@@ -9,7 +9,21 @@
       "image": "sar_dragon",
       "hp": 80,
       "attack": 10
-    }
+    },
+    "story": [
+      {
+        "speaker": "Narrator",
+        "text": "Ein dunkler Drache bedroht das Land..."
+      },
+      {
+        "speaker": "Dragon",
+        "text": "Du wagst es, mich herauszufordern?"
+      },
+      {
+        "speaker": "Hero",
+        "text": "Ich werde dich stoppen!"
+      }
+    ]
   },
   {
     "id": 2,
@@ -21,7 +35,13 @@
       "image": "sar_dragon",
       "hp": 80,
       "attack": 10
-    }
+    },
+    "story": [
+      {
+        "speaker": "Narrator",
+        "text": "Ein neues Gebiet voller Gefahren..."
+      }
+    ]
   },
   {
     "id": 3,
@@ -33,7 +53,13 @@
       "image": "sar_dragon",
       "hp": 120,
       "attack": 14
-    }
+    },
+    "story": [
+      {
+        "speaker": "Narrator",
+        "text": "Das Königreich steht kurz vor dem Fall..."
+      }
+    ]
   },
   {
     "id": 4,
@@ -45,7 +71,17 @@
       "image": "sar_dragon",
       "hp": 160,
       "attack": 16
-    }
+    },
+    "story": [
+      {
+        "speaker": "Narrator",
+        "text": "Eisige Winde schneiden durch deine Haut..."
+      },
+      {
+        "speaker": "Dragon",
+        "text": "Hier endet deine Reise."
+      }
+    ]
   },
   {
     "id": 5,
@@ -57,7 +93,17 @@
       "image": "sar_dragon",
       "hp": 200,
       "attack": 20
-    }
+    },
+    "story": [
+      {
+        "speaker": "Narrator",
+        "text": "Flammen lodern überall um dich herum..."
+      },
+      {
+        "speaker": "Hero",
+        "text": "Ich gebe nicht auf!"
+      }
+    ]
   },
   {
     "id": 6,
@@ -69,7 +115,13 @@
       "image": "sar_dragon",
       "hp": 260,
       "attack": 25
-    }
+    },
+    "story": [
+      {
+        "speaker": "Narrator",
+        "text": "Die Leere verschlingt alles..."
+      }
+    ]
   },
   {
     "id": 7,
@@ -81,6 +133,16 @@
       "image": "sar_dragon",
       "hp": 300,
       "attack": 30
-    }
+    },
+    "story": [
+      {
+        "speaker": "Narrator",
+        "text": "Die letzte Prüfung beginnt..."
+      },
+      {
+        "speaker": "Dragon",
+        "text": "Zeig mir deine wahre Stärke!"
+      }
+    ]
   }
 ]

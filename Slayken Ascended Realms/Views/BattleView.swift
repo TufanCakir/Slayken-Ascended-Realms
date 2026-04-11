@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct BattleView: View {
-
     @EnvironmentObject var theme: ThemeManager
     @EnvironmentObject var gameState: GameState
 
@@ -21,52 +20,86 @@ struct BattleView: View {
     @State private var enemyHP: CGFloat = 1
     @State private var showVictory = false
     @State private var showDefeat = false
+    @State private var enemyHit = false
+    @State private var playerHit = false
+    @State private var isAuto = false
+    @State private var isFast = false
 
     var body: some View {
         ZStack {
-            // 🌄 BACKGROUND
-            Image(gameState.selectedBackground.image)
+            // Background
+            Image(gameState.selectedMap.mapImage)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
 
             VStack {
-                // ENEMY
+                // Enemy section
                 VStack {
+                    hpBar(value: enemyHP)
+                        .padding(.horizontal, 30)
+
                     Image(enemy.image)
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 180)
-
-                    hpBar(value: enemyHP)
+                        .frame(height: 200)
+                        .scaleEffect(enemyHit ? 0.9 : 1)
+                        .opacity(enemyHit ? 0.6 : 1)
+                        .animation(.easeInOut(duration: 0.2), value: enemyHit)
                 }
 
                 Spacer()
 
-                Text("Tap to Attack")
-                    .foregroundStyle(
-                        theme.selectedTheme?.primary.color ?? .white
-                    )
-                    .shadow(
-                        color: (theme.selectedTheme?.glow.color ?? .blue)
-                            .opacity(0.6),
-                        radius: 8
-                    )
-
-                Spacer()
-
-                // PLAYER
-                VStack {
-                    hpBar(value: playerHP)
-
+                // Player section
+                VStack(spacing: 18) {
                     Image(player.image)
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 180)
+                        .frame(height: 200)
+                        .scaleEffect(playerHit ? 0.9 : 1)
+                        .opacity(playerHit ? 0.6 : 1)
+                        .animation(.easeInOut(duration: 0.2), value: playerHit)
+
+                    hpBar(value: playerHP)
+                        .padding(.horizontal, 30)
+
+                    // Action bar
+                    HStack {
+                        Button {
+                            isFast.toggle()
+                        } label: {
+                            Text("Speed x2")
+                                .font(.system(size: 14, weight: .bold))
+                                .padding()
+                                .background(
+                                    isFast
+                                        ? (theme.selectedTheme?.secondary.color
+                                            ?? .orange)
+                                        : Color.black
+                                )
+                                .clipShape(.capsule)
+                        }
+                        Button {
+                            isAuto.toggle()
+                            if isAuto { startAutoAttack() }
+                        } label: {
+                            Text("AUTO")
+                                .font(.system(size: 14, weight: .bold))
+                                .padding()
+                                .background(
+                                    isAuto
+                                        ? (theme.selectedTheme?.primary.color
+                                            ?? .blue)
+                                        : Color.black
+                                )
+                                .clipShape(.capsule)
+                        }
+                    }
+                    .foregroundStyle(.white)
                 }
             }
-            .padding()
 
+            // Overlays
             if showVictory {
                 VictoryView {
                     dismiss()
@@ -93,12 +126,28 @@ struct BattleView: View {
                     )
             }
         }
-        .onTapGesture {
-            attack()
-        }
+        .onTapGesture { attack() }
         .onAppear {
             playerHP = 1
             enemyHP = 1
+        }
+        .onChange(of: isFast) {
+            if isAuto {
+                startAutoAttack()
+            }
+        }
+    }
+
+    func startAutoAttack() {
+        Timer.scheduledTimer(
+            withTimeInterval: isFast ? 0.5 : 1.0,
+            repeats: true
+        ) { timer in
+            if !isAuto || showVictory || showDefeat {
+                timer.invalidate()
+                return
+            }
+            attack()
         }
     }
 
@@ -109,12 +158,11 @@ struct BattleView: View {
 
             ZStack(alignment: .leading) {
 
+                // BACKGROUND
                 Capsule()
-                    .fill(
-                        (theme.selectedTheme?.accent.color ?? .black)
-                            .opacity(0.2)
-                    )
+                    .fill(Color.black.opacity(0.5))
 
+                // FILL (jetzt korrekt von links!)
                 Capsule()
                     .fill(
                         LinearGradient(
@@ -127,12 +175,21 @@ struct BattleView: View {
                         )
                     )
                     .frame(width: geo.size.width * safe)
-                    .shadow(
-                        color: (theme.selectedTheme?.glow.color ?? .red)
-                            .opacity(0.7),
-                        radius: 8
-                    )
-                    .animation(.linear(duration: 0.2), value: safe)
+                    .animation(.easeInOut(duration: 0.25), value: safe)
+
+                // BORDER
+                Capsule()
+                    .stroke(Color.white.opacity(0.2), lineWidth: 1)
+
+                // TEXT (zentriert lassen wir extra!)
+                HStack {
+                    Spacer()
+                    Text("\(Int(safe * 100))%")
+                        .font(.caption.bold())
+                        .foregroundStyle(.white)
+                        .shadow(radius: 3)
+                    Spacer()
+                }
             }
         }
         .frame(height: 10)
@@ -143,10 +200,14 @@ struct BattleView: View {
     func attack() {
         guard !showVictory && !showDefeat else { return }
 
-        // 🔥 PLAYER greift an
-        let playerDamage = player.attack / enemy.hp
+        playerHit = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            playerHit = false
+        }
 
-        withAnimation {
+        // Player attack
+        let playerDamage = player.attack / enemy.hp
+        withAnimation(.easeOut(duration: 0.2)) {
             enemyHP -= playerDamage
         }
 
@@ -156,11 +217,13 @@ struct BattleView: View {
             return
         }
 
-        // 🔥 ENEMY greift zurück
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            let enemyDamage = enemy.attack / player.hp
+        // Enemy counter attack
+        enemyHit = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            enemyHit = false
 
-            withAnimation {
+            let enemyDamage = enemy.attack / player.hp
+            withAnimation(.easeOut(duration: 0.2)) {
                 playerHP -= enemyDamage
             }
 
@@ -181,7 +244,7 @@ struct BattleView: View {
     )
     let sampleEnemy = CharacterStats(
         name: "Goblin",
-        image: "dragon",
+        image: "sar_dragon",
         hp: 80,
         attack: 12
     )

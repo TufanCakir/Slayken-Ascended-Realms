@@ -64,7 +64,7 @@ struct PopupView: View {
                     }
                 }
             }
-            .padding(20)
+            .padding()
             .background(
                 LinearGradient(
                     colors: [
@@ -85,7 +85,7 @@ struct PopupView: View {
                         lineWidth: 2
                     )
             }
-            .padding(.horizontal, 40)
+            .padding()
         }
     }
 }

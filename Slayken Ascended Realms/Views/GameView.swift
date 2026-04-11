@@ -34,12 +34,31 @@ struct GameView: View {
     @State private var selectedEnemy: CharacterStats?
     @State private var selectedPlayer: String = ""
     @State private var activeSelectionSheet: ActiveSelectionSheet?
+    @State private var showStory = false
+    @State private var currentStory: [StoryLine] = []
+
+    let rows = [
+        GridItem(.fixed(90)),
+        GridItem(.fixed(90)),
+    ]
 
     var body: some View {
         NavigationStack {
             GeometryReader { geo in
 
                 ZStack {
+
+                    if showStory {
+                        StoryView(
+                            story: currentStory
+                        ) {
+                            showStory = false
+                            showPopup = true
+                        }
+                        .environmentObject(theme)  // 👈 DAS FEHLT
+                        .transition(.opacity)
+                        .zIndex(20)
+                    }
 
                     // 🔥 POPUP OVERLAY (JETZT RICHTIG)
                     if showPopup {
@@ -75,13 +94,13 @@ struct GameView: View {
 
                                 // 🔥 LEVEL BUTTONS
                                 VStack {
-                                    Spacer()
 
                                     ScrollView(
                                         .horizontal,
                                         showsIndicators: false
                                     ) {
-                                        HStack(spacing: 16) {
+
+                                        LazyHGrid(rows: rows, spacing: 16) {
 
                                             ForEach(gameState.maps) { map in
                                                 levelButton(map: map)
@@ -151,39 +170,38 @@ struct GameView: View {
     private func levelButton(map: GameMap) -> some View {
         Button {
             gameState.selectedMap = map
-
-            // 🔥 DIREKT AUS MAP
             selectedEnemy = map.enemy
 
-            showPopup = true
+            currentStory = map.story
+            showPopup = false
+            showStory = true
 
         } label: {
             ZStack(alignment: .bottomLeading) {
+
+                // 🖼️ BACKGROUND IMAGE
                 Image(map.mapImage)
                     .resizable()
                     .scaledToFill()
+                    .frame(width: 180, height: 100)
                     .clipped()
-                    .clipShape(RoundedRectangle(cornerRadius: 14))
 
+                // 📝 TEXT
                 Text(map.name)
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(.white)
-                    .padding(6)
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
             }
+            .frame(width: 180, height: 80)
+            .clipShape(RoundedRectangle(cornerRadius: 18))
+
+            // 🔥 SELECTED BORDER
             .overlay {
                 if gameState.selectedMap.id == map.id {
-                    RoundedRectangle(cornerRadius: 14)
-                        .stroke(
-                            theme.selectedTheme?.primary.color ?? .blue,
-                            lineWidth: 3
-                        )
+                    RoundedRectangle(cornerRadius: 18)
+                        .stroke(Color.white, lineWidth: 3)
                 }
             }
-            .shadow(
-                color: (theme.selectedTheme?.glow.color ?? .blue)
-                    .opacity(0.6),
-                radius: 8
-            )
         }
     }
 }

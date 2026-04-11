@@ -12,6 +12,7 @@ final class GameState: ObservableObject {
     @Published var player: CharacterStats
     @Published var maps: [GameMap]
     @Published var backgrounds: [GameBackground]
+
     @Published var selectedMap: GameMap {
         didSet {
             print(
@@ -22,6 +23,7 @@ final class GameState: ObservableObject {
             )
         }
     }
+    
     @Published var selectedBackground: GameBackground {
         didSet {
             print(
@@ -58,10 +60,11 @@ final class GameState: ObservableObject {
                 difficulty: 1,
                 enemy: CharacterStats(
                     name: "Dummy",
-                    image: "node_dragon",
+                    image: "acsended_riven",
                     hp: 100,
                     attack: 10
-                )
+                ),
+                story: []
             )
         let defaultBG =
             loadedBackgrounds.first

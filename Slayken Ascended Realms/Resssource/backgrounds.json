@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "SAR BG",
+        "image": "sar_bg"
+    },
+    {
+        "id": 2,
+        "name": "Fire BG",
+        "image": "country"
+    },
+    {
+        "id": 3,
+        "name": "Ice BG",
+        "image": "ice"
+    },
+    {
+        "id": 4,
+        "name": "Fire BG",
+        "image": "fire"
+    },
+    {
+        "id": 5,
+        "name": "Void BG",
+        "image": "void"
+    },
+    {
+        "id": 6,
+        "name": "Map BG",
+        "image": "map"
+    },
+    {
+        "id": 7,
+        "name": "Arena BG",
+        "image": "bg_arena"
+    },
+]
+ 

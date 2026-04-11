@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "name": "SAR",
+    "mapImage": "sar_bg",
+    "difficulty": 1,
+    "enemy": {
+      "name": "Dragon",
+      "image": "sar_dragon",
+      "hp": 80,
+      "attack": 10
+    }
+  },
+  {
+    "id": 2,
+    "name": "Map",
+    "mapImage": "map",
+    "difficulty": 1,
+    "enemy": {
+      "name": "Dragon",
+      "image": "sar_dragon",
+      "hp": 80,
+      "attack": 10
+    }
+  },
+  {
+    "id": 3,
+    "name": "Kingdom",
+    "mapImage": "country",
+    "difficulty": 2,
+    "enemy": {
+      "name": "Dragon",
+      "image": "sar_dragon",
+      "hp": 120,
+      "attack": 14
+    }
+  },
+  {
+    "id": 4,
+    "name": "Ice Realm",
+    "mapImage": "ice",
+    "difficulty": 3,
+    "enemy": {
+      "name": "Dragon",
+      "image": "sar_dragon",
+      "hp": 160,
+      "attack": 16
+    }
+  },
+  {
+    "id": 5,
+    "name": "Fire Lands",
+    "mapImage": "fire",
+    "difficulty": 4,
+    "enemy": {
+      "name": "Dragon",
+      "image": "sar_dragon",
+      "hp": 200,
+      "attack": 20
+    }
+  },
+  {
+    "id": 6,
+    "name": "Void",
+    "mapImage": "void",
+    "difficulty": 5,
+    "enemy": {
+      "name": "Dragon",
+      "image": "sar_dragon",
+      "hp": 260,
+      "attack": 25
+    }
+  },
+  {
+    "id": 7,
+    "name": "Arena",
+    "mapImage": "bg_arena",
+    "difficulty": 6,
+    "enemy": {
+      "name": "Dragon",
+      "image": "sar_dragon",
+      "hp": 300,
+      "attack": 30
+    }
+  }
+]

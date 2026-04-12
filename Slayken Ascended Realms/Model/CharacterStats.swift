@@ -5,11 +5,13 @@
 //  Created by Tufan Cakir on 10.04.26.
 //
 
+import CoreGraphics
 import Foundation
 
 struct CharacterStats: Codable {
     let name: String
     let image: String
+    let model: String
     let hp: CGFloat
     let attack: CGFloat
 }
@@ -23,6 +25,7 @@ func loadPlayer() -> CharacterStats {
         return CharacterStats(
             name: "Default",
             image: "character1",
+            model: "riven",
             hp: 100,
             attack: 10
         )

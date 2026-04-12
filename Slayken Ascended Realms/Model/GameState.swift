@@ -61,6 +61,7 @@ final class GameState: ObservableObject {
                 enemy: CharacterStats(
                     name: "Dummy",
                     image: "acsended_riven",
+                    model: "riven",
                     hp: 100,
                     attack: 10
                 ),

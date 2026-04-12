@@ -26,39 +26,19 @@ struct BattleView: View {
 
     var body: some View {
         ZStack {
-            Image(gameState.selectedMap.mapImage)
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+            BattleSceneView(
+                player: player,
+                enemy: enemy,
+                enemyHP: enemyHP,
+                groundTexture: gameState.selectedMap.mapImage,
+                skyboxTexture: gameState.selectedBackground.image
+            )
+            .ignoresSafeArea()
 
             VStack {
-                VStack {
-                    hpBar(value: enemyHP)
-                        .padding(.horizontal, 30)
-
-                    Image(enemy.image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 200)
-                        .scaleEffect(enemyHit ? 0.9 : 1)
-                        .opacity(enemyHit ? 0.6 : 1)
-                        .animation(.easeInOut(duration: 0.2), value: enemyHit)
-                }
-
                 Spacer()
 
                 VStack(spacing: 18) {
-                    Image(player.image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 200)
-                        .scaleEffect(playerHit ? 0.9 : 1)
-                        .opacity(playerHit ? 0.6 : 1)
-                        .animation(.easeInOut(duration: 0.2), value: playerHit)
-
-                    hpBar(value: playerHP)
-                        .padding(.horizontal, 30)
-
                     HStack {
                         Button {
                             isFast.toggle()
@@ -94,7 +74,12 @@ struct BattleView: View {
                         }
                     }
                     .foregroundStyle(.white)
+
+                    hpBar(value: playerHP)
+                        .frame(height: 14)
                 }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 24)
             }
 
             if showVictory {
@@ -185,8 +170,7 @@ struct BattleView: View {
                 }
             }
         }
-        .frame(height: 10)
-        .padding(.horizontal, 50)
+        .frame(height: 12)
     }
 
     func attack() {
@@ -229,17 +213,19 @@ struct BattleView: View {
     let samplePlayer = CharacterStats(
         name: "Hero",
         image: "acsended_riven",
+        model: "warrior",
         hp: 100,
         attack: 20
     )
     let sampleEnemy = CharacterStats(
         name: "Goblin",
         image: "sar_dragon",
+        model: "warrior",
         hp: 80,
         attack: 12
     )
 
-    return BattleView(
+    BattleView(
         player: samplePlayer,
         enemy: sampleEnemy,
         onExit: {}

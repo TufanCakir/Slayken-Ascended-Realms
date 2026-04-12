@@ -7,6 +7,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
+            "model": "warrior",
             "hp": 80,
             "attack": 10
         },
@@ -33,6 +34,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
+            "model": "warrior",
             "hp": 80,
             "attack": 10
         },
@@ -51,6 +53,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
+            "model": "warrior",
             "hp": 120,
             "attack": 14
         },
@@ -69,6 +72,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
+            "model": "warrior",
             "hp": 160,
             "attack": 16
         },
@@ -91,6 +95,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
+            "model": "warrior",
             "hp": 200,
             "attack": 20
         },
@@ -113,6 +118,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
+            "model": "warrior",
             "hp": 260,
             "attack": 25
         },
@@ -131,6 +137,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
+            "model": "warrior",
             "hp": 300,
             "attack": 30
         },

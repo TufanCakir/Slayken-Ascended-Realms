@@ -355,3 +355,12 @@ private enum TextureNames {
     static let ground = "sar_bg"
     static let skybox = "sar_bg"
 }
+#Preview {
+    GameSceneView(
+        joystickVector: .zero,
+        groundTexture: TextureNames.ground,
+        skyboxTexture: TextureNames.skybox
+    )
+    .ignoresSafeArea()
+}
+

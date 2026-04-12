@@ -1,6 +1,7 @@
 {
-    "name": "Riven",
-    "image": "acsended_riven ",
-    "hp": 100,
-    "attack": 20
+  "name": "Riven",
+  "image": "acsended_riven",
+  "model": "warrior",
+  "hp": 100,
+  "attack": 20
 }

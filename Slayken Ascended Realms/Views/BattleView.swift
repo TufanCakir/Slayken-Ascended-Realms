@@ -13,8 +13,7 @@ struct BattleView: View {
 
     let player: CharacterStats
     let enemy: CharacterStats
-
-    @Environment(\.dismiss) var dismiss
+    let onExit: () -> Void
 
     @State private var playerHP: CGFloat = 1
     @State private var enemyHP: CGFloat = 1
@@ -27,14 +26,12 @@ struct BattleView: View {
 
     var body: some View {
         ZStack {
-            // Background
             Image(gameState.selectedMap.mapImage)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
 
             VStack {
-                // Enemy section
                 VStack {
                     hpBar(value: enemyHP)
                         .padding(.horizontal, 30)
@@ -50,7 +47,6 @@ struct BattleView: View {
 
                 Spacer()
 
-                // Player section
                 VStack(spacing: 18) {
                     Image(player.image)
                         .resizable()
@@ -63,7 +59,6 @@ struct BattleView: View {
                     hpBar(value: playerHP)
                         .padding(.horizontal, 30)
 
-                    // Action bar
                     HStack {
                         Button {
                             isFast.toggle()
@@ -79,9 +74,12 @@ struct BattleView: View {
                                 )
                                 .clipShape(.capsule)
                         }
+
                         Button {
                             isAuto.toggle()
-                            if isAuto { startAutoAttack() }
+                            if isAuto {
+                                startAutoAttack()
+                            }
                         } label: {
                             Text("AUTO")
                                 .font(.system(size: 14, weight: .bold))
@@ -99,10 +97,9 @@ struct BattleView: View {
                 }
             }
 
-            // Overlays
             if showVictory {
                 VictoryView {
-                    dismiss()
+                    onExit()
                 }
             }
 
@@ -126,7 +123,9 @@ struct BattleView: View {
                     )
             }
         }
-        .onTapGesture { attack() }
+        .onTapGesture {
+            attack()
+        }
         .onAppear {
             playerHP = 1
             enemyHP = 1
@@ -151,18 +150,14 @@ struct BattleView: View {
         }
     }
 
-    // MARK: - UI Helpers
     func hpBar(value: CGFloat) -> some View {
         GeometryReader { geo in
             let safe = max(0, min(1, value))
 
             ZStack(alignment: .leading) {
-
-                // BACKGROUND
                 Capsule()
                     .fill(Color.black.opacity(0.5))
 
-                // FILL (jetzt korrekt von links!)
                 Capsule()
                     .fill(
                         LinearGradient(
@@ -177,11 +172,9 @@ struct BattleView: View {
                     .frame(width: geo.size.width * safe)
                     .animation(.easeInOut(duration: 0.25), value: safe)
 
-                // BORDER
                 Capsule()
                     .stroke(Color.white.opacity(0.2), lineWidth: 1)
 
-                // TEXT (zentriert lassen wir extra!)
                 HStack {
                     Spacer()
                     Text("\(Int(safe * 100))%")
@@ -196,7 +189,6 @@ struct BattleView: View {
         .padding(.horizontal, 50)
     }
 
-    // MARK: - Actions
     func attack() {
         guard !showVictory && !showDefeat else { return }
 
@@ -205,7 +197,6 @@ struct BattleView: View {
             playerHit = false
         }
 
-        // Player attack
         let playerDamage = player.attack / enemy.hp
         withAnimation(.easeOut(duration: 0.2)) {
             enemyHP -= playerDamage
@@ -217,7 +208,6 @@ struct BattleView: View {
             return
         }
 
-        // Enemy counter attack
         enemyHit = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             enemyHit = false
@@ -248,7 +238,12 @@ struct BattleView: View {
         hp: 80,
         attack: 12
     )
-    return BattleView(player: samplePlayer, enemy: sampleEnemy)
-        .environmentObject(GameState())
-        .environmentObject(ThemeManager())
+
+    return BattleView(
+        player: samplePlayer,
+        enemy: sampleEnemy,
+        onExit: {}
+    )
+    .environmentObject(GameState())
+    .environmentObject(ThemeManager())
 }

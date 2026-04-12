@@ -12,7 +12,6 @@ struct StoryLine: Identifiable, Codable {
     let speaker: String
     let text: String
 
-
     enum CodingKeys: String, CodingKey {
         case speaker, text
     }

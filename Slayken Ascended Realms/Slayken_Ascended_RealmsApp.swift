@@ -15,7 +15,7 @@ struct Slayken_Ascended_RealmsApp: App {
 
     var body: some Scene {
         WindowGroup {
-            StartView()
+            RootView()
                 .environmentObject(gameState)
                 .environmentObject(theme)
         }

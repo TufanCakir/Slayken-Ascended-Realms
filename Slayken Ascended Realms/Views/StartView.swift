@@ -12,74 +12,62 @@ struct StartView: View {
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
 
-    @State private var startGame = false
+    let onStart: () -> Void
 
     var body: some View {
-        NavigationStack {
-            ZStack {
+        ZStack {
 
-                // 🌄 BACKGROUND
-                Image("sar_bg")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+            Image("sar_bg")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
 
-                // 🐉 DRAGON (RESPONSIVE + HERO)
-                Image("sar_dragon")
-                    .resizable()
-                    .scaledToFit()
+            Image("sar_dragon")
+                .resizable()
+                .scaledToFit()
 
-                VStack(spacing: 20) {
+            VStack(spacing: 20) {
 
-                    Spacer()
+                Spacer()
 
-                    Text("Slayken")
-                        .font(.system(size: 40, weight: .black))
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [
-                                    theme.selectedTheme?.primary.color ?? .blue,
-                                    theme.selectedTheme?.secondary.color
-                                        ?? .cyan,
-                                ],
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
+                Text("Slayken")
+                    .font(.system(size: 40, weight: .black))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [
+                                theme.selectedTheme?.primary.color ?? .blue,
+                                theme.selectedTheme?.secondary.color ?? .cyan,
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
                         )
+                    )
 
-                    Text("Ascended Realms")
-                        .font(.system(size: 40, weight: .black))
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [
-                                    theme.selectedTheme?.primary.color ?? .blue,
-                                    theme.selectedTheme?.secondary.color
-                                        ?? .cyan,
-                                ],
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
+                Text("Ascended Realms")
+                    .font(.system(size: 40, weight: .black))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [
+                                theme.selectedTheme?.primary.color ?? .blue,
+                                theme.selectedTheme?.secondary.color ?? .cyan,
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
                         )
+                    )
 
-                    Spacer()
-
-                }
+                Spacer()
             }
-            // 🔥 GANZER SCREEN TAPPBAR
-            .contentShape(Rectangle())
-            .onTapGesture {
-                startGame = true
-            }
-            .navigationDestination(isPresented: $startGame) {
-                GameView()
-                    .environmentObject(gameState)
-                    .environmentObject(theme)
-            }
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            onStart()
         }
     }
 }
+
 #Preview {
-    StartView()
+    StartView(onStart: {})
         .environmentObject(GameState())
         .environmentObject(ThemeManager())
 }

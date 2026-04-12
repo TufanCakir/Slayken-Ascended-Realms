@@ -23,7 +23,7 @@ final class GameState: ObservableObject {
             )
         }
     }
-    
+
     @Published var selectedBackground: GameBackground {
         didSet {
             print(
@@ -52,8 +52,8 @@ final class GameState: ObservableObject {
         )
 
         let defaultMap =
-            loadedMaps.first ??
-            GameMap(
+            loadedMaps.first
+            ?? GameMap(
                 id: 0,
                 name: "Default",
                 mapImage: "map",

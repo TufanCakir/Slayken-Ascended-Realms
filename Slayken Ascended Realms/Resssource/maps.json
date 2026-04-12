@@ -1,148 +1,148 @@
 [
-  {
-    "id": 1,
-    "name": "SAR",
-    "mapImage": "sar_bg",
-    "difficulty": 1,
-    "enemy": {
-      "name": "Dragon",
-      "image": "sar_dragon",
-      "hp": 80,
-      "attack": 10
+    {
+        "id": 1,
+        "name": "SAR",
+        "mapImage": "sar_bg",
+        "difficulty": 1,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "hp": 80,
+            "attack": 10
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Ein dunkler Drache bedroht das Land..."
+            },
+            {
+                "speaker": "Dragon",
+                "text": "Du wagst es, mich herauszufordern?"
+            },
+            {
+                "speaker": "Hero",
+                "text": "Ich werde dich stoppen!"
+            }
+        ]
     },
-    "story": [
-      {
-        "speaker": "Narrator",
-        "text": "Ein dunkler Drache bedroht das Land..."
-      },
-      {
-        "speaker": "Dragon",
-        "text": "Du wagst es, mich herauszufordern?"
-      },
-      {
-        "speaker": "Hero",
-        "text": "Ich werde dich stoppen!"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "name": "Map",
-    "mapImage": "map",
-    "difficulty": 1,
-    "enemy": {
-      "name": "Dragon",
-      "image": "sar_dragon",
-      "hp": 80,
-      "attack": 10
+    {
+        "id": 2,
+        "name": "Map",
+        "mapImage": "map",
+        "difficulty": 1,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "hp": 80,
+            "attack": 10
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Ein neues Gebiet voller Gefahren..."
+            }
+        ]
     },
-    "story": [
-      {
-        "speaker": "Narrator",
-        "text": "Ein neues Gebiet voller Gefahren..."
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "name": "Kingdom",
-    "mapImage": "country",
-    "difficulty": 2,
-    "enemy": {
-      "name": "Dragon",
-      "image": "sar_dragon",
-      "hp": 120,
-      "attack": 14
+    {
+        "id": 3,
+        "name": "Kingdom",
+        "mapImage": "country",
+        "difficulty": 2,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "hp": 120,
+            "attack": 14
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Das Königreich steht kurz vor dem Fall..."
+            }
+        ]
     },
-    "story": [
-      {
-        "speaker": "Narrator",
-        "text": "Das Königreich steht kurz vor dem Fall..."
-      }
-    ]
-  },
-  {
-    "id": 4,
-    "name": "Ice Realm",
-    "mapImage": "ice",
-    "difficulty": 3,
-    "enemy": {
-      "name": "Dragon",
-      "image": "sar_dragon",
-      "hp": 160,
-      "attack": 16
+    {
+        "id": 4,
+        "name": "Ice Realm",
+        "mapImage": "ice",
+        "difficulty": 3,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "hp": 160,
+            "attack": 16
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Eisige Winde schneiden durch deine Haut..."
+            },
+            {
+                "speaker": "Dragon",
+                "text": "Hier endet deine Reise."
+            }
+        ]
     },
-    "story": [
-      {
-        "speaker": "Narrator",
-        "text": "Eisige Winde schneiden durch deine Haut..."
-      },
-      {
-        "speaker": "Dragon",
-        "text": "Hier endet deine Reise."
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "name": "Fire Lands",
-    "mapImage": "fire",
-    "difficulty": 4,
-    "enemy": {
-      "name": "Dragon",
-      "image": "sar_dragon",
-      "hp": 200,
-      "attack": 20
+    {
+        "id": 5,
+        "name": "Fire Lands",
+        "mapImage": "fire",
+        "difficulty": 4,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "hp": 200,
+            "attack": 20
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Flammen lodern überall um dich herum..."
+            },
+            {
+                "speaker": "Hero",
+                "text": "Ich gebe nicht auf!"
+            }
+        ]
     },
-    "story": [
-      {
-        "speaker": "Narrator",
-        "text": "Flammen lodern überall um dich herum..."
-      },
-      {
-        "speaker": "Hero",
-        "text": "Ich gebe nicht auf!"
-      }
-    ]
-  },
-  {
-    "id": 6,
-    "name": "Void",
-    "mapImage": "void",
-    "difficulty": 5,
-    "enemy": {
-      "name": "Dragon",
-      "image": "sar_dragon",
-      "hp": 260,
-      "attack": 25
+    {
+        "id": 6,
+        "name": "Void",
+        "mapImage": "void",
+        "difficulty": 5,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "hp": 260,
+            "attack": 25
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Die Leere verschlingt alles..."
+            }
+        ]
     },
-    "story": [
-      {
-        "speaker": "Narrator",
-        "text": "Die Leere verschlingt alles..."
-      }
-    ]
-  },
-  {
-    "id": 7,
-    "name": "Arena",
-    "mapImage": "bg_arena",
-    "difficulty": 6,
-    "enemy": {
-      "name": "Dragon",
-      "image": "sar_dragon",
-      "hp": 300,
-      "attack": 30
-    },
-    "story": [
-      {
-        "speaker": "Narrator",
-        "text": "Die letzte Prüfung beginnt..."
-      },
-      {
-        "speaker": "Dragon",
-        "text": "Zeig mir deine wahre Stärke!"
-      }
-    ]
-  }
+    {
+        "id": 7,
+        "name": "Arena",
+        "mapImage": "bg_arena",
+        "difficulty": 6,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "hp": 300,
+            "attack": 30
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Die letzte Prüfung beginnt..."
+            },
+            {
+                "speaker": "Dragon",
+                "text": "Zeig mir deine wahre Stärke!"
+            }
+        ]
+    }
 ]

@@ -18,29 +18,29 @@ struct StoryView: View {
 
     var body: some View {
         ZStack {
-            
+
             // 🔥 DARK BACKGROUND
             Color.black.opacity(0.6)
                 .ignoresSafeArea()
-            
+
             // 💬 CENTER DIALOG
             VStack(spacing: 16) {
-                
+
                 Text(story[currentIndex].speaker)
                     .font(.headline)
                     .foregroundStyle(.white)
-                
+
                 Text(story[currentIndex].text)
                     .font(.body)
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
-                
+
                 Button {
                     next()
                 } label: {
                     Text("Weiter")
                         .font(.headline)
-                        .foregroundStyle(.white)                        .padding(.horizontal, 20)
+                        .foregroundStyle(.white).padding(.horizontal, 20)
                         .padding(.vertical, 10)
                         .foregroundStyle(.white)
                         .background {
@@ -101,13 +101,13 @@ struct StoryView: View {
         story: previewStoryLines,
         onFinish: {}
     )
-        .environmentObject(ThemeManager())
+    .environmentObject(ThemeManager())
 }
 
 private let previewStoryLines: [StoryLine] = [
     #"{"speaker":"Erza","text":"Die Schatten bewegen sich wieder."}"#,
-    #"{"speaker":"Slayken","text":"Dann betreten wir das Reich und beenden es."}"#
+    #"{"speaker":"Slayken","text":"Dann betreten wir das Reich und beenden es."}"#,
 ]
-    .compactMap { line in
-        try? JSONDecoder().decode(StoryLine.self, from: Data(line.utf8))
-    }
+.compactMap { line in
+    try? JSONDecoder().decode(StoryLine.self, from: Data(line.utf8))
+}

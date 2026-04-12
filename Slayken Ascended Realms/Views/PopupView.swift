@@ -9,9 +9,10 @@ import SwiftUI
 
 struct PopupView: View {
     @Binding var showPopup: Bool
-    @Binding var startBattle: Bool
 
     @EnvironmentObject private var theme: ThemeManager
+
+    let onStart: () -> Void
 
     var body: some View {
         ZStack {
@@ -37,7 +38,7 @@ struct PopupView: View {
 
                     Button {
                         showPopup = false
-                        startBattle = true
+                        onStart()
                     } label: {
                         Text("Start")
                             .frame(maxWidth: .infinity)
@@ -91,6 +92,6 @@ struct PopupView: View {
 }
 
 #Preview {
-    PopupView(showPopup: .constant(true), startBattle: .constant(false))
+    PopupView(showPopup: .constant(true), onStart: {})
         .environmentObject(ThemeManager())
 }

@@ -13,7 +13,7 @@ struct GameMap: Identifiable, Codable {
     let mapImage: String
     let difficulty: Int
     let enemy: CharacterStats
-    let story: [StoryLine] 
+    let story: [StoryLine]
 }
 
 struct GameBackground: Identifiable, Codable {

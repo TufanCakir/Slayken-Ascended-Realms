@@ -34,6 +34,7 @@ struct GameView: View {
     @State private var showStory = false
     @State private var currentStory: [StoryLine] = []
     @State private var joystickVector: SIMD2<Float> = .zero
+    @State private var showSupport = false
     
     let onStartBattle: (CharacterStats) -> Void
 
@@ -95,33 +96,40 @@ struct GameView: View {
                     .background(.ultraThinMaterial)
                 }
                 .overlay(alignment: .topTrailing) {
-                    HStack(spacing: 12) {
-                        Button {
-                            activeSelectionSheet = .background
-                        } label: {
-                            Image(systemName: "photo")
-                        }
+                        HStack(spacing: 12) {
+                            Button {
+                                activeSelectionSheet = .background
+                            } label: {
+                                Image(systemName: "photo")
+                            }
 
-                        Button {
-                            activeSelectionSheet = .map
-                        } label: {
-                            Image(systemName: "map")
-                        }
+                            Button {
+                                activeSelectionSheet = .map
+                            } label: {
+                                Image(systemName: "map")
+                            }
 
-                        Button {
-                            activeSelectionSheet = .theme
-                        } label: {
-                            Image(systemName: "paintbrush")
+                            Button {
+                                activeSelectionSheet = .theme
+                            } label: {
+                                Image(systemName: "paintbrush")
+                            }
+
+                            // 🆘 Support Button
+                            Button {
+                                showSupport = true
+                            } label: {
+                                Image(systemName: "questionmark.circle")
+                            }
                         }
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(.black.opacity(0.35), in: Capsule())
+                        .padding(.top, 12)
+                        .padding(.trailing, 16)
                     }
-                    .font(.headline)
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 10)
-                    .background(.black.opacity(0.35), in: Capsule())
-                    .padding(.top, 12)
-                    .padding(.trailing, 16)
-                }
             }
             .sheet(item: $activeSelectionSheet) { selection in
                 switch selection {
@@ -143,6 +151,9 @@ struct GameView: View {
                     }
                     .environmentObject(theme)
                 }
+            }
+            .sheet(isPresented: $showSupport) {
+                SupportView()
             }
         }
     }

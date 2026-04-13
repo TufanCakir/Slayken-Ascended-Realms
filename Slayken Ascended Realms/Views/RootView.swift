@@ -50,8 +50,12 @@ struct RootView: View {
             }
 
             if isLoading {
-                loadingOverlay
-                    .zIndex(100)
+                LoadingOverlayView(
+                    progress: loadingProgress,
+                    background: loadingBackground
+                )
+                .environmentObject(theme)
+                .zIndex(100)
             }
         }
         .animation(.smooth(duration: 0.45), value: currentScreenID)
@@ -68,45 +72,6 @@ struct RootView: View {
             return "game"
         case .battle:
             return "battle"
-        }
-    }
-
-    private var loadingOverlay: some View {
-        ZStack {
-            Image(loadingBackground)
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-
-            LinearGradient(
-                colors: [
-                    Color.black.opacity(0.2),
-                    Color.black.opacity(0.75),
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
-
-            VStack(spacing: 24) {
-                Spacer()
-
-                Text("Loading Realm")
-                    .font(.system(size: 30, weight: .black))
-                    .foregroundStyle(.white)
-
-                ProgressView(value: loadingProgress, total: 1.0)
-                    .progressViewStyle(.linear)
-                    .tint(theme.selectedTheme?.primary.color ?? .white)
-                    .scaleEffect(x: 1, y: 2.4, anchor: .center)
-
-                Text("\(Int(loadingProgress * 100))%")
-                    .font(.headline)
-                    .foregroundStyle(.white.opacity(0.9))
-
-                Spacer()
-            }
-            .padding(.horizontal, 28)
         }
     }
 
@@ -170,4 +135,10 @@ struct RootView: View {
             isLoading = false
         }
     }
+}
+
+#Preview {
+    RootView()
+        .environmentObject(GameState())
+        .environmentObject(ThemeManager())
 }

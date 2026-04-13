@@ -17,21 +17,16 @@ struct StartView: View {
     var body: some View {
         ZStack {
 
-            Image("sar_bg")
+            Image("warrior_bg")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
 
-            Image("sar_dragon")
-                .resizable()
-                .scaledToFit()
-
             VStack(spacing: 20) {
-
-                Spacer()
 
                 Text("Slayken")
                     .font(.system(size: 40, weight: .black))
+                    .shadow(color: .black, radius: 5)
                     .foregroundStyle(
                         LinearGradient(
                             colors: [
@@ -45,6 +40,7 @@ struct StartView: View {
 
                 Text("Ascended Realms")
                     .font(.system(size: 40, weight: .black))
+                    .shadow(color: .black, radius: 5)
                     .foregroundStyle(
                         LinearGradient(
                             colors: [
@@ -55,8 +51,6 @@ struct StartView: View {
                             endPoint: .bottom
                         )
                     )
-
-                Spacer()
             }
         }
         .contentShape(Rectangle())

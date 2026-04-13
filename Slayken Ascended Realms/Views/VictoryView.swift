@@ -92,7 +92,7 @@ struct VictoryView: View {
                     .easeInOut(duration: 0.8).repeatForever(),
                     value: animate
                 )
-
+                .padding(.horizontal, 50)
                 Spacer()
             }
         }

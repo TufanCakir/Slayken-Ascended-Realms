@@ -101,66 +101,17 @@ final class BattleSceneCoordinator {
 
     private func makeCamera() -> SCNNode {
         let camera = SCNCamera()
-        camera.fieldOfView = 60
+        camera.fieldOfView = 50
 
         cameraNode.camera = camera
 
-        // 🔥 Seitlich + oben + zurück
-        cameraNode.position = SCNVector3(15, 5, 15)
-
-        // 🔥 Auf Mittelpunkt zwischen beiden schauen
+        // 🔥 SIDE VIEW (leicht schräg von rechts)
+        cameraNode.position = SCNVector3(0, 5, 20)
         cameraNode.look(at: SCNVector3(0, 0, 0))
 
         return cameraNode
     }
-    
-    private func makeHPBarNode() -> SCNNode {
-        let container = SCNNode()
 
-        let billboard = SCNBillboardConstraint()
-        billboard.freeAxes = .all
-        container.constraints = [billboard]
-
-        // Hintergrund
-        let backgroundPlane = SCNPlane(width: 1.2, height: 0.12)
-        let backgroundMaterial = SCNMaterial()
-        backgroundMaterial.diffuse.contents = UIColor.black.withAlphaComponent(0.55)
-        backgroundMaterial.isDoubleSided = true
-        backgroundPlane.materials = [backgroundMaterial]
-
-        let backgroundNode = SCNNode(geometry: backgroundPlane)
-        container.addChildNode(backgroundNode)
-
-        // Rote Füllung
-        let fillPlane = SCNPlane(width: 1.1, height: 0.08)
-        let fillMaterial = SCNMaterial()
-        fillMaterial.diffuse.contents = UIColor.systemRed
-        fillMaterial.isDoubleSided = true
-        fillPlane.materials = [fillMaterial]
-
-        let fillNode = SCNNode(geometry: fillPlane)
-
-        // Wichtig: leicht vor den Hintergrund
-        fillNode.pivot = SCNMatrix4MakeTranslation(-0.55, 0, 0)
-        fillNode.position = SCNVector3Zero // ✅ DAS REICHT
-
-        container.addChildNode(fillNode)
-
-        // Rahmen
-        let borderPlane = SCNPlane(width: 3, height: 0.34)
-        let borderMaterial = SCNMaterial()
-        borderMaterial.diffuse.contents = UIColor.clear
-        borderMaterial.emission.contents = UIColor.white.withAlphaComponent(0.2)
-        borderMaterial.isDoubleSided = true
-        borderPlane.materials = [borderMaterial]
-
-        let borderNode = SCNNode(geometry: borderPlane)
-        borderNode.position = SCNVector3(1, 3, 1.2)
-        container.addChildNode(borderNode)
-
-        enemyHPNode = fillNode
-        return container
-    }
     private func makeLights() -> SCNNode {
         let rig = SCNNode()
 
@@ -251,7 +202,10 @@ final class BattleSceneCoordinator {
         }
     }
 
-    private func configureGroundMaterial(_ material: SCNMaterial, textureName: String) {
+    private func configureGroundMaterial(
+        _ material: SCNMaterial,
+        textureName: String
+    ) {
         guard let image = UIImage(named: textureName) else {
             material.diffuse.contents = nil
             if let box = groundBox {
@@ -279,7 +233,9 @@ final class BattleSceneCoordinator {
         return groundNode.position.y + Float(ground.height) * 0.5
     }
 
-    private func makeFighterNode(for stats: CharacterStats, isEnemy: Bool) -> SCNNode {
+    private func makeFighterNode(for stats: CharacterStats, isEnemy: Bool)
+        -> SCNNode
+    {
         let root = isEnemy ? enemyRootNode : playerRootNode
         root.childNodes.forEach { $0.removeFromParentNode() }
 
@@ -293,7 +249,11 @@ final class BattleSceneCoordinator {
         let centerX = (bounds.min.x + bounds.max.x) * 0.5
         let centerZ = (bounds.min.z + bounds.max.z) * 0.5
 
-        modelNode.pivot = SCNMatrix4MakeTranslation(centerX, bounds.min.y, centerZ)
+        modelNode.pivot = SCNMatrix4MakeTranslation(
+            centerX,
+            bounds.min.y,
+            centerZ
+        )
 
         let height = max(bounds.max.y - bounds.min.y, 0.01)
         let scale: Float = 4.0 / height
@@ -301,21 +261,10 @@ final class BattleSceneCoordinator {
 
         modelContainer.eulerAngles = SCNVector3(-Float.pi / 2, Float.pi / 2, 0)
 
-        // ✅ HP BAR RICHTIG PLATZIEREN
-        if isEnemy {
-            let hpNode = makeHPBarNode()
-
-            let topY = (bounds.max.y - bounds.min.y) * scale
-            hpNode.position = SCNVector3(0, topY * 0.8, 0)
-
-            // 🔥 WICHTIG: an modelContainer hängen
-            modelContainer.addChildNode(hpNode)
-        }
-
         let groundY = getGroundTopY()
 
         let yOffset: Float = 2
-        let xOffset: Float = 8
+        let xOffset: Float = 2
         let zOffset: Float = 5
 
         if isEnemy {
@@ -353,7 +302,7 @@ final class BattleSceneCoordinator {
         enemy: CharacterStats(
             name: "Enemy",
             image: "character1",
-            model: "warrior",
+            model: "warriorin",
             hp: 100,
             attack: 10
         ),

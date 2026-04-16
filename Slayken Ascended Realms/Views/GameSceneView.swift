@@ -1,6 +1,6 @@
 //
 //  GameSceneView.swift
-//  test
+//  Slayken Ascended Realms
 //
 
 import SceneKit
@@ -16,7 +16,7 @@ struct GameSceneView: UIViewRepresentable {
     func makeCoordinator() -> SceneCoordinator {
         SceneCoordinator(player: player)
     }
-    
+
     func makeUIView(context: Context) -> SCNView {
         let view = SCNView(frame: .zero)
         view.scene = context.coordinator.scene
@@ -25,11 +25,11 @@ struct GameSceneView: UIViewRepresentable {
         view.autoenablesDefaultLighting = false
         view.isPlaying = true
         view.preferredFramesPerSecond = 60
-        
+
         context.coordinator.start()
         return view
     }
-    
+
     func updateUIView(_ uiView: SCNView, context: Context) {
         context.coordinator.joystickVector = joystickVector
         context.coordinator.updateTextures(
@@ -44,51 +44,54 @@ final class SceneCoordinator {
     private let groundBaseDepth: CGFloat = 100
     private let groundThickness: CGFloat = 6
     private let player: CharacterStats
-    
+
     private let playerNode = SCNNode()
     private let playerVisualNode = SCNNode()
     private let cameraNode = SCNNode()
     private var groundNode: SCNNode?
     private var groundBox: SCNBox?
-    
+
     private var currentGroundTexture = TextureNames.ground
     private var currentSkyboxTexture = TextureNames.skybox
-    
+
     private var displayLink: CADisplayLink?
     private var lastUpdateTime: CFTimeInterval = 0
-    
+
     var joystickVector: SIMD2<Float> = .zero
 
     init(player: CharacterStats) {
         self.player = player
     }
-    
+
     func start() {
         guard displayLink == nil else { return }
-        
+
         setupScene()
-        
-        let link = CADisplayLink(target: self, selector: #selector(stepFrame(_:)))
+
+        let link = CADisplayLink(
+            target: self,
+            selector: #selector(stepFrame(_:))
+        )
         link.add(to: .main, forMode: .common)
         displayLink = link
     }
-    
+
     deinit {
         displayLink?.invalidate()
     }
-    
+
     private func setupScene() {
         guard scene.rootNode.childNodes.isEmpty else { return }
-        
+
         scene.rootNode.addChildNode(makeCamera())
         scene.rootNode.addChildNode(makeLights())
         scene.rootNode.addChildNode(makeGround())
         scene.rootNode.addChildNode(makePlayer())
-        
+
         scene.background.contents = UIImage(named: "sar_bg")
         scene.lightingEnvironment.contents = UIImage(named: "sar_bg")
     }
-    
+
     func updateTextures(ground: String, skybox: String) {
         currentGroundTexture = ground
         currentSkyboxTexture = skybox
@@ -96,9 +99,11 @@ final class SceneCoordinator {
         applyGroundTexture(named: currentGroundTexture)
 
         scene.background.contents = UIImage(named: currentSkyboxTexture)
-        scene.lightingEnvironment.contents = UIImage(named: currentSkyboxTexture)
+        scene.lightingEnvironment.contents = UIImage(
+            named: currentSkyboxTexture
+        )
     }
-    
+
     private func makeCamera() -> SCNNode {
         let camera = SCNCamera()
         camera.fieldOfView = 50
@@ -111,7 +116,7 @@ final class SceneCoordinator {
 
         return cameraNode
     }
-    
+
     private func makeGround() -> SCNNode {
         let box = SCNBox(
             width: groundBaseDepth,
@@ -133,7 +138,7 @@ final class SceneCoordinator {
 
         return node
     }
-    
+
     private var groundMaterials: [SCNMaterial] = []
 
     private func makeGroundMaterials() -> [SCNMaterial] {
@@ -203,19 +208,19 @@ final class SceneCoordinator {
             box.width = groundBaseDepth * aspectRatio
         }
     }
-    
+
     private func makeLights() -> SCNNode {
         let rig = SCNNode()
-        
+
         let ambient = SCNLight()
         ambient.type = .ambient
         ambient.intensity = 900
         ambient.color = UIColor(white: 0.9, alpha: 1)
-        
+
         let ambientNode = SCNNode()
         ambientNode.light = ambient
         rig.addChildNode(ambientNode)
-        
+
         let directional = SCNLight()
         directional.type = .directional
         directional.intensity = 1200
@@ -225,24 +230,24 @@ final class SceneCoordinator {
         directional.shadowRadius = 6
         directional.shadowSampleCount = 16
         directional.shadowColor = UIColor.black.withAlphaComponent(0.35)
-        
+
         let directionalNode = SCNNode()
         directionalNode.light = directional
         directionalNode.eulerAngles = SCNVector3(-0.8, 0.5, 0)
         rig.addChildNode(directionalNode)
-        
+
         return rig
     }
-    
+
     private var currentAnimation: String = ""
     private let playerHeightOffset: Float = 1
 
     private struct PlayerAnimation {
         let node: SCNNode
         let key: String
-        let animation: CAAnimation
+        let animation: SCNAnimation
     }
-    
+
     private func playAnimation(named name: String) {
         guard currentAnimation != name else { return }
         currentAnimation = name
@@ -250,15 +255,21 @@ final class SceneCoordinator {
         stopStoredAnimations()
 
         guard !animations.isEmpty else {
-            print("Character animation not found for: \(name). No animations loaded.")
+            print(
+                "Character animation not found for: \(name). No animations loaded."
+            )
             return
         }
 
         for entry in animations {
-            entry.node.addAnimation(entry.animation, forKey: entry.key)
+            let animationPlayer = SCNAnimationPlayer(animation: entry.animation)
+            entry.node.addAnimationPlayer(animationPlayer, forKey: entry.key)
+            animationPlayer.play()
         }
 
-        print("Character animation started: \(name), entries=\(animations.count)")
+        print(
+            "Character animation started: \(name), entries=\(animations.count)"
+        )
     }
 
     private func stopPlayerAnimation() {
@@ -270,18 +281,22 @@ final class SceneCoordinator {
 
     private func stopStoredAnimations() {
         for entry in animations {
-            entry.node.removeAnimation(forKey: entry.key, blendOutDuration: 0.15)
+            entry.node.removeAnimation(
+                forKey: entry.key,
+                blendOutDuration: 0.15
+            )
         }
         playerNode.removeAllAnimations()
         playerVisualNode.removeAllAnimations()
     }
-    
+
     private func getGroundTopY() -> Float {
         guard let ground = groundNode,
-              let box = ground.geometry as? SCNBox else { return 0 }
+            let box = ground.geometry as? SCNBox
+        else { return 0 }
         return ground.position.y + Float(box.height) * 0.5
     }
-    
+
     private func makePlayer() -> SCNNode {
         // 1. Model laden
         if let modelScene = SCNScene(named: "\(player.model).usdz") {
@@ -294,7 +309,6 @@ final class SceneCoordinator {
             fallback.firstMaterial?.diffuse.contents = UIColor.white
             playerVisualNode.geometry = fallback
         }
-
 
         // 2. Z-UP → Y-UP Rotation ZUERST!
 
@@ -314,21 +328,28 @@ final class SceneCoordinator {
         // 5. Skalierung (nach Pivot!)
         let height = max(bounds.max.y - bounds.min.y, 0.01)
         let scale = 10 / height
-        
+
         playerVisualNode.scale = SCNVector3(scale, scale, scale)
 
         // 6. In Parent einhängen
         playerNode.addChildNode(playerVisualNode)
 
         // 7. EXAKT auf Boden setzen
-        playerNode.position = SCNVector3(0, getGroundTopY() + playerHeightOffset, 0)
-      
+        playerNode.position = SCNVector3(
+            0,
+            getGroundTopY() + playerHeightOffset,
+            0
+        )
+
         loadAnimations()
 
         return playerNode
     }
 
-    private func applyCharacterTextureIfNeeded(_ textureName: String?, to rootNode: SCNNode) {
+    private func applyCharacterTextureIfNeeded(
+        _ textureName: String?,
+        to rootNode: SCNNode
+    ) {
         guard
             let textureName,
             !textureName.isEmpty,
@@ -339,7 +360,8 @@ final class SceneCoordinator {
             guard let geometry = node.geometry else { return }
 
             let copiedGeometry = geometry.copy() as? SCNGeometry ?? geometry
-            let copiedMaterials = copiedGeometry.materials.isEmpty
+            let copiedMaterials =
+                copiedGeometry.materials.isEmpty
                 ? [SCNMaterial()]
                 : copiedGeometry.materials.map { material in
                     material.copy() as? SCNMaterial ?? material
@@ -362,26 +384,26 @@ final class SceneCoordinator {
 
     private func loadTextureImage(named textureName: String) -> UIImage? {
         UIImage(named: textureName)
-        ?? UIImage(named: "\(textureName).jpg")
-        ?? UIImage(named: "\(textureName).png")
-        ?? UIImage(named: "3DModel/\(textureName).jpg")
-        ?? UIImage(named: "3DModel/\(textureName).png")
+            ?? UIImage(named: "\(textureName).jpg")
+            ?? UIImage(named: "\(textureName).png")
+            ?? UIImage(named: "3DModel/\(textureName).jpg")
+            ?? UIImage(named: "3DModel/\(textureName).png")
     }
-    
+
     @objc
     private func stepFrame(_ displayLink: CADisplayLink) {
         if lastUpdateTime == 0 {
             lastUpdateTime = displayLink.timestamp
             return
         }
-        
+
         let deltaTime = Float(displayLink.timestamp - lastUpdateTime)
         lastUpdateTime = displayLink.timestamp
-        
+
         updatePlayer(deltaTime: deltaTime)
         updateCamera(deltaTime: deltaTime)
     }
-    
+
     private func updatePlayer(deltaTime: Float) {
         let input = joystickVector
         let magnitude = simd_length(input)
@@ -406,7 +428,7 @@ final class SceneCoordinator {
         playerNode.simdPosition = newPosition
         playerNode.eulerAngles.y = atan2(direction.x, direction.z)
     }
-    
+
     private func loadAnimations() {
         animations.removeAll()
         print("Scanning character animations...")
@@ -415,14 +437,24 @@ final class SceneCoordinator {
             let nodeName = node.name ?? "unnamed node"
 
             for key in node.animationKeys {
-                if let anim = node.animation(forKey: key) {
-                    let animation = (anim.copy() as? CAAnimation) ?? anim
+                if let animationPlayer = node.animationPlayer(forKey: key) {
+                    let animation =
+                        (animationPlayer.animation.copy() as? SCNAnimation)
+                        ?? animationPlayer.animation
                     animation.repeatCount = .infinity
-                    animation.fadeInDuration = 0.2
-                    animation.fadeOutDuration = 0.2
-                    animations.append(PlayerAnimation(node: node, key: key, animation: animation))
+                    animation.blendInDuration = 0.2
+                    animation.blendOutDuration = 0.2
+                    animations.append(
+                        PlayerAnimation(
+                            node: node,
+                            key: key,
+                            animation: animation
+                        )
+                    )
                     node.removeAnimation(forKey: key)
-                    print("Found character animation: key=\(key), node=\(nodeName), duration=\(animation.duration)")
+                    print(
+                        "Found character animation: key=\(key), node=\(nodeName), duration=\(animation.duration)"
+                    )
                 }
             }
         }
@@ -434,29 +466,30 @@ final class SceneCoordinator {
             print("Character animations loaded: \(animationNames)")
         }
     }
-    
+
     private var animations: [PlayerAnimation] = []
-    
+
     private func clampToGroundBounds(_ position: simd_float3) -> simd_float3 {
         guard let ground = groundNode,
-              let box = ground.geometry as? SCNBox else {
+            let box = ground.geometry as? SCNBox
+        else {
             return position
         }
-        
+
         var pos = position
         let padding: Float = 2
-        
+
         let limitX = Float(box.width) * 0.5 - padding
         let limitZ = Float(box.length) * 0.5 - padding
-        
+
         pos.x = max(-limitX, min(limitX, pos.x))
         pos.z = max(-limitZ, min(limitZ, pos.z))
-        
+
         return pos
     }
-    
+
     private func updateCamera(deltaTime: Float) {
-        let offset = SCNVector3(0, 25, 45) // 🔥 Höhe + Abstand
+        let offset = SCNVector3(0, 25, 45)  // 🔥 Höhe + Abstand
 
         let targetPosition = SCNVector3(
             playerNode.position.x + offset.x,
@@ -467,17 +500,22 @@ final class SceneCoordinator {
         let strength = min(deltaTime * 3, 1)
 
         cameraNode.position = SCNVector3(
-            cameraNode.position.x + (targetPosition.x - cameraNode.position.x) * strength,
-            cameraNode.position.y + (targetPosition.y - cameraNode.position.y) * strength,
-            cameraNode.position.z + (targetPosition.z - cameraNode.position.z) * strength
+            cameraNode.position.x + (targetPosition.x - cameraNode.position.x)
+                * strength,
+            cameraNode.position.y + (targetPosition.y - cameraNode.position.y)
+                * strength,
+            cameraNode.position.z + (targetPosition.z - cameraNode.position.z)
+                * strength
         )
 
         // 🔥 immer auf Spieler schauen (leicht nach unten)
-        cameraNode.look(at: SCNVector3(
-            playerNode.position.x,
-            playerNode.position.y,
-            playerNode.position.z
-        ))
+        cameraNode.look(
+            at: SCNVector3(
+                playerNode.position.x,
+                playerNode.position.y,
+                playerNode.position.z
+            )
+        )
     }
 }
 

@@ -1,61 +1,48 @@
 //
 //  StartView.swift
-//  Slayken Ascended Realms
+//  Valtasia
 //
-//  Created by Tufan Cakir on 11.04.26.
+//  Created by Tufan Cakir on 06.03.26.
 //
 
 import SwiftUI
 
 struct StartView: View {
-
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
 
     let onStart: () -> Void
 
+    @State private var animate = false
+
     var body: some View {
         ZStack {
 
+            // MARK: BACKGROUND
             Image("warrior_bg")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
 
-            VStack(spacing: 20) {
+            VStack {
 
-                Text("Slayken")
-                    .font(.system(size: 40, weight: .black))
-                    .shadow(color: .black, radius: 5)
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [
-                                theme.selectedTheme?.primary.color ?? .blue,
-                                theme.selectedTheme?.secondary.color ?? .cyan,
-                            ],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                    )
+                // ⭐ LOGO
+                Image("ascended_logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 400)
+                    .scaleEffect(animate ? 1 : 0.8)
+                    .opacity(animate ? 1 : 0)
+                    .animation(.easeOut(duration: 0.8), value: animate)
 
-                Text("Ascended Realms")
-                    .font(.system(size: 40, weight: .black))
-                    .shadow(color: .black, radius: 5)
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [
-                                theme.selectedTheme?.primary.color ?? .blue,
-                                theme.selectedTheme?.secondary.color ?? .cyan,
-                            ],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                    )
             }
         }
         .contentShape(Rectangle())
         .onTapGesture {
             onStart()
+        }
+        .onAppear {
+            animate = true
         }
     }
 }

@@ -142,7 +142,7 @@ struct LoadingOverlayView: View {
                             .foregroundStyle(.white.opacity(0.9))
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 22)
                 .padding(.vertical, 24)
                 .background(
                     LinearGradient(
@@ -167,6 +167,8 @@ struct LoadingOverlayView: View {
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 18))
                 .shadow(color: .black.opacity(0.7), radius: 30, y: 12)
+                .frame(maxWidth: 420)
+                .padding(.horizontal, 24)
                 Spacer()
             }
         }

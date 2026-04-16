@@ -1,0 +1,8 @@
+{
+  "name": "Riven",
+  "image": "acsended_riven",
+  "model": "test2",
+  "texture": "result_texture_0001",
+  "hp": 100,
+  "attack": 20
+}

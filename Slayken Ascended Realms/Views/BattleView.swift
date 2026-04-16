@@ -29,6 +29,8 @@ struct BattleView: View {
     @State private var playerHit = false
     @State private var isAuto = false
     @State private var isFast = false
+    @State private var playerAttackID = 0
+    @State private var enemyAttackID = 0
 
     var body: some View {
         ZStack {
@@ -36,6 +38,8 @@ struct BattleView: View {
                 player: player,
                 enemy: enemy,
                 enemyHP: enemyHP,
+                playerAttackID: playerAttackID,
+                enemyAttackID: enemyAttackID,
                 groundTexture: gameState.selectedMap.mapImage,
                 skyboxTexture: gameState.selectedBackground.image
             )
@@ -299,6 +303,7 @@ struct BattleView: View {
     }
 
     func enemyAttack() {
+        enemyAttackID += 1
         enemyHit = true
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
@@ -326,6 +331,7 @@ struct BattleView: View {
 
         currentTurn = .enemy
 
+        playerAttackID += 1
         playerHit = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             playerHit = false
@@ -353,7 +359,7 @@ struct BattleView: View {
     let samplePlayer = CharacterStats(
         name: "Hero",
         image: "acsended_riven",
-        model: "warrior",
+        model: "test2",
         hp: 100,
         attack: 20
     )

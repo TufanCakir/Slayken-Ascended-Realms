@@ -13,6 +13,8 @@ struct BattleSceneView: UIViewRepresentable {
     let player: CharacterStats
     let enemy: CharacterStats
     let enemyHP: CGFloat
+    let playerAttackID: Int
+    let enemyAttackID: Int
     let groundTexture: String
     let skyboxTexture: String
 
@@ -43,6 +45,10 @@ struct BattleSceneView: UIViewRepresentable {
             skyboxTexture: skyboxTexture
         )
         context.coordinator.updateEnemyHP(enemyHP)
+        context.coordinator.updateAttackTriggers(
+            playerAttackID: playerAttackID,
+            enemyAttackID: enemyAttackID
+        )
     }
 }
 
@@ -62,6 +68,8 @@ final class BattleSceneCoordinator {
 
     private var groundBox: SCNBox?
     private var groundMaterials: [SCNMaterial] = []
+    private var lastPlayerAttackID = 0
+    private var lastEnemyAttackID = 0
 
     init(player: CharacterStats, enemy: CharacterStats) {
         self.playerStats = player
@@ -71,6 +79,22 @@ final class BattleSceneCoordinator {
     func updateEnemyHP(_ value: CGFloat) {
         let safe = max(0, min(1, value))
         enemyHPNode?.scale.x = Float(safe)
+    }
+
+    func updateAttackTriggers(playerAttackID: Int, enemyAttackID: Int) {
+        if playerAttackID != lastPlayerAttackID {
+            lastPlayerAttackID = playerAttackID
+            if playerAttackID > 0 {
+                playAttackAnimation(attacker: playerRootNode, defender: enemyRootNode)
+            }
+        }
+
+        if enemyAttackID != lastEnemyAttackID {
+            lastEnemyAttackID = enemyAttackID
+            if enemyAttackID > 0 {
+                playAttackAnimation(attacker: enemyRootNode, defender: playerRootNode)
+            }
+        }
     }
 
     func setupScene(groundTexture: String, skyboxTexture: String) {
@@ -101,7 +125,7 @@ final class BattleSceneCoordinator {
 
     private func makeCamera() -> SCNNode {
         let camera = SCNCamera()
-        camera.fieldOfView = 50
+        camera.fieldOfView = 100
 
         cameraNode.camera = camera
 
@@ -233,6 +257,87 @@ final class BattleSceneCoordinator {
         return groundNode.position.y + Float(ground.height) * 0.5
     }
 
+    private func playAttackAnimation(attacker: SCNNode, defender: SCNNode) {
+        attacker.removeAction(forKey: "attack")
+        defender.removeAction(forKey: "hit")
+
+        let start = attacker.position
+        let defenderPosition = defender.position
+        let direction = normalizedXZ(
+            SCNVector3(
+                defenderPosition.x - start.x,
+                0,
+                defenderPosition.z - start.z
+            )
+        )
+        let distanceToEnemy = sqrt(
+            pow(defenderPosition.x - start.x, 2) +
+            pow(defenderPosition.z - start.z, 2)
+        )
+
+        let lungeDistance = max(1.2, distanceToEnemy * 0.45)
+        let windupDistance: Float = 0.35
+
+        let windupPosition = SCNVector3(
+            start.x - direction.x * windupDistance,
+            start.y,
+            start.z - direction.z * windupDistance
+        )
+        let lungePosition = SCNVector3(
+            start.x + direction.x * lungeDistance,
+            start.y,
+            start.z + direction.z * lungeDistance
+        )
+
+        let windup = SCNAction.move(to: windupPosition, duration: 0.08)
+        windup.timingMode = .easeOut
+
+        let lunge = SCNAction.group([
+            SCNAction.move(to: lungePosition, duration: 0.12),
+            SCNAction.rotateBy(x: -0.18, y: 0, z: 0, duration: 0.12),
+        ])
+        lunge.timingMode = .easeIn
+
+        let recover = SCNAction.group([
+            SCNAction.move(to: start, duration: 0.18),
+            SCNAction.rotateBy(x: 0.18, y: 0, z: 0, duration: 0.18),
+        ])
+        recover.timingMode = .easeOut
+
+        attacker.runAction(
+            SCNAction.sequence([windup, lunge, SCNAction.wait(duration: 0.04), recover]),
+            forKey: "attack"
+        )
+
+        let hitDistance = max(0.25, distanceToEnemy * 0.05)
+        let hitBack = SCNAction.move(
+            by: SCNVector3(direction.x * hitDistance, 0, direction.z * hitDistance),
+            duration: 0.07
+        )
+        let returnBack = SCNAction.move(
+            by: SCNVector3(-direction.x * hitDistance, 0, -direction.z * hitDistance),
+            duration: 0.12
+        )
+
+        defender.runAction(
+            SCNAction.sequence([
+                SCNAction.wait(duration: 0.16),
+                hitBack,
+                returnBack,
+            ]),
+            forKey: "hit"
+        )
+    }
+
+    private func normalizedXZ(_ vector: SCNVector3) -> SCNVector3 {
+        let length = sqrt(vector.x * vector.x + vector.z * vector.z)
+        guard length > 0.001 else {
+            return SCNVector3(0, 0, -1)
+        }
+
+        return SCNVector3(vector.x / length, 0, vector.z / length)
+    }
+
     private func makeFighterNode(for stats: CharacterStats, isEnemy: Bool)
         -> SCNNode
     {
@@ -240,7 +345,7 @@ final class BattleSceneCoordinator {
         root.childNodes.forEach { $0.removeFromParentNode() }
 
         let modelContainer = SCNNode()
-        let modelNode = loadModel(named: stats.model)
+        let modelNode = loadModel(named: stats.model, textureName: stats.texture)
         modelContainer.addChildNode(modelNode)
         root.addChildNode(modelContainer)
 
@@ -265,7 +370,7 @@ final class BattleSceneCoordinator {
 
         let yOffset: Float = 2
         let xOffset: Float = 2
-        let zOffset: Float = 5
+        let zOffset: Float = 10
 
         if isEnemy {
             root.position = SCNVector3(-xOffset, groundY + yOffset, -zOffset)
@@ -278,7 +383,7 @@ final class BattleSceneCoordinator {
         return root
     }
 
-    private func loadModel(named modelName: String) -> SCNNode {
+    private func loadModel(named modelName: String, textureName: String?) -> SCNNode {
         let container = SCNNode()
 
         if let scene = SCNScene(named: "\(modelName).usdz")
@@ -287,6 +392,8 @@ final class BattleSceneCoordinator {
             for child in scene.rootNode.childNodes {
                 container.addChildNode(child.clone())
             }
+            removeModelAnimations(from: container)
+            applyCharacterTextureIfNeeded(textureName, to: container)
         } else {
             let fallback = SCNCapsule(capRadius: 1, height: 3)
             fallback.firstMaterial?.diffuse.contents = UIColor.systemGray
@@ -295,18 +402,70 @@ final class BattleSceneCoordinator {
 
         return container
     }
+
+    private func removeModelAnimations(from rootNode: SCNNode) {
+        rootNode.removeAllAnimations()
+        rootNode.enumerateChildNodes { node, _ in
+            for key in node.animationKeys {
+                node.removeAnimation(forKey: key)
+            }
+            node.removeAllAnimations()
+        }
+    }
+
+    private func applyCharacterTextureIfNeeded(_ textureName: String?, to rootNode: SCNNode) {
+        guard
+            let textureName,
+            !textureName.isEmpty,
+            let image = loadTextureImage(named: textureName)
+        else { return }
+
+        rootNode.enumerateChildNodes { node, _ in
+            guard let geometry = node.geometry else { return }
+
+            let copiedGeometry = geometry.copy() as? SCNGeometry ?? geometry
+            let copiedMaterials = copiedGeometry.materials.isEmpty
+                ? [SCNMaterial()]
+                : copiedGeometry.materials.map { material in
+                    material.copy() as? SCNMaterial ?? material
+                }
+
+            for material in copiedMaterials {
+                material.lightingModel = .physicallyBased
+                material.diffuse.contents = image
+                material.diffuse.wrapS = .repeat
+                material.diffuse.wrapT = .repeat
+                material.roughness.contents = 0.85
+                material.metalness.contents = 0.0
+                material.isDoubleSided = true
+            }
+
+            copiedGeometry.materials = copiedMaterials
+            node.geometry = copiedGeometry
+        }
+    }
+
+    private func loadTextureImage(named textureName: String) -> UIImage? {
+        UIImage(named: textureName)
+        ?? UIImage(named: "\(textureName).jpg")
+        ?? UIImage(named: "\(textureName).png")
+        ?? UIImage(named: "3DModel/\(textureName).jpg")
+        ?? UIImage(named: "3DModel/\(textureName).png")
+    }
 }
 #Preview {
     BattleSceneView(
-        player: loadPlayer(),
+        player: loadBattlePlayer(),
         enemy: CharacterStats(
             name: "Enemy",
-            image: "character1",
+            image: "1",
             model: "warriorin",
             hp: 100,
             attack: 10
         ),
         enemyHP: 0.72,
+        playerAttackID: 0,
+        enemyAttackID: 0,
         groundTexture: "sar_bg",
         skyboxTexture: "sar_bg"
     )

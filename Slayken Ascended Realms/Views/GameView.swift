@@ -35,6 +35,7 @@ struct GameView: View {
     @State private var currentStory: [StoryLine] = []
     @State private var joystickVector: SIMD2<Float> = .zero
     @State private var showSupport = false
+    private let player = loadGamePlayer()
     
     let onStartBattle: (CharacterStats) -> Void
 
@@ -50,6 +51,7 @@ struct GameView: View {
                 
                 // ✅ 3D FULLSCREEN
                 GameSceneView(
+                    player: player,
                     joystickVector: joystickVector,
                     groundTexture: gameState.selectedMap.mapImage,
                     skyboxTexture: gameState.selectedBackground.image

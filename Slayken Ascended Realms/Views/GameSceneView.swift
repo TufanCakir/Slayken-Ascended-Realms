@@ -8,12 +8,13 @@ import SwiftUI
 import UIKit
 
 struct GameSceneView: UIViewRepresentable {
+    let player: CharacterStats
     let joystickVector: SIMD2<Float>
     let groundTexture: String
     let skyboxTexture: String
 
     func makeCoordinator() -> SceneCoordinator {
-        SceneCoordinator()
+        SceneCoordinator(player: player)
     }
     
     func makeUIView(context: Context) -> SCNView {
@@ -42,6 +43,7 @@ final class SceneCoordinator {
     let scene = SCNScene()
     private let groundBaseDepth: CGFloat = 100
     private let groundThickness: CGFloat = 6
+    private let player: CharacterStats
     
     private let playerNode = SCNNode()
     private let playerVisualNode = SCNNode()
@@ -56,6 +58,10 @@ final class SceneCoordinator {
     private var lastUpdateTime: CFTimeInterval = 0
     
     var joystickVector: SIMD2<Float> = .zero
+
+    init(player: CharacterStats) {
+        self.player = player
+    }
     
     func start() {
         guard displayLink == nil else { return }
@@ -95,12 +101,13 @@ final class SceneCoordinator {
     
     private func makeCamera() -> SCNNode {
         let camera = SCNCamera()
-        camera.fieldOfView = 100   // 🔥 mehr Sichtfeld
+        camera.fieldOfView = 50
 
         cameraNode.camera = camera
 
-        // 🔥 deutlich weiter weg + höher
-        cameraNode.position = SCNVector3(0, 40, 60)
+        // 🔥 SIDE VIEW (leicht schräg von rechts)
+        cameraNode.position = SCNVector3(0, 5, 20)
+        cameraNode.look(at: SCNVector3(0, 0, 0))
 
         return cameraNode
     }
@@ -227,6 +234,48 @@ final class SceneCoordinator {
         return rig
     }
     
+    private var currentAnimation: String = ""
+    private let playerHeightOffset: Float = 1
+
+    private struct PlayerAnimation {
+        let node: SCNNode
+        let key: String
+        let animation: CAAnimation
+    }
+    
+    private func playAnimation(named name: String) {
+        guard currentAnimation != name else { return }
+        currentAnimation = name
+
+        stopStoredAnimations()
+
+        guard !animations.isEmpty else {
+            print("Character animation not found for: \(name). No animations loaded.")
+            return
+        }
+
+        for entry in animations {
+            entry.node.addAnimation(entry.animation, forKey: entry.key)
+        }
+
+        print("Character animation started: \(name), entries=\(animations.count)")
+    }
+
+    private func stopPlayerAnimation() {
+        guard !currentAnimation.isEmpty else { return }
+        currentAnimation = ""
+        stopStoredAnimations()
+        print("Character animations stopped")
+    }
+
+    private func stopStoredAnimations() {
+        for entry in animations {
+            entry.node.removeAnimation(forKey: entry.key, blendOutDuration: 0.15)
+        }
+        playerNode.removeAllAnimations()
+        playerVisualNode.removeAllAnimations()
+    }
+    
     private func getGroundTopY() -> Float {
         guard let ground = groundNode,
               let box = ground.geometry as? SCNBox else { return 0 }
@@ -234,40 +283,89 @@ final class SceneCoordinator {
     }
     
     private func makePlayer() -> SCNNode {
-        if let modelScene = SCNScene(named: "riven.usdz") {
+        // 1. Model laden
+        if let modelScene = SCNScene(named: "\(player.model).usdz") {
             for child in modelScene.rootNode.childNodes {
                 playerVisualNode.addChildNode(child.clone())
             }
+            applyCharacterTextureIfNeeded(player.texture, to: playerVisualNode)
         } else {
             let fallback = SCNSphere(radius: 1)
             fallback.firstMaterial?.diffuse.contents = UIColor.white
             playerVisualNode.geometry = fallback
         }
-        
+
+
+        // 2. Z-UP → Y-UP Rotation ZUERST!
+
+        // 3. Jetzt korrekte BoundingBox holen
         let bounds = playerVisualNode.boundingBox
+
+        // 4. Pivot auf Füße setzen (BOTTOM CENTER)
         let centerX = (bounds.min.x + bounds.max.x) * 0.5
         let centerZ = (bounds.min.z + bounds.max.z) * 0.5
-        playerVisualNode.pivot = SCNMatrix4MakeTranslation(centerX, bounds.min.y, centerZ)
-        
+
+        playerVisualNode.pivot = SCNMatrix4MakeTranslation(
+            centerX,
+            bounds.min.y,
+            centerZ
+        )
+
+        // 5. Skalierung (nach Pivot!)
         let height = max(bounds.max.y - bounds.min.y, 0.01)
-        let scale = 3.0 / height
-        playerVisualNode.scale = SCNVector3(scale, scale, scale)
+        let scale = 10 / height
         
-        // USDZ assets are often authored in Z-up space. Keep movement on the parent node
-        // and apply the orientation correction only to the visual node.
-        playerVisualNode.eulerAngles.x = -.pi / 2
+        playerVisualNode.scale = SCNVector3(scale, scale, scale)
+
+        // 6. In Parent einhängen
         playerNode.addChildNode(playerVisualNode)
-        alignPlayerToGround()
-        playerNode.position = SCNVector3(0, 0, 0)
+
+        // 7. EXAKT auf Boden setzen
+        playerNode.position = SCNVector3(0, getGroundTopY() + playerHeightOffset, 0)
+      
+        loadAnimations()
+
         return playerNode
     }
-    
-    private func alignPlayerToGround() {
-        let bounds = playerNode.boundingBox
-        let bottomOffset = bounds.min.y
-        
-        guard bottomOffset.isFinite else { return }
-        playerVisualNode.position.y -= bottomOffset
+
+    private func applyCharacterTextureIfNeeded(_ textureName: String?, to rootNode: SCNNode) {
+        guard
+            let textureName,
+            !textureName.isEmpty,
+            let image = loadTextureImage(named: textureName)
+        else { return }
+
+        rootNode.enumerateChildNodes { node, _ in
+            guard let geometry = node.geometry else { return }
+
+            let copiedGeometry = geometry.copy() as? SCNGeometry ?? geometry
+            let copiedMaterials = copiedGeometry.materials.isEmpty
+                ? [SCNMaterial()]
+                : copiedGeometry.materials.map { material in
+                    material.copy() as? SCNMaterial ?? material
+                }
+
+            for material in copiedMaterials {
+                material.lightingModel = .physicallyBased
+                material.diffuse.contents = image
+                material.diffuse.wrapS = .repeat
+                material.diffuse.wrapT = .repeat
+                material.roughness.contents = 0.85
+                material.metalness.contents = 0.0
+                material.isDoubleSided = true
+            }
+
+            copiedGeometry.materials = copiedMaterials
+            node.geometry = copiedGeometry
+        }
+    }
+
+    private func loadTextureImage(named textureName: String) -> UIImage? {
+        UIImage(named: textureName)
+        ?? UIImage(named: "\(textureName).jpg")
+        ?? UIImage(named: "\(textureName).png")
+        ?? UIImage(named: "3DModel/\(textureName).jpg")
+        ?? UIImage(named: "3DModel/\(textureName).png")
     }
     
     @objc
@@ -287,25 +385,57 @@ final class SceneCoordinator {
     private func updatePlayer(deltaTime: Float) {
         let input = joystickVector
         let magnitude = simd_length(input)
+
+        if magnitude > 0.1 {
+            playAnimation(named: "move")
+        } else {
+            stopPlayerAnimation()
+        }
+
         guard magnitude > 0.08 else { return }
-        
+
         let direction = simd_normalize(simd_float3(input.x, 0, -input.y))
-        
-        // ✅ EINMAL sauber berechnen
-        let speed: Float = 15
+
+        let speed: Float = 25
         let distance = min(magnitude, 1) * speed * deltaTime
-        
+
         var newPosition = playerNode.simdPosition + direction * distance
-        
-        // ✅ Bodenhöhe
-        newPosition.y = getGroundTopY()
-        
-        // ✅ Grenzen (jetzt richtig genutzt)
+        newPosition.y = getGroundTopY() + playerHeightOffset
         newPosition = clampToGroundBounds(newPosition)
-        
+
         playerNode.simdPosition = newPosition
         playerNode.eulerAngles.y = atan2(direction.x, direction.z)
     }
+    
+    private func loadAnimations() {
+        animations.removeAll()
+        print("Scanning character animations...")
+
+        playerVisualNode.enumerateChildNodes { node, _ in
+            let nodeName = node.name ?? "unnamed node"
+
+            for key in node.animationKeys {
+                if let anim = node.animation(forKey: key) {
+                    let animation = (anim.copy() as? CAAnimation) ?? anim
+                    animation.repeatCount = .infinity
+                    animation.fadeInDuration = 0.2
+                    animation.fadeOutDuration = 0.2
+                    animations.append(PlayerAnimation(node: node, key: key, animation: animation))
+                    node.removeAnimation(forKey: key)
+                    print("Found character animation: key=\(key), node=\(nodeName), duration=\(animation.duration)")
+                }
+            }
+        }
+
+        if animations.isEmpty {
+            print("No character animations found")
+        } else {
+            let animationNames = animations.map(\.key).sorted()
+            print("Character animations loaded: \(animationNames)")
+        }
+    }
+    
+    private var animations: [PlayerAnimation] = []
     
     private func clampToGroundBounds(_ position: simd_float3) -> simd_float3 {
         guard let ground = groundNode,
@@ -357,10 +487,10 @@ private enum TextureNames {
 }
 #Preview {
     GameSceneView(
+        player: loadGamePlayer(),
         joystickVector: .zero,
         groundTexture: TextureNames.ground,
         skyboxTexture: TextureNames.skybox
     )
     .ignoresSafeArea()
 }
-

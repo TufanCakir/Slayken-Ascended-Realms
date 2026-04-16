@@ -2,6 +2,7 @@
   "name": "Riven",
   "image": "acsended_riven",
   "model": "warrior",
+  "texture": null,
   "hp": 100,
   "attack": 20
 }

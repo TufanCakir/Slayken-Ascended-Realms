@@ -41,7 +41,7 @@ final class GameState: ObservableObject {
     init() {
         print("🚀 GameState INIT")
 
-        let loadedPlayer = loadPlayer()
+        let loadedPlayer = loadBattlePlayer()
         let loadedMaps = loadMaps()
         let loadedBackgrounds = loadBackgrounds()
 

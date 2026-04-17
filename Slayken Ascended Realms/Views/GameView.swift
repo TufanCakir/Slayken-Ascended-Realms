@@ -35,7 +35,7 @@ struct GameView: View {
     @State private var currentStory: [StoryLine] = []
     @State private var joystickVector: SIMD2<Float> = .zero
     @State private var showSupport = false
-    private let player = loadGamePlayer()
+    @State private var selectedTab: GameTab = .game
     
     let onStartBattle: (CharacterStats) -> Void
 
@@ -49,13 +49,15 @@ struct GameView: View {
             
             ZStack {
                 
+                
                 // ✅ 3D FULLSCREEN
                 GameSceneView(
-                    player: player,
+                    player: gameState.player,
                     joystickVector: joystickVector,
                     groundTexture: gameState.selectedMap.mapImage,
                     skyboxTexture: gameState.selectedBackground.image
                 )
+                .id(gameState.player.model)
                 .ignoresSafeArea()
                 
                 
@@ -78,60 +80,51 @@ struct GameView: View {
                     .zIndex(30)
                 }
 
-                VStack {
+                VStack(spacing: 0) {
+                    GameHeaderView(
+                        onBackground: {
+                            activeSelectionSheet = .background
+                        },
+                        onMap: {
+                            activeSelectionSheet = .map
+                        },
+                        onTheme: {
+                            activeSelectionSheet = .theme
+                        },
+                        onSupport: {
+                            showSupport = true
+                        }
+                    )
+
                     Spacer()
 
-                    JoystickView(vector: $joystickVector)
-                        .padding(.bottom, 12)
+                    // 🎮 TAB CONTENT
+                    Group {
+                        switch selectedTab {
+                        case .game:
+                            VStack {
 
-                    ZStack {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            LazyHGrid(rows: rows, spacing: 16) {
-                                ForEach(gameState.maps) { map in
-                                    levelButton(map: map)
-                                }
+                                JoystickView(vector: $joystickVector)
+                                    .padding(.bottom, 12)
+
+                                mapScrollSection(geo: geo)
                             }
-                            .padding()
+
+                        case .map:
+                            MapSelectView {
+                                selectedTab = .game
+                            }
+                            .environmentObject(gameState)
+
+                        case .character:
+                            CharacterSelectView()
                         }
                     }
-                    .frame(height: geo.size.height * 0.25)
-                    .background(.ultraThinMaterial)
+
+                    // 🔻 FOOTER IMMER UNTEN
+                    GameFooterView(selectedTab: $selectedTab)
+                
                 }
-                .overlay(alignment: .topTrailing) {
-                        HStack(spacing: 12) {
-                            Button {
-                                activeSelectionSheet = .background
-                            } label: {
-                                Image(systemName: "photo")
-                            }
-
-                            Button {
-                                activeSelectionSheet = .map
-                            } label: {
-                                Image(systemName: "map")
-                            }
-
-                            Button {
-                                activeSelectionSheet = .theme
-                            } label: {
-                                Image(systemName: "paintbrush")
-                            }
-
-                            // 🆘 Support Button
-                            Button {
-                                showSupport = true
-                            } label: {
-                                Image(systemName: "questionmark.circle")
-                            }
-                        }
-                        .font(.headline)
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 10)
-                        .background(.black.opacity(0.35), in: Capsule())
-                        .padding(.top, 12)
-                        .padding(.trailing, 16)
-                    }
             }
             .sheet(item: $activeSelectionSheet) { selection in
                 switch selection {
@@ -160,6 +153,20 @@ struct GameView: View {
         }
     }
     
+    private func mapScrollSection(geo: GeometryProxy) -> some View {
+        ZStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHGrid(rows: rows, spacing: 16) {
+                    ForEach(gameState.maps) { map in
+                        levelButton(map: map)
+                    }
+                }
+                .padding()
+            }
+        }
+        .frame(height: geo.size.height * 0.25)
+        .background(.ultraThinMaterial)
+    }
 
     private func levelButton(map: GameMap) -> some View {
         Button {

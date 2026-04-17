@@ -407,21 +407,26 @@ final class BattleSceneCoordinator {
     {
         let container = SCNNode()
 
-        if let scene = SCNScene(named: "\(modelName).usdz")
-            ?? SCNScene(named: "\(modelName).scn")
-        {
+        if let scene = loadModelScene(named: modelName) {
             for child in scene.rootNode.childNodes {
                 container.addChildNode(child.clone())
             }
             removeModelAnimations(from: container)
             applyCharacterTextureIfNeeded(textureName, to: container)
         } else {
-            let fallback = SCNCapsule(capRadius: 1, height: 3)
-            fallback.firstMaterial?.diffuse.contents = UIColor.systemGray
-            container.geometry = fallback
+            print("3D fighter model not found: \(modelName)")
         }
 
         return container
+    }
+
+    private func loadModelScene(named modelName: String) -> SCNScene? {
+        SCNScene(named: "\(modelName).usdz")
+            ?? SCNScene(named: "3DModel/\(modelName).usdz")
+            ?? SCNScene(named: "3DModelleAnimation/\(modelName).usdz")
+            ?? SCNScene(named: "\(modelName).scn")
+            ?? SCNScene(named: "3DModel/\(modelName).scn")
+            ?? SCNScene(named: "3DModelleAnimation/\(modelName).scn")
     }
 
     private func removeModelAnimations(from rootNode: SCNNode) {

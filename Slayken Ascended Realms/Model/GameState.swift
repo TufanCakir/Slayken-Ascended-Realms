@@ -10,8 +10,21 @@ import SwiftUI
 
 final class GameState: ObservableObject {
     @Published var player: CharacterStats
+    @Published var availableCharacters: [CharacterStats]
     @Published var maps: [GameMap]
     @Published var backgrounds: [GameBackground]
+
+    var battlePlayer: CharacterStats {
+        CharacterStats(
+            name: player.name,
+            image: player.image,
+            model: player.battleModel ?? player.model,
+            battleModel: player.battleModel,
+            texture: player.texture,
+            hp: player.hp,
+            attack: player.attack
+        )
+    }
 
     @Published var selectedMap: GameMap {
         didSet {
@@ -37,11 +50,13 @@ final class GameState: ObservableObject {
 
     private let mapKey = "selectedMapID"
     private let bgKey = "selectedBackgroundID"
+    private let characterKey = "selectedCharacterModel"
 
     init() {
         print("🚀 GameState INIT")
 
-        let loadedPlayer = loadBattlePlayer()
+        let loadedCharacters = Self.loadAvailableCharacters()
+        let loadedPlayer = loadedCharacters.first ?? loadBattlePlayer()
         let loadedMaps = loadMaps()
         let loadedBackgrounds = loadBackgrounds()
 
@@ -72,6 +87,7 @@ final class GameState: ObservableObject {
             ?? GameBackground(id: 0, name: "Default", image: "country")
 
         self.player = loadedPlayer
+        self.availableCharacters = loadedCharacters
         self.maps = loadedMaps
         self.backgrounds = loadedBackgrounds
         self.selectedMap = defaultMap
@@ -116,6 +132,19 @@ final class GameState: ObservableObject {
         } else {
             print("⚠️ kein gespeicherter BG")
         }
+
+        if let savedCharacterModel = UserDefaults.standard.string(forKey: characterKey) {
+            print("🔎 gespeicherter Character:", savedCharacterModel)
+
+            if let character = availableCharacters.first(where: { $0.model == savedCharacterModel }) {
+                player = character
+                print("✅ Character geladen:", character.name)
+            } else {
+                print("❌ Character nicht gefunden!")
+            }
+        } else {
+            print("⚠️ kein gespeicherter Character")
+        }
     }
 
     func saveMap(_ map: GameMap) {
@@ -134,5 +163,30 @@ final class GameState: ObservableObject {
         UserDefaults.standard.set(background.id, forKey: bgKey)
 
         print("💾 gespeichert unter ID:", background.id)
+    }
+
+    func saveCharacter(_ character: CharacterStats) {
+        print("💾 SAVE CHARACTER →", character.name, character.model)
+
+        player = character
+        UserDefaults.standard.set(character.model, forKey: characterKey)
+
+        print("💾 gespeichert unter Model:", character.model)
+    }
+
+    private static func loadAvailableCharacters() -> [CharacterStats] {
+        loadGamePlayers().map { character in
+            character.withBattleModel(
+                character.battleModel ?? makeBattleModelName(from: character.model)
+            )
+        }
+    }
+
+    private static func makeBattleModelName(from modelName: String) -> String {
+        if modelName.hasSuffix("_animation") {
+            return String(modelName.dropLast("_animation".count))
+        }
+
+        return modelName
     }
 }

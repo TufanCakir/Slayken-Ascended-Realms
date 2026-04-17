@@ -1,8 +1,18 @@
-{
-    "name": "Riven",
-    "image": "acsended_riven",
-    "model": "warriorin_animation",
-    "texture": "warrior_textur_original",
-    "hp": 100,
-    "attack": 20
-}
+[
+    {
+        "name": "Zaron",
+        "image": "1",
+        "model": "zaron_animation",
+        "texture": "warrior_textur_original",
+        "hp": 100,
+        "attack": 20
+    },
+    {
+        "name": "Shela",
+        "image": "2",
+        "model": "warriorin",
+        "texture": null,
+        "hp": 100,
+        "attack": 20
+    }
+]

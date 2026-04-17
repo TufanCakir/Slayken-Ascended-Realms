@@ -299,15 +299,13 @@ final class SceneCoordinator {
 
     private func makePlayer() -> SCNNode {
         // 1. Model laden
-        if let modelScene = SCNScene(named: "\(player.model).usdz") {
+        if let modelScene = loadModelScene(named: player.model) {
             for child in modelScene.rootNode.childNodes {
                 playerVisualNode.addChildNode(child.clone())
             }
             applyCharacterTextureIfNeeded(player.texture, to: playerVisualNode)
         } else {
-            let fallback = SCNSphere(radius: 1)
-            fallback.firstMaterial?.diffuse.contents = UIColor.white
-            playerVisualNode.geometry = fallback
+            print("3D character model not found: \(player.model)")
         }
 
         // 2. Z-UP → Y-UP Rotation ZUERST!
@@ -344,6 +342,15 @@ final class SceneCoordinator {
         loadAnimations()
 
         return playerNode
+    }
+
+    private func loadModelScene(named modelName: String) -> SCNScene? {
+        SCNScene(named: "\(modelName).usdz")
+            ?? SCNScene(named: "3DModel/\(modelName).usdz")
+            ?? SCNScene(named: "3DModelleAnimation/\(modelName).usdz")
+            ?? SCNScene(named: "\(modelName).scn")
+            ?? SCNScene(named: "3DModel/\(modelName).scn")
+            ?? SCNScene(named: "3DModelleAnimation/\(modelName).scn")
     }
 
     private func applyCharacterTextureIfNeeded(
@@ -416,17 +423,27 @@ final class SceneCoordinator {
 
         guard magnitude > 0.08 else { return }
 
-        let direction = simd_normalize(simd_float3(input.x, 0, -input.y))
+        let cameraRight = groundDirection(from: cameraNode.simdWorldRight)
+        let cameraForward = groundDirection(from: cameraNode.simdWorldFront)
+        let movementVector = (cameraRight * input.x) + (cameraForward * input.y)
+        let movementDirection = simd_normalize(movementVector)
 
         let speed: Float = 25
         let distance = min(magnitude, 1) * speed * deltaTime
 
-        var newPosition = playerNode.simdPosition + direction * distance
+        var newPosition = playerNode.simdPosition + movementDirection * distance
         newPosition.y = getGroundTopY() + playerHeightOffset
         newPosition = clampToGroundBounds(newPosition)
 
         playerNode.simdPosition = newPosition
-        playerNode.eulerAngles.y = atan2(direction.x, direction.z)
+        playerNode.eulerAngles.y = atan2(movementDirection.x, movementDirection.z) - Float.pi / 2
+    }
+
+    private func groundDirection(from vector: simd_float3) -> simd_float3 {
+        let flatVector = simd_float3(vector.x, 0, vector.z)
+        let length = simd_length(flatVector)
+        guard length > 0.001 else { return simd_float3(0, 0, -1) }
+        return flatVector / length
     }
 
     private func loadAnimations() {

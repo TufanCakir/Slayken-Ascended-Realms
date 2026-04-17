@@ -40,7 +40,7 @@ struct RootView: View {
             case .battle:
                 if let activeEnemy {
                     BattleView(
-                        player: gameState.player,
+                        player: gameState.battlePlayer,
                         enemy: activeEnemy,
                         onExit: {
                             transition(to: .game)

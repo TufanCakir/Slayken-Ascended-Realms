@@ -36,7 +36,7 @@ struct GameView: View {
     @State private var joystickVector: SIMD2<Float> = .zero
     @State private var showSupport = false
     @State private var selectedTab: GameTab = .game
-    
+
     let onStartBattle: (CharacterStats) -> Void
 
     let rows = [
@@ -46,10 +46,9 @@ struct GameView: View {
 
     var body: some View {
         GeometryReader { geo in
-            
+
             ZStack {
-                
-                
+
                 // ✅ 3D FULLSCREEN
                 GameSceneView(
                     player: gameState.player,
@@ -59,8 +58,7 @@ struct GameView: View {
                 )
                 .id(gameState.player.model)
                 .ignoresSafeArea()
-                
-                
+
                 if showStory {
                     StoryView(story: currentStory) {
                         withAnimation {
@@ -118,12 +116,14 @@ struct GameView: View {
 
                         case .character:
                             CharacterSelectView()
+                        case .support:
+                            SupportView()
                         }
                     }
 
                     // 🔻 FOOTER IMMER UNTEN
                     GameFooterView(selectedTab: $selectedTab)
-                
+
                 }
             }
             .sheet(item: $activeSelectionSheet) { selection in
@@ -152,7 +152,7 @@ struct GameView: View {
             }
         }
     }
-    
+
     private func mapScrollSection(geo: GeometryProxy) -> some View {
         ZStack {
             ScrollView(.horizontal, showsIndicators: false) {

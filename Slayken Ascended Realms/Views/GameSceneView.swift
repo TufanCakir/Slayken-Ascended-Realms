@@ -255,9 +255,6 @@ final class SceneCoordinator {
         stopStoredAnimations()
 
         guard !animations.isEmpty else {
-            print(
-                "Character animation not found for: \(name). No animations loaded."
-            )
             return
         }
 
@@ -266,17 +263,12 @@ final class SceneCoordinator {
             entry.node.addAnimationPlayer(animationPlayer, forKey: entry.key)
             animationPlayer.play()
         }
-
-        print(
-            "Character animation started: \(name), entries=\(animations.count)"
-        )
     }
 
     private func stopPlayerAnimation() {
         guard !currentAnimation.isEmpty else { return }
         currentAnimation = ""
         stopStoredAnimations()
-        print("Character animations stopped")
     }
 
     private func stopStoredAnimations() {
@@ -304,8 +296,6 @@ final class SceneCoordinator {
                 playerVisualNode.addChildNode(child.clone())
             }
             applyCharacterTextureIfNeeded(player.texture, to: playerVisualNode)
-        } else {
-            print("3D character model not found: \(player.model)")
         }
 
         // 2. Z-UP → Y-UP Rotation ZUERST!
@@ -436,7 +426,8 @@ final class SceneCoordinator {
         newPosition = clampToGroundBounds(newPosition)
 
         playerNode.simdPosition = newPosition
-        playerNode.eulerAngles.y = atan2(movementDirection.x, movementDirection.z) - Float.pi / 2
+        playerNode.eulerAngles.y =
+            atan2(movementDirection.x, movementDirection.z) - Float.pi / 2
     }
 
     private func groundDirection(from vector: simd_float3) -> simd_float3 {
@@ -448,11 +439,8 @@ final class SceneCoordinator {
 
     private func loadAnimations() {
         animations.removeAll()
-        print("Scanning character animations...")
 
         playerVisualNode.enumerateChildNodes { node, _ in
-            let nodeName = node.name ?? "unnamed node"
-
             for key in node.animationKeys {
                 if let animationPlayer = node.animationPlayer(forKey: key) {
                     let animation =
@@ -469,18 +457,8 @@ final class SceneCoordinator {
                         )
                     )
                     node.removeAnimation(forKey: key)
-                    print(
-                        "Found character animation: key=\(key), node=\(nodeName), duration=\(animation.duration)"
-                    )
                 }
             }
-        }
-
-        if animations.isEmpty {
-            print("No character animations found")
-        } else {
-            let animationNames = animations.map(\.key).sorted()
-            print("Character animations loaded: \(animationNames)")
         }
     }
 

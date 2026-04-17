@@ -35,7 +35,11 @@ struct JoystickView: View {
                     let center = CGPoint(x: size / 2, y: size / 2)
                     let dx = value.location.x - center.x
                     let dy = value.location.y - center.y
-                    let normalized = normalizedVector(dx: dx, dy: dy, maxRadius: radius)
+                    let normalized = normalizedVector(
+                        dx: dx,
+                        dy: dy,
+                        maxRadius: radius
+                    )
                     vector = SIMD2(Float(normalized.x), Float(-normalized.y))
                 }
                 .onEnded { _ in
@@ -59,7 +63,9 @@ struct JoystickView: View {
         }
     }
 
-    private func normalizedVector(dx: CGFloat, dy: CGFloat, maxRadius: CGFloat) -> CGPoint {
+    private func normalizedVector(dx: CGFloat, dy: CGFloat, maxRadius: CGFloat)
+        -> CGPoint
+    {
         let distance = sqrt((dx * dx) + (dy * dy))
         guard distance > 0 else { return .zero }
 

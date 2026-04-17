@@ -9,4 +9,5 @@ enum GameTab {
     case game
     case map
     case character
+    case support
 }

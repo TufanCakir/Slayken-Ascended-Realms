@@ -32,7 +32,6 @@ final class ThemeManager: ObservableObject {
                 from: data
             )
         else {
-            print("❌ themes.json failed")
             return
         }
 

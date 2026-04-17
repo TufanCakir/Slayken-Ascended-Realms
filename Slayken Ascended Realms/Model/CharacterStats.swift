@@ -68,7 +68,10 @@ func loadPlayer() -> CharacterStats {
 
 private func loadCharacters(named resourceName: String) -> [CharacterStats] {
     guard
-        let url = Bundle.main.url(forResource: resourceName, withExtension: "json"),
+        let url = Bundle.main.url(
+            forResource: resourceName,
+            withExtension: "json"
+        ),
         let data = try? Data(contentsOf: url)
     else {
         return []
@@ -84,7 +87,6 @@ private func loadCharacters(named resourceName: String) -> [CharacterStats] {
         return [player]
     }
 
-    print("Character JSON konnte nicht geladen werden: \(resourceName).json")
     return []
 }
 
@@ -97,5 +99,3 @@ private func defaultPlayer() -> CharacterStats {
         attack: 10
     )
 }
-
-

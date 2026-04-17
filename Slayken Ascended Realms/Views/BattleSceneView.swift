@@ -413,8 +413,6 @@ final class BattleSceneCoordinator {
             }
             removeModelAnimations(from: container)
             applyCharacterTextureIfNeeded(textureName, to: container)
-        } else {
-            print("3D fighter model not found: \(modelName)")
         }
 
         return container

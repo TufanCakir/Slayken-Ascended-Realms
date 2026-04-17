@@ -29,10 +29,26 @@ struct GameHeaderView: View {
         self.onTheme = onTheme
         self.onSupport = onSupport
         self.actions = [
-            HeaderActionItem(id: .background, imageName: "background", fallbackSystemName: "photo"),
-            HeaderActionItem(id: .map, imageName: "map", fallbackSystemName: "map"),
-            HeaderActionItem(id: .theme, imageName: "theme", fallbackSystemName: "paintbrush"),
-            HeaderActionItem(id: .support, imageName: "support", fallbackSystemName: "questionmark.circle"),
+            HeaderActionItem(
+                id: .background,
+                imageName: "background",
+                fallbackSystemName: "photo"
+            ),
+            HeaderActionItem(
+                id: .map,
+                imageName: "map",
+                fallbackSystemName: "map"
+            ),
+            HeaderActionItem(
+                id: .theme,
+                imageName: "theme",
+                fallbackSystemName: "paintbrush"
+            ),
+            HeaderActionItem(
+                id: .support,
+                imageName: "support",
+                fallbackSystemName: "questionmark.circle"
+            ),
         ]
     }
 
@@ -51,7 +67,9 @@ struct GameHeaderView: View {
             .clipped()
             .background(
                 Color.white.opacity(isExpanded ? 0.92 : 0)
-                    .background(isExpanded ? .ultraThinMaterial : .regularMaterial)
+                    .background(
+                        isExpanded ? .ultraThinMaterial : .regularMaterial
+                    )
             )
             .clipShape(Capsule())
             .shadow(
@@ -60,7 +78,10 @@ struct GameHeaderView: View {
                 y: 3
             )
             .opacity(isExpanded ? 1 : 0)
-            .animation(.spring(response: 0.36, dampingFraction: 0.84), value: isExpanded)
+            .animation(
+                .spring(response: 0.36, dampingFraction: 0.84),
+                value: isExpanded
+            )
 
             Button {
                 withAnimation(.spring(response: 0.36, dampingFraction: 0.84)) {

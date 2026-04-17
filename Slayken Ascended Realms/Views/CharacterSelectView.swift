@@ -30,12 +30,16 @@ struct CharacterSelectView: View {
                     gameState.saveCharacter(selectedCharacter)
                     didSave = true
                 } label: {
-                    Label(didSave ? "Gespeichert" : "Speichern", systemImage: didSave ? "checkmark.circle.fill" : "square.and.arrow.down")
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 10)
-                        .background(saveButtonColor, in: Capsule())
+                    Label(
+                        didSave ? "Gespeichert" : "Speichern",
+                        systemImage: didSave
+                            ? "checkmark.circle.fill" : "square.and.arrow.down"
+                    )
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 10)
+                    .background(saveButtonColor, in: Capsule())
                 }
                 .disabled(selectedCharacter == nil)
             }
@@ -86,7 +90,9 @@ struct CharacterSelectView: View {
             VStack(alignment: .leading, spacing: 10) {
                 characterIcon(character)
                     .frame(width: 180, height: 190)
-                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    .clipShape(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    )
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(character.name)
@@ -97,7 +103,10 @@ struct CharacterSelectView: View {
 
                     HStack(spacing: 10) {
                         statLabel(icon: "heart.fill", value: Int(character.hp))
-                        statLabel(icon: "bolt.fill", value: Int(character.attack))
+                        statLabel(
+                            icon: "bolt.fill",
+                            value: Int(character.attack)
+                        )
                     }
                 }
             }
@@ -106,7 +115,10 @@ struct CharacterSelectView: View {
             .background(Color.black.opacity(isSelected ? 0.72 : 0.46))
             .overlay {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .stroke(isSelected ? accent : .white.opacity(0.22), lineWidth: isSelected ? 3 : 1)
+                    .stroke(
+                        isSelected ? accent : .white.opacity(0.22),
+                        lineWidth: isSelected ? 3 : 1
+                    )
             }
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
@@ -138,7 +150,6 @@ struct CharacterSelectView: View {
         }
     }
 }
-
 
 #Preview {
     CharacterSelectView()

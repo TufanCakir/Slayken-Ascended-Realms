@@ -5,6 +5,7 @@
 //  Created by Tufan Cakir on 10.04.26.
 //
 
+import SwiftData
 import SwiftUI
 
 enum Turn {
@@ -15,6 +16,7 @@ enum Turn {
 struct BattleView: View {
     @EnvironmentObject var theme: ThemeManager
     @EnvironmentObject var gameState: GameState
+    @Environment(\.modelContext) private var modelContext
 
     let player: CharacterStats
     let enemy: CharacterStats
@@ -31,6 +33,7 @@ struct BattleView: View {
     @State private var isFast = false
     @State private var playerAttackID = 0
     @State private var enemyAttackID = 0
+    @State private var didAwardRewards = false
 
     var body: some View {
         ZStack {
@@ -40,8 +43,8 @@ struct BattleView: View {
                 enemyHP: enemyHP,
                 playerAttackID: playerAttackID,
                 enemyAttackID: enemyAttackID,
-                groundTexture: gameState.selectedMap.mapImage,
-                skyboxTexture: gameState.selectedBackground.image
+                groundTexture: gameState.activeGroundTexture,
+                skyboxTexture: gameState.activeSkyboxTexture
             )
             .ignoresSafeArea()
 
@@ -325,6 +328,15 @@ struct BattleView: View {
         }
     }
 
+    private func awardVictoryRewardsIfNeeded() {
+        guard !didAwardRewards else { return }
+        didAwardRewards = true
+        PlayerInventoryStore.add(gameState.activeBattleRewards, in: modelContext)
+        if let battleID = gameState.selectedBattle?.id {
+            PlayerInventoryStore.markBattleCompleted(battleID, in: modelContext)
+        }
+    }
+
     func attack() {
         guard currentTurn == .player else { return }
         guard !showVictory && !showDefeat else { return }
@@ -344,6 +356,7 @@ struct BattleView: View {
 
         if enemyHP <= 0 {
             enemyHP = 0
+            awardVictoryRewardsIfNeeded()
             showVictory = true
             return
         }
@@ -357,16 +370,16 @@ struct BattleView: View {
 
 #Preview {
     let samplePlayer = CharacterStats(
-        name: "Hero",
-        image: "acsended_riven",
-        model: "test2",
+        name: "Zaron",
+        image: "",
+        model: "zaron",
         hp: 100,
         attack: 20
     )
     let sampleEnemy = CharacterStats(
-        name: "Goblin",
-        image: "sar_dragon",
-        model: "warrior",
+        name: "Shela",
+        image: "",
+        model: "shela",
         hp: 80,
         attack: 12
     )

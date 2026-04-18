@@ -17,18 +17,20 @@ struct GameFooterView: View {
             systemName: "house"
         ),
         FooterTabItem(
-            tab: .events,
-            systemName: "globe.europe.africa"
-        ),
-        FooterTabItem(tab: .map, systemName: "map"),
-        FooterTabItem(
             tab: .character,
             systemName: "person"
         ),
         FooterTabItem(
-            tab: .support,
-            systemName: "questionmark.circle"
+            tab: .summon,
+            systemName: "sparkles"
         ),
+        FooterTabItem(
+            tab: .events,
+            systemName: "globe.europe.africa"
+        ),
+    
+
+   
     ]
 
     private var tabsView: some View {
@@ -46,7 +48,7 @@ struct GameFooterView: View {
             tabsView
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
-                .frame(width: isExpanded ? 314 : 0, alignment: .trailing)
+                .frame(width: isExpanded ? 262 : 0, alignment: .trailing)
                 .clipped()
                 .background(
                     Color.white.opacity(isExpanded ? 0.92 : 0)
@@ -123,6 +125,8 @@ private struct FooterTabItem: Identifiable {
             return "Character"
         case .support:
             return "Support"
+        case .summon:
+            return "Summon"
         }
     }
 }

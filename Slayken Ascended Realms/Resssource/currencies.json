@@ -1,0 +1,16 @@
+[
+    {
+        "code": "coins",
+        "name": "Coins",
+        "icon": "circle.hexagongrid.fill",
+        "assetIcon": "icon_coins",
+        "sortOrder": 0
+    },
+    {
+        "code": "crystals",
+        "name": "Crystals",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "sortOrder": 1
+    }
+]

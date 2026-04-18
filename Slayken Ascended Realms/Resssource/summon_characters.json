@@ -1,0 +1,52 @@
+[
+    {
+        "id": "zaron",
+        "name": "Zaron",
+        "summonImage": "summon_zaron",
+        "model": "zaron_animation",
+        "battleModel": "zaron",
+        "texture": "warrior_textur_original",
+        "rarity": 5,
+        "hp": 120,
+        "attack": 55,
+        "skins": [
+            {
+                "id": "original",
+                "name": "Original",
+                "texture": "warrior_textur_original",
+                "summonImage": "summon_zaron"
+            },
+            {
+                "id": "ascended",
+                "name": "Ascended",
+                "texture": "zaron_skin_ascended",
+                "summonImage": "summon_zaron_ascended"
+            }
+        ]
+    },
+    {
+        "id": "shela",
+        "name": "Shela",
+        "summonImage": "summon_shela",
+        "model": "shela_animation",
+        "battleModel": "warriorin",
+        "texture": "shela_texture_original",
+        "rarity": 4,
+        "hp": 105,
+        "attack": 48,
+        "skins": [
+            {
+                "id": "original",
+                "name": "Original",
+                "texture": "shela_texture_original",
+                "summonImage": "summon_shela"
+            },
+            {
+                "id": "shadow",
+                "name": "Shadow",
+                "texture": "shela_skin_shadow",
+                "summonImage": "summon_shela_shadow"
+            }
+        ]
+    }
+]

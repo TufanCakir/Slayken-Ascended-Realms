@@ -13,6 +13,22 @@ final class GameState: ObservableObject {
     @Published var availableCharacters: [CharacterStats]
     @Published var maps: [GameMap]
     @Published var backgrounds: [GameBackground]
+    @Published var currencies: [CurrencyDefinition]
+    @Published var eventChapters: [GlobeEventChapter]
+    @Published var summonCharacters: [SummonCharacter]
+    @Published var summonBanners: [SummonBanner]
+    @Published var selectedBattle: GlobeBattle?
+    @Published var activeEventChapterID: String?
+    @Published var activeEventPointID: String?
+
+    var activeEventChapter: GlobeEventChapter? {
+        eventChapters.first { $0.id == activeEventChapterID } ?? eventChapters.first
+    }
+
+    var activeEventPoint: GlobeEventPoint? {
+        guard let activeEventChapter, let activeEventPointID else { return nil }
+        return activeEventChapter.points.first { $0.id == activeEventPointID }
+    }
 
     var battlePlayer: CharacterStats {
         CharacterStats(
@@ -29,6 +45,18 @@ final class GameState: ObservableObject {
     @Published var selectedMap: GameMap
     @Published var selectedBackground: GameBackground
 
+    var activeGroundTexture: String {
+        selectedBattle?.groundTexture ?? selectedMap.mapImage
+    }
+
+    var activeSkyboxTexture: String {
+        selectedBattle?.skyboxTexture ?? selectedBackground.image
+    }
+
+    var activeBattleRewards: [CurrencyAmount] {
+        selectedBattle?.rewards ?? []
+    }
+
     private let mapKey = "selectedMapID"
     private let bgKey = "selectedBackgroundID"
     private let characterKey = "selectedCharacterModel"
@@ -38,6 +66,10 @@ final class GameState: ObservableObject {
         let loadedPlayer = loadedCharacters.first ?? loadBattlePlayer()
         let loadedMaps = loadMaps()
         let loadedBackgrounds = loadBackgrounds()
+        let loadedCurrencies = loadCurrencyDefinitions()
+        let loadedEventChapters = loadGlobeEventChapters()
+        let loadedSummonCharacters = loadSummonCharacters()
+        let loadedSummonBanners = loadSummonBanners()
 
         let defaultMap =
             loadedMaps.first
@@ -63,6 +95,13 @@ final class GameState: ObservableObject {
         self.availableCharacters = loadedCharacters
         self.maps = loadedMaps
         self.backgrounds = loadedBackgrounds
+        self.currencies = loadedCurrencies
+        self.eventChapters = loadedEventChapters
+        self.summonCharacters = loadedSummonCharacters
+        self.summonBanners = loadedSummonBanners
+        self.selectedBattle = nil
+        self.activeEventChapterID = loadedEventChapters.first?.id
+        self.activeEventPointID = nil
         self.selectedMap = defaultMap
         self.selectedBackground = defaultBG
 
@@ -107,6 +146,41 @@ final class GameState: ObservableObject {
     func saveCharacter(_ character: CharacterStats) {
         player = character
         UserDefaults.standard.set(character.model, forKey: characterKey)
+    }
+
+    func saveSummonedCharacter(_ character: SummonCharacter, selectedSkinID: String? = nil) {
+        saveCharacter(character.stats(selectedSkinID: selectedSkinID))
+    }
+
+    func selectEventChapter(_ chapter: GlobeEventChapter) {
+        activeEventChapterID = chapter.id
+        activeEventPointID = nil
+    }
+
+    func selectEventPoint(_ point: GlobeEventPoint, in chapter: GlobeEventChapter) {
+        activeEventChapterID = chapter.id
+        activeEventPointID = point.id
+    }
+
+    func selectBattle(_ battle: GlobeBattle) {
+        selectedBattle = battle
+        if let location = eventLocation(for: battle.id) {
+            activeEventChapterID = location.chapter.id
+            activeEventPointID = location.point.id
+        }
+    }
+
+    func clearBattleSelection() {
+        selectedBattle = nil
+    }
+
+    private func eventLocation(for battleID: String) -> (chapter: GlobeEventChapter, point: GlobeEventPoint)? {
+        for chapter in eventChapters {
+            for point in chapter.points where point.battles.contains(where: { $0.id == battleID }) {
+                return (chapter, point)
+            }
+        }
+        return nil
     }
 
     private static func loadAvailableCharacters() -> [CharacterStats] {

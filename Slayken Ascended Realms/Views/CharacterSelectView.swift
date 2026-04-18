@@ -6,9 +6,19 @@
 import SwiftUI
 
 struct CharacterSelectView: View {
+    private enum Mode: String, CaseIterable, Identifiable {
+        case team = "Team"
+        case legacy = "Direct"
+
+        var id: String { rawValue }
+    }
+
+    var onClose: (() -> Void)? = nil
+
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
 
+    @State private var mode: Mode = .team
     @State private var selectedModel = ""
     @State private var didSave = false
 
@@ -17,6 +27,103 @@ struct CharacterSelectView: View {
     }
 
     var body: some View {
+        ZStack {
+            background
+
+            VStack(spacing: 0) {
+                header
+
+                Picker("Character Mode", selection: $mode) {
+                    ForEach(Mode.allCases) { mode in
+                        Text(mode.rawValue).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 18)
+                .padding(.bottom, 12)
+
+                ScrollView(.vertical, showsIndicators: true) {
+                    VStack(spacing: 14) {
+                        switch mode {
+                        case .team:
+                            TeamView(characters: gameState.summonCharacters)
+                        case .legacy:
+                            directCharacterSelection
+                        }
+                    }
+                    .padding(.horizontal, 14)
+                    .padding(.bottom, 28)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            if selectedModel.isEmpty {
+                selectedModel = gameState.player.model
+            }
+        }
+        .onChange(of: selectedModel) {
+            didSave = selectedModel == gameState.player.model
+        }
+        .onChange(of: gameState.player.model) {
+            didSave = selectedModel == gameState.player.model
+        }
+    }
+
+    private var header: some View {
+        VStack(spacing: 6) {
+            HStack {
+                if let onClose {
+                    Button(action: onClose) {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 14, weight: .black))
+                            .foregroundStyle(.white)
+                            .frame(width: 38, height: 38)
+                            .background(Color.black.opacity(0.48), in: Circle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Close Character")
+                } else {
+                    Color.clear.frame(width: 38, height: 38)
+                }
+
+                Spacer()
+
+                Text("Team")
+                    .font(.system(size: 28, weight: .light))
+                    .foregroundStyle(.white.opacity(0.94))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+
+                Spacer()
+
+                Color.clear.frame(width: 38, height: 38)
+            }
+            .padding(.horizontal, 16)
+
+            Rectangle()
+                .fill(.white.opacity(0.26))
+                .frame(height: 1)
+                .padding(.horizontal, 62)
+        }
+        .padding(.top, 58)
+        .padding(.bottom, 12)
+    }
+
+    private var background: some View {
+        LinearGradient(
+            colors: [
+                Color(red: 0.08, green: 0.10, blue: 0.12),
+                Color(red: 0.28, green: 0.33, blue: 0.34),
+                Color(red: 0.06, green: 0.08, blue: 0.10),
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        .ignoresSafeArea()
+    }
+
+    private var directCharacterSelection: some View {
         VStack(spacing: 14) {
             HStack {
                 Text("Character")
@@ -30,16 +137,12 @@ struct CharacterSelectView: View {
                     gameState.saveCharacter(selectedCharacter)
                     didSave = true
                 } label: {
-                    Label(
-                        didSave ? "Gespeichert" : "Speichern",
-                        systemImage: didSave
-                            ? "checkmark.circle.fill" : "square.and.arrow.down"
-                    )
-                    .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 10)
-                    .background(saveButtonColor, in: Capsule())
+                    Label(didSave ? "Gespeichert" : "Speichern", systemImage: didSave ? "checkmark.circle.fill" : "square.and.arrow.down")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(saveButtonColor, in: Capsule())
                 }
                 .disabled(selectedCharacter == nil)
             }
@@ -57,19 +160,8 @@ struct CharacterSelectView: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .background(.black.opacity(0.48))
-        .background(.ultraThinMaterial)
-        .onAppear {
-            if selectedModel.isEmpty {
-                selectedModel = gameState.player.model
-            }
-        }
-        .onChange(of: selectedModel) {
-            didSave = selectedModel == gameState.player.model
-        }
-        .onChange(of: gameState.player.model) {
-            didSave = selectedModel == gameState.player.model
-        }
+        .background(.black.opacity(0.28))
+        .background(.ultraThinMaterial.opacity(0.45))
     }
 
     private var saveButtonColor: Color {
@@ -90,9 +182,7 @@ struct CharacterSelectView: View {
             VStack(alignment: .leading, spacing: 10) {
                 characterIcon(character)
                     .frame(width: 180, height: 190)
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(character.name)
@@ -103,10 +193,7 @@ struct CharacterSelectView: View {
 
                     HStack(spacing: 10) {
                         statLabel(icon: "heart.fill", value: Int(character.hp))
-                        statLabel(
-                            icon: "bolt.fill",
-                            value: Int(character.attack)
-                        )
+                        statLabel(icon: "bolt.fill", value: Int(character.attack))
                     }
                 }
             }
@@ -115,10 +202,7 @@ struct CharacterSelectView: View {
             .background(Color.black.opacity(isSelected ? 0.72 : 0.46))
             .overlay {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .stroke(
-                        isSelected ? accent : .white.opacity(0.22),
-                        lineWidth: isSelected ? 3 : 1
-                    )
+                    .stroke(isSelected ? accent : .white.opacity(0.22), lineWidth: isSelected ? 3 : 1)
             }
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }

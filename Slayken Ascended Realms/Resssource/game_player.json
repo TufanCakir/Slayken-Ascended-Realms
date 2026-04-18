@@ -6,13 +6,5 @@
         "texture": "warrior_textur_original",
         "hp": 100,
         "attack": 50
-    },
-    {
-        "name": "Shela",
-        "image": "preview_shela",
-        "model": "shela_animation",
-        "texture": "shela_texture_original",
-        "hp": 100,
-        "attack": 50
     }
 ]

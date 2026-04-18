@@ -3,449 +3,583 @@
 //  Slayken Ascended Realms
 //
 
-import SceneKit
 import SwiftUI
 
 struct GlobeEventView: View {
-    let maps: [GameMap]
-    let selectedMap: GameMap
-    let onSelect: (GameMap) -> Void
+    let chapters: [GlobeEventChapter]
+    let selectedBattleID: String?
+    let onSelectBattle: (GlobeBattle) -> Void
 
     @EnvironmentObject private var theme: ThemeManager
-    @State private var focusedMapID: Int?
-    @State private var expandedMarkerID: Int?
+    @EnvironmentObject private var gameState: GameState
+    @State private var selectedChapterID: String?
+    @State private var selectedPointID: String?
+    @State private var activeCutscene: GlobeEventCutscene?
+    @State private var battleAfterCutscene: GlobeBattle?
+    @State private var isChapterDrawerExpanded = false
 
     private var activeTheme: GameTheme? {
         theme.selectedTheme ?? theme.themes.first
     }
 
-    private var eventMaps: [GameMap] {
-        var seenIDs = Set<Int>()
-        return maps.filter { map in
-            seenIDs.insert(map.id).inserted
-        }
+    private var selectedChapter: GlobeEventChapter? {
+        chapters.first { $0.id == selectedChapterID } ?? chapters.first
     }
 
-    private var focusedMap: GameMap {
-        eventMaps.first(where: { $0.id == focusedMapID }) ?? selectedMap
+    private var selectedPoint: GlobeEventPoint? {
+        guard let selectedChapter, let selectedPointID else { return nil }
+        return selectedChapter.points.first { $0.id == selectedPointID }
     }
 
     var body: some View {
         GeometryReader { geo in
-            let globeFrame = globeFrame(in: geo.size)
             let currentTheme = activeTheme
 
             ZStack {
-                backgroundGradient(for: currentTheme)
-                    .ignoresSafeArea()
+                eventMapLayer(size: geo.size, theme: currentTheme)
+                    .zIndex(0)
 
-                GlobeSceneView(theme: currentTheme)
-                    .frame(width: globeFrame.width, height: globeFrame.height)
-                    .position(x: globeFrame.midX, y: globeFrame.midY)
-
-                starField(theme: currentTheme)
+                mapEdgeFade()
                     .allowsHitTesting(false)
+                    .zIndex(1)
 
-                ForEach(Array(eventMaps.enumerated()), id: \.element.id) {
-                    index,
-                    map in
-                    eventMarker(
-                        map: map,
-                        index: index,
-                        total: eventMaps.count,
-                        globeFrame: globeFrame,
-                        theme: currentTheme
-                    )
-                    .zIndex(focusedMap.id == map.id ? 2 : 1)
-                }
+                VStack(spacing: 0) {
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            chapterDrawer(theme: currentTheme)
 
-                eventBanner(map: focusedMap, theme: currentTheme)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 150)
-                    .frame(maxHeight: .infinity, alignment: .top)
-            }
-            .onAppear {
-                focusedMapID = selectedMap.id
-                expandedMarkerID = selectedMap.id
-            }
-            .onChange(of: selectedMap.id) { _, newValue in
-                focusedMapID = newValue
-                expandedMarkerID = newValue
-            }
-        }
-    }
-
-    private func backgroundGradient(for theme: GameTheme?) -> some View {
-        LinearGradient(
-            colors: [
-                theme?.accent.color.opacity(0.92) ?? .black,
-                .black,
-                theme?.secondary.color.opacity(0.22) ?? .black.opacity(0.35),
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-
-    private func starField(theme: GameTheme?) -> some View {
-        ZStack {
-
-            ForEach(0..<32, id: \.self) { index in
-                Circle()
-                    .fill(
-                        (theme?.glow.color ?? .white).opacity(
-                            index % 3 == 0 ? 0.72 : 0.38
-                        )
-                    )
-                    .frame(
-                        width: index % 4 == 0 ? 2 : 1,
-                        height: index % 4 == 0 ? 2 : 1
-                    )
-                    .position(starPosition(for: index))
-            }
-        }
-    }
-
-    private func eventBanner(map: GameMap, theme: GameTheme?) -> some View {
-        HStack(spacing: 10) {
-            Image(map.mapImage)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 92, height: 58)
-                .clipped()
-                .overlay(
-                    Rectangle()
-                        .stroke(
-                            (theme?.primary.color ?? .white).opacity(0.58),
-                            lineWidth: 1
-                        )
-                )
-
-            VStack(alignment: .leading, spacing: 4) {
-                HStack(spacing: 6) {
-                    Text("Event")
-                        .font(.caption2.weight(.bold))
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 7)
-                        .padding(.vertical, 2)
-                        .background(
-                            (theme?.secondary.color ?? .red).opacity(0.72),
-                            in: Capsule()
-                        )
-
-                    Text("Lv. \(map.difficulty * 10)")
-                        .font(.caption.weight(.bold))
-                        .foregroundStyle(theme?.glow.color ?? .yellow)
-                }
-
-                Text(map.name)
-                    .font(.headline.weight(.heavy))
-                    .foregroundStyle(.white)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.75)
-
-                Text(
-                    map.story.first?.text
-                        ?? "A new realm has appeared on the globe."
-                )
-                .font(.caption2.weight(.medium))
-                .foregroundStyle(.white.opacity(0.86))
-                .lineLimit(2)
-            }
-
-        }
-        .padding(8)
-        .background((theme?.accent.color ?? .black).opacity(0.42))
-        .overlay(
-            Rectangle()
-                .stroke(
-                    (theme?.primary.color ?? .white).opacity(0.22),
-                    lineWidth: 1
-                )
-        )
-    }
-
-    private func eventMarker(
-        map: GameMap,
-        index: Int,
-        total: Int,
-        globeFrame: CGRect,
-        theme: GameTheme?
-    ) -> some View {
-        let isFocused = focusedMap.id == map.id
-        let isPanelExpanded = expandedMarkerID == map.id
-        let point = eventPosition(for: index, total: total, in: globeFrame)
-        let labelOffset = eventLabelOffset(
-            for: point,
-            in: globeFrame,
-            isFocused: isFocused
-        )
-
-        return ZStack {
-            Button {
-                withAnimation(.spring(response: 0.36, dampingFraction: 0.84)) {
-                    focusedMapID = map.id
-                    expandedMarkerID = map.id
-                }
-            } label: {
-                eventMarkerPin(isFocused: isFocused, theme: theme)
-                    .frame(width: 48, height: 48)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-
-            if isFocused {
-                eventMarkerPanel(
-                    map: map,
-                    theme: theme,
-                    isExpanded: isPanelExpanded,
-                    opensToLeading: labelOffset.width < 0
-                )
-                .offset(labelOffset)
-            }
-        }
-        .frame(width: isFocused ? 190 : 48, height: isFocused ? 88 : 48)
-        .position(point)
-    }
-
-    private func eventMarkerPanel(
-        map: GameMap,
-        theme: GameTheme?,
-        isExpanded: Bool,
-        opensToLeading: Bool
-    ) -> some View {
-        HStack(spacing: 6) {
-            if opensToLeading {
-                markerPanelContent(
-                    map: map,
-                    theme: theme,
-                    isExpanded: isExpanded,
-                    alignment: .trailing
-                )
-            }
-
-            Button {
-                withAnimation(.spring(response: 0.36, dampingFraction: 0.84)) {
-                    expandedMarkerID = isExpanded ? nil : map.id
-                }
-            } label: {
-                Image(
-                    systemName: panelChevronName(
-                        isExpanded: isExpanded,
-                        opensToLeading: opensToLeading
-                    )
-                )
-                .font(.system(size: 12, weight: .bold))
-                .foregroundStyle(.black.opacity(0.72))
-                .frame(width: 28, height: 38)
-                .background(.white.opacity(0.92), in: Capsule())
-                .shadow(color: .black.opacity(0.16), radius: 8, y: 2)
-            }
-            .buttonStyle(.plain)
-
-            if !opensToLeading {
-                markerPanelContent(
-                    map: map,
-                    theme: theme,
-                    isExpanded: isExpanded,
-                    alignment: .leading
-                )
-            }
-        }
-        .animation(
-            .spring(response: 0.36, dampingFraction: 0.84),
-            value: isExpanded
-        )
-    }
-
-    private func markerPanelContent(
-        map: GameMap,
-        theme: GameTheme?,
-        isExpanded: Bool,
-        alignment: Alignment
-    ) -> some View {
-        let horizontalAlignment: HorizontalAlignment =
-            alignment == .trailing ? .trailing : .leading
-
-        return Button {
-            onSelect(map)
-        } label: {
-            HStack(spacing: 0) {
-                VStack(alignment: horizontalAlignment, spacing: 3) {
-                    Text(map.name)
-                        .font(.caption.weight(.heavy))
-                        .foregroundStyle(.white)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.72)
-                        .shadow(color: .black, radius: 2, y: 1)
-
-                    HStack(spacing: 5) {
-                        if alignment == .trailing {
-                            Text("Start")
-                                .font(.caption2.weight(.heavy))
-                                .foregroundStyle(theme?.glow.color ?? .yellow)
+                            if selectedPoint != nil {
+                                mapLevelButton(theme: currentTheme)
+                            }
                         }
+                        .padding(.leading, 12)
+                        .padding(.top, 118)
 
-                        Text(eventSubtitle(for: map))
-                            .font(.caption2.weight(.semibold))
-                            .foregroundStyle(.white.opacity(0.86))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.72)
-                            .shadow(color: .black, radius: 2, y: 1)
+                        Spacer(minLength: 0)
+                    }
 
-                        if alignment != .trailing {
-                            Text("Start")
-                                .font(.caption2.weight(.heavy))
-                                .foregroundStyle(theme?.glow.color ?? .yellow)
-                        }
+                    Spacer(minLength: 0)
+
+                    if selectedPoint != nil {
+                        pointBattlePanel(theme: currentTheme)
+                            .padding(.horizontal, 12)
+                            .padding(.bottom, 82)
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
                     }
                 }
-                .frame(width: 130, alignment: alignment)
+                .zIndex(2)
             }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 7)
-            .frame(width: isExpanded ? 150 : 0, alignment: alignment)
-            .clipped()
-            .background(
-                (theme?.accent.color ?? .black).opacity(isExpanded ? 0.72 : 0)
-                    .background(
-                        isExpanded ? .ultraThinMaterial : .regularMaterial
-                    )
+            .fullScreenCover(item: $activeCutscene) { cutscene in
+                EventCutsceneView(cutscene: cutscene) {
+                    finishCutscene()
+                }
+            }
+            .onAppear {
+                selectedChapterID = gameState.activeEventChapterID ?? selectedChapterID ?? chapters.first?.id
+            }
+            .onChange(of: selectedChapterID) { _, _ in
+                selectedPointID = nil
+            }
+        }
+    }
+
+    private func eventMapLayer(size: CGSize, theme: GameTheme?) -> some View {
+        let canvasSize = mapCanvasSize(in: size)
+        let texture = selectedPoint?.mapTexture ?? selectedChapter?.mapTexture ?? "map"
+
+        return ZStack(alignment: .topLeading) {
+            mapTexture(texture, size: canvasSize, theme: theme)
+
+            if let selectedPoint {
+                battleRouteLayer(battles: selectedPoint.battles, canvasSize: canvasSize, theme: theme)
+
+                ForEach(selectedPoint.battles) { battle in
+                    battleMapNode(battle, canvasSize: canvasSize, theme: theme)
+                }
+            } else if let selectedChapter {
+                pointRouteLayer(points: selectedChapter.points, canvasSize: canvasSize, theme: theme)
+
+                ForEach(selectedChapter.points) { point in
+                    pointMapNode(point, canvasSize: canvasSize, theme: theme)
+                }
+            }
+        }
+        .frame(width: canvasSize.width, height: canvasSize.height)
+        .clipped()
+        .background(Color.black)
+        .ignoresSafeArea()
+    }
+
+    private func mapTexture(_ imageName: String, size: CGSize, theme: GameTheme?) -> some View {
+        ZStack {
+            Color.black
+
+            Image(imageName)
+                .resizable()
+                .scaledToFill()
+                .frame(width: size.width, height: size.height)
+                .clipped()
+
+            mapGrid(size: size, theme: theme)
+                .opacity(0.16)
+        }
+        .frame(width: size.width, height: size.height)
+    }
+
+    private func mapEdgeFade() -> some View {
+        VStack(spacing: 0) {
+            LinearGradient(
+                colors: [.black.opacity(0.54), .black.opacity(0.0)],
+                startPoint: .top,
+                endPoint: .bottom
             )
-            .overlay(alignment: .bottom) {
-                Rectangle()
-                    .fill(
-                        (theme?.glow.color ?? .yellow).opacity(
-                            isExpanded ? 0.75 : 0
-                        )
-                    )
-                    .frame(height: 1)
+            .frame(height: 148)
+
+            Spacer(minLength: 0)
+
+            LinearGradient(
+                colors: [.black.opacity(0.0), .black.opacity(0.42)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .frame(height: 150)
+        }
+        .ignoresSafeArea()
+    }
+
+    private func mapGrid(size: CGSize, theme: GameTheme?) -> some View {
+        Canvas { context, canvasSize in
+            var path = Path()
+            let step: CGFloat = 110
+            var x: CGFloat = 0
+            while x <= canvasSize.width {
+                path.move(to: CGPoint(x: x, y: 0))
+                path.addLine(to: CGPoint(x: x, y: canvasSize.height))
+                x += step
             }
-            .clipShape(Capsule())
-            .opacity(isExpanded ? 1 : 0)
+
+            var y: CGFloat = 0
+            while y <= canvasSize.height {
+                path.move(to: CGPoint(x: 0, y: y))
+                path.addLine(to: CGPoint(x: canvasSize.width, y: y))
+                y += step
+            }
+
+            context.stroke(path, with: .color((theme?.glow.color ?? .white).opacity(0.36)), lineWidth: 1)
+        }
+        .frame(width: size.width, height: size.height)
+    }
+
+    private func pointRouteLayer(points: [GlobeEventPoint], canvasSize: CGSize, theme: GameTheme?) -> some View {
+        Path { path in
+            guard let first = points.first else { return }
+            path.move(to: mapPoint(first.node, in: canvasSize))
+            for point in points.dropFirst() {
+                path.addLine(to: mapPoint(point.node, in: canvasSize))
+            }
+        }
+        .stroke(
+            LinearGradient(
+                colors: [theme?.glow.color ?? .yellow, theme?.primary.color ?? .white],
+                startPoint: .leading,
+                endPoint: .trailing
+            ),
+            style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round, dash: [10, 7])
+        )
+    }
+
+    private func battleRouteLayer(battles: [GlobeBattle], canvasSize: CGSize, theme: GameTheme?) -> some View {
+        Path { path in
+            guard let first = battles.first else { return }
+            path.move(to: mapPoint(first.node, in: canvasSize))
+            for battle in battles.dropFirst() {
+                path.addLine(to: mapPoint(battle.node, in: canvasSize))
+            }
+        }
+        .stroke(
+            LinearGradient(
+                colors: [theme?.secondary.color ?? .red, theme?.glow.color ?? .yellow],
+                startPoint: .leading,
+                endPoint: .trailing
+            ),
+            style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round, dash: [8, 6])
+        )
+    }
+
+    private func pointMapNode(_ point: GlobeEventPoint, canvasSize: CGSize, theme: GameTheme?) -> some View {
+        let isFocused = selectedPointID == point.id
+
+        return Button {
+            withAnimation(.spring(response: 0.34, dampingFraction: 0.82)) {
+                selectedPointID = point.id
+            }
+            if let selectedChapter {
+                gameState.selectEventPoint(point, in: selectedChapter)
+            }
+            playCutsceneIfAvailable(point.cutscene)
+        } label: {
+            mapNodeLabel(
+                title: point.title,
+                subtitle: "\(point.battles.count) Kaempfe",
+                icon: "map.fill",
+                isFocused: isFocused,
+                theme: theme
+            )
         }
         .buttonStyle(.plain)
-        .disabled(!isExpanded)
+        .position(mapPoint(point.node, in: canvasSize))
+        .zIndex(isFocused ? 5 : 3)
     }
 
-    private func panelChevronName(isExpanded: Bool, opensToLeading: Bool)
-        -> String
-    {
-        if opensToLeading {
-            return isExpanded ? "chevron.right" : "chevron.left"
+    private func battleMapNode(_ battle: GlobeBattle, canvasSize: CGSize, theme: GameTheme?) -> some View {
+        let isFocused = selectedBattleID == battle.id
+
+        return Button {
+            if let cutscene = battle.cutscene {
+                battleAfterCutscene = battle
+                activeCutscene = cutscene
+            } else {
+                onSelectBattle(battle)
+            }
+        } label: {
+            mapNodeLabel(
+                title: battle.name,
+                subtitle: "Lv. \(battle.difficulty * 10)",
+                icon: "flame.fill",
+                isFocused: isFocused,
+                theme: theme
+            )
         }
-        return isExpanded ? "chevron.left" : "chevron.right"
+        .buttonStyle(.plain)
+        .position(mapPoint(battle.node, in: canvasSize))
+        .zIndex(isFocused ? 5 : 3)
     }
 
-    private func eventMarkerPin(isFocused: Bool, theme: GameTheme?) -> some View
-    {
-        ZStack {
-            Circle()
-                .stroke(
-                    (theme?.secondary.color ?? .red).opacity(
-                        isFocused ? 0.48 : 0.22
-                    ),
-                    lineWidth: isFocused ? 2 : 1
-                )
-                .frame(width: isFocused ? 38 : 28, height: isFocused ? 38 : 28)
-                .scaleEffect(isFocused ? 1.12 : 1)
+    private func mapNodeLabel(
+        title: String,
+        subtitle: String,
+        icon: String,
+        isFocused: Bool,
+        theme: GameTheme?
+    ) -> some View {
+        VStack(spacing: 4) {
+            ZStack {
+                Circle()
+                    .fill(Color.black.opacity(0.44))
+                    .frame(width: isFocused ? 68 : 58, height: isFocused ? 68 : 58)
+                    .offset(y: 10)
+                    .blur(radius: 8)
 
-            Circle()
-                .fill((theme?.accent.color ?? .black).opacity(0.58))
-                .frame(width: isFocused ? 24 : 20, height: isFocused ? 24 : 20)
-                .overlay(
-                    Circle()
-                        .stroke(
-                            (theme?.primary.color ?? .white).opacity(0.55),
-                            lineWidth: 1
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [
+                                theme?.glow.color ?? .yellow,
+                                theme?.primary.color.opacity(0.88) ?? .white.opacity(0.88),
+                                theme?.accent.color.opacity(0.84) ?? .black.opacity(0.84),
+                            ],
+                            center: .topLeading,
+                            startRadius: 2,
+                            endRadius: 34
                         )
-                )
-
-            GlobeMarkerTriangle()
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            theme?.glow.color ?? .yellow,
-                            theme?.secondary.color ?? .red,
-                        ],
-                        startPoint: .top,
-                        endPoint: .bottom
                     )
-                )
-                .frame(width: isFocused ? 14 : 11, height: isFocused ? 13 : 10)
-                .offset(y: isFocused ? 1 : 0)
+                    .frame(width: isFocused ? 54 : 46, height: isFocused ? 54 : 46)
+                    .overlay(Circle().stroke(.white.opacity(0.72), lineWidth: isFocused ? 2 : 1))
+                    .shadow(color: (theme?.glow.color ?? .yellow).opacity(0.75), radius: isFocused ? 18 : 10)
+
+                Image(systemName: icon)
+                    .font(.system(size: isFocused ? 19 : 16, weight: .black))
+                    .foregroundStyle(.black.opacity(0.72))
+
+                TrianglePointer()
+                    .fill(theme?.glow.color ?? .yellow)
+                    .frame(width: 16, height: 14)
+                    .offset(y: isFocused ? 34 : 30)
+                    .shadow(color: .black.opacity(0.36), radius: 3, y: 2)
+            }
+            .frame(width: 76, height: 76)
+
+            VStack(spacing: 1) {
+                Text(title)
+                    .font(.system(size: isFocused ? 12 : 10, weight: .black))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                Text(subtitle)
+                    .font(.system(size: 9, weight: .bold))
+                    .lineLimit(1)
+                    .foregroundStyle(.white.opacity(0.72))
+            }
+            .foregroundStyle(.white)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .frame(width: 118)
+            .background(Color.black.opacity(isFocused ? 0.58 : 0.36), in: Capsule())
+            .overlay(Capsule().stroke(.white.opacity(isFocused ? 0.34 : 0.14), lineWidth: 1))
         }
-        .shadow(
-            color: (theme?.glow.color ?? .red).opacity(isFocused ? 0.75 : 0.42),
-            radius: isFocused ? 10 : 5
-        )
         .animation(.easeOut(duration: 0.18), value: isFocused)
     }
 
-    private func eventSubtitle(for map: GameMap) -> String {
-        "Difficulty \(map.difficulty) - \(map.enemy.name)"
-    }
+    private func chapterDrawer(theme: GameTheme?) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Button {
+                withAnimation(.spring(response: 0.28, dampingFraction: 0.86)) {
+                    isChapterDrawerExpanded.toggle()
+                }
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: isChapterDrawerExpanded ? "chevron.up" : "chevron.down")
+                        .font(.system(size: 11, weight: .black))
+                        .frame(width: 22, height: 22)
+                        .background(Color.white.opacity(0.15), in: Circle())
 
-    private func globeFrame(in size: CGSize) -> CGRect {
-        let diameter = min(size.width * 1.72, size.height * 0.62)
-        let center = CGPoint(x: size.width * 0.5, y: size.height * 0.56)
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text("Kapitel")
+                            .font(.system(size: 9, weight: .black))
+                            .foregroundStyle(.white.opacity(0.66))
+                        Text(selectedChapter?.title ?? "Auswahl")
+                            .font(.system(size: 12, weight: .black))
+                            .foregroundStyle(.white)
+                            .lineLimit(1)
+                    }
 
-        return CGRect(
-            x: center.x - diameter * 0.5,
-            y: center.y - diameter * 0.5,
-            width: diameter,
-            height: diameter
-        )
-    }
+                    Spacer(minLength: 0)
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 8)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
 
-    private func eventPosition(
-        for index: Int,
-        total: Int,
-        in globeFrame: CGRect
-    ) -> CGPoint {
-        guard total > 1 else {
-            return CGPoint(x: globeFrame.midX, y: globeFrame.midY)
+            if isChapterDrawerExpanded {
+                ScrollView(.vertical, showsIndicators: true) {
+                    VStack(spacing: 8) {
+                        ForEach(chapters) { chapter in
+                            chapterButton(chapter, theme: theme)
+                        }
+                    }
+                    .padding(.bottom, 2)
+                }
+                .frame(maxHeight: 280)
+                .transition(.move(edge: .top).combined(with: .opacity))
+            }
         }
+        .frame(width: isChapterDrawerExpanded ? 230 : 172, alignment: .leading)
+        .background((theme?.accent.color ?? .black).opacity(0.28))
+        .background(.ultraThinMaterial.opacity(0.58))
+        .overlay {
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke((theme?.primary.color ?? .white).opacity(0.24), lineWidth: 1)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+    }
 
-        let goldenAngle = CGFloat.pi * (3 - sqrt(5))
-        let progress = (CGFloat(index) + 0.5) / CGFloat(total)
-        let radius = sqrt(progress) * 0.49
-        let angle = CGFloat(index) * goldenAngle - CGFloat.pi * 0.55
-        let point = CGPoint(
-            x: 0.5 + cos(angle) * radius * 0.96,
-            y: 0.5 + sin(angle) * radius * 0.80
-        )
+    private func chapterButton(_ chapter: GlobeEventChapter, theme: GameTheme?) -> some View {
+        let isSelected = selectedChapterID == chapter.id
 
-        return CGPoint(
-            x: globeFrame.minX + globeFrame.width * point.x,
-            y: globeFrame.minY + globeFrame.height * point.y
+        return Button {
+            withAnimation(.spring(response: 0.28, dampingFraction: 0.86)) {
+                selectedChapterID = chapter.id
+                selectedPointID = nil
+                isChapterDrawerExpanded = false
+            }
+            gameState.selectEventChapter(chapter)
+            playCutsceneIfAvailable(chapter.cutscene)
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: isSelected ? "largecircle.fill.circle" : "circle")
+                    .font(.system(size: 12, weight: .black))
+                    .foregroundStyle(isSelected ? (theme?.glow.color ?? .yellow) : .white.opacity(0.55))
+                    .frame(width: 18)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(chapter.title)
+                        .font(.system(size: 12, weight: .black))
+                        .foregroundStyle(.white)
+                        .lineLimit(1)
+                    Text(chapter.subtitle)
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(.white.opacity(0.74))
+                        .lineLimit(1)
+                    Text("\(chapter.points.count) Unterkapitel")
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.52))
+                }
+
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, 9)
+            .padding(.vertical, 8)
+            .background((isSelected ? theme?.primary.color : theme?.accent.color)?.opacity(isSelected ? 0.36 : 0.18) ?? Color.black.opacity(0.24))
+            .overlay {
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .stroke(.white.opacity(isSelected ? 0.38 : 0.12), lineWidth: 1)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func mapLevelButton(theme: GameTheme?) -> some View {
+        Button {
+            withAnimation(.spring(response: 0.30, dampingFraction: 0.86)) {
+                selectedPointID = nil
+            }
+        } label: {
+            Label("Kapitelkarte", systemImage: "arrow.uturn.left")
+                .font(.system(size: 11, weight: .black))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 11)
+                .padding(.vertical, 8)
+                .background((theme?.accent.color ?? .black).opacity(0.34))
+                .background(.ultraThinMaterial.opacity(0.58))
+                .clipShape(Capsule())
+                .overlay(Capsule().stroke(.white.opacity(0.18), lineWidth: 1))
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func pointBattlePanel(theme: GameTheme?) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            if let selectedPoint {
+                HStack(spacing: 10) {
+                    Image(selectedPoint.mapImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 72, height: 46)
+                        .clipped()
+                        .overlay(Rectangle().stroke(.white.opacity(0.18), lineWidth: 1))
+
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(selectedPoint.title)
+                            .font(.system(size: 16, weight: .black))
+                            .foregroundStyle(.white)
+                        Text(selectedPoint.text)
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundStyle(.white.opacity(0.82))
+                            .lineLimit(2)
+                    }
+
+                    Spacer()
+
+                    Text(selectedPoint.mapTexture)
+                        .font(.system(size: 9, weight: .black))
+                        .foregroundStyle(.white.opacity(0.46))
+                        .lineLimit(1)
+                }
+
+                ScrollView(.vertical, showsIndicators: true) {
+                    VStack(spacing: 8) {
+                        ForEach(selectedPoint.battles) { battle in
+                            battleButton(battle, theme: theme)
+                        }
+                    }
+                    .padding(.vertical, 2)
+                }
+                .frame(maxHeight: 190)
+            }
+        }
+        .padding(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background((theme?.accent.color ?? .black).opacity(0.28))
+        .background(.ultraThinMaterial.opacity(0.55))
+        .overlay {
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke((theme?.primary.color ?? .white).opacity(0.22), lineWidth: 1)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+    }
+
+    private func battleButton(_ battle: GlobeBattle, theme: GameTheme?) -> some View {
+        Button {
+            if let cutscene = battle.cutscene {
+                battleAfterCutscene = battle
+                activeCutscene = cutscene
+            } else {
+                onSelectBattle(battle)
+            }
+        } label: {
+            HStack(spacing: 10) {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 6) {
+                        Text("Lv. \(battle.difficulty * 10)")
+                            .font(.system(size: 10, weight: .black))
+                            .foregroundStyle(theme?.glow.color ?? .yellow)
+                        Text(battle.name)
+                            .font(.system(size: 13, weight: .black))
+                            .foregroundStyle(.white)
+                            .lineLimit(1)
+                    }
+
+                    Text(battle.description)
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(.white.opacity(0.78))
+                        .lineLimit(1)
+
+                    Text("Ground: \(battle.groundTexture)  Sky: \(battle.skyboxTexture)")
+                        .font(.system(size: 9, weight: .semibold))
+                        .foregroundStyle(.white.opacity(0.58))
+                        .lineLimit(1)
+                }
+
+                Spacer()
+
+                VStack(alignment: .trailing, spacing: 3) {
+                    ForEach(battle.rewards) { reward in
+                        Text("+\(reward.amount) \(reward.currency)")
+                            .font(.system(size: 10, weight: .black))
+                            .foregroundStyle(.white.opacity(0.9))
+                    }
+                }
+
+                Image(systemName: "play.fill")
+                    .font(.system(size: 13, weight: .black))
+                    .foregroundStyle(.black.opacity(0.72))
+                    .frame(width: 30, height: 30)
+                    .background((theme?.glow.color ?? .yellow).opacity(0.92), in: Circle())
+            }
+            .padding(9)
+            .background(Color.black.opacity(selectedBattleID == battle.id ? 0.62 : 0.30))
+            .overlay {
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .stroke(
+                        selectedBattleID == battle.id ? (theme?.glow.color ?? .yellow) : .white.opacity(0.14),
+                        lineWidth: selectedBattleID == battle.id ? 2 : 1
+                    )
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func mapCanvasSize(in size: CGSize) -> CGSize {
+        size
+    }
+
+    private func mapPoint(_ node: EventMapNodePosition, in size: CGSize) -> CGPoint {
+        CGPoint(
+            x: min(max(CGFloat(node.x), 0), 1) * size.width,
+            y: min(max(CGFloat(node.y), 0), 1) * size.height
         )
     }
 
-    private func eventLabelOffset(
-        for point: CGPoint,
-        in globeFrame: CGRect,
-        isFocused: Bool
-    ) -> CGSize {
-        let distance: CGFloat = isFocused ? 64 : 54
-        let horizontal = point.x < globeFrame.midX ? distance : -distance
-        let verticalDistance: CGFloat =
-            abs(point.y - globeFrame.midY) < globeFrame.height * 0.12
-            ? 0
-            : (point.y < globeFrame.midY ? -24 : 24)
-
-        return CGSize(width: horizontal, height: verticalDistance)
+    private func playCutsceneIfAvailable(_ cutscene: GlobeEventCutscene?) {
+        guard let cutscene else { return }
+        battleAfterCutscene = nil
+        activeCutscene = cutscene
     }
 
-    private func starPosition(for index: Int) -> CGPoint {
-        let x = CGFloat((index * 37) % 100) / 100
-        let y = CGFloat((index * 61) % 100) / 100
+    private func finishCutscene() {
+        let pendingBattle = battleAfterCutscene
+        activeCutscene = nil
+        battleAfterCutscene = nil
 
-        return CGPoint(x: x * 900, y: y * 700)
+        if let pendingBattle {
+            onSelectBattle(pendingBattle)
+        }
     }
 }
 
-private struct GlobeMarkerTriangle: Shape {
+private struct TrianglePointer: Shape {
     func path(in rect: CGRect) -> Path {
         Path { path in
             path.move(to: CGPoint(x: rect.midX, y: rect.maxY))
@@ -456,130 +590,11 @@ private struct GlobeMarkerTriangle: Shape {
     }
 }
 
-private struct GlobeSceneView: UIViewRepresentable {
-    let theme: GameTheme?
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(themeID: theme?.id)
-    }
-
-    func makeUIView(context: Context) -> SCNView {
-        let view = SCNView(frame: .zero)
-        view.scene = makeScene(theme: theme)
-        view.backgroundColor = .clear
-        view.allowsCameraControl = true
-        view.autoenablesDefaultLighting = false
-        view.isPlaying = true
-        view.preferredFramesPerSecond = 60
-        view.defaultCameraController.interactionMode = .orbitTurntable
-        view.defaultCameraController.inertiaEnabled = true
-        return view
-    }
-
-    func updateUIView(_ uiView: SCNView, context: Context) {
-        guard context.coordinator.themeID != theme?.id else { return }
-        context.coordinator.themeID = theme?.id
-        uiView.scene = makeScene(theme: theme)
-    }
-
-    final class Coordinator {
-        var themeID: Int?
-
-        init(themeID: Int?) {
-            self.themeID = themeID
-        }
-    }
-
-    private func makeScene(theme: GameTheme?) -> SCNScene {
-        let scene = SCNScene()
-        scene.background.contents = UIColor.clear
-
-        let globeNode = loadGlobeNode(theme: theme)
-        globeNode.position = SCNVector3(0, 0, 0)
-        globeNode.scale = SCNVector3(1.22, 1.22, 1.22)
-        scene.rootNode.addChildNode(globeNode)
-
-        let cameraNode = SCNNode()
-        cameraNode.camera = SCNCamera()
-        cameraNode.camera?.fieldOfView = 34
-        cameraNode.position = SCNVector3(0, 0, 3.7)
-        scene.rootNode.addChildNode(cameraNode)
-
-        let keyLight = SCNNode()
-        keyLight.light = SCNLight()
-        keyLight.light?.type = .omni
-        keyLight.light?.intensity = 1150
-        keyLight.light?.color = theme?.primary.uiColor ?? UIColor.white
-        keyLight.position = SCNVector3(-2.4, 2.8, 3.4)
-        scene.rootNode.addChildNode(keyLight)
-
-        let fillLight = SCNNode()
-        fillLight.light = SCNLight()
-        fillLight.light?.type = .ambient
-        fillLight.light?.intensity = 320
-        fillLight.light?.color =
-            theme?.glow.uiColor.withAlphaComponent(0.65)
-            ?? UIColor.systemBlue.withAlphaComponent(0.65)
-        scene.rootNode.addChildNode(fillLight)
-
-        let spin = CABasicAnimation(keyPath: "rotation")
-        spin.fromValue = NSValue(scnVector4: SCNVector4(0, 1, 0, 0))
-        spin.toValue = NSValue(scnVector4: SCNVector4(0, 1, 0, Float.pi * 2))
-        spin.duration = 70
-        spin.repeatCount = .infinity
-        globeNode.addAnimation(spin, forKey: "slowGlobeSpin")
-
-        return scene
-    }
-
-    private func loadGlobeNode(theme: GameTheme?) -> SCNNode {
-        let container = SCNNode()
-
-        if let scene = SCNScene(named: "globe.usdz")
-            ?? SCNScene(named: "3DModel/globe.usdz")
-        {
-            for child in scene.rootNode.childNodes {
-                container.addChildNode(child.clone())
-            }
-        } else {
-            let sphere = SCNSphere(radius: 1.35)
-            sphere.firstMaterial?.diffuse.contents =
-                theme?.secondary.uiColor ?? UIColor.systemBlue
-            sphere.firstMaterial?.emission.contents =
-                theme?.glow.uiColor.withAlphaComponent(0.28)
-                ?? UIColor.systemTeal.withAlphaComponent(0.28)
-            container.geometry = sphere
-        }
-
-        return container
-    }
-}
-
-extension ColorData {
-    fileprivate var uiColor: UIColor {
-        UIColor(red: r, green: g, blue: b, alpha: a)
-    }
-}
-
 #Preview {
     GlobeEventView(
-        maps: loadMaps(),
-        selectedMap: loadMaps().first
-            ?? GameMap(
-                id: 0,
-                name: "Preview Event",
-                mapImage: "map1",
-                difficulty: 1,
-                enemy: CharacterStats(
-                    name: "Dragon",
-                    image: "acsended_riven",
-                    model: "warriorin",
-                    hp: 100,
-                    attack: 10
-                ),
-                story: []
-            ),
-        onSelect: { _ in }
-    )
-    .environmentObject(ThemeManager())
+        chapters: loadGlobeEventChapters(),
+        selectedBattleID: nil
+    ) { _ in }
+        .environmentObject(ThemeManager())
+    .environmentObject(GameState())
 }

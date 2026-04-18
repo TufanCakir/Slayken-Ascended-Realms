@@ -43,6 +43,7 @@ struct RootView: View {
                         player: gameState.battlePlayer,
                         enemy: activeEnemy,
                         onExit: {
+                            gameState.clearBattleSelection()
                             transition(to: .game)
                         }
                     )

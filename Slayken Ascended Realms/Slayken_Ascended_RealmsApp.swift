@@ -5,6 +5,7 @@
 //  Created by Tufan Cakir on 10.04.26.
 //
 
+import SwiftData
 import SwiftUI
 
 @main
@@ -19,5 +20,11 @@ struct Slayken_Ascended_RealmsApp: App {
                 .environmentObject(gameState)
                 .environmentObject(theme)
         }
+        .modelContainer(for: [
+            PlayerCurrencyBalance.self,
+            OwnedSummonCharacter.self,
+            TeamMemberRecord.self,
+            PlayerBattleProgress.self,
+        ])
     }
 }

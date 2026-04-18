@@ -1,0 +1,33 @@
+[
+    {
+        "id": "chapter_heroes",
+        "name": "Chapter Heroes",
+        "image": "map",
+        "cost": [
+            {
+                "currency": "crystals",
+                "amount": 100
+            }
+        ],
+        "rates": [
+            {
+                "rarity": 5,
+                "rate": 2.5
+            },
+            {
+                "rarity": 4,
+                "rate": 12.5
+            }
+        ],
+        "pool": [
+            {
+                "characterID": "zaron",
+                "weight": 25
+            },
+            {
+                "characterID": "shela",
+                "weight": 75
+            }
+        ]
+    }
+]

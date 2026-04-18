@@ -5,6 +5,7 @@
 //  Created by Tufan Cakir on 10.04.26.
 //
 
+import SwiftData
 import SwiftUI
 
 struct GameView: View {
@@ -27,6 +28,7 @@ struct GameView: View {
 
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
+    @Query private var completedBattles: [PlayerBattleProgress]
 
     @State private var showPopup = false
     @State private var selectedEnemy: CharacterStats?
@@ -36,6 +38,8 @@ struct GameView: View {
     @State private var joystickVector: SIMD2<Float> = .zero
     @State private var showSupport = false
     @State private var showGlobeEvents = false
+    @State private var showSummon = false
+    @State private var showCharacter = false
     @State private var selectedTab: GameTab = .game
 
     let onStartBattle: (CharacterStats) -> Void
@@ -74,21 +78,31 @@ struct GameView: View {
                     .zIndex(30)
                 }
 
-                VStack(spacing: 0) {
-                    GameHeaderView(
-                        onBackground: {
-                            activeSelectionSheet = .background
+                if selectedTab == .game && !showStory && !showPopup {
+                    GameEventMapPreviewView(
+                        chapter: gameState.activeEventChapter,
+                        point: gameState.activeEventPoint,
+                        completedBattleIDs: Set(completedBattles.map(\.battleID)),
+                        selectedBattleID: gameState.selectedBattle?.id,
+                        theme: theme.selectedTheme ?? theme.themes.first,
+                        onOpen: {
+                            selectedTab = .events
+                            showGlobeEvents = true
                         },
-                        onMap: {
-                            activeSelectionSheet = .map
-                        },
-                        onTheme: {
-                            activeSelectionSheet = .theme
-                        },
-                        onSupport: {
-                            showSupport = true
+                        onSelectBattle: { battle in
+                            startBattle(battle)
                         }
                     )
+                    .padding(.bottom, 72)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                    .zIndex(4)
+                }
+
+                VStack(spacing: 0) {
+                    VStack(spacing: 8) {
+                        GameHeaderView(currencies: gameState.currencies)
+                            .padding()
+                    }
 
                     Spacer()
 
@@ -99,7 +113,7 @@ struct GameView: View {
                             VStack {
 
                                 JoystickView(vector: $joystickVector)
-                                    .padding(.bottom, 12)
+                                    .padding(.bottom, 230)
                             }
 
                         case .events:
@@ -112,7 +126,9 @@ struct GameView: View {
                             .environmentObject(gameState)
 
                         case .character:
-                            CharacterSelectView()
+                            EmptyView()
+                        case .summon:
+                            EmptyView()
                         case .support:
                             SupportView()
                         }
@@ -122,6 +138,31 @@ struct GameView: View {
                     GameFooterView(selectedTab: $selectedTab)
 
                 }
+
+                GameSideDrawerView(
+                    onBackground: {
+                        activeSelectionSheet = .background
+                    },
+                    onMap: {
+                        activeSelectionSheet = .map
+                    },
+                    onTheme: {
+                        activeSelectionSheet = .theme
+                    },
+                    onSupport: {
+                        showSupport = true
+                    }
+                )
+                .frame(maxHeight: .infinity, alignment: .topTrailing)
+                .zIndex(12)
+
+                GameMiddleDrawerView(
+                    selectedTab: $selectedTab,
+                    onSupport: {
+                        showSupport = true
+                    }
+                )
+                .zIndex(11)
             }
             .sheet(item: $activeSelectionSheet) { selection in
                 switch selection {
@@ -148,6 +189,43 @@ struct GameView: View {
                 SupportView()
             }
             .fullScreenCover(
+                isPresented: $showCharacter,
+                onDismiss: {
+                    if selectedTab == .character {
+                        selectedTab = .game
+                    }
+                }
+            ) {
+                CharacterSelectView(onClose: {
+                    showCharacter = false
+                    selectedTab = .game
+                })
+                .environmentObject(gameState)
+                .environmentObject(theme)
+                .ignoresSafeArea()
+                .background(.black)
+            }
+            .fullScreenCover(
+                isPresented: $showSummon,
+                onDismiss: {
+                    if selectedTab == .summon {
+                        selectedTab = .game
+                    }
+                }
+            ) {
+                SummonView(
+                    banners: gameState.summonBanners,
+                    characters: gameState.summonCharacters,
+                    currencies: gameState.currencies,
+                    onClose: {
+                        showSummon = false
+                        selectedTab = .game
+                    }
+                )
+                .ignoresSafeArea()
+                .background(.black)
+            }
+            .fullScreenCover(
                 isPresented: $showGlobeEvents,
                 onDismiss: {
                     if selectedTab == .events {
@@ -157,45 +235,73 @@ struct GameView: View {
             ) {
                 ZStack {
                     GlobeEventView(
-                        maps: gameState.maps,
-                        selectedMap: gameState.selectedMap
-                    ) { map in
+                        chapters: gameState.eventChapters,
+                        selectedBattleID: gameState.selectedBattle?.id
+                    ) { battle in
                         showGlobeEvents = false
                         selectedTab = .game
-                        startMap(map)
+                        startBattle(battle)
                     }
                     .ignoresSafeArea()
 
                     VStack(spacing: 0) {
-                        GameHeaderView(
-                            onBackground: {
-                                closeGlobeAndOpen(.background)
-                            },
-                            onMap: {
-                                closeGlobeAndOpen(.map)
-                            },
-                            onTheme: {
-                                closeGlobeAndOpen(.theme)
-                            },
-                            onSupport: {
-                                showGlobeEvents = false
-                                selectedTab = .game
-                                showSupport = true
-                            }
-                        )
+                        GameHeaderView(currencies: gameState.currencies)
 
                         Spacer()
 
                         GameFooterView(selectedTab: $selectedTab)
                     }
+
+                    GameSideDrawerView(
+                        showBackground: false,
+                        showTheme: false,
+                        onBackground: {
+                            closeGlobeAndOpen(.background)
+                        },
+                        onMap: {
+                            closeGlobeAndOpen(.map)
+                        },
+                        onTheme: {
+                            closeGlobeAndOpen(.theme)
+                        },
+                        onSupport: {
+                            showGlobeEvents = false
+                            selectedTab = .game
+                            showSupport = true
+                        }
+                    )
+                    .frame(maxHeight: .infinity, alignment: .topTrailing)
+                    .zIndex(12)
+
+                    GameMiddleDrawerView(
+                        selectedTab: $selectedTab,
+                        onSupport: {
+                            showGlobeEvents = false
+                            selectedTab = .game
+                            showSupport = true
+                        }
+                    )
+                    .zIndex(11)
                 }
                 .background(.black)
             }
             .onChange(of: selectedTab) { _, newTab in
                 if newTab == .events {
                     showGlobeEvents = true
-                } else if showGlobeEvents {
-                    showGlobeEvents = false
+                } else if newTab == .character {
+                    showCharacter = true
+                } else if newTab == .summon {
+                    showSummon = true
+                } else {
+                    if showGlobeEvents {
+                        showGlobeEvents = false
+                    }
+                    if showCharacter {
+                        showCharacter = false
+                    }
+                    if showSummon {
+                        showSummon = false
+                    }
                 }
             }
         }
@@ -208,6 +314,7 @@ struct GameView: View {
     }
 
     private func startMap(_ map: GameMap) {
+        gameState.clearBattleSelection()
         gameState.selectedMap = map
         selectedEnemy = map.enemy
         currentStory = map.story
@@ -215,6 +322,17 @@ struct GameView: View {
         withAnimation(.easeInOut(duration: 0.25)) {
             showPopup = false
             showStory = true
+        }
+    }
+
+    private func startBattle(_ battle: GlobeBattle) {
+        gameState.selectBattle(battle)
+        selectedEnemy = battle.enemy
+        currentStory = battle.story
+
+        withAnimation(.easeInOut(duration: 0.25)) {
+            showPopup = battle.cutscene != nil || battle.story.isEmpty
+            showStory = battle.cutscene == nil && !battle.story.isEmpty
         }
     }
 }

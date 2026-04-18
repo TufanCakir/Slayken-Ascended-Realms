@@ -7,7 +7,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
-            "model": "warriorin",
+            "model": "shela",
             "hp": 80,
             "attack": 10
         },
@@ -34,7 +34,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
-            "model": "warriorin",
+            "model": "shela",
             "hp": 80,
             "attack": 10
         },
@@ -53,7 +53,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
-            "model": "warriorin",
+            "model": "shela",
             "hp": 120,
             "attack": 14
         },
@@ -72,7 +72,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
-            "model": "warriorin",
+            "model": "shela",
             "hp": 160,
             "attack": 16
         },
@@ -95,7 +95,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
-            "model": "warriorin",
+            "model": "shela",
             "hp": 200,
             "attack": 20
         },
@@ -118,7 +118,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
-            "model": "warriorin",
+            "model": "shela",
             "hp": 260,
             "attack": 25
         },
@@ -137,7 +137,7 @@
         "enemy": {
             "name": "Dragon",
             "image": "sar_dragon",
-            "model": "warriorin",
+            "model": "shela",
             "hp": 300,
             "attack": 30
         },

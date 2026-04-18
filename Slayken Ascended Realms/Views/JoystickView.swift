@@ -9,7 +9,7 @@ import UIKit
 struct JoystickView: View {
     @Binding var vector: SIMD2<Float>
 
-    private let size: CGFloat = 130
+    private let size: CGFloat = 100
     private let knobSize: CGFloat = 54
 
     var body: some View {

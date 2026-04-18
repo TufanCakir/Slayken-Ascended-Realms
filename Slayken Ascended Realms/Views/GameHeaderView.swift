@@ -8,157 +8,51 @@
 import SwiftUI
 
 struct GameHeaderView: View {
-    let onBackground: () -> Void
-    let onMap: () -> Void
-    let onTheme: () -> Void
-    let onSupport: () -> Void
+    let currencies: [CurrencyDefinition]
 
     @State private var isExpanded = true
 
-    private let actions: [HeaderActionItem]
-
-    init(
-        onBackground: @escaping () -> Void,
-        onMap: @escaping () -> Void,
-        onTheme: @escaping () -> Void,
-        onSupport: @escaping () -> Void
-    ) {
-        self.onBackground = onBackground
-        self.onMap = onMap
-        self.onTheme = onTheme
-        self.onSupport = onSupport
-        self.actions = [
-            HeaderActionItem(
-                id: .background,
-                systemName: "photo"
-            ),
-            HeaderActionItem(
-                id: .map,
-                systemName: "map"
-            ),
-            HeaderActionItem(
-                id: .theme,
-                systemName: "paintbrush"
-            ),
-            HeaderActionItem(
-                id: .support,
-                systemName: "questionmark.circle"
-            ),
-        ]
+    init(currencies: [CurrencyDefinition] = []) {
+        self.currencies = currencies
     }
 
     var body: some View {
         HStack(spacing: 8) {
             Spacer(minLength: 0)
 
-            HStack(spacing: 18) {
-                ForEach(actions) { item in
-                    actionButton(item)
-                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
-            .frame(width: isExpanded ? 244 : 0, alignment: .trailing)
-            .clipped()
-            .background(
-                Color.white.opacity(isExpanded ? 0.92 : 0)
-                    .background(
-                        isExpanded ? .ultraThinMaterial : .regularMaterial
-                    )
-            )
-            .clipShape(Capsule())
-            .shadow(
-                color: .black.opacity(isExpanded ? 0.16 : 0),
-                radius: 10,
-                y: 3
-            )
-            .opacity(isExpanded ? 1 : 0)
-            .animation(
-                .spring(response: 0.36, dampingFraction: 0.84),
-                value: isExpanded
-            )
+            CurrencyBarView(currencies: currencies, compact: true)
+                .frame(width: isExpanded ? currencyWidth : 0, alignment: .trailing)
+                .clipped()
+                .opacity(isExpanded ? 1 : 0)
 
             Button {
-                withAnimation(.spring(response: 0.36, dampingFraction: 0.84)) {
+                withAnimation(.spring(response: 0.34, dampingFraction: 0.84)) {
                     isExpanded.toggle()
                 }
             } label: {
                 Image(systemName: isExpanded ? "chevron.right" : "chevron.left")
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.system(size: 14, weight: .black))
                     .foregroundStyle(.black.opacity(0.72))
-                    .frame(width: 34, height: 46)
+                    .frame(width: 34, height: 38)
                     .background(.white.opacity(0.92), in: Capsule())
                     .shadow(color: .black.opacity(0.16), radius: 8, y: 2)
             }
             .buttonStyle(.plain)
+            .accessibilityLabel(isExpanded ? "Hide Resources" : "Show Resources")
         }
         .padding(.horizontal, 14)
-        .padding(.vertical, 8)
+        .padding(.top, 58)
+        .padding(.bottom, 8)
         .frame(maxWidth: .infinity, alignment: .trailing)
+        .animation(.spring(response: 0.34, dampingFraction: 0.84), value: isExpanded)
     }
 
-    private func actionButton(_ item: HeaderActionItem) -> some View {
-        Button {
-            perform(item.id)
-        } label: {
-            Image(systemName: item.systemName)
-                .font(.system(size: 18, weight: .medium))
-                .foregroundStyle(.gray)
-                .frame(width: 34, height: 34)
-                .padding(4)
-                .background(
-                    Color.black.opacity(0.06),
-                    in: RoundedRectangle(cornerRadius: 9, style: .continuous)
-                )
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(item.accessibilityLabel)
-    }
-
-    private func perform(_ action: HeaderAction) {
-        switch action {
-        case .background:
-            onBackground()
-        case .map:
-            onMap()
-        case .theme:
-            onTheme()
-        case .support:
-            onSupport()
-        }
-    }
-}
-
-private enum HeaderAction {
-    case background
-    case map
-    case theme
-    case support
-}
-
-private struct HeaderActionItem: Identifiable {
-    let id: HeaderAction
-    let systemName: String
-
-    var accessibilityLabel: String {
-        switch id {
-        case .background:
-            return "Background"
-        case .map:
-            return "Map"
-        case .theme:
-            return "Theme"
-        case .support:
-            return "Support"
-        }
+    private var currencyWidth: CGFloat {
+        let count = max(currencies.count, 1)
+        return CGFloat(min(count, 4) * 76 + max(0, min(count, 4) - 1) * 6)
     }
 }
 
 #Preview {
-    GameHeaderView(
-        onBackground: {},
-        onMap: {},
-        onTheme: {},
-        onSupport: {}
-    )
+    GameHeaderView()
 }

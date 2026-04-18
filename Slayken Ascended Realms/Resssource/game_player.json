@@ -1,18 +1,18 @@
 [
     {
         "name": "Zaron",
-        "image": "1",
+        "image": "preview_zaron",
         "model": "zaron_animation",
         "texture": "warrior_textur_original",
         "hp": 100,
-        "attack": 20
+        "attack": 50
     },
     {
         "name": "Shela",
-        "image": "2",
-        "model": "warriorin",
-        "texture": null,
+        "image": "preview_shela",
+        "model": "shela_animation",
+        "texture": "shela_texture_original",
         "hp": 100,
-        "attack": 20
+        "attack": 50
     }
 ]

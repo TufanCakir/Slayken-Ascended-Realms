@@ -35,14 +35,10 @@ struct GameView: View {
     @State private var currentStory: [StoryLine] = []
     @State private var joystickVector: SIMD2<Float> = .zero
     @State private var showSupport = false
+    @State private var showGlobeEvents = false
     @State private var selectedTab: GameTab = .game
 
     let onStartBattle: (CharacterStats) -> Void
-
-    let rows = [
-        GridItem(.fixed(90)),
-        GridItem(.fixed(90)),
-    ]
 
     var body: some View {
         GeometryReader { geo in
@@ -104,9 +100,10 @@ struct GameView: View {
 
                                 JoystickView(vector: $joystickVector)
                                     .padding(.bottom, 12)
-
-                                mapScrollSection(geo: geo)
                             }
+
+                        case .events:
+                            EmptyView()
 
                         case .map:
                             MapSelectView {
@@ -150,56 +147,74 @@ struct GameView: View {
             .sheet(isPresented: $showSupport) {
                 SupportView()
             }
-        }
-    }
-
-    private func mapScrollSection(geo: GeometryProxy) -> some View {
-        ZStack {
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHGrid(rows: rows, spacing: 16) {
-                    ForEach(gameState.maps) { map in
-                        levelButton(map: map)
+            .fullScreenCover(
+                isPresented: $showGlobeEvents,
+                onDismiss: {
+                    if selectedTab == .events {
+                        selectedTab = .game
                     }
                 }
-                .padding()
+            ) {
+                ZStack {
+                    GlobeEventView(
+                        maps: gameState.maps,
+                        selectedMap: gameState.selectedMap
+                    ) { map in
+                        showGlobeEvents = false
+                        selectedTab = .game
+                        startMap(map)
+                    }
+                    .ignoresSafeArea()
+
+                    VStack(spacing: 0) {
+                        GameHeaderView(
+                            onBackground: {
+                                closeGlobeAndOpen(.background)
+                            },
+                            onMap: {
+                                closeGlobeAndOpen(.map)
+                            },
+                            onTheme: {
+                                closeGlobeAndOpen(.theme)
+                            },
+                            onSupport: {
+                                showGlobeEvents = false
+                                selectedTab = .game
+                                showSupport = true
+                            }
+                        )
+
+                        Spacer()
+
+                        GameFooterView(selectedTab: $selectedTab)
+                    }
+                }
+                .background(.black)
             }
-        }
-        .frame(height: geo.size.height * 0.25)
-        .background(.ultraThinMaterial)
-    }
-
-    private func levelButton(map: GameMap) -> some View {
-        Button {
-            gameState.selectedMap = map
-            selectedEnemy = map.enemy
-            currentStory = map.story
-
-            withAnimation(.easeInOut(duration: 0.25)) {
-                showPopup = false
-                showStory = true
-            }
-        } label: {
-            ZStack(alignment: .bottomLeading) {
-
-                Image(map.mapImage)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 180, height: 100)
-                    .clipped()
-
-                Text(map.name)
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-            }
-            .frame(width: 180, height: 80)
-            .clipShape(RoundedRectangle(cornerRadius: 18))
-            .overlay {
-                if gameState.selectedMap.id == map.id {
-                    RoundedRectangle(cornerRadius: 18)
-                        .stroke(Color.white, lineWidth: 3)
+            .onChange(of: selectedTab) { _, newTab in
+                if newTab == .events {
+                    showGlobeEvents = true
+                } else if showGlobeEvents {
+                    showGlobeEvents = false
                 }
             }
+        }
+    }
+
+    private func closeGlobeAndOpen(_ selection: ActiveSelectionSheet) {
+        showGlobeEvents = false
+        selectedTab = .game
+        activeSelectionSheet = selection
+    }
+
+    private func startMap(_ map: GameMap) {
+        gameState.selectedMap = map
+        selectedEnemy = map.enemy
+        currentStory = map.story
+
+        withAnimation(.easeInOut(duration: 0.25)) {
+            showPopup = false
+            showStory = true
         }
     }
 }

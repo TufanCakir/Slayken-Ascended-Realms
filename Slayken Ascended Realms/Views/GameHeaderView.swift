@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 struct GameHeaderView: View {
     let onBackground: () -> Void
@@ -31,23 +30,19 @@ struct GameHeaderView: View {
         self.actions = [
             HeaderActionItem(
                 id: .background,
-                imageName: "background",
-                fallbackSystemName: "photo"
+                systemName: "photo"
             ),
             HeaderActionItem(
                 id: .map,
-                imageName: "map",
-                fallbackSystemName: "map"
+                systemName: "map"
             ),
             HeaderActionItem(
                 id: .theme,
-                imageName: "theme",
-                fallbackSystemName: "paintbrush"
+                systemName: "paintbrush"
             ),
             HeaderActionItem(
                 id: .support,
-                imageName: "support",
-                fallbackSystemName: "questionmark.circle"
+                systemName: "questionmark.circle"
             ),
         ]
     }
@@ -106,7 +101,9 @@ struct GameHeaderView: View {
         Button {
             perform(item.id)
         } label: {
-            headerIcon(item)
+            Image(systemName: item.systemName)
+                .font(.system(size: 18, weight: .medium))
+                .foregroundStyle(.gray)
                 .frame(width: 34, height: 34)
                 .padding(4)
                 .background(
@@ -116,19 +113,6 @@ struct GameHeaderView: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(item.accessibilityLabel)
-    }
-
-    @ViewBuilder
-    private func headerIcon(_ item: HeaderActionItem) -> some View {
-        if let image = UIImage(named: item.imageName) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-        } else {
-            Image(systemName: item.fallbackSystemName)
-                .font(.system(size: 18, weight: .medium))
-                .foregroundStyle(.gray)
-        }
     }
 
     private func perform(_ action: HeaderAction) {
@@ -154,8 +138,7 @@ private enum HeaderAction {
 
 private struct HeaderActionItem: Identifiable {
     let id: HeaderAction
-    let imageName: String
-    let fallbackSystemName: String
+    let systemName: String
 
     var accessibilityLabel: String {
         switch id {

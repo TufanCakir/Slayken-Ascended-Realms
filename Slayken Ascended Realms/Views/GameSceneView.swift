@@ -106,13 +106,13 @@ final class SceneCoordinator {
 
     private func makeCamera() -> SCNNode {
         let camera = SCNCamera()
-        camera.fieldOfView = 50
+        camera.fieldOfView = 70  // 100 ist zu viel (verzerrt)
 
         cameraNode.camera = camera
 
-        // 🔥 SIDE VIEW (leicht schräg von rechts)
-        cameraNode.position = SCNVector3(0, 5, 20)
-        cameraNode.look(at: SCNVector3(0, 0, 0))
+        // 🔥 Startposition (wichtig!)
+        cameraNode.position = SCNVector3(0, 25, 45)
+        cameraNode.eulerAngles = SCNVector3(-atan2f(25, 45), 0, 0)
 
         return cameraNode
     }
@@ -197,15 +197,13 @@ final class SceneCoordinator {
         }
 
         material.diffuse.contents = image
-        material.diffuse.contentsTransform = SCNMatrix4Identity
+        material.diffuse.wrapS = .repeat
 
         let imageSize = image.size
         guard imageSize.width > 0, imageSize.height > 0 else { return }
 
-        let aspectRatio = imageSize.width / imageSize.height
         if let box = groundBox {
             box.length = groundBaseDepth
-            box.width = groundBaseDepth * aspectRatio
         }
     }
 
@@ -415,19 +413,39 @@ final class SceneCoordinator {
 
         let cameraRight = groundDirection(from: cameraNode.simdWorldRight)
         let cameraForward = groundDirection(from: cameraNode.simdWorldFront)
+
         let movementVector = (cameraRight * input.x) + (cameraForward * input.y)
         let movementDirection = simd_normalize(movementVector)
 
-        let speed: Float = 25
+        let speed: Float = 50
         let distance = min(magnitude, 1) * speed * deltaTime
 
-        var newPosition = playerNode.simdPosition + movementDirection * distance
-        newPosition.y = getGroundTopY() + playerHeightOffset
-        newPosition = clampToGroundBounds(newPosition)
+        // 🎯 TARGET POSITION
+        var targetPosition =
+            playerNode.simdPosition + movementDirection * distance
+        targetPosition.y = getGroundTopY() + playerHeightOffset
+        targetPosition = clampToGroundBounds(targetPosition)
 
-        playerNode.simdPosition = newPosition
-        playerNode.eulerAngles.y =
+        // 🔥 SMOOTH POSITION (Lerp)
+        let positionSmooth: Float = 50  // vorher 10
+        let t: Float = min(max(deltaTime * positionSmooth, 0), 1)
+
+        playerNode.simdPosition =
+            playerNode.simdPosition + (targetPosition - playerNode.simdPosition)
+            * t
+
+        // 🎯 TARGET ROTATION
+        let targetAngle =
             atan2(movementDirection.x, movementDirection.z) - Float.pi / 2
+
+        let currentAngle = playerNode.eulerAngles.y
+        let rotationSpeed: Float = 8
+
+        let newAngle =
+            currentAngle + (targetAngle - currentAngle)
+            * min(deltaTime * rotationSpeed, 1)
+
+        playerNode.eulerAngles.y = newAngle
     }
 
     private func groundDirection(from vector: simd_float3) -> simd_float3 {
@@ -484,7 +502,7 @@ final class SceneCoordinator {
     }
 
     private func updateCamera(deltaTime: Float) {
-        let offset = SCNVector3(0, 25, 45)  // 🔥 Höhe + Abstand
+        let offset = SCNVector3(0, 30, 50)  // 🔥 Höhe + Abstand
 
         let targetPosition = SCNVector3(
             playerNode.position.x + offset.x,
@@ -502,15 +520,7 @@ final class SceneCoordinator {
             cameraNode.position.z + (targetPosition.z - cameraNode.position.z)
                 * strength
         )
-
-        // 🔥 immer auf Spieler schauen (leicht nach unten)
-        cameraNode.look(
-            at: SCNVector3(
-                playerNode.position.x,
-                playerNode.position.y,
-                playerNode.position.z
-            )
-        )
+        cameraNode.eulerAngles = SCNVector3(-atan2f(offset.y, offset.z), 0, 0)
     }
 }
 

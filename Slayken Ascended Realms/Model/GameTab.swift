@@ -7,6 +7,7 @@
 
 enum GameTab {
     case game
+    case events
     case map
     case character
     case support

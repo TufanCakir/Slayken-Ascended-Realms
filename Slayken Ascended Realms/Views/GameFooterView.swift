@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 struct GameFooterView: View {
     @Binding var selectedTab: GameTab
@@ -15,19 +14,20 @@ struct GameFooterView: View {
     private let tabs: [FooterTabItem] = [
         FooterTabItem(
             tab: .game,
-            imageName: "game",
-            fallbackSystemName: "gamecontroller"
+            systemName: "house"
         ),
-        FooterTabItem(tab: .map, imageName: "map", fallbackSystemName: "map"),
+        FooterTabItem(
+            tab: .events,
+            systemName: "globe.europe.africa"
+        ),
+        FooterTabItem(tab: .map, systemName: "map"),
         FooterTabItem(
             tab: .character,
-            imageName: "character",
-            fallbackSystemName: "person"
+            systemName: "person"
         ),
         FooterTabItem(
             tab: .support,
-            imageName: "support",
-            fallbackSystemName: "questionmark.circle"
+            systemName: "questionmark.circle"
         ),
     ]
 
@@ -46,7 +46,7 @@ struct GameFooterView: View {
             tabsView
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
-                .frame(width: isExpanded ? 244 : 0, alignment: .trailing)
+                .frame(width: isExpanded ? 314 : 0, alignment: .trailing)
                 .clipped()
                 .background(
                     Color.white.opacity(isExpanded ? 0.92 : 0)
@@ -89,7 +89,9 @@ struct GameFooterView: View {
         Button {
             selectedTab = item.tab
         } label: {
-            footerIcon(item)
+            Image(systemName: item.systemName)
+                .font(.system(size: 18, weight: .medium))
+                .foregroundStyle(.gray)
                 .frame(width: 34, height: 34)
                 .padding(4)
                 .background(
@@ -101,24 +103,11 @@ struct GameFooterView: View {
         .accessibilityLabel(item.accessibilityLabel)
     }
 
-    @ViewBuilder
-    private func footerIcon(_ item: FooterTabItem) -> some View {
-        if let image = UIImage(named: item.imageName) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-        } else {
-            Image(systemName: item.fallbackSystemName)
-                .font(.system(size: 18, weight: .medium))
-                .foregroundStyle(.gray)
-        }
-    }
 }
 
 private struct FooterTabItem: Identifiable {
     let tab: GameTab
-    let imageName: String
-    let fallbackSystemName: String
+    let systemName: String
 
     var id: GameTab { tab }
 
@@ -126,6 +115,8 @@ private struct FooterTabItem: Identifiable {
         switch tab {
         case .game:
             return "Game"
+        case .events:
+            return "Events"
         case .map:
             return "Map"
         case .character:

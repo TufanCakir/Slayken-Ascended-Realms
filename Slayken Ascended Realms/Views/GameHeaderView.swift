@@ -21,7 +21,10 @@ struct GameHeaderView: View {
             Spacer(minLength: 0)
 
             CurrencyBarView(currencies: currencies, compact: true)
-                .frame(width: isExpanded ? currencyWidth : 0, alignment: .trailing)
+                .frame(
+                    width: isExpanded ? currencyWidth : 0,
+                    alignment: .trailing
+                )
                 .clipped()
                 .opacity(isExpanded ? 1 : 0)
 
@@ -38,13 +41,18 @@ struct GameHeaderView: View {
                     .shadow(color: .black.opacity(0.16), radius: 8, y: 2)
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(isExpanded ? "Hide Resources" : "Show Resources")
+            .accessibilityLabel(
+                isExpanded ? "Hide Resources" : "Show Resources"
+            )
         }
         .padding(.horizontal, 14)
         .padding(.top, 58)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity, alignment: .trailing)
-        .animation(.spring(response: 0.34, dampingFraction: 0.84), value: isExpanded)
+        .animation(
+            .spring(response: 0.34, dampingFraction: 0.84),
+            value: isExpanded
+        )
     }
 
     private var currencyWidth: CGFloat {

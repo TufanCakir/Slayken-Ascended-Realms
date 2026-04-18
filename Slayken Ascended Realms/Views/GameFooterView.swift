@@ -28,9 +28,7 @@ struct GameFooterView: View {
             tab: .events,
             systemName: "globe.europe.africa"
         ),
-    
 
-   
     ]
 
     private var tabsView: some View {
@@ -119,8 +117,6 @@ private struct FooterTabItem: Identifiable {
             return "Game"
         case .events:
             return "Events"
-        case .map:
-            return "Map"
         case .character:
             return "Character"
         case .support:

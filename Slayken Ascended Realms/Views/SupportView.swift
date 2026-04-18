@@ -13,69 +13,126 @@ struct SupportView: View {
     @State private var showAlert = false
 
     var body: some View {
-        NavigationView {
+        ZStack {
+
+            // 🌑 BACKGROUND
+            LinearGradient(
+                colors: [
+                    Color.black,
+                    Color(red: 0.12, green: 0.14, blue: 0.16),
+                    Color.black,
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+
             VStack(spacing: 20) {
 
-                Image(systemName: "questionmark.circle.fill")
-                    .font(.system(size: 60))
-                    .foregroundStyle(.blue)
-                    .padding(.top, 20)
+                // 🔹 HEADER
+                VStack(spacing: 8) {
+                    Image(systemName: "questionmark.circle.fill")
+                        .font(.system(size: 50))
+                        .foregroundStyle(.blue)
 
-                Text("Support")
-                    .font(.largeTitle.bold())
+                    Text("Support")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundStyle(.white)
 
-                Text("Hast du ein Problem oder Feedback? Schreib mir gerne!")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
+                    Text("Probleme oder Feedback?\nSchreib uns direkt!")
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.7))
+                        .multilineTextAlignment(.center)
+                }
+                .padding(.top, 40)
 
-                VStack(alignment: .leading, spacing: 12) {
+                // 🔹 FORM CARD
+                VStack(spacing: 14) {
 
-                    TextField("support@tufancakir.com", text: $email)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .keyboardType(.emailAddress)
-                        .autocapitalization(.none)
+                    // EMAIL FIELD
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Email")
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundStyle(.white.opacity(0.6))
 
-                    TextEditor(text: $message)
-                        .frame(height: 150)
-                        .padding(8)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10).stroke(
-                                Color.gray.opacity(0.3)
+                        TextField("support@tufancakir.com", text: $email)
+                            .padding(10)
+                            .background(Color.black.opacity(0.4))
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.white.opacity(0.2))
+                            }
+                            .foregroundStyle(.white)
+                            .keyboardType(.emailAddress)
+                            .textInputAutocapitalization(.never)
+                    }
+
+                    // MESSAGE FIELD
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Nachricht")
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundStyle(.white.opacity(0.6))
+
+                        TextEditor(text: $message)
+                            .frame(height: 120)
+                            .padding(8)
+                            .background(Color.black.opacity(0.4))
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.white.opacity(0.2))
+                            }
+                            .foregroundStyle(.white)
+                    }
+
+                    // BUTTON
+                    Button(action: sendSupportMail) {
+                        Text("Nachricht senden")
+                            .font(.system(size: 15, weight: .bold))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(
+                                LinearGradient(
+                                    colors: [Color.blue, Color.purple],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                ),
+                                in: Capsule()
                             )
-                        )
+                            .foregroundStyle(.white)
+                            .shadow(color: .blue.opacity(0.6), radius: 8)
+                    }
+                    .padding(.top, 6)
                 }
-                .padding(.horizontal)
-
-                Button(action: sendSupportMail) {
-                    Text("Nachricht senden")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
+                .padding(18)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(.ultraThinMaterial.opacity(0.6))
+                )
+                .overlay {
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.white.opacity(0.2))
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
 
                 Spacer()
 
+                // 🔹 FOOTER
                 VStack(spacing: 4) {
                     Text("Oder direkt per Email:")
-                        .font(.footnote)
-                        .foregroundColor(.gray)
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.6))
 
                     Text("support@tufancakir.com")
-                        .font(.footnote.bold())
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(.white)
                 }
                 .padding(.bottom, 20)
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .alert("Gesendet", isPresented: $showAlert) {
-                Button("OK", role: .cancel) {}
-            } message: {
-                Text("Deine Nachricht wurde vorbereitet.")
-            }
+        }
+        .alert("Gesendet", isPresented: $showAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Deine Nachricht wurde vorbereitet.")
         }
     }
 

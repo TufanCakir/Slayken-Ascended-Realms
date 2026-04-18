@@ -14,93 +14,93 @@ struct EventCutsceneView: View {
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.94)
-                .ignoresSafeArea()
+            // 🔥 FULLSCREEN VIDEO
+            if let player {
+                VideoPlayer(player: player)
+                    .ignoresSafeArea()
+            } else {
+                fallbackView
+            }
 
-            VStack(spacing: 16) {
+            // 🔥 UI OVERLAY
+            VStack {
                 HStack {
                     Text(cutscene.title)
                         .font(.system(size: 20, weight: .black))
                         .foregroundStyle(.white)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
 
                     Spacer()
 
                     Button(action: finish) {
                         Image(systemName: "xmark")
-                            .font(.system(size: 14, weight: .black))
                             .foregroundStyle(.white)
                             .frame(width: 38, height: 38)
-                            .background(Color.white.opacity(0.16), in: Circle())
+                            .background(Color.black.opacity(0.5), in: Circle())
                     }
-                    .buttonStyle(.plain)
                 }
-                .padding(.horizontal, 18)
-                .padding(.top, 52)
+                .padding()
 
-                cutsceneContent
-                    .frame(maxWidth: .infinity)
-                    .aspectRatio(16 / 9, contentMode: .fit)
-                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .stroke(.white.opacity(0.18), lineWidth: 1)
-                    }
-                    .padding(.horizontal, 18)
+                Spacer()
 
                 if let text = cutscene.text, !text.isEmpty {
                     Text(text)
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(.white.opacity(0.86))
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 22)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .padding()
+                        .background(Color.black.opacity(0.5))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .padding(.horizontal)
+                        .padding(.bottom, 12)
                 }
 
                 Button(action: finish) {
-                    Label("Weiter", systemImage: "play.fill")
+                    Text("Weiter")
                         .font(.system(size: 14, weight: .black))
-                        .foregroundStyle(.black.opacity(0.78))
-                        .padding(.horizontal, 22)
-                        .padding(.vertical, 11)
-                        .background(.white.opacity(0.92), in: Capsule())
+                        .foregroundStyle(.black)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 12)
+                        .background(.white, in: Capsule())
                 }
-                .buttonStyle(.plain)
-
-                Spacer(minLength: 18)
+                .padding(.bottom, 40)
             }
         }
+        .background(Color.clear)
+        .presentationBackground(.clear)
+        .ignoresSafeArea()
+        .statusBarHidden(true)
         .onAppear(perform: startPlayback)
         .onDisappear {
             player?.pause()
             player = nil
+            // Remove any observers tied to the previous player item
+            NotificationCenter.default.removeObserver(
+                self,
+                name: .AVPlayerItemDidPlayToEndTime,
+                object: nil
+            )
         }
     }
 
-    @ViewBuilder
-    private var cutsceneContent: some View {
-        if let player {
-            VideoPlayer(player: player)
-                .background(Color.black)
-        } else {
-            ZStack {
-                LinearGradient(
-                    colors: [
-                        Color(red: 0.05, green: 0.06, blue: 0.08),
-                        Color(red: 0.24, green: 0.28, blue: 0.34),
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
+    // 🔧 FALLBACK wenn kein Video da ist
+    private var fallbackView: some View {
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color(red: 0.05, green: 0.06, blue: 0.08),
+                    Color(red: 0.24, green: 0.28, blue: 0.34),
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
 
-                VStack(spacing: 10) {
-                    Image(systemName: "film.stack")
-                        .font(.system(size: 44, weight: .light))
-                    Text("MP4 fehlt")
-                        .font(.system(size: 12, weight: .black))
-                }
-                .foregroundStyle(.white.opacity(0.72))
+            VStack(spacing: 10) {
+                Image(systemName: "film.stack")
+                    .font(.system(size: 44, weight: .light))
+                Text("MP4 fehlt")
+                    .font(.system(size: 12, weight: .black))
             }
+            .foregroundStyle(.white.opacity(0.72))
         }
     }
 
@@ -109,6 +109,15 @@ struct EventCutsceneView: View {
         let newPlayer = AVPlayer(url: url)
         player = newPlayer
         newPlayer.play()
+
+        // 🔥 Auto-Finish wenn Video endet
+        NotificationCenter.default.addObserver(
+            forName: .AVPlayerItemDidPlayToEndTime,
+            object: newPlayer.currentItem,
+            queue: .main
+        ) { _ in
+            finish()
+        }
     }
 
     private func cutsceneVideoURL() -> URL? {

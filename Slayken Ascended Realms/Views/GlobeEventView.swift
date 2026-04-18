@@ -64,7 +64,9 @@ struct GlobeEventView: View {
                         pointBattlePanel(theme: currentTheme)
                             .padding(.horizontal, 12)
                             .padding(.bottom, 82)
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                            .transition(
+                                .move(edge: .bottom).combined(with: .opacity)
+                            )
                     }
                 }
                 .zIndex(2)
@@ -75,7 +77,9 @@ struct GlobeEventView: View {
                 }
             }
             .onAppear {
-                selectedChapterID = gameState.activeEventChapterID ?? selectedChapterID ?? chapters.first?.id
+                selectedChapterID =
+                    gameState.activeEventChapterID ?? selectedChapterID
+                    ?? chapters.first?.id
             }
             .onChange(of: selectedChapterID) { _, _ in
                 selectedPointID = nil
@@ -85,19 +89,28 @@ struct GlobeEventView: View {
 
     private func eventMapLayer(size: CGSize, theme: GameTheme?) -> some View {
         let canvasSize = mapCanvasSize(in: size)
-        let texture = selectedPoint?.mapTexture ?? selectedChapter?.mapTexture ?? "map"
+        let texture =
+            selectedPoint?.mapTexture ?? selectedChapter?.mapTexture ?? "map"
 
         return ZStack(alignment: .topLeading) {
             mapTexture(texture, size: canvasSize, theme: theme)
 
             if let selectedPoint {
-                battleRouteLayer(battles: selectedPoint.battles, canvasSize: canvasSize, theme: theme)
+                battleRouteLayer(
+                    battles: selectedPoint.battles,
+                    canvasSize: canvasSize,
+                    theme: theme
+                )
 
                 ForEach(selectedPoint.battles) { battle in
                     battleMapNode(battle, canvasSize: canvasSize, theme: theme)
                 }
             } else if let selectedChapter {
-                pointRouteLayer(points: selectedChapter.points, canvasSize: canvasSize, theme: theme)
+                pointRouteLayer(
+                    points: selectedChapter.points,
+                    canvasSize: canvasSize,
+                    theme: theme
+                )
 
                 ForEach(selectedChapter.points) { point in
                     pointMapNode(point, canvasSize: canvasSize, theme: theme)
@@ -110,7 +123,11 @@ struct GlobeEventView: View {
         .ignoresSafeArea()
     }
 
-    private func mapTexture(_ imageName: String, size: CGSize, theme: GameTheme?) -> some View {
+    private func mapTexture(
+        _ imageName: String,
+        size: CGSize,
+        theme: GameTheme?
+    ) -> some View {
         ZStack {
             Color.black
 
@@ -165,12 +182,20 @@ struct GlobeEventView: View {
                 y += step
             }
 
-            context.stroke(path, with: .color((theme?.glow.color ?? .white).opacity(0.36)), lineWidth: 1)
+            context.stroke(
+                path,
+                with: .color((theme?.glow.color ?? .white).opacity(0.36)),
+                lineWidth: 1
+            )
         }
         .frame(width: size.width, height: size.height)
     }
 
-    private func pointRouteLayer(points: [GlobeEventPoint], canvasSize: CGSize, theme: GameTheme?) -> some View {
+    private func pointRouteLayer(
+        points: [GlobeEventPoint],
+        canvasSize: CGSize,
+        theme: GameTheme?
+    ) -> some View {
         Path { path in
             guard let first = points.first else { return }
             path.move(to: mapPoint(first.node, in: canvasSize))
@@ -180,15 +205,27 @@ struct GlobeEventView: View {
         }
         .stroke(
             LinearGradient(
-                colors: [theme?.glow.color ?? .yellow, theme?.primary.color ?? .white],
+                colors: [
+                    theme?.glow.color ?? .yellow,
+                    theme?.primary.color ?? .white,
+                ],
                 startPoint: .leading,
                 endPoint: .trailing
             ),
-            style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round, dash: [10, 7])
+            style: StrokeStyle(
+                lineWidth: 3,
+                lineCap: .round,
+                lineJoin: .round,
+                dash: [10, 7]
+            )
         )
     }
 
-    private func battleRouteLayer(battles: [GlobeBattle], canvasSize: CGSize, theme: GameTheme?) -> some View {
+    private func battleRouteLayer(
+        battles: [GlobeBattle],
+        canvasSize: CGSize,
+        theme: GameTheme?
+    ) -> some View {
         Path { path in
             guard let first = battles.first else { return }
             path.move(to: mapPoint(first.node, in: canvasSize))
@@ -198,15 +235,27 @@ struct GlobeEventView: View {
         }
         .stroke(
             LinearGradient(
-                colors: [theme?.secondary.color ?? .red, theme?.glow.color ?? .yellow],
+                colors: [
+                    theme?.secondary.color ?? .red,
+                    theme?.glow.color ?? .yellow,
+                ],
                 startPoint: .leading,
                 endPoint: .trailing
             ),
-            style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round, dash: [8, 6])
+            style: StrokeStyle(
+                lineWidth: 3,
+                lineCap: .round,
+                lineJoin: .round,
+                dash: [8, 6]
+            )
         )
     }
 
-    private func pointMapNode(_ point: GlobeEventPoint, canvasSize: CGSize, theme: GameTheme?) -> some View {
+    private func pointMapNode(
+        _ point: GlobeEventPoint,
+        canvasSize: CGSize,
+        theme: GameTheme?
+    ) -> some View {
         let isFocused = selectedPointID == point.id
 
         return Button {
@@ -231,7 +280,11 @@ struct GlobeEventView: View {
         .zIndex(isFocused ? 5 : 3)
     }
 
-    private func battleMapNode(_ battle: GlobeBattle, canvasSize: CGSize, theme: GameTheme?) -> some View {
+    private func battleMapNode(
+        _ battle: GlobeBattle,
+        canvasSize: CGSize,
+        theme: GameTheme?
+    ) -> some View {
         let isFocused = selectedBattleID == battle.id
 
         return Button {
@@ -266,7 +319,10 @@ struct GlobeEventView: View {
             ZStack {
                 Circle()
                     .fill(Color.black.opacity(0.44))
-                    .frame(width: isFocused ? 68 : 58, height: isFocused ? 68 : 58)
+                    .frame(
+                        width: isFocused ? 68 : 58,
+                        height: isFocused ? 68 : 58
+                    )
                     .offset(y: 10)
                     .blur(radius: 8)
 
@@ -275,17 +331,30 @@ struct GlobeEventView: View {
                         RadialGradient(
                             colors: [
                                 theme?.glow.color ?? .yellow,
-                                theme?.primary.color.opacity(0.88) ?? .white.opacity(0.88),
-                                theme?.accent.color.opacity(0.84) ?? .black.opacity(0.84),
+                                theme?.primary.color.opacity(0.88)
+                                    ?? .white.opacity(0.88),
+                                theme?.accent.color.opacity(0.84)
+                                    ?? .black.opacity(0.84),
                             ],
                             center: .topLeading,
                             startRadius: 2,
                             endRadius: 34
                         )
                     )
-                    .frame(width: isFocused ? 54 : 46, height: isFocused ? 54 : 46)
-                    .overlay(Circle().stroke(.white.opacity(0.72), lineWidth: isFocused ? 2 : 1))
-                    .shadow(color: (theme?.glow.color ?? .yellow).opacity(0.75), radius: isFocused ? 18 : 10)
+                    .frame(
+                        width: isFocused ? 54 : 46,
+                        height: isFocused ? 54 : 46
+                    )
+                    .overlay(
+                        Circle().stroke(
+                            .white.opacity(0.72),
+                            lineWidth: isFocused ? 2 : 1
+                        )
+                    )
+                    .shadow(
+                        color: (theme?.glow.color ?? .yellow).opacity(0.75),
+                        radius: isFocused ? 18 : 10
+                    )
 
                 Image(systemName: icon)
                     .font(.system(size: isFocused ? 19 : 16, weight: .black))
@@ -313,8 +382,16 @@ struct GlobeEventView: View {
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
             .frame(width: 118)
-            .background(Color.black.opacity(isFocused ? 0.58 : 0.36), in: Capsule())
-            .overlay(Capsule().stroke(.white.opacity(isFocused ? 0.34 : 0.14), lineWidth: 1))
+            .background(
+                Color.black.opacity(isFocused ? 0.58 : 0.36),
+                in: Capsule()
+            )
+            .overlay(
+                Capsule().stroke(
+                    .white.opacity(isFocused ? 0.34 : 0.14),
+                    lineWidth: 1
+                )
+            )
         }
         .animation(.easeOut(duration: 0.18), value: isFocused)
     }
@@ -327,10 +404,13 @@ struct GlobeEventView: View {
                 }
             } label: {
                 HStack(spacing: 8) {
-                    Image(systemName: isChapterDrawerExpanded ? "chevron.up" : "chevron.down")
-                        .font(.system(size: 11, weight: .black))
-                        .frame(width: 22, height: 22)
-                        .background(Color.white.opacity(0.15), in: Circle())
+                    Image(
+                        systemName: isChapterDrawerExpanded
+                            ? "chevron.up" : "chevron.down"
+                    )
+                    .font(.system(size: 11, weight: .black))
+                    .frame(width: 22, height: 22)
+                    .background(Color.white.opacity(0.15), in: Circle())
 
                     VStack(alignment: .leading, spacing: 1) {
                         Text("Kapitel")
@@ -368,12 +448,17 @@ struct GlobeEventView: View {
         .background(.ultraThinMaterial.opacity(0.58))
         .overlay {
             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .stroke((theme?.primary.color ?? .white).opacity(0.24), lineWidth: 1)
+                .stroke(
+                    (theme?.primary.color ?? .white).opacity(0.24),
+                    lineWidth: 1
+                )
         }
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
 
-    private func chapterButton(_ chapter: GlobeEventChapter, theme: GameTheme?) -> some View {
+    private func chapterButton(_ chapter: GlobeEventChapter, theme: GameTheme?)
+        -> some View
+    {
         let isSelected = selectedChapterID == chapter.id
 
         return Button {
@@ -386,10 +471,16 @@ struct GlobeEventView: View {
             playCutsceneIfAvailable(chapter.cutscene)
         } label: {
             HStack(spacing: 8) {
-                Image(systemName: isSelected ? "largecircle.fill.circle" : "circle")
-                    .font(.system(size: 12, weight: .black))
-                    .foregroundStyle(isSelected ? (theme?.glow.color ?? .yellow) : .white.opacity(0.55))
-                    .frame(width: 18)
+                Image(
+                    systemName: isSelected
+                        ? "largecircle.fill.circle" : "circle"
+                )
+                .font(.system(size: 12, weight: .black))
+                .foregroundStyle(
+                    isSelected
+                        ? (theme?.glow.color ?? .yellow) : .white.opacity(0.55)
+                )
+                .frame(width: 18)
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(chapter.title)
@@ -409,10 +500,17 @@ struct GlobeEventView: View {
             }
             .padding(.horizontal, 9)
             .padding(.vertical, 8)
-            .background((isSelected ? theme?.primary.color : theme?.accent.color)?.opacity(isSelected ? 0.36 : 0.18) ?? Color.black.opacity(0.24))
+            .background(
+                (isSelected ? theme?.primary.color : theme?.accent.color)?
+                    .opacity(isSelected ? 0.36 : 0.18)
+                    ?? Color.black.opacity(0.24)
+            )
             .overlay {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .stroke(.white.opacity(isSelected ? 0.38 : 0.12), lineWidth: 1)
+                    .stroke(
+                        .white.opacity(isSelected ? 0.38 : 0.12),
+                        lineWidth: 1
+                    )
             }
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
@@ -447,7 +545,12 @@ struct GlobeEventView: View {
                         .scaledToFill()
                         .frame(width: 72, height: 46)
                         .clipped()
-                        .overlay(Rectangle().stroke(.white.opacity(0.18), lineWidth: 1))
+                        .overlay(
+                            Rectangle().stroke(
+                                .white.opacity(0.18),
+                                lineWidth: 1
+                            )
+                        )
 
                     VStack(alignment: .leading, spacing: 3) {
                         Text(selectedPoint.title)
@@ -484,12 +587,17 @@ struct GlobeEventView: View {
         .background(.ultraThinMaterial.opacity(0.55))
         .overlay {
             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .stroke((theme?.primary.color ?? .white).opacity(0.22), lineWidth: 1)
+                .stroke(
+                    (theme?.primary.color ?? .white).opacity(0.22),
+                    lineWidth: 1
+                )
         }
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
 
-    private func battleButton(_ battle: GlobeBattle, theme: GameTheme?) -> some View {
+    private func battleButton(_ battle: GlobeBattle, theme: GameTheme?)
+        -> some View
+    {
         Button {
             if let cutscene = battle.cutscene {
                 battleAfterCutscene = battle
@@ -515,10 +623,12 @@ struct GlobeEventView: View {
                         .foregroundStyle(.white.opacity(0.78))
                         .lineLimit(1)
 
-                    Text("Ground: \(battle.groundTexture)  Sky: \(battle.skyboxTexture)")
-                        .font(.system(size: 9, weight: .semibold))
-                        .foregroundStyle(.white.opacity(0.58))
-                        .lineLimit(1)
+                    Text(
+                        "Ground: \(battle.groundTexture)  Sky: \(battle.skyboxTexture)"
+                    )
+                    .font(.system(size: 9, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.58))
+                    .lineLimit(1)
                 }
 
                 Spacer()
@@ -535,14 +645,21 @@ struct GlobeEventView: View {
                     .font(.system(size: 13, weight: .black))
                     .foregroundStyle(.black.opacity(0.72))
                     .frame(width: 30, height: 30)
-                    .background((theme?.glow.color ?? .yellow).opacity(0.92), in: Circle())
+                    .background(
+                        (theme?.glow.color ?? .yellow).opacity(0.92),
+                        in: Circle()
+                    )
             }
             .padding(9)
-            .background(Color.black.opacity(selectedBattleID == battle.id ? 0.62 : 0.30))
+            .background(
+                Color.black.opacity(selectedBattleID == battle.id ? 0.62 : 0.30)
+            )
             .overlay {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .stroke(
-                        selectedBattleID == battle.id ? (theme?.glow.color ?? .yellow) : .white.opacity(0.14),
+                        selectedBattleID == battle.id
+                            ? (theme?.glow.color ?? .yellow)
+                            : .white.opacity(0.14),
                         lineWidth: selectedBattleID == battle.id ? 2 : 1
                     )
             }
@@ -555,7 +672,9 @@ struct GlobeEventView: View {
         size
     }
 
-    private func mapPoint(_ node: EventMapNodePosition, in size: CGSize) -> CGPoint {
+    private func mapPoint(_ node: EventMapNodePosition, in size: CGSize)
+        -> CGPoint
+    {
         CGPoint(
             x: min(max(CGFloat(node.x), 0), 1) * size.width,
             y: min(max(CGFloat(node.y), 0), 1) * size.height
@@ -595,6 +714,6 @@ private struct TrianglePointer: Shape {
         chapters: loadGlobeEventChapters(),
         selectedBattleID: nil
     ) { _ in }
-        .environmentObject(ThemeManager())
+    .environmentObject(ThemeManager())
     .environmentObject(GameState())
 }

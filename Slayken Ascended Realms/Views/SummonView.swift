@@ -13,12 +13,15 @@ struct SummonView: View {
     var onClose: (() -> Void)? = nil
 
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \PlayerCurrencyBalance.code) private var balances: [PlayerCurrencyBalance]
-    @Query(sort: \OwnedSummonCharacter.acquiredAt) private var ownedRecords: [OwnedSummonCharacter]
+    @Query(sort: \PlayerCurrencyBalance.code) private var balances:
+        [PlayerCurrencyBalance]
+    @Query(sort: \OwnedSummonCharacter.acquiredAt) private var ownedRecords:
+        [OwnedSummonCharacter]
 
     @State private var lastSummon: SummonCharacter?
     @State private var lastBannerID: String?
     @State private var message = ""
+    @State private var showResult = false
 
     var body: some View {
         ZStack {
@@ -44,12 +47,35 @@ struct SummonView: View {
 
                 currencyFooter
             }
+            .overlay {
+                if showResult, let lastSummon {
+                    ZStack {
+                        Color.black.opacity(0.6)
+                            .ignoresSafeArea()
+                            .transition(.opacity)
+
+                        SummonResultView(character: lastSummon) {
+                            withAnimation {
+                                showResult = false
+                            }
+                        }
+                        .transition(.scale)
+                    }
+                    .animation(.easeInOut(duration: 0.25), value: showResult)
+                }
+            }
             .background(.black.opacity(0.18))
             .background(.ultraThinMaterial.opacity(0.45))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
-            PlayerInventoryStore.ensureBalances(for: currencies, in: modelContext)
+            PlayerInventoryStore.ensureBalances(
+                for: currencies,
+                in: modelContext
+            )
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                showResult = true
+            }
         }
     }
 
@@ -121,10 +147,13 @@ struct SummonView: View {
 
             HStack(spacing: 12) {
                 ForEach(currencies) { currency in
-                    Label("\(amount(for: currency.code))", systemImage: currency.icon)
-                        .font(.system(size: 13, weight: .black))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Label(
+                        "\(amount(for: currency.code))",
+                        systemImage: currency.icon
+                    )
+                    .font(.system(size: 13, weight: .black))
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
             .padding(.horizontal, 16)
@@ -144,7 +173,10 @@ struct SummonView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(24)
-        .background(Color.black.opacity(0.34), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .background(
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
     }
 
     private func summonBannerRow(_ banner: SummonBanner) -> some View {
@@ -215,8 +247,22 @@ struct SummonView: View {
                             .background(
                                 LinearGradient(
                                     colors: affordable
-                                        ? [Color(red: 0.10, green: 0.40, blue: 0.57), Color(red: 0.05, green: 0.18, blue: 0.32)]
-                                        : [Color.gray.opacity(0.62), Color.black.opacity(0.62)],
+                                        ? [
+                                            Color(
+                                                red: 0.10,
+                                                green: 0.40,
+                                                blue: 0.57
+                                            ),
+                                            Color(
+                                                red: 0.05,
+                                                green: 0.18,
+                                                blue: 0.32
+                                            ),
+                                        ]
+                                        : [
+                                            Color.gray.opacity(0.62),
+                                            Color.black.opacity(0.62),
+                                        ],
                                     startPoint: .top,
                                     endPoint: .bottom
                                 ),
@@ -233,7 +279,9 @@ struct SummonView: View {
 
                     Text(costText(banner.cost))
                         .font(.system(size: 10, weight: .black))
-                        .foregroundStyle(affordable ? .white.opacity(0.9) : .red.opacity(0.9))
+                        .foregroundStyle(
+                            affordable ? .white.opacity(0.9) : .red.opacity(0.9)
+                        )
                         .lineLimit(1)
                         .minimumScaleFactor(0.65)
                         .frame(width: 68)
@@ -264,7 +312,10 @@ struct SummonView: View {
                 .frame(width: 42, height: 42)
                 .background(
                     RadialGradient(
-                        colors: [Color(red: 0.28, green: 0.66, blue: 0.78), Color(red: 0.05, green: 0.18, blue: 0.28)],
+                        colors: [
+                            Color(red: 0.28, green: 0.66, blue: 0.78),
+                            Color(red: 0.05, green: 0.18, blue: 0.28),
+                        ],
                         center: .topLeading,
                         startRadius: 2,
                         endRadius: 34
@@ -288,13 +339,24 @@ struct SummonView: View {
             return
         }
 
-        guard let character = SummonService.summon(from: banner, characters: characters) else {
+        guard
+            let character = SummonService.summon(
+                from: banner,
+                characters: characters
+            )
+        else {
             message = "Pool ist leer"
             return
         }
 
-        PlayerInventoryStore.addOwned(characterID: character.id, in: modelContext)
+        PlayerInventoryStore.addOwned(
+            characterID: character.id,
+            in: modelContext
+        )
+
+        // 👉 ERST HIER setzen
         lastSummon = character
+        showResult = true
         message = ""
     }
 
@@ -331,7 +393,9 @@ struct SummonView: View {
 
     private func costText(_ cost: [CurrencyAmount]) -> String {
         cost.map { item in
-            if let currency = currencies.first(where: { $0.code == item.currency }) {
+            if let currency = currencies.first(where: {
+                $0.code == item.currency
+            }) {
                 return "\(item.amount) \(currency.name)"
             }
             return "\(item.amount) \(item.currency)"

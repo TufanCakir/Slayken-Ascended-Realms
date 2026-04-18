@@ -52,5 +52,8 @@ struct GlobeBattle: Codable, Identifiable {
 }
 
 func loadGlobeEventChapters() -> [GlobeEventChapter] {
-    JSONResourceLoader.loadArray(GlobeEventChapter.self, resource: "globe_events")
+    JSONResourceLoader.loadArray(
+        GlobeEventChapter.self,
+        resource: "globe_events"
+    )
 }

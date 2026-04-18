@@ -14,10 +14,22 @@ struct GameMiddleDrawerView: View {
 
     private let actions: [MiddleDrawerActionItem] = [
         MiddleDrawerActionItem(id: .home, title: "Home", systemName: "house"),
-        MiddleDrawerActionItem(id: .events, title: "Events", systemName: "globe.europe.africa"),
+        MiddleDrawerActionItem(
+            id: .events,
+            title: "Events",
+            systemName: "globe.europe.africa"
+        ),
         MiddleDrawerActionItem(id: .team, title: "Team", systemName: "person"),
-        MiddleDrawerActionItem(id: .summon, title: "Summon", systemName: "sparkles"),
-        MiddleDrawerActionItem(id: .support, title: "Support", systemName: "questionmark.circle"),
+        MiddleDrawerActionItem(
+            id: .summon,
+            title: "Summon",
+            systemName: "sparkles"
+        ),
+        MiddleDrawerActionItem(
+            id: .support,
+            title: "Support",
+            systemName: "questionmark.circle"
+        ),
     ]
 
     var body: some View {
@@ -33,8 +45,11 @@ struct GameMiddleDrawerView: View {
                 }
             } label: {
                 VStack(spacing: 6) {
-                    Image(systemName: isExpanded ? "chevron.right" : "chevron.left")
-                        .font(.system(size: 13, weight: .black))
+                    Image(
+                        systemName: isExpanded
+                            ? "chevron.right" : "chevron.left"
+                    )
+                    .font(.system(size: 13, weight: .black))
                     Text("Menu")
                         .font(.system(size: 10, weight: .black))
                         .rotationEffect(.degrees(90))
@@ -46,11 +61,16 @@ struct GameMiddleDrawerView: View {
                 .shadow(color: .black.opacity(0.18), radius: 8, y: 2)
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(isExpanded ? "Close Menu Drawer" : "Open Menu Drawer")
+            .accessibilityLabel(
+                isExpanded ? "Close Menu Drawer" : "Open Menu Drawer"
+            )
         }
         .padding(.trailing, 10)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
-        .animation(.spring(response: 0.34, dampingFraction: 0.84), value: isExpanded)
+        .animation(
+            .spring(response: 0.34, dampingFraction: 0.84),
+            value: isExpanded
+        )
     }
 
     private var drawerContent: some View {

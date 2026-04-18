@@ -22,7 +22,8 @@ final class GameState: ObservableObject {
     @Published var activeEventPointID: String?
 
     var activeEventChapter: GlobeEventChapter? {
-        eventChapters.first { $0.id == activeEventChapterID } ?? eventChapters.first
+        eventChapters.first { $0.id == activeEventChapterID }
+            ?? eventChapters.first
     }
 
     var activeEventPoint: GlobeEventPoint? {
@@ -148,7 +149,10 @@ final class GameState: ObservableObject {
         UserDefaults.standard.set(character.model, forKey: characterKey)
     }
 
-    func saveSummonedCharacter(_ character: SummonCharacter, selectedSkinID: String? = nil) {
+    func saveSummonedCharacter(
+        _ character: SummonCharacter,
+        selectedSkinID: String? = nil
+    ) {
         saveCharacter(character.stats(selectedSkinID: selectedSkinID))
     }
 
@@ -157,7 +161,10 @@ final class GameState: ObservableObject {
         activeEventPointID = nil
     }
 
-    func selectEventPoint(_ point: GlobeEventPoint, in chapter: GlobeEventChapter) {
+    func selectEventPoint(
+        _ point: GlobeEventPoint,
+        in chapter: GlobeEventChapter
+    ) {
         activeEventChapterID = chapter.id
         activeEventPointID = point.id
     }
@@ -174,9 +181,12 @@ final class GameState: ObservableObject {
         selectedBattle = nil
     }
 
-    private func eventLocation(for battleID: String) -> (chapter: GlobeEventChapter, point: GlobeEventPoint)? {
+    private func eventLocation(for battleID: String) -> (
+        chapter: GlobeEventChapter, point: GlobeEventPoint
+    )? {
         for chapter in eventChapters {
-            for point in chapter.points where point.battles.contains(where: { $0.id == battleID }) {
+            for point in chapter.points
+            where point.battles.contains(where: { $0.id == battleID }) {
                 return (chapter, point)
             }
         }

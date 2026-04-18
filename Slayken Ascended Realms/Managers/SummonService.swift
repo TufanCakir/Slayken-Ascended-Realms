@@ -6,10 +6,16 @@
 import Foundation
 
 enum SummonService {
-    static func summon(from banner: SummonBanner, characters: [SummonCharacter]) -> SummonCharacter? {
-        let poolByID = Dictionary(uniqueKeysWithValues: characters.map { ($0.id, $0) })
-        let weightedPool = banner.pool.compactMap { entry -> (SummonCharacter, Double)? in
-            guard let character = poolByID[entry.characterID], entry.weight > 0 else { return nil }
+    static func summon(from banner: SummonBanner, characters: [SummonCharacter])
+        -> SummonCharacter?
+    {
+        let poolByID = Dictionary(
+            uniqueKeysWithValues: characters.map { ($0.id, $0) }
+        )
+        let weightedPool = banner.pool.compactMap {
+            entry -> (SummonCharacter, Double)? in
+            guard let character = poolByID[entry.characterID], entry.weight > 0
+            else { return nil }
             return (character, entry.weight)
         }
 

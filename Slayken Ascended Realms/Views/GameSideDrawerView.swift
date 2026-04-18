@@ -6,8 +6,6 @@
 import SwiftUI
 
 struct GameSideDrawerView: View {
-    let onBackground: () -> Void
-    let onMap: () -> Void
     let onTheme: () -> Void
     let onSupport: () -> Void
 
@@ -16,32 +14,27 @@ struct GameSideDrawerView: View {
     private let actions: [SideDrawerActionItem]
 
     init(
-        showBackground: Bool = true,
-        showMap: Bool = true,
         showTheme: Bool = true,
         showSupport: Bool = true,
-        onBackground: @escaping () -> Void,
-        onMap: @escaping () -> Void,
         onTheme: @escaping () -> Void,
         onSupport: @escaping () -> Void
     ) {
-        self.onBackground = onBackground
-        self.onMap = onMap
         self.onTheme = onTheme
         self.onSupport = onSupport
 
         var drawerActions: [SideDrawerActionItem] = []
-        if showBackground {
-            drawerActions.append(SideDrawerActionItem(id: .background, systemName: "photo"))
-        }
-        if showMap {
-            drawerActions.append(SideDrawerActionItem(id: .map, systemName: "map"))
-        }
         if showTheme {
-            drawerActions.append(SideDrawerActionItem(id: .theme, systemName: "paintbrush"))
+            drawerActions.append(
+                SideDrawerActionItem(id: .theme, systemName: "paintbrush")
+            )
         }
         if showSupport {
-            drawerActions.append(SideDrawerActionItem(id: .support, systemName: "questionmark.circle"))
+            drawerActions.append(
+                SideDrawerActionItem(
+                    id: .support,
+                    systemName: "questionmark.circle"
+                )
+            )
         }
         self.actions = drawerActions
     }
@@ -49,7 +42,10 @@ struct GameSideDrawerView: View {
     var body: some View {
         HStack(spacing: 8) {
             drawerContent
-                .frame(width: isExpanded ? drawerWidth : 0, alignment: .trailing)
+                .frame(
+                    width: isExpanded ? drawerWidth : 0,
+                    alignment: .trailing
+                )
                 .clipped()
                 .opacity(isExpanded ? 1 : 0)
 
@@ -71,7 +67,10 @@ struct GameSideDrawerView: View {
         .padding(.trailing, 10)
         .padding(.top, 6)
         .frame(maxWidth: .infinity, alignment: .topTrailing)
-        .animation(.spring(response: 0.34, dampingFraction: 0.84), value: isExpanded)
+        .animation(
+            .spring(response: 0.34, dampingFraction: 0.84),
+            value: isExpanded
+        )
     }
 
     private var drawerWidth: CGFloat {
@@ -110,10 +109,6 @@ struct GameSideDrawerView: View {
 
     private func perform(_ action: SideDrawerAction) {
         switch action {
-        case .background:
-            onBackground()
-        case .map:
-            onMap()
         case .theme:
             onTheme()
         case .support:
@@ -123,8 +118,6 @@ struct GameSideDrawerView: View {
 }
 
 private enum SideDrawerAction {
-    case background
-    case map
     case theme
     case support
 }
@@ -135,23 +128,10 @@ private struct SideDrawerActionItem: Identifiable {
 
     var accessibilityLabel: String {
         switch id {
-        case .background:
-            return "Background"
-        case .map:
-            return "Map"
         case .theme:
             return "Theme"
         case .support:
             return "Support"
         }
     }
-}
-
-#Preview {
-    GameSideDrawerView(
-        onBackground: {},
-        onMap: {},
-        onTheme: {},
-        onSupport: {}
-    )
 }

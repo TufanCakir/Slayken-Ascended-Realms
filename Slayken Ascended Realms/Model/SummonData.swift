@@ -63,7 +63,10 @@ struct SummonPoolEntry: Codable, Identifiable, Equatable {
 }
 
 func loadSummonCharacters() -> [SummonCharacter] {
-    JSONResourceLoader.loadArray(SummonCharacter.self, resource: "summon_characters")
+    JSONResourceLoader.loadArray(
+        SummonCharacter.self,
+        resource: "summon_characters"
+    )
 }
 
 func loadSummonBanners() -> [SummonBanner] {

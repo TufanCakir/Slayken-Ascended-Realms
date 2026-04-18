@@ -33,10 +33,12 @@ struct RootView: View {
                 }
 
             case .game:
-                GameView { enemy in
-                    transition(to: .battle, enemy: enemy)
-                }
-
+                GameView(
+                    onStartBattle: { enemy in
+                        transition(to: .battle, enemy: enemy)
+                    },
+                    chapters: gameState.eventChapters  // 🔥 HIER
+                )
             case .battle:
                 if let activeEnemy {
                     BattleView(

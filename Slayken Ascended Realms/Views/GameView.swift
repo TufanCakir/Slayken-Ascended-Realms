@@ -10,16 +10,10 @@ import SwiftUI
 
 struct GameView: View {
     private enum ActiveSelectionSheet: Identifiable {
-        case background
-        case map
         case theme
 
         var id: String {
             switch self {
-            case .background:
-                return "background"
-            case .map:
-                return "map"
             case .theme:
                 return "theme"
             }
@@ -43,6 +37,7 @@ struct GameView: View {
     @State private var selectedTab: GameTab = .game
 
     let onStartBattle: (CharacterStats) -> Void
+    let chapters: [GlobeEventChapter]
 
     var body: some View {
         GeometryReader { geo in
@@ -53,8 +48,10 @@ struct GameView: View {
                 GameSceneView(
                     player: gameState.player,
                     joystickVector: joystickVector,
-                    groundTexture: gameState.selectedMap.mapImage,
-                    skyboxTexture: gameState.selectedBackground.image
+                    groundTexture: gameState.selectedBattle?.groundTexture
+                        ?? "void",
+                    skyboxTexture: gameState.selectedBattle?.skyboxTexture
+                        ?? "void"
                 )
                 .id(gameState.player.model)
                 .ignoresSafeArea()
@@ -77,12 +74,13 @@ struct GameView: View {
                     }
                     .zIndex(30)
                 }
-
                 if selectedTab == .game && !showStory && !showPopup {
                     GameEventMapPreviewView(
-                        chapter: gameState.activeEventChapter,
+                        chapters: gameState.eventChapters,  // ✅ jetzt korrekt
                         point: gameState.activeEventPoint,
-                        completedBattleIDs: Set(completedBattles.map(\.battleID)),
+                        completedBattleIDs: Set(
+                            completedBattles.map(\.battleID)
+                        ),
                         selectedBattleID: gameState.selectedBattle?.id,
                         theme: theme.selectedTheme ?? theme.themes.first,
                         onOpen: {
@@ -93,8 +91,7 @@ struct GameView: View {
                             startBattle(battle)
                         }
                     )
-                    .padding(.bottom, 72)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                    .padding(.top, 500)
                     .zIndex(4)
                 }
 
@@ -113,17 +110,11 @@ struct GameView: View {
                             VStack {
 
                                 JoystickView(vector: $joystickVector)
-                                    .padding(.bottom, 230)
+                                    .padding(.bottom, 210)
                             }
 
                         case .events:
                             EmptyView()
-
-                        case .map:
-                            MapSelectView {
-                                selectedTab = .game
-                            }
-                            .environmentObject(gameState)
 
                         case .character:
                             EmptyView()
@@ -140,12 +131,6 @@ struct GameView: View {
                 }
 
                 GameSideDrawerView(
-                    onBackground: {
-                        activeSelectionSheet = .background
-                    },
-                    onMap: {
-                        activeSelectionSheet = .map
-                    },
                     onTheme: {
                         activeSelectionSheet = .theme
                     },
@@ -166,18 +151,7 @@ struct GameView: View {
             }
             .sheet(item: $activeSelectionSheet) { selection in
                 switch selection {
-                case .background:
-                    BackgroundSelectView {
-                        activeSelectionSheet = nil
-                    }
-                    .environmentObject(gameState)
-
-                case .map:
-                    MapSelectView {
-                        activeSelectionSheet = nil
-                    }
-                    .environmentObject(gameState)
-
+       
                 case .theme:
                     ThemeSelectView {
                         activeSelectionSheet = nil
@@ -253,14 +227,7 @@ struct GameView: View {
                     }
 
                     GameSideDrawerView(
-                        showBackground: false,
                         showTheme: false,
-                        onBackground: {
-                            closeGlobeAndOpen(.background)
-                        },
-                        onMap: {
-                            closeGlobeAndOpen(.map)
-                        },
                         onTheme: {
                             closeGlobeAndOpen(.theme)
                         },
@@ -338,7 +305,7 @@ struct GameView: View {
 }
 
 #Preview {
-    GameView { _ in }
+    GameView(onStartBattle: { _ in }, chapters: [])
         .environmentObject(GameState())
         .environmentObject(ThemeManager())
 }

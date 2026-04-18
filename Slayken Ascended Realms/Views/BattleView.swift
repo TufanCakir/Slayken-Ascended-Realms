@@ -131,9 +131,13 @@ struct BattleView: View {
             }
 
             if showVictory {
-                VictoryView {
-                    onExit()
-                }
+                VictoryView(
+                    currencies: loadCurrencyDefinitions(),
+                    rewards: gameState.activeBattleRewards,
+                    onContinue: {
+                        onExit()
+                    }
+                )
             }
 
             if showDefeat {
@@ -331,7 +335,10 @@ struct BattleView: View {
     private func awardVictoryRewardsIfNeeded() {
         guard !didAwardRewards else { return }
         didAwardRewards = true
-        PlayerInventoryStore.add(gameState.activeBattleRewards, in: modelContext)
+        PlayerInventoryStore.add(
+            gameState.activeBattleRewards,
+            in: modelContext
+        )
         if let battleID = gameState.selectedBattle?.id {
             PlayerInventoryStore.markBattleCompleted(battleID, in: modelContext)
         }

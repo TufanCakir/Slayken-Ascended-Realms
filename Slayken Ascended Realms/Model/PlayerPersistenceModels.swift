@@ -23,7 +23,11 @@ final class OwnedSummonCharacter {
     var selectedSkinID: String?
     var acquiredAt: Date
 
-    init(characterID: String, selectedSkinID: String? = nil, acquiredAt: Date = .now) {
+    init(
+        characterID: String,
+        selectedSkinID: String? = nil,
+        acquiredAt: Date = .now
+    ) {
         self.characterID = characterID
         self.selectedSkinID = selectedSkinID
         self.acquiredAt = acquiredAt

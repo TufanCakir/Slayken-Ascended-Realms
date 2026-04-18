@@ -11,7 +11,8 @@ struct CurrencyBarView: View {
     var compact = false
 
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \PlayerCurrencyBalance.code) private var balances: [PlayerCurrencyBalance]
+    @Query(sort: \PlayerCurrencyBalance.code) private var balances:
+        [PlayerCurrencyBalance]
 
     var body: some View {
         HStack(spacing: compact ? 6 : 8) {
@@ -20,7 +21,10 @@ struct CurrencyBarView: View {
             }
         }
         .onAppear {
-            PlayerInventoryStore.ensureBalances(for: currencies, in: modelContext)
+            PlayerInventoryStore.ensureBalances(
+                for: currencies,
+                in: modelContext
+            )
         }
     }
 
@@ -42,7 +46,8 @@ struct CurrencyBarView: View {
 
     @ViewBuilder
     private func currencyIcon(_ currency: CurrencyDefinition) -> some View {
-        if let assetIcon = currency.assetIcon, UIImage(named: assetIcon) != nil {
+        if let assetIcon = currency.assetIcon, UIImage(named: assetIcon) != nil
+        {
             Image(assetIcon)
                 .resizable()
                 .scaledToFit()

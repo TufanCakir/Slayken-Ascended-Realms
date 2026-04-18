@@ -7,33 +7,46 @@
         "cutscene": {
             "id": "chapter_1_intro",
             "title": "Der erste Riss",
-            "video": "cutscene_chapter_1_intro",
-            "text": "Ein Riss oeffnet sich ueber dem Mondtor."
+            "video": "intro",
+            "text": "Ein Portal öffnet sich über dem Mondtor."
         },
         "points": [
             {
                 "id": "chapter_1_gate",
                 "title": "Mondtor",
-                "text": "Am Mondtor oeffnet sich ein Riss. Waehle einen Kampf, um die Spur zu verfolgen.",
+                "text":
+                    "Am Mondtor oeffnet sich ein Riss. Waehle einen Kampf, um die Spur zu verfolgen.",
                 "mapImage": "map1",
                 "mapTexture": "map1",
-                "node": { "x": 0.32, "y": 0.48 },
+                "node": {
+                    "x": 0.32,
+                    "y": 0.48
+                },
                 "cutscene": {
                     "id": "chapter_1_gate_intro",
                     "title": "Mondtor",
-                    "video": "cutscene_chapter_1_gate",
+                    "video": "mondtor",
                     "text": "Der Pfad am Mondtor ist instabil."
                 },
                 "battles": [
                     {
                         "id": "chapter_1_battle_1",
                         "name": "Torwache",
-                        "description": "Ein schneller Einstiegskampf mit kleinen Rewards.",
+                        "description":
+                            "Ein schneller Einstiegskampf mit kleinen Rewards.",
                         "difficulty": 1,
                         "groundTexture": "map",
-                        "skyboxTexture": "sar_bg",
-                        "node": { "x": 0.28, "y": 0.54 },
-                        "cutscene": null,
+                        "skyboxTexture": "map",
+                        "node": {
+                            "x": 0.28,
+                            "y": 0.54
+                        },
+                        "cutscene": {
+                            "id": "chapter_1_battle_1_cutscene",
+                            "title": "Mondtor",
+                            "video": "mondtor",
+                            "text": "Der Pfad am Mondtor ist instabil."
+                        },
                         "enemy": {
                             "name": "Rift Guard",
                             "image": "sar_dragon",
@@ -42,26 +55,39 @@
                             "attack": 10
                         },
                         "rewards": [
-                            { "currency": "coins", "amount": 120 },
-                            { "currency": "crystals", "amount": 10 }
+                            {
+                                "currency": "coins",
+                                "amount": 120
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 10
+                            }
                         ],
                         "story": [
-                            { "speaker": "Narrator", "text": "Der erste Waechter steht direkt vor dem Riss." },
-                            { "speaker": "Hero", "text": "Ich schliesse dieses Tor." }
+                            {
+                                "speaker": "Narrator",
+                                "text":
+                                    "Der erste Waechter steht direkt vor dem Riss."
+                            }
                         ]
                     },
                     {
                         "id": "chapter_1_battle_2",
                         "name": "Kristallspur",
-                        "description": "Mehr Leben, aber bessere Kristallbelohnung.",
+                        "description":
+                            "Mehr Leben, aber bessere Kristallbelohnung.",
                         "difficulty": 2,
-                        "groundTexture": "ice",
-                        "skyboxTexture": "void",
-                        "node": { "x": 0.68, "y": 0.38 },
+                        "groundTexture": "sar_bg",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.68,
+                            "y": 0.38
+                        },
                         "cutscene": {
                             "id": "chapter_1_battle_2_cutscene",
                             "title": "Kristallspur",
-                            "video": "cutscene_crystal_trace",
+                            "video": "kristallspur",
                             "text": "Die Kristalle zeigen den naechsten Gegner."
                         },
                         "enemy": {
@@ -72,252 +98,56 @@
                             "attack": 14
                         },
                         "rewards": [
-                            { "currency": "coins", "amount": 180 },
-                            { "currency": "crystals", "amount": 18 }
+                            {
+                                "currency": "coins",
+                                "amount": 180
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 18
+                            }
                         ],
                         "story": [
-                            { "speaker": "Narrator", "text": "Die Spur leuchtet kalt unter deinen Fuessen." }
+                            {
+                                "speaker": "Narrator",
+                                "text":
+                                    "Die Spur leuchtet kalt unter deinen Fuessen."
+                            }
                         ]
-                    }
-                ]
-            },
-            {
-                "id": "chapter_1_forge",
-                "title": "Ascheforge",
-                "text": "Unter der Forge sammeln sich Gegner. Jeder Kampf nutzt eigene Szene-Texturen.",
-                "mapImage": "map2",
-                "mapTexture": "map2",
-                "node": { "x": 0.68, "y": 0.62 },
-                "cutscene": {
-                    "id": "chapter_1_forge_intro",
-                    "title": "Ascheforge",
-                    "video": "cutscene_ascheforge",
-                    "text": "Die Forge brennt unter schwarzem Himmel."
-                },
-                "battles": [
-                    {
-                        "id": "chapter_1_battle_3",
-                        "name": "Feuerprobe",
-                        "description": "Ein harter Kampf mit hohen Coin-Rewards.",
-                        "difficulty": 3,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "fire",
-                        "node": { "x": 0.55, "y": 0.50 },
-                        "cutscene": null,
-                        "enemy": {
-                            "name": "Ash Knight",
-                            "image": "sar_dragon",
-                            "model": "shela",
-                            "hp": 160,
-                            "attack": 18
-                        },
-                        "rewards": [
-                            { "currency": "coins", "amount": 280 },
-                            { "currency": "crystals", "amount": 25 }
-                        ],
-                        "story": [
-                            { "speaker": "Ash Knight", "text": "Nur Staerke ueberlebt diese Hitze." }
-                        ]
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "chapter_2",
-        "title": "Story Kapitel 2",
-        "subtitle": "Die Splitter des Himmels",
-        "mapTexture": "map2",
-        "cutscene": {
-            "id": "chapter_2_intro",
-            "title": "Splitter des Himmels",
-            "video": "cutscene_chapter_2_intro",
-            "text": "Ueber den Wolken fallen Splitter einer alten Macht."
-        },
-        "points": [
-            {
-                "id": "chapter_2_cloudspire",
-                "title": "Wolkenspitze",
-                "text": "Eine schwebende Spitze sammelt Energie aus dem Sturm.",
-                "mapImage": "map2",
-                "mapTexture": "map2",
-                "node": { "x": 0.38, "y": 0.36 },
-                "cutscene": {
-                    "id": "chapter_2_cloudspire_intro",
-                    "title": "Wolkenspitze",
-                    "video": "cutscene_cloudspire",
-                    "text": "Die Wolkenspitze steigt aus dem Nebel."
-                },
-                "battles": [
-                    {
-                        "id": "chapter_2_battle_1",
-                        "name": "Sturmwaechter",
-                        "description": "Ein Gegner mit schneller Angriffskraft.",
-                        "difficulty": 4,
-                        "groundTexture": "country",
-                        "skyboxTexture": "sar_bg",
-                        "node": { "x": 0.33, "y": 0.48 },
-                        "cutscene": null,
-                        "enemy": {
-                            "name": "Storm Guard",
-                            "image": "sar_dragon",
-                            "model": "zaron",
-                            "hp": 190,
-                            "attack": 22
-                        },
-                        "rewards": [
-                            { "currency": "coins", "amount": 340 },
-                            { "currency": "crystals", "amount": 32 }
-                        ],
-                        "story": []
                     },
                     {
-                        "id": "chapter_2_battle_2",
-                        "name": "Himmelsbruch",
-                        "description": "Bosskampf am Rand der Wolkenspitze.",
-                        "difficulty": 5,
-                        "groundTexture": "void",
-                        "skyboxTexture": "ice",
-                        "node": { "x": 0.66, "y": 0.32 },
-                        "cutscene": {
-                            "id": "chapter_2_battle_2_cutscene",
-                            "title": "Himmelsbruch",
-                            "video": "cutscene_skybreak",
-                            "text": "Der Himmel bricht auf und der Boss erscheint."
-                        },
-                        "enemy": {
-                            "name": "Sky Breaker",
-                            "image": "sar_dragon",
-                            "model": "shela",
-                            "hp": 240,
-                            "attack": 28
-                        },
-                        "rewards": [
-                            { "currency": "coins", "amount": 460 },
-                            { "currency": "crystals", "amount": 44 }
-                        ],
-                        "story": []
-                    }
-                ]
-            },
-            {
-                "id": "chapter_2_ruins",
-                "title": "Sternruinen",
-                "text": "In den Ruinen liegen alte Siegel unter zerbrochenem Licht.",
-                "mapImage": "map2",
-                "mapTexture": "map2",
-                "node": { "x": 0.66, "y": 0.66 },
-                "cutscene": null,
-                "battles": [
-                    {
-                        "id": "chapter_2_battle_3",
-                        "name": "Siegelbrecher",
-                        "description": "Ein schwerer Elitekampf mit mehr Coins.",
-                        "difficulty": 5,
+                        "id": "chapter_1_battle_3",
+                        "name": "Rissbestie",
+                        "description": "Ein aggressiver Gegner direkt am Tor.",
+                        "difficulty": 3,
                         "groundTexture": "map",
-                        "skyboxTexture": "void",
-                        "node": { "x": 0.50, "y": 0.48 },
-                        "cutscene": null,
+                        "skyboxTexture": "map",
+                        "node": {
+                            "x": 0.45,
+                            "y": 0.60
+                        },
+                        "cutscene": {
+                            "id": "chapter_1_battle_3_cutscene",
+                            "title": "Kristallspur",
+                            "video": "rissbestie",
+                            "text": "Die Kristalle zeigen den naechsten Gegner."
+                        },
                         "enemy": {
-                            "name": "Seal Breaker",
+                            "name": "Rift Beast",
                             "image": "sar_dragon",
                             "model": "zaron",
-                            "hp": 260,
-                            "attack": 26
+                            "hp": 140,
+                            "attack": 16
                         },
                         "rewards": [
-                            { "currency": "coins", "amount": 520 },
-                            { "currency": "crystals", "amount": 38 }
-                        ],
-                        "story": []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "chapter_3",
-        "title": "Story Kapitel 3",
-        "subtitle": "Koenigreich der Leere",
-        "mapTexture": "map2",
-        "cutscene": null,
-        "points": [
-            {
-                "id": "chapter_3_voidgate",
-                "title": "Leerenpforte",
-                "text": "Die Pforte fuehrt direkt in ein verdrehtes Reich.",
-                "mapImage": "map2",
-                "mapTexture": "map2",
-                "node": { "x": 0.30, "y": 0.42 },
-                "cutscene": {
-                    "id": "chapter_3_voidgate_intro",
-                    "title": "Leerenpforte",
-                    "video": "cutscene_voidgate",
-                    "text": "Die Pforte pulsiert und zieht alles Licht hinein."
-                },
-                "battles": [
-                    {
-                        "id": "chapter_3_battle_1",
-                        "name": "Leerenritter",
-                        "description": "Ein Boss mit hoher Lebensenergie.",
-                        "difficulty": 1,
-                        "groundTexture": "void",
-                        "skyboxTexture": "void",
-                        "node": { "x": 0.48, "y": 0.48 },
-                        "cutscene": {
-                            "id": "chapter_3_battle_1_cutscene",
-                            "title": "Leerenritter",
-                            "video": "cutscene_void_knight",
-                            "text": "Ein Ritter aus der Leere fordert dich heraus."
-                        },
-                        "enemy": {
-                            "name": "Void Knight",
-                            "image": "sar_dragon",
-                            "model": "shela",
-                            "hp": 30,
-                            "attack": 34
-                        },
-                        "rewards": [
-                            { "currency": "coins", "amount": 720 },
-                            { "currency": "crystals", "amount": 60 }
-                        ],
-                        "story": []
-                    }
-                ]
-            },
-            {
-                "id": "chapter_3_crown",
-                "title": "Schwarze Krone",
-                "text": "Die Krone ist der Kern des Risses und der Abschluss dieses Kapitels.",
-                "mapImage": "event_point_black_crown",
-                "mapTexture": "event_map_black_crown",
-                "node": { "x": 0.70, "y": 0.54 },
-                "cutscene": null,
-                "battles": [
-                    {
-                        "id": "chapter_3_battle_2",
-                        "name": "Kronentraeger",
-                        "description": "Finaler Kampf des dritten Kapitels.",
-                        "difficulty": 7,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "fire",
-                        "node": { "x": 0.52, "y": 0.46 },
-                        "cutscene": {
-                            "id": "chapter_3_battle_2_cutscene",
-                            "title": "Die schwarze Krone",
-                            "video": "cutscene_black_crown",
-                            "text": "Die Krone erwacht."
-                        },
-                        "enemy": {
-                            "name": "Crown Bearer",
-                            "image": "sar_dragon",
-                            "model": "zaron",
-                            "hp": 420,
-                            "attack": 40
-                        },
-                        "rewards": [
-                            { "currency": "coins", "amount": 900 },
-                            { "currency": "crystals", "amount": 80 }
+                            {
+                                "currency": "coins",
+                                "amount": 200
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 20
+                            }
                         ],
                         "story": []
                     }

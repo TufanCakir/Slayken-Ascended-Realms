@@ -2,7 +2,7 @@
     {
         "id": "zaron",
         "name": "Zaron",
-        "summonImage": "summon_zaron",
+        "summonImage": "preview_zaron",
         "model": "zaron_animation",
         "battleModel": "zaron",
         "texture": "warrior_textur_original",
@@ -14,20 +14,20 @@
                 "id": "original",
                 "name": "Original",
                 "texture": "warrior_textur_original",
-                "summonImage": "summon_zaron"
+                "summonImage": "preview_zaron"
             },
             {
                 "id": "ascended",
                 "name": "Ascended",
                 "texture": "zaron_skin_ascended",
-                "summonImage": "summon_zaron_ascended"
+                "summonImage": "preview_zaron"
             }
         ]
     },
     {
         "id": "shela",
         "name": "Shela",
-        "summonImage": "summon_shela",
+        "summonImage": "preview_shela",
         "model": "shela_animation",
         "battleModel": "warriorin",
         "texture": "shela_texture_original",
@@ -39,13 +39,13 @@
                 "id": "original",
                 "name": "Original",
                 "texture": "shela_texture_original",
-                "summonImage": "summon_shela"
+                "summonImage": "preview_shela"
             },
             {
                 "id": "shadow",
                 "name": "Shadow",
                 "texture": "shela_skin_shadow",
-                "summonImage": "summon_shela_shadow"
+                "summonImage": "preview_shela"
             }
         ]
     }

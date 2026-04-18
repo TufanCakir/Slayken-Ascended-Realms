@@ -8,16 +8,23 @@ import SwiftData
 
 @MainActor
 enum PlayerInventoryStore {
-    static func ensureBalances(for currencies: [CurrencyDefinition], in context: ModelContext) {
+    static func ensureBalances(
+        for currencies: [CurrencyDefinition],
+        in context: ModelContext
+    ) {
         for currency in currencies {
             if balance(for: currency.code, in: context) == nil {
-                context.insert(PlayerCurrencyBalance(code: currency.code, amount: 0))
+                context.insert(
+                    PlayerCurrencyBalance(code: currency.code, amount: 0)
+                )
             }
         }
         save(context)
     }
 
-    static func balance(for code: String, in context: ModelContext) -> PlayerCurrencyBalance? {
+    static func balance(for code: String, in context: ModelContext)
+        -> PlayerCurrencyBalance?
+    {
         let descriptor = FetchDescriptor<PlayerCurrencyBalance>(
             predicate: #Predicate { $0.code == code }
         )
@@ -31,7 +38,8 @@ enum PlayerInventoryStore {
     static func add(_ rewards: [CurrencyAmount], in context: ModelContext) {
         for reward in rewards where reward.amount != 0 {
             let existing = balance(for: reward.currency, in: context)
-            let balance = existing ?? PlayerCurrencyBalance(code: reward.currency)
+            let balance =
+                existing ?? PlayerCurrencyBalance(code: reward.currency)
             if existing == nil {
                 context.insert(balance)
             }
@@ -40,11 +48,15 @@ enum PlayerInventoryStore {
         save(context)
     }
 
-    static func canSpend(_ cost: [CurrencyAmount], in context: ModelContext) -> Bool {
+    static func canSpend(_ cost: [CurrencyAmount], in context: ModelContext)
+        -> Bool
+    {
         cost.allSatisfy { amount(for: $0.currency, in: context) >= $0.amount }
     }
 
-    static func spend(_ cost: [CurrencyAmount], in context: ModelContext) -> Bool {
+    static func spend(_ cost: [CurrencyAmount], in context: ModelContext)
+        -> Bool
+    {
         guard canSpend(cost, in: context) else { return false }
         for item in cost {
             balance(for: item.currency, in: context)?.amount -= item.amount
@@ -66,26 +78,37 @@ enum PlayerInventoryStore {
         save(context)
     }
 
-    static func setTeam(characterID: String, slotIndex: Int = 0, in context: ModelContext) {
+    static func setTeam(
+        characterID: String,
+        slotIndex: Int = 0,
+        in context: ModelContext
+    ) {
         let descriptor = FetchDescriptor<TeamMemberRecord>(
             predicate: #Predicate { $0.slotIndex == slotIndex }
         )
         if let existing = try? context.fetch(descriptor).first {
             existing.characterID = characterID
         } else {
-            context.insert(TeamMemberRecord(slotIndex: slotIndex, characterID: characterID))
+            context.insert(
+                TeamMemberRecord(slotIndex: slotIndex, characterID: characterID)
+            )
         }
         save(context)
     }
 
-    static func isBattleCompleted(_ battleID: String, in context: ModelContext) -> Bool {
+    static func isBattleCompleted(_ battleID: String, in context: ModelContext)
+        -> Bool
+    {
         let descriptor = FetchDescriptor<PlayerBattleProgress>(
             predicate: #Predicate { $0.battleID == battleID }
         )
         return ((try? context.fetchCount(descriptor)) ?? 0) > 0
     }
 
-    static func markBattleCompleted(_ battleID: String, in context: ModelContext) {
+    static func markBattleCompleted(
+        _ battleID: String,
+        in context: ModelContext
+    ) {
         guard !isBattleCompleted(battleID, in: context) else { return }
         context.insert(PlayerBattleProgress(battleID: battleID))
         save(context)

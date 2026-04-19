@@ -15,6 +15,7 @@ struct BattleSceneView: UIViewRepresentable {
     let enemyHP: CGFloat
     let playerAttackID: Int
     let enemyAttackID: Int
+    let particleEffect: String?
     let groundTexture: String
     let skyboxTexture: String
 
@@ -47,7 +48,8 @@ struct BattleSceneView: UIViewRepresentable {
         context.coordinator.updateEnemyHP(enemyHP)
         context.coordinator.updateAttackTriggers(
             playerAttackID: playerAttackID,
-            enemyAttackID: enemyAttackID
+            enemyAttackID: enemyAttackID,
+            particleEffect: particleEffect
         )
     }
 }
@@ -81,13 +83,18 @@ final class BattleSceneCoordinator {
         enemyHPNode?.scale.x = Float(safe)
     }
 
-    func updateAttackTriggers(playerAttackID: Int, enemyAttackID: Int) {
+    func updateAttackTriggers(
+        playerAttackID: Int,
+        enemyAttackID: Int,
+        particleEffect: String?
+    ) {
         if playerAttackID != lastPlayerAttackID {
             lastPlayerAttackID = playerAttackID
             if playerAttackID > 0 {
                 playAttackAnimation(
                     attacker: playerRootNode,
-                    defender: enemyRootNode
+                    defender: enemyRootNode,
+                    particleEffect: particleEffect
                 )
             }
         }
@@ -97,7 +104,8 @@ final class BattleSceneCoordinator {
             if enemyAttackID > 0 {
                 playAttackAnimation(
                     attacker: enemyRootNode,
-                    defender: playerRootNode
+                    defender: playerRootNode,
+                    particleEffect: nil
                 )
             }
         }
@@ -263,7 +271,11 @@ final class BattleSceneCoordinator {
         return groundNode.position.y + Float(ground.height) * 0.5
     }
 
-    private func playAttackAnimation(attacker: SCNNode, defender: SCNNode) {
+    private func playAttackAnimation(
+        attacker: SCNNode,
+        defender: SCNNode,
+        particleEffect: String?
+    ) {
         attacker.removeAction(forKey: "attack")
         defender.removeAction(forKey: "hit")
 
@@ -310,9 +322,17 @@ final class BattleSceneCoordinator {
         ])
         recover.timingMode = .easeOut
 
+        let impact = SCNAction.run { [weak self, weak defender] _ in
+            guard let self, let defender, let particleEffect else { return }
+            self.spawnParticleEffect(
+                named: particleEffect,
+                at: defender.presentation.position
+            )
+        }
+
         attacker.runAction(
             SCNAction.sequence([
-                windup, lunge, SCNAction.wait(duration: 0.04), recover,
+                windup, lunge, impact, SCNAction.wait(duration: 0.04), recover,
             ]),
             forKey: "attack"
         )
@@ -343,6 +363,49 @@ final class BattleSceneCoordinator {
             ]),
             forKey: "hit"
         )
+    }
+
+    private func spawnParticleEffect(named effect: String, at position: SCNVector3) {
+        let particles = SCNParticleSystem()
+        particles.birthRate = 620
+        particles.emissionDuration = 0.12
+        particles.particleLifeSpan = 0.48
+        particles.particleLifeSpanVariation = 0.14
+        particles.particleSize = 0.16
+        particles.particleSizeVariation = 0.08
+        particles.particleVelocity = 4.6
+        particles.particleVelocityVariation = 1.8
+        particles.spreadingAngle = 86
+        particles.blendMode = .additive
+        particles.particleColor = particleColor(for: effect)
+
+        let node = SCNNode()
+        node.position = SCNVector3(position.x, position.y + 1.35, position.z)
+        node.addParticleSystem(particles)
+        scene.rootNode.addChildNode(node)
+        node.runAction(
+            SCNAction.sequence([
+                SCNAction.wait(duration: 0.85),
+                SCNAction.removeFromParentNode(),
+            ])
+        )
+    }
+
+    private func particleColor(for effect: String) -> UIColor {
+        switch effect.lowercased() {
+        case "fire", "ash":
+            return UIColor(red: 1.0, green: 0.34, blue: 0.08, alpha: 1)
+        case "ice", "crystal":
+            return UIColor(red: 0.32, green: 0.86, blue: 1.0, alpha: 1)
+        case "void":
+            return UIColor(red: 0.58, green: 0.18, blue: 1.0, alpha: 1)
+        case "light":
+            return UIColor(red: 1.0, green: 0.90, blue: 0.38, alpha: 1)
+        case "storm":
+            return UIColor(red: 0.45, green: 0.72, blue: 1.0, alpha: 1)
+        default:
+            return UIColor(red: 0.92, green: 0.96, blue: 1.0, alpha: 1)
+        }
     }
 
     private func normalizedXZ(_ vector: SCNVector3) -> SCNVector3 {
@@ -494,6 +557,7 @@ final class BattleSceneCoordinator {
         enemyHP: 0.72,
         playerAttackID: 0,
         enemyAttackID: 0,
+        particleEffect: "fire",
         groundTexture: "sar_bg",
         skyboxTexture: "sar_bg"
     )

@@ -6,7 +6,7 @@
         "cost": [
             {
                 "currency": "crystals",
-                "amount": 0
+                "amount": 100
             }
         ],
         "rates": [
@@ -27,6 +27,53 @@
             {
                 "characterID": "shela",
                 "weight": 75
+            }
+        ]
+    },
+    {
+        "id": "rift_skill_cards",
+        "name": "Rift Skill Cards",
+        "image": "fire",
+        "cost": [
+            {
+                "currency": "coins",
+                "amount": 300
+            }
+        ],
+        "rates": [
+            {
+                "rarity": 4,
+                "rate": 20.0
+            },
+            {
+                "rarity": 3,
+                "rate": 80.0
+            }
+        ],
+        "pool": [
+            {
+                "cardID": "slash_red",
+                "weight": 32
+            },
+            {
+                "cardID": "crystal_blue",
+                "weight": 25
+            },
+            {
+                "cardID": "void_pulse",
+                "weight": 12
+            },
+            {
+                "cardID": "moon_guard",
+                "weight": 15
+            },
+            {
+                "cardID": "storm_edge",
+                "weight": 10
+            },
+            {
+                "cardID": "ash_breaker",
+                "weight": 6
             }
         ]
     }

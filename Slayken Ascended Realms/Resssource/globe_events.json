@@ -8,19 +8,19 @@
             "id": "chapter_1_intro",
             "title": "Der erste Riss",
             "video": "intro",
-            "text": "Ein Portal öffnet sich über dem Mondtor."
+            "text": "Ein Portal oeffnet sich ueber dem Mondtor."
         },
         "points": [
             {
                 "id": "chapter_1_gate",
                 "title": "Mondtor",
                 "text":
-                    "Am Mondtor oeffnet sich ein Riss. Waehle einen Kampf, um die Spur zu verfolgen.",
+                    "Am Mondtor oeffnet sich ein Riss. Schlage dich von Node zu Node vor.",
                 "mapImage": "map1",
                 "mapTexture": "map1",
                 "node": {
-                    "x": 0.32,
-                    "y": 0.48
+                    "x": 0.30,
+                    "y": 0.52
                 },
                 "cutscene": {
                     "id": "chapter_1_gate_intro",
@@ -32,20 +32,19 @@
                     {
                         "id": "chapter_1_battle_1",
                         "name": "Torwache",
-                        "description":
-                            "Ein schneller Einstiegskampf mit kleinen Rewards.",
+                        "description": "Der erste Waechter am Riss.",
                         "difficulty": 1,
                         "groundTexture": "map",
                         "skyboxTexture": "map",
                         "node": {
-                            "x": 0.28,
-                            "y": 0.54
+                            "x": 0.10,
+                            "y": 0.64
                         },
                         "cutscene": {
                             "id": "chapter_1_battle_1_cutscene",
-                            "title": "Mondtor",
-                            "video": "mondtor",
-                            "text": "Der Pfad am Mondtor ist instabil."
+                            "title": "Torwache",
+                            "video": "torwache",
+                            "text": "Die Torwache stellt sich dir entgegen."
                         },
                         "enemy": {
                             "name": "Rift Guard",
@@ -54,6 +53,30 @@
                             "hp": 80,
                             "attack": 10
                         },
+                        "enemies": [
+                            {
+                                "name": "Rift Scout",
+                                "image": "sar_dragon",
+                                "model": "shela",
+                                "hp": 70,
+                                "attack": 9
+                            },
+                            {
+                                "name": "Rift Guard",
+                                "image": "sar_dragon",
+                                "model": "shela",
+                                "hp": 90,
+                                "attack": 11
+                            }
+                        ],
+                        "boss": {
+                            "name": "Gate Breaker",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 150,
+                            "attack": 16
+                        },
+                        "xpReward": 160,
                         "rewards": [
                             {
                                 "currency": "coins",
@@ -64,25 +87,18 @@
                                 "amount": 10
                             }
                         ],
-                        "story": [
-                            {
-                                "speaker": "Narrator",
-                                "text":
-                                    "Der erste Waechter steht direkt vor dem Riss."
-                            }
-                        ]
+                        "story": []
                     },
                     {
                         "id": "chapter_1_battle_2",
                         "name": "Kristallspur",
-                        "description":
-                            "Mehr Leben, aber bessere Kristallbelohnung.",
+                        "description": "Eine leuchtende Spur fuehrt weiter.",
                         "difficulty": 2,
                         "groundTexture": "sar_bg",
                         "skyboxTexture": "sar_bg",
                         "node": {
-                            "x": 0.68,
-                            "y": 0.38
+                            "x": 0.20,
+                            "y": 0.54
                         },
                         "cutscene": {
                             "id": "chapter_1_battle_2_cutscene",
@@ -107,13 +123,7 @@
                                 "amount": 18
                             }
                         ],
-                        "story": [
-                            {
-                                "speaker": "Narrator",
-                                "text":
-                                    "Die Spur leuchtet kalt unter deinen Fuessen."
-                            }
-                        ]
+                        "story": []
                     },
                     {
                         "id": "chapter_1_battle_3",
@@ -123,14 +133,14 @@
                         "groundTexture": "map",
                         "skyboxTexture": "map",
                         "node": {
-                            "x": 0.45,
-                            "y": 0.60
+                            "x": 0.31,
+                            "y": 0.61
                         },
                         "cutscene": {
                             "id": "chapter_1_battle_3_cutscene",
-                            "title": "Kristallspur",
+                            "title": "Rissbestie",
                             "video": "rissbestie",
-                            "text": "Die Kristalle zeigen den naechsten Gegner."
+                            "text": "Die Bestie springt aus dem Riss."
                         },
                         "enemy": {
                             "name": "Rift Beast",
@@ -142,11 +152,1107 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 200
+                                "amount": 210
                             },
                             {
                                 "currency": "crystals",
                                 "amount": 20
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_1_battle_4",
+                        "name": "Mondsplitter",
+                        "description": "Splitterenergie sammelt sich im Boden.",
+                        "difficulty": 4,
+                        "groundTexture": "ice",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.40,
+                            "y": 0.46
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Moon Shard",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 160,
+                            "attack": 18
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 240
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 22
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_1_battle_5",
+                        "name": "Nebelpfad",
+                        "description": "Ein Kampf im dichten Nebel.",
+                        "difficulty": 5,
+                        "groundTexture": "country",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.49,
+                            "y": 0.58
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Mist Lurker",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 185,
+                            "attack": 20
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 280
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 25
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_1_battle_6",
+                        "name": "Runenwache",
+                        "description": "Alte Runen erwachen.",
+                        "difficulty": 6,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.58,
+                            "y": 0.42
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Rune Guard",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 210,
+                            "attack": 23
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 330
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 28
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_1_battle_7",
+                        "name": "Schattenriss",
+                        "description":
+                            "Der Riss wirft einen Schatten auf die Map.",
+                        "difficulty": 7,
+                        "groundTexture": "void",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.66,
+                            "y": 0.55
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Shadow Rift",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 240,
+                            "attack": 25
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 380
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 32
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_1_battle_8",
+                        "name": "Mondklinge",
+                        "description": "Ein schneller Elitegegner.",
+                        "difficulty": 8,
+                        "groundTexture": "ice",
+                        "skyboxTexture": "map",
+                        "node": {
+                            "x": 0.74,
+                            "y": 0.40
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Moon Blade",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 270,
+                            "attack": 28
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 430
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 36
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_1_battle_9",
+                        "name": "Torbrecher",
+                        "description": "Der Vorboss am Mondtor.",
+                        "difficulty": 9,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.84,
+                            "y": 0.52
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Gate Breaker",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 310,
+                            "attack": 31
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 500
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 42
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_1_battle_10",
+                        "name": "Risskern",
+                        "description": "Boss des ersten Kapitels.",
+                        "difficulty": 10,
+                        "groundTexture": "void",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.92,
+                            "y": 0.36
+                        },
+                        "cutscene": {
+                            "id": "chapter_1_battle_10_cutscene",
+                            "title": "Risskern",
+                            "video": "rissbestie",
+                            "text": "Der Kern des ersten Risses pulsiert."
+                        },
+                        "enemy": {
+                            "name": "Rift Core",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 360,
+                            "attack": 35
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 650
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 55
+                            }
+                        ],
+                        "story": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "chapter_2",
+        "title": "Story Kapitel 2",
+        "subtitle": "Die Splitter des Himmels",
+        "mapTexture": "map2",
+        "cutscene": {
+            "id": "chapter_2_intro",
+            "title": "Splitter des Himmels",
+            "video": "intro",
+            "text": "Himmelssplitter fallen auf eine neue Route."
+        },
+        "points": [
+            {
+                "id": "chapter_2_spire",
+                "title": "Wolkenspitze",
+                "text": "Die Route fuehrt durch schwebende Ruinen.",
+                "mapImage": "map2",
+                "mapTexture": "map2",
+                "node": {
+                    "x": 0.42,
+                    "y": 0.42
+                },
+                "cutscene": null,
+                "battles": [
+                    {
+                        "id": "chapter_2_battle_1",
+                        "name": "Windwache",
+                        "description": "Startkampf des zweiten Kapitels.",
+                        "difficulty": 11,
+                        "groundTexture": "country",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.08,
+                            "y": 0.52
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Wind Guard",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 380,
+                            "attack": 36
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 700
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 60
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_2",
+                        "name": "Sturmrand",
+                        "description": "Der Wind wird staerker.",
+                        "difficulty": 12,
+                        "groundTexture": "ice",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.16,
+                            "y": 0.40
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Storm Edge",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 410,
+                            "attack": 38
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 760
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 64
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_3",
+                        "name": "Wolkenklaue",
+                        "description": "Ein schneller Luftgegner.",
+                        "difficulty": 13,
+                        "groundTexture": "sar_bg",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.24,
+                            "y": 0.58
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Cloud Claw",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 440,
+                            "attack": 40
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 820
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 68
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_4",
+                        "name": "Donnerpfad",
+                        "description": "Blitze schneiden durch die Route.",
+                        "difficulty": 14,
+                        "groundTexture": "void",
+                        "skyboxTexture": "ice",
+                        "node": {
+                            "x": 0.32,
+                            "y": 0.45
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Thunder Path",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 470,
+                            "attack": 42
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 900
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 72
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_5",
+                        "name": "Himmelsriss",
+                        "description": "Ein Riss oeffnet sich ueber dir.",
+                        "difficulty": 15,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.40,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Sky Rift",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 510,
+                            "attack": 45
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 980
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 78
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_6",
+                        "name": "Aetherwache",
+                        "description": "Der Aether blockiert den Weg.",
+                        "difficulty": 16,
+                        "groundTexture": "map",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.48,
+                            "y": 0.37
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Aether Guard",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 550,
+                            "attack": 48
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1060
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 84
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_7",
+                        "name": "Sternfaenger",
+                        "description": "Ein Elitegegner sammelt Splitter.",
+                        "difficulty": 17,
+                        "groundTexture": "ice",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.56,
+                            "y": 0.54
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Star Catcher",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 590,
+                            "attack": 51
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1150
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 90
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_8",
+                        "name": "Nebelbruecke",
+                        "description": "Die Bruecke verschwindet im Nebel.",
+                        "difficulty": 18,
+                        "groundTexture": "country",
+                        "skyboxTexture": "ice",
+                        "node": {
+                            "x": 0.64,
+                            "y": 0.42
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Fog Bridge",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 630,
+                            "attack": 54
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1240
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 96
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_9",
+                        "name": "Sturmherz",
+                        "description": "Der Sturm bekommt einen Kern.",
+                        "difficulty": 19,
+                        "groundTexture": "void",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.72,
+                            "y": 0.62
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Storm Heart",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 680,
+                            "attack": 57
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1340
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 104
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_10",
+                        "name": "Himmelsbrecher",
+                        "description": "Vorboss der Wolkenspitze.",
+                        "difficulty": 20,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.80,
+                            "y": 0.46
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Sky Breaker",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 730,
+                            "attack": 61
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1450
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 112
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_11",
+                        "name": "Splitterkrone",
+                        "description": "Die Krone der Splitter erwacht.",
+                        "difficulty": 21,
+                        "groundTexture": "map",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.88,
+                            "y": 0.58
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Shard Crown",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 790,
+                            "attack": 65
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1580
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 122
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_12",
+                        "name": "Aetherlord",
+                        "description": "Boss des zweiten Kapitels.",
+                        "difficulty": 22,
+                        "groundTexture": "void",
+                        "skyboxTexture": "ice",
+                        "node": {
+                            "x": 0.95,
+                            "y": 0.36
+                        },
+                        "cutscene": {
+                            "id": "chapter_2_battle_12_cutscene",
+                            "title": "Aetherlord",
+                            "video": "intro",
+                            "text": "Der Aetherlord steigt aus den Splittern."
+                        },
+                        "enemy": {
+                            "name": "Aether Lord",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 860,
+                            "attack": 70
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1750
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 140
+                            }
+                        ],
+                        "story": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "chapter_3",
+        "title": "Story Kapitel 3",
+        "subtitle": "Koenigreich der Leere",
+        "mapTexture": "map3",
+        "cutscene": {
+            "id": "chapter_3_intro",
+            "title": "Koenigreich der Leere",
+            "video": "intro",
+            "text": "Die Route fuehrt in ein leeres Reich."
+        },
+        "points": [
+            {
+                "id": "chapter_3_void",
+                "title": "Leerenpforte",
+                "text": "Die letzte Route fuehrt durch die Leere.",
+                "mapImage": "map3",
+                "mapTexture": "map3",
+                "node": {
+                    "x": 0.46,
+                    "y": 0.50
+                },
+                "cutscene": null,
+                "battles": [
+                    {
+                        "id": "chapter_3_battle_1",
+                        "name": "Leerenwache",
+                        "description": "Erster Kampf in der Leere.",
+                        "difficulty": 23,
+                        "groundTexture": "void",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.06,
+                            "y": 0.56
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Void Guard",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 900,
+                            "attack": 72
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1850
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 150
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_2",
+                        "name": "Schwarzer Pfad",
+                        "description": "Der Pfad zieht Licht aus der Map.",
+                        "difficulty": 24,
+                        "groundTexture": "void",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.13,
+                            "y": 0.42
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Black Path",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 960,
+                            "attack": 76
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1980
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 158
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_3",
+                        "name": "Kronenschatten",
+                        "description": "Der Schatten einer alten Krone.",
+                        "difficulty": 25,
+                        "groundTexture": "map",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.20,
+                            "y": 0.64
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Crown Shade",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 1020,
+                            "attack": 80
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2120
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 166
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_4",
+                        "name": "Nachtklaue",
+                        "description": "Ein schneller Nachtgegner.",
+                        "difficulty": 26,
+                        "groundTexture": "ice",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.27,
+                            "y": 0.48
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Night Claw",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 1080,
+                            "attack": 84
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2260
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 174
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_5",
+                        "name": "Leerenritter",
+                        "description": "Ein schwerer Ritter blockiert den Weg.",
+                        "difficulty": 27,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.34,
+                            "y": 0.61
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Void Knight",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 1160,
+                            "attack": 88
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2420
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 184
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_6",
+                        "name": "Schwarze Forge",
+                        "description": "Die Forge brennt ohne Licht.",
+                        "difficulty": 28,
+                        "groundTexture": "fire",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.41,
+                            "y": 0.39
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Black Forge",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 1240,
+                            "attack": 92
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2600
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 194
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_7",
+                        "name": "Abysskern",
+                        "description": "Der Kern der Leere pulsiert.",
+                        "difficulty": 29,
+                        "groundTexture": "void",
+                        "skyboxTexture": "ice",
+                        "node": {
+                            "x": 0.49,
+                            "y": 0.55
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Abyss Core",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 1320,
+                            "attack": 96
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2780
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 206
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_8",
+                        "name": "Dunkelzirkel",
+                        "description": "Ein Zirkel ruft neue Gegner.",
+                        "difficulty": 30,
+                        "groundTexture": "map",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.57,
+                            "y": 0.44
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Dark Circle",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 1410,
+                            "attack": 101
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2980
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 218
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_9",
+                        "name": "Knochentor",
+                        "description":
+                            "Das Tor oeffnet sich nur nach dem Sieg.",
+                        "difficulty": 31,
+                        "groundTexture": "country",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.65,
+                            "y": 0.62
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Bone Gate",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 1500,
+                            "attack": 106
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3200
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 232
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_10",
+                        "name": "Leerenprinz",
+                        "description": "Ein Vorbote der Krone.",
+                        "difficulty": 32,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.72,
+                            "y": 0.40
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Void Prince",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 1600,
+                            "attack": 112
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3440
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 248
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_11",
+                        "name": "Aschekrone",
+                        "description": "Die Krone sammelt Asche.",
+                        "difficulty": 33,
+                        "groundTexture": "fire",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.79,
+                            "y": 0.57
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Ash Crown",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 1710,
+                            "attack": 118
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3700
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 266
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_12",
+                        "name": "Schattenkoenig",
+                        "description": "Der Schattenkoenig erscheint.",
+                        "difficulty": 34,
+                        "groundTexture": "void",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.86,
+                            "y": 0.46
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Shadow King",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 1820,
+                            "attack": 124
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3980
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 286
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_13",
+                        "name": "Kronentraeger",
+                        "description": "Der letzte Waechter vor dem Kern.",
+                        "difficulty": 35,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.92,
+                            "y": 0.61
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Crown Bearer",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 1950,
+                            "attack": 132
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4300
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 310
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_3_battle_14",
+                        "name": "Leerenkrone",
+                        "description": "Finaler Boss des dritten Kapitels.",
+                        "difficulty": 36,
+                        "groundTexture": "void",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.97,
+                            "y": 0.34
+                        },
+                        "cutscene": {
+                            "id": "chapter_3_battle_14_cutscene",
+                            "title": "Leerenkrone",
+                            "video": "intro",
+                            "text": "Die Leerenkrone erwacht."
+                        },
+                        "enemy": {
+                            "name": "Void Crown",
+                            "image": "sar_dragon",
+                            "model": "shela",
+                            "hp": 2100,
+                            "attack": 140
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 5000
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 360
                             }
                         ],
                         "story": []

@@ -17,6 +17,7 @@ final class GameState: ObservableObject {
     @Published var eventChapters: [GlobeEventChapter]
     @Published var summonCharacters: [SummonCharacter]
     @Published var summonBanners: [SummonBanner]
+    @Published var abilityCards: [AbilityCardDefinition]
     @Published var selectedBattle: GlobeBattle?
     @Published var activeEventChapterID: String?
     @Published var activeEventPointID: String?
@@ -71,6 +72,7 @@ final class GameState: ObservableObject {
         let loadedEventChapters = loadGlobeEventChapters()
         let loadedSummonCharacters = loadSummonCharacters()
         let loadedSummonBanners = loadSummonBanners()
+        let loadedAbilityCards = loadAbilityCards()
 
         let defaultMap =
             loadedMaps.first
@@ -100,6 +102,7 @@ final class GameState: ObservableObject {
         self.eventChapters = loadedEventChapters
         self.summonCharacters = loadedSummonCharacters
         self.summonBanners = loadedSummonBanners
+        self.abilityCards = loadedAbilityCards
         self.selectedBattle = nil
         self.activeEventChapterID = loadedEventChapters.first?.id
         self.activeEventPointID = nil

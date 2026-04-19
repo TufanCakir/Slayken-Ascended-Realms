@@ -9,15 +9,30 @@ import SwiftUI
 
 struct GameHeaderView: View {
     let currencies: [CurrencyDefinition]
+    let onNews: () -> Void
 
     @State private var isExpanded = true
 
-    init(currencies: [CurrencyDefinition] = []) {
+    init(currencies: [CurrencyDefinition] = [], onNews: @escaping () -> Void = {}) {
         self.currencies = currencies
+        self.onNews = onNews
     }
 
     var body: some View {
         HStack(spacing: 8) {
+            Button {
+                onNews()
+            } label: {
+                Image(systemName: "newspaper.fill")
+                    .font(.system(size: 15, weight: .black))
+                    .foregroundStyle(.black.opacity(0.76))
+                    .frame(width: 38, height: 38)
+                    .background(.white.opacity(0.92), in: Capsule())
+                    .shadow(color: .black.opacity(0.16), radius: 8, y: 2)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("News")
+
             Spacer(minLength: 0)
 
             CurrencyBarView(currencies: currencies, compact: true)

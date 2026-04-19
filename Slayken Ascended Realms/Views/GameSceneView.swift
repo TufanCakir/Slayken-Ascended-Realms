@@ -10,6 +10,7 @@ import UIKit
 struct GameSceneView: UIViewRepresentable {
     let player: CharacterStats
     let joystickVector: SIMD2<Float>
+    let autoMoveTarget: SIMD2<Float>?
     let groundTexture: String
     let skyboxTexture: String
 
@@ -32,6 +33,7 @@ struct GameSceneView: UIViewRepresentable {
 
     func updateUIView(_ uiView: SCNView, context: Context) {
         context.coordinator.joystickVector = joystickVector
+        context.coordinator.autoMoveTarget = autoMoveTarget
         context.coordinator.updateTextures(
             ground: groundTexture,
             skybox: skyboxTexture
@@ -58,6 +60,7 @@ final class SceneCoordinator {
     private var lastUpdateTime: CFTimeInterval = 0
 
     var joystickVector: SIMD2<Float> = .zero
+    var autoMoveTarget: SIMD2<Float>?
 
     init(player: CharacterStats) {
         self.player = player
@@ -400,6 +403,11 @@ final class SceneCoordinator {
     }
 
     private func updatePlayer(deltaTime: Float) {
+        if let autoMoveTarget {
+            movePlayerToward(autoMoveTarget, deltaTime: deltaTime)
+            return
+        }
+
         let input = joystickVector
         let magnitude = simd_length(input)
 
@@ -446,6 +454,35 @@ final class SceneCoordinator {
             * min(deltaTime * rotationSpeed, 1)
 
         playerNode.eulerAngles.y = newAngle
+    }
+
+    private func movePlayerToward(_ target: SIMD2<Float>, deltaTime: Float) {
+        let targetPosition = simd_float3(
+            target.x,
+            getGroundTopY() + playerHeightOffset,
+            target.y
+        )
+        let delta = targetPosition - playerNode.simdPosition
+        let flatDelta = simd_float3(delta.x, 0, delta.z)
+        let remainingDistance = simd_length(flatDelta)
+
+        guard remainingDistance > 1.0 else {
+            autoMoveTarget = nil
+            stopPlayerAnimation()
+            return
+        }
+
+        playAnimation(named: "move")
+
+        let movementDirection = flatDelta / remainingDistance
+        let distance = min(remainingDistance, 42 * deltaTime)
+        var nextPosition = playerNode.simdPosition + movementDirection * distance
+        nextPosition.y = getGroundTopY() + playerHeightOffset
+        playerNode.simdPosition = clampToGroundBounds(nextPosition)
+
+        let targetAngle = atan2(movementDirection.x, movementDirection.z) - Float.pi / 2
+        let currentAngle = playerNode.eulerAngles.y
+        playerNode.eulerAngles.y = currentAngle + (targetAngle - currentAngle) * min(deltaTime * 8, 1)
     }
 
     private func groundDirection(from vector: simd_float3) -> simd_float3 {
@@ -532,6 +569,7 @@ private enum TextureNames {
     GameSceneView(
         player: loadGamePlayer(),
         joystickVector: .zero,
+        autoMoveTarget: nil,
         groundTexture: TextureNames.ground,
         skyboxTexture: TextureNames.skybox
     )

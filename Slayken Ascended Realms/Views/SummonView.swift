@@ -12,13 +12,14 @@ struct SummonView: View {
     let currencies: [CurrencyDefinition]
     var onClose: (() -> Void)? = nil
 
+    @EnvironmentObject private var gameState: GameState
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \PlayerCurrencyBalance.code) private var balances:
         [PlayerCurrencyBalance]
     @Query(sort: \OwnedSummonCharacter.acquiredAt) private var ownedRecords:
         [OwnedSummonCharacter]
 
-    @State private var lastSummon: SummonCharacter?
+    @State private var lastSummon: SummonDrop?
     @State private var lastBannerID: String?
     @State private var message = ""
     @State private var showResult = false
@@ -54,7 +55,7 @@ struct SummonView: View {
                             .ignoresSafeArea()
                             .transition(.opacity)
 
-                        SummonResultView(character: lastSummon) {
+                        SummonResultView(result: lastSummon) {
                             withAnimation {
                                 showResult = false
                             }
@@ -221,7 +222,7 @@ struct SummonView: View {
                             .lineLimit(1)
 
                         if resultIsHere, let lastSummon {
-                            Text(lastSummon.name)
+                            Text(resultName(lastSummon))
                                 .font(.system(size: 10, weight: .black))
                                 .foregroundStyle(.green)
                                 .lineLimit(1)
@@ -340,22 +341,27 @@ struct SummonView: View {
         }
 
         guard
-            let character = SummonService.summon(
+            let result = SummonService.summon(
                 from: banner,
-                characters: characters
+                characters: characters,
+                cards: gameState.abilityCards
             )
         else {
             message = "Pool ist leer"
             return
         }
 
-        PlayerInventoryStore.addOwned(
-            characterID: character.id,
-            in: modelContext
-        )
+        switch result {
+        case .character(let character):
+            PlayerInventoryStore.addOwned(
+                characterID: character.id,
+                in: modelContext
+            )
+        case .card(let card):
+            PlayerInventoryStore.addOwnedCard(cardID: card.id, in: modelContext)
+        }
 
-        // 👉 ERST HIER setzen
-        lastSummon = character
+        lastSummon = result
         showResult = true
         message = ""
     }
@@ -363,9 +369,9 @@ struct SummonView: View {
     private func bannerSubtitle(_ banner: SummonBanner) -> String {
         let count = banner.pool.count
         if count == 1 {
-            return "Summons 1 character card from this banner."
+            return "Summons 1 card from this banner."
         }
-        return "Summons 1 card from a pool of \(count) characters."
+        return "Summons 1 card from a pool of \(count) drops."
     }
 
     private func rateSummary(for banner: SummonBanner) -> String {
@@ -376,9 +382,26 @@ struct SummonView: View {
     }
 
     private func poolText(for banner: SummonBanner) -> String {
-        poolCharacters(for: banner)
-            .map { $0.name }
+        banner.pool
+            .compactMap { entry -> String? in
+                if let characterID = entry.characterID {
+                    return characters.first { $0.id == characterID }?.name
+                }
+                if let cardID = entry.cardID {
+                    return gameState.abilityCards.first { $0.id == cardID }?.name
+                }
+                return nil
+            }
             .joined(separator: ", ")
+    }
+
+    private func resultName(_ result: SummonDrop) -> String {
+        switch result {
+        case .character(let character):
+            return character.name
+        case .card(let card):
+            return card.name
+        }
     }
 
     private func canAfford(_ cost: [CurrencyAmount]) -> Bool {
@@ -405,7 +428,8 @@ struct SummonView: View {
 
     private func poolCharacters(for banner: SummonBanner) -> [SummonCharacter] {
         banner.pool.compactMap { entry in
-            characters.first { $0.id == entry.characterID }
+            guard let characterID = entry.characterID else { return nil }
+            return characters.first { $0.id == characterID }
         }
     }
 

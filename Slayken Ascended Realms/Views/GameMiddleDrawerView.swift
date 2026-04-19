@@ -9,6 +9,7 @@ struct GameMiddleDrawerView: View {
     @Binding var selectedTab: GameTab
 
     let onSupport: () -> Void
+    let onNews: () -> Void
 
     @State private var isExpanded = false
 
@@ -26,6 +27,11 @@ struct GameMiddleDrawerView: View {
             systemName: "sparkles"
         ),
         MiddleDrawerActionItem(
+            id: .news,
+            title: "News",
+            systemName: "newspaper"
+        ),
+        MiddleDrawerActionItem(
             id: .support,
             title: "Support",
             systemName: "questionmark.circle"
@@ -35,7 +41,7 @@ struct GameMiddleDrawerView: View {
     var body: some View {
         HStack(spacing: 8) {
             drawerContent
-                .frame(width: isExpanded ? 142 : 0, alignment: .trailing)
+                .frame(width: isExpanded ? 148 : 0, alignment: .trailing)
                 .clipped()
                 .opacity(isExpanded ? 1 : 0)
 
@@ -44,20 +50,15 @@ struct GameMiddleDrawerView: View {
                     isExpanded.toggle()
                 }
             } label: {
-                VStack(spacing: 6) {
-                    Image(
-                        systemName: isExpanded
-                            ? "chevron.right" : "chevron.left"
-                    )
-                    .font(.system(size: 13, weight: .black))
+                VStack(spacing: 0) {
                     Text("Menu")
-                        .font(.system(size: 10, weight: .black))
+                        .font(.system(size: 15)).bold()
                         .rotationEffect(.degrees(90))
                         .fixedSize()
                 }
-                .foregroundStyle(.black.opacity(0.72))
-                .frame(width: 34, height: 92)
-                .background(.white.opacity(0.92), in: Capsule())
+                .foregroundStyle(.black)
+                .frame(width: 30, height: 100)
+                .background(.white, in: Capsule())
                 .shadow(color: .black.opacity(0.18), radius: 8, y: 2)
             }
             .buttonStyle(.plain)
@@ -123,6 +124,9 @@ struct GameMiddleDrawerView: View {
             selectedTab = .character
         case .summon:
             selectedTab = .summon
+        case .news:
+            selectedTab = .game
+            onNews()
         case .support:
             selectedTab = .game
             onSupport()
@@ -139,6 +143,8 @@ struct GameMiddleDrawerView: View {
             return selectedTab == .character
         case .summon:
             return selectedTab == .summon
+        case .news:
+            return false
         case .support:
             return selectedTab == .support
         }
@@ -150,6 +156,7 @@ private enum MiddleDrawerAction {
     case events
     case team
     case summon
+    case news
     case support
 }
 
@@ -160,5 +167,5 @@ private struct MiddleDrawerActionItem: Identifiable {
 }
 
 #Preview {
-    GameMiddleDrawerView(selectedTab: .constant(.game), onSupport: {})
+    GameMiddleDrawerView(selectedTab: .constant(.game), onSupport: {}, onNews: {})
 }

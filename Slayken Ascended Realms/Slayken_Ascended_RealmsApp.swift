@@ -25,6 +25,9 @@ struct Slayken_Ascended_RealmsApp: App {
             OwnedSummonCharacter.self,
             TeamMemberRecord.self,
             PlayerBattleProgress.self,
+            PlayerDeckCardSlot.self,
+            OwnedAbilityCard.self,
+            PlayerCharacterProgress.self,
         ])
     }
 }

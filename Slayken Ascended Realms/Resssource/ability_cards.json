@@ -1,0 +1,56 @@
+[
+    {
+        "id": "slash_red",
+        "name": "Rift Slash",
+        "image": "fire",
+        "element": "Fire",
+        "damageMultiplier": 1.18,
+        "particleEffect": "fire",
+        "description": "Kurzer roter Slash mit Feuerpartikeln."
+    },
+    {
+        "id": "crystal_blue",
+        "name": "Crystal Burst",
+        "image": "ice",
+        "element": "Ice",
+        "damageMultiplier": 1.14,
+        "particleEffect": "ice",
+        "description": "Kristalltreffer mit blauen Splittern."
+    },
+    {
+        "id": "void_pulse",
+        "name": "Void Pulse",
+        "image": "void",
+        "element": "Void",
+        "damageMultiplier": 1.22,
+        "particleEffect": "void",
+        "description": "Dunkler Impuls mit violettem Einschlag."
+    },
+    {
+        "id": "moon_guard",
+        "name": "Moon Guard",
+        "image": "card_moon_guard",
+        "element": "Light",
+        "damageMultiplier": 1.08,
+        "particleEffect": "light",
+        "description": "Leichter Angriff mit hellem Schutzkreis."
+    },
+    {
+        "id": "storm_edge",
+        "name": "Storm Edge",
+        "image": "card_storm_edge",
+        "element": "Storm",
+        "damageMultiplier": 1.16,
+        "particleEffect": "storm",
+        "description": "Schneller Treffer mit Blitzpartikeln."
+    },
+    {
+        "id": "ash_breaker",
+        "name": "Ash Breaker",
+        "image": "card_ash_breaker",
+        "element": "Ash",
+        "damageMultiplier": 1.20,
+        "particleEffect": "ash",
+        "description": "Schwerer Treffer mit dunkler Asche."
+    }
+]

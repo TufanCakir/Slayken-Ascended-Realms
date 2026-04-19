@@ -8,6 +8,7 @@ import SwiftUI
 struct GameSideDrawerView: View {
     let onTheme: () -> Void
     let onSupport: () -> Void
+    let onNews: () -> Void
 
     @State private var isExpanded = false
 
@@ -16,16 +17,24 @@ struct GameSideDrawerView: View {
     init(
         showTheme: Bool = true,
         showSupport: Bool = true,
+        showNews: Bool = true,
         onTheme: @escaping () -> Void,
-        onSupport: @escaping () -> Void
+        onSupport: @escaping () -> Void,
+        onNews: @escaping () -> Void = {}
     ) {
         self.onTheme = onTheme
         self.onSupport = onSupport
+        self.onNews = onNews
 
         var drawerActions: [SideDrawerActionItem] = []
         if showTheme {
             drawerActions.append(
                 SideDrawerActionItem(id: .theme, systemName: "paintbrush")
+            )
+        }
+        if showNews {
+            drawerActions.append(
+                SideDrawerActionItem(id: .news, systemName: "newspaper")
             )
         }
         if showSupport {
@@ -111,6 +120,8 @@ struct GameSideDrawerView: View {
         switch action {
         case .theme:
             onTheme()
+        case .news:
+            onNews()
         case .support:
             onSupport()
         }
@@ -119,6 +130,7 @@ struct GameSideDrawerView: View {
 
 private enum SideDrawerAction {
     case theme
+    case news
     case support
 }
 
@@ -130,6 +142,8 @@ private struct SideDrawerActionItem: Identifiable {
         switch id {
         case .theme:
             return "Theme"
+        case .news:
+            return "News"
         case .support:
             return "Support"
         }

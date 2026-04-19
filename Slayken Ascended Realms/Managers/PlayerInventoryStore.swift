@@ -114,6 +114,79 @@ enum PlayerInventoryStore {
         save(context)
     }
 
+    static func setDeckCard(cardID: String, slotIndex: Int, in context: ModelContext) {
+        let descriptor = FetchDescriptor<PlayerDeckCardSlot>(
+            predicate: #Predicate { $0.slotIndex == slotIndex }
+        )
+        if let existing = try? context.fetch(descriptor).first {
+            existing.cardID = cardID
+        } else {
+            context.insert(PlayerDeckCardSlot(slotIndex: slotIndex, cardID: cardID))
+        }
+        save(context)
+    }
+
+    static func ownCard(cardID: String, in context: ModelContext) -> Bool {
+        let descriptor = FetchDescriptor<OwnedAbilityCard>(
+            predicate: #Predicate { $0.cardID == cardID }
+        )
+        return ((try? context.fetchCount(descriptor)) ?? 0) > 0
+    }
+
+    static func addOwnedCard(cardID: String, in context: ModelContext) {
+        let descriptor = FetchDescriptor<OwnedAbilityCard>(
+            predicate: #Predicate { $0.cardID == cardID }
+        )
+        if let existing = try? context.fetch(descriptor).first {
+            existing.count += 1
+        } else {
+            context.insert(OwnedAbilityCard(cardID: cardID))
+        }
+        save(context)
+    }
+
+    static func progress(for characterID: String, in context: ModelContext)
+        -> PlayerCharacterProgress?
+    {
+        let descriptor = FetchDescriptor<PlayerCharacterProgress>(
+            predicate: #Predicate { $0.characterID == characterID }
+        )
+        return try? context.fetch(descriptor).first
+    }
+
+    static func addXP(
+        _ amount: Int,
+        to characterID: String,
+        in context: ModelContext
+    ) -> PlayerCharacterProgress {
+        let existing = progress(for: characterID, in: context)
+        let progress = existing ?? PlayerCharacterProgress(characterID: characterID)
+        if existing == nil {
+            context.insert(progress)
+        }
+
+        progress.xp += max(0, amount)
+        progress.level = level(forXP: progress.xp)
+        save(context)
+        return progress
+    }
+
+    static func level(forXP xp: Int) -> Int {
+        var level = 1
+        var remainingXP = max(0, xp)
+
+        while remainingXP >= xpNeededForNextLevel(level) {
+            remainingXP -= xpNeededForNextLevel(level)
+            level += 1
+        }
+
+        return level
+    }
+
+    static func xpNeededForNextLevel(_ level: Int) -> Int {
+        Int((100.0 * pow(1.35, Double(max(1, level) - 1))).rounded())
+    }
+
     private static func save(_ context: ModelContext) {
         try? context.save()
     }

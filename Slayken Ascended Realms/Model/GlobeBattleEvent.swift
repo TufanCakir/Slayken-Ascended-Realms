@@ -47,6 +47,9 @@ struct GlobeBattle: Codable, Identifiable {
     let node: EventMapNodePosition
     let cutscene: GlobeEventCutscene?
     let enemy: CharacterStats
+    let enemies: [CharacterStats]?
+    let boss: CharacterStats?
+    let xpReward: Int?
     let rewards: [CurrencyAmount]
     let story: [StoryLine]
 }

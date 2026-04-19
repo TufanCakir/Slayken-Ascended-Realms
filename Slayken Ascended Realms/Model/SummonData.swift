@@ -56,10 +56,11 @@ struct SummonRate: Codable, Identifiable, Equatable {
 }
 
 struct SummonPoolEntry: Codable, Identifiable, Equatable {
-    let characterID: String
+    let characterID: String?
+    let cardID: String?
     let weight: Double
 
-    var id: String { characterID }
+    var id: String { characterID ?? cardID ?? UUID().uuidString }
 }
 
 func loadSummonCharacters() -> [SummonCharacter] {

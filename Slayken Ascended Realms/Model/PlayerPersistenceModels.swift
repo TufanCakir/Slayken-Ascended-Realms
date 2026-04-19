@@ -55,3 +55,40 @@ final class PlayerBattleProgress {
         self.completedAt = completedAt
     }
 }
+
+@Model
+final class PlayerDeckCardSlot {
+    @Attribute(.unique) var slotIndex: Int
+    var cardID: String
+
+    init(slotIndex: Int, cardID: String) {
+        self.slotIndex = slotIndex
+        self.cardID = cardID
+    }
+}
+
+@Model
+final class OwnedAbilityCard {
+    @Attribute(.unique) var cardID: String
+    var count: Int
+    var acquiredAt: Date
+
+    init(cardID: String, count: Int = 1, acquiredAt: Date = .now) {
+        self.cardID = cardID
+        self.count = count
+        self.acquiredAt = acquiredAt
+    }
+}
+
+@Model
+final class PlayerCharacterProgress {
+    @Attribute(.unique) var characterID: String
+    var level: Int
+    var xp: Int
+
+    init(characterID: String, level: Int = 1, xp: Int = 0) {
+        self.characterID = characterID
+        self.level = level
+        self.xp = xp
+    }
+}

@@ -3,6 +3,7 @@
 //  Slayken Ascended Realms
 //
 
+import SwiftData
 import SwiftUI
 
 struct GlobeEventView: View {
@@ -12,6 +13,7 @@ struct GlobeEventView: View {
 
     @EnvironmentObject private var theme: ThemeManager
     @EnvironmentObject private var gameState: GameState
+    @Query private var completedBattles: [PlayerBattleProgress]
     @State private var selectedChapterID: String?
     @State private var selectedPointID: String?
     @State private var activeCutscene: GlobeEventCutscene?
@@ -29,6 +31,10 @@ struct GlobeEventView: View {
     private var selectedPoint: GlobeEventPoint? {
         guard let selectedChapter, let selectedPointID else { return nil }
         return selectedChapter.points.first { $0.id == selectedPointID }
+    }
+
+    private var completedBattleIDs: Set<String> {
+        Set(completedBattles.map(\.battleID))
     }
 
     var body: some View {
@@ -80,9 +86,10 @@ struct GlobeEventView: View {
                 selectedChapterID =
                     gameState.activeEventChapterID ?? selectedChapterID
                     ?? chapters.first?.id
+                restoreActivePointIfPossible()
             }
             .onChange(of: selectedChapterID) { _, _ in
-                selectedPointID = nil
+                restoreActivePointIfPossible()
             }
         }
     }
@@ -96,13 +103,14 @@ struct GlobeEventView: View {
             mapTexture(texture, size: canvasSize, theme: theme)
 
             if let selectedPoint {
+                let battles = visibleBattles(for: selectedPoint)
                 battleRouteLayer(
-                    battles: selectedPoint.battles,
+                    battles: battles,
                     canvasSize: canvasSize,
                     theme: theme
                 )
 
-                ForEach(selectedPoint.battles) { battle in
+                ForEach(battles) { battle in
                     battleMapNode(battle, canvasSize: canvasSize, theme: theme)
                 }
             } else if let selectedChapter {
@@ -251,12 +259,29 @@ struct GlobeEventView: View {
         )
     }
 
+    private func visibleBattles(for point: GlobeEventPoint) -> [GlobeBattle] {
+        var result: [GlobeBattle] = []
+
+        for index in point.battles.indices {
+            let battle = point.battles[index]
+            let isCompleted = completedBattleIDs.contains(battle.id)
+            let previousCompleted = index == 0 || completedBattleIDs.contains(point.battles[index - 1].id)
+
+            if isCompleted || previousCompleted {
+                result.append(battle)
+            }
+        }
+
+        return result
+    }
+
     private func pointMapNode(
         _ point: GlobeEventPoint,
         canvasSize: CGSize,
         theme: GameTheme?
     ) -> some View {
         let isFocused = selectedPointID == point.id
+        let visibleCount = visibleBattles(for: point).count
 
         return Button {
             withAnimation(.spring(response: 0.34, dampingFraction: 0.82)) {
@@ -269,7 +294,7 @@ struct GlobeEventView: View {
         } label: {
             mapNodeLabel(
                 title: point.title,
-                subtitle: "\(point.battles.count) Kaempfe",
+                subtitle: "\(visibleCount)/\(point.battles.count) Kaempfe",
                 icon: "map.fill",
                 isFocused: isFocused,
                 theme: theme
@@ -539,6 +564,7 @@ struct GlobeEventView: View {
     private func pointBattlePanel(theme: GameTheme?) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             if let selectedPoint {
+                let battles = visibleBattles(for: selectedPoint)
                 HStack(spacing: 10) {
                     Image(selectedPoint.mapImage)
                         .resizable()
@@ -572,7 +598,7 @@ struct GlobeEventView: View {
 
                 ScrollView(.vertical, showsIndicators: true) {
                     VStack(spacing: 8) {
-                        ForEach(selectedPoint.battles) { battle in
+                        ForEach(battles) { battle in
                             battleButton(battle, theme: theme)
                         }
                     }
@@ -685,6 +711,19 @@ struct GlobeEventView: View {
         guard let cutscene else { return }
         battleAfterCutscene = nil
         activeCutscene = cutscene
+    }
+
+    private func restoreActivePointIfPossible() {
+        guard
+            let selectedChapterID,
+            let activePointID = gameState.activeEventPointID,
+            chapters.first(where: { $0.id == selectedChapterID })?.points.contains(where: { $0.id == activePointID }) == true
+        else {
+            selectedPointID = nil
+            return
+        }
+
+        selectedPointID = activePointID
     }
 
     private func finishCutscene() {

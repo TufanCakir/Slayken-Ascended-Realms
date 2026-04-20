@@ -39,6 +39,7 @@ final class GameState: ObservableObject {
             model: player.battleModel ?? player.model,
             battleModel: player.battleModel,
             texture: player.texture,
+            element: player.element,
             hp: player.hp,
             attack: player.attack
         )
@@ -137,16 +138,6 @@ final class GameState: ObservableObject {
         }
     }
 
-    func saveMap(_ map: GameMap) {
-        selectedMap = map
-        UserDefaults.standard.set(map.id, forKey: mapKey)
-    }
-
-    func saveBackground(_ background: GameBackground) {
-        selectedBackground = background
-        UserDefaults.standard.set(background.id, forKey: bgKey)
-    }
-
     func saveCharacter(_ character: CharacterStats) {
         player = character
         UserDefaults.standard.set(character.model, forKey: characterKey)
@@ -182,6 +173,26 @@ final class GameState: ObservableObject {
 
     func clearBattleSelection() {
         selectedBattle = nil
+    }
+
+    func resetGameData() {
+        UserDefaults.standard.removeObject(forKey: mapKey)
+        UserDefaults.standard.removeObject(forKey: bgKey)
+        UserDefaults.standard.removeObject(forKey: characterKey)
+
+        selectedBattle = nil
+        activeEventChapterID = eventChapters.first?.id
+        activeEventPointID = nil
+
+        if let defaultCharacter = availableCharacters.first {
+            player = defaultCharacter
+        }
+        if let defaultMap = maps.first {
+            selectedMap = defaultMap
+        }
+        if let defaultBackground = backgrounds.first {
+            selectedBackground = defaultBackground
+        }
     }
 
     private func eventLocation(for battleID: String) -> (

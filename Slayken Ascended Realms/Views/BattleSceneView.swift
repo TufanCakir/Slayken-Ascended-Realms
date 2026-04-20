@@ -2,7 +2,7 @@
 //  BattleSceneView.swift
 //  Slayken Ascended Realms
 //
-//  Created by Tufan Cakir on 12.04.26.
+//  Created by Tufan Cakir on 10.04.26.
 //
 
 import SceneKit
@@ -11,16 +11,23 @@ import UIKit
 
 struct BattleSceneView: UIViewRepresentable {
     let player: CharacterStats
-    let enemy: CharacterStats
-    let enemyHP: CGFloat
+    let enemies: [CharacterStats]
+    let enemyHPs: [CGFloat]
+    let selectedEnemyIndex: Int
     let playerAttackID: Int
     let enemyAttackID: Int
+    let attackingEnemyIndex: Int?
     let particleEffect: String?
     let groundTexture: String
     let skyboxTexture: String
+    let onSelectEnemy: (Int) -> Void
 
     func makeCoordinator() -> BattleSceneCoordinator {
-        BattleSceneCoordinator(player: player, enemy: enemy)
+        BattleSceneCoordinator(
+            player: player,
+            enemies: enemies,
+            onSelectEnemy: onSelectEnemy
+        )
     }
 
     func makeUIView(context: Context) -> SCNView {
@@ -36,6 +43,7 @@ struct BattleSceneView: UIViewRepresentable {
             groundTexture: groundTexture,
             skyboxTexture: skyboxTexture
         )
+        context.coordinator.installTapGesture(on: view)
 
         return view
     }
@@ -45,10 +53,13 @@ struct BattleSceneView: UIViewRepresentable {
             groundTexture: groundTexture,
             skyboxTexture: skyboxTexture
         )
-        context.coordinator.updateEnemyHP(enemyHP)
+        context.coordinator.updateEnemyHPs(enemyHPs)
+        context.coordinator.updateSelectedEnemy(selectedEnemyIndex)
         context.coordinator.updateAttackTriggers(
             playerAttackID: playerAttackID,
             enemyAttackID: enemyAttackID,
+            attackingEnemyIndex: attackingEnemyIndex,
+            selectedEnemyIndex: selectedEnemyIndex,
             particleEffect: particleEffect
         )
     }
@@ -60,40 +71,102 @@ final class BattleSceneCoordinator {
     private let groundThickness: CGFloat = 6
 
     private let playerStats: CharacterStats
-    private let enemyStats: CharacterStats
+    private let enemyStats: [CharacterStats]
+    private let onSelectEnemy: (Int) -> Void
 
     private let cameraNode = SCNNode()
     private let playerRootNode = SCNNode()
-    private let enemyRootNode = SCNNode()
+    private var enemyRootNodes: [SCNNode] = []
     private var groundNode = SCNNode()
-    private var enemyHPNode: SCNNode?
+    private var enemyHPNodes: [SCNNode] = []
+    private var enemySelectionNodes: [SCNNode] = []
 
     private var groundBox: SCNBox?
     private var groundMaterials: [SCNMaterial] = []
     private var lastPlayerAttackID = 0
     private var lastEnemyAttackID = 0
 
-    init(player: CharacterStats, enemy: CharacterStats) {
+    init(
+        player: CharacterStats,
+        enemies: [CharacterStats],
+        onSelectEnemy: @escaping (Int) -> Void
+    ) {
         self.playerStats = player
-        self.enemyStats = enemy
+        self.enemyStats =
+            enemies.isEmpty
+            ? [
+                CharacterStats(
+                    name: "Enemy",
+                    image: "",
+                    model: "shela",
+                    hp: 100,
+                    attack: 10
+                )
+            ] : enemies
+        self.onSelectEnemy = onSelectEnemy
     }
 
-    func updateEnemyHP(_ value: CGFloat) {
-        let safe = max(0, min(1, value))
-        enemyHPNode?.scale.x = Float(safe)
+    func installTapGesture(on view: SCNView) {
+        guard
+            view.gestureRecognizers?.contains(where: { $0.name == "enemyTap" })
+                != true
+        else { return }
+        let gesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(handleTap(_:))
+        )
+        gesture.name = "enemyTap"
+        view.addGestureRecognizer(gesture)
+    }
+
+    @objc
+    private func handleTap(_ gesture: UITapGestureRecognizer) {
+        guard let view = gesture.view as? SCNView else { return }
+        let location = gesture.location(in: view)
+        for hit in view.hitTest(location, options: nil) {
+            var node: SCNNode? = hit.node
+            while let current = node {
+                if let index = enemyRootNodes.firstIndex(of: current) {
+                    onSelectEnemy(index)
+                    return
+                }
+                node = current.parent
+            }
+        }
+    }
+
+    func updateEnemyHPs(_ values: [CGFloat]) {
+        for index in enemyHPNodes.indices {
+            let safe = max(
+                0,
+                min(1, values.indices.contains(index) ? values[index] : 0)
+            )
+            enemyHPNodes[index].scale.x = Float(safe)
+            enemyRootNodes[index].opacity = safe <= 0 ? 0.28 : 1
+        }
+    }
+
+    func updateSelectedEnemy(_ index: Int) {
+        for nodeIndex in enemySelectionNodes.indices {
+            enemySelectionNodes[nodeIndex].isHidden = nodeIndex != index
+        }
     }
 
     func updateAttackTriggers(
         playerAttackID: Int,
         enemyAttackID: Int,
+        attackingEnemyIndex: Int?,
+        selectedEnemyIndex: Int,
         particleEffect: String?
     ) {
         if playerAttackID != lastPlayerAttackID {
             lastPlayerAttackID = playerAttackID
-            if playerAttackID > 0 {
+            if playerAttackID > 0,
+                enemyRootNodes.indices.contains(selectedEnemyIndex)
+            {
                 playAttackAnimation(
                     attacker: playerRootNode,
-                    defender: enemyRootNode,
+                    defender: enemyRootNodes[selectedEnemyIndex],
                     particleEffect: particleEffect
                 )
             }
@@ -101,9 +174,13 @@ final class BattleSceneCoordinator {
 
         if enemyAttackID != lastEnemyAttackID {
             lastEnemyAttackID = enemyAttackID
-            if enemyAttackID > 0 {
+            if enemyAttackID > 0,
+                let attackingEnemyIndex,
+                enemyRootNodes.indices.contains(attackingEnemyIndex),
+                enemyRootNodes[attackingEnemyIndex].opacity > 0.3
+            {
                 playAttackAnimation(
-                    attacker: enemyRootNode,
+                    attacker: enemyRootNodes[attackingEnemyIndex],
                     defender: playerRootNode,
                     particleEffect: nil
                 )
@@ -118,17 +195,32 @@ final class BattleSceneCoordinator {
         scene.rootNode.addChildNode(makeLights())
         scene.rootNode.addChildNode(makeGround(textureName: groundTexture))
 
-        let enemyNode = makeFighterNode(for: enemyStats, isEnemy: true)
-        let playerNode = makeFighterNode(for: playerStats, isEnemy: false)
+        let playerNode = makeFighterNode(
+            for: playerStats,
+            isEnemy: false,
+            index: 0,
+            total: 1
+        )
+        let enemyNodes = enemyStats.indices.map { index in
+            makeFighterNode(
+                for: enemyStats[index],
+                isEnemy: true,
+                index: index,
+                total: enemyStats.count
+            )
+        }
 
-        scene.rootNode.addChildNode(enemyNode)
+        for enemyNode in enemyNodes {
+            scene.rootNode.addChildNode(enemyNode)
+        }
         scene.rootNode.addChildNode(playerNode)
 
         updateEnvironment(
             groundTexture: groundTexture,
             skyboxTexture: skyboxTexture
         )
-        updateEnemyHP(1)
+        updateEnemyHPs(Array(repeating: 1, count: enemyStats.count))
+        updateSelectedEnemy(0)
     }
 
     func updateEnvironment(groundTexture: String, skyboxTexture: String) {
@@ -365,7 +457,10 @@ final class BattleSceneCoordinator {
         )
     }
 
-    private func spawnParticleEffect(named effect: String, at position: SCNVector3) {
+    private func spawnParticleEffect(
+        named effect: String,
+        at position: SCNVector3
+    ) {
         let particles = SCNParticleSystem()
         particles.birthRate = 620
         particles.emissionDuration = 0.12
@@ -417,11 +512,17 @@ final class BattleSceneCoordinator {
         return SCNVector3(vector.x / length, 0, vector.z / length)
     }
 
-    private func makeFighterNode(for stats: CharacterStats, isEnemy: Bool)
+    private func makeFighterNode(
+        for stats: CharacterStats,
+        isEnemy: Bool,
+        index: Int,
+        total: Int
+    )
         -> SCNNode
     {
-        let root = isEnemy ? enemyRootNode : playerRootNode
+        let root = isEnemy ? SCNNode() : playerRootNode
         root.childNodes.forEach { $0.removeFromParentNode() }
+        root.name = isEnemy ? "enemy_\(index)" : "player"
 
         let modelContainer = SCNNode()
         let modelNode = loadModel(
@@ -455,14 +556,50 @@ final class BattleSceneCoordinator {
         let zOffset: Float = 10
 
         if isEnemy {
-            root.position = SCNVector3(-xOffset, groundY + yOffset, -zOffset)
+            let spacing: Float = 8
+            let centerOffset = (Float(total - 1) * spacing) * 0.5
+            root.position = SCNVector3(
+                -xOffset + Float(index) * spacing - centerOffset,
+                groundY + yOffset,
+                -zOffset
+            )
             root.eulerAngles.y = Float.pi
+            addEnemyHUD(to: root, index: index)
+            enemyRootNodes.append(root)
         } else {
             root.position = SCNVector3(xOffset, groundY + yOffset, zOffset)
             root.eulerAngles.y = 0
         }
 
         return root
+    }
+
+    private func addEnemyHUD(to root: SCNNode, index: Int) {
+        let hpBackground = SCNNode(geometry: SCNPlane(width: 1.6, height: 0.12))
+        hpBackground.geometry?.firstMaterial?.diffuse.contents = UIColor.black
+            .withAlphaComponent(0.72)
+        hpBackground.position = SCNVector3(0, 4.7, 0)
+        hpBackground.constraints = [SCNBillboardConstraint()]
+        root.addChildNode(hpBackground)
+
+        let hpFill = SCNNode(geometry: SCNPlane(width: 1.52, height: 0.08))
+        hpFill.geometry?.firstMaterial?.diffuse.contents = UIColor.systemGreen
+        hpFill.position = SCNVector3(-0.76, 4.71, 0.01)
+        hpFill.pivot = SCNMatrix4MakeTranslation(-0.76, 0, 0)
+        hpFill.constraints = [SCNBillboardConstraint()]
+        root.addChildNode(hpFill)
+        enemyHPNodes.append(hpFill)
+
+        let selection = SCNNode(
+            geometry: SCNTorus(ringRadius: 1.05, pipeRadius: 0.035)
+        )
+        selection.geometry?.firstMaterial?.diffuse.contents =
+            UIColor.systemYellow
+        selection.eulerAngles.x = Float.pi / 2
+        selection.position = SCNVector3(0, 0.00, 0)
+        selection.isHidden = index != 0
+        root.addChildNode(selection)
+        enemySelectionNodes.append(selection)
     }
 
     private func loadModel(named modelName: String, textureName: String?)
@@ -547,19 +684,38 @@ final class BattleSceneCoordinator {
 #Preview {
     BattleSceneView(
         player: loadBattlePlayer(),
-        enemy: CharacterStats(
-            name: "Enemy",
-            image: "1",
-            model: "warriorin",
-            hp: 100,
-            attack: 10
-        ),
-        enemyHP: 0.72,
+        enemies: [
+            CharacterStats(
+                name: "Enemy A",
+                image: "1",
+                model: "shela",
+                hp: 100,
+                attack: 10
+            ),
+            CharacterStats(
+                name: "Enemy B",
+                image: "1",
+                model: "zaron",
+                hp: 120,
+                attack: 12
+            ),
+            CharacterStats(
+                name: "Enemy C",
+                image: "1",
+                model: "shela",
+                hp: 90,
+                attack: 9
+            ),
+        ],
+        enemyHPs: [0.72, 1.0, 0.45],
+        selectedEnemyIndex: 0,
         playerAttackID: 0,
         enemyAttackID: 0,
+        attackingEnemyIndex: nil,
         particleEffect: "fire",
         groundTexture: "sar_bg",
-        skyboxTexture: "sar_bg"
+        skyboxTexture: "sar_bg",
+        onSelectEnemy: { _ in }
     )
     .ignoresSafeArea()
 }

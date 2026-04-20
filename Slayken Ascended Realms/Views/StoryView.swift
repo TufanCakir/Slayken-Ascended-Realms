@@ -2,7 +2,7 @@
 //  StoryView.swift
 //  Slayken Ascended Realms
 //
-//  Created by Tufan Cakir on 11.04.26.
+//  Created by Tufan Cakir on 10.04.26.
 //
 
 import SwiftUI

@@ -2,66 +2,65 @@
 //  NewsView.swift
 //  Slayken Ascended Realms
 //
+//  Created by Tufan Cakir on 10.04.26.
+//
 
 import SwiftUI
+import UIKit
 
 struct NewsView: View {
-    private let activities: [NewsItem] = [
-        NewsItem(
-            title: "Realm Route aktiv",
-            subtitle: "Neue Battle-Nodes werden Schritt fuer Schritt auf der World Map freigeschaltet.",
-            systemName: "map.fill",
-            tint: Color(red: 0.14, green: 0.48, blue: 0.95)
-        ),
-        NewsItem(
-            title: "Summon Banner",
-            subtitle: "Sammle Charaktere und baue dein Team fuer kommende Kaempfe aus.",
-            systemName: "sparkles",
-            tint: Color(red: 0.78, green: 0.42, blue: 0.96)
-        ),
-        NewsItem(
-            title: "Battle Skills",
-            subtitle: "Skill Cards loesen eigene Effekte aus und geben deinem Team mehr Kontrolle im Kampf.",
-            systemName: "bolt.fill",
-            tint: Color(red: 0.96, green: 0.68, blue: 0.20)
-        )
-    ]
+    var onClose: (() -> Void)? = nil
 
-    private let features: [NewsItem] = [
-        NewsItem(
-            title: "3D Charaktere",
-            subtitle: "Shela und Zaron koennen direkt in der Spielszene angezeigt werden.",
-            systemName: "person.crop.square.fill",
-            tint: Color(red: 0.22, green: 0.76, blue: 0.72)
-        ),
-        NewsItem(
-            title: "Themes",
-            subtitle: "Wechsle Look und Stimmung deiner Realm-Oberflaeche ueber das Schnellmenue.",
-            systemName: "paintbrush.fill",
-            tint: Color(red: 0.38, green: 0.64, blue: 0.96)
-        ),
-        NewsItem(
-            title: "Support",
-            subtitle: "Feedback und Fehlerberichte koennen direkt aus der App vorbereitet werden.",
-            systemName: "questionmark.circle.fill",
-            tint: Color(red: 0.32, green: 0.82, blue: 0.42)
-        )
-    ]
+    @EnvironmentObject var theme: ThemeManager
+
+    private let items = loadNewsItems()
+
+    private var groupedItems: [(String, [NewsItemDefinition])] {
+        Dictionary(grouping: items, by: \.category)
+            .map { ($0.key, $0.value.sorted { $0.date > $1.date }) }
+            .sorted { $0.0 < $1.0 }
+    }
 
     var body: some View {
-        ZStack {
-            background
+        NavigationStack {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 22) {
                     header
 
-                    newsSection(title: "Aktivitaeten", items: activities)
-                    newsSection(title: "Neue Features", items: features)
+                    if items.isEmpty {
+                        emptyState
+                    } else {
+                        ForEach(groupedItems, id: \.0) {
+                            category,
+                            categoryItems in
+                            newsSection(title: category, items: categoryItems)
+                        }
+                    }
                 }
-                .padding(.horizontal, 20)
-                .padding(.top, 32)
+                .padding(.horizontal, 18)
+                .padding(.top, 24)
                 .padding(.bottom, 34)
+            }
+            .toolbar(.hidden, for: .navigationBar)
+            .background {
+                ZStack {
+                    if let theme = theme.selectedTheme {
+                        Image(theme.background)
+                            .resizable()
+                            .scaledToFill()
+                    }
+
+                    LinearGradient(
+                        colors: [
+                            Color.black.opacity(0.2),
+                            Color.black.opacity(0.6),
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                }
+                .ignoresSafeArea()
             }
         }
     }
@@ -71,7 +70,7 @@ struct NewsView: View {
             colors: [
                 Color(red: 0.04, green: 0.06, blue: 0.10),
                 Color(red: 0.09, green: 0.13, blue: 0.20),
-                Color(red: 0.03, green: 0.04, blue: 0.07)
+                Color(red: 0.03, green: 0.04, blue: 0.07),
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -80,86 +79,236 @@ struct NewsView: View {
     }
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 10) {
-                Image(systemName: "newspaper.fill")
-                    .font(.system(size: 22, weight: .black))
-                    .foregroundStyle(.white)
-                    .frame(width: 44, height: 44)
-                    .background(Color(red: 0.14, green: 0.48, blue: 0.95), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("News")
-                        .font(.system(size: 30, weight: .black))
+        HStack(alignment: .top, spacing: 12) {
+            if let onClose {
+                Button(action: onClose) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 14, weight: .black))
                         .foregroundStyle(.white)
-
-                    Text("Aktuelles aus Slayken Ascended Realms")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(.white.opacity(0.66))
+                        .frame(width: 38, height: 38)
+                        .background(Color.black.opacity(0.44), in: Circle())
+                        .overlay(
+                            Circle().stroke(.white.opacity(0.18), lineWidth: 1)
+                        )
                 }
+                .buttonStyle(.plain)
+                .accessibilityLabel("News schliessen")
             }
-
-            Text("Hier findest du laufende Aktivitaeten, neue Inhalte und wichtige Spiel-Updates.")
-                .font(.system(size: 14, weight: .medium))
-                .foregroundStyle(.white.opacity(0.72))
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.top, 8)
         }
     }
 
-    private func newsSection(title: String, items: [NewsItem]) -> some View {
+    private var emptyState: some View {
+        VStack(spacing: 10) {
+            Image(systemName: "newspaper")
+                .font(.system(size: 34, weight: .black))
+            Text("Keine News gefunden")
+                .font(.system(size: 15, weight: .black))
+        }
+        .foregroundStyle(.white.opacity(0.72))
+        .frame(maxWidth: .infinity)
+        .padding(28)
+        .background(
+            Color.white.opacity(0.08),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
+    }
+
+    private func newsSection(title: String, items: [NewsItemDefinition])
+        -> some View
+    {
         VStack(alignment: .leading, spacing: 12) {
             Text(title.uppercased())
                 .font(.system(size: 11, weight: .black))
                 .tracking(1.4)
                 .foregroundStyle(.white.opacity(0.52))
 
-            VStack(spacing: 10) {
+            VStack(spacing: 12) {
                 ForEach(items) { item in
-                    newsRow(item)
+                    NavigationLink {
+                        NewsDetailView(item: item)
+                    } label: {
+                        newsRow(item)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
         }
     }
 
-    private func newsRow(_ item: NewsItem) -> some View {
+    private func newsRow(_ item: NewsItemDefinition) -> some View {
         HStack(alignment: .top, spacing: 12) {
-            Image(systemName: item.systemName)
-                .font(.system(size: 17, weight: .black))
-                .foregroundStyle(.white)
-                .frame(width: 38, height: 38)
-                .background(item.tint, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+            newsImage(item.image)
+                .frame(width: 92, height: 62)
+                .clipShape(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8).stroke(
+                        .white.opacity(0.15),
+                        lineWidth: 1
+                    )
+                )
 
-            VStack(alignment: .leading, spacing: 5) {
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(spacing: 6) {
+                    Text(item.date)
+                        .font(.system(size: 9, weight: .black))
+                        .foregroundStyle(.white.opacity(0.48))
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 10, weight: .black))
+                        .foregroundStyle(.white.opacity(0.38))
+                }
+
                 Text(item.title)
                     .font(.system(size: 16, weight: .black))
                     .foregroundStyle(.white)
+                    .lineLimit(1)
 
                 Text(item.subtitle)
-                    .font(.system(size: 13, weight: .medium))
+                    .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(.white.opacity(0.70))
-                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(2)
             }
-
-            Spacer(minLength: 0)
         }
-        .padding(14)
-        .background(Color.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .padding(12)
+        .background(
+            Color.white.opacity(0.08),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
         .overlay {
             RoundedRectangle(cornerRadius: 8, style: .continuous)
                 .stroke(.white.opacity(0.12), lineWidth: 1)
         }
     }
+
+    @ViewBuilder
+    private func newsImage(_ imageName: String) -> some View {
+        if UIImage(named: imageName) != nil {
+            Image(imageName)
+                .resizable()
+                .scaledToFill()
+        } else {
+            ZStack {
+                LinearGradient(
+                    colors: [.blue.opacity(0.8), .black],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                Image(systemName: "newspaper.fill")
+                    .font(.system(size: 24, weight: .black))
+                    .foregroundStyle(.white.opacity(0.72))
+            }
+        }
+    }
 }
 
-private struct NewsItem: Identifiable {
-    let id = UUID()
-    let title: String
-    let subtitle: String
-    let systemName: String
-    let tint: Color
+private struct NewsDetailView: View {
+    let item: NewsItemDefinition
+
+    var body: some View {
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color.black, Color(red: 0.08, green: 0.12, blue: 0.18),
+                    Color.black,
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 18) {
+                    heroImage
+
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(item.category.uppercased())
+                            .font(.system(size: 10, weight: .black))
+                            .tracking(1.5)
+                            .foregroundStyle(.white.opacity(0.52))
+
+                        Text(item.title)
+                            .font(.system(size: 30, weight: .black))
+                            .foregroundStyle(.white)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        Text(item.subtitle)
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(.white.opacity(0.72))
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        tagRow
+                            .padding(.top, 2)
+
+                        Text(item.body)
+                            .font(.system(size: 15, weight: .medium))
+                            .foregroundStyle(.white.opacity(0.82))
+                            .lineSpacing(5)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 8)
+                    }
+                    .padding(.horizontal, 18)
+                    .padding(.bottom, 34)
+                }
+            }
+        }
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbarColorScheme(.dark, for: .navigationBar)
+    }
+
+    private var heroImage: some View {
+        Group {
+            if UIImage(named: item.image) != nil {
+                Image(item.image)
+                    .resizable()
+                    .scaledToFill()
+            } else {
+                ZStack {
+                    LinearGradient(
+                        colors: [.blue.opacity(0.8), .purple.opacity(0.55)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                    Image(systemName: "newspaper.fill")
+                        .font(.system(size: 54, weight: .black))
+                        .foregroundStyle(.white.opacity(0.75))
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 240)
+        .clipped()
+        .overlay(alignment: .bottomLeading) {
+            Text(item.date)
+                .font(.system(size: 11, weight: .black))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(Color.black.opacity(0.62), in: Capsule())
+                .padding(16)
+        }
+    }
+
+    private var tagRow: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 7) {
+                ForEach(item.tags, id: \.self) { tag in
+                    Text(tag)
+                        .font(.system(size: 10, weight: .black))
+                        .foregroundStyle(.black.opacity(0.78))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 5)
+                        .background(Color.cyan.opacity(0.88), in: Capsule())
+                }
+            }
+        }
+    }
 }
 
 #Preview {
-    NewsView()
+    NewsView(onClose: {})
+        .environmentObject(ThemeManager())
 }

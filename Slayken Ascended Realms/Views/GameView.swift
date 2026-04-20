@@ -33,12 +33,22 @@ struct GameView: View {
     @State private var autoMoveTarget: SIMD2<Float>?
     @State private var showSupport = false
     @State private var showNews = false
+    @State private var showSettings = false
     @State private var showGlobeEvents = false
     @State private var showSummon = false
     @State private var showCharacter = false
     @State private var selectedTab: GameTab = .game
 
+    let onResetGame: () -> Void
     let onStartBattle: (CharacterStats) -> Void
+
+    init(
+        onResetGame: @escaping () -> Void = {},
+        onStartBattle: @escaping (CharacterStats) -> Void
+    ) {
+        self.onResetGame = onResetGame
+        self.onStartBattle = onStartBattle
+    }
 
     var body: some View {
         GeometryReader { geo in
@@ -66,8 +76,11 @@ struct GameView: View {
                     .zIndex(20)
                 }
 
-                if showPopup {
-                    PopupView(showPopup: $showPopup) {
+                if showPopup, let battle = gameState.selectedBattle {
+                    BattleInfoPopupView(
+                        showPopup: $showPopup,
+                        battle: battle
+                    ) {
                         if let selectedEnemy {
                             onStartBattle(selectedEnemy)
                         }
@@ -84,13 +97,14 @@ struct GameView: View {
                                     completedBattles.map(\.battleID)
                                 ),
                                 selectedBattleID: gameState.selectedBattle?.id,
-                                theme: theme.selectedTheme ?? theme.themes.first,
+                                theme: theme.selectedTheme
+                                    ?? theme.themes.first,
                                 onSelectPoint: { _ in
                                     selectedTab = .events
                                     showGlobeEvents = true
                                 },
                                 onSelectBattle: { battle in
-                                    startBattle(battle)
+                                    moveToBattleAndStart(battle)
                                 }
                             )
                             .padding(.top, 400)
@@ -103,7 +117,7 @@ struct GameView: View {
                         LinearGradient(
                             colors: [
                                 Color.black.opacity(0.0),
-                                Color.black.opacity(0.35)
+                                Color.black.opacity(0.35),
                             ],
                             startPoint: .top,
                             endPoint: .bottom
@@ -161,6 +175,9 @@ struct GameView: View {
                     },
                     onNews: {
                         showNews = true
+                    },
+                    onSettings: {
+                        showSettings = true
                     }
                 )
                 .frame(maxHeight: .infinity, alignment: .topTrailing)
@@ -173,6 +190,9 @@ struct GameView: View {
                     },
                     onNews: {
                         showNews = true
+                    },
+                    onSettings: {
+                        showSettings = true
                     }
                 )
                 .offset(y: -112)
@@ -180,7 +200,7 @@ struct GameView: View {
             }
             .sheet(item: $activeSelectionSheet) { selection in
                 switch selection {
-       
+
                 case .theme:
                     ThemeSelectView {
                         activeSelectionSheet = nil
@@ -191,8 +211,25 @@ struct GameView: View {
             .sheet(isPresented: $showSupport) {
                 SupportView()
             }
-            .sheet(isPresented: $showNews) {
-                NewsView()
+            .fullScreenCover(isPresented: $showNews) {
+                NewsView {
+                    showNews = false
+                }
+                .ignoresSafeArea()
+                .background(.black)
+            }
+            .fullScreenCover(isPresented: $showSettings) {
+                SettingsView(
+                    onClose: {
+                        showSettings = false
+                    },
+                    onReset: {
+                        showSettings = false
+                        onResetGame()
+                    }
+                )
+                .environmentObject(gameState)
+                .background(.black)
             }
             .fullScreenCover(
                 isPresented: $showCharacter,
@@ -246,7 +283,9 @@ struct GameView: View {
                     ) { battle in
                         showGlobeEvents = false
                         selectedTab = .game
-                        startBattle(battle)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                            moveToBattleAndStart(battle)
+                        }
                     }
                     .ignoresSafeArea()
 
@@ -276,6 +315,11 @@ struct GameView: View {
                             showGlobeEvents = false
                             selectedTab = .game
                             showNews = true
+                        },
+                        onSettings: {
+                            showGlobeEvents = false
+                            selectedTab = .game
+                            showSettings = true
                         }
                     )
                     .frame(maxHeight: .infinity, alignment: .topTrailing)
@@ -292,6 +336,11 @@ struct GameView: View {
                             showGlobeEvents = false
                             selectedTab = .game
                             showNews = true
+                        },
+                        onSettings: {
+                            showGlobeEvents = false
+                            selectedTab = .game
+                            showSettings = true
                         }
                     )
                     .zIndex(11)
@@ -326,21 +375,9 @@ struct GameView: View {
         activeSelectionSheet = selection
     }
 
-    private func startMap(_ map: GameMap) {
-        gameState.clearBattleSelection()
-        gameState.selectedMap = map
-        selectedEnemy = map.enemy
-        currentStory = map.story
-
-        withAnimation(.easeInOut(duration: 0.25)) {
-            showPopup = false
-            showStory = true
-        }
-    }
-
     private func moveToBattleAndStart(_ battle: GlobeBattle) {
         autoMoveTarget = sceneTarget(for: battle.node)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.85) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.35) {
             autoMoveTarget = nil
             startBattle(battle)
         }
@@ -370,4 +407,3 @@ struct GameView: View {
         .environmentObject(GameState())
         .environmentObject(ThemeManager())
 }
-

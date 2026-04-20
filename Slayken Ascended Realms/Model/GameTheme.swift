@@ -2,7 +2,7 @@
 //  GameTheme.swift
 //  Slayken Ascended Realms
 //
-//  Created by Tufan Cakir on 11.04.26.
+//  Created by Tufan Cakir on 10.04.26.
 //
 
 import SwiftUI
@@ -10,6 +10,7 @@ import SwiftUI
 struct GameTheme: Identifiable, Codable {
     let id: Int
     let name: String
+    let background: String
 
     let primary: ColorData
     let secondary: ColorData

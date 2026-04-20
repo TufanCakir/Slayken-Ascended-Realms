@@ -16,6 +16,7 @@ struct CharacterStats: Codable, Equatable, Identifiable {
     let model: String
     let battleModel: String?
     let texture: String?
+    let element: String?
     let hp: CGFloat
     let attack: CGFloat
 
@@ -25,6 +26,7 @@ struct CharacterStats: Codable, Equatable, Identifiable {
         model: String,
         battleModel: String? = nil,
         texture: String? = nil,
+        element: String? = nil,
         hp: CGFloat,
         attack: CGFloat
     ) {
@@ -33,6 +35,7 @@ struct CharacterStats: Codable, Equatable, Identifiable {
         self.model = model
         self.battleModel = battleModel
         self.texture = texture
+        self.element = element
         self.hp = hp
         self.attack = attack
     }
@@ -44,6 +47,7 @@ struct CharacterStats: Codable, Equatable, Identifiable {
             model: model,
             battleModel: battleModel,
             texture: texture,
+            element: element,
             hp: hp,
             attack: attack
         )
@@ -60,10 +64,6 @@ func loadGamePlayers() -> [CharacterStats] {
 
 func loadBattlePlayer() -> CharacterStats {
     loadCharacters(named: "battle_player").first ?? defaultPlayer()
-}
-
-func loadPlayer() -> CharacterStats {
-    loadBattlePlayer()
 }
 
 private func loadCharacters(named resourceName: String) -> [CharacterStats] {

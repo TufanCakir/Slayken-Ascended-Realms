@@ -2,6 +2,8 @@
 //  GameSideDrawerView.swift
 //  Slayken Ascended Realms
 //
+//  Created by Tufan Cakir on 10.04.26.
+//
 
 import SwiftUI
 
@@ -9,6 +11,7 @@ struct GameSideDrawerView: View {
     let onTheme: () -> Void
     let onSupport: () -> Void
     let onNews: () -> Void
+    let onSettings: () -> Void
 
     @State private var isExpanded = false
 
@@ -18,13 +21,16 @@ struct GameSideDrawerView: View {
         showTheme: Bool = true,
         showSupport: Bool = true,
         showNews: Bool = true,
+        showSettings: Bool = true,
         onTheme: @escaping () -> Void,
         onSupport: @escaping () -> Void,
-        onNews: @escaping () -> Void = {}
+        onNews: @escaping () -> Void = {},
+        onSettings: @escaping () -> Void = {}
     ) {
         self.onTheme = onTheme
         self.onSupport = onSupport
         self.onNews = onNews
+        self.onSettings = onSettings
 
         var drawerActions: [SideDrawerActionItem] = []
         if showTheme {
@@ -42,6 +48,14 @@ struct GameSideDrawerView: View {
                 SideDrawerActionItem(
                     id: .support,
                     systemName: "questionmark.circle"
+                )
+            )
+        }
+        if showSettings {
+            drawerActions.append(
+                SideDrawerActionItem(
+                    id: .settings,
+                    systemName: "gearshape.fill"
                 )
             )
         }
@@ -124,6 +138,8 @@ struct GameSideDrawerView: View {
             onNews()
         case .support:
             onSupport()
+        case .settings:
+            onSettings()
         }
     }
 }
@@ -132,6 +148,7 @@ private enum SideDrawerAction {
     case theme
     case news
     case support
+    case settings
 }
 
 private struct SideDrawerActionItem: Identifiable {
@@ -146,6 +163,8 @@ private struct SideDrawerActionItem: Identifiable {
             return "News"
         case .support:
             return "Support"
+        case .settings:
+            return "Settings"
         }
     }
 }

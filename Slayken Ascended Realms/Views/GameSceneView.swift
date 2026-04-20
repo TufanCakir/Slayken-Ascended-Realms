@@ -2,6 +2,8 @@
 //  GameSceneView.swift
 //  Slayken Ascended Realms
 //
+//  Created by Tufan Cakir on 10.04.26.
+//
 
 import SceneKit
 import SwiftUI
@@ -476,13 +478,16 @@ final class SceneCoordinator {
 
         let movementDirection = flatDelta / remainingDistance
         let distance = min(remainingDistance, 42 * deltaTime)
-        var nextPosition = playerNode.simdPosition + movementDirection * distance
+        var nextPosition =
+            playerNode.simdPosition + movementDirection * distance
         nextPosition.y = getGroundTopY() + playerHeightOffset
         playerNode.simdPosition = clampToGroundBounds(nextPosition)
 
-        let targetAngle = atan2(movementDirection.x, movementDirection.z) - Float.pi / 2
+        let targetAngle =
+            atan2(movementDirection.x, movementDirection.z) - Float.pi / 2
         let currentAngle = playerNode.eulerAngles.y
-        playerNode.eulerAngles.y = currentAngle + (targetAngle - currentAngle) * min(deltaTime * 8, 1)
+        playerNode.eulerAngles.y =
+            currentAngle + (targetAngle - currentAngle) * min(deltaTime * 8, 1)
     }
 
     private func groundDirection(from vector: simd_float3) -> simd_float3 {

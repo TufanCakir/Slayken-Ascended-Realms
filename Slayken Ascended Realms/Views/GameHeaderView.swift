@@ -2,7 +2,7 @@
 //  GameHeaderView.swift
 //  Slayken Ascended Realms
 //
-//  Created by Tufan Cakir on 17.04.26.
+//  Created by Tufan Cakir on 10.04.26.
 //
 
 import SwiftUI
@@ -13,7 +13,10 @@ struct GameHeaderView: View {
 
     @State private var isExpanded = true
 
-    init(currencies: [CurrencyDefinition] = [], onNews: @escaping () -> Void = {}) {
+    init(
+        currencies: [CurrencyDefinition] = [],
+        onNews: @escaping () -> Void = {}
+    ) {
         self.currencies = currencies
         self.onNews = onNews
     }

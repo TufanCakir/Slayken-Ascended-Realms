@@ -2,6 +2,8 @@
 //  GameMiddleDrawerView.swift
 //  Slayken Ascended Realms
 //
+//  Created by Tufan Cakir on 10.04.26.
+//
 
 import SwiftUI
 
@@ -10,6 +12,7 @@ struct GameMiddleDrawerView: View {
 
     let onSupport: () -> Void
     let onNews: () -> Void
+    let onSettings: () -> Void
 
     @State private var isExpanded = false
 
@@ -35,6 +38,11 @@ struct GameMiddleDrawerView: View {
             id: .support,
             title: "Support",
             systemName: "questionmark.circle"
+        ),
+        MiddleDrawerActionItem(
+            id: .settings,
+            title: "Settings",
+            systemName: "gear"
         ),
     ]
 
@@ -130,6 +138,9 @@ struct GameMiddleDrawerView: View {
         case .support:
             selectedTab = .game
             onSupport()
+        case .settings:
+            selectedTab = .game
+            onSettings()
         }
     }
 
@@ -147,6 +158,8 @@ struct GameMiddleDrawerView: View {
             return false
         case .support:
             return selectedTab == .support
+        case .settings:
+            return false
         }
     }
 }
@@ -158,6 +171,7 @@ private enum MiddleDrawerAction {
     case summon
     case news
     case support
+    case settings
 }
 
 private struct MiddleDrawerActionItem: Identifiable {
@@ -167,5 +181,10 @@ private struct MiddleDrawerActionItem: Identifiable {
 }
 
 #Preview {
-    GameMiddleDrawerView(selectedTab: .constant(.game), onSupport: {}, onNews: {})
+    GameMiddleDrawerView(
+        selectedTab: .constant(.game),
+        onSupport: {},
+        onNews: {},
+        onSettings: {}
+    )
 }

@@ -2,7 +2,7 @@
 //  SummonResultView.swift
 //  Slayken Ascended Realms
 //
-//  Created by Tufan Cakir on 18.04.26.
+//  Created by Tufan Cakir on 10.04.26.
 //
 
 import SwiftUI
@@ -11,6 +11,8 @@ import UIKit
 struct SummonResultView: View {
     let result: SummonDrop
     var onClose: (() -> Void)? = nil
+
+    @EnvironmentObject var theme: ThemeManager
 
     @State private var animate = false
 
@@ -51,62 +53,95 @@ struct SummonResultView: View {
     }
 
     var body: some View {
-        ZStack {
-            background
 
-            VStack(spacing: 24) {
-                Spacer()
+        VStack(spacing: 24) {
+            Spacer()
 
-                VStack(spacing: 12) {
-                    Text(title)
-                        .font(.system(size: 18, weight: .light))
-                        .foregroundStyle(.white.opacity(0.85))
+            VStack(spacing: 12) {
+                Text(title)
+                    .font(.system(size: 18, weight: .light))
+                    .foregroundStyle(.white.opacity(0.85))
 
-                    rarityStars
+                rarityStars
 
-                    Text(name)
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundStyle(.white)
-                        .multilineTextAlignment(.center)
-                        .shadow(color: .black, radius: 4, y: 2)
+                Text(name)
+                    .font(.system(size: 28, weight: .bold))
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+                    .shadow(color: .black, radius: 4, y: 2)
 
-                    resultImage
-                        .frame(width: 220, height: 220)
-                        .scaleEffect(animate ? 1 : 0.7)
-                        .opacity(animate ? 1 : 0)
-                        .animation(.spring(response: 0.5, dampingFraction: 0.7), value: animate)
-                }
-                .padding(24)
-                .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(.ultraThinMaterial.opacity(0.6)))
-                .overlay { RoundedRectangle(cornerRadius: 16).stroke(.white.opacity(0.3), lineWidth: 1) }
-                .shadow(color: .black.opacity(0.6), radius: 12, y: 6)
-
-                Spacer()
-
-                Button(action: { onClose?() }) {
-                    Text("Continue")
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 52)
-                        .background(
-                            LinearGradient(
-                                colors: [Color(red: 0.10, green: 0.40, blue: 0.57), Color(red: 0.05, green: 0.18, blue: 0.32)],
-                                startPoint: .top,
-                                endPoint: .bottom
-                            ),
-                            in: Capsule()
-                        )
-                        .overlay { Capsule().stroke(.white.opacity(0.6), lineWidth: 1) }
-                        .shadow(color: .black.opacity(0.5), radius: 6, y: 3)
-                }
-                .padding(.horizontal, 24)
-
-                Spacer().frame(height: 40)
+                resultImage
+                    .frame(width: 220, height: 220)
+                    .scaleEffect(animate ? 1 : 0.7)
+                    .opacity(animate ? 1 : 0)
+                    .animation(
+                        .spring(response: 0.5, dampingFraction: 0.7),
+                        value: animate
+                    )
             }
+            .padding(24)
+            .background(
+                RoundedRectangle(cornerRadius: 16, style: .continuous).fill(
+                    .ultraThinMaterial.opacity(0.6)
+                )
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: 16).stroke(
+                    .white.opacity(0.3),
+                    lineWidth: 1
+                )
+            }
+            .shadow(color: .black.opacity(0.6), radius: 12, y: 6)
+
+            Spacer()
+
+            Button(action: { onClose?() }) {
+                Text("Continue")
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 52)
+                    .background(
+                        LinearGradient(
+                            colors: [
+                                Color(red: 0.10, green: 0.40, blue: 0.57),
+                                Color(red: 0.05, green: 0.18, blue: 0.32),
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        ),
+                        in: Capsule()
+                    )
+                    .overlay {
+                        Capsule().stroke(.white.opacity(0.6), lineWidth: 1)
+                    }
+                    .shadow(color: .black.opacity(0.5), radius: 6, y: 3)
+            }
+            .padding(.horizontal, 24)
+
+            Spacer().frame(height: 40)
         }
         .ignoresSafeArea()
         .onAppear { animate = true }
+        .background {
+            ZStack {
+                if let theme = theme.selectedTheme {
+                    Image(theme.background)
+                        .resizable()
+                        .scaledToFill()
+                }
+
+                LinearGradient(
+                    colors: [
+                        Color.black.opacity(0.2),
+                        Color.black.opacity(0.6),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            }
+            .ignoresSafeArea()
+        }
     }
 
     private var rarityStars: some View {
@@ -138,7 +173,10 @@ struct SummonResultView: View {
     private var background: some View {
         ZStack {
             LinearGradient(
-                colors: [Color.black, Color(red: 0.12, green: 0.16, blue: 0.18), Color.black],
+                colors: [
+                    Color.black, Color(red: 0.12, green: 0.16, blue: 0.18),
+                    Color.black,
+                ],
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -148,7 +186,10 @@ struct SummonResultView: View {
                 .frame(width: 300)
                 .blur(radius: 80)
                 .scaleEffect(animate ? 1.2 : 0.8)
-                .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true), value: animate)
+                .animation(
+                    .easeInOut(duration: 1.2).repeatForever(autoreverses: true),
+                    value: animate
+                )
         }
     }
 }

@@ -2,6 +2,8 @@
 //  TeamView.swift
 //  Slayken Ascended Realms
 //
+//  Created by Tufan Cakir on 10.04.26.
+//
 
 import SwiftData
 import SwiftUI
@@ -24,19 +26,27 @@ struct TeamView: View {
 
     let characters: [SummonCharacter]
 
+    @EnvironmentObject private var themeManager: ThemeManager
     @EnvironmentObject private var gameState: GameState
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \OwnedSummonCharacter.acquiredAt) private var ownedRecords: [OwnedSummonCharacter]
-    @Query(sort: \TeamMemberRecord.slotIndex) private var teamRecords: [TeamMemberRecord]
-    @Query(sort: \PlayerDeckCardSlot.slotIndex) private var deckSlots: [PlayerDeckCardSlot]
-    @Query(sort: \OwnedAbilityCard.acquiredAt) private var ownedCards: [OwnedAbilityCard]
+    @Query(sort: \OwnedSummonCharacter.acquiredAt) private var ownedRecords:
+        [OwnedSummonCharacter]
+    @Query(sort: \TeamMemberRecord.slotIndex) private var teamRecords:
+        [TeamMemberRecord]
+    @Query(sort: \PlayerDeckCardSlot.slotIndex) private var deckSlots:
+        [PlayerDeckCardSlot]
+    @Query(sort: \OwnedAbilityCard.acquiredAt) private var ownedCards:
+        [OwnedAbilityCard]
 
     @State private var activeSheet: ActiveSheet?
 
     private let deckSlotCount = 8
 
     private var selectedCharacter: SummonCharacter? {
-        guard let teamCharacterID = teamRecords.first(where: { $0.slotIndex == 0 })?.characterID else { return nil }
+        guard
+            let teamCharacterID = teamRecords.first(where: { $0.slotIndex == 0 }
+            )?.characterID
+        else { return nil }
         return characters.first { $0.id == teamCharacterID }
     }
 
@@ -48,7 +58,8 @@ struct TeamView: View {
     private var selectedSkin: CharacterSkin? {
         guard let selectedCharacter else { return nil }
         let selectedSkinID = selectedOwnedRecord?.selectedSkinID
-        return selectedCharacter.skins.first { $0.id == selectedSkinID } ?? selectedCharacter.skins.first
+        return selectedCharacter.skins.first { $0.id == selectedSkinID }
+            ?? selectedCharacter.skins.first
     }
 
     private var deckMultiplier: Double {
@@ -59,29 +70,26 @@ struct TeamView: View {
     }
 
     var body: some View {
-        ZStack {
-            background
 
-            VStack(spacing: 14) {
-                Text("Decks")
-                    .font(.system(size: 28, weight: .light))
+        VStack(spacing: 14) {
+            Text("Decks")
+                .font(.system(size: 28, weight: .light))
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+
+            deckPanel
+
+            Button {
+                activeSheet = .cards
+            } label: {
+                Label("Meine Karten", systemImage: "rectangle.stack.fill")
+                    .font(.system(size: 13, weight: .black))
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
-
-                deckPanel
-
-                Button {
-                    activeSheet = .cards
-                } label: {
-                    Label("Meine Karten", systemImage: "rectangle.stack.fill")
-                        .font(.system(size: 13, weight: .black))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 11)
-                        .background(Color.black.opacity(0.44), in: Capsule())
-                }
-                .buttonStyle(.plain)
+                    .padding(.vertical, 11)
+                    .background(Color.black.opacity(0.44), in: Capsule())
             }
+            .buttonStyle(.plain)
             .padding(.horizontal, 14)
             .padding(.top, 8)
             .padding(.bottom, 18)
@@ -89,13 +97,23 @@ struct TeamView: View {
         .fullScreenCover(item: $activeSheet) { sheet in
             switch sheet {
             case .character:
-                TeamCharacterPickerView(characters: characters) { character, skinID in
-                    PlayerInventoryStore.setTeam(characterID: character.id, in: modelContext)
-                    if let record = ownedRecords.first(where: { $0.characterID == character.id }) {
+                TeamCharacterPickerView(characters: characters) {
+                    character,
+                    skinID in
+                    PlayerInventoryStore.setTeam(
+                        characterID: character.id,
+                        in: modelContext
+                    )
+                    if let record = ownedRecords.first(where: {
+                        $0.characterID == character.id
+                    }) {
                         record.selectedSkinID = skinID
                         try? modelContext.save()
                     }
-                    gameState.saveSummonedCharacter(character, selectedSkinID: skinID)
+                    gameState.saveSummonedCharacter(
+                        character,
+                        selectedSkinID: skinID
+                    )
                     activeSheet = nil
                 } onClose: {
                     activeSheet = nil
@@ -104,7 +122,11 @@ struct TeamView: View {
 
             case .card(let slot):
                 TeamCardPickerView(slotIndex: slot) { card in
-                    PlayerInventoryStore.setDeckCard(cardID: card.id, slotIndex: slot, in: modelContext)
+                    PlayerInventoryStore.setDeckCard(
+                        cardID: card.id,
+                        slotIndex: slot,
+                        in: modelContext
+                    )
                     activeSheet = nil
                 } onClose: {
                     activeSheet = nil
@@ -120,36 +142,38 @@ struct TeamView: View {
         }
     }
 
-    private var background: some View {
-        ZStack {
-            Image("sar_bg")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-            LinearGradient(colors: [.black.opacity(0.10), .black.opacity(0.66)], startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
-        }
-    }
-
     private var deckPanel: some View {
         VStack(spacing: 10) {
             characterSlot
 
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 4), spacing: 8) {
+            LazyVGrid(
+                columns: Array(
+                    repeating: GridItem(.flexible(), spacing: 8),
+                    count: 4
+                ),
+                spacing: 8
+            ) {
                 ForEach(0..<deckSlotCount, id: \.self) { index in
                     cardSlot(index)
                 }
             }
 
             HStack(spacing: 12) {
-                deckMetric("Cards", value: "\(deckSlots.count)/\(deckSlotCount)")
-                deckMetric("Damage", value: "x\(String(format: "%.2f", deckMultiplier))")
-                deckMetric("Owned", value: "\(ownedCards.reduce(0) { $0 + $1.count })")
+                deckMetric(
+                    "Cards",
+                    value: "\(deckSlots.count)/\(deckSlotCount)"
+                )
+                deckMetric(
+                    "Damage",
+                    value: "x\(String(format: "%.2f", deckMultiplier))"
+                )
+                deckMetric(
+                    "Owned",
+                    value: "\(ownedCards.reduce(0) { $0 + $1.count })"
+                )
             }
         }
-        .padding(10)
-        .background(Color.cyan.opacity(0.54), in: RoundedRectangle(cornerRadius: 5, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 5).stroke(.white.opacity(0.30), lineWidth: 1))
+        .padding()
     }
 
     private var characterSlot: some View {
@@ -157,19 +181,33 @@ struct TeamView: View {
             activeSheet = .character
         } label: {
             HStack(spacing: 10) {
-                slotImage(selectedSkin?.summonImage ?? selectedCharacter?.summonImage, fallback: "person.crop.square.fill")
-                    .frame(width: 66, height: 66)
-                    .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
-                    .overlay(RoundedRectangle(cornerRadius: 5).stroke(.white.opacity(0.62), lineWidth: 1))
+                slotImage(
+                    selectedSkin?.summonImage ?? selectedCharacter?.summonImage,
+                    fallback: "person.crop.square.fill"
+                )
+                .frame(width: 66, height: 66)
+                .clipShape(
+                    RoundedRectangle(cornerRadius: 5, style: .continuous)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5).stroke(
+                        .white.opacity(0.62),
+                        lineWidth: 1
+                    )
+                )
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(selectedCharacter?.name ?? "Character Slot")
                         .font(.system(size: 15, weight: .black))
                         .foregroundStyle(.white)
                         .lineLimit(1)
-                    Text(selectedCharacter == nil ? "Tippen zum Auswaehlen" : "Skin: \(selectedSkin?.name ?? "Original")")
-                        .font(.system(size: 10, weight: .black))
-                        .foregroundStyle(.white.opacity(0.74))
+                    Text(
+                        selectedCharacter == nil
+                            ? "Tippen zum Auswaehlen"
+                            : "Skin: \(selectedSkin?.name ?? "Original")"
+                    )
+                    .font(.system(size: 10, weight: .black))
+                    .foregroundStyle(.white.opacity(0.74))
                 }
 
                 Spacer()
@@ -179,14 +217,19 @@ struct TeamView: View {
                     .foregroundStyle(.white.opacity(0.82))
             }
             .padding(9)
-            .background(Color.black.opacity(0.32), in: RoundedRectangle(cornerRadius: 5, style: .continuous))
+            .background(
+                Color.black.opacity(0.32),
+                in: RoundedRectangle(cornerRadius: 5, style: .continuous)
+            )
         }
         .buttonStyle(.plain)
     }
 
     private func cardSlot(_ index: Int) -> some View {
         let slot = deckSlots.first { $0.slotIndex == index }
-        let card = slot.flatMap { slot in gameState.abilityCards.first { $0.id == slot.cardID } }
+        let card = slot.flatMap { slot in
+            gameState.abilityCards.first { $0.id == slot.cardID }
+        }
 
         return Button {
             activeSheet = .card(slot: index)
@@ -194,7 +237,11 @@ struct TeamView: View {
             ZStack(alignment: .bottomLeading) {
                 if let card {
                     slotImage(card.image, fallback: "sparkles")
-                    LinearGradient(colors: [.clear, .black.opacity(0.82)], startPoint: .center, endPoint: .bottom)
+                    LinearGradient(
+                        colors: [.clear, .black.opacity(0.82)],
+                        startPoint: .center,
+                        endPoint: .bottom
+                    )
                     Text(card.name)
                         .font(.system(size: 8, weight: .black))
                         .foregroundStyle(.white)
@@ -215,7 +262,12 @@ struct TeamView: View {
             }
             .aspectRatio(0.72, contentMode: .fit)
             .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: 5).stroke(.white.opacity(0.52), lineWidth: 1))
+            .overlay(
+                RoundedRectangle(cornerRadius: 5).stroke(
+                    .white.opacity(0.52),
+                    lineWidth: 1
+                )
+            )
         }
         .buttonStyle(.plain)
     }
@@ -233,14 +285,19 @@ struct TeamView: View {
     }
 
     @ViewBuilder
-    private func slotImage(_ imageName: String?, fallback: String) -> some View {
+    private func slotImage(_ imageName: String?, fallback: String) -> some View
+    {
         if let imageName, UIImage(named: imageName) != nil {
             Image(imageName)
                 .resizable()
                 .scaledToFill()
         } else {
             ZStack {
-                LinearGradient(colors: [.black.opacity(0.76), .cyan.opacity(0.34)], startPoint: .top, endPoint: .bottom)
+                LinearGradient(
+                    colors: [.black.opacity(0.76), .cyan.opacity(0.34)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
                 Image(systemName: fallback)
                     .font(.system(size: 24, weight: .black))
                     .foregroundStyle(.white.opacity(0.78))

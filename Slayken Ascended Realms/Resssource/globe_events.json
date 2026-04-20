@@ -19,7 +19,7 @@
                 "mapImage": "map1",
                 "mapTexture": "map1",
                 "node": {
-                    "x": 0.30,
+                    "x": 0.3,
                     "y": 0.52
                 },
                 "cutscene": {
@@ -37,7 +37,7 @@
                         "groundTexture": "map",
                         "skyboxTexture": "map",
                         "node": {
-                            "x": 0.10,
+                            "x": 0.1,
                             "y": 0.64
                         },
                         "cutscene": {
@@ -51,7 +51,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 80,
-                            "attack": 10
+                            "attack": 10,
+                            "element": "Fire"
                         },
                         "enemies": [
                             {
@@ -59,14 +60,16 @@
                                 "image": "sar_dragon",
                                 "model": "shela",
                                 "hp": 70,
-                                "attack": 9
+                                "attack": 9,
+                                "element": "Plant"
                             },
                             {
                                 "name": "Rift Guard",
                                 "image": "sar_dragon",
                                 "model": "shela",
                                 "hp": 90,
-                                "attack": 11
+                                "attack": 11,
+                                "element": "Storm"
                             }
                         ],
                         "boss": {
@@ -74,7 +77,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 150,
-                            "attack": 16
+                            "attack": 16,
+                            "element": "Water"
                         },
                         "xpReward": 160,
                         "rewards": [
@@ -97,7 +101,7 @@
                         "groundTexture": "sar_bg",
                         "skyboxTexture": "sar_bg",
                         "node": {
-                            "x": 0.20,
+                            "x": 0.2,
                             "y": 0.54
                         },
                         "cutscene": {
@@ -111,7 +115,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 120,
-                            "attack": 14
+                            "attack": 14,
+                            "element": "Light"
                         },
                         "rewards": [
                             {
@@ -147,7 +152,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 140,
-                            "attack": 16
+                            "attack": 16,
+                            "element": "Dark"
                         },
                         "rewards": [
                             {
@@ -169,7 +175,7 @@
                         "groundTexture": "ice",
                         "skyboxTexture": "sar_bg",
                         "node": {
-                            "x": 0.40,
+                            "x": 0.4,
                             "y": 0.46
                         },
                         "cutscene": null,
@@ -178,7 +184,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 160,
-                            "attack": 18
+                            "attack": 18,
+                            "element": "Fire"
                         },
                         "rewards": [
                             {
@@ -209,7 +216,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 185,
-                            "attack": 20
+                            "attack": 20,
+                            "element": "Water"
                         },
                         "rewards": [
                             {
@@ -240,7 +248,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 210,
-                            "attack": 23
+                            "attack": 23,
+                            "element": "Plant"
                         },
                         "rewards": [
                             {
@@ -272,7 +281,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 240,
-                            "attack": 25
+                            "attack": 25,
+                            "element": "Storm"
                         },
                         "rewards": [
                             {
@@ -295,7 +305,7 @@
                         "skyboxTexture": "map",
                         "node": {
                             "x": 0.74,
-                            "y": 0.40
+                            "y": 0.4
                         },
                         "cutscene": null,
                         "enemy": {
@@ -303,7 +313,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 270,
-                            "attack": 28
+                            "attack": 28,
+                            "element": "Light"
                         },
                         "rewards": [
                             {
@@ -334,7 +345,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 310,
-                            "attack": 31
+                            "attack": 31,
+                            "element": "Dark"
                         },
                         "rewards": [
                             {
@@ -370,7 +382,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 360,
-                            "attack": 35
+                            "attack": 35,
+                            "element": "Fire"
                         },
                         "rewards": [
                             {
@@ -429,7 +442,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 380,
-                            "attack": 36
+                            "attack": 36,
+                            "element": "Water"
                         },
                         "rewards": [
                             {
@@ -452,7 +466,7 @@
                         "skyboxTexture": "void",
                         "node": {
                             "x": 0.16,
-                            "y": 0.40
+                            "y": 0.4
                         },
                         "cutscene": null,
                         "enemy": {
@@ -460,7 +474,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 410,
-                            "attack": 38
+                            "attack": 38,
+                            "element": "Plant"
                         },
                         "rewards": [
                             {
@@ -491,7 +506,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 440,
-                            "attack": 40
+                            "attack": 40,
+                            "element": "Storm"
                         },
                         "rewards": [
                             {
@@ -522,7 +538,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 470,
-                            "attack": 42
+                            "attack": 42,
+                            "element": "Light"
                         },
                         "rewards": [
                             {
@@ -544,8 +561,8 @@
                         "groundTexture": "bg_arena",
                         "skyboxTexture": "fire",
                         "node": {
-                            "x": 0.40,
-                            "y": 0.60
+                            "x": 0.4,
+                            "y": 0.6
                         },
                         "cutscene": null,
                         "enemy": {
@@ -553,7 +570,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 510,
-                            "attack": 45
+                            "attack": 45,
+                            "element": "Dark"
                         },
                         "rewards": [
                             {
@@ -584,7 +602,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 550,
-                            "attack": 48
+                            "attack": 48,
+                            "element": "Fire"
                         },
                         "rewards": [
                             {
@@ -615,7 +634,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 590,
-                            "attack": 51
+                            "attack": 51,
+                            "element": "Water"
                         },
                         "rewards": [
                             {
@@ -646,7 +666,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 630,
-                            "attack": 54
+                            "attack": 54,
+                            "element": "Plant"
                         },
                         "rewards": [
                             {
@@ -677,7 +698,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 680,
-                            "attack": 57
+                            "attack": 57,
+                            "element": "Storm"
                         },
                         "rewards": [
                             {
@@ -699,7 +721,7 @@
                         "groundTexture": "bg_arena",
                         "skyboxTexture": "fire",
                         "node": {
-                            "x": 0.80,
+                            "x": 0.8,
                             "y": 0.46
                         },
                         "cutscene": null,
@@ -708,7 +730,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 730,
-                            "attack": 61
+                            "attack": 61,
+                            "element": "Light"
                         },
                         "rewards": [
                             {
@@ -739,7 +762,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 790,
-                            "attack": 65
+                            "attack": 65,
+                            "element": "Dark"
                         },
                         "rewards": [
                             {
@@ -775,7 +799,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 860,
-                            "attack": 70
+                            "attack": 70,
+                            "element": "Fire"
                         },
                         "rewards": [
                             {
@@ -813,7 +838,7 @@
                 "mapTexture": "map3",
                 "node": {
                     "x": 0.46,
-                    "y": 0.50
+                    "y": 0.5
                 },
                 "cutscene": null,
                 "battles": [
@@ -834,7 +859,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 900,
-                            "attack": 72
+                            "attack": 72,
+                            "element": "Water"
                         },
                         "rewards": [
                             {
@@ -865,7 +891,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 960,
-                            "attack": 76
+                            "attack": 76,
+                            "element": "Plant"
                         },
                         "rewards": [
                             {
@@ -887,7 +914,7 @@
                         "groundTexture": "map",
                         "skyboxTexture": "void",
                         "node": {
-                            "x": 0.20,
+                            "x": 0.2,
                             "y": 0.64
                         },
                         "cutscene": null,
@@ -896,7 +923,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 1020,
-                            "attack": 80
+                            "attack": 80,
+                            "element": "Storm"
                         },
                         "rewards": [
                             {
@@ -927,7 +955,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 1080,
-                            "attack": 84
+                            "attack": 84,
+                            "element": "Light"
                         },
                         "rewards": [
                             {
@@ -958,7 +987,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 1160,
-                            "attack": 88
+                            "attack": 88,
+                            "element": "Dark"
                         },
                         "rewards": [
                             {
@@ -989,7 +1019,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 1240,
-                            "attack": 92
+                            "attack": 92,
+                            "element": "Fire"
                         },
                         "rewards": [
                             {
@@ -1020,7 +1051,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 1320,
-                            "attack": 96
+                            "attack": 96,
+                            "element": "Water"
                         },
                         "rewards": [
                             {
@@ -1051,7 +1083,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 1410,
-                            "attack": 101
+                            "attack": 101,
+                            "element": "Plant"
                         },
                         "rewards": [
                             {
@@ -1083,7 +1116,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 1500,
-                            "attack": 106
+                            "attack": 106,
+                            "element": "Storm"
                         },
                         "rewards": [
                             {
@@ -1106,7 +1140,7 @@
                         "skyboxTexture": "void",
                         "node": {
                             "x": 0.72,
-                            "y": 0.40
+                            "y": 0.4
                         },
                         "cutscene": null,
                         "enemy": {
@@ -1114,7 +1148,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 1600,
-                            "attack": 112
+                            "attack": 112,
+                            "element": "Light"
                         },
                         "rewards": [
                             {
@@ -1145,7 +1180,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 1710,
-                            "attack": 118
+                            "attack": 118,
+                            "element": "Dark"
                         },
                         "rewards": [
                             {
@@ -1176,7 +1212,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 1820,
-                            "attack": 124
+                            "attack": 124,
+                            "element": "Fire"
                         },
                         "rewards": [
                             {
@@ -1207,7 +1244,8 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 1950,
-                            "attack": 132
+                            "attack": 132,
+                            "element": "Water"
                         },
                         "rewards": [
                             {
@@ -1243,7 +1281,8 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 2100,
-                            "attack": 140
+                            "attack": 140,
+                            "element": "Plant"
                         },
                         "rewards": [
                             {

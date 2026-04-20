@@ -1,8 +1,8 @@
 //
 //  StartView.swift
-//  Valtasia
+//  Slayken Ascended Realms
 //
-//  Created by Tufan Cakir on 06.03.26.
+//  Created by Tufan Cakir on 10.04.26.
 //
 
 import SwiftUI
@@ -17,7 +17,10 @@ struct StartView: View {
     @State private var pulse = false
 
     private var appVersionText: String {
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+        let version =
+            Bundle.main.object(
+                forInfoDictionaryKey: "CFBundleShortVersionString"
+            ) as? String
         return version?.isEmpty == false ? version ?? "1.0" : "1.0."
     }
 
@@ -64,7 +67,9 @@ struct StartView: View {
                 withAnimation(.easeOut(duration: 0.8)) {
                     animate = true
                 }
-                withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
+                withAnimation(
+                    .easeInOut(duration: 1.5).repeatForever(autoreverses: true)
+                ) {
                     pulse = true
                 }
             }
@@ -81,14 +86,19 @@ struct StartView: View {
         VStack(spacing: 0) {
             ZStack {
                 Circle()
-                    .stroke(Color(red: 0.18, green: 0.43, blue: 0.92).opacity(0.58), lineWidth: 3)
+                    .stroke(
+                        Color(red: 0.18, green: 0.43, blue: 0.92).opacity(0.58),
+                        lineWidth: 3
+                    )
                     .frame(width: 190, height: 190)
                     .scaleEffect(x: 1.35, y: 0.56)
                     .rotationEffect(.degrees(-8))
                     .offset(y: -2)
 
                 Text("S")
-                    .font(.system(size: 128, weight: .ultraLight, design: .serif))
+                    .font(
+                        .system(size: 128, weight: .ultraLight, design: .serif)
+                    )
                     .foregroundStyle(.black.opacity(0.14))
                     .offset(y: -58)
 
@@ -149,8 +159,10 @@ struct StartView: View {
             Text("© \(copyrightYear) Tufan Cakir. Alle Rechte vorbehalten.")
                 .font(.system(size: 10, weight: .semibold, design: .serif))
 
-            Text("SLAYKEN ASCENDED REALMS und alle zugehörigen Namen sind Eigentum von Tufan Cakir.")
-                .font(.system(size: 7, weight: .regular, design: .serif))
+            Text(
+                "SLAYKEN ASCENDED REALMS und alle zugehörigen Namen sind Eigentum von Tufan Cakir."
+            )
+            .font(.system(size: 7, weight: .regular, design: .serif))
         }
         .foregroundStyle(.black.opacity(0.24))
         .multilineTextAlignment(.center)

@@ -2,6 +2,8 @@
 //  GameEventMapPreviewView.swift
 //  Slayken Ascended Realms
 //
+//  Created by Tufan Cakir on 10.04.26.
+//
 
 import SwiftUI
 
@@ -29,7 +31,9 @@ struct GameEventMapPreviewView: View {
         for index in point.battles.indices {
             let battle = point.battles[index]
             let isCompleted = completedBattleIDs.contains(battle.id)
-            let previousCompleted = index == 0 || completedBattleIDs.contains(point.battles[index - 1].id)
+            let previousCompleted =
+                index == 0
+                || completedBattleIDs.contains(point.battles[index - 1].id)
 
             if isCompleted || previousCompleted {
                 result.append(battle)
@@ -53,18 +57,28 @@ struct GameEventMapPreviewView: View {
                         mapTexture(size: contentSize)
 
                         if point != nil {
-                            battleRouteLayer(battles: visibleBattles, size: contentSize)
+                            battleRouteLayer(
+                                battles: visibleBattles,
+                                size: contentSize
+                            )
 
                             ForEach(visibleBattles) { battle in
                                 battleDot(battle)
-                                    .position(mapPoint(battle.node, in: contentSize))
+                                    .position(
+                                        mapPoint(battle.node, in: contentSize)
+                                    )
                             }
                         } else if let chapter {
-                            pointRouteLayer(points: chapter.points, size: contentSize)
+                            pointRouteLayer(
+                                points: chapter.points,
+                                size: contentSize
+                            )
 
                             ForEach(chapter.points) { point in
                                 pointDot(point)
-                                    .position(mapPoint(point.node, in: contentSize))
+                                    .position(
+                                        mapPoint(point.node, in: contentSize)
+                                    )
                             }
                         }
                     }
@@ -111,7 +125,9 @@ struct GameEventMapPreviewView: View {
         .frame(width: size.width, height: size.height)
     }
 
-    private func pointRouteLayer(points: [GlobeEventPoint], size: CGSize) -> some View {
+    private func pointRouteLayer(points: [GlobeEventPoint], size: CGSize)
+        -> some View
+    {
         Path { path in
             guard let first = points.first else { return }
             path.move(to: mapPoint(first.node, in: size))
@@ -121,12 +137,19 @@ struct GameEventMapPreviewView: View {
         }
         .stroke(
             Color.white.opacity(0.72),
-            style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round, dash: [8, 7])
+            style: StrokeStyle(
+                lineWidth: 3,
+                lineCap: .round,
+                lineJoin: .round,
+                dash: [8, 7]
+            )
         )
         .shadow(color: .black.opacity(0.35), radius: 3, y: 1)
     }
 
-    private func battleRouteLayer(battles: [GlobeBattle], size: CGSize) -> some View {
+    private func battleRouteLayer(battles: [GlobeBattle], size: CGSize)
+        -> some View
+    {
         Path { path in
             guard let first = battles.first else { return }
             path.move(to: mapPoint(first.node, in: size))
@@ -136,7 +159,12 @@ struct GameEventMapPreviewView: View {
         }
         .stroke(
             Color.white.opacity(0.74),
-            style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round, dash: [8, 7])
+            style: StrokeStyle(
+                lineWidth: 3,
+                lineCap: .round,
+                lineJoin: .round,
+                dash: [8, 7]
+            )
         )
         .shadow(color: .black.opacity(0.35), radius: 3, y: 1)
     }
@@ -146,7 +174,11 @@ struct GameEventMapPreviewView: View {
             onSelectPoint(point)
         } label: {
             VStack(spacing: 3) {
-                nodeCircle(icon: "mappin", isCompleted: false, isSelected: false)
+                nodeCircle(
+                    icon: "mappin",
+                    isCompleted: false,
+                    isSelected: false
+                )
 
                 Text(point.title)
                     .font(.system(size: 10, weight: .black))
@@ -169,7 +201,11 @@ struct GameEventMapPreviewView: View {
             onSelectBattle(battle)
         } label: {
             VStack(spacing: 3) {
-                nodeCircle(icon: isCompleted ? "checkmark" : "flame.fill", isCompleted: isCompleted, isSelected: isSelected)
+                nodeCircle(
+                    icon: isCompleted ? "checkmark" : "flame.fill",
+                    isCompleted: isCompleted,
+                    isSelected: isSelected
+                )
 
                 VStack(spacing: 1) {
                     Text(battle.name)
@@ -182,25 +218,45 @@ struct GameEventMapPreviewView: View {
                 }
                 .padding(.horizontal, 7)
                 .padding(.vertical, 3)
-                .background(Color.black.opacity(isSelected ? 0.68 : 0.52), in: Capsule())
+                .background(
+                    Color.black.opacity(isSelected ? 0.68 : 0.52),
+                    in: Capsule()
+                )
                 .frame(width: 112)
             }
         }
         .buttonStyle(.plain)
     }
 
-    private func nodeCircle(icon: String, isCompleted: Bool, isSelected: Bool) -> some View {
+    private func nodeCircle(icon: String, isCompleted: Bool, isSelected: Bool)
+        -> some View
+    {
         ZStack {
             Circle()
                 .fill(Color.black.opacity(0.40))
-                .frame(width: isSelected ? 52 : 44, height: isSelected ? 52 : 44)
+                .frame(
+                    width: isSelected ? 52 : 44,
+                    height: isSelected ? 52 : 44
+                )
                 .blur(radius: 6)
                 .offset(y: 6)
 
             Circle()
-                .fill(isCompleted ? Color.green.opacity(0.92) : (theme?.glow.color ?? .red))
-                .frame(width: isSelected ? 38 : 32, height: isSelected ? 38 : 32)
-                .overlay(Circle().stroke(.white.opacity(0.76), lineWidth: isSelected ? 2 : 1))
+                .fill(
+                    isCompleted
+                        ? Color.green.opacity(0.92)
+                        : (theme?.glow.color ?? .red)
+                )
+                .frame(
+                    width: isSelected ? 38 : 32,
+                    height: isSelected ? 38 : 32
+                )
+                .overlay(
+                    Circle().stroke(
+                        .white.opacity(0.76),
+                        lineWidth: isSelected ? 2 : 1
+                    )
+                )
                 .shadow(color: .black.opacity(0.34), radius: 5, y: 2)
 
             Image(systemName: icon)
@@ -210,7 +266,9 @@ struct GameEventMapPreviewView: View {
         .frame(width: 60, height: 52)
     }
 
-    private func mapPoint(_ node: EventMapNodePosition, in size: CGSize) -> CGPoint {
+    private func mapPoint(_ node: EventMapNodePosition, in size: CGSize)
+        -> CGPoint
+    {
         CGPoint(
             x: min(max(CGFloat(node.x), 0), 1) * size.width,
             y: min(max(CGFloat(node.y), 0), 1) * size.height

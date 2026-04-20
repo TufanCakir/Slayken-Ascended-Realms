@@ -2,6 +2,8 @@
 //  GlobeEventView.swift
 //  Slayken Ascended Realms
 //
+//  Created by Tufan Cakir on 10.04.26.
+//
 
 import SwiftData
 import SwiftUI
@@ -265,7 +267,9 @@ struct GlobeEventView: View {
         for index in point.battles.indices {
             let battle = point.battles[index]
             let isCompleted = completedBattleIDs.contains(battle.id)
-            let previousCompleted = index == 0 || completedBattleIDs.contains(point.battles[index - 1].id)
+            let previousCompleted =
+                index == 0
+                || completedBattleIDs.contains(point.battles[index - 1].id)
 
             if isCompleted || previousCompleted {
                 result.append(battle)
@@ -717,7 +721,8 @@ struct GlobeEventView: View {
         guard
             let selectedChapterID,
             let activePointID = gameState.activeEventPointID,
-            chapters.first(where: { $0.id == selectedChapterID })?.points.contains(where: { $0.id == activePointID }) == true
+            chapters.first(where: { $0.id == selectedChapterID })?.points
+                .contains(where: { $0.id == activePointID }) == true
         else {
             selectedPointID = nil
             return

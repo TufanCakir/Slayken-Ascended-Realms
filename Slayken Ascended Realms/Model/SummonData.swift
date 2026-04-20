@@ -2,6 +2,8 @@
 //  SummonData.swift
 //  Slayken Ascended Realms
 //
+//  Created by Tufan Cakir on 10.04.26.
+//
 
 import CoreGraphics
 import Foundation
@@ -20,6 +22,7 @@ struct SummonCharacter: Codable, Identifiable, Equatable {
     let model: String
     let battleModel: String?
     let texture: String?
+    let element: String?
     let rarity: Int
     let hp: Double
     let attack: Double
@@ -33,6 +36,7 @@ struct SummonCharacter: Codable, Identifiable, Equatable {
             model: model,
             battleModel: battleModel,
             texture: selectedSkin?.texture ?? texture,
+            element: element,
             hp: CGFloat(hp),
             attack: CGFloat(attack)
         )

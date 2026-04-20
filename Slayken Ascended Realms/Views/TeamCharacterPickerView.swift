@@ -1,3 +1,10 @@
+//
+//  TeamCharacterPickerView.swift
+//  Slayken Ascended Realms
+//
+//  Created by Tufan Cakir on 10.04.26.
+//
+
 import SwiftData
 import SwiftUI
 import UIKit
@@ -7,7 +14,10 @@ struct TeamCharacterPickerView: View {
     let onSelect: (SummonCharacter, String?) -> Void
     let onClose: () -> Void
 
-    @Query(sort: \OwnedSummonCharacter.acquiredAt) private var ownedRecords: [OwnedSummonCharacter]
+    @EnvironmentObject var theme: ThemeManager
+
+    @Query(sort: \OwnedSummonCharacter.acquiredAt) private var ownedRecords:
+        [OwnedSummonCharacter]
     @State private var selectedCharacterID: String?
     @State private var selectedSkinID: String?
 
@@ -17,71 +27,118 @@ struct TeamCharacterPickerView: View {
     }
 
     private var selectedCharacter: SummonCharacter? {
-        ownedCharacters.first { $0.id == selectedCharacterID } ?? ownedCharacters.first
+        ownedCharacters.first { $0.id == selectedCharacterID }
+            ?? ownedCharacters.first
     }
 
     var body: some View {
-        ZStack {
-            background
 
-            VStack(spacing: 12) {
-                header(title: "Character Slot")
+        VStack(spacing: 12) {
+            header(title: "Character Slot")
 
-                if ownedCharacters.isEmpty {
-                    emptyState(text: "Keine Charaktere. Ziehe zuerst Characters im Summon.", icon: "person.crop.square.badge.questionmark")
-                } else {
-                    ScrollView(.vertical, showsIndicators: false) {
-                        VStack(spacing: 12) {
-                            characterGrid
-                            skinPicker
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 24)
+            if ownedCharacters.isEmpty {
+                emptyState(
+                    text:
+                        "Keine Charaktere. Ziehe zuerst Characters im Summon.",
+                    icon: "person.crop.square.fill"
+                )
+            } else {
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 12) {
+                        characterGrid
+                        skinPicker
                     }
-
-                    Button {
-                        if let selectedCharacter {
-                            onSelect(selectedCharacter, selectedSkinID)
-                        }
-                    } label: {
-                        Text("Einsetzen")
-                            .font(.system(size: 15, weight: .black))
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 13)
-                            .background(Color.cyan.opacity(0.74), in: Capsule())
-                    }
-                    .buttonStyle(.plain)
-                    .padding(.horizontal, 18)
-                    .padding(.bottom, 18)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 24)
                 }
+
+                Button {
+                    if let selectedCharacter {
+                        onSelect(selectedCharacter, selectedSkinID)
+                    }
+                } label: {
+                    Text("Einsetzen")
+                        .font(.system(size: 15, weight: .black))
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 13)
+                        .background(Color.cyan.opacity(0.74), in: Capsule())
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal, 18)
+                .padding(.bottom, 18)
             }
         }
         .onAppear {
-            selectedCharacterID = selectedCharacterID ?? ownedCharacters.first?.id
-            selectedSkinID = selectedSkinID ?? selectedCharacter?.skins.first?.id
+            selectedCharacterID =
+                selectedCharacterID ?? ownedCharacters.first?.id
+            selectedSkinID =
+                selectedSkinID ?? selectedCharacter?.skins.first?.id
+        }
+        .background {
+            ZStack {
+                if let theme = theme.selectedTheme {
+                    Image(theme.background)
+                        .resizable()
+                        .scaledToFill()
+                }
+
+                LinearGradient(
+                    colors: [
+                        Color.black.opacity(0.2),
+                        Color.black.opacity(0.6),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            }
+            .ignoresSafeArea()
         }
     }
 
     private var characterGrid: some View {
-        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+        LazyVGrid(
+            columns: [GridItem(.flexible()), GridItem(.flexible())],
+            spacing: 10
+        ) {
             ForEach(ownedCharacters) { character in
                 Button {
                     selectedCharacterID = character.id
                     selectedSkinID = character.skins.first?.id
                 } label: {
                     VStack(spacing: 7) {
-                        image(character.summonImage, fallback: "person.crop.square.fill")
-                            .frame(height: 138)
-                            .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                        image(
+                            character.summonImage,
+                            fallback: "person.crop.square.fill"
+                        )
+                        .frame(height: 138)
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: 6,
+                                style: .continuous
+                            )
+                        )
                         Text(character.name)
                             .font(.system(size: 12, weight: .black))
                             .foregroundStyle(.white)
                             .lineLimit(1)
                     }
                     .padding(7)
-                    .background(Color.black.opacity(0.42), in: RoundedRectangle(cornerRadius: 7, style: .continuous))
-                    .overlay(RoundedRectangle(cornerRadius: 7).stroke(selectedCharacterID == character.id ? .yellow : .white.opacity(0.22), lineWidth: selectedCharacterID == character.id ? 2 : 1))
+                    .background(
+                        Color.black.opacity(0.42),
+                        in: RoundedRectangle(
+                            cornerRadius: 7,
+                            style: .continuous
+                        )
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 7).stroke(
+                            selectedCharacterID == character.id
+                                ? .yellow : .white.opacity(0.22),
+                            lineWidth: selectedCharacterID == character.id
+                                ? 2 : 1
+                        )
+                    )
                 }
                 .buttonStyle(.plain)
             }
@@ -107,7 +164,12 @@ struct TeamCharacterPickerView: View {
                                     .foregroundStyle(.white)
                                     .padding(.horizontal, 12)
                                     .padding(.vertical, 8)
-                                    .background(selectedSkinID == skin.id ? Color.cyan.opacity(0.78) : Color.black.opacity(0.46), in: Capsule())
+                                    .background(
+                                        selectedSkinID == skin.id
+                                            ? Color.cyan.opacity(0.78)
+                                            : Color.black.opacity(0.46),
+                                        in: Capsule()
+                                    )
                             }
                             .buttonStyle(.plain)
                         }
@@ -115,7 +177,10 @@ struct TeamCharacterPickerView: View {
                 }
             }
             .padding(12)
-            .background(Color.black.opacity(0.30), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+            .background(
+                Color.black.opacity(0.30),
+                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            )
         }
     }
 
@@ -155,8 +220,15 @@ struct TeamCharacterPickerView: View {
     }
 
     private var background: some View {
-        LinearGradient(colors: [Color.black, Color(red: 0.12, green: 0.18, blue: 0.20), Color.black], startPoint: .top, endPoint: .bottom)
-            .ignoresSafeArea()
+        LinearGradient(
+            colors: [
+                Color.black, Color(red: 0.12, green: 0.18, blue: 0.20),
+                Color.black,
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        .ignoresSafeArea()
     }
 
     @ViewBuilder

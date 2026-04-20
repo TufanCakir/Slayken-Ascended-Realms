@@ -2,7 +2,7 @@
 //  ThemeSelectView.swift
 //  Slayken Ascended Realms
 //
-//  Created by Tufan Cakir on 11.04.26.
+//  Created by Tufan Cakir on 10.04.26.
 //
 
 import SwiftUI
@@ -15,9 +15,9 @@ struct ThemeSelectView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-
                 // 🌑 BACKGROUND (aktuelles Theme)
                 if let current = theme.selectedTheme {
+                 
                     LinearGradient(
                         colors: [
                             current.primary.color,

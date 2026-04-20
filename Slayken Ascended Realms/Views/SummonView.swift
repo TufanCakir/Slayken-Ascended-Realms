@@ -2,6 +2,8 @@
 //  SummonView.swift
 //  Slayken Ascended Realms
 //
+//  Created by Tufan Cakir on 10.04.26.
+//
 
 import SwiftData
 import SwiftUI
@@ -12,6 +14,7 @@ struct SummonView: View {
     let currencies: [CurrencyDefinition]
     var onClose: (() -> Void)? = nil
 
+    @EnvironmentObject private var themeManager: ThemeManager
     @EnvironmentObject private var gameState: GameState
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \PlayerCurrencyBalance.code) private var balances:
@@ -25,63 +28,96 @@ struct SummonView: View {
     @State private var showResult = false
 
     var body: some View {
-        ZStack {
-            background
+        VStack(spacing: 0) {
+            header
 
-            VStack(spacing: 0) {
-                header
+            Spacer(minLength: 18)
 
-                ScrollView(.vertical, showsIndicators: true) {
-                    VStack(spacing: 9) {
-                        ForEach(banners) { banner in
-                            summonBannerRow(banner)
-                        }
+            centerBlock
 
-                        if banners.isEmpty {
-                            emptyBannerState
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 10)
-                    .padding(.bottom, 18)
-                }
+            Spacer(minLength: 20)
 
-                currencyFooter
-            }
-            .overlay {
-                if showResult, let lastSummon {
-                    ZStack {
-                        Color.black.opacity(0.6)
-                            .ignoresSafeArea()
-                            .transition(.opacity)
+            bannerBlock
+                .padding(.horizontal, 20)
 
-                        SummonResultView(result: lastSummon) {
-                            withAnimation {
-                                showResult = false
-                            }
-                        }
-                        .transition(.scale)
-                    }
-                    .animation(.easeInOut(duration: 0.25), value: showResult)
-                }
-            }
-            .background(.black.opacity(0.18))
-            .background(.ultraThinMaterial.opacity(0.45))
+            Spacer(minLength: 18)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+            ZStack {
+                if let theme = themeManager.selectedTheme {
+                    Image(theme.background)
+                        .resizable()
+                        .scaledToFill()
+                }
+
+                LinearGradient(
+                    colors: [
+                        Color.black.opacity(0.2),
+                        Color.black.opacity(0.6),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            }
+            .ignoresSafeArea()
+        }
+
+        .overlay {
+            if showResult, let lastSummon {
+                ZStack {
+                    Color.black.opacity(0.6)
+                        .ignoresSafeArea()
+
+                    SummonResultView(result: lastSummon) {
+                        withAnimation {
+                            showResult = false
+                        }
+                    }
+                }
+            }
+        }
         .onAppear {
             PlayerInventoryStore.ensureBalances(
                 for: currencies,
                 in: modelContext
             )
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                showResult = true
+        }
+    }
+
+    private var bannerBlock: some View {
+        VStack(spacing: 10) {
+            ForEach(banners) { banner in
+                summonBannerRow(banner)
+                    .frame(maxWidth: .infinity)
             }
+
+            if banners.isEmpty {
+                emptyBannerState
+            }
+        }
+        .padding(.vertical, 6)
+    }
+
+    private var centerBlock: some View {
+        VStack(spacing: 12) {
+
+            Image(systemName: "sparkles")
+                .font(.system(size: 60, weight: .ultraLight))
+                .foregroundStyle(.white.opacity(0.25))
+
+            Text("Summon Portal")
+                .font(.system(size: 22, weight: .light))
+                .foregroundStyle(.white.opacity(0.9))
+
+            Text("Beschwoere neue Karten und Helden")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(.white.opacity(0.7))
         }
     }
 
     private var header: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 10) {
+
             HStack {
                 if let onClose {
                     Button(action: onClose) {
@@ -92,7 +128,6 @@ struct SummonView: View {
                             .background(Color.black.opacity(0.48), in: Circle())
                     }
                     .buttonStyle(.plain)
-                    .accessibilityLabel("Close Summon")
                 } else {
                     Color.clear.frame(width: 38, height: 38)
                 }
@@ -100,10 +135,8 @@ struct SummonView: View {
                 Spacer()
 
                 Text("Summon Cards")
-                    .font(.system(size: 28, weight: .light))
+                    .font(.system(size: 24, weight: .light))
                     .foregroundStyle(.white.opacity(0.94))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
 
                 Spacer()
 
@@ -111,56 +144,44 @@ struct SummonView: View {
             }
             .padding(.horizontal, 16)
 
+            // 💰 HIER rein
+            CurrencyBarView(currencies: currencies)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(
+                    Color.black.opacity(0.35),
+                    in: Capsule()
+                )
+
             Rectangle()
-                .fill(.white.opacity(0.26))
+                .fill(.white.opacity(0.22))
                 .frame(height: 1)
                 .padding(.horizontal, 62)
         }
         .padding(.top, 58)
-        .padding(.bottom, 4)
     }
 
     private var background: some View {
         ZStack {
+            Color(red: 0.12, green: 0.15, blue: 0.22)
+                .ignoresSafeArea()
+
             LinearGradient(
                 colors: [
-                    Color(red: 0.08, green: 0.11, blue: 0.13),
-                    Color(red: 0.28, green: 0.34, blue: 0.33),
-                    Color(red: 0.06, green: 0.08, blue: 0.10),
+                    Color.black.opacity(0.18),
+                    Color(red: 0.10, green: 0.13, blue: 0.20).opacity(0.92),
+                    Color.black.opacity(0.18),
                 ],
                 startPoint: .top,
                 endPoint: .bottom
             )
+            .ignoresSafeArea()
 
             Image(systemName: "sparkles")
-                .font(.system(size: 180, weight: .ultraLight))
-                .foregroundStyle(.white.opacity(0.08))
-                .offset(y: -80)
+                .font(.system(size: 200, weight: .ultraLight))
+                .foregroundStyle(.white.opacity(0.05))
+                .offset(y: -120)
         }
-        .ignoresSafeArea()
-    }
-
-    private var currencyFooter: some View {
-        VStack(spacing: 6) {
-            Rectangle()
-                .fill(.white.opacity(0.22))
-                .frame(height: 1)
-
-            HStack(spacing: 12) {
-                ForEach(currencies) { currency in
-                    Label(
-                        "\(amount(for: currency.code))",
-                        systemImage: currency.icon
-                    )
-                    .font(.system(size: 13, weight: .black))
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 8)
-        }
-        .background(Color.black.opacity(0.34))
     }
 
     private var emptyBannerState: some View {
@@ -388,7 +409,8 @@ struct SummonView: View {
                     return characters.first { $0.id == characterID }?.name
                 }
                 if let cardID = entry.cardID {
-                    return gameState.abilityCards.first { $0.id == cardID }?.name
+                    return gameState.abilityCards.first { $0.id == cardID }?
+                        .name
                 }
                 return nil
             }
@@ -426,13 +448,6 @@ struct SummonView: View {
         .joined(separator: " + ")
     }
 
-    private func poolCharacters(for banner: SummonBanner) -> [SummonCharacter] {
-        banner.pool.compactMap { entry in
-            guard let characterID = entry.characterID else { return nil }
-            return characters.first { $0.id == characterID }
-        }
-    }
-
     @ViewBuilder
     private func bannerBackground(_ imageName: String) -> some View {
         if UIImage(named: imageName) == nil {
@@ -458,4 +473,10 @@ struct SummonView: View {
                 .scaledToFill()
         }
     }
+}
+
+#Preview {
+    SummonView(banners: [], characters: [], currencies: [])
+        .environmentObject(GameState())
+        .environmentObject(ThemeManager())
 }

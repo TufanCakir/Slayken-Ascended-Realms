@@ -2,7 +2,7 @@
 //  RootView.swift
 //  Slayken Ascended Realms
 //
-//  Created by Tufan Cakir on 12.04.26.
+//  Created by Tufan Cakir on 10.04.26.
 //
 
 import SwiftUI
@@ -33,7 +33,9 @@ struct RootView: View {
                 }
 
             case .game:
-                GameView { enemy in
+                GameView(onResetGame: {
+                    resetToStart()
+                }) { enemy in
                     transition(to: .battle, enemy: enemy)
                 }
             case .battle:
@@ -91,6 +93,18 @@ struct RootView: View {
         loadingTask?.cancel()
         loadingTask = Task {
             await runLoadingTransition(to: screen, enemy: enemy)
+        }
+    }
+
+    private func resetToStart() {
+        loadingTask?.cancel()
+        gameState.clearBattleSelection()
+        activeEnemy = nil
+        loadingProgress = 0
+
+        withAnimation(.smooth(duration: 0.35)) {
+            isLoading = false
+            currentScreen = .start
         }
     }
 

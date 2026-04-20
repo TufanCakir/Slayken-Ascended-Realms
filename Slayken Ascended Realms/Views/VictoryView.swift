@@ -24,82 +24,87 @@ struct VictoryView: View {
     var onContinue: () -> Void
 
     var body: some View {
-        ZStack {
-            Image(gameState.activeSkyboxTexture)
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-                .blur(radius: 5)
 
-            Color.black.opacity(0.58)
-                .ignoresSafeArea()
+        VStack {
 
-            Circle()
-                .fill((theme.selectedTheme?.glow.color ?? .blue).opacity(0.38))
-                .blur(radius: 130)
-                .scaleEffect(animate ? 1.22 : 0.86)
-                .animation(.easeInOut(duration: 2).repeatForever(autoreverses: true), value: animate)
+            rewardRow
+            Spacer()
+            xpPanel
+            Spacer()
 
-            VStack(spacing: 18) {
-                Text("VICTORY")
-                    .font(.system(size: 46, weight: .black))
-                    .foregroundStyle(
+            Text("VICTORY")
+                .font(.system(size: 46, weight: .black))
+                .foregroundStyle(
+                    LinearGradient(
+                        colors: [
+                            theme.selectedTheme?.secondary.color ?? .white,
+                            theme.selectedTheme?.primary.color ?? .blue,
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .shadow(
+                    color: (theme.selectedTheme?.glow.color ?? .blue).opacity(
+                        0.9
+                    ),
+                    radius: 18
+                )
+
+            Button {
+                onContinue()
+            } label: {
+                Text("Continue")
+                    .font(.system(size: 17, weight: .black))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 13)
+                    .background(
                         LinearGradient(
                             colors: [
-                                theme.selectedTheme?.secondary.color ?? .white,
                                 theme.selectedTheme?.primary.color ?? .blue,
+                                theme.selectedTheme?.secondary.color ?? .purple,
                             ],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        ),
+                        in: Capsule()
                     )
-                    .shadow(color: (theme.selectedTheme?.glow.color ?? .blue).opacity(0.9), radius: 18)
-
-                Text("\(defeatedEnemies) Enemies Defeated")
-                    .font(.system(size: 13, weight: .black))
-                    .foregroundStyle(.white.opacity(0.76))
-
-                VStack(spacing: 10) {
-                    rewardRow
-                    xpPanel
-                }
-
-                Button {
-                    onContinue()
-                } label: {
-                    Text("Continue")
-                        .font(.system(size: 17, weight: .black))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 13)
-                        .background(
-                            LinearGradient(
-                                colors: [
-                                    theme.selectedTheme?.primary.color ?? .blue,
-                                    theme.selectedTheme?.secondary.color ?? .purple,
-                                ],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            ),
-                            in: Capsule()
-                        )
-                        .foregroundStyle(.white)
-                }
-                .padding(.top, 4)
+                    .foregroundStyle(.white)
             }
-            .padding(24)
-            .background(Color.black.opacity(0.54), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: 14).stroke(.white.opacity(0.18), lineWidth: 1))
-            .padding(.horizontal, 24)
+            .padding(.top, 4)
         }
+        .padding()
+        .padding(.horizontal, 24)
         .onAppear {
             animate = true
+        }
+        .background {
+            ZStack {
+                if let theme = theme.selectedTheme {
+                    Image(theme.background)
+                        .resizable()
+                        .scaledToFill()
+                }
+
+                LinearGradient(
+                    colors: [
+                        Color.black.opacity(0.2),
+                        Color.black.opacity(0.6),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            }
+            .ignoresSafeArea()
         }
     }
 
     private var rewardRow: some View {
         HStack(spacing: 10) {
             ForEach(rewards) { reward in
-                if let currency = currencies.first(where: { $0.code == reward.currency }) {
+                if let currency = currencies.first(where: {
+                    $0.code == reward.currency
+                }) {
                     rewardItem(currency: currency, amount: reward.amount)
                 }
             }
@@ -118,9 +123,15 @@ struct VictoryView: View {
 
                 Spacer()
 
-                Text(levelAfter > levelBefore ? "Lv.\(levelBefore) -> Lv.\(levelAfter)" : "Lv.\(levelAfter)")
-                    .font(.system(size: 13, weight: .black))
-                    .foregroundStyle(levelAfter > levelBefore ? .green : .white.opacity(0.82))
+                Text(
+                    levelAfter > levelBefore
+                        ? "Lv.\(levelBefore) -> Lv.\(levelAfter)"
+                        : "Lv.\(levelAfter)"
+                )
+                .font(.system(size: 13, weight: .black))
+                .foregroundStyle(
+                    levelAfter > levelBefore ? .green : .white.opacity(0.82)
+                )
             }
 
             GeometryReader { geo in
@@ -128,18 +139,29 @@ struct VictoryView: View {
                     Capsule()
                         .fill(Color.white.opacity(0.12))
                     Capsule()
-                        .fill(LinearGradient(colors: [.yellow, .orange], startPoint: .leading, endPoint: .trailing))
+                        .fill(
+                            LinearGradient(
+                                colors: [.yellow, .orange],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
                         .frame(width: geo.size.width * 0.72)
                 }
             }
             .frame(height: 8)
         }
         .padding(12)
-        .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .background(
+            Color.black.opacity(0.45),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
         .foregroundStyle(.white)
     }
 
-    private func rewardItem(currency: CurrencyDefinition, amount: Int) -> some View {
+    private func rewardItem(currency: CurrencyDefinition, amount: Int)
+        -> some View
+    {
         VStack(spacing: 6) {
             if let asset = currency.assetIcon, UIImage(named: asset) != nil {
                 Image(asset)
@@ -162,7 +184,10 @@ struct VictoryView: View {
                 .lineLimit(1)
         }
         .frame(width: 84, height: 76)
-        .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .background(
+            Color.black.opacity(0.45),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
     }
 }
 

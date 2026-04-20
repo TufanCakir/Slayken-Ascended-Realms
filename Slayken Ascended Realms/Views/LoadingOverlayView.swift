@@ -2,7 +2,7 @@
 //  LoadingOverlayView.swift
 //  Slayken Ascended Realms
 //
-//  Created by Tufan Cakir on 13.04.26.
+//  Created by Tufan Cakir on 10.04.26.
 //
 
 import SwiftUI
@@ -17,8 +17,11 @@ struct LoadingOverlayView: View {
     @State private var showSupport = false
 
     private var appVersionText: String {
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
-        return version?.isEmpty == false ? version ?? "1.0" : "1.0."
+        let version =
+            Bundle.main.object(
+                forInfoDictionaryKey: "CFBundleShortVersionString"
+            ) as? String
+        return version?.isEmpty == false ? version ?? "1.0" : "1.0"
     }
 
     private var newsImage: String {
@@ -69,7 +72,9 @@ struct LoadingOverlayView: View {
             SupportView()
         }
         .onAppear {
-            withAnimation(.linear(duration: 1.05).repeatForever(autoreverses: false)) {
+            withAnimation(
+                .linear(duration: 1.05).repeatForever(autoreverses: false)
+            ) {
                 spin = true
             }
         }
@@ -122,18 +127,28 @@ struct LoadingOverlayView: View {
                         Circle()
                             .fill(.white.opacity(0.92))
                             .frame(width: 40, height: 40)
-                            .shadow(color: .black.opacity(0.28), radius: 8, y: 3)
+                            .shadow(
+                                color: .black.opacity(0.28),
+                                radius: 8,
+                                y: 3
+                            )
 
                         if UIImage(named: "support_icon") != nil {
                             Image("support_icon")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 26, height: 26)
-                                .shadow(color: .black.opacity(0.18), radius: 2, y: 1)
+                                .shadow(
+                                    color: .black.opacity(0.18),
+                                    radius: 2,
+                                    y: 1
+                                )
                         } else {
                             Image(systemName: "envelope.fill")
                                 .font(.system(size: 20, weight: .black))
-                                .foregroundStyle(Color(red: 0.12, green: 0.40, blue: 0.95))
+                                .foregroundStyle(
+                                    Color(red: 0.12, green: 0.40, blue: 0.95)
+                                )
                         }
                     }
 
@@ -235,8 +250,19 @@ struct LoadingOverlayView: View {
                     Capsule()
                         .fill(Color.black.opacity(0.46))
                     Capsule()
-                        .fill(LinearGradient(colors: [.cyan, .white.opacity(0.86)], startPoint: .leading, endPoint: .trailing))
-                        .frame(width: max(16, geo.size.width * min(max(progress, 0), 1)))
+                        .fill(
+                            LinearGradient(
+                                colors: [.cyan, .white.opacity(0.86)],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .frame(
+                            width: max(
+                                16,
+                                geo.size.width * min(max(progress, 0), 1)
+                            )
+                        )
                 }
             }
             .frame(height: 7)

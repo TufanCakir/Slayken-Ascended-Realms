@@ -2,6 +2,8 @@
 //  CharacterSelectView.swift
 //  Slayken Ascended Realms
 //
+//  Created by Tufan Cakir on 10.04.26.
+//
 
 import SwiftUI
 
@@ -27,35 +29,32 @@ struct CharacterSelectView: View {
     }
 
     var body: some View {
-        ZStack {
-            background
+        VStack(spacing: 0) {
+            header
 
-            VStack(spacing: 0) {
-                header
-
-                Picker("Character Mode", selection: $mode) {
-                    ForEach(Mode.allCases) { mode in
-                        Text(mode.rawValue).tag(mode)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal, 18)
-                .padding(.bottom, 12)
-
-                ScrollView(.vertical, showsIndicators: true) {
-                    VStack(spacing: 14) {
-                        switch mode {
-                        case .team:
-                            TeamView(characters: gameState.summonCharacters)
-                        case .legacy:
-                            directCharacterSelection
-                        }
-                    }
-                    .padding(.horizontal, 14)
-                    .padding(.bottom, 28)
+            Picker("Character Mode", selection: $mode) {
+                ForEach(Mode.allCases) { mode in
+                    Text(mode.rawValue).tag(mode)
                 }
             }
+            .pickerStyle(.segmented)
+            .padding(.horizontal, 18)
+            .padding(.bottom, 12)
+
+            ScrollView(.vertical, showsIndicators: true) {
+                VStack(spacing: 14) {
+                    switch mode {
+                    case .team:
+                        TeamView(characters: gameState.summonCharacters)
+                    case .legacy:
+                        directCharacterSelection
+                    }
+                }
+                .padding(.horizontal, 14)
+                .padding(.bottom, 28)
+            }
         }
+
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             if selectedModel.isEmpty {
@@ -67,6 +66,25 @@ struct CharacterSelectView: View {
         }
         .onChange(of: gameState.player.model) {
             didSave = selectedModel == gameState.player.model
+        }
+        .background {
+            ZStack {
+                if let theme = theme.selectedTheme {
+                    Image(theme.background)
+                        .resizable()
+                        .scaledToFill()
+                }
+
+                LinearGradient(
+                    colors: [
+                        Color.black.opacity(0.2),
+                        Color.black.opacity(0.6),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            }
+            .ignoresSafeArea()
         }
     }
 
@@ -111,15 +129,21 @@ struct CharacterSelectView: View {
     }
 
     private var background: some View {
-        LinearGradient(
-            colors: [
-                Color(red: 0.08, green: 0.10, blue: 0.12),
-                Color(red: 0.28, green: 0.33, blue: 0.34),
-                Color(red: 0.06, green: 0.08, blue: 0.10),
-            ],
-            startPoint: .top,
-            endPoint: .bottom
-        )
+        ZStack {
+            if let theme = theme.selectedTheme {
+                Image(theme.background)
+                    .resizable()
+                    .scaledToFill()
+            }
+            LinearGradient(
+                colors: [
+                    Color.black.opacity(0.2),
+                    Color.black.opacity(0.6),
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        }
         .ignoresSafeArea()
     }
 

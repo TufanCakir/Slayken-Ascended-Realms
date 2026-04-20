@@ -1,0 +1,64 @@
+[
+    {
+        "id": "realm_route_active",
+        "category": "Aktivitaeten",
+        "title": "Realm Route aktiv",
+        "subtitle":
+            "Battle-Nodes werden Schritt fuer Schritt auf der World Map freigeschaltet.",
+        "image": "news_realm_route",
+        "date": "2026-04-19",
+        "tags": [
+            "World Map",
+            "Battle",
+            "Progress"
+        ],
+        "body":
+            "Die Realm Route fuehrt dich ueber mehrere Battle-Nodes durch das aktuelle Kapitel. Abgeschlossene Kaempfe schalten neue Nodes frei, damit sich der Fortschritt wie eine echte Route anfuehlt. Tippe einen Battle-Node an, bewege deinen 3D-Charakter zum Ziel und pruefe im Battle-Info-Popup zuerst Element, Gegnerstaerke, Level und empfohlene Konter."
+    },
+    {
+        "id": "element_battle_system",
+        "category": "Neue Features",
+        "title": "Element-System im Kampf",
+        "subtitle":
+            "Cards und Gegner haben Elemente mit Staerken und Schwaechen.",
+        "image": "news_elements",
+        "date": "2026-04-19",
+        "tags": [
+            "Elemente",
+            "Cards",
+            "Balance"
+        ],
+        "body":
+            "Skill Cards und Gegner nutzen jetzt Elemente. Fire ist stark gegen Plant, Water ist stark gegen Fire und Plant ist stark gegen Water. Light, Dark und Void sind breit effektiv gegen normale Elemente. Dadurch sollst du nicht nur eine starke Karte spammen, sondern Deck, Mana und Gegner-Element bewusst vergleichen."
+    },
+    {
+        "id": "mana_skill_cards",
+        "category": "Neue Features",
+        "title": "Mana fuer Skill Cards",
+        "subtitle": "Jede Card hat eigene Mana-Kosten aus JSON.",
+        "image": "news_mana_cards",
+        "date": "2026-04-19",
+        "tags": [
+            "Mana",
+            "Skill Cards",
+            "JSON"
+        ],
+        "body":
+            "Im Kampf gibt es jetzt eine Mana-Leiste. Normale Angriffe bauen Mana auf, Skill Cards verbrauchen Mana. Jede Karte besitzt eigene Mana-Kosten in ability_cards.json. So kannst du spaeter schnell balancen, ob eine starke Karte teuer oder eine schnelle Karte guenstig sein soll."
+    },
+    {
+        "id": "card_growth_duplicates",
+        "category": "Aktivitaeten",
+        "title": "Duplikate verbessern Cards",
+        "subtitle": "Gezogene Duplikate steigern Level, Sterne und Damage.",
+        "image": "news_card_growth",
+        "date": "2026-04-19",
+        "tags": [
+            "Summon",
+            "Level",
+            "Stars"
+        ],
+        "body":
+            "Wenn du dieselbe Skill Card mehrfach summonst, steigt ihre Duplikatanzahl. Daraus werden Level und Sterne berechnet. Der Damage skaliert exponentiell ueber damageGrowth, Level und Sterne. Alle wichtigen Werte wie maxLevel, maxStars, duplicatesPerLevel und levelsPerStar stehen in JSON und koennen leicht angepasst werden."
+    }
+]

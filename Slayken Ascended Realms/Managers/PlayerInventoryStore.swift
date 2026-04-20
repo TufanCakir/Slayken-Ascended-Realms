@@ -2,6 +2,8 @@
 //  PlayerInventoryStore.swift
 //  Slayken Ascended Realms
 //
+//  Created by Tufan Cakir on 10.04.26.
+//
 
 import Foundation
 import SwiftData
@@ -114,23 +116,22 @@ enum PlayerInventoryStore {
         save(context)
     }
 
-    static func setDeckCard(cardID: String, slotIndex: Int, in context: ModelContext) {
+    static func setDeckCard(
+        cardID: String,
+        slotIndex: Int,
+        in context: ModelContext
+    ) {
         let descriptor = FetchDescriptor<PlayerDeckCardSlot>(
             predicate: #Predicate { $0.slotIndex == slotIndex }
         )
         if let existing = try? context.fetch(descriptor).first {
             existing.cardID = cardID
         } else {
-            context.insert(PlayerDeckCardSlot(slotIndex: slotIndex, cardID: cardID))
+            context.insert(
+                PlayerDeckCardSlot(slotIndex: slotIndex, cardID: cardID)
+            )
         }
         save(context)
-    }
-
-    static func ownCard(cardID: String, in context: ModelContext) -> Bool {
-        let descriptor = FetchDescriptor<OwnedAbilityCard>(
-            predicate: #Predicate { $0.cardID == cardID }
-        )
-        return ((try? context.fetchCount(descriptor)) ?? 0) > 0
     }
 
     static func addOwnedCard(cardID: String, in context: ModelContext) {
@@ -160,7 +161,8 @@ enum PlayerInventoryStore {
         in context: ModelContext
     ) -> PlayerCharacterProgress {
         let existing = progress(for: characterID, in: context)
-        let progress = existing ?? PlayerCharacterProgress(characterID: characterID)
+        let progress =
+            existing ?? PlayerCharacterProgress(characterID: characterID)
         if existing == nil {
             context.insert(progress)
         }

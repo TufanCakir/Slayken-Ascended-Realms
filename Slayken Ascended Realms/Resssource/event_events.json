@@ -1,0 +1,229 @@
+[
+    {
+        "id": "event_shadow_moon",
+        "title": "Event: Schattenmond",
+        "subtitle": "Eigenes Event mit eigenen Gegnern, Cutscenes und Story",
+        "mapTexture": "sar_bg",
+        "cutscene": {
+            "id": "event_shadow_moon_intro",
+            "title": "Schattenmond erwacht",
+            "video": "intro",
+            "text":
+                "Ein zeitlich begrenztes Portal oeffnet sich ueber dem Schattenmond."
+        },
+        "points": [
+            {
+                "id": "event_shadow_moon_gate",
+                "title": "Schattenpfad",
+                "text":
+                    "Der Event-Pfad nutzt eigene Battles und kann komplett per JSON erweitert werden.",
+                "mapImage": "sar_bg",
+                "mapTexture": "sar_bg",
+                "node": {
+                    "x": 0.24,
+                    "y": 0.58
+                },
+                "cutscene": {
+                    "id": "event_shadow_moon_gate_cutscene",
+                    "title": "Schattenpfad",
+                    "video": "mondtor",
+                    "text": "Die Luft wird kalt, als der Pfad sichtbar wird."
+                },
+                "battles": [
+                    {
+                        "id": "event_shadow_moon_battle_1",
+                        "name": "Dunkle Vorhut",
+                        "description": "Drei Gegner greifen nebeneinander an.",
+                        "difficulty": 3,
+                        "groundTexture": "country",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.20,
+                            "y": 0.62
+                        },
+                        "cutscene": {
+                            "id": "event_shadow_moon_battle_1_cutscene",
+                            "title": "Dunkle Vorhut",
+                            "video": "torwache",
+                            "text": "Die Vorhut blockiert den Weg."
+                        },
+                        "enemies": [
+                            {
+                                "name": "Shadow Scout",
+                                "image": "sar_dragon",
+                                "model": "shela",
+                                "hp": 95,
+                                "attack": 11,
+                                "element": "Dark"
+                            },
+                            {
+                                "name": "Moon Acolyte",
+                                "image": "sar_dragon",
+                                "model": "zaron",
+                                "hp": 110,
+                                "attack": 13,
+                                "element": "Light"
+                            },
+                            {
+                                "name": "Rift Thorn",
+                                "image": "sar_dragon",
+                                "model": "shela",
+                                "hp": 105,
+                                "attack": 12,
+                                "element": "Plant"
+                            }
+                        ],
+                        "xpReward": 210,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 260
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 24
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Diese Gegner gehoeren nicht zur normalen Story. Das ist ein eigenes Event."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Dann koennen wir neue Event-Battles spaeter direkt in JSON eintragen."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_shadow_moon_battle_2",
+                        "name": "Mondkern Bestie",
+                        "description": "Ein Event-Boss mit eigener Begleitung.",
+                        "difficulty": 5,
+                        "groundTexture": "ice",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.48
+                        },
+                        "cutscene": {
+                            "id": "event_shadow_moon_battle_2_cutscene",
+                            "title": "Mondkern Bestie",
+                            "video": "rissbestie",
+                            "text": "Der Boss tritt aus dem Kern des Portals."
+                        },
+                        "enemies": [
+                            {
+                                "name": "Core Wisp",
+                                "image": "sar_dragon",
+                                "model": "shela",
+                                "hp": 120,
+                                "attack": 14,
+                                "element": "Water"
+                            },
+                            {
+                                "name": "Core Guard",
+                                "image": "sar_dragon",
+                                "model": "zaron",
+                                "hp": 145,
+                                "attack": 16,
+                                "element": "Fire"
+                            }
+                        ],
+                        "boss": {
+                            "name": "Shadow Moon Beast",
+                            "image": "sar_dragon",
+                            "model": "zaron",
+                            "hp": 260,
+                            "attack": 28,
+                            "element": "Dark"
+                        },
+                        "xpReward": 420,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 520
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 45
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Der Boss ist nicht allein. Wir muessen zuerst seine Begleiter brechen."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Nutze das richtige Element, sonst kostet der Kampf zu viel Mana."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "event_shadow_moon_ruins",
+                "title": "Event Ruinen",
+                "text": "Ein zweiter Event-Punkt fuer weitere JSON-Battles.",
+                "mapImage": "sar_bg",
+                "mapTexture": "map1",
+                "node": {
+                    "x": 0.58,
+                    "y": 0.44
+                },
+                "cutscene": null,
+                "battles": [
+                    {
+                        "id": "event_shadow_moon_battle_3",
+                        "name": "Runen Echo",
+                        "description":
+                            "Kurzer Event-Kampf mit zwei verschiedenen Elementen.",
+                        "difficulty": 4,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.52,
+                            "y": 0.52
+                        },
+                        "cutscene": null,
+                        "enemies": [
+                            {
+                                "name": "Rune Echo",
+                                "image": "sar_dragon",
+                                "model": "shela",
+                                "hp": 150,
+                                "attack": 17,
+                                "element": "Storm"
+                            },
+                            {
+                                "name": "Ash Keeper",
+                                "image": "sar_dragon",
+                                "model": "zaron",
+                                "hp": 170,
+                                "attack": 19,
+                                "element": "Ash"
+                            }
+                        ],
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 360
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 30
+                            }
+                        ],
+                        "story": []
+                    }
+                ]
+            }
+        ]
+    }
+]

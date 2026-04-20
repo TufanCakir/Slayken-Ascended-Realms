@@ -18,9 +18,11 @@ final class GameState: ObservableObject {
     @Published var summonCharacters: [SummonCharacter]
     @Published var summonBanners: [SummonBanner]
     @Published var abilityCards: [AbilityCardDefinition]
+    @Published var particleEffects: [ParticleEffectDefinition]
     @Published var selectedBattle: GlobeBattle?
     @Published var activeEventChapterID: String?
     @Published var activeEventPointID: String?
+    @Published var activeEventBattleID: String?
 
     var activeEventChapter: GlobeEventChapter? {
         eventChapters.first { $0.id == activeEventChapterID }
@@ -63,6 +65,9 @@ final class GameState: ObservableObject {
     private let mapKey = "selectedMapID"
     private let bgKey = "selectedBackgroundID"
     private let characterKey = "selectedCharacterModel"
+    private let eventChapterKey = "activeEventChapterID"
+    private let eventPointKey = "activeEventPointID"
+    private let eventBattleKey = "activeEventBattleID"
 
     init() {
         let loadedCharacters = Self.loadAvailableCharacters()
@@ -74,6 +79,7 @@ final class GameState: ObservableObject {
         let loadedSummonCharacters = loadSummonCharacters()
         let loadedSummonBanners = loadSummonBanners()
         let loadedAbilityCards = loadAbilityCards()
+        let loadedParticleEffects = loadParticleEffects()
 
         let defaultMap =
             loadedMaps.first
@@ -104,9 +110,11 @@ final class GameState: ObservableObject {
         self.summonCharacters = loadedSummonCharacters
         self.summonBanners = loadedSummonBanners
         self.abilityCards = loadedAbilityCards
+        self.particleEffects = loadedParticleEffects
         self.selectedBattle = nil
         self.activeEventChapterID = loadedEventChapters.first?.id
         self.activeEventPointID = nil
+        self.activeEventBattleID = nil
         self.selectedMap = defaultMap
         self.selectedBackground = defaultBG
 
@@ -136,6 +144,34 @@ final class GameState: ObservableObject {
                 player = character
             }
         }
+
+        if let savedChapterID = UserDefaults.standard.string(
+            forKey: eventChapterKey
+        ), eventChapters.contains(where: { $0.id == savedChapterID }) {
+            activeEventChapterID = savedChapterID
+        }
+
+        if let savedPointID = UserDefaults.standard.string(
+            forKey: eventPointKey
+        ),
+            let chapter = activeEventChapter,
+            chapter.points.contains(where: { $0.id == savedPointID })
+        {
+            activeEventPointID = savedPointID
+        } else {
+            activeEventPointID = nil
+        }
+
+        if let savedBattleID = UserDefaults.standard.string(
+            forKey: eventBattleKey
+        ),
+            let point = activeEventPoint,
+            point.battles.contains(where: { $0.id == savedBattleID })
+        {
+            activeEventBattleID = savedBattleID
+        } else {
+            activeEventBattleID = nil
+        }
     }
 
     func saveCharacter(_ character: CharacterStats) {
@@ -153,6 +189,10 @@ final class GameState: ObservableObject {
     func selectEventChapter(_ chapter: GlobeEventChapter) {
         activeEventChapterID = chapter.id
         activeEventPointID = nil
+        activeEventBattleID = nil
+        UserDefaults.standard.set(chapter.id, forKey: eventChapterKey)
+        UserDefaults.standard.removeObject(forKey: eventPointKey)
+        UserDefaults.standard.removeObject(forKey: eventBattleKey)
     }
 
     func selectEventPoint(
@@ -161,6 +201,23 @@ final class GameState: ObservableObject {
     ) {
         activeEventChapterID = chapter.id
         activeEventPointID = point.id
+        activeEventBattleID = nil
+        UserDefaults.standard.set(chapter.id, forKey: eventChapterKey)
+        UserDefaults.standard.set(point.id, forKey: eventPointKey)
+        UserDefaults.standard.removeObject(forKey: eventBattleKey)
+    }
+
+    func clearActiveEventPoint() {
+        activeEventPointID = nil
+        activeEventBattleID = nil
+        UserDefaults.standard.removeObject(forKey: eventPointKey)
+        UserDefaults.standard.removeObject(forKey: eventBattleKey)
+        if let activeEventChapterID {
+            UserDefaults.standard.set(
+                activeEventChapterID,
+                forKey: eventChapterKey
+            )
+        }
     }
 
     func selectBattle(_ battle: GlobeBattle) {
@@ -168,6 +225,13 @@ final class GameState: ObservableObject {
         if let location = eventLocation(for: battle.id) {
             activeEventChapterID = location.chapter.id
             activeEventPointID = location.point.id
+            activeEventBattleID = battle.id
+            UserDefaults.standard.set(
+                location.chapter.id,
+                forKey: eventChapterKey
+            )
+            UserDefaults.standard.set(location.point.id, forKey: eventPointKey)
+            UserDefaults.standard.set(battle.id, forKey: eventBattleKey)
         }
     }
 
@@ -179,10 +243,14 @@ final class GameState: ObservableObject {
         UserDefaults.standard.removeObject(forKey: mapKey)
         UserDefaults.standard.removeObject(forKey: bgKey)
         UserDefaults.standard.removeObject(forKey: characterKey)
+        UserDefaults.standard.removeObject(forKey: eventChapterKey)
+        UserDefaults.standard.removeObject(forKey: eventPointKey)
+        UserDefaults.standard.removeObject(forKey: eventBattleKey)
 
         selectedBattle = nil
         activeEventChapterID = eventChapters.first?.id
         activeEventPointID = nil
+        activeEventBattleID = nil
 
         if let defaultCharacter = availableCharacters.first {
             player = defaultCharacter

@@ -96,7 +96,8 @@ struct GameView: View {
                                 completedBattleIDs: Set(
                                     completedBattles.map(\.battleID)
                                 ),
-                                selectedBattleID: gameState.selectedBattle?.id,
+                                selectedBattleID: gameState.activeEventBattleID
+                                    ?? gameState.selectedBattle?.id,
                                 theme: theme.selectedTheme
                                     ?? theme.themes.first,
                                 onSelectPoint: { _ in
@@ -112,20 +113,6 @@ struct GameView: View {
                             EmptyView()
                                 .padding(.top, 400)
                         }
-
-                        // Bottom fade overlay (optional)
-                        LinearGradient(
-                            colors: [
-                                Color.black.opacity(0.0),
-                                Color.black.opacity(0.35),
-                            ],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                        .frame(height: 160)
-                        .frame(maxWidth: .infinity, alignment: .bottom)
-                        .allowsHitTesting(false)
-                        .ignoresSafeArea(edges: .bottom)
                     }
                     .zIndex(4)
                 }
@@ -279,7 +266,8 @@ struct GameView: View {
                 ZStack {
                     GlobeEventView(
                         chapters: gameState.eventChapters,
-                        selectedBattleID: gameState.selectedBattle?.id
+                        selectedBattleID: gameState.activeEventBattleID
+                            ?? gameState.selectedBattle?.id
                     ) { battle in
                         showGlobeEvents = false
                         selectedTab = .game
@@ -392,12 +380,12 @@ struct GameView: View {
 
     private func startBattle(_ battle: GlobeBattle) {
         gameState.selectBattle(battle)
-        selectedEnemy = battle.enemy
+        selectedEnemy = battle.primaryEnemy
         currentStory = battle.story
 
         withAnimation(.easeInOut(duration: 0.25)) {
-            showPopup = battle.cutscene != nil || battle.story.isEmpty
-            showStory = battle.cutscene == nil && !battle.story.isEmpty
+            showStory = !battle.story.isEmpty
+            showPopup = battle.story.isEmpty
         }
     }
 }

@@ -16,7 +16,7 @@ struct BattleInfoPopupView: View {
     @EnvironmentObject private var theme: ThemeManager
 
     private var mainEnemy: CharacterStats {
-        battle.boss ?? battle.enemies?.last ?? battle.enemy
+        battle.primaryEnemy
     }
 
     private var enemyElement: GameElement {
@@ -36,7 +36,7 @@ struct BattleInfoPopupView: View {
     }
 
     private var enemyCount: Int {
-        max(1, (battle.enemies?.count ?? 0) + (battle.boss == nil ? 0 : 1))
+        battle.battleEnemies.count
     }
 
     private var recommendedElements: [GameElement] {

@@ -50,6 +50,7 @@ struct BattleView: View {
     @State private var manaRegenTask: Task<Void, Never>?
     @State private var inspectedCard: AbilityCardDefinition?
     @State private var cardLongPressActive = false
+    @State private var cardPressTask: Task<Void, Never>?
 
     private let maxMana: Double = 100
     private let baseAttackManaGain: Double = 18
@@ -89,16 +90,11 @@ struct BattleView: View {
     }
 
     private var battleEnemies: [CharacterStats] {
-        var wave =
-            gameState.selectedBattle?.enemies?.isEmpty == false
-            ? gameState.selectedBattle?.enemies ?? []
-            : [enemy]
-
-        if let boss = gameState.selectedBattle?.boss {
-            wave.append(boss)
+        if let selectedBattle = gameState.selectedBattle {
+            return selectedBattle.battleEnemies
         }
 
-        return wave.isEmpty ? [enemy] : wave
+        return [enemy]
     }
 
     private var activeEnemies: [CharacterStats] {
@@ -149,6 +145,7 @@ struct BattleView: View {
                 enemyAttackID: enemyAttackID,
                 attackingEnemyIndex: attackingEnemyIndex,
                 particleEffect: currentParticleEffect,
+                particleEffects: gameState.particleEffects,
                 groundTexture: gameState.activeGroundTexture,
                 skyboxTexture: gameState.activeSkyboxTexture,
                 onSelectEnemy: { index in
@@ -216,6 +213,7 @@ struct BattleView: View {
         .onDisappear {
             autoTask?.cancel()
             manaRegenTask?.cancel()
+            cardPressTask?.cancel()
         }
     }
 
@@ -443,73 +441,85 @@ struct BattleView: View {
                 let progress = cardProgress(for: card)
                 let canUse = playerMana >= Double(card.resolvedManaCost)
 
-                Button {
-                    guard canUse, !cardLongPressActive else { return }
-                    attack(with: card)
-                } label: {
-                    ZStack(alignment: .bottomTrailing) {
-                        cardImage(card.image)
-                            .frame(width: 64, height: 88)
-                            .clipShape(
-                                RoundedRectangle(
-                                    cornerRadius: 5,
-                                    style: .continuous
-                                )
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5).stroke(
-                                    GameElement(card.element).color.opacity(
-                                        0.85
-                                    ),
-                                    lineWidth: 2
-                                )
-                            )
-                            .opacity(canUse ? 1 : 0.44)
-
-                        VStack(alignment: .trailing, spacing: 2) {
-                            Text("★\(progress.stars) Lv.\(progress.level)")
-                                .font(.system(size: 8, weight: .black))
-                            Text("\(card.resolvedManaCost) MP")
-                                .font(.system(size: 8, weight: .black))
-                            Text(
-                                "x\(String(format: "%.1f", effectiveCardMultiplier(card)))"
-                            )
-                            .font(.system(size: 8, weight: .black))
-                        }
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, 3)
-                        .background(
-                            Color.black.opacity(0.76),
-                            in: RoundedRectangle(
+                ZStack(alignment: .bottomTrailing) {
+                    cardImage(card.image)
+                        .frame(width: 64, height: 88)
+                        .clipShape(
+                            RoundedRectangle(
                                 cornerRadius: 5,
                                 style: .continuous
                             )
                         )
-                        .padding(3)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5).stroke(
+                                GameElement(card.element).color.opacity(
+                                    0.85
+                                ),
+                                lineWidth: 2
+                            )
+                        )
+                        .opacity(canUse ? 1 : 0.44)
+
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text("★\(progress.stars) Lv.\(progress.level)")
+                            .font(.system(size: 8, weight: .black))
+                        Text("\(card.resolvedManaCost) MP")
+                            .font(.system(size: 8, weight: .black))
+                        Text(
+                            "x\(String(format: "%.1f", effectiveCardMultiplier(card)))"
+                        )
+                        .font(.system(size: 8, weight: .black))
                     }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 5)
+                    .padding(.vertical, 3)
+                    .background(
+                        Color.black.opacity(0.76),
+                        in: RoundedRectangle(
+                            cornerRadius: 5,
+                            style: .continuous
+                        )
+                    )
+                    .padding(3)
                 }
-                .buttonStyle(.plain)
-                .onLongPressGesture(
-                    minimumDuration: 0.35,
-                    pressing: { isPressing in
-                        withAnimation(.easeInOut(duration: 0.16)) {
-                            inspectedCard = isPressing ? card : nil
-                        }
-                        if isPressing {
-                            cardLongPressActive = true
-                        } else {
-                            DispatchQueue.main.asyncAfter(
-                                deadline: .now() + 0.08
-                            ) {
-                                cardLongPressActive = false
-                            }
-                        }
-                    },
-                    perform: {}
-                )
+                .contentShape(Rectangle())
+                .gesture(cardPressGesture(for: card, canUse: canUse))
             }
         }
+    }
+
+    private func cardPressGesture(
+        for card: AbilityCardDefinition,
+        canUse: Bool
+    ) -> some Gesture {
+        DragGesture(minimumDistance: 0)
+            .onChanged { _ in
+                guard cardPressTask == nil else { return }
+                cardLongPressActive = false
+                cardPressTask = Task { @MainActor in
+                    try? await Task.sleep(for: .milliseconds(350))
+                    guard !Task.isCancelled else { return }
+                    cardLongPressActive = true
+                    withAnimation(.easeInOut(duration: 0.16)) {
+                        inspectedCard = card
+                    }
+                }
+            }
+            .onEnded { _ in
+                cardPressTask?.cancel()
+                cardPressTask = nil
+
+                if cardLongPressActive {
+                    cardLongPressActive = false
+                    withAnimation(.easeInOut(duration: 0.12)) {
+                        inspectedCard = nil
+                    }
+                    return
+                }
+
+                guard canUse else { return }
+                attack(with: card)
+            }
     }
 
     private func cardInfoOverlay(for card: AbilityCardDefinition) -> some View {

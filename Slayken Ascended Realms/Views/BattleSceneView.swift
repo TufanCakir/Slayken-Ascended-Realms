@@ -18,6 +18,7 @@ struct BattleSceneView: UIViewRepresentable {
     let enemyAttackID: Int
     let attackingEnemyIndex: Int?
     let particleEffect: String?
+    let particleEffects: [ParticleEffectDefinition]
     let groundTexture: String
     let skyboxTexture: String
     let onSelectEnemy: (Int) -> Void
@@ -26,6 +27,7 @@ struct BattleSceneView: UIViewRepresentable {
         BattleSceneCoordinator(
             player: player,
             enemies: enemies,
+            particleEffects: particleEffects,
             onSelectEnemy: onSelectEnemy
         )
     }
@@ -72,6 +74,7 @@ final class BattleSceneCoordinator {
 
     private let playerStats: CharacterStats
     private let enemyStats: [CharacterStats]
+    private let particleEffectDefinitions: [String: ParticleEffectDefinition]
     private let onSelectEnemy: (Int) -> Void
 
     private let cameraNode = SCNNode()
@@ -89,6 +92,7 @@ final class BattleSceneCoordinator {
     init(
         player: CharacterStats,
         enemies: [CharacterStats],
+        particleEffects: [ParticleEffectDefinition],
         onSelectEnemy: @escaping (Int) -> Void
     ) {
         self.playerStats = player
@@ -103,6 +107,11 @@ final class BattleSceneCoordinator {
                     attack: 10
                 )
             ] : enemies
+        self.particleEffectDefinitions = Dictionary(
+            uniqueKeysWithValues: particleEffects.map {
+                ($0.id.lowercased(), $0)
+            }
+        )
         self.onSelectEnemy = onSelectEnemy
     }
 
@@ -461,46 +470,67 @@ final class BattleSceneCoordinator {
         named effect: String,
         at position: SCNVector3
     ) {
+        let definition = particleDefinition(for: effect)
         let particles = SCNParticleSystem()
-        particles.birthRate = 620
-        particles.emissionDuration = 0.12
-        particles.particleLifeSpan = 0.48
-        particles.particleLifeSpanVariation = 0.14
-        particles.particleSize = 0.16
-        particles.particleSizeVariation = 0.08
-        particles.particleVelocity = 4.6
-        particles.particleVelocityVariation = 1.8
-        particles.spreadingAngle = 86
+        particles.birthRate = definition.resolvedBirthRate
+        particles.emissionDuration = definition.resolvedEmissionDuration
+        particles.particleLifeSpan = definition.resolvedLifeSpan
+        particles.particleLifeSpanVariation =
+            definition.resolvedLifeSpanVariation
+        particles.particleSize = definition.resolvedSize
+        particles.particleSizeVariation = definition.resolvedSizeVariation
+        particles.particleVelocity = definition.resolvedVelocity
+        particles.particleVelocityVariation =
+            definition.resolvedVelocityVariation
+        particles.spreadingAngle = definition.resolvedSpreadingAngle
         particles.blendMode = .additive
-        particles.particleColor = particleColor(for: effect)
+        particles.particleColor = UIColor(
+            red: definition.red,
+            green: definition.green,
+            blue: definition.blue,
+            alpha: definition.resolvedAlpha
+        )
 
         let node = SCNNode()
-        node.position = SCNVector3(position.x, position.y + 1.35, position.z)
+        node.position = SCNVector3(
+            position.x,
+            position.y + Float(definition.resolvedYOffset),
+            position.z
+        )
         node.addParticleSystem(particles)
         scene.rootNode.addChildNode(node)
         node.runAction(
             SCNAction.sequence([
-                SCNAction.wait(duration: 0.85),
+                SCNAction.wait(duration: definition.resolvedCleanupDelay),
                 SCNAction.removeFromParentNode(),
             ])
         )
     }
 
-    private func particleColor(for effect: String) -> UIColor {
-        switch effect.lowercased() {
-        case "fire", "ash":
-            return UIColor(red: 1.0, green: 0.34, blue: 0.08, alpha: 1)
-        case "ice", "crystal":
-            return UIColor(red: 0.32, green: 0.86, blue: 1.0, alpha: 1)
-        case "void":
-            return UIColor(red: 0.58, green: 0.18, blue: 1.0, alpha: 1)
-        case "light":
-            return UIColor(red: 1.0, green: 0.90, blue: 0.38, alpha: 1)
-        case "storm":
-            return UIColor(red: 0.45, green: 0.72, blue: 1.0, alpha: 1)
-        default:
-            return UIColor(red: 0.92, green: 0.96, blue: 1.0, alpha: 1)
-        }
+    private func particleDefinition(for effect: String)
+        -> ParticleEffectDefinition
+    {
+        particleEffectDefinitions[effect.lowercased()]
+            ?? particleEffectDefinitions["neutral"]
+            ?? ParticleEffectDefinition(
+                id: "neutral",
+                name: "Neutral Spark",
+                red: 0.92,
+                green: 0.96,
+                blue: 1.0,
+                alpha: 1,
+                birthRate: nil,
+                emissionDuration: nil,
+                lifeSpan: nil,
+                lifeSpanVariation: nil,
+                size: nil,
+                sizeVariation: nil,
+                velocity: nil,
+                velocityVariation: nil,
+                spreadingAngle: nil,
+                yOffset: nil,
+                cleanupDelay: nil
+            )
     }
 
     private func normalizedXZ(_ vector: SCNVector3) -> SCNVector3 {
@@ -713,6 +743,7 @@ final class BattleSceneCoordinator {
         enemyAttackID: 0,
         attackingEnemyIndex: nil,
         particleEffect: "fire",
+        particleEffects: loadParticleEffects(),
         groundTexture: "sar_bg",
         skyboxTexture: "sar_bg",
         onSelectEnemy: { _ in }

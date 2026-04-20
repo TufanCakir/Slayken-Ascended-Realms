@@ -43,6 +43,24 @@ struct GameEventMapPreviewView: View {
         return result
     }
 
+    private var focusedNodeID: String? {
+        if let point, let selectedBattleID,
+            point.battles.contains(where: { $0.id == selectedBattleID })
+        {
+            return nodeID(forBattleID: selectedBattleID)
+        }
+
+        if let point {
+            return nodeID(forPointID: point.id)
+        }
+
+        if let chapter {
+            return nodeID(forPointID: chapter.points.first?.id ?? "")
+        }
+
+        return nil
+    }
+
     var body: some View {
         GeometryReader { geo in
             let viewportSize = geo.size
@@ -52,42 +70,67 @@ struct GameEventMapPreviewView: View {
             )
 
             ZStack(alignment: .topLeading) {
-                ScrollView([.horizontal, .vertical], showsIndicators: false) {
-                    ZStack(alignment: .topLeading) {
-                        mapTexture(size: contentSize)
+                ScrollViewReader { proxy in
+                    ScrollView(
+                        [.horizontal, .vertical],
+                        showsIndicators: false
+                    ) {
+                        ZStack(alignment: .topLeading) {
+                            mapTexture(size: contentSize)
 
-                        if point != nil {
-                            battleRouteLayer(
-                                battles: visibleBattles,
-                                size: contentSize
-                            )
+                            if point != nil {
+                                battleRouteLayer(
+                                    battles: visibleBattles,
+                                    size: contentSize
+                                )
 
-                            ForEach(visibleBattles) { battle in
-                                battleDot(battle)
-                                    .position(
-                                        mapPoint(battle.node, in: contentSize)
-                                    )
-                            }
-                        } else if let chapter {
-                            pointRouteLayer(
-                                points: chapter.points,
-                                size: contentSize
-                            )
+                                ForEach(visibleBattles) { battle in
+                                    battleDot(battle)
+                                        .id(nodeID(forBattleID: battle.id))
+                                        .position(
+                                            mapPoint(
+                                                battle.node,
+                                                in: contentSize
+                                            )
+                                        )
+                                }
+                            } else if let chapter {
+                                pointRouteLayer(
+                                    points: chapter.points,
+                                    size: contentSize
+                                )
 
-                            ForEach(chapter.points) { point in
-                                pointDot(point)
-                                    .position(
-                                        mapPoint(point.node, in: contentSize)
-                                    )
+                                ForEach(chapter.points) { point in
+                                    pointDot(point)
+                                        .id(nodeID(forPointID: point.id))
+                                        .position(
+                                            mapPoint(
+                                                point.node,
+                                                in: contentSize
+                                            )
+                                        )
+                                }
                             }
                         }
+                        .frame(
+                            width: contentSize.width,
+                            height: contentSize.height
+                        )
                     }
-                    .frame(width: contentSize.width, height: contentSize.height)
+                    .scrollBounceBehavior(.basedOnSize)
+                    .frame(
+                        width: viewportSize.width,
+                        height: viewportSize.height
+                    )
+                    .mask(topVanishMask(size: viewportSize))
+                    .clipped()
+                    .onAppear {
+                        scrollToFocusedNode(with: proxy)
+                    }
+                    .onChange(of: focusedNodeID) { _, _ in
+                        scrollToFocusedNode(with: proxy)
+                    }
                 }
-                .scrollBounceBehavior(.basedOnSize)
-                .frame(width: viewportSize.width, height: viewportSize.height)
-                .mask(topVanishMask(size: viewportSize))
-                .clipped()
             }
         }
     }
@@ -104,8 +147,6 @@ struct GameEventMapPreviewView: View {
                     .clipped()
             }
 
-            Rectangle()
-                .fill(Color.black.opacity(0.04))
         }
         .frame(width: size.width, height: size.height)
     }
@@ -114,8 +155,8 @@ struct GameEventMapPreviewView: View {
         LinearGradient(
             stops: [
                 .init(color: .clear, location: 0.0),
-                .init(color: .black.opacity(0.08), location: 0.10),
-                .init(color: .black.opacity(0.42), location: 0.24),
+                .init(color: .black, location: 0.10),
+                .init(color: .black, location: 0.24),
                 .init(color: .black, location: 0.42),
                 .init(color: .black, location: 1.0),
             ],
@@ -273,6 +314,23 @@ struct GameEventMapPreviewView: View {
             x: min(max(CGFloat(node.x), 0), 1) * size.width,
             y: min(max(CGFloat(node.y), 0), 1) * size.height
         )
+    }
+
+    private func scrollToFocusedNode(with proxy: ScrollViewProxy) {
+        guard let focusedNodeID else { return }
+        DispatchQueue.main.async {
+            withAnimation(.easeInOut(duration: 0.35)) {
+                proxy.scrollTo(focusedNodeID, anchor: .center)
+            }
+        }
+    }
+
+    private func nodeID(forPointID id: String) -> String {
+        "point-\(id)"
+    }
+
+    private func nodeID(forBattleID id: String) -> String {
+        "battle-\(id)"
     }
 }
 

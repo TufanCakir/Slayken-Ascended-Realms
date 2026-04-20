@@ -51,7 +51,7 @@
                             "image": "sar_dragon",
                             "model": "shela",
                             "hp": 80,
-                            "attack": 10,
+                            "attack": 3,
                             "element": "Fire"
                         },
                         "enemies": [
@@ -60,7 +60,7 @@
                                 "image": "sar_dragon",
                                 "model": "shela",
                                 "hp": 70,
-                                "attack": 9,
+                                "attack": 3,
                                 "element": "Plant"
                             },
                             {
@@ -68,7 +68,7 @@
                                 "image": "sar_dragon",
                                 "model": "shela",
                                 "hp": 90,
-                                "attack": 11,
+                                "attack": 3,
                                 "element": "Storm"
                             }
                         ],
@@ -77,7 +77,7 @@
                             "image": "sar_dragon",
                             "model": "zaron",
                             "hp": 150,
-                            "attack": 16,
+                            "attack": 3,
                             "element": "Water"
                         },
                         "xpReward": 160,

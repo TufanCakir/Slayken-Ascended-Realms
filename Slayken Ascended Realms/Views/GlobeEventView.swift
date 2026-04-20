@@ -551,6 +551,7 @@ struct GlobeEventView: View {
             withAnimation(.spring(response: 0.30, dampingFraction: 0.86)) {
                 selectedPointID = nil
             }
+            gameState.clearActiveEventPoint()
         } label: {
             Label("Kapitelkarte", systemImage: "arrow.uturn.left")
                 .font(.system(size: 11, weight: .black))

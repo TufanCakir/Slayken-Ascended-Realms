@@ -7,15 +7,19 @@
 
 import SwiftData
 import SwiftUI
+import UIKit
 
 struct GlobeEventView: View {
     let chapters: [GlobeEventChapter]
     let selectedBattleID: String?
     let onSelectBattle: (GlobeBattle) -> Void
 
+    @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var theme: ThemeManager
     @EnvironmentObject private var gameState: GameState
     @Query private var completedBattles: [PlayerBattleProgress]
+    @Query private var accountProgress: [PlayerAccountProgress]
+    @Query private var seenCutscenes: [SeenCutsceneRecord]
     @State private var selectedChapterID: String?
     @State private var selectedPointID: String?
     @State private var activeCutscene: GlobeEventCutscene?
@@ -35,8 +39,38 @@ struct GlobeEventView: View {
         return selectedChapter.points.first { $0.id == selectedPointID }
     }
 
+    private var focusedNodeID: String? {
+        if let selectedPoint, let selectedBattleID,
+           selectedPoint.battles.contains(where: { $0.id == selectedBattleID }) {
+            return nodeID(forBattleID: selectedBattleID)
+        }
+
+        if let selectedPoint {
+            return visibleBattles(for: selectedPoint).first.map { nodeID(forBattleID: $0.id) }
+                ?? nodeID(forPointID: selectedPoint.id)
+        }
+
+        if let selectedChapter {
+            return nodeID(forPointID: selectedChapter.points.first?.id ?? "")
+        }
+
+        return nil
+    }
+
     private var completedBattleIDs: Set<String> {
         Set(completedBattles.map(\.battleID))
+    }
+
+    private var seenCutsceneIDs: Set<String> {
+        Set(seenCutscenes.map(\.cutsceneID))
+    }
+
+    private var ascendedLevel: Int {
+        accountProgress.first?.level ?? 1
+    }
+
+    private var firstUnlockedChapterID: String? {
+        chapters.first { isChapterUnlocked($0) }?.id
     }
 
     var body: some View {
@@ -44,8 +78,20 @@ struct GlobeEventView: View {
             let currentTheme = activeTheme
 
             ZStack {
-                eventMapLayer(size: geo.size, theme: currentTheme)
-                    .zIndex(0)
+                ScrollViewReader { proxy in
+                    ScrollView([.horizontal, .vertical], showsIndicators: false) {
+                        eventMapLayer(size: geo.size, theme: currentTheme)
+                    }
+                    .scrollBounceBehavior(.basedOnSize)
+                    .ignoresSafeArea()
+                    .onAppear {
+                        scrollToFocusedNode(with: proxy)
+                    }
+                    .onChange(of: focusedNodeID) { _, _ in
+                        scrollToFocusedNode(with: proxy)
+                    }
+                }
+                .zIndex(0)
 
                 mapEdgeFade()
                     .allowsHitTesting(false)
@@ -85,9 +131,7 @@ struct GlobeEventView: View {
                 }
             }
             .onAppear {
-                selectedChapterID =
-                    gameState.activeEventChapterID ?? selectedChapterID
-                    ?? chapters.first?.id
+                syncSelectedChapterWithUnlocks()
                 restoreActivePointIfPossible()
             }
             .onChange(of: selectedChapterID) { _, _ in
@@ -114,8 +158,9 @@ struct GlobeEventView: View {
 
                 ForEach(battles) { battle in
                     battleMapNode(battle, canvasSize: canvasSize, theme: theme)
+                        .id(nodeID(forBattleID: battle.id))
                 }
-            } else if let selectedChapter {
+        } else if let selectedChapter {
                 pointRouteLayer(
                     points: selectedChapter.points,
                     canvasSize: canvasSize,
@@ -124,6 +169,7 @@ struct GlobeEventView: View {
 
                 ForEach(selectedChapter.points) { point in
                     pointMapNode(point, canvasSize: canvasSize, theme: theme)
+                        .id(nodeID(forPointID: point.id))
                 }
             }
         }
@@ -299,7 +345,8 @@ struct GlobeEventView: View {
             mapNodeLabel(
                 title: point.title,
                 subtitle: "\(visibleCount)/\(point.battles.count) Kaempfe",
-                icon: "map.fill",
+                imageName: point.nodeImage ?? point.mapImage,
+                fallbackIcon: "map.fill",
                 isFocused: isFocused,
                 theme: theme
             )
@@ -317,17 +364,13 @@ struct GlobeEventView: View {
         let isFocused = selectedBattleID == battle.id
 
         return Button {
-            if let cutscene = battle.cutscene {
-                battleAfterCutscene = battle
-                activeCutscene = cutscene
-            } else {
-                onSelectBattle(battle)
-            }
+            playCutsceneIfAvailable(battle.cutscene, then: battle)
         } label: {
             mapNodeLabel(
                 title: battle.name,
                 subtitle: "Lv. \(battle.difficulty * 10)",
-                icon: "flame.fill",
+                imageName: battle.nodeImage ?? battle.primaryEnemy.image,
+                fallbackIcon: "flame.fill",
                 isFocused: isFocused,
                 theme: theme
             )
@@ -340,11 +383,14 @@ struct GlobeEventView: View {
     private func mapNodeLabel(
         title: String,
         subtitle: String,
-        icon: String,
+        imageName: String,
+        fallbackIcon: String,
         isFocused: Bool,
         theme: GameTheme?
     ) -> some View {
-        VStack(spacing: 4) {
+        let imageSize: CGFloat = isFocused ? 50 : 42
+
+        return VStack(spacing: 4) {
             ZStack {
                 Circle()
                     .fill(Color.black.opacity(0.44))
@@ -385,9 +431,18 @@ struct GlobeEventView: View {
                         radius: isFocused ? 18 : 10
                     )
 
-                Image(systemName: icon)
-                    .font(.system(size: isFocused ? 19 : 16, weight: .black))
-                    .foregroundStyle(.black.opacity(0.72))
+                if UIImage(named: imageName) != nil {
+                    Image(imageName)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: imageSize, height: imageSize)
+                        .clipShape(Circle())
+                        .overlay(Circle().stroke(.white.opacity(0.55), lineWidth: 1))
+                } else {
+                    Image(systemName: fallbackIcon)
+                        .font(.system(size: isFocused ? 19 : 16, weight: .black))
+                        .foregroundStyle(.black.opacity(0.72))
+                }
 
                 TrianglePointer()
                     .fill(theme?.glow.color ?? .yellow)
@@ -433,14 +488,6 @@ struct GlobeEventView: View {
                 }
             } label: {
                 HStack(spacing: 8) {
-                    Image(
-                        systemName: isChapterDrawerExpanded
-                            ? "chevron.up" : "chevron.down"
-                    )
-                    .font(.system(size: 11, weight: .black))
-                    .frame(width: 22, height: 22)
-                    .background(Color.white.opacity(0.15), in: Circle())
-
                     VStack(alignment: .leading, spacing: 1) {
                         Text("Kapitel")
                             .font(.system(size: 9, weight: .black))
@@ -489,8 +536,10 @@ struct GlobeEventView: View {
         -> some View
     {
         let isSelected = selectedChapterID == chapter.id
+        let isUnlocked = isChapterUnlocked(chapter)
 
         return Button {
+            guard isUnlocked else { return }
             withAnimation(.spring(response: 0.28, dampingFraction: 0.86)) {
                 selectedChapterID = chapter.id
                 selectedPointID = nil
@@ -501,12 +550,16 @@ struct GlobeEventView: View {
         } label: {
             HStack(spacing: 8) {
                 Image(
-                    systemName: isSelected
+                    systemName: !isUnlocked
+                        ? "lock.fill"
+                        : isSelected
                         ? "largecircle.fill.circle" : "circle"
                 )
                 .font(.system(size: 12, weight: .black))
                 .foregroundStyle(
-                    isSelected
+                    !isUnlocked
+                        ? .white.opacity(0.35)
+                        : isSelected
                         ? (theme?.glow.color ?? .yellow) : .white.opacity(0.55)
                 )
                 .frame(width: 18)
@@ -520,7 +573,7 @@ struct GlobeEventView: View {
                         .font(.system(size: 10, weight: .semibold))
                         .foregroundStyle(.white.opacity(0.74))
                         .lineLimit(1)
-                    Text("\(chapter.points.count) Unterkapitel")
+                    Text(chapterRequirementText(chapter))
                         .font(.system(size: 9, weight: .bold))
                         .foregroundStyle(.white.opacity(0.52))
                 }
@@ -544,6 +597,8 @@ struct GlobeEventView: View {
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
         .buttonStyle(.plain)
+        .disabled(!isUnlocked)
+        .opacity(isUnlocked ? 1 : 0.48)
     }
 
     private func mapLevelButton(theme: GameTheme?) -> some View {
@@ -630,12 +685,7 @@ struct GlobeEventView: View {
         -> some View
     {
         Button {
-            if let cutscene = battle.cutscene {
-                battleAfterCutscene = battle
-                activeCutscene = cutscene
-            } else {
-                onSelectBattle(battle)
-            }
+            playCutsceneIfAvailable(battle.cutscene, then: battle)
         } label: {
             HStack(spacing: 10) {
                 VStack(alignment: .leading, spacing: 4) {
@@ -700,7 +750,10 @@ struct GlobeEventView: View {
     }
 
     private func mapCanvasSize(in size: CGSize) -> CGSize {
-        size
+        CGSize(
+            width: max(size.width * 1.85, 880),
+            height: max(size.height * 1.35, 920)
+        )
     }
 
     private func mapPoint(_ node: EventMapNodePosition, in size: CGSize)
@@ -712,9 +765,42 @@ struct GlobeEventView: View {
         )
     }
 
-    private func playCutsceneIfAvailable(_ cutscene: GlobeEventCutscene?) {
-        guard let cutscene else { return }
-        battleAfterCutscene = nil
+    private func scrollToFocusedNode(with proxy: ScrollViewProxy) {
+        guard let focusedNodeID else { return }
+        DispatchQueue.main.async {
+            withAnimation(.easeInOut(duration: 0.35)) {
+                proxy.scrollTo(focusedNodeID, anchor: .center)
+            }
+        }
+    }
+
+    private func nodeID(forPointID id: String) -> String {
+        "point-\(id)"
+    }
+
+    private func nodeID(forBattleID id: String) -> String {
+        "battle-\(id)"
+    }
+
+    private func playCutsceneIfAvailable(
+        _ cutscene: GlobeEventCutscene?,
+        then battle: GlobeBattle? = nil
+    ) {
+        guard let cutscene else {
+            if let battle {
+                onSelectBattle(battle)
+            }
+            return
+        }
+
+        guard !seenCutsceneIDs.contains(cutscene.id) else {
+            if let battle {
+                onSelectBattle(battle)
+            }
+            return
+        }
+
+        battleAfterCutscene = battle
         activeCutscene = cutscene
     }
 
@@ -732,7 +818,63 @@ struct GlobeEventView: View {
         selectedPointID = activePointID
     }
 
+    private func syncSelectedChapterWithUnlocks() {
+        if let selectedChapterID,
+           let chapter = chapters.first(where: { $0.id == selectedChapterID }),
+           isChapterUnlocked(chapter) {
+            return
+        }
+
+        if let savedID = gameState.activeEventChapterID,
+           let chapter = chapters.first(where: { $0.id == savedID }),
+           isChapterUnlocked(chapter) {
+            selectedChapterID = savedID
+            return
+        }
+
+        selectedChapterID = firstUnlockedChapterID ?? chapters.first?.id
+        if let selectedChapter {
+            gameState.selectEventChapter(selectedChapter)
+        }
+    }
+
+    private func isChapterUnlocked(_ chapter: GlobeEventChapter) -> Bool {
+        guard ascendedLevel >= (chapter.minAscendedLevel ?? 1) else {
+            return false
+        }
+        guard !isEventChapter(chapter) else { return true }
+
+        guard let index = chapters.firstIndex(where: { $0.id == chapter.id })
+        else {
+            return false
+        }
+        guard index > 0 else { return true }
+
+        let previousChapter = chapters[index - 1]
+        let requiredBattleIDs = previousChapter.points.flatMap { point in
+            point.battles.map(\.id)
+        }
+        return requiredBattleIDs.allSatisfy { completedBattleIDs.contains($0) }
+    }
+
+    private func isEventChapter(_ chapter: GlobeEventChapter) -> Bool {
+        chapter.id.hasPrefix("event_")
+    }
+
+    private func chapterRequirementText(_ chapter: GlobeEventChapter) -> String {
+        guard isChapterUnlocked(chapter) else {
+            if ascendedLevel < (chapter.minAscendedLevel ?? 1) {
+                return "Ascended Lv. \(chapter.minAscendedLevel ?? 1)"
+            }
+            return "Vorheriges Kapitel abschliessen"
+        }
+        return "\(chapter.points.count) Unterkapitel"
+    }
+
     private func finishCutscene() {
+        if let activeCutscene {
+            PlayerInventoryStore.markCutsceneSeen(activeCutscene.id, in: modelContext)
+        }
         let pendingBattle = battleAfterCutscene
         activeCutscene = nil
         battleAfterCutscene = nil

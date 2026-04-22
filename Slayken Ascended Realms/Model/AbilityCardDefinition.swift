@@ -12,6 +12,7 @@ struct AbilityCardDefinition: Codable, Identifiable, Equatable {
     let name: String
     let image: String
     let element: String
+    let rarity: Int?
     let damageMultiplier: Double
     let particleEffect: String
     let description: String
@@ -22,6 +23,7 @@ struct AbilityCardDefinition: Codable, Identifiable, Equatable {
     let levelsPerStar: Int?
     let damageGrowth: Double?
 
+    var resolvedRarity: Int { rarity ?? resolvedMaxStars }
     var resolvedManaCost: Int { manaCost ?? 35 }
     var resolvedMaxLevel: Int { maxLevel ?? 30 }
     var resolvedMaxStars: Int { maxStars ?? 5 }

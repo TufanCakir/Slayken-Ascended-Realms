@@ -1,7 +1,39 @@
 [
     {
+        "id": "release_max_skill_gift",
+        "name": "Release Gift: Max Skill",
+        "subtitle": "Kostenloses Release Banner. Einmal nutzbar, garantiert ein 5-Star Skill.",
+        "category": "Special",
+        "image": "void",
+        "cost": [],
+        "maxSummons": 1,
+        "guarantee": {
+            "dropType": "card",
+            "rarity": 5,
+            "appliesOnSummon": 1
+        },
+        "rates": [
+            {
+                "rarity": 5,
+                "rate": 100.0
+            }
+        ],
+        "pool": [
+            {
+                "cardID": "void_pulse",
+                "weight": 50
+            },
+            {
+                "cardID": "ash_breaker",
+                "weight": 50
+            }
+        ]
+    },
+    {
         "id": "chapter_heroes",
         "name": "Chapter Heroes",
+        "subtitle": "Standard Character Banner mit Zaron und Shela.",
+        "category": "Character",
         "image": "map",
         "cost": [
             {
@@ -16,7 +48,7 @@
             },
             {
                 "rarity": 4,
-                "rate": 12.5
+                "rate": 97.5
             }
         ],
         "pool": [
@@ -31,8 +63,178 @@
         ]
     },
     {
+        "id": "event_shadow_hero_guarantee",
+        "name": "Schattenmond Hero",
+        "subtitle": "Event Banner. Beim 10. Summon ist ein 5-Star Character garantiert.",
+        "category": "Event",
+        "image": "sar_bg",
+        "cost": [
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ],
+        "maxSummons": 10,
+        "guarantee": {
+            "dropType": "character",
+            "rarity": 5,
+            "appliesOnSummon": 10
+        },
+        "rates": [
+            {
+                "rarity": 5,
+                "rate": 8.0
+            },
+            {
+                "rarity": 4,
+                "rate": 92.0
+            }
+        ],
+        "pool": [
+            {
+                "characterID": "zaron",
+                "weight": 20
+            },
+            {
+                "characterID": "shela",
+                "weight": 80
+            }
+        ]
+    },
+    {
+        "id": "skill_star_1",
+        "name": "1-Star Skill Banner",
+        "subtitle": "Gueltiges Einsteiger-Banner fuer 1-Star Skills.",
+        "category": "Skill",
+        "image": "fire",
+        "cost": [
+            {
+                "currency": "coins",
+                "amount": 100
+            }
+        ],
+        "rates": [
+            {
+                "rarity": 1,
+                "rate": 100.0
+            }
+        ],
+        "pool": [
+            {
+                "cardID": "slash_red",
+                "weight": 100
+            }
+        ]
+    },
+    {
+        "id": "skill_star_2",
+        "name": "2-Star Skill Banner",
+        "subtitle": "Gezieltes Banner fuer 2-Star Skills.",
+        "category": "Skill",
+        "image": "ice",
+        "cost": [
+            {
+                "currency": "coins",
+                "amount": 180
+            }
+        ],
+        "rates": [
+            {
+                "rarity": 2,
+                "rate": 100.0
+            }
+        ],
+        "pool": [
+            {
+                "cardID": "crystal_blue",
+                "weight": 100
+            }
+        ]
+    },
+    {
+        "id": "skill_star_3",
+        "name": "3-Star Skill Banner",
+        "subtitle": "Gezieltes Banner fuer 3-Star Skills.",
+        "category": "Skill",
+        "image": "country",
+        "cost": [
+            {
+                "currency": "coins",
+                "amount": 260
+            }
+        ],
+        "rates": [
+            {
+                "rarity": 3,
+                "rate": 100.0
+            }
+        ],
+        "pool": [
+            {
+                "cardID": "moon_guard",
+                "weight": 100
+            }
+        ]
+    },
+    {
+        "id": "skill_star_4",
+        "name": "4-Star Skill Banner",
+        "subtitle": "Gezieltes Banner fuer 4-Star Skills.",
+        "category": "Skill",
+        "image": "bg_arena",
+        "cost": [
+            {
+                "currency": "crystals",
+                "amount": 60
+            }
+        ],
+        "rates": [
+            {
+                "rarity": 4,
+                "rate": 100.0
+            }
+        ],
+        "pool": [
+            {
+                "cardID": "storm_edge",
+                "weight": 100
+            }
+        ]
+    },
+    {
+        "id": "skill_star_5",
+        "name": "5-Star Skill Banner",
+        "subtitle": "Max-Star Skill Banner mit hoeheren Kosten.",
+        "category": "Skill",
+        "image": "void",
+        "cost": [
+            {
+                "currency": "crystals",
+                "amount": 150
+            }
+        ],
+        "rates": [
+            {
+                "rarity": 5,
+                "rate": 100.0
+            }
+        ],
+        "pool": [
+            {
+                "cardID": "void_pulse",
+                "weight": 55
+            },
+            {
+                "cardID": "ash_breaker",
+                "weight": 45
+            }
+        ]
+    },
+    {
         "id": "rift_skill_cards",
-        "name": "Rift Skill Cards",
+        "name": "Mixed Rift Skills",
+        "subtitle": "Gemischtes Skill Banner mit allen Sterne-Stufen.",
+        "category": "Skill",
         "image": "fire",
         "cost": [
             {
@@ -42,38 +244,50 @@
         ],
         "rates": [
             {
+                "rarity": 5,
+                "rate": 6.0
+            },
+            {
                 "rarity": 4,
-                "rate": 20.0
+                "rate": 10.0
             },
             {
                 "rarity": 3,
-                "rate": 80.0
+                "rate": 18.0
+            },
+            {
+                "rarity": 2,
+                "rate": 26.0
+            },
+            {
+                "rarity": 1,
+                "rate": 40.0
             }
         ],
         "pool": [
             {
                 "cardID": "slash_red",
-                "weight": 32
+                "weight": 40
             },
             {
                 "cardID": "crystal_blue",
-                "weight": 25
-            },
-            {
-                "cardID": "void_pulse",
-                "weight": 12
+                "weight": 26
             },
             {
                 "cardID": "moon_guard",
-                "weight": 15
+                "weight": 18
             },
             {
                 "cardID": "storm_edge",
                 "weight": 10
             },
             {
+                "cardID": "void_pulse",
+                "weight": 3
+            },
+            {
                 "cardID": "ash_breaker",
-                "weight": 6
+                "weight": 3
             }
         ]
     }

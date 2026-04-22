@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct GameEventMapPreviewView: View {
     let chapter: GlobeEventChapter?
@@ -44,18 +45,20 @@ struct GameEventMapPreviewView: View {
     }
 
     private var focusedNodeID: String? {
-        if let point, let selectedBattleID,
-            point.battles.contains(where: { $0.id == selectedBattleID })
+        if point != nil, let selectedBattleID,
+            visibleBattles.contains(where: { $0.id == selectedBattleID })
         {
             return nodeID(forBattleID: selectedBattleID)
         }
 
         if let point {
-            return nodeID(forPointID: point.id)
+            return nextUnlockedBattle(in: point).map { nodeID(forBattleID: $0.id) }
+                ?? nodeID(forPointID: point.id)
         }
 
         if let chapter {
-            return nodeID(forPointID: chapter.points.first?.id ?? "")
+            return nextUnlockedPoint(in: chapter).map { nodeID(forPointID: $0.id) }
+                ?? nodeID(forPointID: chapter.points.first?.id ?? "")
         }
 
         return nil
@@ -86,13 +89,13 @@ struct GameEventMapPreviewView: View {
 
                                 ForEach(visibleBattles) { battle in
                                     battleDot(battle)
-                                        .id(nodeID(forBattleID: battle.id))
                                         .position(
                                             mapPoint(
                                                 battle.node,
                                                 in: contentSize
                                             )
                                         )
+                                        .id(nodeID(forBattleID: battle.id))
                                 }
                             } else if let chapter {
                                 pointRouteLayer(
@@ -102,13 +105,13 @@ struct GameEventMapPreviewView: View {
 
                                 ForEach(chapter.points) { point in
                                     pointDot(point)
-                                        .id(nodeID(forPointID: point.id))
                                         .position(
                                             mapPoint(
                                                 point.node,
                                                 in: contentSize
                                             )
                                         )
+                                        .id(nodeID(forPointID: point.id))
                                 }
                             }
                         }
@@ -136,7 +139,7 @@ struct GameEventMapPreviewView: View {
     }
 
     private func mapTexture(size: CGSize) -> some View {
-        ZStack {
+        return ZStack {
             Color.black.opacity(0.08)
 
             if let texture {
@@ -216,7 +219,8 @@ struct GameEventMapPreviewView: View {
         } label: {
             VStack(spacing: 3) {
                 nodeCircle(
-                    icon: "mappin",
+                    imageName: point.nodeImage ?? point.mapImage,
+                    fallbackIcon: "mappin",
                     isCompleted: false,
                     isSelected: false
                 )
@@ -243,7 +247,8 @@ struct GameEventMapPreviewView: View {
         } label: {
             VStack(spacing: 3) {
                 nodeCircle(
-                    icon: isCompleted ? "checkmark" : "flame.fill",
+                    imageName: battle.nodeImage ?? battle.primaryEnemy.image,
+                    fallbackIcon: isCompleted ? "checkmark" : "flame.fill",
                     isCompleted: isCompleted,
                     isSelected: isSelected
                 )
@@ -269,10 +274,17 @@ struct GameEventMapPreviewView: View {
         .buttonStyle(.plain)
     }
 
-    private func nodeCircle(icon: String, isCompleted: Bool, isSelected: Bool)
+    private func nodeCircle(
+        imageName: String,
+        fallbackIcon: String,
+        isCompleted: Bool,
+        isSelected: Bool
+    )
         -> some View
     {
-        ZStack {
+        let size: CGFloat = isSelected ? 44 : 38
+
+        return ZStack {
             Circle()
                 .fill(Color.black.opacity(0.40))
                 .frame(
@@ -300,9 +312,18 @@ struct GameEventMapPreviewView: View {
                 )
                 .shadow(color: .black.opacity(0.34), radius: 5, y: 2)
 
-            Image(systemName: icon)
-                .font(.system(size: isSelected ? 15 : 13, weight: .black))
-                .foregroundStyle(.black.opacity(0.72))
+            if UIImage(named: imageName) != nil {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: size, height: size)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(.white.opacity(0.55), lineWidth: 1))
+            } else {
+                Image(systemName: fallbackIcon)
+                    .font(.system(size: isSelected ? 15 : 13, weight: .black))
+                    .foregroundStyle(.black.opacity(0.72))
+            }
         }
         .frame(width: 60, height: 52)
     }
@@ -316,11 +337,22 @@ struct GameEventMapPreviewView: View {
         )
     }
 
+    private func nextUnlockedBattle(in point: GlobeEventPoint) -> GlobeBattle? {
+        visibleBattles.first { !completedBattleIDs.contains($0.id) }
+            ?? visibleBattles.last
+    }
+
+    private func nextUnlockedPoint(in chapter: GlobeEventChapter) -> GlobeEventPoint? {
+        chapter.points.first { point in
+            point.battles.contains { !completedBattleIDs.contains($0.id) }
+        }
+    }
+
     private func scrollToFocusedNode(with proxy: ScrollViewProxy) {
         guard let focusedNodeID else { return }
         DispatchQueue.main.async {
             withAnimation(.easeInOut(duration: 0.35)) {
-                proxy.scrollTo(focusedNodeID, anchor: .center)
+                proxy.scrollTo(focusedNodeID, anchor: UnitPoint(x: 0.5, y: 0.62))
             }
         }
     }

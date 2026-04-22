@@ -94,3 +94,38 @@ final class PlayerCharacterProgress {
         self.xp = xp
     }
 }
+
+@Model
+final class PlayerAccountProgress {
+    @Attribute(.unique) var id: String
+    var level: Int
+    var xp: Int
+
+    init(id: String = "ascended", level: Int = 1, xp: Int = 0) {
+        self.id = id
+        self.level = level
+        self.xp = xp
+    }
+}
+
+@Model
+final class SeenCutsceneRecord {
+    @Attribute(.unique) var cutsceneID: String
+    var seenAt: Date
+
+    init(cutsceneID: String, seenAt: Date = .now) {
+        self.cutsceneID = cutsceneID
+        self.seenAt = seenAt
+    }
+}
+
+@Model
+final class SummonBannerProgress {
+    @Attribute(.unique) var bannerID: String
+    var summonCount: Int
+
+    init(bannerID: String, summonCount: Int = 0) {
+        self.bannerID = bannerID
+        self.summonCount = summonCount
+    }
+}

@@ -7,6 +7,7 @@
 
 import SwiftData
 import SwiftUI
+import UIKit
 
 struct SummonView: View {
     let banners: [SummonBanner]
@@ -21,27 +22,32 @@ struct SummonView: View {
         [PlayerCurrencyBalance]
     @Query(sort: \OwnedSummonCharacter.acquiredAt) private var ownedRecords:
         [OwnedSummonCharacter]
+    @Query(sort: \SummonBannerProgress.bannerID) private var bannerProgress:
+        [SummonBannerProgress]
 
     @State private var lastSummon: SummonDrop?
     @State private var lastBannerID: String?
     @State private var message = ""
     @State private var showResult = false
+    @State private var infoBanner: SummonBanner?
+    @State private var confirmationBanner: SummonBanner?
 
     var body: some View {
         VStack(spacing: 0) {
             header
 
-            Spacer(minLength: 18)
-
-            centerBlock
-
-            Spacer(minLength: 20)
-
-            bannerBlock
-                .padding(.horizontal, 20)
-
-            Spacer(minLength: 18)
+            ScrollView(showsIndicators: true) {
+                VStack(spacing: 18) {
+                    centerBlock
+                    bannerBlock
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, 18)
+                .padding(.bottom, 34)
+            }
         }
+        .safeAreaPadding(.top, 6)
+        .safeAreaPadding(.bottom, 6)
         .background {
             ZStack {
                 if let theme = themeManager.selectedTheme {
@@ -82,10 +88,36 @@ struct SummonView: View {
                 in: modelContext
             )
         }
+        .sheet(item: $infoBanner) { banner in
+            SummonBannerInfoSheet(
+                banner: banner,
+                characters: characters,
+                cards: gameState.abilityCards,
+                currencies: currencies,
+                summonCount: summonCount(for: banner)
+            )
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
+        }
+        .confirmationDialog(
+            confirmationTitle,
+            isPresented: confirmationBinding,
+            titleVisibility: .visible,
+            presenting: confirmationBanner
+        ) { banner in
+            Button("Summon fuer \(costText(banner.cost))") {
+                performSummon(from: banner)
+            }
+            Button("Nicht summon", role: .cancel) {
+                confirmationBanner = nil
+            }
+        } message: { banner in
+            Text("Willst du wirklich \(banner.name) benutzen?")
+        }
     }
 
     private var bannerBlock: some View {
-        VStack(spacing: 10) {
+        LazyVStack(spacing: 12) {
             ForEach(banners) { banner in
                 summonBannerRow(banner)
                     .frame(maxWidth: .infinity)
@@ -134,54 +166,19 @@ struct SummonView: View {
 
                 Spacer()
 
-                Text("Summon Cards")
-                    .font(.system(size: 24, weight: .light))
-                    .foregroundStyle(.white.opacity(0.94))
-
-                Spacer()
-
-                Color.clear.frame(width: 38, height: 38)
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal)
 
             // 💰 HIER rein
             CurrencyBarView(currencies: currencies)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(
-                    Color.black.opacity(0.35),
-                    in: Capsule()
-                )
 
             Rectangle()
                 .fill(.white.opacity(0.22))
                 .frame(height: 1)
                 .padding(.horizontal, 62)
         }
-        .padding(.top, 58)
-    }
-
-    private var background: some View {
-        ZStack {
-            Color(red: 0.12, green: 0.15, blue: 0.22)
-                .ignoresSafeArea()
-
-            LinearGradient(
-                colors: [
-                    Color.black.opacity(0.18),
-                    Color(red: 0.10, green: 0.13, blue: 0.20).opacity(0.92),
-                    Color.black.opacity(0.18),
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
-
-            Image(systemName: "sparkles")
-                .font(.system(size: 200, weight: .ultraLight))
-                .foregroundStyle(.white.opacity(0.05))
-                .offset(y: -120)
-        }
+        .padding(.top, 6)
+        .padding(.bottom, 8)
     }
 
     private var emptyBannerState: some View {
@@ -203,10 +200,12 @@ struct SummonView: View {
 
     private func summonBannerRow(_ banner: SummonBanner) -> some View {
         let affordable = canAfford(banner.cost)
+        let available = isAvailable(banner)
         let resultIsHere = lastBannerID == banner.id
 
         return ZStack {
             bannerBackground(banner.image)
+                .allowsHitTesting(false)
 
             LinearGradient(
                 colors: [
@@ -217,6 +216,7 @@ struct SummonView: View {
                 startPoint: .leading,
                 endPoint: .trailing
             )
+            .allowsHitTesting(false)
 
             HStack(spacing: 9) {
                 infoButton(banner)
@@ -228,6 +228,13 @@ struct SummonView: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.62)
                         .shadow(color: .black, radius: 2, y: 1)
+
+                    if let category = banner.category {
+                        Text(category.uppercased())
+                            .font(.system(size: 9, weight: .black))
+                            .foregroundStyle(.cyan.opacity(0.95))
+                            .lineLimit(1)
+                    }
 
                     Text(bannerSubtitle(banner))
                         .font(.system(size: 11, weight: .bold))
@@ -241,6 +248,13 @@ struct SummonView: View {
                             .font(.system(size: 10, weight: .black))
                             .foregroundStyle(.yellow)
                             .lineLimit(1)
+
+                        if let limitText = limitText(for: banner) {
+                            Text(limitText)
+                                .font(.system(size: 10, weight: .black))
+                                .foregroundStyle(.white.opacity(0.82))
+                                .lineLimit(1)
+                        }
 
                         if resultIsHere, let lastSummon {
                             Text(resultName(lastSummon))
@@ -260,7 +274,7 @@ struct SummonView: View {
 
                 VStack(spacing: 2) {
                     Button {
-                        summon(from: banner)
+                        requestSummon(from: banner)
                     } label: {
                         Text("Use")
                             .font(.system(size: 18, weight: .medium))
@@ -268,7 +282,7 @@ struct SummonView: View {
                             .frame(width: 58, height: 42)
                             .background(
                                 LinearGradient(
-                                    colors: affordable
+                                    colors: affordable && available
                                         ? [
                                             Color(
                                                 red: 0.10,
@@ -292,44 +306,44 @@ struct SummonView: View {
                             )
                             .overlay {
                                 Capsule()
-                                    .stroke(.white.opacity(0.58), lineWidth: 1)
+                                    .stroke(.white.opacity(0.58), lineWidth: 2)
                             }
                             .shadow(color: .black.opacity(0.5), radius: 4, y: 2)
                     }
                     .buttonStyle(.plain)
-                    .disabled(!affordable)
+                    .contentShape(Rectangle())
+                    .disabled(!affordable || !available)
 
                     Text(costText(banner.cost))
                         .font(.system(size: 10, weight: .black))
                         .foregroundStyle(
-                            affordable ? .white.opacity(0.9) : .red.opacity(0.9)
+                            affordable && available
+                                ? .white.opacity(0.9) : .red.opacity(0.9)
                         )
                         .lineLimit(1)
                         .minimumScaleFactor(0.65)
-                        .frame(width: 68)
                 }
             }
             .padding(.leading, 8)
             .padding(.trailing, 7)
             .padding(.vertical, 7)
         }
-        .frame(height: 82)
+        .frame(height: 92)
+        .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .stroke(.white.opacity(0.28), lineWidth: 1)
+                .stroke(.white.opacity(0.22), lineWidth: 1)
         }
         .shadow(color: .black.opacity(0.38), radius: 8, y: 4)
     }
 
     private func infoButton(_ banner: SummonBanner) -> some View {
         Button {
-            lastBannerID = banner.id
-            lastSummon = nil
-            message = poolText(for: banner)
+            infoBanner = banner
         } label: {
-            Text("Info")
-                .font(.system(size: 10, weight: .black))
+            Image(systemName: "info.circle.fill")
+                .font(.system(size: 18, weight: .black))
                 .foregroundStyle(.white)
                 .frame(width: 42, height: 42)
                 .background(
@@ -350,13 +364,53 @@ struct SummonView: View {
                 .shadow(color: .black.opacity(0.45), radius: 4, y: 2)
         }
         .buttonStyle(.plain)
+        .contentShape(Circle())
     }
 
-    private func summon(from banner: SummonBanner) {
+    private var confirmationTitle: String {
+        guard let confirmationBanner else { return "Summon bestaetigen" }
+        return "Summon fuer \(costText(confirmationBanner.cost))?"
+    }
+
+    private var confirmationBinding: Binding<Bool> {
+        Binding(
+            get: { confirmationBanner != nil },
+            set: { isPresented in
+                if !isPresented {
+                    confirmationBanner = nil
+                }
+            }
+        )
+    }
+
+    private func requestSummon(from banner: SummonBanner) {
         lastBannerID = banner.id
         lastSummon = nil
 
-        guard PlayerInventoryStore.spend(banner.cost, in: modelContext) else {
+        guard isAvailable(banner) else {
+            message = "Limit erreicht"
+            return
+        }
+
+        guard canAfford(banner.cost) else {
+            message = "Nicht genug Waehrung"
+            return
+        }
+
+        confirmationBanner = banner
+    }
+
+    private func performSummon(from banner: SummonBanner) {
+        confirmationBanner = nil
+        lastBannerID = banner.id
+        lastSummon = nil
+
+        guard isAvailable(banner) else {
+            message = "Limit erreicht"
+            return
+        }
+
+        guard canAfford(banner.cost) else {
             message = "Nicht genug Waehrung"
             return
         }
@@ -365,10 +419,16 @@ struct SummonView: View {
             let result = SummonService.summon(
                 from: banner,
                 characters: characters,
-                cards: gameState.abilityCards
+                cards: gameState.abilityCards,
+                summonNumber: summonCount(for: banner) + 1
             )
         else {
             message = "Pool ist leer"
+            return
+        }
+
+        guard PlayerInventoryStore.spend(banner.cost, in: modelContext) else {
+            message = "Nicht genug Waehrung"
             return
         }
 
@@ -382,12 +442,16 @@ struct SummonView: View {
             PlayerInventoryStore.addOwnedCard(cardID: card.id, in: modelContext)
         }
 
+        PlayerInventoryStore.incrementSummonCount(for: banner.id, in: modelContext)
         lastSummon = result
         showResult = true
         message = ""
     }
 
     private func bannerSubtitle(_ banner: SummonBanner) -> String {
+        if let subtitle = banner.subtitle {
+            return subtitle
+        }
         let count = banner.pool.count
         if count == 1 {
             return "Summons 1 card from this banner."
@@ -400,21 +464,6 @@ struct SummonView: View {
             .sorted { $0.rarity > $1.rarity }
             .map { "★\($0.rarity) \(String(format: "%.1f", $0.rate))%" }
             .joined(separator: "   ")
-    }
-
-    private func poolText(for banner: SummonBanner) -> String {
-        banner.pool
-            .compactMap { entry -> String? in
-                if let characterID = entry.characterID {
-                    return characters.first { $0.id == characterID }?.name
-                }
-                if let cardID = entry.cardID {
-                    return gameState.abilityCards.first { $0.id == cardID }?
-                        .name
-                }
-                return nil
-            }
-            .joined(separator: ", ")
     }
 
     private func resultName(_ result: SummonDrop) -> String {
@@ -432,12 +481,27 @@ struct SummonView: View {
         }
     }
 
+    private func summonCount(for banner: SummonBanner) -> Int {
+        bannerProgress.first { $0.bannerID == banner.id }?.summonCount ?? 0
+    }
+
+    private func isAvailable(_ banner: SummonBanner) -> Bool {
+        guard let maxSummons = banner.maxSummons else { return true }
+        return summonCount(for: banner) < maxSummons
+    }
+
+    private func limitText(for banner: SummonBanner) -> String? {
+        guard let maxSummons = banner.maxSummons else { return nil }
+        return "\(summonCount(for: banner))/\(maxSummons)"
+    }
+
     private func amount(for code: String) -> Int {
         balances.first { $0.code == code }?.amount ?? 0
     }
 
     private func costText(_ cost: [CurrencyAmount]) -> String {
-        cost.map { item in
+        guard !cost.isEmpty else { return "Free" }
+        return cost.map { item in
             if let currency = currencies.first(where: {
                 $0.code == item.currency
             }) {
@@ -475,8 +539,224 @@ struct SummonView: View {
     }
 }
 
-#Preview {
-    SummonView(banners: [], characters: [], currencies: [])
-        .environmentObject(GameState())
-        .environmentObject(ThemeManager())
+#Preview("Summon Banners") {
+    SummonView(
+        banners: loadSummonBanners(),
+        characters: loadSummonCharacters(),
+        currencies: loadCurrencyDefinitions(),
+        onClose: {}
+    )
+    .environmentObject(GameState())
+    .environmentObject(ThemeManager())
+    .modelContainer(
+        for: [
+            PlayerCurrencyBalance.self,
+            OwnedSummonCharacter.self,
+            OwnedAbilityCard.self,
+            SummonBannerProgress.self,
+        ],
+        inMemory: true
+    )
+}
+
+private struct SummonBannerInfoSheet: View {
+    let banner: SummonBanner
+    let characters: [SummonCharacter]
+    let cards: [AbilityCardDefinition]
+    let currencies: [CurrencyDefinition]
+    let summonCount: Int
+
+    var body: some View {
+        NavigationStack {
+            ScrollView(showsIndicators: true) {
+                VStack(alignment: .leading, spacing: 18) {
+                    bannerHero
+                    ratesSection
+                    guaranteeSection
+                    poolSection
+                }
+                .padding(18)
+            }
+            .background(Color.black.opacity(0.92))
+            .navigationTitle("Banner Info")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+
+    private var bannerHero: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(banner.name)
+                .font(.system(size: 24, weight: .black))
+                .foregroundStyle(.white)
+                .lineLimit(2)
+
+            if let subtitle = banner.subtitle {
+                Text(subtitle)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.72))
+            }
+
+            HStack(spacing: 8) {
+                infoPill(banner.category ?? "Standard")
+                infoPill(costText(banner.cost))
+                if let maxSummons = banner.maxSummons {
+                    infoPill("\(summonCount)/\(maxSummons) used")
+                }
+            }
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
+    }
+
+    private var ratesSection: some View {
+        infoSection(title: "Rates") {
+            ForEach(banner.rates.sorted { $0.rarity > $1.rarity }) { rate in
+                HStack {
+                    Text(stars(rate.rarity))
+                        .font(.system(size: 13, weight: .black))
+                    Spacer()
+                    Text("\(String(format: "%.1f", rate.rate))%")
+                        .font(.system(size: 13, weight: .black))
+                }
+                .foregroundStyle(.white)
+                .padding(.vertical, 6)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var guaranteeSection: some View {
+        if let guarantee = banner.guarantee {
+            infoSection(title: "Guarantee") {
+                Text(guaranteeText(guarantee))
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.82))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    private var poolSection: some View {
+        infoSection(title: "Pool") {
+            ForEach(poolRows, id: \.id) { row in
+                HStack(spacing: 10) {
+                    Image(row.image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 42, height: 42)
+                        .clipped()
+                        .background(.white.opacity(0.08))
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(row.name)
+                            .font(.system(size: 13, weight: .black))
+                            .foregroundStyle(.white)
+                        Text("\(row.kind)  \(stars(row.rarity))")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundStyle(.white.opacity(0.58))
+                    }
+
+                    Spacer()
+
+                    Text("W \(String(format: "%.0f", row.weight))")
+                        .font(.system(size: 11, weight: .black))
+                        .foregroundStyle(.cyan.opacity(0.9))
+                }
+                .padding(.vertical, 6)
+            }
+        }
+    }
+
+    private func infoSection<Content: View>(
+        title: String,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title.uppercased())
+                .font(.system(size: 12, weight: .black))
+                .foregroundStyle(.white.opacity(0.56))
+            content()
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.white.opacity(0.07), in: RoundedRectangle(cornerRadius: 8))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(.white.opacity(0.11), lineWidth: 1)
+        )
+    }
+
+    private func infoPill(_ text: String) -> some View {
+        Text(text)
+            .font(.system(size: 10, weight: .black))
+            .foregroundStyle(.white)
+            .lineLimit(1)
+            .minimumScaleFactor(0.7)
+            .padding(.horizontal, 9)
+            .padding(.vertical, 6)
+            .background(.white.opacity(0.12), in: Capsule())
+    }
+
+    private var poolRows: [PoolRow] {
+        banner.pool.compactMap { entry in
+            if let characterID = entry.characterID,
+               let character = characters.first(where: { $0.id == characterID }) {
+                return PoolRow(
+                    id: character.id,
+                    name: character.name,
+                    image: character.summonImage,
+                    kind: "Character",
+                    rarity: character.rarity,
+                    weight: entry.weight
+                )
+            }
+
+            if let cardID = entry.cardID,
+               let card = cards.first(where: { $0.id == cardID }) {
+                return PoolRow(
+                    id: card.id,
+                    name: card.name,
+                    image: card.image,
+                    kind: "Skill",
+                    rarity: card.resolvedRarity,
+                    weight: entry.weight
+                )
+            }
+
+            return nil
+        }
+    }
+
+    private func guaranteeText(_ guarantee: SummonGuarantee) -> String {
+        let summonNumber = guarantee.appliesOnSummon ?? 1
+        let type = guarantee.dropType ?? "drop"
+        if let rarity = guarantee.rarity {
+            return "On summon \(summonNumber), guarantees a \(stars(rarity)) \(type)."
+        }
+        return "On summon \(summonNumber), guarantees a \(type)."
+    }
+
+    private func costText(_ cost: [CurrencyAmount]) -> String {
+        guard !cost.isEmpty else { return "Free" }
+        return cost.map { item in
+            let name = currencies.first { $0.code == item.currency }?.name
+                ?? item.currency
+            return "\(item.amount) \(name)"
+        }
+        .joined(separator: " + ")
+    }
+
+    private func stars(_ count: Int) -> String {
+        String(repeating: "*", count: max(1, count))
+    }
+
+    private struct PoolRow {
+        let id: String
+        let name: String
+        let image: String
+        let kind: String
+        let rarity: Int
+        let weight: Double
+    }
 }

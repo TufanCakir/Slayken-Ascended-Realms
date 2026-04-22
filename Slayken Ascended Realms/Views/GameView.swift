@@ -23,6 +23,7 @@ struct GameView: View {
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
     @Query private var completedBattles: [PlayerBattleProgress]
+    @Query private var accountProgress: [PlayerAccountProgress]
 
     @State private var showPopup = false
     @State private var selectedEnemy: CharacterStats?
@@ -33,6 +34,7 @@ struct GameView: View {
     @State private var autoMoveTarget: SIMD2<Float>?
     @State private var showSupport = false
     @State private var showNews = false
+    @State private var showStoryArchive = false
     @State private var showSettings = false
     @State private var showGlobeEvents = false
     @State private var showSummon = false
@@ -89,10 +91,10 @@ struct GameView: View {
                 }
                 if selectedTab == .game && !showStory && !showPopup {
                     ZStack {
-                        if let chapter = gameState.eventChapters.first {
+                        if let chapter = activePreviewChapter {
                             GameEventMapPreviewView(
                                 chapter: chapter,
-                                point: gameState.activeEventPoint,
+                                point: activePreviewPoint(for: chapter),
                                 completedBattleIDs: Set(
                                     completedBattles.map(\.battleID)
                                 ),
@@ -178,6 +180,9 @@ struct GameView: View {
                     onNews: {
                         showNews = true
                     },
+                    onArchive: {
+                        showStoryArchive = true
+                    },
                     onSettings: {
                         showSettings = true
                     }
@@ -202,6 +207,14 @@ struct GameView: View {
                 NewsView {
                     showNews = false
                 }
+                .ignoresSafeArea()
+                .background(.black)
+            }
+            .fullScreenCover(isPresented: $showStoryArchive) {
+                StoryArchiveView(chapters: gameState.eventChapters) {
+                    showStoryArchive = false
+                }
+                .environmentObject(theme)
                 .ignoresSafeArea()
                 .background(.black)
             }
@@ -252,7 +265,6 @@ struct GameView: View {
                         selectedTab = .game
                     }
                 )
-                .ignoresSafeArea()
                 .background(.black)
             }
             .fullScreenCover(
@@ -278,12 +290,6 @@ struct GameView: View {
                     .ignoresSafeArea()
 
                     VStack(spacing: 0) {
-                        GameHeaderView(currencies: gameState.currencies) {
-                            showGlobeEvents = false
-                            selectedTab = .game
-                            showNews = true
-                        }
-
                         Spacer()
 
                         GameFooterView(selectedTab: $selectedTab)
@@ -325,6 +331,11 @@ struct GameView: View {
                             selectedTab = .game
                             showNews = true
                         },
+                        onArchive: {
+                            showGlobeEvents = false
+                            selectedTab = .game
+                            showStoryArchive = true
+                        },
                         onSettings: {
                             showGlobeEvents = false
                             selectedTab = .game
@@ -361,6 +372,53 @@ struct GameView: View {
         showGlobeEvents = false
         selectedTab = .game
         activeSelectionSheet = selection
+    }
+
+    private var completedBattleIDs: Set<String> {
+        Set(completedBattles.map(\.battleID))
+    }
+
+    private var ascendedLevel: Int {
+        accountProgress.first?.level ?? 1
+    }
+
+    private var activePreviewChapter: GlobeEventChapter? {
+        if let chapter = gameState.activeEventChapter,
+           isChapterUnlocked(chapter) {
+            return chapter
+        }
+        return gameState.eventChapters.first { isChapterUnlocked($0) }
+    }
+
+    private func activePreviewPoint(for chapter: GlobeEventChapter) -> GlobeEventPoint? {
+        if chapter.id == gameState.activeEventChapterID,
+           let point = gameState.activeEventPoint {
+            return point
+        }
+        return chapter.points.first
+    }
+
+    private func isChapterUnlocked(_ chapter: GlobeEventChapter) -> Bool {
+        guard ascendedLevel >= (chapter.minAscendedLevel ?? 1) else {
+            return false
+        }
+        guard !isEventChapter(chapter) else { return true }
+
+        guard let index = gameState.eventChapters.firstIndex(where: { $0.id == chapter.id })
+        else {
+            return false
+        }
+        guard index > 0 else { return true }
+
+        let previousChapter = gameState.eventChapters[index - 1]
+        let requiredBattleIDs = previousChapter.points.flatMap { point in
+            point.battles.map(\.id)
+        }
+        return requiredBattleIDs.allSatisfy { completedBattleIDs.contains($0) }
+    }
+
+    private func isEventChapter(_ chapter: GlobeEventChapter) -> Bool {
+        chapter.id.hasPrefix("event_")
     }
 
     private func moveToBattleAndStart(_ battle: GlobeBattle) {

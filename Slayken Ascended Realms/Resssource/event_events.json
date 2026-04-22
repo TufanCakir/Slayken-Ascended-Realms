@@ -3,6 +3,7 @@
         "id": "event_shadow_moon",
         "title": "Event: Schattenmond",
         "subtitle": "Eigenes Event mit eigenen Gegnern, Cutscenes und Story",
+        "minAscendedLevel": 2,
         "mapTexture": "sar_bg",
         "cutscene": {
             "id": "event_shadow_moon_intro",

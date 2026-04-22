@@ -12,6 +12,7 @@ struct GameMiddleDrawerView: View {
 
     let onSupport: () -> Void
     let onNews: () -> Void
+    let onArchive: () -> Void
     let onSettings: () -> Void
 
     @State private var isExpanded = false
@@ -33,6 +34,11 @@ struct GameMiddleDrawerView: View {
             id: .news,
             title: "News",
             systemName: "newspaper"
+        ),
+        MiddleDrawerActionItem(
+            id: .archive,
+            title: "Story",
+            systemName: "book"
         ),
         MiddleDrawerActionItem(
             id: .support,
@@ -135,6 +141,9 @@ struct GameMiddleDrawerView: View {
         case .news:
             selectedTab = .game
             onNews()
+        case .archive:
+            selectedTab = .game
+            onArchive()
         case .support:
             selectedTab = .game
             onSupport()
@@ -154,7 +163,7 @@ struct GameMiddleDrawerView: View {
             return selectedTab == .character
         case .summon:
             return selectedTab == .summon
-        case .news:
+        case .news, .archive:
             return false
         case .support:
             return selectedTab == .support
@@ -170,6 +179,7 @@ private enum MiddleDrawerAction {
     case team
     case summon
     case news
+    case archive
     case support
     case settings
 }
@@ -185,6 +195,7 @@ private struct MiddleDrawerActionItem: Identifiable {
         selectedTab: .constant(.game),
         onSupport: {},
         onNews: {},
+        onArchive: {},
         onSettings: {}
     )
 }

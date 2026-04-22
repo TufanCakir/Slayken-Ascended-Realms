@@ -1050,6 +1050,7 @@ struct BattleView: View {
             to: player.model,
             in: modelContext
         )
+        _ = PlayerInventoryStore.addAccountXP(awardedXP, in: modelContext)
         levelAfterVictory = progress.level
 
         if let battleID = gameState.selectedBattle?.id {

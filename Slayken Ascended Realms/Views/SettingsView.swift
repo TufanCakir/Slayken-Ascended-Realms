@@ -21,6 +21,9 @@ struct SettingsView: View {
     @Query private var deckSlots: [PlayerDeckCardSlot]
     @Query private var ownedCards: [OwnedAbilityCard]
     @Query private var characterProgress: [PlayerCharacterProgress]
+    @Query private var accountProgress: [PlayerAccountProgress]
+    @Query private var seenCutscenes: [SeenCutsceneRecord]
+    @Query private var summonProgress: [SummonBannerProgress]
 
     let onClose: () -> Void
     let onReset: () -> Void
@@ -165,6 +168,9 @@ struct SettingsView: View {
             statRow("Deck Karten", deckSlots.count)
             statRow("Karten Besitz", ownedCards.count)
             statRow("Charakter Level", characterProgress.count)
+            statRow("Ascended Level", accountProgress.count)
+            statRow("Gesehene Cutscenes", seenCutscenes.count)
+            statRow("Banner Fortschritt", summonProgress.count)
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -232,6 +238,15 @@ struct SettingsView: View {
         for progress in characterProgress {
             modelContext.delete(progress)
         }
+        for progress in accountProgress {
+            modelContext.delete(progress)
+        }
+        for record in seenCutscenes {
+            modelContext.delete(record)
+        }
+        for progress in summonProgress {
+            modelContext.delete(progress)
+        }
 
         try? modelContext.save()
         gameState.resetGameData()
@@ -253,6 +268,9 @@ struct SettingsView: View {
                 PlayerDeckCardSlot.self,
                 OwnedAbilityCard.self,
                 PlayerCharacterProgress.self,
+                PlayerAccountProgress.self,
+                SeenCutsceneRecord.self,
+                SummonBannerProgress.self,
             ],
             inMemory: true
         )

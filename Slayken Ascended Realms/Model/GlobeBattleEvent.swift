@@ -23,6 +23,7 @@ struct GlobeEventChapter: Codable, Identifiable {
     let id: String
     let title: String
     let subtitle: String
+    let minAscendedLevel: Int?
     let mapTexture: String
     let cutscene: GlobeEventCutscene?
     let points: [GlobeEventPoint]
@@ -34,6 +35,7 @@ struct GlobeEventPoint: Codable, Identifiable {
     let text: String
     let mapImage: String
     let mapTexture: String
+    let nodeImage: String?
     let node: EventMapNodePosition
     let cutscene: GlobeEventCutscene?
     let battles: [GlobeBattle]
@@ -46,6 +48,7 @@ struct GlobeBattle: Codable, Identifiable {
     let difficulty: Int
     let groundTexture: String
     let skyboxTexture: String
+    let nodeImage: String?
     let node: EventMapNodePosition
     let cutscene: GlobeEventCutscene?
     let enemy: CharacterStats?
@@ -62,6 +65,7 @@ struct GlobeBattle: Codable, Identifiable {
         case difficulty
         case groundTexture
         case skyboxTexture
+        case nodeImage
         case node
         case cutscene
         case enemy
@@ -87,6 +91,7 @@ struct GlobeBattle: Codable, Identifiable {
         skyboxTexture =
             try container.decodeIfPresent(String.self, forKey: .skyboxTexture)
             ?? groundTexture
+        nodeImage = try container.decodeIfPresent(String.self, forKey: .nodeImage)
         node =
             try container.decodeIfPresent(
                 EventMapNodePosition.self,

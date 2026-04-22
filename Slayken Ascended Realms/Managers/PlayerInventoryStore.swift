@@ -116,6 +116,21 @@ enum PlayerInventoryStore {
         save(context)
     }
 
+    static func hasSeenCutscene(_ cutsceneID: String, in context: ModelContext)
+        -> Bool
+    {
+        let descriptor = FetchDescriptor<SeenCutsceneRecord>(
+            predicate: #Predicate { $0.cutsceneID == cutsceneID }
+        )
+        return ((try? context.fetchCount(descriptor)) ?? 0) > 0
+    }
+
+    static func markCutsceneSeen(_ cutsceneID: String, in context: ModelContext) {
+        guard !hasSeenCutscene(cutsceneID, in: context) else { return }
+        context.insert(SeenCutsceneRecord(cutsceneID: cutsceneID))
+        save(context)
+    }
+
     static func setDeckCard(
         cardID: String,
         slotIndex: Int,
@@ -173,6 +188,51 @@ enum PlayerInventoryStore {
         return progress
     }
 
+    static func accountProgress(in context: ModelContext) -> PlayerAccountProgress {
+        let descriptor = FetchDescriptor<PlayerAccountProgress>(
+            predicate: #Predicate { $0.id == "ascended" }
+        )
+        if let progress = try? context.fetch(descriptor).first {
+            return progress
+        }
+
+        let progress = PlayerAccountProgress()
+        context.insert(progress)
+        save(context)
+        return progress
+    }
+
+    static func addAccountXP(_ amount: Int, in context: ModelContext)
+        -> PlayerAccountProgress
+    {
+        let progress = accountProgress(in: context)
+        progress.xp += max(0, amount)
+        progress.level = level(forXP: progress.xp)
+        save(context)
+        return progress
+    }
+
+    static func summonCount(for bannerID: String, in context: ModelContext)
+        -> Int
+    {
+        summonProgress(for: bannerID, in: context)?.summonCount ?? 0
+    }
+
+    @discardableResult
+    static func incrementSummonCount(
+        for bannerID: String,
+        in context: ModelContext
+    ) -> SummonBannerProgress {
+        let existing = summonProgress(for: bannerID, in: context)
+        let progress = existing ?? SummonBannerProgress(bannerID: bannerID)
+        if existing == nil {
+            context.insert(progress)
+        }
+        progress.summonCount += 1
+        save(context)
+        return progress
+    }
+
     static func level(forXP xp: Int) -> Int {
         var level = 1
         var remainingXP = max(0, xp)
@@ -187,6 +247,16 @@ enum PlayerInventoryStore {
 
     static func xpNeededForNextLevel(_ level: Int) -> Int {
         Int((100.0 * pow(1.35, Double(max(1, level) - 1))).rounded())
+    }
+
+    private static func summonProgress(
+        for bannerID: String,
+        in context: ModelContext
+    ) -> SummonBannerProgress? {
+        let descriptor = FetchDescriptor<SummonBannerProgress>(
+            predicate: #Predicate { $0.bannerID == bannerID }
+        )
+        return try? context.fetch(descriptor).first
     }
 
     private static func save(_ context: ModelContext) {

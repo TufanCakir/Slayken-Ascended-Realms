@@ -47,8 +47,8 @@ struct SummonResultView: View {
         switch result {
         case .character(let character):
             return character.rarity
-        case .card:
-            return 4
+        case .card(let card):
+            return card.resolvedRarity
         }
     }
 

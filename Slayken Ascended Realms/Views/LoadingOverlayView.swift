@@ -31,7 +31,7 @@ struct LoadingOverlayView: View {
         if UIImage(named: background) != nil {
             return background
         }
-        return "sar_bg"
+        return "bg_epic"
     }
 
     private var tipTitle: String {
@@ -285,6 +285,6 @@ struct LoadingOverlayView: View {
 }
 
 #Preview {
-    LoadingOverlayView(progress: 0.62, background: "sar_bg")
+    LoadingOverlayView(progress: 0.62, background: "bg_epic")
         .environmentObject(ThemeManager())
 }

@@ -187,7 +187,6 @@ struct CharacterSelectView: View {
                 .padding(.bottom, 18)
             }
         }
-        .frame(maxWidth: .infinity)
         .background(.black.opacity(0.28))
         .background(.ultraThinMaterial.opacity(0.45))
     }
@@ -265,8 +264,6 @@ struct CharacterSelectView: View {
             Image(character.image)
                 .resizable()
                 .scaledToFit()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.black.opacity(0.35))
         }
     }
 }

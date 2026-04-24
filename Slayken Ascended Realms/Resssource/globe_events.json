@@ -50,6 +50,7 @@
                             "name": "Rift Guard",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 80,
                             "attack": 3,
                             "element": "Fire"
@@ -58,7 +59,8 @@
                             {
                                 "name": "Rift Scout",
                                 "image": "sar_dragon",
-                                "model": "shela",
+                                "model": "shen",
+                                "texture": "shen_texture_original",
                                 "hp": 70,
                                 "attack": 3,
                                 "element": "Plant"
@@ -66,7 +68,8 @@
                             {
                                 "name": "Rift Guard",
                                 "image": "sar_dragon",
-                                "model": "shela",
+                                "model": "shen",
+                                "texture": "shen_texture_original",
                                 "hp": 90,
                                 "attack": 3,
                                 "element": "Storm"
@@ -75,7 +78,8 @@
                         "boss": {
                             "name": "Gate Breaker",
                             "image": "sar_dragon",
-                            "model": "zaron",
+                            "model": "shen",
+                            "texture": "shen_texture_original",
                             "hp": 150,
                             "attack": 3,
                             "element": "Water"
@@ -114,6 +118,7 @@
                             "name": "Crystal Shade",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 120,
                             "attack": 14,
                             "element": "Light"
@@ -151,6 +156,7 @@
                             "name": "Rift Beast",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 140,
                             "attack": 16,
                             "element": "Dark"
@@ -183,6 +189,7 @@
                             "name": "Moon Shard",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 160,
                             "attack": 18,
                             "element": "Fire"
@@ -215,6 +222,7 @@
                             "name": "Mist Lurker",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 185,
                             "attack": 20,
                             "element": "Water"
@@ -247,6 +255,7 @@
                             "name": "Rune Guard",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 210,
                             "attack": 23,
                             "element": "Plant"
@@ -280,6 +289,7 @@
                             "name": "Shadow Rift",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 240,
                             "attack": 25,
                             "element": "Storm"
@@ -312,6 +322,7 @@
                             "name": "Moon Blade",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 270,
                             "attack": 28,
                             "element": "Light"
@@ -344,6 +355,7 @@
                             "name": "Gate Breaker",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 310,
                             "attack": 31,
                             "element": "Dark"
@@ -381,6 +393,7 @@
                             "name": "Rift Core",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 360,
                             "attack": 35,
                             "element": "Fire"
@@ -441,6 +454,7 @@
                             "name": "Wind Guard",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 380,
                             "attack": 36,
                             "element": "Water"
@@ -473,6 +487,7 @@
                             "name": "Storm Edge",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 410,
                             "attack": 38,
                             "element": "Plant"
@@ -505,6 +520,7 @@
                             "name": "Cloud Claw",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 440,
                             "attack": 40,
                             "element": "Storm"
@@ -537,6 +553,7 @@
                             "name": "Thunder Path",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 470,
                             "attack": 42,
                             "element": "Light"
@@ -569,6 +586,7 @@
                             "name": "Sky Rift",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 510,
                             "attack": 45,
                             "element": "Dark"
@@ -601,6 +619,7 @@
                             "name": "Aether Guard",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 550,
                             "attack": 48,
                             "element": "Fire"
@@ -633,6 +652,7 @@
                             "name": "Star Catcher",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 590,
                             "attack": 51,
                             "element": "Water"
@@ -665,6 +685,7 @@
                             "name": "Fog Bridge",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 630,
                             "attack": 54,
                             "element": "Plant"
@@ -697,6 +718,7 @@
                             "name": "Storm Heart",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 680,
                             "attack": 57,
                             "element": "Storm"
@@ -729,6 +751,7 @@
                             "name": "Sky Breaker",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 730,
                             "attack": 61,
                             "element": "Light"
@@ -761,6 +784,7 @@
                             "name": "Shard Crown",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 790,
                             "attack": 65,
                             "element": "Dark"
@@ -798,6 +822,7 @@
                             "name": "Aether Lord",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 860,
                             "attack": 70,
                             "element": "Fire"
@@ -858,6 +883,7 @@
                             "name": "Void Guard",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 900,
                             "attack": 72,
                             "element": "Water"
@@ -890,6 +916,7 @@
                             "name": "Black Path",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 960,
                             "attack": 76,
                             "element": "Plant"
@@ -922,6 +949,7 @@
                             "name": "Crown Shade",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 1020,
                             "attack": 80,
                             "element": "Storm"
@@ -954,6 +982,7 @@
                             "name": "Night Claw",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 1080,
                             "attack": 84,
                             "element": "Light"
@@ -986,6 +1015,7 @@
                             "name": "Void Knight",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 1160,
                             "attack": 88,
                             "element": "Dark"
@@ -1018,6 +1048,7 @@
                             "name": "Black Forge",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 1240,
                             "attack": 92,
                             "element": "Fire"
@@ -1050,6 +1081,7 @@
                             "name": "Abyss Core",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 1320,
                             "attack": 96,
                             "element": "Water"
@@ -1082,6 +1114,7 @@
                             "name": "Dark Circle",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 1410,
                             "attack": 101,
                             "element": "Plant"
@@ -1115,6 +1148,7 @@
                             "name": "Bone Gate",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 1500,
                             "attack": 106,
                             "element": "Storm"
@@ -1147,6 +1181,7 @@
                             "name": "Void Prince",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 1600,
                             "attack": 112,
                             "element": "Light"
@@ -1179,6 +1214,7 @@
                             "name": "Ash Crown",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 1710,
                             "attack": 118,
                             "element": "Dark"
@@ -1211,6 +1247,7 @@
                             "name": "Shadow King",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 1820,
                             "attack": 124,
                             "element": "Fire"
@@ -1243,6 +1280,7 @@
                             "name": "Crown Bearer",
                             "image": "sar_dragon",
                             "model": "zaron",
+                            "texture": "preview_zaron",
                             "hp": 1950,
                             "attack": 132,
                             "element": "Water"
@@ -1280,6 +1318,7 @@
                             "name": "Void Crown",
                             "image": "sar_dragon",
                             "model": "shela",
+                            "texture": "shela_texture_original",
                             "hp": 2100,
                             "attack": 140,
                             "element": "Plant"

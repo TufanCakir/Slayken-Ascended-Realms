@@ -218,6 +218,70 @@ enum PlayerInventoryStore {
         summonProgress(for: bannerID, in: context)?.summonCount ?? 0
     }
 
+    static func claimGiftBox(
+        _ gift: GiftBoxDefinition,
+        in context: ModelContext
+    ) {
+        add(gift.rewards, in: context)
+    }
+
+    static func dailyLoginGift(
+        from rewards: [DailyLoginRewardDefinition],
+        now: Date = .now,
+        in context: ModelContext
+    ) -> DailyLoginRewardState? {
+        guard !rewards.isEmpty else { return nil }
+
+        let progress = dailyLoginProgress(in: context)
+        guard let nextIndex = nextDailyGiftIndex(
+            progress: progress,
+            rewards: rewards,
+            now: now
+        ) else {
+            return nil
+        }
+
+        return DailyLoginRewardState(
+            reward: rewards[nextIndex],
+            dayNumber: rewards[nextIndex].day
+        )
+    }
+
+    @discardableResult
+    static func claimDailyLoginGift(
+        from rewards: [DailyLoginRewardDefinition],
+        now: Date = .now,
+        in context: ModelContext
+    ) -> DailyLoginRewardState? {
+        guard let availableGift = dailyLoginGift(
+            from: rewards,
+            now: now,
+            in: context
+        )
+        else {
+            return nil
+        }
+
+        add(availableGift.reward.rewards, in: context)
+
+        let progress = dailyLoginProgress(in: context)
+        let calendar = Calendar.current
+
+        if let lastClaimedAt = progress.lastClaimedAt,
+            isNextCalendarDay(after: lastClaimedAt, comparedTo: now, calendar: calendar)
+        {
+            progress.streakCount += 1
+        } else {
+            progress.streakCount = 1
+        }
+
+        progress.totalClaims += 1
+        progress.lastClaimedAt = now
+        save(context)
+
+        return availableGift
+    }
+
     @discardableResult
     static func incrementSummonCount(
         for bannerID: String,
@@ -257,6 +321,61 @@ enum PlayerInventoryStore {
             predicate: #Predicate { $0.bannerID == bannerID }
         )
         return try? context.fetch(descriptor).first
+    }
+
+    private static func dailyLoginProgress(in context: ModelContext)
+        -> PlayerDailyLoginProgress
+    {
+        let descriptor = FetchDescriptor<PlayerDailyLoginProgress>(
+            predicate: #Predicate { $0.id == "daily_login" }
+        )
+        if let progress = try? context.fetch(descriptor).first {
+            return progress
+        }
+
+        let progress = PlayerDailyLoginProgress()
+        context.insert(progress)
+        save(context)
+        return progress
+    }
+
+    private static func nextDailyGiftIndex(
+        progress: PlayerDailyLoginProgress,
+        rewards: [DailyLoginRewardDefinition],
+        now: Date
+    ) -> Int? {
+        let calendar = Calendar.current
+
+        guard let lastClaimedAt = progress.lastClaimedAt else {
+            return 0
+        }
+
+        if calendar.isDate(lastClaimedAt, inSameDayAs: now) {
+            return nil
+        }
+
+        if isNextCalendarDay(after: lastClaimedAt, comparedTo: now, calendar: calendar)
+        {
+            return progress.streakCount % rewards.count
+        }
+
+        return 0
+    }
+
+    private static func isNextCalendarDay(
+        after previousDate: Date,
+        comparedTo currentDate: Date,
+        calendar: Calendar
+    ) -> Bool {
+        let previousStart = calendar.startOfDay(for: previousDate)
+        let currentStart = calendar.startOfDay(for: currentDate)
+        let dayDifference =
+            calendar.dateComponents(
+                [.day],
+                from: previousStart,
+                to: currentStart
+            ).day ?? 0
+        return dayDifference == 1
     }
 
     private static func save(_ context: ModelContext) {

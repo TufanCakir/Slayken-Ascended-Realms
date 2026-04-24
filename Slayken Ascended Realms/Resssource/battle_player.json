@@ -1,8 +1,8 @@
 {
-    "name": "Riven",
+    "name": "Sennara",
     "image": "preview_zaron",
-    "model": "zaron",
-    "texture": null,
+    "model": "sennara",
+    "texture": "sennara_texture_original",
     "hp": 100,
     "attack": 20
 }

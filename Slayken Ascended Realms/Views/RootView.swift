@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct RootView: View {
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
+    @Environment(\.modelContext) private var modelContext
 
     private enum Screen {
         case start
@@ -21,8 +23,11 @@ struct RootView: View {
     @State private var activeEnemy: CharacterStats?
     @State private var isLoading = false
     @State private var loadingProgress = 0.0
-    @State private var loadingBackground = "sar_bg"
+    @State private var loadingBackground = "bg_epic"
     @State private var loadingTask: Task<Void, Never>?
+    @State private var pendingDailyReward: DailyLoginRewardState?
+
+    private let dailyLoginRewards = loadDailyLoginRewardDefinitions()
 
     var body: some View {
         ZStack {
@@ -59,8 +64,21 @@ struct RootView: View {
                 .environmentObject(theme)
                 .zIndex(100)
             }
+
+            if currentScreen == .game, let pendingDailyReward {
+                DailyLoginPopupView(
+                    rewardState: pendingDailyReward,
+                    onClaim: claimDailyGift
+                )
+                .environmentObject(gameState)
+                .environmentObject(theme)
+                .zIndex(200)
+            }
         }
         .animation(.smooth(duration: 0.45), value: currentScreenID)
+        .onAppear {
+            refreshDailyGift()
+        }
         .onDisappear {
             loadingTask?.cancel()
         }
@@ -81,7 +99,7 @@ struct RootView: View {
         let assets = gameState.backgrounds.map(\.image)
         if assets.isEmpty {
             return [
-                "sar_bg", "map", "country", "bg_arena", "fire", "ice", "void",
+                "bg_epic", "sar_bg", "map", "country", "bg_arena", "fire", "ice", "void",
             ]
         }
 
@@ -101,6 +119,7 @@ struct RootView: View {
         gameState.clearBattleSelection()
         activeEnemy = nil
         loadingProgress = 0
+        refreshDailyGift()
 
         withAnimation(.smooth(duration: 0.35)) {
             isLoading = false
@@ -148,6 +167,29 @@ struct RootView: View {
         withAnimation(.easeInOut(duration: 0.2)) {
             isLoading = false
         }
+    }
+
+    private func refreshDailyGift() {
+        PlayerInventoryStore.ensureBalances(
+            for: gameState.currencies,
+            in: modelContext
+        )
+        pendingDailyReward = PlayerInventoryStore.dailyLoginGift(
+            from: dailyLoginRewards,
+            in: modelContext
+        )
+    }
+
+    private func claimDailyGift() {
+        PlayerInventoryStore.ensureBalances(
+            for: gameState.currencies,
+            in: modelContext
+        )
+        _ = PlayerInventoryStore.claimDailyLoginGift(
+            from: dailyLoginRewards,
+            in: modelContext
+        )
+        pendingDailyReward = nil
     }
 }
 

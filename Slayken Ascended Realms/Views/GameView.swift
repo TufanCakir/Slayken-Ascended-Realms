@@ -22,6 +22,7 @@ struct GameView: View {
 
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
+    @Environment(\.modelContext) private var modelContext
     @Query private var completedBattles: [PlayerBattleProgress]
     @Query private var accountProgress: [PlayerAccountProgress]
 
@@ -39,7 +40,12 @@ struct GameView: View {
     @State private var showGlobeEvents = false
     @State private var showSummon = false
     @State private var showCharacter = false
+    @State private var showGift = false
+    @State private var showDailyLogin = false
     @State private var selectedTab: GameTab = .game
+
+    private let gifts = loadGiftBoxDefinitions()
+    private let dailyLoginRewards = loadDailyLoginRewardDefinitions()
 
     let onResetGame: () -> Void
     let onStartBattle: (CharacterStats) -> Void
@@ -183,6 +189,12 @@ struct GameView: View {
                     onArchive: {
                         showStoryArchive = true
                     },
+                    onGift: {
+                        showGift = true
+                    },
+                    onDailyLogin: {
+                        showDailyLogin = true
+                    },
                     onSettings: {
                         showSettings = true
                     }
@@ -208,6 +220,30 @@ struct GameView: View {
                     showNews = false
                 }
                 .ignoresSafeArea()
+                .background(.black)
+            }
+            .fullScreenCover(isPresented: $showGift) {
+                GiftView(
+                    gifts: gifts,
+                    onClaim: claimGiftFromMenu,
+                    onClose: {
+                        showGift = false
+                    }
+                )
+                .environmentObject(gameState)
+                .environmentObject(theme)
+                    .background(.black)
+            }
+            .fullScreenCover(isPresented: $showDailyLogin) {
+                DailyLoginView(
+                    rewards: dailyLoginRewards,
+                    currencies: gameState.currencies,
+                    availableReward: availableDailyReward,
+                    onClaim: claimDailyGiftFromMenu,
+                    onClose: {
+                        showDailyLogin = false
+                    }
+                )
                 .background(.black)
             }
             .fullScreenCover(isPresented: $showStoryArchive) {
@@ -336,6 +372,16 @@ struct GameView: View {
                             selectedTab = .game
                             showStoryArchive = true
                         },
+                        onGift: {
+                            showGlobeEvents = false
+                            selectedTab = .game
+                            showGift = true
+                        },
+                        onDailyLogin: {
+                            showGlobeEvents = false
+                            selectedTab = .game
+                            showDailyLogin = true
+                        },
                         onSettings: {
                             showGlobeEvents = false
                             selectedTab = .game
@@ -372,6 +418,13 @@ struct GameView: View {
         showGlobeEvents = false
         selectedTab = .game
         activeSelectionSheet = selection
+    }
+
+    private var availableDailyReward: DailyLoginRewardState? {
+        PlayerInventoryStore.dailyLoginGift(
+            from: dailyLoginRewards,
+            in: modelContext
+        )
     }
 
     private var completedBattleIDs: Set<String> {
@@ -445,6 +498,26 @@ struct GameView: View {
             showStory = !battle.story.isEmpty
             showPopup = battle.story.isEmpty
         }
+    }
+
+    private func claimDailyGiftFromMenu() {
+        PlayerInventoryStore.ensureBalances(
+            for: gameState.currencies,
+            in: modelContext
+        )
+        _ = PlayerInventoryStore.claimDailyLoginGift(
+            from: dailyLoginRewards,
+            in: modelContext
+        )
+        showDailyLogin = false
+    }
+
+    private func claimGiftFromMenu(_ gift: GiftBoxDefinition) {
+        PlayerInventoryStore.ensureBalances(
+            for: gameState.currencies,
+            in: modelContext
+        )
+        PlayerInventoryStore.claimGiftBox(gift, in: modelContext)
     }
 }
 

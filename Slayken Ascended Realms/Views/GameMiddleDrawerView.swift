@@ -13,6 +13,8 @@ struct GameMiddleDrawerView: View {
     let onSupport: () -> Void
     let onNews: () -> Void
     let onArchive: () -> Void
+    let onGift: () -> Void
+    let onDailyLogin: () -> Void
     let onSettings: () -> Void
 
     @State private var isExpanded = false
@@ -39,6 +41,16 @@ struct GameMiddleDrawerView: View {
             id: .archive,
             title: "Story",
             systemName: "book"
+        ),
+        MiddleDrawerActionItem(
+            id: .gift,
+            title: "Gift",
+            systemName: "gift"
+        ),
+        MiddleDrawerActionItem(
+            id: .dailyLogin,
+            title: "Daily",
+            systemName: "calendar.badge.clock"
         ),
         MiddleDrawerActionItem(
             id: .support,
@@ -144,6 +156,12 @@ struct GameMiddleDrawerView: View {
         case .archive:
             selectedTab = .game
             onArchive()
+        case .gift:
+            selectedTab = .game
+            onGift()
+        case .dailyLogin:
+            selectedTab = .game
+            onDailyLogin()
         case .support:
             selectedTab = .game
             onSupport()
@@ -163,7 +181,7 @@ struct GameMiddleDrawerView: View {
             return selectedTab == .character
         case .summon:
             return selectedTab == .summon
-        case .news, .archive:
+        case .news, .archive, .gift, .dailyLogin:
             return false
         case .support:
             return selectedTab == .support
@@ -180,6 +198,8 @@ private enum MiddleDrawerAction {
     case summon
     case news
     case archive
+    case gift
+    case dailyLogin
     case support
     case settings
 }
@@ -196,6 +216,8 @@ private struct MiddleDrawerActionItem: Identifiable {
         onSupport: {},
         onNews: {},
         onArchive: {},
+        onGift: {},
+        onDailyLogin: {},
         onSettings: {}
     )
 }

@@ -1,9 +1,9 @@
 [
     {
-        "name": "Zaron",
-        "image": "preview_zaron",
-        "model": "zaron_animation",
-        "texture": "warrior_textur_original",
+        "name": "Shen",
+        "image": "bg_shen",
+        "model": "sennara_animation",
+        "texture": "shen_texture_original",
         "hp": 100,
         "attack": 50
     }

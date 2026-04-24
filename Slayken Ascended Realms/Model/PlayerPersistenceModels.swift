@@ -129,3 +129,23 @@ final class SummonBannerProgress {
         self.summonCount = summonCount
     }
 }
+
+@Model
+final class PlayerDailyLoginProgress {
+    @Attribute(.unique) var id: String
+    var lastClaimedAt: Date?
+    var streakCount: Int
+    var totalClaims: Int
+
+    init(
+        id: String = "daily_login",
+        lastClaimedAt: Date? = nil,
+        streakCount: Int = 0,
+        totalClaims: Int = 0
+    ) {
+        self.id = id
+        self.lastClaimedAt = lastClaimedAt
+        self.streakCount = streakCount
+        self.totalClaims = totalClaims
+    }
+}

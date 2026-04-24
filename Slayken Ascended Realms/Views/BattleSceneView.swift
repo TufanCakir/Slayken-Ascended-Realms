@@ -80,12 +80,14 @@ final class BattleSceneCoordinator {
     private let cameraNode = SCNNode()
     private let playerRootNode = SCNNode()
     private var enemyRootNodes: [SCNNode] = []
+    private var fighterModelContainers: [String: SCNNode] = [:]
     private var groundNode = SCNNode()
     private var enemyHPNodes: [SCNNode] = []
     private var enemySelectionNodes: [SCNNode] = []
 
     private var groundBox: SCNBox?
     private var groundMaterials: [SCNMaterial] = []
+    private var defeatedFighterNames: Set<String> = []
     private var lastPlayerAttackID = 0
     private var lastEnemyAttackID = 0
 
@@ -151,7 +153,13 @@ final class BattleSceneCoordinator {
                 min(1, values.indices.contains(index) ? values[index] : 0)
             )
             enemyHPNodes[index].scale.x = Float(safe)
-            enemyRootNodes[index].opacity = safe <= 0 ? 0.28 : 1
+
+            let enemyNode = enemyRootNodes[index]
+            if safe <= 0.001 {
+                playDeathAnimationIfNeeded(on: enemyNode)
+            } else {
+                resetDefeatedStateIfNeeded(on: enemyNode)
+            }
         }
     }
 
@@ -171,11 +179,13 @@ final class BattleSceneCoordinator {
         if playerAttackID != lastPlayerAttackID {
             lastPlayerAttackID = playerAttackID
             if playerAttackID > 0,
-                enemyRootNodes.indices.contains(selectedEnemyIndex)
+                enemyRootNodes.indices.contains(selectedEnemyIndex),
+                enemyRootNodes[selectedEnemyIndex].opacity > 0.05
             {
                 playAttackAnimation(
                     attacker: playerRootNode,
                     defender: enemyRootNodes[selectedEnemyIndex],
+                    animationSeed: playerAttackID,
                     particleEffect: particleEffect
                 )
             }
@@ -191,6 +201,7 @@ final class BattleSceneCoordinator {
                 playAttackAnimation(
                     attacker: enemyRootNodes[attackingEnemyIndex],
                     defender: playerRootNode,
+                    animationSeed: enemyAttackID,
                     particleEffect: nil
                 )
             }
@@ -375,10 +386,13 @@ final class BattleSceneCoordinator {
     private func playAttackAnimation(
         attacker: SCNNode,
         defender: SCNNode,
+        animationSeed: Int,
         particleEffect: String?
     ) {
         attacker.removeAction(forKey: "attack")
         defender.removeAction(forKey: "hit")
+        modelContainer(for: attacker)?.removeAction(forKey: "attackPose")
+        modelContainer(for: defender)?.removeAction(forKey: "hitShake")
 
         let start = attacker.position
         let defenderPosition = defender.position
@@ -411,18 +425,13 @@ final class BattleSceneCoordinator {
         let windup = SCNAction.move(to: windupPosition, duration: 0.08)
         windup.timingMode = .easeOut
 
-        let lunge = SCNAction.group([
-            SCNAction.move(to: lungePosition, duration: 0.12),
-            SCNAction.rotateBy(x: -0.18, y: 0, z: 0, duration: 0.12),
-        ])
-        lunge.timingMode = .easeIn
+        let dash = SCNAction.move(to: lungePosition, duration: 0.15)
+        dash.timingMode = .easeInEaseOut
 
-        let recover = SCNAction.group([
-            SCNAction.move(to: start, duration: 0.18),
-            SCNAction.rotateBy(x: 0.18, y: 0, z: 0, duration: 0.18),
-        ])
+        let recover = SCNAction.move(to: start, duration: 0.18)
         recover.timingMode = .easeOut
 
+        let anticipationDelay = SCNAction.wait(duration: 0.03)
         let impact = SCNAction.run { [weak self, weak defender] _ in
             guard let self, let defender, let particleEffect else { return }
             self.spawnParticleEffect(
@@ -431,9 +440,33 @@ final class BattleSceneCoordinator {
             )
         }
 
+        let attackerPose = makeAttackPoseAction(seed: animationSeed)
+        let impactShake = makeImpactShakeAction()
+
+        modelContainer(for: attacker)?.runAction(
+            SCNAction.sequence([
+                SCNAction.wait(duration: 0.11),
+                attackerPose,
+            ]),
+            forKey: "attackPose"
+        )
+
+        modelContainer(for: defender)?.runAction(
+            SCNAction.sequence([
+                SCNAction.wait(duration: 0.26),
+                impactShake,
+            ]),
+            forKey: "hitShake"
+        )
+
         attacker.runAction(
             SCNAction.sequence([
-                windup, lunge, impact, SCNAction.wait(duration: 0.04), recover,
+                windup,
+                anticipationDelay,
+                dash,
+                impact,
+                anticipationDelay,
+                recover,
             ]),
             forKey: "attack"
         )
@@ -458,11 +491,98 @@ final class BattleSceneCoordinator {
 
         defender.runAction(
             SCNAction.sequence([
-                SCNAction.wait(duration: 0.16),
+                SCNAction.wait(duration: 0.24),
                 hitBack,
                 returnBack,
             ]),
             forKey: "hit"
+        )
+    }
+
+    private func modelContainer(for root: SCNNode) -> SCNNode? {
+        guard let name = root.name else { return nil }
+        return fighterModelContainers[name]
+    }
+
+    private func makeAttackPoseAction(seed: Int) -> SCNAction {
+        switch abs(seed) % 4 {
+        case 0:
+            return SCNAction.sequence([
+                SCNAction.rotateBy(x: -0.6, y: 0, z: 0, duration: 0.15),
+                SCNAction.rotateBy(x: 0.6, y: 0, z: 0, duration: 0.1),
+            ])
+        case 1:
+            return SCNAction.sequence([
+                SCNAction.rotateBy(x: 0, y: 0.4, z: 0, duration: 0.08),
+                SCNAction.rotateBy(x: 0, y: -0.4, z: 0, duration: 0.08),
+            ])
+        case 2:
+            return SCNAction.rotateBy(x: 0, y: .pi * 2, z: 0, duration: 0.4)
+        default:
+            return SCNAction.sequence([
+                SCNAction.moveBy(x: 0, y: 2, z: 0, duration: 0.15),
+                SCNAction.moveBy(x: 0, y: -2, z: 0, duration: 0.2),
+            ])
+        }
+    }
+
+    private func makeImpactShakeAction() -> SCNAction {
+        SCNAction.sequence([
+            SCNAction.moveBy(x: 0.2, y: 0, z: 0, duration: 0.05),
+            SCNAction.moveBy(x: -0.4, y: 0, z: 0, duration: 0.05),
+            SCNAction.moveBy(x: 0.2, y: 0, z: 0, duration: 0.05),
+        ])
+    }
+
+    private func makeIdleBounceAction() -> SCNAction {
+        SCNAction.repeatForever(
+            SCNAction.sequence([
+                SCNAction.moveBy(x: 0, y: 0.1, z: 0, duration: 0.8),
+                SCNAction.moveBy(x: 0, y: -0.1, z: 0, duration: 0.8),
+            ])
+        )
+    }
+
+    private func playDeathAnimationIfNeeded(on root: SCNNode) {
+        guard let name = root.name, !defeatedFighterNames.contains(name) else {
+            return
+        }
+
+        defeatedFighterNames.insert(name)
+        root.removeAction(forKey: "attack")
+        root.removeAction(forKey: "hit")
+        modelContainer(for: root)?.removeAction(forKey: "idle")
+        modelContainer(for: root)?.removeAction(forKey: "attackPose")
+        modelContainer(for: root)?.removeAction(forKey: "hitShake")
+
+        root.runAction(
+            SCNAction.sequence([
+                SCNAction.rotateBy(x: 0, y: 0, z: .pi / 2, duration: 0.3),
+                SCNAction.fadeOpacity(to: 0, duration: 0.4),
+            ]),
+            forKey: "death"
+        )
+    }
+
+    private func resetDefeatedStateIfNeeded(on root: SCNNode) {
+        guard let name = root.name, defeatedFighterNames.contains(name) else {
+            return
+        }
+
+        defeatedFighterNames.remove(name)
+        root.removeAction(forKey: "death")
+        root.opacity = 1
+        root.eulerAngles.z = 0
+        modelContainer(for: root)?.opacity = 1
+        modelContainer(for: root)?.position = SCNVector3(0, 0, 0)
+        modelContainer(for: root)?.eulerAngles = SCNVector3(
+            -Float.pi / 2,
+            Float.pi / 2,
+            0
+        )
+        modelContainer(for: root)?.runAction(
+            makeIdleBounceAction(),
+            forKey: "idle"
         )
     }
 
@@ -561,6 +681,7 @@ final class BattleSceneCoordinator {
         )
         modelContainer.addChildNode(modelNode)
         root.addChildNode(modelContainer)
+        fighterModelContainers[root.name ?? ""] = modelContainer
 
         let bounds = modelNode.boundingBox
 
@@ -578,10 +699,11 @@ final class BattleSceneCoordinator {
         modelContainer.scale = SCNVector3(scale, scale, scale)
 
         modelContainer.eulerAngles = SCNVector3(-Float.pi / 2, Float.pi / 2, 0)
+        modelContainer.runAction(makeIdleBounceAction(), forKey: "idle")
 
         let groundY = getGroundTopY()
 
-        let yOffset: Float = 2
+        let yOffset: Float = 3
         let xOffset: Float = 2
         let zOffset: Float = 10
 

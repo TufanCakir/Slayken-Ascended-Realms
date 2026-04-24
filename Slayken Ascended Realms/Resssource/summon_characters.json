@@ -13,7 +13,7 @@
             {
                 "id": "original",
                 "name": "Original",
-                "texture": "warrior_textur_original",
+                "texture": "zaron_textur_original",
                 "summonImage": "preview_zaron"
             },
             {
@@ -46,6 +46,31 @@
                 "name": "Shadow",
                 "texture": "shela_skin_shadow",
                 "summonImage": "preview_shela"
+            }
+        ]
+    },
+    {
+        "id": "sennara",
+        "name": "Sennara",
+        "summonImage": "preview_sennara",
+        "model": "sennara_animation",
+        "battleModel": "sennara",
+        "texture": "sennara_texture_original",
+        "rarity": 4,
+        "hp": 105,
+        "attack": 48,
+        "skins": [
+            {
+                "id": "original",
+                "name": "Original",
+                "texture": "sennara_texture_original",
+                "summonImage": "preview_sennara"
+            },
+            {
+                "id": "shadow",
+                "name": "Shadow",
+                "texture": "sennara_skin_shadow",
+                "summonImage": "preview_sennara"
             }
         ]
     }

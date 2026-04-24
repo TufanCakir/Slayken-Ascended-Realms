@@ -59,6 +59,10 @@
             {
                 "characterID": "shela",
                 "weight": 75
+            },
+            {
+                "characterID": "sennara",
+                "weight": 95
             }
         ]
     },

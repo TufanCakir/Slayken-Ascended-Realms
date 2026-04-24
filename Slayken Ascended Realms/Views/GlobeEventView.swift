@@ -345,7 +345,7 @@ struct GlobeEventView: View {
             mapNodeLabel(
                 title: point.title,
                 subtitle: "\(visibleCount)/\(point.battles.count) Kaempfe",
-                imageName: point.nodeImage ?? point.mapImage,
+                imageName: point.resolvedNodeImage,
                 fallbackIcon: "map.fill",
                 isFocused: isFocused,
                 theme: theme
@@ -369,7 +369,7 @@ struct GlobeEventView: View {
             mapNodeLabel(
                 title: battle.name,
                 subtitle: "Lv. \(battle.difficulty * 10)",
-                imageName: battle.nodeImage ?? battle.primaryEnemy.image,
+                imageName: battle.resolvedNodeImage,
                 fallbackIcon: "flame.fill",
                 isFocused: isFocused,
                 theme: theme

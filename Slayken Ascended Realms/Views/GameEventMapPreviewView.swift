@@ -219,7 +219,7 @@ struct GameEventMapPreviewView: View {
         } label: {
             VStack(spacing: 3) {
                 nodeCircle(
-                    imageName: point.nodeImage ?? point.mapImage,
+                    imageName: point.resolvedNodeImage,
                     fallbackIcon: "mappin",
                     isCompleted: false,
                     isSelected: false
@@ -247,7 +247,7 @@ struct GameEventMapPreviewView: View {
         } label: {
             VStack(spacing: 3) {
                 nodeCircle(
-                    imageName: battle.nodeImage ?? battle.primaryEnemy.image,
+                    imageName: battle.resolvedNodeImage,
                     fallbackIcon: isCompleted ? "checkmark" : "flame.fill",
                     isCompleted: isCompleted,
                     isSelected: isSelected

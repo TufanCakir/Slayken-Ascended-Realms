@@ -37,7 +37,7 @@
                         "description": "Drei Gegner greifen nebeneinander an.",
                         "difficulty": 3,
                         "groundTexture": "country",
-                        "skyboxTexture": "void",
+                        "skyboxTexture": "country",
                         "node": {
                             "x": 0.20,
                             "y": 0.62
@@ -104,7 +104,7 @@
                         "description": "Ein Event-Boss mit eigener Begleitung.",
                         "difficulty": 5,
                         "groundTexture": "ice",
-                        "skyboxTexture": "sar_bg",
+                        "skyboxTexture": "ice",
                         "node": {
                             "x": 0.42,
                             "y": 0.48
@@ -172,7 +172,7 @@
                 "title": "Event Ruinen",
                 "text": "Ein zweiter Event-Punkt fuer weitere JSON-Battles.",
                 "mapImage": "sar_bg",
-                "mapTexture": "map1",
+                "mapTexture": "sar_bg",
                 "node": {
                     "x": 0.58,
                     "y": 0.44
@@ -219,6 +219,433 @@
                             {
                                 "currency": "crystals",
                                 "amount": 30
+                            }
+                        ],
+                        "story": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_coin_harvest",
+        "title": "Event: Coin Farm",
+        "subtitle": "Goldrausch fuer schnelle Muenzfarmen",
+        "minAscendedLevel": 1,
+        "mapTexture": "country",
+        "cutscene": {
+            "id": "event_coin_harvest_intro",
+            "title": "Goldrausch",
+            "video": "intro",
+            "text": "In einer offenen Schatzroute tauchen immer neue Muenztruhen und Waechter auf."
+        },
+        "points": [
+            {
+                "id": "event_coin_harvest_field",
+                "title": "Schatzfeld",
+                "text": "Farme hier Coins gegen immer staerkere Schatzwaechter.",
+                "mapImage": "country",
+                "mapTexture": "country",
+                "node": {
+                    "x": 0.34,
+                    "y": 0.50
+                },
+                "cutscene": {
+                    "id": "event_coin_harvest_field_cutscene",
+                    "title": "Schatzfeld",
+                    "video": "torwache",
+                    "text": "Ein ganzer Pfad voller Kisten fuehrt tief in das Farmgebiet."
+                },
+                "battles": [
+                    {
+                        "id": "event_coin_harvest_battle_1",
+                        "name": "Kupferwache",
+                        "description": "Shen verteidigt die erste Reihe der Schatzkisten.",
+                        "difficulty": 4,
+                        "groundTexture": "country",
+                        "skyboxTexture": "country",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.58
+                        },
+                        "enemy": {
+                            "name": "Shen der Kassenwache",
+                            "image": "preview_shen",
+                            "model": "shen",
+                            "texture": "shen_texture_original",
+                            "hp": 180,
+                            "attack": 18,
+                            "element": "Earth"
+                        },
+                        "xpReward": 180,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 850
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 8
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_coin_harvest_battle_2",
+                        "name": "Truhensturm",
+                        "description": "Sennara beschwoert einen Schwall aus Schatzenergie.",
+                        "difficulty": 6,
+                        "groundTexture": "map",
+                        "skyboxTexture": "map",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.44
+                        },
+                        "enemy": {
+                            "name": "Sennara Goldweberin",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 260,
+                            "attack": 24,
+                            "element": "Light"
+                        },
+                        "xpReward": 240,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1450
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 12
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_coin_harvest_battle_3",
+                        "name": "Goldthron",
+                        "description": "Ein Bosskampf fuer maximale Coin-Ausbeute.",
+                        "difficulty": 8,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.70,
+                            "y": 0.52
+                        },
+                        "enemies": [
+                            {
+                                "name": "Shen Tresorwache",
+                                "image": "preview_shen",
+                                "model": "shen",
+                                "texture": "shen_texture_original",
+                                "hp": 240,
+                                "attack": 22,
+                                "element": "Storm"
+                            }
+                        ],
+                        "boss": {
+                            "name": "Sennara vom Goldthron",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 420,
+                            "attack": 34,
+                            "element": "Light"
+                        },
+                        "xpReward": 320,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2600
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 20
+                            }
+                        ],
+                        "story": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_xp_trials",
+        "title": "Event: XP Farm",
+        "subtitle": "Trainingsfeld fuer Charakter- und Account-XP",
+        "minAscendedLevel": 2,
+        "mapTexture": "bg_arena",
+        "cutscene": {
+            "id": "event_xp_trials_intro",
+            "title": "Pruefungen der Halle",
+            "video": "kristallspur",
+            "text": "In der Trainingshalle warten aufeinanderfolgende XP-Pruefungen."
+        },
+        "points": [
+            {
+                "id": "event_xp_trials_hall",
+                "title": "Trainingshalle",
+                "text": "Besiege Shen und Sennara in Trainingsduellen fuer hohe XP-Werte.",
+                "mapImage": "bg_arena",
+                "mapTexture": "bg_arena",
+                "node": {
+                    "x": 0.46,
+                    "y": 0.46
+                },
+                "cutscene": null,
+                "battles": [
+                    {
+                        "id": "event_xp_trials_battle_1",
+                        "name": "Shens Lektion",
+                        "description": "Shen eröffnet die Trainingsserie mit einem kontrollierten Duell.",
+                        "difficulty": 7,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "ice",
+                        "node": {
+                            "x": 0.20,
+                            "y": 0.56
+                        },
+                        "enemy": {
+                            "name": "Trainer Shen",
+                            "image": "preview_shen",
+                            "model": "shen",
+                            "texture": "shen_texture_original",
+                            "hp": 300,
+                            "attack": 28,
+                            "element": "Water"
+                        },
+                        "xpReward": 620,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 480
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 18
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_xp_trials_battle_2",
+                        "name": "Sennaras Prüfung",
+                        "description": "Sennara testet dein Durchhaltevermoegen in einer zweiten Runde.",
+                        "difficulty": 9,
+                        "groundTexture": "ice",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.48,
+                            "y": 0.42
+                        },
+                        "enemy": {
+                            "name": "Mentorin Sennara",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 420,
+                            "attack": 33,
+                            "element": "Storm"
+                        },
+                        "xpReward": 980,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 620
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 24
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_xp_trials_battle_3",
+                        "name": "Doppeltraining",
+                        "description": "Beide neuen Kaempfer treten gemeinsam fuer maximale XP an.",
+                        "difficulty": 11,
+                        "groundTexture": "sar_bg",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.76,
+                            "y": 0.50
+                        },
+                        "enemies": [
+                            {
+                                "name": "Shen der Meisterklasse",
+                                "image": "preview_shen",
+                                "model": "shen",
+                                "texture": "shen_texture_original",
+                                "hp": 360,
+                                "attack": 31,
+                                "element": "Fire"
+                            }
+                        ],
+                        "boss": {
+                            "name": "Sennara der Meisterklasse",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 560,
+                            "attack": 38,
+                            "element": "Light"
+                        },
+                        "xpReward": 1450,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 900
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 30
+                            }
+                        ],
+                        "story": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_crystal_bloom",
+        "title": "Event: Crystal Farm",
+        "subtitle": "Kristallroute mit Sennara und Shen",
+        "minAscendedLevel": 3,
+        "mapTexture": "void",
+        "cutscene": {
+            "id": "event_crystal_bloom_intro",
+            "title": "Kristallbluete",
+            "video": "mondtor",
+            "text": "Ein seltenes Kristallfeld oeffnet sich und lockt starke Beschuetzer an."
+        },
+        "points": [
+            {
+                "id": "event_crystal_bloom_cavern",
+                "title": "Kristallgrotte",
+                "text": "Hier liegt der Fokus auf Crystal-Rewards und schweren Elite-Kaempfen.",
+                "mapImage": "void",
+                "mapTexture": "void",
+                "node": {
+                    "x": 0.50,
+                    "y": 0.40
+                },
+                "cutscene": {
+                    "id": "event_crystal_bloom_cavern_cutscene",
+                    "title": "Kristallgrotte",
+                    "video": "kristallspur",
+                    "text": "Die Grotte pulsiert vor Energie und jede Kiste glimmt violett."
+                },
+                "battles": [
+                    {
+                        "id": "event_crystal_bloom_battle_1",
+                        "name": "Kristallklaue",
+                        "description": "Shen greift hier als schneller Kristalljaeger an.",
+                        "difficulty": 8,
+                        "groundTexture": "void",
+                        "skyboxTexture": "ice",
+                        "node": {
+                            "x": 0.22,
+                            "y": 0.50
+                        },
+                        "enemy": {
+                            "name": "Kristall Shen",
+                            "image": "preview_shen",
+                            "model": "shen",
+                            "texture": "shen_texture_original",
+                            "hp": 340,
+                            "attack": 30,
+                            "element": "Light"
+                        },
+                        "xpReward": 360,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 420
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 70
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_crystal_bloom_battle_2",
+                        "name": "Sennaras Splitterstrom",
+                        "description": "Sennara laesst die Kristalle ueber das Feld kreisen.",
+                        "difficulty": 10,
+                        "groundTexture": "ice",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.52,
+                            "y": 0.38
+                        },
+                        "enemy": {
+                            "name": "Sennara Splitterweberin",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 500,
+                            "attack": 36,
+                            "element": "Dark"
+                        },
+                        "xpReward": 520,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 500
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 110
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_crystal_bloom_battle_3",
+                        "name": "Herz der Grotte",
+                        "description": "Der Bosskampf mit maximalem Crystal-Fokus.",
+                        "difficulty": 12,
+                        "groundTexture": "sar_bg",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.48
+                        },
+                        "enemies": [
+                            {
+                                "name": "Shen Kristallwache",
+                                "image": "preview_shen",
+                                "model": "shen",
+                                "texture": "shen_texture_original",
+                                "hp": 420,
+                                "attack": 34,
+                                "element": "Storm"
+                            }
+                        ],
+                        "boss": {
+                            "name": "Sennara Kristallkronin",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 680,
+                            "attack": 44,
+                            "element": "Light"
+                        },
+                        "xpReward": 760,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 650
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 180
                             }
                         ],
                         "story": []

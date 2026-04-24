@@ -39,6 +39,10 @@ struct GlobeEventPoint: Codable, Identifiable {
     let node: EventMapNodePosition
     let cutscene: GlobeEventCutscene?
     let battles: [GlobeBattle]
+
+    var resolvedNodeImage: String {
+        nodeImage ?? "chest_brown"
+    }
 }
 
 struct GlobeBattle: Codable, Identifiable {
@@ -57,6 +61,10 @@ struct GlobeBattle: Codable, Identifiable {
     let xpReward: Int?
     let rewards: [CurrencyAmount]
     let story: [StoryLine]
+
+    var resolvedNodeImage: String {
+        nodeImage ?? "chest_brown"
+    }
 
     enum CodingKeys: String, CodingKey {
         case id

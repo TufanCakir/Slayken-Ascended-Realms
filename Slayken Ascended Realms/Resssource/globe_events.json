@@ -16,8 +16,8 @@
                 "title": "Mondtor",
                 "text":
                     "Am Mondtor oeffnet sich ein Riss. Schlage dich von Node zu Node vor.",
-                "mapImage": "map1",
-                "mapTexture": "map1",
+                "mapImage": "realm_country",
+                "mapTexture": "realm_country",
                 "node": {
                     "x": 0.3,
                     "y": 0.52
@@ -34,8 +34,8 @@
                         "name": "Torwache",
                         "description": "Der erste Waechter am Riss.",
                         "difficulty": 1,
-                        "groundTexture": "map",
-                        "skyboxTexture": "map",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.1,
                             "y": 0.64
@@ -102,8 +102,8 @@
                         "name": "Kristallspur",
                         "description": "Eine leuchtende Spur fuehrt weiter.",
                         "difficulty": 2,
-                        "groundTexture": "sar_bg",
-                        "skyboxTexture": "sar_bg",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.2,
                             "y": 0.54
@@ -140,8 +140,8 @@
                         "name": "Rissbestie",
                         "description": "Ein aggressiver Gegner direkt am Tor.",
                         "difficulty": 3,
-                        "groundTexture": "map",
-                        "skyboxTexture": "map",
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
                         "node": {
                             "x": 0.31,
                             "y": 0.61
@@ -178,8 +178,8 @@
                         "name": "Mondsplitter",
                         "description": "Splitterenergie sammelt sich im Boden.",
                         "difficulty": 4,
-                        "groundTexture": "ice",
-                        "skyboxTexture": "sar_bg",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.4,
                             "y": 0.46
@@ -212,7 +212,7 @@
                         "description": "Ein Kampf im dichten Nebel.",
                         "difficulty": 5,
                         "groundTexture": "country",
-                        "skyboxTexture": "void",
+                        "skyboxTexture": "country",
                         "node": {
                             "x": 0.49,
                             "y": 0.58
@@ -244,7 +244,7 @@
                         "name": "Runenwache",
                         "description": "Alte Runen erwachen.",
                         "difficulty": 6,
-                        "groundTexture": "bg_arena",
+                        "groundTexture": "fire",
                         "skyboxTexture": "fire",
                         "node": {
                             "x": 0.58,
@@ -278,8 +278,8 @@
                         "description":
                             "Der Riss wirft einen Schatten auf die Map.",
                         "difficulty": 7,
-                        "groundTexture": "void",
-                        "skyboxTexture": "void",
+                        "groundTexture": "ice",
+                        "skyboxTexture": "ice",
                         "node": {
                             "x": 0.66,
                             "y": 0.55
@@ -311,8 +311,8 @@
                         "name": "Mondklinge",
                         "description": "Ein schneller Elitegegner.",
                         "difficulty": 8,
-                        "groundTexture": "ice",
-                        "skyboxTexture": "map",
+                        "groundTexture": "void",
+                        "skyboxTexture": "void",
                         "node": {
                             "x": 0.74,
                             "y": 0.4
@@ -344,8 +344,8 @@
                         "name": "Torbrecher",
                         "description": "Der Vorboss am Mondtor.",
                         "difficulty": 9,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "fire",
+                        "groundTexture": "map",
+                        "skyboxTexture": "map",
                         "node": {
                             "x": 0.84,
                             "y": 0.52
@@ -377,7 +377,7 @@
                         "name": "Risskern",
                         "description": "Boss des ersten Kapitels.",
                         "difficulty": 10,
-                        "groundTexture": "void",
+                        "groundTexture": "sar_bg",
                         "skyboxTexture": "sar_bg",
                         "node": {
                             "x": 0.92,
@@ -443,8 +443,8 @@
                         "name": "Windwache",
                         "description": "Startkampf des zweiten Kapitels.",
                         "difficulty": 11,
-                        "groundTexture": "country",
-                        "skyboxTexture": "sar_bg",
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
                         "node": {
                             "x": 0.08,
                             "y": 0.52

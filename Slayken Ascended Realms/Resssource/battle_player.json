@@ -1,8 +1,8 @@
 {
-    "name": "Sennara",
-    "image": "preview_zaron",
-    "model": "sennara",
-    "texture": "sennara_texture_original",
+    "name": "Shen",
+    "image": "preview_shen",
+    "model": "shen",
+    "texture": "shen_texture_original",
     "hp": 100,
-    "attack": 20
+    "attack": 100
 }

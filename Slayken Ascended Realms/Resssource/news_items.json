@@ -1,64 +1,123 @@
 [
     {
-        "id": "realm_route_active",
-        "category": "Aktivitaeten",
-        "title": "Realm Route aktiv",
-        "subtitle":
-            "Battle-Nodes werden Schritt fuer Schritt auf der World Map freigeschaltet.",
-        "image": "news_realm_route",
-        "date": "2026-04-19",
+        "id": "project_update_core_systems",
+        "category": "Neu Im Game",
+        "title": "Neue Systeme fuer Geschenke, Daily Login und Event-Farmen",
+        "subtitle": "Giftboxen, 30 Tage Daily Login und neue Farm-Events sind jetzt im Projekt angelegt.",
+        "image": "news_project_update",
+        "date": "2026-04-20",
         "tags": [
-            "World Map",
-            "Battle",
-            "Progress"
+            "Giftbox",
+            "Daily Login",
+            "Events",
+            "Farm"
         ],
-        "body":
-            "Die Realm Route fuehrt dich ueber mehrere Battle-Nodes durch das aktuelle Kapitel. Abgeschlossene Kaempfe schalten neue Nodes frei, damit sich der Fortschritt wie eine echte Route anfuehlt. Tippe einen Battle-Node an, bewege deinen 3D-Charakter zum Ziel und pruefe im Battle-Info-Popup zuerst Element, Gegnerstaerke, Level und empfohlene Konter."
+        "body": "Im Projekt wurden mehrere neue Live-Systems vorbereitet. Es gibt jetzt ein getrenntes Giftbox-System fuer manuelle Geschenke an den Spieler, ein eigenes 30-Tage-Daily-Login-System mit separater JSON-Datei und neue Event-Kapitel fuer Coin Farm, XP Farm und Crystal Farm. Diese Inhalte sind so aufgebaut, dass du sie spaeter direkt ueber JSON erweitern und balancen kannst."
     },
     {
-        "id": "element_battle_system",
-        "category": "Neue Features",
-        "title": "Element-System im Kampf",
-        "subtitle":
-            "Cards und Gegner haben Elemente mit Staerken und Schwaechen.",
-        "image": "news_elements",
-        "date": "2026-04-19",
+        "id": "new_characters_shen_sennara",
+        "category": "Neue Charaktere",
+        "title": "Shen und Sennara sind im Projekt angekommen",
+        "subtitle": "Beide Charaktere werden jetzt bereits in neuen Event-Inhalten eingesetzt.",
+        "image": "news_new_characters",
+        "date": "2026-04-20",
         "tags": [
-            "Elemente",
-            "Cards",
-            "Balance"
+            "Shen",
+            "Sennara",
+            "3D Modelle",
+            "Events"
         ],
-        "body":
-            "Skill Cards und Gegner nutzen jetzt Elemente. Fire ist stark gegen Plant, Water ist stark gegen Fire und Plant ist stark gegen Water. Light, Dark und Void sind breit effektiv gegen normale Elemente. Dadurch sollst du nicht nur eine starke Karte spammen, sondern Deck, Mana und Gegner-Element bewusst vergleichen."
+        "body": "Mit Shen und Sennara sind zwei weitere Charaktere im Projekt vorhanden. Beide besitzen Modelle beziehungsweise Battle-Modelle und werden bereits in den neuen Event-JSONs als Gegner und Boss-Charaktere genutzt. Dadurch fuehlt sich der Event-Bereich nicht mehr nach Platzhaltern an, sondern zeigt schon neue Gesichter aus deiner eigenen Welt."
     },
     {
-        "id": "mana_skill_cards",
+        "id": "event_map_progression_expanded",
         "category": "Neue Features",
-        "title": "Mana fuer Skill Cards",
-        "subtitle": "Jede Card hat eigene Mana-Kosten aus JSON.",
-        "image": "news_mana_cards",
-        "date": "2026-04-19",
+        "title": "Event Map, Nodes und Battle-Routen wurden erweitert",
+        "subtitle": "Point-Nodes und Battle-Nodes koennen jetzt sauber ueber JSON und Projektbilder gesteuert werden.",
+        "image": "news_event_map",
+        "date": "2026-04-20",
         "tags": [
-            "Mana",
-            "Skill Cards",
+            "Globe Event",
+            "Nodes",
+            "Battle Route",
             "JSON"
         ],
-        "body":
-            "Im Kampf gibt es jetzt eine Mana-Leiste. Normale Angriffe bauen Mana auf, Skill Cards verbrauchen Mana. Jede Karte besitzt eigene Mana-Kosten in ability_cards.json. So kannst du spaeter schnell balancen, ob eine starke Karte teuer oder eine schnelle Karte guenstig sein soll."
+        "body": "Die GlobeEvent-Map wurde weiter ausgebaut. Point-Nodes und Battle-Nodes koennen ueber JSON mit eigenen Bildern beschrieben werden. Aktuell ist als Basis bereits chest_brown als Node-Darstellung eingebunden, damit neue Routen sofort sichtbar sind. Das System ist damit vorbereitet, spaeter pro Event eigene Icons, Truhen, Bossmarker oder Spezial-Node-PNGs einzusetzen."
     },
     {
-        "id": "card_growth_duplicates",
+        "id": "resource_farm_events_live",
         "category": "Aktivitaeten",
-        "title": "Duplikate verbessern Cards",
-        "subtitle": "Gezogene Duplikate steigern Level, Sterne und Damage.",
-        "image": "news_card_growth",
-        "date": "2026-04-19",
+        "title": "Coin Farm, XP Farm und Crystal Farm vorbereitet",
+        "subtitle": "Drei Event-Linien geben dir unterschiedliche Farm-Schwerpunkte.",
+        "image": "news_farm_events",
+        "date": "2026-04-20",
         "tags": [
-            "Summon",
-            "Level",
-            "Stars"
+            "Coin Farm",
+            "XP Farm",
+            "Crystal Farm",
+            "Rewards"
         ],
-        "body":
-            "Wenn du dieselbe Skill Card mehrfach summonst, steigt ihre Duplikatanzahl. Daraus werden Level und Sterne berechnet. Der Damage skaliert exponentiell ueber damageGrowth, Level und Sterne. Alle wichtigen Werte wie maxLevel, maxStars, duplicatesPerLevel und levelsPerStar stehen in JSON und koennen leicht angepasst werden."
+        "body": "Die neuen Event-Kapitel sind auf unterschiedliche Belohnungen ausgelegt. Coin Farm konzentriert sich auf hohe Muenz-Rewards, XP Farm auf deutlich hoehere Erfahrung und Crystal Farm auf bessere Kristall-Ausbeute. Damit entsteht schon jetzt eine klare Trennung zwischen normalen Story-Kaempfen und gezielten Farm-Routen."
+    },
+    {
+        "id": "seasonal_rift_events_expand",
+        "category": "Neu Im Game",
+        "title": "Neue saisonale Rift-Events erweitern die Event-Map",
+        "subtitle": "Mehrere neue Event-Kapitel bringen eigene Stimmung, Bosse und staerkere Rewards.",
+        "image": "news_seasonal_events",
+        "date": "2026-04-20",
+        "tags": [
+            "Rift Dragon Ascension",
+            "Celestial Reset",
+            "Lunar Rift Eclipse",
+            "Flame Rift Surge"
+        ],
+        "body": "Der Event-Bereich wurde um mehrere neue, eigenstaendige Kapitel erweitert. Mit Rift Dragon Ascension, Celestial Reset, Lunar Rift Eclipse und Flame Rift Surge entstehen jetzt deutlich staerkere Themen-Events mit eigenem Flair. Die neuen Kapitel orientieren sich an realen Feststimmungen und saisonalen Motiven, wurden aber bewusst in die Welt von Slayken Ascended Realms uebersetzt, damit der Stil originell bleibt und zur bestehenden Rift-Atmosphaere passt."
+    },
+    {
+        "id": "better_event_rewards_update",
+        "category": "Aktivitaeten",
+        "title": "Events geben jetzt deutlich staerkere Ressourcen",
+        "subtitle": "Mehr Coins, mehr Crystals und hoehere XP-Werte machen Events wertvoller.",
+        "image": "news_reward_boost",
+        "date": "2026-04-20",
+        "tags": [
+            "Rewards",
+            "Coins",
+            "Crystals",
+            "XP"
+        ],
+        "body": "Die neuen Event-Kapitel wurden nicht nur thematisch erweitert, sondern auch belohnungstechnisch aufgewertet. Viele Event-Battles liefern jetzt spuerbar mehr Coins, bessere Crystal-Rewards und groessere XP-Ausbeute. Dadurch fuehlen sich Event-Routen klarer wie spezielle High-Value-Aktivitaeten an und geben dem Spieler einen echten Grund, zwischen Story, Farm und Seasonal-Events zu wechseln."
+    },
+    {
+        "id": "shen_sennara_event_presence",
+        "category": "Neue Charaktere",
+        "title": "Shen und Sennara praegen die neuen Event-Bosse",
+        "subtitle": "Die beiden neueren Charaktere tauchen jetzt in mehreren Event-Routen als Waechter und Boss-Gegner auf.",
+        "image": "news_shen_sennara_events",
+        "date": "2026-04-20",
+        "tags": [
+            "Shen",
+            "Sennara",
+            "Boss",
+            "Event Map"
+        ],
+        "body": "Shen und Sennara sind nicht mehr nur vorhandene Projektressourcen, sondern werden aktiv in den Event-Kapiteln eingesetzt. Je nach Route treten sie als Waechter, Elitegegner oder Bosscharaktere auf und geben den neuen Events eine erkennbare Identitaet. Damit bekommen die neuen Inhalte auch visuell und spielerisch mehr Gewicht."
+    },
+    {
+        "id": "roadmap_next_content_drop",
+        "category": "Was Noch Kommt",
+        "title": "Mehr Charaktere, mehr Events, mehr Maps und mehr Story sind geplant",
+        "subtitle": "Der aktuelle Stand ist nur der Anfang fuer den groesseren Content-Ausbau.",
+        "image": "news_roadmap",
+        "date": "2026-04-20",
+        "tags": [
+            "Roadmap",
+            "Mehr Charaktere",
+            "Mehr Events",
+            "Mehr Maps",
+            "Story Kapitel"
+        ],
+        "body": "Als naechste Ausbaustufe bieten sich mehr spielbare Charaktere, weitere Event-Typen, neue Maps, mehr Story-Kapitel und zusaetzliche Battle-Routen an. Auch neue Boss-Events, Spezial-Farm-Events, weitere Giftboxen, neue Daily-Login-Belohnungen und ein groesserer Story-Archiv-Bereich passen gut in den aktuellen Projektaufbau. Die vorhandenen JSON-Systeme sind bereits so flexibel, dass sich dieser Content Schritt fuer Schritt schnell erweitern laesst."
     }
 ]

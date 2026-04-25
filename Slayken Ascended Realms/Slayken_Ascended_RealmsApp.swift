@@ -13,12 +13,17 @@ struct Slayken_Ascended_RealmsApp: App {
 
     @StateObject var gameState = GameState()
     @StateObject var theme = ThemeManager()
+    @StateObject var musicManager = MusicManager()
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(gameState)
                 .environmentObject(theme)
+                .environmentObject(musicManager)
+                .onAppear {
+                    musicManager.startPlaybackIfNeeded()
+                }
         }
         .modelContainer(for: [
             PlayerCurrencyBalance.self,

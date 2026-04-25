@@ -653,5 +653,533 @@
                 ]
             }
         ]
+    },
+    {
+        "id": "event_rift_dragon_ascension",
+        "title": "Event: Rift Dragon Ascension",
+        "subtitle": "Drachenfragmente steigen aus den Wasserpfaden auf",
+        "minAscendedLevel": 4,
+        "mapTexture": "realm_country",
+        "cutscene": {
+            "id": "event_rift_dragon_ascension_intro",
+            "title": "Rift Dragon Ascension",
+            "video": "intro",
+            "text": "Uralte Drachenfragmente sammeln sich ueber den Wasserpfaden und rufen starke Waechter."
+        },
+        "points": [
+            {
+                "id": "event_rift_dragon_docks",
+                "title": "Drachenhafen",
+                "text": "Ein saisonaler Pfad mit Wasser, Nebel und aufsteigender Drachenenergie.",
+                "mapImage": "realm_country",
+                "mapTexture": "realm_country",
+                "node": {
+                    "x": 0.38,
+                    "y": 0.48
+                },
+                "cutscene": {
+                    "id": "event_rift_dragon_docks_cutscene",
+                    "title": "Drachenhafen",
+                    "video": "mondtor",
+                    "text": "Leuchtende Wellen tragen Splitter eines Rift-Drachen an Land."
+                },
+                "battles": [
+                    {
+                        "id": "event_rift_dragon_battle_1",
+                        "name": "Nebelruder",
+                        "description": "Shen sichert den ersten Wasserpfad.",
+                        "difficulty": 10,
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.58
+                        },
+                        "enemy": {
+                            "name": "Shen vom Nebelruder",
+                            "image": "preview_shen",
+                            "model": "shen",
+                            "texture": "shen_texture_original",
+                            "hp": 420,
+                            "attack": 34,
+                            "element": "Water"
+                        },
+                        "xpReward": 520,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1500
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 65
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_rift_dragon_battle_2",
+                        "name": "Drachenfragment Tanz",
+                        "description": "Sennara bindet die Fragmentenergie und verstaerkt die Route.",
+                        "difficulty": 12,
+                        "groundTexture": "ice",
+                        "skyboxTexture": "country",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.42
+                        },
+                        "enemy": {
+                            "name": "Sennara Fragmentweberin",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 560,
+                            "attack": 41,
+                            "element": "Light"
+                        },
+                        "xpReward": 760,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2200
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 110
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_rift_dragon_battle_3",
+                        "name": "Ancient Rift Dragon",
+                        "description": "Ein uralter Rift-Drache materialisiert sich ueber dem Hafen.",
+                        "difficulty": 15,
+                        "groundTexture": "sar_bg",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.80,
+                            "y": 0.50
+                        },
+                        "enemies": [
+                            {
+                                "name": "Shen Drachenwaechter",
+                                "image": "preview_shen",
+                                "model": "shen",
+                                "texture": "shen_texture_original",
+                                "hp": 500,
+                                "attack": 38,
+                                "element": "Storm"
+                            }
+                        ],
+                        "boss": {
+                            "name": "Ancient Rift Dragon",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 860,
+                            "attack": 55,
+                            "element": "Dark"
+                        },
+                        "xpReward": 1200,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3600
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 180
+                            }
+                        ],
+                        "story": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_celestial_reset",
+        "title": "Event: Celestial Reset",
+        "subtitle": "Ein himmlischer Neubeginn mit Bonus-Routen",
+        "minAscendedLevel": 3,
+        "mapTexture": "map2",
+        "cutscene": {
+            "id": "event_celestial_reset_intro",
+            "title": "Celestial Reset",
+            "video": "intro",
+            "text": "Der Himmel richtet sich neu aus und entlaedt eine seltene Reset-Energie."
+        },
+        "points": [
+            {
+                "id": "event_celestial_reset_gate",
+                "title": "Sternentor",
+                "text": "Ein Event fuer Neustart-Boni, Summon-Energie und breite Ressourcenpakete.",
+                "mapImage": "map2",
+                "mapTexture": "map2",
+                "node": {
+                    "x": 0.44,
+                    "y": 0.40
+                },
+                "cutscene": null,
+                "battles": [
+                    {
+                        "id": "event_celestial_reset_battle_1",
+                        "name": "Reset Echo",
+                        "description": "Die erste Welle der himmlischen Ruecksetzung.",
+                        "difficulty": 9,
+                        "groundTexture": "map2",
+                        "skyboxTexture": "map2",
+                        "node": {
+                            "x": 0.22,
+                            "y": 0.54
+                        },
+                        "enemy": {
+                            "name": "Shen des Sternentors",
+                            "image": "preview_shen",
+                            "model": "shen",
+                            "texture": "shen_texture_original",
+                            "hp": 380,
+                            "attack": 31,
+                            "element": "Light"
+                        },
+                        "xpReward": 540,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1300
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 80
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_celestial_reset_battle_2",
+                        "name": "Sternenprotokoll",
+                        "description": "Sennara oeffnet die zweite Schicht der Himmelsroute.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.52,
+                            "y": 0.38
+                        },
+                        "enemy": {
+                            "name": "Sennara des Protokolls",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 520,
+                            "attack": 39,
+                            "element": "Void"
+                        },
+                        "xpReward": 780,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1900
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 120
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_celestial_reset_battle_3",
+                        "name": "Celestial Crown",
+                        "description": "Bosskampf mit besonders wertigem Gesamtloot.",
+                        "difficulty": 14,
+                        "groundTexture": "sar_bg",
+                        "skyboxTexture": "void",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.46
+                        },
+                        "boss": {
+                            "name": "Crown of the Reset",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 780,
+                            "attack": 52,
+                            "element": "Light"
+                        },
+                        "xpReward": 1180,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3400
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 210
+                            }
+                        ],
+                        "story": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_lunar_rift_eclipse",
+        "title": "Event: Lunar Rift Eclipse",
+        "subtitle": "Nacht-Map mit Schattenloot und verdichteter Rift-Energie",
+        "minAscendedLevel": 5,
+        "mapTexture": "void",
+        "cutscene": {
+            "id": "event_lunar_rift_eclipse_intro",
+            "title": "Lunar Rift Eclipse",
+            "video": "mondtor",
+            "text": "Eine dunkle Mondphase legt sich ueber die Route und macht Rift-Beute wertvoller."
+        },
+        "points": [
+            {
+                "id": "event_lunar_rift_eclipse_shore",
+                "title": "Eclipse Ufer",
+                "text": "Schattenfeinde, dichter Nebel und seltenere Crystal-Ausbeute praegen dieses Event.",
+                "mapImage": "void",
+                "mapTexture": "void",
+                "node": {
+                    "x": 0.40,
+                    "y": 0.52
+                },
+                "cutscene": null,
+                "battles": [
+                    {
+                        "id": "event_lunar_rift_eclipse_battle_1",
+                        "name": "Mondwacht",
+                        "description": "Shen blockiert den Pfad unter der Eclipse.",
+                        "difficulty": 11,
+                        "groundTexture": "void",
+                        "skyboxTexture": "ice",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.58
+                        },
+                        "enemy": {
+                            "name": "Shen der Mondwacht",
+                            "image": "preview_shen",
+                            "model": "shen",
+                            "texture": "shen_texture_original",
+                            "hp": 460,
+                            "attack": 36,
+                            "element": "Dark"
+                        },
+                        "xpReward": 640,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1400
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 95
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_lunar_rift_eclipse_battle_2",
+                        "name": "Schattenspindel",
+                        "description": "Sennara zieht die Mondenergie in die Rift-Fasern.",
+                        "difficulty": 13,
+                        "groundTexture": "ice",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.42
+                        },
+                        "enemy": {
+                            "name": "Sennara der Eclipse",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 620,
+                            "attack": 45,
+                            "element": "Dark"
+                        },
+                        "xpReward": 900,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2100
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 145
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_lunar_rift_eclipse_battle_3",
+                        "name": "Eclipse Heart",
+                        "description": "Das Herz der Finsternis konzentriert sich im letzten Kampf.",
+                        "difficulty": 16,
+                        "groundTexture": "sar_bg",
+                        "skyboxTexture": "sar_bg",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.48
+                        },
+                        "boss": {
+                            "name": "Heart of the Eclipse",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 940,
+                            "attack": 58,
+                            "element": "Void"
+                        },
+                        "xpReward": 1320,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3900
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 240
+                            }
+                        ],
+                        "story": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_flame_rift_surge",
+        "title": "Event: Flame Rift Surge",
+        "subtitle": "Heisse Front mit Fire-Buffs und schnellen Kampfketten",
+        "minAscendedLevel": 4,
+        "mapTexture": "fire",
+        "cutscene": {
+            "id": "event_flame_rift_surge_intro",
+            "title": "Flame Rift Surge",
+            "video": "rissbestie",
+            "text": "Eine Feuerwelle durchschneidet die Rift-Linien und macht die Kaempfe aggressiver."
+        },
+        "points": [
+            {
+                "id": "event_flame_rift_surge_core",
+                "title": "Glutkern",
+                "text": "Eine schnelle, heiße Event-Route mit kompakten Kämpfen und starken Ressourcen.",
+                "mapImage": "fire",
+                "mapTexture": "fire",
+                "node": {
+                    "x": 0.42,
+                    "y": 0.46
+                },
+                "cutscene": null,
+                "battles": [
+                    {
+                        "id": "event_flame_rift_surge_battle_1",
+                        "name": "Aschenlauf",
+                        "description": "Shen jagt durch die erste Glutlinie.",
+                        "difficulty": 10,
+                        "groundTexture": "fire",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.20,
+                            "y": 0.56
+                        },
+                        "enemy": {
+                            "name": "Shen der Aschenklinge",
+                            "image": "preview_shen",
+                            "model": "shen",
+                            "texture": "shen_texture_original",
+                            "hp": 430,
+                            "attack": 37,
+                            "element": "Fire"
+                        },
+                        "xpReward": 600,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1550
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 70
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_flame_rift_surge_battle_2",
+                        "name": "Glutweberin",
+                        "description": "Sennara zieht Flammenadern durch das Schlachtfeld.",
+                        "difficulty": 12,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.40
+                        },
+                        "enemy": {
+                            "name": "Sennara der Flammenader",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 590,
+                            "attack": 43,
+                            "element": "Fire"
+                        },
+                        "xpReward": 860,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2250
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 120
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_flame_rift_surge_battle_3",
+                        "name": "Surge Core",
+                        "description": "Der Flammenkern explodiert im finalen Bosskampf.",
+                        "difficulty": 15,
+                        "groundTexture": "sar_bg",
+                        "skyboxTexture": "fire",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.50
+                        },
+                        "boss": {
+                            "name": "Surge Core Titan",
+                            "image": "preview_sennara",
+                            "model": "sennara",
+                            "texture": "sennara_texture_original",
+                            "hp": 900,
+                            "attack": 57,
+                            "element": "Fire"
+                        },
+                        "xpReward": 1280,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3700
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 210
+                            }
+                        ],
+                        "story": []
+                    }
+                ]
+            }
+        ]
     }
 ]

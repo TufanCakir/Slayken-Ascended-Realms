@@ -13,6 +13,7 @@ struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var theme: ThemeManager
     @EnvironmentObject var gameState: GameState
+    @EnvironmentObject var musicManager: MusicManager
 
     @Query private var currencyBalances: [PlayerCurrencyBalance]
     @Query private var ownedCharacters: [OwnedSummonCharacter]
@@ -37,6 +38,7 @@ struct SettingsView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 16) {
+                    audioPanel
                     resetPanel
                     dataPanel
                 }
@@ -142,6 +144,74 @@ struct SettingsView: View {
                     .foregroundStyle(.white)
             }
             .buttonStyle(.plain)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity)
+        .background(
+            .white.opacity(0.07),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(.white.opacity(0.12))
+        )
+    }
+
+    var audioPanel: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Label("Music", systemImage: "music.note")
+                .font(.system(size: 18, weight: .black))
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            HStack(spacing: 12) {
+                Text(musicManager.isEnabled ? "Aktiv" : "Aus")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(.white.opacity(0.72))
+
+                Spacer()
+
+                Button {
+                    musicManager.toggleEnabled()
+                } label: {
+                    Text(musicManager.isEnabled ? "MUSIK AUS" : "MUSIK AN")
+                        .font(.system(size: 12, weight: .black))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(
+                            musicManager.isEnabled
+                                ? Color.red.opacity(0.85)
+                                : Color.green.opacity(0.85),
+                            in: RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        )
+                        .foregroundStyle(.white)
+                }
+                .buttonStyle(.plain)
+            }
+
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Text("Lautstaerke")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.72))
+
+                    Spacer()
+
+                    Text("\(Int(musicManager.volume * 100))%")
+                        .font(.system(size: 13, weight: .black))
+                        .foregroundStyle(.white)
+                }
+
+                Slider(
+                    value: Binding(
+                        get: { musicManager.volume },
+                        set: { musicManager.setVolume($0) }
+                    ),
+                    in: 0...1
+                )
+                .tint(.cyan)
+                .disabled(!musicManager.isEnabled)
+            }
         }
         .padding(16)
         .frame(maxWidth: .infinity)

@@ -1,0 +1,12 @@
+[
+    {
+        "id": "music_track_1",
+        "title": "Main Theme 1",
+        "fileName": "music1.mp3"
+    },
+    {
+        "id": "music_track_2",
+        "title": "Main Theme 2",
+        "fileName": "music2.mp3"
+    }
+]

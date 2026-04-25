@@ -5,7 +5,7 @@
         "subtitle":
             "Kostenloses Release Banner. Einmal nutzbar, garantiert ein 5-Star Skill.",
         "category": "Special",
-        "image": "void",
+        "image": "bg_void",
         "cost": [],
         "maxSummons": 1,
         "guarantee": {
@@ -35,7 +35,7 @@
         "name": "Chapter Heroes",
         "subtitle": "Standard Character Banner mit Zaron und Shela.",
         "category": "Character",
-        "image": "map",
+        "image": "realm_country",
         "cost": [
             {
                 "currency": "crystals",
@@ -62,7 +62,11 @@
                 "weight": 75
             },
             {
-                "characterID": "sinara",
+                "characterID": "shen",
+                "weight": 100
+            },
+            {
+                "characterID": "lafiya",
                 "weight": 95
             }
         ]
@@ -73,7 +77,7 @@
         "subtitle":
             "Event Banner. Beim 10. Summon ist ein 5-Star Character garantiert.",
         "category": "Event",
-        "image": "sar_bg",
+        "image": "bg_sar",
         "cost": [
             {
                 "currency": "crystals",
@@ -104,6 +108,14 @@
             {
                 "characterID": "shela",
                 "weight": 80
+            },
+            {
+                "characterID": "shen",
+                "weight": 100
+            },
+            {
+                "characterID": "lafiya",
+                "weight": 95
             }
         ]
     },
@@ -112,7 +124,7 @@
         "name": "1-Star Skill Banner",
         "subtitle": "Gueltiges Einsteiger-Banner fuer 1-Star Skills.",
         "category": "Skill",
-        "image": "fire",
+        "image": "realm_fire",
         "cost": [
             {
                 "currency": "coins",
@@ -137,7 +149,7 @@
         "name": "2-Star Skill Banner",
         "subtitle": "Gezieltes Banner fuer 2-Star Skills.",
         "category": "Skill",
-        "image": "ice",
+        "image": "realm_ice",
         "cost": [
             {
                 "currency": "coins",
@@ -162,7 +174,7 @@
         "name": "3-Star Skill Banner",
         "subtitle": "Gezieltes Banner fuer 3-Star Skills.",
         "category": "Skill",
-        "image": "country",
+        "image": "bg_country",
         "cost": [
             {
                 "currency": "coins",
@@ -212,7 +224,7 @@
         "name": "5-Star Skill Banner",
         "subtitle": "Max-Star Skill Banner mit hoeheren Kosten.",
         "category": "Skill",
-        "image": "void",
+        "image": "bg_void",
         "cost": [
             {
                 "currency": "crystals",
@@ -241,7 +253,7 @@
         "name": "Mixed Rift Skills",
         "subtitle": "Gemischtes Skill Banner mit allen Sterne-Stufen.",
         "category": "Skill",
-        "image": "fire",
+        "image": "realm_fire",
         "cost": [
             {
                 "currency": "coins",

@@ -149,3 +149,14 @@ final class PlayerDailyLoginProgress {
         self.totalClaims = totalClaims
     }
 }
+
+@Model
+final class PlayerClaimedGift {
+    @Attribute(.unique) var giftID: String
+    var claimedAt: Date
+
+    init(giftID: String, claimedAt: Date = .now) {
+        self.giftID = giftID
+        self.claimedAt = claimedAt
+    }
+}

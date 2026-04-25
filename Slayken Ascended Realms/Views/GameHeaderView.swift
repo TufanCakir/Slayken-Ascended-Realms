@@ -9,19 +9,24 @@ import SwiftUI
 
 struct GameHeaderView: View {
     let currencies: [CurrencyDefinition]
+    let ascendedLevel: Int
 
     @State private var isExpanded = true
 
     init(
         currencies: [CurrencyDefinition] = [],
+        ascendedLevel: Int = 1,
         onNews: @escaping () -> Void = {}
     ) {
         self.currencies = currencies
+        self.ascendedLevel = ascendedLevel
     }
 
     var body: some View {
         HStack(spacing: 8) {
-            Spacer(minLength: 0)
+            ascendedBadge
+
+            Spacer(minLength: 12)
 
             CurrencyBarView(currencies: currencies, compact: true)
                 .frame(
@@ -55,6 +60,30 @@ struct GameHeaderView: View {
         .animation(
             .spring(response: 0.34, dampingFraction: 0.84),
             value: isExpanded
+        )
+    }
+
+    private var ascendedBadge: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "sparkles")
+                .font(.system(size: 14, weight: .black))
+                .foregroundStyle(.yellow)
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text("ASCENDED")
+                    .font(.system(size: 9, weight: .black))
+                    .foregroundStyle(.white.opacity(0.66))
+                Text("Lv. \(ascendedLevel)")
+                    .font(.system(size: 14, weight: .black))
+                    .foregroundStyle(.white)
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color.black.opacity(0.42), in: Capsule())
+        .overlay(
+            Capsule()
+                .stroke(.white.opacity(0.12), lineWidth: 1)
         )
     }
 

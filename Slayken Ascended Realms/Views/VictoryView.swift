@@ -17,8 +17,11 @@ struct VictoryView: View {
     let currencies: [CurrencyDefinition]
     let rewards: [CurrencyAmount]
     let xpReward: Int
+    let ascendedXPReward: Int
     let levelBefore: Int
     let levelAfter: Int
+    let ascendedLevelBefore: Int
+    let ascendedLevelAfter: Int
     let defeatedEnemies: Int
 
     var onContinue: () -> Void
@@ -30,6 +33,7 @@ struct VictoryView: View {
             rewardRow
             Spacer()
             xpPanel
+            ascendedXPPanel
             Spacer()
 
             Text("VICTORY")
@@ -159,6 +163,55 @@ struct VictoryView: View {
         .foregroundStyle(.white)
     }
 
+    private var ascendedXPPanel: some View {
+        VStack(spacing: 8) {
+            HStack {
+                Image(systemName: "star.circle.fill")
+                    .font(.system(size: 15, weight: .black))
+                    .foregroundStyle(.yellow)
+
+                Text("Ascended XP +\(ascendedXPReward)")
+                    .font(.system(size: 15, weight: .black))
+
+                Spacer()
+
+                Text(
+                    ascendedLevelAfter > ascendedLevelBefore
+                        ? "Asc. Lv.\(ascendedLevelBefore) -> Lv.\(ascendedLevelAfter)"
+                        : "Asc. Lv.\(ascendedLevelAfter)"
+                )
+                .font(.system(size: 13, weight: .black))
+                .foregroundStyle(
+                    ascendedLevelAfter > ascendedLevelBefore
+                        ? .green : .white.opacity(0.82)
+                )
+            }
+
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(Color.white.opacity(0.12))
+                    Capsule()
+                        .fill(
+                            LinearGradient(
+                                colors: [.white, .yellow],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .frame(width: geo.size.width * 0.72)
+                }
+            }
+            .frame(height: 8)
+        }
+        .padding(12)
+        .background(
+            Color.black.opacity(0.45),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
+        .foregroundStyle(.white)
+    }
+
     private func rewardItem(currency: CurrencyDefinition, amount: Int)
         -> some View
     {
@@ -199,8 +252,11 @@ struct VictoryView: View {
             CurrencyAmount(currency: "crystals", amount: 5),
         ],
         xpReward: 140,
+        ascendedXPReward: 140,
         levelBefore: 1,
         levelAfter: 2,
+        ascendedLevelBefore: 1,
+        ascendedLevelAfter: 2,
         defeatedEnemies: 3,
         onContinue: {}
     )

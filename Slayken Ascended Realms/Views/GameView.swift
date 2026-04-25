@@ -548,7 +548,7 @@ struct GameView: View {
             for: gameState.currencies,
             in: modelContext
         )
-        PlayerInventoryStore.claimGiftBox(gift, in: modelContext)
+        _ = PlayerInventoryStore.claimGiftBox(gift, in: modelContext)
     }
 }
 

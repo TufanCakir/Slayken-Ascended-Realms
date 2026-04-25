@@ -92,9 +92,10 @@ private func loadCharacters(named resourceName: String) -> [CharacterStats] {
 
 private func defaultPlayer() -> CharacterStats {
     CharacterStats(
-        name: "Warrior",
-        image: "",
-        model: "warriorin",
+        name: "Shen",
+        image: "preview_shen",
+        model: "shen",
+        texture: "shen_texture_original",
         hp: 100,
         attack: 10
     )

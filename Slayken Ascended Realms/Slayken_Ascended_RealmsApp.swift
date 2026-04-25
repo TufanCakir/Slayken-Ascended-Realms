@@ -37,6 +37,7 @@ struct Slayken_Ascended_RealmsApp: App {
             SeenCutsceneRecord.self,
             SummonBannerProgress.self,
             PlayerDailyLoginProgress.self,
+            PlayerClaimedGift.self,
         ])
     }
 }

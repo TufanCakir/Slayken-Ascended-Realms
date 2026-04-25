@@ -44,8 +44,11 @@ struct BattleView: View {
     @State private var currentParticleEffect: String?
     @State private var playerMana: Double = 60
     @State private var awardedXP = 0
+    @State private var awardedAscendedXP = 0
     @State private var levelBeforeVictory = 1
     @State private var levelAfterVictory = 1
+    @State private var ascendedLevelBeforeVictory = 1
+    @State private var ascendedLevelAfterVictory = 1
     @State private var autoTask: Task<Void, Never>?
     @State private var manaRegenTask: Task<Void, Never>?
     @State private var inspectedCard: AbilityCardDefinition?
@@ -171,8 +174,11 @@ struct BattleView: View {
                     currencies: loadCurrencyDefinitions(),
                     rewards: gameState.activeBattleRewards,
                     xpReward: awardedXP,
+                    ascendedXPReward: awardedAscendedXP,
                     levelBefore: levelBeforeVictory,
                     levelAfter: levelAfterVictory,
+                    ascendedLevelBefore: ascendedLevelBeforeVictory,
+                    ascendedLevelAfter: ascendedLevelAfterVictory,
                     defeatedEnemies: battleEnemies.count,
                     onContinue: {
                         onExit()
@@ -1040,6 +1046,11 @@ struct BattleView: View {
         didAwardRewards = true
         levelBeforeVictory = playerLevel
         awardedXP = battleXPReward
+        let accountProgressBefore = PlayerInventoryStore.accountProgress(
+            in: modelContext
+        )
+        ascendedLevelBeforeVictory = accountProgressBefore.level
+        awardedAscendedXP = awardedXP
 
         PlayerInventoryStore.add(
             gameState.activeBattleRewards,
@@ -1050,8 +1061,12 @@ struct BattleView: View {
             to: player.model,
             in: modelContext
         )
-        _ = PlayerInventoryStore.addAccountXP(awardedXP, in: modelContext)
+        let accountProgressAfter = PlayerInventoryStore.addAccountXP(
+            awardedAscendedXP,
+            in: modelContext
+        )
         levelAfterVictory = progress.level
+        ascendedLevelAfterVictory = accountProgressAfter.level
 
         if let battleID = gameState.selectedBattle?.id {
             PlayerInventoryStore.markBattleCompleted(battleID, in: modelContext)

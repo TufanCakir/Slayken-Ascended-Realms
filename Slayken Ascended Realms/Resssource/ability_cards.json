@@ -2,7 +2,7 @@
     {
         "id": "slash_red",
         "name": "Rift Slash",
-        "image": "fire",
+        "image": "bg_fire",
         "element": "Fire",
         "rarity": 1,
         "damageMultiplier": 1.18,
@@ -18,7 +18,7 @@
     {
         "id": "crystal_blue",
         "name": "Crystal Burst",
-        "image": "ice",
+        "image": "bg_ice",
         "element": "Ice",
         "rarity": 2,
         "damageMultiplier": 1.14,
@@ -34,7 +34,7 @@
     {
         "id": "void_pulse",
         "name": "Void Pulse",
-        "image": "void",
+        "image": "bg_void",
         "element": "Void",
         "rarity": 5,
         "damageMultiplier": 1.22,
@@ -50,7 +50,7 @@
     {
         "id": "moon_guard",
         "name": "Moon Guard",
-        "image": "country",
+        "image": "bg_country",
         "element": "Light",
         "rarity": 3,
         "damageMultiplier": 1.08,

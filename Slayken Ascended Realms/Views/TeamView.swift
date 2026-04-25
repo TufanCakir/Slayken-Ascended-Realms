@@ -290,7 +290,7 @@ struct TeamView: View {
         if let imageName, UIImage(named: imageName) != nil {
             Image(imageName)
                 .resizable()
-                .scaledToFill()
+                .scaledToFit()
         } else {
             ZStack {
                 LinearGradient(

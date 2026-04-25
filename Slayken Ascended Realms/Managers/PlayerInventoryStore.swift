@@ -224,8 +224,22 @@ enum PlayerInventoryStore {
     static func claimGiftBox(
         _ gift: GiftBoxDefinition,
         in context: ModelContext
-    ) {
+    ) -> Bool {
+        guard !isGiftClaimed(gift.id, in: context) else { return false }
         add(gift.rewards, in: context)
+        for characterReward in gift.characterRewards {
+            addOwned(characterID: characterReward.characterID, in: context)
+        }
+        context.insert(PlayerClaimedGift(giftID: gift.id))
+        save(context)
+        return true
+    }
+
+    static func isGiftClaimed(_ giftID: String, in context: ModelContext) -> Bool {
+        let descriptor = FetchDescriptor<PlayerClaimedGift>(
+            predicate: #Predicate { $0.giftID == giftID }
+        )
+        return ((try? context.fetchCount(descriptor)) ?? 0) > 0
     }
 
     static func dailyLoginGift(

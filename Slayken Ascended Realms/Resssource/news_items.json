@@ -5,7 +5,7 @@
         "title": "Neue Systeme fuer Geschenke, Daily Login und Event-Farmen",
         "subtitle":
             "Giftboxen, 30 Tage Daily Login und neue Farm-Events sind jetzt im Projekt angelegt.",
-        "image": "news_project_update",
+        "image": "bg_epic",
         "date": "2026-04-20",
         "tags": [
             "Giftbox",
@@ -22,7 +22,7 @@
         "title": "Shen und Sennara sind im Projekt angekommen",
         "subtitle":
             "Beide Charaktere werden jetzt bereits in neuen Event-Inhalten eingesetzt.",
-        "image": "news_new_characters",
+        "image": "bg_sar",
         "date": "2026-04-20",
         "tags": [
             "Shen",
@@ -39,7 +39,7 @@
         "title": "Event Map, Nodes und Battle-Routen wurden erweitert",
         "subtitle":
             "Point-Nodes und Battle-Nodes koennen jetzt sauber ueber JSON und Projektbilder gesteuert werden.",
-        "image": "news_event_map",
+        "image": "realm_country",
         "date": "2026-04-20",
         "tags": [
             "Globe Event",
@@ -56,7 +56,7 @@
         "title": "Coin Farm, XP Farm und Crystal Farm vorbereitet",
         "subtitle":
             "Drei Event-Linien geben dir unterschiedliche Farm-Schwerpunkte.",
-        "image": "news_farm_events",
+        "image": "realm_fire",
         "date": "2026-04-20",
         "tags": [
             "Coin Farm",
@@ -73,7 +73,7 @@
         "title": "Neue saisonale Rift-Events erweitern die Event-Map",
         "subtitle":
             "Mehrere neue Event-Kapitel bringen eigene Stimmung, Bosse und staerkere Rewards.",
-        "image": "news_seasonal_events",
+        "image": "realm_moon_gate",
         "date": "2026-04-20",
         "tags": [
             "Rift Dragon Ascension",
@@ -90,7 +90,7 @@
         "title": "Events geben jetzt deutlich staerkere Ressourcen",
         "subtitle":
             "Mehr Coins, mehr Crystals und hoehere XP-Werte machen Events wertvoller.",
-        "image": "news_reward_boost",
+        "image": "bg_void",
         "date": "2026-04-20",
         "tags": [
             "Rewards",
@@ -107,7 +107,7 @@
         "title": "Shen und Sennara praegen die neuen Event-Bosse",
         "subtitle":
             "Die beiden neueren Charaktere tauchen jetzt in mehreren Event-Routen als Waechter und Boss-Gegner auf.",
-        "image": "news_shen_sennara_events",
+        "image": "bg_ice",
         "date": "2026-04-20",
         "tags": [
             "Shen",
@@ -125,7 +125,7 @@
             "Mehr Charaktere, mehr Events, mehr Maps und mehr Story sind geplant",
         "subtitle":
             "Der aktuelle Stand ist nur der Anfang fuer den groesseren Content-Ausbau.",
-        "image": "news_roadmap",
+        "image": "realm_void",
         "date": "2026-04-20",
         "tags": [
             "Roadmap",

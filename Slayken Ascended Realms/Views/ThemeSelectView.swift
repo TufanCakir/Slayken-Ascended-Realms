@@ -15,17 +15,19 @@ struct ThemeSelectView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // 🌑 BACKGROUND (aktuelles Theme)
                 if let current = theme.selectedTheme {
+                    Image(current.background)
+                        .resizable()
+                        .scaledToFill()
+                        .ignoresSafeArea()
 
                     LinearGradient(
                         colors: [
-                            current.primary.color,
-                            current.secondary.color,
-                            current.accent.color,
+                            Color.black.opacity(0.18),
+                            Color.black.opacity(0.58),
                         ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
+                        startPoint: .top,
+                        endPoint: .bottom
                     )
                     .ignoresSafeArea()
                 }
@@ -33,34 +35,24 @@ struct ThemeSelectView: View {
                 ScrollView {
                     LazyVGrid(
                         columns: [
-                            GridItem(.flexible()),
-                            GridItem(.flexible()),
-                        ]
+                            GridItem(.flexible(), spacing: 10),
+                            GridItem(.flexible(), spacing: 10),
+                        ],
+                        spacing: 10
                     ) {
                         ForEach(theme.themes) { item in
                             Button {
                                 theme.select(item)
                                 onClose()
                             } label: {
-
                                 ZStack(alignment: .bottomLeading) {
+                                    Image(item.background)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .clipShape(
+                                            RoundedRectangle(cornerRadius: 18)
+                                        )
 
-                                    // 🎨 THEME PREVIEW
-                                    LinearGradient(
-                                        colors: [
-                                            item.primary.color,
-                                            item.secondary.color,
-                                            item.accent.color,
-                                        ],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                    .frame(height: 120)
-                                    .clipShape(
-                                        RoundedRectangle(cornerRadius: 18)
-                                    )
-
-                                    // 🌘 DARK OVERLAY
                                     LinearGradient(
                                         colors: [.clear, .black.opacity(0.8)],
                                         startPoint: .top,
@@ -74,7 +66,7 @@ struct ThemeSelectView: View {
                                     Text(item.name)
                                         .font(.system(size: 14, weight: .bold))
                                         .foregroundStyle(.white)
-                                        .padding(8)
+                                        .padding()
                                 }
                                 .overlay {
                                     if theme.selectedTheme?.id == item.id {
@@ -104,6 +96,7 @@ struct ThemeSelectView: View {
                         }
                     }
                     .padding()
+                    .padding(.horizontal, 50)
                 }
             }
         }

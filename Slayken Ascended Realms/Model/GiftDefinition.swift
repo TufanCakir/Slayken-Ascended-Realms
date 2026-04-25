@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct GiftCharacterReward: Codable, Identifiable, Equatable {
+    let characterID: String
+
+    var id: String { characterID }
+}
+
 struct GiftBoxDefinition: Codable, Identifiable, Equatable {
     let id: String
     let title: String
@@ -15,6 +21,7 @@ struct GiftBoxDefinition: Codable, Identifiable, Equatable {
     let buttonTitle: String
     let icon: String
     let rewards: [CurrencyAmount]
+    let characterRewards: [GiftCharacterReward]
 }
 
 struct DailyLoginRewardDefinition: Codable, Identifiable, Equatable {

@@ -5,11 +5,14 @@
 //  Created by Tufan Cakir on 10.04.26.
 //
 
+import SwiftData
 import SwiftUI
 
 struct GiftView: View {
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
+    @Query(sort: \PlayerClaimedGift.claimedAt) private var claimedGifts:
+        [PlayerClaimedGift]
 
     let gifts: [GiftBoxDefinition]
     let onClaim: (GiftBoxDefinition) -> Void
@@ -17,6 +20,10 @@ struct GiftView: View {
 
     private var activeTheme: GameTheme? {
         theme.selectedTheme ?? theme.themes.first
+    }
+
+    private var claimedGiftIDs: Set<String> {
+        Set(claimedGifts.map(\.giftID))
     }
 
     var body: some View {
@@ -78,7 +85,9 @@ struct GiftView: View {
     }
 
     private func giftCard(_ gift: GiftBoxDefinition) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
+        let isClaimed = claimedGiftIDs.contains(gift.id)
+
+        return VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(gift.title)
@@ -107,12 +116,15 @@ struct GiftView: View {
                 ForEach(gift.rewards) { reward in
                     rewardRow(reward)
                 }
+                ForEach(gift.characterRewards) { reward in
+                    characterRewardRow(reward)
+                }
             }
 
             Button {
                 onClaim(gift)
             } label: {
-                Text(gift.buttonTitle)
+                Text(isClaimed ? "Bereits abgeholt" : gift.buttonTitle)
                     .font(.system(size: 15, weight: .black, design: .rounded))
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
@@ -123,9 +135,11 @@ struct GiftView: View {
                             style: .continuous
                         )
                     )
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.white.opacity(isClaimed ? 0.72 : 1))
             }
             .buttonStyle(.plain)
+            .disabled(isClaimed)
+            .opacity(isClaimed ? 0.65 : 1)
         }
         .padding(18)
         .background(
@@ -155,6 +169,46 @@ struct GiftView: View {
             Text("+\(reward.amount)")
                 .font(.system(size: 14, weight: .black, design: .rounded))
                 .foregroundStyle(.white.opacity(0.88))
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
+        .background(
+            Color.white.opacity(0.06),
+            in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+        )
+    }
+
+    private func characterRewardRow(_ reward: GiftCharacterReward) -> some View {
+        let character = gameState.summonCharacters.first {
+            $0.id == reward.characterID
+        }
+
+        return HStack {
+            Group {
+                if let summonImage = character?.summonImage {
+                    Image(summonImage)
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .padding(4)
+                        .foregroundStyle(accentColor)
+                }
+            }
+            .frame(width: 24, height: 24)
+            .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+
+            Text(character?.name ?? reward.characterID.capitalized)
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .foregroundStyle(.white)
+
+            Spacer()
+
+            Text("Charakter")
+                .font(.system(size: 13, weight: .black, design: .rounded))
+                .foregroundStyle(accentColor)
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)

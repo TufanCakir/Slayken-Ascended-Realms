@@ -2,7 +2,7 @@
     {
         "id": 1,
         "name": "SAR",
-        "mapImage": "sar_bg",
+        "mapImage": "bg_sar",
         "difficulty": 1,
         "enemy": {
             "name": "Dragon",
@@ -48,7 +48,7 @@
     {
         "id": 3,
         "name": "Kingdom",
-        "mapImage": "country",
+        "mapImage": "bg_country",
         "difficulty": 2,
         "enemy": {
             "name": "Dragon",
@@ -67,7 +67,7 @@
     {
         "id": 4,
         "name": "Ice Realm",
-        "mapImage": "ice",
+        "mapImage": "bg_ice",
         "difficulty": 3,
         "enemy": {
             "name": "Dragon",
@@ -90,7 +90,7 @@
     {
         "id": 5,
         "name": "Fire Lands",
-        "mapImage": "fire",
+        "mapImage": "bg_fire",
         "difficulty": 4,
         "enemy": {
             "name": "Dragon",
@@ -113,7 +113,7 @@
     {
         "id": 6,
         "name": "Void",
-        "mapImage": "void",
+        "mapImage": "bg_void",
         "difficulty": 5,
         "enemy": {
             "name": "Dragon",

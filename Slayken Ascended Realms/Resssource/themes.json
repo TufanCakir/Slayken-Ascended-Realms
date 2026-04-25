@@ -2,7 +2,7 @@
     {
         "id": 1,
         "name": "Ice",
-        "background": "bg_epic",
+        "background": "theme_epic",
         "primary": {
             "r": 0.7,
             "g": 0.9,
@@ -31,7 +31,7 @@
     {
         "id": 2,
         "name": "Fire",
-        "background": "bg_epic",
+        "background": "theme_fire",
         "primary": {
             "r": 1.0,
             "g": 0.5,

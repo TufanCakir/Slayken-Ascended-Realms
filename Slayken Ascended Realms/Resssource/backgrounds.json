@@ -2,27 +2,27 @@
     {
         "id": 1,
         "name": "SAR BG",
-        "image": "sar_bg"
+        "image": "bg_sar"
     },
     {
         "id": 2,
         "name": "Fire BG",
-        "image": "country"
+        "image": "bg_country"
     },
     {
         "id": 3,
         "name": "Ice BG",
-        "image": "ice"
+        "image": "bg_ice"
     },
     {
         "id": 4,
         "name": "Fire BG",
-        "image": "fire"
+        "image": "bg_fire"
     },
     {
         "id": 5,
         "name": "Void BG",
-        "image": "void"
+        "image": "bg_void"
     },
     {
         "id": 6,
@@ -34,4 +34,59 @@
         "name": "Arena BG",
         "image": "bg_arena"
     },
+    {
+        "id": 8,
+        "name": "EPIC THEME",
+        "image": "theme_epic"
+    },
+    {
+        "id": 9,
+        "name": "COUNTRY REALM",
+        "image": "realm_country"
+    },
+    {
+        "id": 10,
+        "name": "FIRE REALM",
+        "image": "realm_fire"
+    },
+    {
+        "id": 11,
+        "name": "ICE REALM",
+        "image": "realm_ice"
+    },
+    {
+        "id": 12,
+        "name": "VOID REALM",
+        "image": "realm_void"
+    },
+    {
+        "id": 13,
+        "name": "MOONGATE REALM",
+        "image": "realm_moon_gate"
+    },
+    {
+        "id": 14,
+        "name": "DRAGON FESTIVAL",
+        "image": "festival_dragon"
+    },
+    {
+        "id": 15,
+        "name": "MOON FESTIVAL",
+        "image": "festival_moon"
+    },
+    {
+        "id": 16,
+        "name": "NEWYEAR FESTIVAL",
+        "image": "festival_new_year"
+    },
+    {
+        "id": 17,
+        "name": "SUMMER FESTIVAL",
+        "image": "festival_sommer"
+    },
+    {
+        "id": 18,
+        "name": "FIRE THEME",
+        "image": "theme_fire"
+    }
 ]

@@ -16,6 +16,11 @@
                 "currency": "crystals",
                 "amount": 120
             }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "shela"
+            }
         ]
     },
     {
@@ -35,7 +40,8 @@
                 "currency": "crystals",
                 "amount": 220
             }
-        ]
+        ],
+        "characterRewards": []
     },
     {
         "id": "giftbox_battle",
@@ -54,7 +60,8 @@
                 "currency": "crystals",
                 "amount": 150
             }
-        ]
+        ],
+        "characterRewards": []
     },
     {
         "id": "giftbox_crystal",
@@ -73,6 +80,11 @@
                 "currency": "crystals",
                 "amount": 350
             }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "lafiya"
+            }
         ]
     },
     {
@@ -90,6 +102,11 @@
             {
                 "currency": "crystals",
                 "amount": 700
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "zaron"
             }
         ]
     },
@@ -110,6 +127,7 @@
                 "currency": "crystals",
                 "amount": 280
             }
-        ]
+        ],
+        "characterRewards": []
     }
 ]

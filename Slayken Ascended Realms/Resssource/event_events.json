@@ -4,7 +4,7 @@
         "title": "Event: Schattenmond",
         "subtitle": "Eigenes Event mit eigenen Gegnern, Cutscenes und Story",
         "minAscendedLevel": 2,
-        "mapTexture": "sar_bg",
+        "mapTexture": "bg_sar",
         "cutscene": {
             "id": "event_shadow_moon_intro",
             "title": "Schattenmond erwacht",
@@ -18,8 +18,8 @@
                 "title": "Schattenpfad",
                 "text":
                     "Der Event-Pfad nutzt eigene Battles und kann komplett per JSON erweitert werden.",
-                "mapImage": "sar_bg",
-                "mapTexture": "sar_bg",
+                "mapImage": "bg_sar",
+                "mapTexture": "bg_sar",
                 "node": {
                     "x": 0.24,
                     "y": 0.58
@@ -36,8 +36,8 @@
                         "name": "Dunkle Vorhut",
                         "description": "Drei Gegner greifen nebeneinander an.",
                         "difficulty": 3,
-                        "groundTexture": "country",
-                        "skyboxTexture": "country",
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
                             "x": 0.20,
                             "y": 0.62
@@ -103,8 +103,8 @@
                         "name": "Mondkern Bestie",
                         "description": "Ein Event-Boss mit eigener Begleitung.",
                         "difficulty": 5,
-                        "groundTexture": "ice",
-                        "skyboxTexture": "ice",
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
                         "node": {
                             "x": 0.42,
                             "y": 0.48
@@ -171,8 +171,8 @@
                 "id": "event_shadow_moon_ruins",
                 "title": "Event Ruinen",
                 "text": "Ein zweiter Event-Punkt fuer weitere JSON-Battles.",
-                "mapImage": "sar_bg",
-                "mapTexture": "sar_bg",
+                "mapImage": "bg_sar",
+                "mapTexture": "bg_sar",
                 "node": {
                     "x": 0.58,
                     "y": 0.44
@@ -185,8 +185,8 @@
                         "description":
                             "Kurzer Event-Kampf mit zwei verschiedenen Elementen.",
                         "difficulty": 4,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "fire",
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
                             "x": 0.52,
                             "y": 0.52
@@ -232,7 +232,7 @@
         "title": "Event: Coin Farm",
         "subtitle": "Goldrausch fuer schnelle Muenzfarmen",
         "minAscendedLevel": 1,
-        "mapTexture": "country",
+        "mapTexture": "bg_country",
         "cutscene": {
             "id": "event_coin_harvest_intro",
             "title": "Goldrausch",
@@ -246,8 +246,8 @@
                 "title": "Schatzfeld",
                 "text":
                     "Farme hier Coins gegen immer staerkere Schatzwaechter.",
-                "mapImage": "country",
-                "mapTexture": "country",
+                "mapImage": "bg_country",
+                "mapTexture": "bg_country",
                 "node": {
                     "x": 0.34,
                     "y": 0.50
@@ -266,8 +266,8 @@
                         "description":
                             "Shen verteidigt die erste Reihe der Schatzkisten.",
                         "difficulty": 4,
-                        "groundTexture": "country",
-                        "skyboxTexture": "country",
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
                             "x": 0.18,
                             "y": 0.58
@@ -275,8 +275,8 @@
                         "enemy": {
                             "name": "Shen der Kassenwache",
                             "image": "preview_shen",
-                            "model": "shen",
-                            "texture": "shen_texture_original",
+                            "model": "krevas",
+                            "texture": null,
                             "hp": 180,
                             "attack": 18,
                             "element": "Earth"
@@ -298,7 +298,7 @@
                         "id": "event_coin_harvest_battle_2",
                         "name": "Truhensturm",
                         "description":
-                            "Sennara beschwoert einen Schwall aus Schatzenergie.",
+                            "Sinara beschwoert einen Schwall aus Schatzenergie.",
                         "difficulty": 6,
                         "groundTexture": "map",
                         "skyboxTexture": "map",
@@ -307,10 +307,10 @@
                             "y": 0.44
                         },
                         "enemy": {
-                            "name": "Sennara Goldweberin",
+                            "name": "Sinara Goldweberin",
                             "image": "preview_sennara",
-                            "model": "sennara",
-                            "texture": "sennara_texture_original",
+                            "model": "jirgin",
+                            "texture": null,
                             "hp": 260,
                             "attack": 24,
                             "element": "Light"
@@ -335,7 +335,7 @@
                             "Ein Bosskampf fuer maximale Coin-Ausbeute.",
                         "difficulty": 8,
                         "groundTexture": "bg_arena",
-                        "skyboxTexture": "fire",
+                        "skyboxTexture": "bg_arena",
                         "node": {
                             "x": 0.70,
                             "y": 0.52
@@ -344,18 +344,18 @@
                             {
                                 "name": "Shen Tresorwache",
                                 "image": "preview_shen",
-                                "model": "shen",
-                                "texture": "shen_texture_original",
+                                "model": "nanekihs",
+                                "texture": null,
                                 "hp": 240,
                                 "attack": 22,
                                 "element": "Storm"
                             }
                         ],
                         "boss": {
-                            "name": "Sennara vom Goldthron",
+                            "name": "Sinara vom Goldthron",
                             "image": "preview_sennara",
-                            "model": "sennara",
-                            "texture": "sennara_texture_original",
+                            "model": "nanekihs",
+                            "texture": null,
                             "hp": 420,
                             "attack": 34,
                             "element": "Light"
@@ -395,7 +395,7 @@
                 "id": "event_xp_trials_hall",
                 "title": "Trainingshalle",
                 "text":
-                    "Besiege Shen und Sennara in Trainingsduellen fuer hohe XP-Werte.",
+                    "Besiege Shen und Sinara in Trainingsduellen fuer hohe XP-Werte.",
                 "mapImage": "bg_arena",
                 "mapTexture": "bg_arena",
                 "node": {
@@ -410,8 +410,8 @@
                         "description":
                             "Shen eröffnet die Trainingsserie mit einem kontrollierten Duell.",
                         "difficulty": 7,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "ice",
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
                         "node": {
                             "x": 0.20,
                             "y": 0.56
@@ -419,8 +419,8 @@
                         "enemy": {
                             "name": "Trainer Shen",
                             "image": "preview_shen",
-                            "model": "shen",
-                            "texture": "shen_texture_original",
+                            "model": "nanekihs",
+                            "texture": null,
                             "hp": 300,
                             "attack": 28,
                             "element": "Water"
@@ -440,21 +440,21 @@
                     },
                     {
                         "id": "event_xp_trials_battle_2",
-                        "name": "Sennaras Prüfung",
+                        "name": "Sinaras Prüfung",
                         "description":
-                            "Sennara testet dein Durchhaltevermoegen in einer zweiten Runde.",
+                            "Sinara testet dein Durchhaltevermoegen in einer zweiten Runde.",
                         "difficulty": 9,
-                        "groundTexture": "ice",
-                        "skyboxTexture": "void",
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
                         "node": {
                             "x": 0.48,
                             "y": 0.42
                         },
                         "enemy": {
-                            "name": "Mentorin Sennara",
+                            "name": "Mentorin Sinara",
                             "image": "preview_sennara",
-                            "model": "sennara",
-                            "texture": "sennara_texture_original",
+                            "model": "nanekihs",
+                            "texture": null,
                             "hp": 420,
                             "attack": 33,
                             "element": "Storm"
@@ -488,18 +488,18 @@
                             {
                                 "name": "Shen der Meisterklasse",
                                 "image": "preview_shen",
-                                "model": "shen",
-                                "texture": "shen_texture_original",
+                                "model": "tsayi",
+                                "texture": null,
                                 "hp": 360,
                                 "attack": 31,
                                 "element": "Fire"
                             }
                         ],
                         "boss": {
-                            "name": "Sennara der Meisterklasse",
+                            "name": "Sinara der Meisterklasse",
                             "image": "preview_sennara",
-                            "model": "sennara",
-                            "texture": "sennara_texture_original",
+                            "model": "tsayi",
+                            "texture": null,
                             "hp": 560,
                             "attack": 38,
                             "element": "Light"
@@ -524,7 +524,7 @@
     {
         "id": "event_crystal_bloom",
         "title": "Event: Crystal Farm",
-        "subtitle": "Kristallroute mit Sennara und Shen",
+        "subtitle": "Kristallroute mit Sinara und Shen",
         "minAscendedLevel": 3,
         "mapTexture": "realm_fire",
         "cutscene": {
@@ -590,9 +590,9 @@
                     },
                     {
                         "id": "event_crystal_bloom_battle_2",
-                        "name": "Sennaras Splitterstrom",
+                        "name": "Sinaras Splitterstrom",
                         "description":
-                            "Sennara laesst die Kristalle ueber das Feld kreisen.",
+                            "Sinara laesst die Kristalle ueber das Feld kreisen.",
                         "difficulty": 10,
                         "groundTexture": "realm_fire",
                         "skyboxTexture": "realm_fire",
@@ -601,7 +601,7 @@
                             "y": 0.38
                         },
                         "enemy": {
-                            "name": "Sennara Splitterweberin",
+                            "name": "Sinara Splitterweberin",
                             "image": "preview_sennara",
                             "model": "nanekihs",
                             "texture": null,
@@ -646,7 +646,7 @@
                             }
                         ],
                         "boss": {
-                            "name": "Sennara Kristallkronin",
+                            "name": "Sinara Kristallkronin",
                             "image": "preview_sennara",
                             "model": "nanekihs",
                             "texture": null,
@@ -741,7 +741,7 @@
                         "id": "event_rift_dragon_battle_2",
                         "name": "Drachenfragment Tanz",
                         "description":
-                            "Sennara bindet die Fragmentenergie und verstaerkt die Route.",
+                            "Sinara bindet die Fragmentenergie und verstaerkt die Route.",
                         "difficulty": 12,
                         "groundTexture": "festival_dragon",
                         "skyboxTexture": "festival_dragon",
@@ -750,7 +750,7 @@
                             "y": 0.42
                         },
                         "enemy": {
-                            "name": "Sennara Fragmentweberin",
+                            "name": "Sinara Fragmentweberin",
                             "image": "preview_sennara",
                             "model": "tsayi",
                             "texture": null,
@@ -786,9 +786,9 @@
                         "enemies": [
                             {
                                 "name": "Shen Drachenwaechter",
+                                "image": "preview_shen",
                                 "model": "tsayi",
                                 "texture": null,
-                                "texture": "shen_texture_original",
                                 "hp": 500,
                                 "attack": 38,
                                 "element": "Storm"
@@ -861,9 +861,9 @@
                         },
                         "enemy": {
                             "name": "Shen des Sternentors",
+                            "image": "preview_shen",
                             "model": "masoyina",
                             "texture": null,
-                            "texture": "shen_texture_original",
                             "hp": 380,
                             "attack": 31,
                             "element": "Light"
@@ -885,7 +885,7 @@
                         "id": "event_celestial_reset_battle_2",
                         "name": "Sternenprotokoll",
                         "description":
-                            "Sennara oeffnet die zweite Schicht der Himmelsroute.",
+                            "Sinara oeffnet die zweite Schicht der Himmelsroute.",
                         "difficulty": 11,
                         "groundTexture": "festival_new_year",
                         "skyboxTexture": "festival_new_year",
@@ -894,10 +894,10 @@
                             "y": 0.38
                         },
                         "enemy": {
-                            "name": "Sennara des Protokolls",
+                            "name": "Sinara des Protokolls",
+                            "image": "preview_sennara",
                             "model": "masoyina",
                             "texture": null,
-                            "texture": "sennara_texture_original",
                             "hp": 520,
                             "attack": 39,
                             "element": "Void"
@@ -994,9 +994,9 @@
                         },
                         "enemy": {
                             "name": "Shen der Mondwacht",
+                            "image": "preview_shen",
                             "model": "krevas",
                             "texture": null,
-                            "texture": "shen_texture_original",
                             "hp": 460,
                             "attack": 36,
                             "element": "Dark"
@@ -1018,7 +1018,7 @@
                         "id": "event_lunar_rift_eclipse_battle_2",
                         "name": "Schattenspindel",
                         "description":
-                            "Sennara zieht die Mondenergie in die Rift-Fasern.",
+                            "Sinara zieht die Mondenergie in die Rift-Fasern.",
                         "difficulty": 13,
                         "groundTexture": "festival_moon",
                         "skyboxTexture": "festival_moon",
@@ -1027,10 +1027,10 @@
                             "y": 0.42
                         },
                         "enemy": {
-                            "name": "Sennara der Eclipse",
+                            "name": "Sinara der Eclipse",
+                            "image": "preview_sennara",
                             "model": "krevas",
                             "texture": null,
-                            "texture": "sennara_texture_original",
                             "hp": 620,
                             "attack": 45,
                             "element": "Dark"
@@ -1091,7 +1091,7 @@
         "title": "Event: Flame Rift Surge",
         "subtitle": "Heisse Front mit Fire-Buffs und schnellen Kampfketten",
         "minAscendedLevel": 4,
-        "mapTexture": "festival_sommer",
+        "mapTexture": "festival_summer",
         "cutscene": {
             "id": "event_flame_rift_surge_intro",
             "title": "Flame Rift Surge",
@@ -1105,8 +1105,8 @@
                 "title": "Glutkern",
                 "text":
                     "Eine schnelle, heiße Event-Route mit kompakten Kämpfen und starken Ressourcen.",
-                "mapImage": "festival_sommer",
-                "mapTexture": "festival_sommer",
+                "mapImage": "festival_summer",
+                "mapTexture": "festival_summer",
                 "node": {
                     "x": 0.42,
                     "y": 0.46
@@ -1118,17 +1118,17 @@
                         "name": "Aschenlauf",
                         "description": "Shen jagt durch die erste Glutlinie.",
                         "difficulty": 10,
-                        "groundTexture": "festival_sommer",
-                        "skyboxTexture": "festival_sommer",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.20,
                             "y": 0.56
                         },
                         "enemy": {
                             "name": "Shen der Aschenklinge",
+                            "image": "preview_shen",
                             "model": "jirgin",
                             "texture": null,
-                            "texture": "shen_texture_original",
                             "hp": 430,
                             "attack": 37,
                             "element": "Fire"
@@ -1150,16 +1150,16 @@
                         "id": "event_flame_rift_surge_battle_2",
                         "name": "Glutweberin",
                         "description":
-                            "Sennara zieht Flammenadern durch das Schlachtfeld.",
+                            "Sinara zieht Flammenadern durch das Schlachtfeld.",
                         "difficulty": 12,
-                        "groundTexture": "festival_sommer",
-                        "skyboxTexture": "festival_sommer",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.50,
                             "y": 0.40
                         },
                         "enemy": {
-                            "name": "Sennara der Flammenader",
+                            "name": "Sinara der Flammenader",
                             "image": "preview_sennara",
                             "model": "jirgin",
                             "texture": null,

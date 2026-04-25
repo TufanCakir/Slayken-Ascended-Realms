@@ -4,7 +4,7 @@
         "image": "preview_shen",
         "model": "shen_animation",
         "texture": "shen_texture_original",
-        "hp": 100,
-        "attack": 100
+        "hp": 300,
+        "attack": 300
     }
 ]

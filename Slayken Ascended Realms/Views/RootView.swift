@@ -5,8 +5,8 @@
 //  Created by Tufan Cakir on 10.04.26.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var gameState: GameState
@@ -99,7 +99,8 @@ struct RootView: View {
         let assets = gameState.backgrounds.map(\.image)
         if assets.isEmpty {
             return [
-                "bg_epic", "sar_bg", "map", "country", "bg_arena", "fire", "ice", "void",
+                "bg_epic", "sar_bg", "map", "country", "bg_arena", "fire",
+                "ice", "void",
             ]
         }
 

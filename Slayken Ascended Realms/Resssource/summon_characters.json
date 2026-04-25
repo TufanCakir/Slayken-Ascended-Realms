@@ -50,12 +50,12 @@
         ]
     },
     {
-        "id": "sennara",
-        "name": "Sennara",
-        "summonImage": "preview_sennara",
-        "model": "sennara_animation",
-        "battleModel": "sennara",
-        "texture": "sennara_texture_original",
+        "id": "sinara",
+        "name": "Sinara",
+        "summonImage": "preview_sinara",
+        "model": "sinara_animation",
+        "battleModel": "sinara",
+        "texture": "sinara_texture_original",
         "rarity": 4,
         "hp": 105,
         "attack": 48,
@@ -63,14 +63,14 @@
             {
                 "id": "original",
                 "name": "Original",
-                "texture": "sennara_texture_original",
-                "summonImage": "preview_sennara"
+                "texture": "sinara_texture_original",
+                "summonImage": "preview_sinara"
             },
             {
                 "id": "shadow",
                 "name": "Shadow",
-                "texture": "sennara_skin_shadow",
-                "summonImage": "preview_sennara"
+                "texture": "sinara_skin_shadow",
+                "summonImage": "preview_sinara"
             }
         ]
     }

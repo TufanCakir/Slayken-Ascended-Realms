@@ -52,12 +52,16 @@ struct GameEventMapPreviewView: View {
         }
 
         if let point {
-            return nextUnlockedBattle(in: point).map { nodeID(forBattleID: $0.id) }
+            return nextUnlockedBattle(in: point).map {
+                nodeID(forBattleID: $0.id)
+            }
                 ?? nodeID(forPointID: point.id)
         }
 
         if let chapter {
-            return nextUnlockedPoint(in: chapter).map { nodeID(forPointID: $0.id) }
+            return nextUnlockedPoint(in: chapter).map {
+                nodeID(forPointID: $0.id)
+            }
                 ?? nodeID(forPointID: chapter.points.first?.id ?? "")
         }
 
@@ -318,7 +322,9 @@ struct GameEventMapPreviewView: View {
                     .scaledToFill()
                     .frame(width: size, height: size)
                     .clipShape(Circle())
-                    .overlay(Circle().stroke(.white.opacity(0.55), lineWidth: 1))
+                    .overlay(
+                        Circle().stroke(.white.opacity(0.55), lineWidth: 1)
+                    )
             } else {
                 Image(systemName: fallbackIcon)
                     .font(.system(size: isSelected ? 15 : 13, weight: .black))
@@ -342,7 +348,9 @@ struct GameEventMapPreviewView: View {
             ?? visibleBattles.last
     }
 
-    private func nextUnlockedPoint(in chapter: GlobeEventChapter) -> GlobeEventPoint? {
+    private func nextUnlockedPoint(in chapter: GlobeEventChapter)
+        -> GlobeEventPoint?
+    {
         chapter.points.first { point in
             point.battles.contains { !completedBattleIDs.contains($0.id) }
         }
@@ -352,7 +360,10 @@ struct GameEventMapPreviewView: View {
         guard let focusedNodeID else { return }
         DispatchQueue.main.async {
             withAnimation(.easeInOut(duration: 0.35)) {
-                proxy.scrollTo(focusedNodeID, anchor: UnitPoint(x: 0.5, y: 0.62))
+                proxy.scrollTo(
+                    focusedNodeID,
+                    anchor: UnitPoint(x: 0.5, y: 0.62)
+                )
             }
         }
     }

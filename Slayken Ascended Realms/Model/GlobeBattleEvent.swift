@@ -7,6 +7,45 @@
 
 import Foundation
 
+private enum GlobeNodeChest {
+    static let pointChests = [
+        "chest_brown",
+        "chest_silver",
+        "chest_gold",
+        "chest_black",
+        "chest_white",
+    ]
+
+    static let battleChests = [
+        "chest_brown",
+        "chest_silver",
+        "chest_gold",
+        "chest_black",
+        "chest_white",
+    ]
+
+    static func pointImage(for id: String) -> String {
+        let index = abs(id.hashValue) % pointChests.count
+        return pointChests[index]
+    }
+
+    static func battleImage(for id: String, difficulty: Int) -> String {
+        switch difficulty {
+        case 1...4:
+            return "chest_brown"
+        case 5...7:
+            return "chest_silver"
+        case 8...10:
+            return "chest_white"
+        case 11...13:
+            return "chest_black"
+        default:
+            let index = abs(id.hashValue) % 2
+            return index == 0 ? "chest_gold" : "chest_black"
+        }
+    }
+}
+
 struct GlobeEventCutscene: Codable, Identifiable, Equatable {
     let id: String
     let title: String
@@ -41,7 +80,7 @@ struct GlobeEventPoint: Codable, Identifiable {
     let battles: [GlobeBattle]
 
     var resolvedNodeImage: String {
-        nodeImage ?? "chest_brown"
+        nodeImage ?? GlobeNodeChest.pointImage(for: id)
     }
 }
 
@@ -63,7 +102,7 @@ struct GlobeBattle: Codable, Identifiable {
     let story: [StoryLine]
 
     var resolvedNodeImage: String {
-        nodeImage ?? "chest_brown"
+        nodeImage ?? GlobeNodeChest.battleImage(for: id, difficulty: difficulty)
     }
 
     enum CodingKeys: String, CodingKey {
@@ -99,7 +138,10 @@ struct GlobeBattle: Codable, Identifiable {
         skyboxTexture =
             try container.decodeIfPresent(String.self, forKey: .skyboxTexture)
             ?? groundTexture
-        nodeImage = try container.decodeIfPresent(String.self, forKey: .nodeImage)
+        nodeImage = try container.decodeIfPresent(
+            String.self,
+            forKey: .nodeImage
+        )
         node =
             try container.decodeIfPresent(
                 EventMapNodePosition.self,

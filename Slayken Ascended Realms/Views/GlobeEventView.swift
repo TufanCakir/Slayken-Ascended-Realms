@@ -41,12 +41,15 @@ struct GlobeEventView: View {
 
     private var focusedNodeID: String? {
         if let selectedPoint, let selectedBattleID,
-           selectedPoint.battles.contains(where: { $0.id == selectedBattleID }) {
+            selectedPoint.battles.contains(where: { $0.id == selectedBattleID })
+        {
             return nodeID(forBattleID: selectedBattleID)
         }
 
         if let selectedPoint {
-            return visibleBattles(for: selectedPoint).first.map { nodeID(forBattleID: $0.id) }
+            return visibleBattles(for: selectedPoint).first.map {
+                nodeID(forBattleID: $0.id)
+            }
                 ?? nodeID(forPointID: selectedPoint.id)
         }
 
@@ -79,7 +82,10 @@ struct GlobeEventView: View {
 
             ZStack {
                 ScrollViewReader { proxy in
-                    ScrollView([.horizontal, .vertical], showsIndicators: false) {
+                    ScrollView(
+                        [.horizontal, .vertical],
+                        showsIndicators: false
+                    ) {
                         eventMapLayer(size: geo.size, theme: currentTheme)
                     }
                     .scrollBounceBehavior(.basedOnSize)
@@ -160,7 +166,7 @@ struct GlobeEventView: View {
                     battleMapNode(battle, canvasSize: canvasSize, theme: theme)
                         .id(nodeID(forBattleID: battle.id))
                 }
-        } else if let selectedChapter {
+            } else if let selectedChapter {
                 pointRouteLayer(
                     points: selectedChapter.points,
                     canvasSize: canvasSize,
@@ -437,10 +443,14 @@ struct GlobeEventView: View {
                         .scaledToFill()
                         .frame(width: imageSize, height: imageSize)
                         .clipShape(Circle())
-                        .overlay(Circle().stroke(.white.opacity(0.55), lineWidth: 1))
+                        .overlay(
+                            Circle().stroke(.white.opacity(0.55), lineWidth: 1)
+                        )
                 } else {
                     Image(systemName: fallbackIcon)
-                        .font(.system(size: isFocused ? 19 : 16, weight: .black))
+                        .font(
+                            .system(size: isFocused ? 19 : 16, weight: .black)
+                        )
                         .foregroundStyle(.black.opacity(0.72))
                 }
 
@@ -553,14 +563,15 @@ struct GlobeEventView: View {
                     systemName: !isUnlocked
                         ? "lock.fill"
                         : isSelected
-                        ? "largecircle.fill.circle" : "circle"
+                            ? "largecircle.fill.circle" : "circle"
                 )
                 .font(.system(size: 12, weight: .black))
                 .foregroundStyle(
                     !isUnlocked
                         ? .white.opacity(0.35)
                         : isSelected
-                        ? (theme?.glow.color ?? .yellow) : .white.opacity(0.55)
+                            ? (theme?.glow.color ?? .yellow)
+                            : .white.opacity(0.55)
                 )
                 .frame(width: 18)
 
@@ -820,14 +831,16 @@ struct GlobeEventView: View {
 
     private func syncSelectedChapterWithUnlocks() {
         if let selectedChapterID,
-           let chapter = chapters.first(where: { $0.id == selectedChapterID }),
-           isChapterUnlocked(chapter) {
+            let chapter = chapters.first(where: { $0.id == selectedChapterID }),
+            isChapterUnlocked(chapter)
+        {
             return
         }
 
         if let savedID = gameState.activeEventChapterID,
-           let chapter = chapters.first(where: { $0.id == savedID }),
-           isChapterUnlocked(chapter) {
+            let chapter = chapters.first(where: { $0.id == savedID }),
+            isChapterUnlocked(chapter)
+        {
             selectedChapterID = savedID
             return
         }
@@ -861,7 +874,8 @@ struct GlobeEventView: View {
         chapter.id.hasPrefix("event_")
     }
 
-    private func chapterRequirementText(_ chapter: GlobeEventChapter) -> String {
+    private func chapterRequirementText(_ chapter: GlobeEventChapter) -> String
+    {
         guard isChapterUnlocked(chapter) else {
             if ascendedLevel < (chapter.minAscendedLevel ?? 1) {
                 return "Ascended Lv. \(chapter.minAscendedLevel ?? 1)"
@@ -873,7 +887,10 @@ struct GlobeEventView: View {
 
     private func finishCutscene() {
         if let activeCutscene {
-            PlayerInventoryStore.markCutsceneSeen(activeCutscene.id, in: modelContext)
+            PlayerInventoryStore.markCutsceneSeen(
+                activeCutscene.id,
+                in: modelContext
+            )
         }
         let pendingBattle = battleAfterCutscene
         activeCutscene = nil

@@ -52,7 +52,7 @@
                             {
                                 "name": "Shadow Scout",
                                 "image": "sar_dragon",
-                                "model": "shela",
+                                "model": "krevas",
                                 "hp": 95,
                                 "attack": 11,
                                 "element": "Dark"
@@ -60,7 +60,7 @@
                             {
                                 "name": "Moon Acolyte",
                                 "image": "sar_dragon",
-                                "model": "zaron",
+                                "model": "tsayi",
                                 "hp": 110,
                                 "attack": 13,
                                 "element": "Light"
@@ -68,7 +68,7 @@
                             {
                                 "name": "Rift Thorn",
                                 "image": "sar_dragon",
-                                "model": "shela",
+                                "model": "nanekihs",
                                 "hp": 105,
                                 "attack": 12,
                                 "element": "Plant"
@@ -119,7 +119,7 @@
                             {
                                 "name": "Core Wisp",
                                 "image": "sar_dragon",
-                                "model": "shela",
+                                "model": "masoyina",
                                 "hp": 120,
                                 "attack": 14,
                                 "element": "Water"
@@ -127,7 +127,7 @@
                             {
                                 "name": "Core Guard",
                                 "image": "sar_dragon",
-                                "model": "zaron",
+                                "model": "jirgin",
                                 "hp": 145,
                                 "attack": 16,
                                 "element": "Fire"
@@ -136,7 +136,7 @@
                         "boss": {
                             "name": "Shadow Moon Beast",
                             "image": "sar_dragon",
-                            "model": "zaron",
+                            "model": "krevas",
                             "hp": 260,
                             "attack": 28,
                             "element": "Dark"
@@ -196,7 +196,7 @@
                             {
                                 "name": "Rune Echo",
                                 "image": "sar_dragon",
-                                "model": "shela",
+                                "model": "tsayi",
                                 "hp": 150,
                                 "attack": 17,
                                 "element": "Storm"
@@ -204,7 +204,7 @@
                             {
                                 "name": "Ash Keeper",
                                 "image": "sar_dragon",
-                                "model": "zaron",
+                                "model": "masoyina",
                                 "hp": 170,
                                 "attack": 19,
                                 "element": "Ash"
@@ -237,13 +237,15 @@
             "id": "event_coin_harvest_intro",
             "title": "Goldrausch",
             "video": "intro",
-            "text": "In einer offenen Schatzroute tauchen immer neue Muenztruhen und Waechter auf."
+            "text":
+                "In einer offenen Schatzroute tauchen immer neue Muenztruhen und Waechter auf."
         },
         "points": [
             {
                 "id": "event_coin_harvest_field",
                 "title": "Schatzfeld",
-                "text": "Farme hier Coins gegen immer staerkere Schatzwaechter.",
+                "text":
+                    "Farme hier Coins gegen immer staerkere Schatzwaechter.",
                 "mapImage": "country",
                 "mapTexture": "country",
                 "node": {
@@ -254,13 +256,15 @@
                     "id": "event_coin_harvest_field_cutscene",
                     "title": "Schatzfeld",
                     "video": "torwache",
-                    "text": "Ein ganzer Pfad voller Kisten fuehrt tief in das Farmgebiet."
+                    "text":
+                        "Ein ganzer Pfad voller Kisten fuehrt tief in das Farmgebiet."
                 },
                 "battles": [
                     {
                         "id": "event_coin_harvest_battle_1",
                         "name": "Kupferwache",
-                        "description": "Shen verteidigt die erste Reihe der Schatzkisten.",
+                        "description":
+                            "Shen verteidigt die erste Reihe der Schatzkisten.",
                         "difficulty": 4,
                         "groundTexture": "country",
                         "skyboxTexture": "country",
@@ -293,7 +297,8 @@
                     {
                         "id": "event_coin_harvest_battle_2",
                         "name": "Truhensturm",
-                        "description": "Sennara beschwoert einen Schwall aus Schatzenergie.",
+                        "description":
+                            "Sennara beschwoert einen Schwall aus Schatzenergie.",
                         "difficulty": 6,
                         "groundTexture": "map",
                         "skyboxTexture": "map",
@@ -326,7 +331,8 @@
                     {
                         "id": "event_coin_harvest_battle_3",
                         "name": "Goldthron",
-                        "description": "Ein Bosskampf fuer maximale Coin-Ausbeute.",
+                        "description":
+                            "Ein Bosskampf fuer maximale Coin-Ausbeute.",
                         "difficulty": 8,
                         "groundTexture": "bg_arena",
                         "skyboxTexture": "fire",
@@ -381,13 +387,15 @@
             "id": "event_xp_trials_intro",
             "title": "Pruefungen der Halle",
             "video": "kristallspur",
-            "text": "In der Trainingshalle warten aufeinanderfolgende XP-Pruefungen."
+            "text":
+                "In der Trainingshalle warten aufeinanderfolgende XP-Pruefungen."
         },
         "points": [
             {
                 "id": "event_xp_trials_hall",
                 "title": "Trainingshalle",
-                "text": "Besiege Shen und Sennara in Trainingsduellen fuer hohe XP-Werte.",
+                "text":
+                    "Besiege Shen und Sennara in Trainingsduellen fuer hohe XP-Werte.",
                 "mapImage": "bg_arena",
                 "mapTexture": "bg_arena",
                 "node": {
@@ -399,7 +407,8 @@
                     {
                         "id": "event_xp_trials_battle_1",
                         "name": "Shens Lektion",
-                        "description": "Shen eröffnet die Trainingsserie mit einem kontrollierten Duell.",
+                        "description":
+                            "Shen eröffnet die Trainingsserie mit einem kontrollierten Duell.",
                         "difficulty": 7,
                         "groundTexture": "bg_arena",
                         "skyboxTexture": "ice",
@@ -432,7 +441,8 @@
                     {
                         "id": "event_xp_trials_battle_2",
                         "name": "Sennaras Prüfung",
-                        "description": "Sennara testet dein Durchhaltevermoegen in einer zweiten Runde.",
+                        "description":
+                            "Sennara testet dein Durchhaltevermoegen in einer zweiten Runde.",
                         "difficulty": 9,
                         "groundTexture": "ice",
                         "skyboxTexture": "void",
@@ -465,7 +475,8 @@
                     {
                         "id": "event_xp_trials_battle_3",
                         "name": "Doppeltraining",
-                        "description": "Beide neuen Kaempfer treten gemeinsam fuer maximale XP an.",
+                        "description":
+                            "Beide neuen Kaempfer treten gemeinsam fuer maximale XP an.",
                         "difficulty": 11,
                         "groundTexture": "sar_bg",
                         "skyboxTexture": "sar_bg",
@@ -515,20 +526,22 @@
         "title": "Event: Crystal Farm",
         "subtitle": "Kristallroute mit Sennara und Shen",
         "minAscendedLevel": 3,
-        "mapTexture": "void",
+        "mapTexture": "realm_fire",
         "cutscene": {
             "id": "event_crystal_bloom_intro",
             "title": "Kristallbluete",
             "video": "mondtor",
-            "text": "Ein seltenes Kristallfeld oeffnet sich und lockt starke Beschuetzer an."
+            "text":
+                "Ein seltenes Kristallfeld oeffnet sich und lockt starke Beschuetzer an."
         },
         "points": [
             {
                 "id": "event_crystal_bloom_cavern",
                 "title": "Kristallgrotte",
-                "text": "Hier liegt der Fokus auf Crystal-Rewards und schweren Elite-Kaempfen.",
-                "mapImage": "void",
-                "mapTexture": "void",
+                "text":
+                    "Hier liegt der Fokus auf Crystal-Rewards und schweren Elite-Kaempfen.",
+                "mapImage": "realm_fire",
+                "mapTexture": "realm_fire",
                 "node": {
                     "x": 0.50,
                     "y": 0.40
@@ -537,16 +550,18 @@
                     "id": "event_crystal_bloom_cavern_cutscene",
                     "title": "Kristallgrotte",
                     "video": "kristallspur",
-                    "text": "Die Grotte pulsiert vor Energie und jede Kiste glimmt violett."
+                    "text":
+                        "Die Grotte pulsiert vor Energie und jede Kiste glimmt violett."
                 },
                 "battles": [
                     {
                         "id": "event_crystal_bloom_battle_1",
                         "name": "Kristallklaue",
-                        "description": "Shen greift hier als schneller Kristalljaeger an.",
+                        "description":
+                            "Shen greift hier als schneller Kristalljaeger an.",
                         "difficulty": 8,
-                        "groundTexture": "void",
-                        "skyboxTexture": "ice",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.22,
                             "y": 0.50
@@ -554,8 +569,8 @@
                         "enemy": {
                             "name": "Kristall Shen",
                             "image": "preview_shen",
-                            "model": "shen",
-                            "texture": "shen_texture_original",
+                            "model": "nanekihs",
+                            "texture": null,
                             "hp": 340,
                             "attack": 30,
                             "element": "Light"
@@ -576,10 +591,11 @@
                     {
                         "id": "event_crystal_bloom_battle_2",
                         "name": "Sennaras Splitterstrom",
-                        "description": "Sennara laesst die Kristalle ueber das Feld kreisen.",
+                        "description":
+                            "Sennara laesst die Kristalle ueber das Feld kreisen.",
                         "difficulty": 10,
-                        "groundTexture": "ice",
-                        "skyboxTexture": "void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.52,
                             "y": 0.38
@@ -587,8 +603,8 @@
                         "enemy": {
                             "name": "Sennara Splitterweberin",
                             "image": "preview_sennara",
-                            "model": "sennara",
-                            "texture": "sennara_texture_original",
+                            "model": "nanekihs",
+                            "texture": null,
                             "hp": 500,
                             "attack": 36,
                             "element": "Dark"
@@ -609,10 +625,11 @@
                     {
                         "id": "event_crystal_bloom_battle_3",
                         "name": "Herz der Grotte",
-                        "description": "Der Bosskampf mit maximalem Crystal-Fokus.",
+                        "description":
+                            "Der Bosskampf mit maximalem Crystal-Fokus.",
                         "difficulty": 12,
-                        "groundTexture": "sar_bg",
-                        "skyboxTexture": "sar_bg",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.82,
                             "y": 0.48
@@ -621,8 +638,8 @@
                             {
                                 "name": "Shen Kristallwache",
                                 "image": "preview_shen",
-                                "model": "shen",
-                                "texture": "shen_texture_original",
+                                "model": "nanekihs",
+                                "texture": null,
                                 "hp": 420,
                                 "attack": 34,
                                 "element": "Storm"
@@ -631,8 +648,8 @@
                         "boss": {
                             "name": "Sennara Kristallkronin",
                             "image": "preview_sennara",
-                            "model": "sennara",
-                            "texture": "sennara_texture_original",
+                            "model": "nanekihs",
+                            "texture": null,
                             "hp": 680,
                             "attack": 44,
                             "element": "Light"
@@ -659,20 +676,22 @@
         "title": "Event: Rift Dragon Ascension",
         "subtitle": "Drachenfragmente steigen aus den Wasserpfaden auf",
         "minAscendedLevel": 4,
-        "mapTexture": "realm_country",
+        "mapTexture": "festival_dragon",
         "cutscene": {
             "id": "event_rift_dragon_ascension_intro",
             "title": "Rift Dragon Ascension",
             "video": "intro",
-            "text": "Uralte Drachenfragmente sammeln sich ueber den Wasserpfaden und rufen starke Waechter."
+            "text":
+                "Uralte Drachenfragmente sammeln sich ueber den Wasserpfaden und rufen starke Waechter."
         },
         "points": [
             {
                 "id": "event_rift_dragon_docks",
                 "title": "Drachenhafen",
-                "text": "Ein saisonaler Pfad mit Wasser, Nebel und aufsteigender Drachenenergie.",
-                "mapImage": "realm_country",
-                "mapTexture": "realm_country",
+                "text":
+                    "Ein saisonaler Pfad mit Wasser, Nebel und aufsteigender Drachenenergie.",
+                "mapImage": "festival_dragon",
+                "mapTexture": "festival_dragon",
                 "node": {
                     "x": 0.38,
                     "y": 0.48
@@ -681,7 +700,8 @@
                     "id": "event_rift_dragon_docks_cutscene",
                     "title": "Drachenhafen",
                     "video": "mondtor",
-                    "text": "Leuchtende Wellen tragen Splitter eines Rift-Drachen an Land."
+                    "text":
+                        "Leuchtende Wellen tragen Splitter eines Rift-Drachen an Land."
                 },
                 "battles": [
                     {
@@ -689,8 +709,8 @@
                         "name": "Nebelruder",
                         "description": "Shen sichert den ersten Wasserpfad.",
                         "difficulty": 10,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "festival_dragon",
+                        "skyboxTexture": "festival_dragon",
                         "node": {
                             "x": 0.18,
                             "y": 0.58
@@ -698,8 +718,8 @@
                         "enemy": {
                             "name": "Shen vom Nebelruder",
                             "image": "preview_shen",
-                            "model": "shen",
-                            "texture": "shen_texture_original",
+                            "model": "tsayi",
+                            "texture": null,
                             "hp": 420,
                             "attack": 34,
                             "element": "Water"
@@ -720,10 +740,11 @@
                     {
                         "id": "event_rift_dragon_battle_2",
                         "name": "Drachenfragment Tanz",
-                        "description": "Sennara bindet die Fragmentenergie und verstaerkt die Route.",
+                        "description":
+                            "Sennara bindet die Fragmentenergie und verstaerkt die Route.",
                         "difficulty": 12,
-                        "groundTexture": "ice",
-                        "skyboxTexture": "country",
+                        "groundTexture": "festival_dragon",
+                        "skyboxTexture": "festival_dragon",
                         "node": {
                             "x": 0.50,
                             "y": 0.42
@@ -731,8 +752,8 @@
                         "enemy": {
                             "name": "Sennara Fragmentweberin",
                             "image": "preview_sennara",
-                            "model": "sennara",
-                            "texture": "sennara_texture_original",
+                            "model": "tsayi",
+                            "texture": null,
                             "hp": 560,
                             "attack": 41,
                             "element": "Light"
@@ -753,10 +774,11 @@
                     {
                         "id": "event_rift_dragon_battle_3",
                         "name": "Ancient Rift Dragon",
-                        "description": "Ein uralter Rift-Drache materialisiert sich ueber dem Hafen.",
+                        "description":
+                            "Ein uralter Rift-Drache materialisiert sich ueber dem Hafen.",
                         "difficulty": 15,
-                        "groundTexture": "sar_bg",
-                        "skyboxTexture": "sar_bg",
+                        "groundTexture": "festival_dragon",
+                        "skyboxTexture": "festival_dragon",
                         "node": {
                             "x": 0.80,
                             "y": 0.50
@@ -764,8 +786,8 @@
                         "enemies": [
                             {
                                 "name": "Shen Drachenwaechter",
-                                "image": "preview_shen",
-                                "model": "shen",
+                                "model": "tsayi",
+                                "texture": null,
                                 "texture": "shen_texture_original",
                                 "hp": 500,
                                 "attack": 38,
@@ -775,8 +797,8 @@
                         "boss": {
                             "name": "Ancient Rift Dragon",
                             "image": "preview_sennara",
-                            "model": "sennara",
-                            "texture": "sennara_texture_original",
+                            "model": "tsayi",
+                            "texture": null,
                             "hp": 860,
                             "attack": 55,
                             "element": "Dark"
@@ -803,20 +825,22 @@
         "title": "Event: Celestial Reset",
         "subtitle": "Ein himmlischer Neubeginn mit Bonus-Routen",
         "minAscendedLevel": 3,
-        "mapTexture": "map2",
+        "mapTexture": "festival_new_year",
         "cutscene": {
             "id": "event_celestial_reset_intro",
             "title": "Celestial Reset",
             "video": "intro",
-            "text": "Der Himmel richtet sich neu aus und entlaedt eine seltene Reset-Energie."
+            "text":
+                "Der Himmel richtet sich neu aus und entlaedt eine seltene Reset-Energie."
         },
         "points": [
             {
                 "id": "event_celestial_reset_gate",
                 "title": "Sternentor",
-                "text": "Ein Event fuer Neustart-Boni, Summon-Energie und breite Ressourcenpakete.",
-                "mapImage": "map2",
-                "mapTexture": "map2",
+                "text":
+                    "Ein Event fuer Neustart-Boni, Summon-Energie und breite Ressourcenpakete.",
+                "mapImage": "festival_new_year",
+                "mapTexture": "festival_new_year",
                 "node": {
                     "x": 0.44,
                     "y": 0.40
@@ -826,18 +850,19 @@
                     {
                         "id": "event_celestial_reset_battle_1",
                         "name": "Reset Echo",
-                        "description": "Die erste Welle der himmlischen Ruecksetzung.",
+                        "description":
+                            "Die erste Welle der himmlischen Ruecksetzung.",
                         "difficulty": 9,
-                        "groundTexture": "map2",
-                        "skyboxTexture": "map2",
+                        "groundTexture": "festival_new_year",
+                        "skyboxTexture": "festival_new_year",
                         "node": {
                             "x": 0.22,
                             "y": 0.54
                         },
                         "enemy": {
                             "name": "Shen des Sternentors",
-                            "image": "preview_shen",
-                            "model": "shen",
+                            "model": "masoyina",
+                            "texture": null,
                             "texture": "shen_texture_original",
                             "hp": 380,
                             "attack": 31,
@@ -859,18 +884,19 @@
                     {
                         "id": "event_celestial_reset_battle_2",
                         "name": "Sternenprotokoll",
-                        "description": "Sennara oeffnet die zweite Schicht der Himmelsroute.",
+                        "description":
+                            "Sennara oeffnet die zweite Schicht der Himmelsroute.",
                         "difficulty": 11,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "void",
+                        "groundTexture": "festival_new_year",
+                        "skyboxTexture": "festival_new_year",
                         "node": {
                             "x": 0.52,
                             "y": 0.38
                         },
                         "enemy": {
                             "name": "Sennara des Protokolls",
-                            "image": "preview_sennara",
-                            "model": "sennara",
+                            "model": "masoyina",
+                            "texture": null,
                             "texture": "sennara_texture_original",
                             "hp": 520,
                             "attack": 39,
@@ -892,10 +918,11 @@
                     {
                         "id": "event_celestial_reset_battle_3",
                         "name": "Celestial Crown",
-                        "description": "Bosskampf mit besonders wertigem Gesamtloot.",
+                        "description":
+                            "Bosskampf mit besonders wertigem Gesamtloot.",
                         "difficulty": 14,
-                        "groundTexture": "sar_bg",
-                        "skyboxTexture": "void",
+                        "groundTexture": "festival_new_year",
+                        "skyboxTexture": "festival_new_year",
                         "node": {
                             "x": 0.82,
                             "y": 0.46
@@ -903,8 +930,8 @@
                         "boss": {
                             "name": "Crown of the Reset",
                             "image": "preview_sennara",
-                            "model": "sennara",
-                            "texture": "sennara_texture_original",
+                            "model": "masoyina",
+                            "texture": null,
                             "hp": 780,
                             "attack": 52,
                             "element": "Light"
@@ -931,20 +958,22 @@
         "title": "Event: Lunar Rift Eclipse",
         "subtitle": "Nacht-Map mit Schattenloot und verdichteter Rift-Energie",
         "minAscendedLevel": 5,
-        "mapTexture": "void",
+        "mapTexture": "festival_moon",
         "cutscene": {
             "id": "event_lunar_rift_eclipse_intro",
             "title": "Lunar Rift Eclipse",
             "video": "mondtor",
-            "text": "Eine dunkle Mondphase legt sich ueber die Route und macht Rift-Beute wertvoller."
+            "text":
+                "Eine dunkle Mondphase legt sich ueber die Route und macht Rift-Beute wertvoller."
         },
         "points": [
             {
                 "id": "event_lunar_rift_eclipse_shore",
                 "title": "Eclipse Ufer",
-                "text": "Schattenfeinde, dichter Nebel und seltenere Crystal-Ausbeute praegen dieses Event.",
-                "mapImage": "void",
-                "mapTexture": "void",
+                "text":
+                    "Schattenfeinde, dichter Nebel und seltenere Crystal-Ausbeute praegen dieses Event.",
+                "mapImage": "festival_moon",
+                "mapTexture": "festival_moon",
                 "node": {
                     "x": 0.40,
                     "y": 0.52
@@ -954,18 +983,19 @@
                     {
                         "id": "event_lunar_rift_eclipse_battle_1",
                         "name": "Mondwacht",
-                        "description": "Shen blockiert den Pfad unter der Eclipse.",
+                        "description":
+                            "Shen blockiert den Pfad unter der Eclipse.",
                         "difficulty": 11,
-                        "groundTexture": "void",
-                        "skyboxTexture": "ice",
+                        "groundTexture": "festival_moon",
+                        "skyboxTexture": "festival_moon",
                         "node": {
                             "x": 0.18,
                             "y": 0.58
                         },
                         "enemy": {
                             "name": "Shen der Mondwacht",
-                            "image": "preview_shen",
-                            "model": "shen",
+                            "model": "krevas",
+                            "texture": null,
                             "texture": "shen_texture_original",
                             "hp": 460,
                             "attack": 36,
@@ -987,18 +1017,19 @@
                     {
                         "id": "event_lunar_rift_eclipse_battle_2",
                         "name": "Schattenspindel",
-                        "description": "Sennara zieht die Mondenergie in die Rift-Fasern.",
+                        "description":
+                            "Sennara zieht die Mondenergie in die Rift-Fasern.",
                         "difficulty": 13,
-                        "groundTexture": "ice",
-                        "skyboxTexture": "sar_bg",
+                        "groundTexture": "festival_moon",
+                        "skyboxTexture": "festival_moon",
                         "node": {
                             "x": 0.50,
                             "y": 0.42
                         },
                         "enemy": {
                             "name": "Sennara der Eclipse",
-                            "image": "preview_sennara",
-                            "model": "sennara",
+                            "model": "krevas",
+                            "texture": null,
                             "texture": "sennara_texture_original",
                             "hp": 620,
                             "attack": 45,
@@ -1020,10 +1051,11 @@
                     {
                         "id": "event_lunar_rift_eclipse_battle_3",
                         "name": "Eclipse Heart",
-                        "description": "Das Herz der Finsternis konzentriert sich im letzten Kampf.",
+                        "description":
+                            "Das Herz der Finsternis konzentriert sich im letzten Kampf.",
                         "difficulty": 16,
-                        "groundTexture": "sar_bg",
-                        "skyboxTexture": "sar_bg",
+                        "groundTexture": "festival_moon",
+                        "skyboxTexture": "festival_moon",
                         "node": {
                             "x": 0.82,
                             "y": 0.48
@@ -1031,8 +1063,8 @@
                         "boss": {
                             "name": "Heart of the Eclipse",
                             "image": "preview_sennara",
-                            "model": "sennara",
-                            "texture": "sennara_texture_original",
+                            "model": "krevas",
+                            "texture": null,
                             "hp": 940,
                             "attack": 58,
                             "element": "Void"
@@ -1059,20 +1091,22 @@
         "title": "Event: Flame Rift Surge",
         "subtitle": "Heisse Front mit Fire-Buffs und schnellen Kampfketten",
         "minAscendedLevel": 4,
-        "mapTexture": "fire",
+        "mapTexture": "festival_sommer",
         "cutscene": {
             "id": "event_flame_rift_surge_intro",
             "title": "Flame Rift Surge",
             "video": "rissbestie",
-            "text": "Eine Feuerwelle durchschneidet die Rift-Linien und macht die Kaempfe aggressiver."
+            "text":
+                "Eine Feuerwelle durchschneidet die Rift-Linien und macht die Kaempfe aggressiver."
         },
         "points": [
             {
                 "id": "event_flame_rift_surge_core",
                 "title": "Glutkern",
-                "text": "Eine schnelle, heiße Event-Route mit kompakten Kämpfen und starken Ressourcen.",
-                "mapImage": "fire",
-                "mapTexture": "fire",
+                "text":
+                    "Eine schnelle, heiße Event-Route mit kompakten Kämpfen und starken Ressourcen.",
+                "mapImage": "festival_sommer",
+                "mapTexture": "festival_sommer",
                 "node": {
                     "x": 0.42,
                     "y": 0.46
@@ -1084,16 +1118,16 @@
                         "name": "Aschenlauf",
                         "description": "Shen jagt durch die erste Glutlinie.",
                         "difficulty": 10,
-                        "groundTexture": "fire",
-                        "skyboxTexture": "fire",
+                        "groundTexture": "festival_sommer",
+                        "skyboxTexture": "festival_sommer",
                         "node": {
                             "x": 0.20,
                             "y": 0.56
                         },
                         "enemy": {
                             "name": "Shen der Aschenklinge",
-                            "image": "preview_shen",
-                            "model": "shen",
+                            "model": "jirgin",
+                            "texture": null,
                             "texture": "shen_texture_original",
                             "hp": 430,
                             "attack": 37,
@@ -1115,10 +1149,11 @@
                     {
                         "id": "event_flame_rift_surge_battle_2",
                         "name": "Glutweberin",
-                        "description": "Sennara zieht Flammenadern durch das Schlachtfeld.",
+                        "description":
+                            "Sennara zieht Flammenadern durch das Schlachtfeld.",
                         "difficulty": 12,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "fire",
+                        "groundTexture": "festival_sommer",
+                        "skyboxTexture": "festival_sommer",
                         "node": {
                             "x": 0.50,
                             "y": 0.40
@@ -1126,8 +1161,8 @@
                         "enemy": {
                             "name": "Sennara der Flammenader",
                             "image": "preview_sennara",
-                            "model": "sennara",
-                            "texture": "sennara_texture_original",
+                            "model": "jirgin",
+                            "texture": null,
                             "hp": 590,
                             "attack": 43,
                             "element": "Fire"
@@ -1148,10 +1183,11 @@
                     {
                         "id": "event_flame_rift_surge_battle_3",
                         "name": "Surge Core",
-                        "description": "Der Flammenkern explodiert im finalen Bosskampf.",
+                        "description":
+                            "Der Flammenkern explodiert im finalen Bosskampf.",
                         "difficulty": 15,
-                        "groundTexture": "sar_bg",
-                        "skyboxTexture": "fire",
+                        "groundTexture": "festival_sommer",
+                        "skyboxTexture": "festival_sommer",
                         "node": {
                             "x": 0.82,
                             "y": 0.50
@@ -1159,8 +1195,8 @@
                         "boss": {
                             "name": "Surge Core Titan",
                             "image": "preview_sennara",
-                            "model": "sennara",
-                            "texture": "sennara_texture_original",
+                            "model": "jirgin",
+                            "texture": null,
                             "hp": 900,
                             "attack": 57,
                             "element": "Fire"

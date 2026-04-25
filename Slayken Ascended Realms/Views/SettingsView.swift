@@ -182,7 +182,10 @@ struct SettingsView: View {
                             musicManager.isEnabled
                                 ? Color.red.opacity(0.85)
                                 : Color.green.opacity(0.85),
-                            in: RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            in: RoundedRectangle(
+                                cornerRadius: 10,
+                                style: .continuous
+                            )
                         )
                         .foregroundStyle(.white)
                 }

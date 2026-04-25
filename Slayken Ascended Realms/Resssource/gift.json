@@ -3,48 +3,76 @@
         "id": "giftbox_welcome",
         "title": "Willkommensbox",
         "subtitle": "Soforthilfe fuer neue Helden",
-        "message": "Eine kleine Startbox mit Muenzen und Kristallen fuer den Einstieg.",
+        "message":
+            "Eine kleine Startbox mit Muenzen und Kristallen fuer den Einstieg.",
         "buttonTitle": "Box vergeben",
         "icon": "gift.fill",
         "rewards": [
-            { "currency": "coins", "amount": 2500 },
-            { "currency": "crystals", "amount": 120 }
+            {
+                "currency": "coins",
+                "amount": 2500
+            },
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
         ]
     },
     {
         "id": "giftbox_event",
         "title": "Eventbox",
         "subtitle": "Belohnung fuer Sonderaktionen",
-        "message": "Perfekt fuer Eventtage oder kleine Live-Geschenke an den Spieler.",
+        "message":
+            "Perfekt fuer Eventtage oder kleine Live-Geschenke an den Spieler.",
         "buttonTitle": "Eventbox geben",
         "icon": "sparkles.rectangle.stack.fill",
         "rewards": [
-            { "currency": "coins", "amount": 4000 },
-            { "currency": "crystals", "amount": 220 }
+            {
+                "currency": "coins",
+                "amount": 4000
+            },
+            {
+                "currency": "crystals",
+                "amount": 220
+            }
         ]
     },
     {
         "id": "giftbox_battle",
         "title": "Kriegskasse",
         "subtitle": "Vorbereitung auf harte Kaempfe",
-        "message": "Diese Box fuellt die Kasse fuer neue Versuche und Upgrades.",
+        "message":
+            "Diese Box fuellt die Kasse fuer neue Versuche und Upgrades.",
         "buttonTitle": "Kasse senden",
         "icon": "shield.fill",
         "rewards": [
-            { "currency": "coins", "amount": 6000 },
-            { "currency": "crystals", "amount": 150 }
+            {
+                "currency": "coins",
+                "amount": 6000
+            },
+            {
+                "currency": "crystals",
+                "amount": 150
+            }
         ]
     },
     {
         "id": "giftbox_crystal",
         "title": "Kristallbox",
         "subtitle": "Fokus auf Premium-Ressourcen",
-        "message": "Wenn der Spieler mehr Beschwoerungen braucht, ist diese Box passend.",
+        "message":
+            "Wenn der Spieler mehr Beschwoerungen braucht, ist diese Box passend.",
         "buttonTitle": "Kristallbox geben",
         "icon": "diamond.fill",
         "rewards": [
-            { "currency": "coins", "amount": 2000 },
-            { "currency": "crystals", "amount": 350 }
+            {
+                "currency": "coins",
+                "amount": 2000
+            },
+            {
+                "currency": "crystals",
+                "amount": 350
+            }
         ]
     },
     {
@@ -55,20 +83,33 @@
         "buttonTitle": "Legendengeschenk geben",
         "icon": "crown.fill",
         "rewards": [
-            { "currency": "coins", "amount": 12000 },
-            { "currency": "crystals", "amount": 700 }
+            {
+                "currency": "coins",
+                "amount": 12000
+            },
+            {
+                "currency": "crystals",
+                "amount": 700
+            }
         ]
     },
     {
         "id": "giftbox_maintenance",
         "title": "Maintenance Box",
         "subtitle": "Ausgleich fuer Wartezeiten",
-        "message": "Ideal als Entschaedigung nach Fixes, Updates oder Downtime.",
+        "message":
+            "Ideal als Entschaedigung nach Fixes, Updates oder Downtime.",
         "buttonTitle": "Entschaedigung geben",
         "icon": "wrench.and.screwdriver.fill",
         "rewards": [
-            { "currency": "coins", "amount": 5000 },
-            { "currency": "crystals", "amount": 280 }
+            {
+                "currency": "coins",
+                "amount": 5000
+            },
+            {
+                "currency": "crystals",
+                "amount": 280
+            }
         ]
     }
 ]

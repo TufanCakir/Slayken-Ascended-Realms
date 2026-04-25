@@ -33,7 +33,8 @@ enum SummonService {
         )
 
         if let guarantee = banner.guarantee,
-           guarantee.appliesOnSummon == summonNumber {
+            guarantee.appliesOnSummon == summonNumber
+        {
             let guaranteedPool = weightedPool.filter {
                 matchesGuarantee($0.0, guarantee: guarantee)
             }

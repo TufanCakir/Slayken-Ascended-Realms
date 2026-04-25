@@ -2,6 +2,8 @@
 //  StoryArchiveView.swift
 //  Slayken Ascended Realms
 //
+//  Created by Tufan Cakir on 10.04.26.
+//
 
 import SwiftUI
 
@@ -18,7 +20,6 @@ struct StoryArchiveView: View {
 
     var body: some View {
         ZStack {
-            backgroundLayer
 
             VStack(spacing: 0) {
                 header
@@ -40,28 +41,23 @@ struct StoryArchiveView: View {
                 activeCutscene = nil
             }
         }
-    }
+        .background {
+            ZStack {
+                if let theme = theme.selectedTheme {
+                    Image(theme.background)
+                        .resizable()
+                        .scaledToFill()
+                }
 
-    private var backgroundLayer: some View {
-        ZStack {
-            Color.black.ignoresSafeArea()
-
-            if let activeTheme {
-                Image(activeTheme.background)
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                    .opacity(0.32)
+                LinearGradient(
+                    colors: [
+                        Color.black.opacity(0.2),
+                        Color.black.opacity(0.6),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
             }
-
-            LinearGradient(
-                colors: [
-                    Color.black.opacity(0.30),
-                    Color.black.opacity(0.82),
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
             .ignoresSafeArea()
         }
     }
@@ -75,7 +71,10 @@ struct StoryArchiveView: View {
                     .frame(width: 40, height: 40)
                     .background(
                         .white.opacity(0.13),
-                        in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        in: RoundedRectangle(
+                            cornerRadius: 8,
+                            style: .continuous
+                        )
                     )
             }
             .buttonStyle(.plain)
@@ -131,7 +130,10 @@ struct StoryArchiveView: View {
         }
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.white.opacity(0.075), in: RoundedRectangle(cornerRadius: 8))
+        .background(
+            .white.opacity(0.075),
+            in: RoundedRectangle(cornerRadius: 8)
+        )
         .overlay(
             RoundedRectangle(cornerRadius: 8)
                 .stroke(.white.opacity(0.13), lineWidth: 1)
@@ -141,12 +143,14 @@ struct StoryArchiveView: View {
     private func pointSection(_ point: GlobeEventPoint) -> some View {
         VStack(alignment: .leading, spacing: 9) {
             HStack(spacing: 10) {
-                Image(point.nodeImage ?? point.mapImage)
+                Image(point.resolvedNodeImage)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 58, height: 42)
                     .clipped()
-                    .overlay(Rectangle().stroke(.white.opacity(0.18), lineWidth: 1))
+                    .overlay(
+                        Rectangle().stroke(.white.opacity(0.18), lineWidth: 1)
+                    )
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(point.title)
@@ -199,16 +203,24 @@ struct StoryArchiveView: View {
 
             if !battle.story.isEmpty {
                 VStack(alignment: .leading, spacing: 6) {
-                    ForEach(Array(battle.story.enumerated()), id: \.offset) { _, line in
+                    ForEach(Array(battle.story.enumerated()), id: \.offset) {
+                        _,
+                        line in
                         storyLine(line)
                     }
                 }
                 .padding(10)
-                .background(.white.opacity(0.055), in: RoundedRectangle(cornerRadius: 8))
+                .background(
+                    .white.opacity(0.055),
+                    in: RoundedRectangle(cornerRadius: 8)
+                )
             }
         }
         .padding(10)
-        .background(.white.opacity(0.045), in: RoundedRectangle(cornerRadius: 8))
+        .background(
+            .white.opacity(0.045),
+            in: RoundedRectangle(cornerRadius: 8)
+        )
     }
 
     private func storyLine(_ line: StoryLine) -> some View {

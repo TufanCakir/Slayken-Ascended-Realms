@@ -17,7 +17,7 @@ struct ThemeSelectView: View {
             ZStack {
                 // 🌑 BACKGROUND (aktuelles Theme)
                 if let current = theme.selectedTheme {
-                 
+
                     LinearGradient(
                         colors: [
                             current.primary.color,

@@ -24,9 +24,11 @@ final class MusicManager: NSObject, ObservableObject {
 
     override init() {
         self.tracks = loadMusicTracks()
-        let savedVolume = UserDefaults.standard.object(forKey: volumeKey) as? Double
+        let savedVolume =
+            UserDefaults.standard.object(forKey: volumeKey) as? Double
         self.volume = savedVolume ?? 0.7
-        let savedEnabled = UserDefaults.standard.object(forKey: enabledKey) as? Bool
+        let savedEnabled =
+            UserDefaults.standard.object(forKey: enabledKey) as? Bool
         self.isEnabled = savedEnabled ?? true
         super.init()
         configureAudioSession()
@@ -67,7 +69,11 @@ final class MusicManager: NSObject, ObservableObject {
     private func configureAudioSession() {
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.ambient, mode: .default, options: [.mixWithOthers])
+            try session.setCategory(
+                .ambient,
+                mode: .default,
+                options: [.mixWithOthers]
+            )
             try session.setActive(true)
         } catch {
             return

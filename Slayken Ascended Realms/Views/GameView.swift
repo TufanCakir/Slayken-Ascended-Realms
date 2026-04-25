@@ -36,6 +36,7 @@ struct GameView: View {
     @State private var showSupport = false
     @State private var showNews = false
     @State private var showStoryArchive = false
+    @State private var showEventArchive = false
     @State private var showSettings = false
     @State private var showGlobeEvents = false
     @State private var showSummon = false
@@ -189,6 +190,9 @@ struct GameView: View {
                     onArchive: {
                         showStoryArchive = true
                     },
+                    onEventArchive: {
+                        showEventArchive = true
+                    },
                     onGift: {
                         showGift = true
                     },
@@ -232,7 +236,7 @@ struct GameView: View {
                 )
                 .environmentObject(gameState)
                 .environmentObject(theme)
-                    .background(.black)
+                .background(.black)
             }
             .fullScreenCover(isPresented: $showDailyLogin) {
                 DailyLoginView(
@@ -247,11 +251,18 @@ struct GameView: View {
                 .background(.black)
             }
             .fullScreenCover(isPresented: $showStoryArchive) {
-                StoryArchiveView(chapters: gameState.eventChapters) {
+                StoryArchiveView(chapters: storyArchiveChapters) {
                     showStoryArchive = false
                 }
                 .environmentObject(theme)
                 .ignoresSafeArea()
+                .background(.black)
+            }
+            .fullScreenCover(isPresented: $showEventArchive) {
+                EventArchiveView(chapters: eventArchiveChapters) {
+                    showEventArchive = false
+                }
+                .environmentObject(theme)
                 .background(.black)
             }
             .fullScreenCover(isPresented: $showSettings) {
@@ -372,6 +383,11 @@ struct GameView: View {
                             selectedTab = .game
                             showStoryArchive = true
                         },
+                        onEventArchive: {
+                            showGlobeEvents = false
+                            selectedTab = .game
+                            showEventArchive = true
+                        },
                         onGift: {
                             showGlobeEvents = false
                             selectedTab = .game
@@ -427,6 +443,14 @@ struct GameView: View {
         )
     }
 
+    private var storyArchiveChapters: [GlobeEventChapter] {
+        gameState.eventChapters.filter { !isEventChapter($0) }
+    }
+
+    private var eventArchiveChapters: [GlobeEventChapter] {
+        gameState.eventChapters.filter { isEventChapter($0) }
+    }
+
     private var completedBattleIDs: Set<String> {
         Set(completedBattles.map(\.battleID))
     }
@@ -437,15 +461,19 @@ struct GameView: View {
 
     private var activePreviewChapter: GlobeEventChapter? {
         if let chapter = gameState.activeEventChapter,
-           isChapterUnlocked(chapter) {
+            isChapterUnlocked(chapter)
+        {
             return chapter
         }
         return gameState.eventChapters.first { isChapterUnlocked($0) }
     }
 
-    private func activePreviewPoint(for chapter: GlobeEventChapter) -> GlobeEventPoint? {
+    private func activePreviewPoint(for chapter: GlobeEventChapter)
+        -> GlobeEventPoint?
+    {
         if chapter.id == gameState.activeEventChapterID,
-           let point = gameState.activeEventPoint {
+            let point = gameState.activeEventPoint
+        {
             return point
         }
         return chapter.points.first
@@ -457,7 +485,10 @@ struct GameView: View {
         }
         guard !isEventChapter(chapter) else { return true }
 
-        guard let index = gameState.eventChapters.firstIndex(where: { $0.id == chapter.id })
+        guard
+            let index = gameState.eventChapters.firstIndex(where: {
+                $0.id == chapter.id
+            })
         else {
             return false
         }

@@ -442,7 +442,10 @@ struct SummonView: View {
             PlayerInventoryStore.addOwnedCard(cardID: card.id, in: modelContext)
         }
 
-        PlayerInventoryStore.incrementSummonCount(for: banner.id, in: modelContext)
+        PlayerInventoryStore.incrementSummonCount(
+            for: banner.id,
+            in: modelContext
+        )
         lastSummon = result
         showResult = true
         message = ""
@@ -701,7 +704,9 @@ private struct SummonBannerInfoSheet: View {
     private var poolRows: [PoolRow] {
         banner.pool.compactMap { entry in
             if let characterID = entry.characterID,
-               let character = characters.first(where: { $0.id == characterID }) {
+                let character = characters.first(where: { $0.id == characterID }
+                )
+            {
                 return PoolRow(
                     id: character.id,
                     name: character.name,
@@ -713,7 +718,8 @@ private struct SummonBannerInfoSheet: View {
             }
 
             if let cardID = entry.cardID,
-               let card = cards.first(where: { $0.id == cardID }) {
+                let card = cards.first(where: { $0.id == cardID })
+            {
                 return PoolRow(
                     id: card.id,
                     name: card.name,
@@ -732,7 +738,8 @@ private struct SummonBannerInfoSheet: View {
         let summonNumber = guarantee.appliesOnSummon ?? 1
         let type = guarantee.dropType ?? "drop"
         if let rarity = guarantee.rarity {
-            return "On summon \(summonNumber), guarantees a \(stars(rarity)) \(type)."
+            return
+                "On summon \(summonNumber), guarantees a \(stars(rarity)) \(type)."
         }
         return "On summon \(summonNumber), guarantees a \(type)."
     }
@@ -740,7 +747,8 @@ private struct SummonBannerInfoSheet: View {
     private func costText(_ cost: [CurrencyAmount]) -> String {
         guard !cost.isEmpty else { return "Free" }
         return cost.map { item in
-            let name = currencies.first { $0.code == item.currency }?.name
+            let name =
+                currencies.first { $0.code == item.currency }?.name
                 ?? item.currency
             return "\(item.amount) \(name)"
         }

@@ -86,7 +86,9 @@ struct GiftView: View {
                         .foregroundStyle(.white)
 
                     Text(gift.subtitle)
-                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .font(
+                            .system(size: 13, weight: .bold, design: .rounded)
+                        )
                         .foregroundStyle(.white.opacity(0.72))
                 }
 
@@ -114,13 +116,22 @@ struct GiftView: View {
                     .font(.system(size: 15, weight: .black, design: .rounded))
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
-                    .background(accentColor, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .background(
+                        accentColor,
+                        in: RoundedRectangle(
+                            cornerRadius: 16,
+                            style: .continuous
+                        )
+                    )
                     .foregroundStyle(.white)
             }
             .buttonStyle(.plain)
         }
         .padding(18)
-        .background(Color.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .background(
+            Color.white.opacity(0.08),
+            in: RoundedRectangle(cornerRadius: 24, style: .continuous)
+        )
         .overlay(
             RoundedRectangle(cornerRadius: 24, style: .continuous)
                 .stroke(Color.white.opacity(0.1), lineWidth: 1)
@@ -147,7 +158,10 @@ struct GiftView: View {
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
-        .background(Color.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .background(
+            Color.white.opacity(0.06),
+            in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+        )
     }
 
     private var accentColor: Color {

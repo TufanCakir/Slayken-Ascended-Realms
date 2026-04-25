@@ -125,7 +125,8 @@ enum PlayerInventoryStore {
         return ((try? context.fetchCount(descriptor)) ?? 0) > 0
     }
 
-    static func markCutsceneSeen(_ cutsceneID: String, in context: ModelContext) {
+    static func markCutsceneSeen(_ cutsceneID: String, in context: ModelContext)
+    {
         guard !hasSeenCutscene(cutsceneID, in: context) else { return }
         context.insert(SeenCutsceneRecord(cutsceneID: cutsceneID))
         save(context)
@@ -188,7 +189,9 @@ enum PlayerInventoryStore {
         return progress
     }
 
-    static func accountProgress(in context: ModelContext) -> PlayerAccountProgress {
+    static func accountProgress(in context: ModelContext)
+        -> PlayerAccountProgress
+    {
         let descriptor = FetchDescriptor<PlayerAccountProgress>(
             predicate: #Predicate { $0.id == "ascended" }
         )
@@ -233,11 +236,13 @@ enum PlayerInventoryStore {
         guard !rewards.isEmpty else { return nil }
 
         let progress = dailyLoginProgress(in: context)
-        guard let nextIndex = nextDailyGiftIndex(
-            progress: progress,
-            rewards: rewards,
-            now: now
-        ) else {
+        guard
+            let nextIndex = nextDailyGiftIndex(
+                progress: progress,
+                rewards: rewards,
+                now: now
+            )
+        else {
             return nil
         }
 
@@ -253,11 +258,12 @@ enum PlayerInventoryStore {
         now: Date = .now,
         in context: ModelContext
     ) -> DailyLoginRewardState? {
-        guard let availableGift = dailyLoginGift(
-            from: rewards,
-            now: now,
-            in: context
-        )
+        guard
+            let availableGift = dailyLoginGift(
+                from: rewards,
+                now: now,
+                in: context
+            )
         else {
             return nil
         }
@@ -268,7 +274,11 @@ enum PlayerInventoryStore {
         let calendar = Calendar.current
 
         if let lastClaimedAt = progress.lastClaimedAt,
-            isNextCalendarDay(after: lastClaimedAt, comparedTo: now, calendar: calendar)
+            isNextCalendarDay(
+                after: lastClaimedAt,
+                comparedTo: now,
+                calendar: calendar
+            )
         {
             progress.streakCount += 1
         } else {
@@ -354,8 +364,11 @@ enum PlayerInventoryStore {
             return nil
         }
 
-        if isNextCalendarDay(after: lastClaimedAt, comparedTo: now, calendar: calendar)
-        {
+        if isNextCalendarDay(
+            after: lastClaimedAt,
+            comparedTo: now,
+            calendar: calendar
+        ) {
             return progress.streakCount % rewards.count
         }
 

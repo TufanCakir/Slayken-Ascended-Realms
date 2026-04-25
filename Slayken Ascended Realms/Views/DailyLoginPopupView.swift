@@ -50,7 +50,9 @@ struct DailyLoginPopupView: View {
 
                 VStack(spacing: 8) {
                     Text("Tag \(rewardState.dayNumber)")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(
+                            .system(size: 16, weight: .bold, design: .rounded)
+                        )
                         .foregroundStyle(accentColor)
 
                     Image(systemName: rewardState.reward.icon)
@@ -63,11 +65,15 @@ struct DailyLoginPopupView: View {
                         .foregroundStyle(.white)
 
                     Text(rewardState.reward.subtitle)
-                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .font(
+                            .system(size: 15, weight: .bold, design: .rounded)
+                        )
                         .foregroundStyle(.white.opacity(0.76))
 
                     Text(rewardState.reward.message)
-                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        .font(
+                            .system(size: 14, weight: .medium, design: .rounded)
+                        )
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.white.opacity(0.88))
                 }
@@ -80,7 +86,9 @@ struct DailyLoginPopupView: View {
 
                 Button(action: onClaim) {
                     Text(rewardState.reward.buttonTitle)
-                        .font(.system(size: 15, weight: .black, design: .rounded))
+                        .font(
+                            .system(size: 15, weight: .black, design: .rounded)
+                        )
                         .tracking(1)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)

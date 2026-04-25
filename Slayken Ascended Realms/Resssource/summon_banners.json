@@ -2,7 +2,8 @@
     {
         "id": "release_max_skill_gift",
         "name": "Release Gift: Max Skill",
-        "subtitle": "Kostenloses Release Banner. Einmal nutzbar, garantiert ein 5-Star Skill.",
+        "subtitle":
+            "Kostenloses Release Banner. Einmal nutzbar, garantiert ein 5-Star Skill.",
         "category": "Special",
         "image": "void",
         "cost": [],
@@ -61,7 +62,7 @@
                 "weight": 75
             },
             {
-                "characterID": "sennara",
+                "characterID": "sinara",
                 "weight": 95
             }
         ]
@@ -69,7 +70,8 @@
     {
         "id": "event_shadow_hero_guarantee",
         "name": "Schattenmond Hero",
-        "subtitle": "Event Banner. Beim 10. Summon ist ein 5-Star Character garantiert.",
+        "subtitle":
+            "Event Banner. Beim 10. Summon ist ein 5-Star Character garantiert.",
         "category": "Event",
         "image": "sar_bg",
         "cost": [

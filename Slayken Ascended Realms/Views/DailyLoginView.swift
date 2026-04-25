@@ -77,25 +77,35 @@ struct DailyLoginView: View {
 
     private var statusCard: some View {
         VStack(spacing: 14) {
-            Text(availableReward == nil ? "Heute bereits eingesammelt" : "Belohnung verfuegbar")
-                .font(.system(size: 12, weight: .black, design: .rounded))
-                .tracking(2)
-                .foregroundStyle(.white.opacity(0.72))
+            Text(
+                availableReward == nil
+                    ? "Heute bereits eingesammelt" : "Belohnung verfuegbar"
+            )
+            .font(.system(size: 12, weight: .black, design: .rounded))
+            .tracking(2)
+            .foregroundStyle(.white.opacity(0.72))
 
             if let availableReward {
-                Text("Tag \(availableReward.dayNumber): \(availableReward.reward.title)")
-                    .font(.system(size: 20, weight: .bold, design: .serif))
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.white)
+                Text(
+                    "Tag \(availableReward.dayNumber): \(availableReward.reward.title)"
+                )
+                .font(.system(size: 20, weight: .bold, design: .serif))
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.white)
 
                 Button(action: onClaim) {
                     Text(availableReward.reward.buttonTitle)
-                        .font(.system(size: 15, weight: .black, design: .rounded))
+                        .font(
+                            .system(size: 15, weight: .black, design: .rounded)
+                        )
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
                         .background(
                             Color(red: 0.84, green: 0.34, blue: 0.22),
-                            in: RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            in: RoundedRectangle(
+                                cornerRadius: 16,
+                                style: .continuous
+                            )
                         )
                         .foregroundStyle(.white)
                 }
@@ -108,7 +118,10 @@ struct DailyLoginView: View {
             }
         }
         .padding(20)
-        .background(Color.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .background(
+            Color.white.opacity(0.08),
+            in: RoundedRectangle(cornerRadius: 24, style: .continuous)
+        )
         .overlay(
             RoundedRectangle(cornerRadius: 24, style: .continuous)
                 .stroke(Color.white.opacity(0.1), lineWidth: 1)
@@ -116,7 +129,9 @@ struct DailyLoginView: View {
         .padding(.horizontal, 20)
     }
 
-    private func rewardDayCard(_ reward: DailyLoginRewardDefinition) -> some View {
+    private func rewardDayCard(_ reward: DailyLoginRewardDefinition)
+        -> some View
+    {
         let isHighlighted = reward.day == highlightedDay
 
         return VStack(alignment: .leading, spacing: 12) {
@@ -128,7 +143,9 @@ struct DailyLoginView: View {
                 Spacer()
 
                 Image(systemName: reward.icon)
-                    .foregroundStyle(isHighlighted ? Color.orange : .white.opacity(0.72))
+                    .foregroundStyle(
+                        isHighlighted ? Color.orange : .white.opacity(0.72)
+                    )
             }
 
             Text(reward.title)
@@ -142,18 +159,33 @@ struct DailyLoginView: View {
             VStack(spacing: 8) {
                 ForEach(reward.rewards) { item in
                     HStack {
-                        Image(systemName: currencies.first(where: { $0.code == item.currency })?.icon ?? "gift.fill")
-                            .foregroundStyle(Color.orange)
-                            .frame(width: 20)
+                        Image(
+                            systemName: currencies.first(where: {
+                                $0.code == item.currency
+                            })?.icon ?? "gift.fill"
+                        )
+                        .foregroundStyle(Color.orange)
+                        .frame(width: 20)
 
-                        Text(currencies.first(where: { $0.code == item.currency })?.name ?? item.currency.capitalized)
-                            .font(.system(size: 14, weight: .bold, design: .rounded))
-                            .foregroundStyle(.white)
+                        Text(
+                            currencies.first(where: { $0.code == item.currency }
+                            )?.name ?? item.currency.capitalized
+                        )
+                        .font(
+                            .system(size: 14, weight: .bold, design: .rounded)
+                        )
+                        .foregroundStyle(.white)
 
                         Spacer()
 
                         Text("+\(item.amount)")
-                            .font(.system(size: 14, weight: .black, design: .rounded))
+                            .font(
+                                .system(
+                                    size: 14,
+                                    weight: .black,
+                                    design: .rounded
+                                )
+                            )
                             .foregroundStyle(.white.opacity(0.88))
                     }
                 }
@@ -161,13 +193,16 @@ struct DailyLoginView: View {
         }
         .padding(16)
         .background(
-            (isHighlighted ? Color.orange.opacity(0.18) : Color.white.opacity(0.07)),
+            (isHighlighted
+                ? Color.orange.opacity(0.18) : Color.white.opacity(0.07)),
             in: RoundedRectangle(cornerRadius: 20, style: .continuous)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .stroke(
-                    isHighlighted ? Color.orange.opacity(0.45) : Color.white.opacity(0.08),
+                    isHighlighted
+                        ? Color.orange.opacity(0.45)
+                        : Color.white.opacity(0.08),
                     lineWidth: 1
                 )
         )

@@ -15,32 +15,108 @@ struct RootView: View {
 
     private enum Screen {
         case start
+        case introVideo
+        case tutorialBattle
+        case tutorialArchive
+        case createClass
         case game
         case battle
+    }
+
+    private enum TutorialLaunchSource {
+        case initial
+        case archive
     }
 
     @State private var currentScreen: Screen = .start
     @State private var activeEnemy: CharacterStats?
     @State private var isLoading = false
     @State private var loadingProgress = 0.0
-    @State private var loadingBackground = "bg_epic"
+    @State private var loadingBackground = "theme_epic"
     @State private var loadingTask: Task<Void, Never>?
     @State private var pendingDailyReward: DailyLoginRewardState?
+    @State private var activeTutorial: GameTutorialDefinition?
+    @State private var activeIntroIndex = 0
+    @State private var tutorialLaunchSource: TutorialLaunchSource = .initial
 
     private let dailyLoginRewards = loadDailyLoginRewardDefinitions()
+    private let introVideos = loadIntroVideoDefinitions()
+    private let tutorials = loadTutorialDefinitions()
+    private let introFlowKey = "hasCompletedIntroFlow"
 
     var body: some View {
         ZStack {
             switch currentScreen {
             case .start:
                 StartView {
-                    transition(to: .game)
+                    startGameFlow()
                 }
 
+            case .introVideo:
+                if let activeIntroVideo {
+                    IntroVideoView(
+                        introVideo: activeIntroVideo,
+                        onFinish: {
+                            playNextIntroOrBeginTutorial()
+                        }
+                    )
+                    .id(activeIntroVideo.id)
+                }
+
+            case .tutorialBattle:
+                if let activeTutorial,
+                    let primaryEnemy = activeTutorial.primaryEnemy
+                {
+                    BattleView(
+                        player: activeTutorial.player,
+                        enemy: primaryEnemy,
+                        enemiesOverride: activeTutorial.allEnemies,
+                        onExit: {
+                            handleTutorialExit()
+                        },
+                        tutorialConfig: .init(
+                            title: activeTutorial.title,
+                            objective: activeTutorial.objective,
+                            retreatEnemyIndex: activeTutorial.retreatEnemyIndex,
+                            enemyRetreatThreshold: activeTutorial
+                                .enemyRetreatThreshold,
+                            onEnemyRetreat: completeTutorialBattle,
+                            onBattleComplete: completeTutorialBattle
+                        )
+                    )
+                }
+
+            case .tutorialArchive:
+                TutorialArchiveView(
+                    tutorials: tutorials,
+                    onClose: {
+                        resetToStart()
+                    },
+                    onReplay: { tutorial in
+                        replayTutorial(tutorial)
+                    }
+                )
+                .environmentObject(theme)
+
+            case .createClass:
+                CreateClassView {
+                    completeClassCreation(with: $0)
+                }
+                .environmentObject(gameState)
+                .environmentObject(theme)
+
             case .game:
-                GameView(onResetGame: {
-                    resetToStart()
-                }) { enemy in
+                GameView(
+                    onResetGame: {
+                        resetGameProgress()
+                    },
+                    onOpenTutorialArchive: {
+                        openTutorialArchive(fromGame: true)
+                    },
+                    onOpenCreateClass: {
+                        refreshDailyGift()
+                    }
+                ) { enemy in
                     transition(to: .battle, enemy: enemy)
                 }
             case .battle:
@@ -88,6 +164,14 @@ struct RootView: View {
         switch currentScreen {
         case .start:
             return "start"
+        case .introVideo:
+            return "introVideo"
+        case .tutorialBattle:
+            return "tutorialBattle"
+        case .tutorialArchive:
+            return "tutorialArchive"
+        case .createClass:
+            return "createClass"
         case .game:
             return "game"
         case .battle:
@@ -99,7 +183,8 @@ struct RootView: View {
         let assets = gameState.backgrounds.map(\.image)
         if assets.isEmpty {
             return [
-                "bg_epic", "sar_bg", "map", "country", "bg_arena", "fire",
+                "theme_epic", "theme_fire", "sar_bg", "map", "country",
+                "bg_arena", "fire",
                 "ice", "void",
             ]
         }
@@ -119,6 +204,8 @@ struct RootView: View {
         loadingTask?.cancel()
         gameState.clearBattleSelection()
         activeEnemy = nil
+        activeIntroIndex = 0
+        activeTutorial = nil
         loadingProgress = 0
         refreshDailyGift()
 
@@ -134,7 +221,7 @@ struct RootView: View {
     {
         let images = loadingImages
         loadingProgress = 0
-        loadingBackground = images.randomElement() ?? "sar_bg"
+        loadingBackground = images.randomElement() ?? "bg_sar"
 
         withAnimation(.easeInOut(duration: 0.2)) {
             isLoading = true
@@ -191,6 +278,100 @@ struct RootView: View {
             in: modelContext
         )
         pendingDailyReward = nil
+    }
+
+    private var hasCompletedIntroFlow: Bool {
+        UserDefaults.standard.bool(forKey: introFlowKey)
+    }
+
+    private var introTutorial: GameTutorialDefinition? {
+        tutorials.first
+    }
+
+    private var activeIntroVideo: IntroVideoDefinition? {
+        guard openingIntroVideos.indices.contains(activeIntroIndex) else {
+            return nil
+        }
+        return openingIntroVideos[activeIntroIndex]
+    }
+
+    private var openingIntroVideos: [IntroVideoDefinition] {
+        introVideos
+            .filter { ($0.flow ?? "opening") == "opening" }
+            .sorted {
+                ($0.order ?? .max, $0.id) < ($1.order ?? .max, $1.id)
+            }
+    }
+
+    private func startGameFlow() {
+        if hasCompletedIntroFlow || introTutorial == nil {
+            transition(to: .game)
+        } else if !openingIntroVideos.isEmpty {
+            activeIntroIndex = 0
+            tutorialLaunchSource = .initial
+            transition(to: .introVideo)
+        } else {
+            beginTutorialBattle()
+        }
+    }
+
+    private func completeTutorialBattle() {
+        if tutorialLaunchSource == .archive || hasCompletedIntroFlow {
+            transition(to: .tutorialArchive)
+        } else {
+            transition(to: .createClass)
+        }
+    }
+
+    private func completeClassCreation(with character: CharacterStats) {
+        gameState.saveCharacter(character)
+        UserDefaults.standard.set(true, forKey: introFlowKey)
+        transition(to: .game)
+    }
+
+    private func openTutorialArchive(fromGame: Bool = false) {
+        tutorialLaunchSource = .archive
+        activeTutorial = nil
+        transition(to: .tutorialArchive)
+        if fromGame {
+            gameState.clearBattleSelection()
+        }
+    }
+
+    private func replayTutorial(_ tutorial: GameTutorialDefinition) {
+        activeTutorial = tutorial
+        tutorialLaunchSource = .archive
+        transition(to: .tutorialBattle)
+    }
+
+    private func beginTutorialBattle() {
+        activeIntroIndex = 0
+        activeTutorial = introTutorial
+        tutorialLaunchSource = .initial
+        transition(to: .tutorialBattle)
+    }
+
+    private func playNextIntroOrBeginTutorial() {
+        let nextIndex = activeIntroIndex + 1
+        if openingIntroVideos.indices.contains(nextIndex) {
+            activeIntroIndex = nextIndex
+        } else {
+            beginTutorialBattle()
+        }
+    }
+
+    private func handleTutorialExit() {
+        if tutorialLaunchSource == .archive || hasCompletedIntroFlow {
+            activeTutorial = nil
+            transition(to: .game)
+        } else {
+            resetToStart()
+        }
+    }
+
+    private func resetGameProgress() {
+        UserDefaults.standard.removeObject(forKey: introFlowKey)
+        resetToStart()
     }
 }
 

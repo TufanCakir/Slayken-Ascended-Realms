@@ -41,6 +41,7 @@ struct GameView: View {
     @State private var showGlobeEvents = false
     @State private var showSummon = false
     @State private var showCharacter = false
+    @State private var showCreateClass = false
     @State private var showGift = false
     @State private var showDailyLogin = false
     @State private var selectedTab: GameTab = .game
@@ -49,13 +50,19 @@ struct GameView: View {
     private let dailyLoginRewards = loadDailyLoginRewardDefinitions()
 
     let onResetGame: () -> Void
+    let onOpenTutorialArchive: () -> Void
+    let onOpenCreateClass: () -> Void
     let onStartBattle: (CharacterStats) -> Void
 
     init(
         onResetGame: @escaping () -> Void = {},
+        onOpenTutorialArchive: @escaping () -> Void = {},
+        onOpenCreateClass: @escaping () -> Void = {},
         onStartBattle: @escaping (CharacterStats) -> Void
     ) {
         self.onResetGame = onResetGame
+        self.onOpenTutorialArchive = onOpenTutorialArchive
+        self.onOpenCreateClass = onOpenCreateClass
         self.onStartBattle = onStartBattle
     }
 
@@ -187,11 +194,17 @@ struct GameView: View {
                     onNews: {
                         showNews = true
                     },
+                    onCreateClass: {
+                        showCreateClass = true
+                    },
                     onArchive: {
                         showStoryArchive = true
                     },
                     onEventArchive: {
                         showEventArchive = true
+                    },
+                    onTutorialArchive: {
+                        onOpenTutorialArchive()
                     },
                     onGift: {
                         showGift = true
@@ -273,6 +286,10 @@ struct GameView: View {
                     onReset: {
                         showSettings = false
                         onResetGame()
+                    },
+                    onOpenTutorialArchive: {
+                        showSettings = false
+                        onOpenTutorialArchive()
                     }
                 )
                 .environmentObject(gameState)
@@ -290,6 +307,17 @@ struct GameView: View {
                     showCharacter = false
                     selectedTab = .game
                 })
+                .environmentObject(gameState)
+                .environmentObject(theme)
+                .ignoresSafeArea()
+                .background(.black)
+            }
+            .fullScreenCover(isPresented: $showCreateClass) {
+                CreateClassView { character in
+                    gameState.saveCharacter(character)
+                    showCreateClass = false
+                    onOpenCreateClass()
+                }
                 .environmentObject(gameState)
                 .environmentObject(theme)
                 .ignoresSafeArea()
@@ -378,6 +406,11 @@ struct GameView: View {
                             selectedTab = .game
                             showNews = true
                         },
+                        onCreateClass: {
+                            showGlobeEvents = false
+                            selectedTab = .game
+                            showCreateClass = true
+                        },
                         onArchive: {
                             showGlobeEvents = false
                             selectedTab = .game
@@ -387,6 +420,11 @@ struct GameView: View {
                             showGlobeEvents = false
                             selectedTab = .game
                             showEventArchive = true
+                        },
+                        onTutorialArchive: {
+                            showGlobeEvents = false
+                            selectedTab = .game
+                            onOpenTutorialArchive()
                         },
                         onGift: {
                             showGlobeEvents = false

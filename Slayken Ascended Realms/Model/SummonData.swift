@@ -49,11 +49,16 @@ struct SummonBanner: Codable, Identifiable, Equatable {
     let subtitle: String?
     let category: String?
     let image: String
+    let minAscendedLevel: Int?
     let cost: [CurrencyAmount]
     let maxSummons: Int?
     let guarantee: SummonGuarantee?
     let rates: [SummonRate]
     let pool: [SummonPoolEntry]
+
+    var requiredAscendedLevel: Int {
+        max(1, minAscendedLevel ?? 1)
+    }
 }
 
 struct SummonGuarantee: Codable, Equatable {

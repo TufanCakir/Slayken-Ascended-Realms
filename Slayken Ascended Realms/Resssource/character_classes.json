@@ -1,0 +1,275 @@
+[
+    {
+        "id": "assassin",
+        "title": "Assassin",
+        "summary": "Schnell, aggressiv und auf Burst-Schaden fokussiert.",
+        "defaultName": "Kashin",
+        "category": "standard",
+        "minAscendedLevel": 1,
+        "variants": [
+            {
+                "id": "male",
+                "title": "Male",
+                "image": "",
+                "model": "assassine_male_animation",
+                "battleModel": "assassine_male",
+                "texture": "texture_assassine_male_original",
+                "element": "shadow",
+                "hp": 118,
+                "attack": 52
+            },
+            {
+                "id": "female",
+                "title": "Female",
+                "image": "",
+                "model": "assassinin_female_animation",
+                "battleModel": "assassinin_female",
+                "texture": "texture_assassinin_female_original",
+                "element": "shadow",
+                "hp": 114,
+                "attack": 54
+            }
+        ]
+    },
+    {
+        "id": "mage",
+        "title": "Mage",
+        "summary": "Weniger HP, dafuer hohe magische Angriffskraft.",
+        "defaultName": "Arel",
+        "category": "standard",
+        "minAscendedLevel": 1,
+        "variants": [
+            {
+                "id": "male",
+                "title": "Male",
+                "image": "",
+                "model": "mage_male_animation",
+                "battleModel": "mage_male",
+                "texture": "texture_mage_male_original",
+                "element": "arcane",
+                "hp": 96,
+                "attack": 62
+            },
+            {
+                "id": "female",
+                "title": "Female",
+                "image": "",
+                "model": "mage_female_animation",
+                "battleModel": "mage_female",
+                "texture": "texture_mage_female_original",
+                "element": "arcane",
+                "hp": 94,
+                "attack": 64
+            }
+        ]
+    },
+    {
+        "id": "archer",
+        "title": "Archer",
+        "summary":
+            "Praezise Fernangriffe, hohe Mobilitaet und starker Druck aus der Distanz.",
+        "defaultName": "Selin",
+        "category": "standard",
+        "minAscendedLevel": 1,
+        "variants": [
+            {
+                "id": "male",
+                "title": "Male",
+                "image": "",
+                "model": "archer_male_animation",
+                "battleModel": "archer_male",
+                "texture": "texture_archer_male_original",
+                "element": "wind",
+                "hp": 108,
+                "attack": 68
+            },
+            {
+                "id": "female",
+                "title": "Female",
+                "image": "",
+                "model": "archer_female_animation",
+                "battleModel": "archer_female",
+                "texture": "texture_archer_female_original",
+                "element": "wind",
+                "hp": 104,
+                "attack": 70
+            }
+        ]
+    },
+    {
+        "id": "girma",
+        "title": "Girma",
+        "summary":
+            "Eine schwere Heldenklasse mit starker Frontlinie und konstantem Druck.",
+        "defaultName": "Girma",
+        "category": "hero",
+        "minAscendedLevel": 5,
+        "variants": [
+            {
+                "id": "hero",
+                "title": "Hero",
+                "image": "",
+                "model": "girma_animation",
+                "battleModel": "girma",
+                "texture": "texture_girma_original",
+                "element": "earth",
+                "hp": 156,
+                "attack": 66
+            }
+        ]
+    },
+    {
+        "id": "karshe",
+        "title": "Karshe",
+        "summary":
+            "Eine Heldenklasse fuer aggressive Nahkaempfe und schnelle Durchbrueche.",
+        "defaultName": "Karshe",
+        "category": "hero",
+        "minAscendedLevel": 6,
+        "variants": [
+            {
+                "id": "hero",
+                "title": "Hero",
+                "image": "",
+                "model": "karshe_animation",
+                "battleModel": "karshe",
+                "texture": "texture_karshe_original",
+                "element": "fire",
+                "hp": 132,
+                "attack": 78
+            }
+        ]
+    },
+    {
+        "id": "kasa",
+        "title": "Kasa",
+        "summary":
+            "Eine ausgewogene Heldenklasse mit Kontrolle und solider Ueberlebensfaehigkeit.",
+        "defaultName": "Kasa",
+        "category": "hero",
+        "minAscendedLevel": 7,
+        "variants": [
+            {
+                "id": "hero",
+                "title": "Hero",
+                "image": "",
+                "model": "kasa_animation",
+                "battleModel": "kasa",
+                "texture": "texture_kasa_original",
+                "element": "light",
+                "hp": 142,
+                "attack": 72
+            }
+        ]
+    },
+    {
+        "id": "rukuni",
+        "title": "Rukuni",
+        "summary":
+            "Eine praezise Heldenklasse, die Tempo mit gezielten Treffern verbindet.",
+        "defaultName": "Rukuni",
+        "category": "hero",
+        "minAscendedLevel": 8,
+        "variants": [
+            {
+                "id": "hero",
+                "title": "Hero",
+                "image": "",
+                "model": "rukuni_animation",
+                "battleModel": "rukuni",
+                "texture": "texture_rukuni_original",
+                "element": "wind",
+                "hp": 126,
+                "attack": 82
+            }
+        ]
+    },
+    {
+        "id": "shiro",
+        "title": "Shiro",
+        "summary":
+            "Eine seltene Heldenklasse mit hoher magischer Reichweite und Kontrolle.",
+        "defaultName": "Shiro",
+        "category": "hero",
+        "minAscendedLevel": 9,
+        "variants": [
+            {
+                "id": "hero",
+                "title": "Hero",
+                "image": "",
+                "model": "shiro_animation",
+                "battleModel": "shiro",
+                "texture": "texture_shiro_original",
+                "element": "arcane",
+                "hp": 118,
+                "attack": 88
+            }
+        ]
+    },
+    {
+        "id": "tsohon",
+        "title": "Tsohon",
+        "summary":
+            "Eine uralte Heldenklasse mit enormer Stabilitaet und schwerem Einschlag.",
+        "defaultName": "Tsohon",
+        "category": "hero",
+        "minAscendedLevel": 10,
+        "variants": [
+            {
+                "id": "hero",
+                "title": "Hero",
+                "image": "",
+                "model": "tsohon_animation",
+                "battleModel": "tsohon",
+                "texture": "texture_tsohon_original",
+                "element": "earth",
+                "hp": 170,
+                "attack": 74
+            }
+        ]
+    },
+    {
+        "id": "wuri",
+        "title": "Wuri",
+        "summary":
+            "Eine flinke Heldenklasse fuer Ausweichen, Tempo und saubere Finisher.",
+        "defaultName": "Wuri",
+        "category": "hero",
+        "minAscendedLevel": 11,
+        "variants": [
+            {
+                "id": "hero",
+                "title": "Hero",
+                "image": "",
+                "model": "wuri_animation",
+                "battleModel": "wuri",
+                "texture": "texture_wuri_original",
+                "element": "shadow",
+                "hp": 122,
+                "attack": 90
+            }
+        ]
+    },
+    {
+        "id": "yanzu",
+        "title": "Yanzu",
+        "summary":
+            "Eine spaete Heldenklasse mit starker Praesenz, Druck und Endgame-Potenzial.",
+        "defaultName": "Yanzu",
+        "category": "hero",
+        "minAscendedLevel": 12,
+        "variants": [
+            {
+                "id": "hero",
+                "title": "Hero",
+                "image": "",
+                "model": "yanzu_animation",
+                "battleModel": "yanzu",
+                "texture": "texture_yanzu_original",
+                "element": "light",
+                "hp": 148,
+                "attack": 92
+            }
+        ]
+    }
+]

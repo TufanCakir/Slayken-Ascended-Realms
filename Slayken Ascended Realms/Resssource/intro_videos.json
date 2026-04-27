@@ -1,0 +1,28 @@
+[
+    {
+        "id": "opening_intro_1",
+        "flow": "opening",
+        "order": 1,
+        "title": "Ankunft",
+        "text": "Der Riss oeffnet sich und zieht dich in die Ascended Realms.",
+        "video": "intro.mp4"
+    },
+    {
+        "id": "opening_intro_2",
+        "flow": "opening",
+        "order": 2,
+        "title": "Kristallspur",
+        "text":
+            "Zwischen den alten Pfaden regt sich bereits der erste Widerstand.",
+        "video": "kristallspur.mp4"
+    },
+    {
+        "id": "opening_intro_3",
+        "flow": "opening",
+        "order": 3,
+        "title": "Torwache",
+        "text":
+            "Noch bevor du dich sammeln kannst, stellt sich die Vorhut des Feindes entgegen.",
+        "video": "torwache.mp4"
+    }
+]

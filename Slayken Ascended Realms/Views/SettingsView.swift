@@ -28,6 +28,7 @@ struct SettingsView: View {
 
     let onClose: () -> Void
     let onReset: () -> Void
+    let onOpenTutorialArchive: () -> Void
 
     @State private var showResetConfirm = false
 
@@ -39,6 +40,7 @@ struct SettingsView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 16) {
                     audioPanel
+                    tutorialPanel
                     resetPanel
                     dataPanel
                 }
@@ -141,6 +143,53 @@ struct SettingsView: View {
                         in: RoundedRectangle(cornerRadius: 10)
                     )
                     .shadow(color: .red.opacity(0.6), radius: 10)
+                    .foregroundStyle(.white)
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity)
+        .background(
+            .white.opacity(0.07),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(.white.opacity(0.12))
+        )
+    }
+
+    var tutorialPanel: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Label("Tutorial", systemImage: "book.closed.fill")
+                .font(.system(size: 18, weight: .black))
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            Text(
+                "Oeffnet das Tutorial Archiv, damit du abgeschlossene Einfuehrungen erneut spielen kannst."
+            )
+            .font(.system(size: 13, weight: .semibold))
+            .foregroundStyle(.white.opacity(0.7))
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            Button {
+                onOpenTutorialArchive()
+            } label: {
+                Text("TUTORIAL ARCHIV")
+                    .font(.system(size: 14, weight: .black))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background(
+                        LinearGradient(
+                            colors: [.cyan.opacity(0.95), .blue.opacity(0.95)],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        ),
+                        in: RoundedRectangle(cornerRadius: 10)
+                    )
                     .foregroundStyle(.white)
             }
             .buttonStyle(.plain)
@@ -329,7 +378,7 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView(onClose: {}, onReset: {})
+    SettingsView(onClose: {}, onReset: {}, onOpenTutorialArchive: {})
         .environmentObject(GameState())
         .environmentObject(ThemeManager())
         .modelContainer(

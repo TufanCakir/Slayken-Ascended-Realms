@@ -12,8 +12,10 @@ struct GameMiddleDrawerView: View {
 
     let onSupport: () -> Void
     let onNews: () -> Void
+    let onCreateClass: () -> Void
     let onArchive: () -> Void
     let onEventArchive: () -> Void
+    let onTutorialArchive: () -> Void
     let onGift: () -> Void
     let onDailyLogin: () -> Void
     let onSettings: () -> Void
@@ -29,6 +31,11 @@ struct GameMiddleDrawerView: View {
         ),
         MiddleDrawerActionItem(id: .team, title: "Team", systemName: "person"),
         MiddleDrawerActionItem(
+            id: .createClass,
+            title: "Classes",
+            systemName: "person.crop.rectangle.stack"
+        ),
+        MiddleDrawerActionItem(
             id: .summon,
             title: "Summon",
             systemName: "sparkles"
@@ -42,6 +49,11 @@ struct GameMiddleDrawerView: View {
             id: .archive,
             title: "Story",
             systemName: "book"
+        ),
+        MiddleDrawerActionItem(
+            id: .tutorialArchive,
+            title: "Tutorial",
+            systemName: "play.rectangle.on.rectangle"
         ),
         MiddleDrawerActionItem(
             id: .eventArchive,
@@ -154,6 +166,9 @@ struct GameMiddleDrawerView: View {
             selectedTab = .events
         case .team:
             selectedTab = .character
+        case .createClass:
+            selectedTab = .game
+            onCreateClass()
         case .summon:
             selectedTab = .summon
         case .news:
@@ -162,6 +177,9 @@ struct GameMiddleDrawerView: View {
         case .archive:
             selectedTab = .game
             onArchive()
+        case .tutorialArchive:
+            selectedTab = .game
+            onTutorialArchive()
         case .eventArchive:
             selectedTab = .game
             onEventArchive()
@@ -188,9 +206,12 @@ struct GameMiddleDrawerView: View {
             return selectedTab == .events
         case .team:
             return selectedTab == .character
+        case .createClass:
+            return false
         case .summon:
             return selectedTab == .summon
-        case .news, .archive, .eventArchive, .gift, .dailyLogin:
+        case .news, .archive, .tutorialArchive, .eventArchive, .gift,
+            .dailyLogin:
             return false
         case .support:
             return selectedTab == .support
@@ -204,9 +225,11 @@ private enum MiddleDrawerAction {
     case home
     case events
     case team
+    case createClass
     case summon
     case news
     case archive
+    case tutorialArchive
     case eventArchive
     case gift
     case dailyLogin
@@ -225,8 +248,10 @@ private struct MiddleDrawerActionItem: Identifiable {
         selectedTab: .constant(.game),
         onSupport: {},
         onNews: {},
+        onCreateClass: {},
         onArchive: {},
         onEventArchive: {},
+        onTutorialArchive: {},
         onGift: {},
         onDailyLogin: {},
         onSettings: {}

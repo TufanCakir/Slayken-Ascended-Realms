@@ -6,6 +6,7 @@
             "Kostenloses Release Banner. Einmal nutzbar, garantiert ein 5-Star Skill.",
         "category": "Special",
         "image": "bg_void",
+        "minAscendedLevel": 1,
         "cost": [],
         "maxSummons": 1,
         "guarantee": {
@@ -36,6 +37,7 @@
         "subtitle": "Standard Character Banner mit Zaron und Shela.",
         "category": "Character",
         "image": "realm_country",
+        "minAscendedLevel": 1,
         "cost": [
             {
                 "currency": "crystals",
@@ -78,6 +80,7 @@
             "Event Banner. Beim 10. Summon ist ein 5-Star Character garantiert.",
         "category": "Event",
         "image": "bg_sar",
+        "minAscendedLevel": 7,
         "cost": [
             {
                 "currency": "crystals",
@@ -125,6 +128,7 @@
         "subtitle": "Gueltiges Einsteiger-Banner fuer 1-Star Skills.",
         "category": "Skill",
         "image": "realm_fire",
+        "minAscendedLevel": 1,
         "cost": [
             {
                 "currency": "coins",
@@ -150,6 +154,7 @@
         "subtitle": "Gezieltes Banner fuer 2-Star Skills.",
         "category": "Skill",
         "image": "realm_ice",
+        "minAscendedLevel": 2,
         "cost": [
             {
                 "currency": "coins",
@@ -175,6 +180,7 @@
         "subtitle": "Gezieltes Banner fuer 3-Star Skills.",
         "category": "Skill",
         "image": "bg_country",
+        "minAscendedLevel": 3,
         "cost": [
             {
                 "currency": "coins",
@@ -200,6 +206,7 @@
         "subtitle": "Gezieltes Banner fuer 4-Star Skills.",
         "category": "Skill",
         "image": "bg_arena",
+        "minAscendedLevel": 4,
         "cost": [
             {
                 "currency": "crystals",
@@ -225,6 +232,7 @@
         "subtitle": "Max-Star Skill Banner mit hoeheren Kosten.",
         "category": "Skill",
         "image": "bg_void",
+        "minAscendedLevel": 5,
         "cost": [
             {
                 "currency": "crystals",
@@ -254,6 +262,7 @@
         "subtitle": "Gemischtes Skill Banner mit allen Sterne-Stufen.",
         "category": "Skill",
         "image": "realm_fire",
+        "minAscendedLevel": 6,
         "cost": [
             {
                 "currency": "coins",

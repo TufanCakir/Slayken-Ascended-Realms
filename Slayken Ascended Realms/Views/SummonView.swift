@@ -24,6 +24,7 @@ struct SummonView: View {
         [OwnedSummonCharacter]
     @Query(sort: \SummonBannerProgress.bannerID) private var bannerProgress:
         [SummonBannerProgress]
+    @Query private var accountProgress: [PlayerAccountProgress]
 
     @State private var lastSummon: SummonDrop?
     @State private var lastBannerID: String?
@@ -31,6 +32,10 @@ struct SummonView: View {
     @State private var showResult = false
     @State private var infoBanner: SummonBanner?
     @State private var confirmationBanner: SummonBanner?
+
+    private var ascendedLevel: Int {
+        accountProgress.first?.level ?? 1
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -94,7 +99,8 @@ struct SummonView: View {
                 characters: characters,
                 cards: gameState.abilityCards,
                 currencies: currencies,
-                summonCount: summonCount(for: banner)
+                summonCount: summonCount(for: banner),
+                ascendedLevel: ascendedLevel
             )
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.visible)
@@ -144,6 +150,10 @@ struct SummonView: View {
             Text("Beschwoere neue Karten und Helden")
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundStyle(.white.opacity(0.7))
+
+            Text("Ascended Level \(ascendedLevel)")
+                .font(.system(size: 11, weight: .black))
+                .foregroundStyle(.cyan.opacity(0.9))
         }
     }
 
@@ -201,6 +211,7 @@ struct SummonView: View {
     private func summonBannerRow(_ banner: SummonBanner) -> some View {
         let affordable = canAfford(banner.cost)
         let available = isAvailable(banner)
+        let levelUnlocked = isLevelUnlocked(banner)
         let resultIsHere = lastBannerID == banner.id
 
         return ZStack {
@@ -249,6 +260,13 @@ struct SummonView: View {
                             .foregroundStyle(.yellow)
                             .lineLimit(1)
 
+                        if !levelUnlocked {
+                            Text("Unlock Lv. \(banner.requiredAscendedLevel)")
+                                .font(.system(size: 10, weight: .black))
+                                .foregroundStyle(.orange.opacity(0.95))
+                                .lineLimit(1)
+                        }
+
                         if let limitText = limitText(for: banner) {
                             Text(limitText)
                                 .font(.system(size: 10, weight: .black))
@@ -283,6 +301,7 @@ struct SummonView: View {
                             .background(
                                 LinearGradient(
                                     colors: affordable && available
+                                        && levelUnlocked
                                         ? [
                                             Color(
                                                 red: 0.10,
@@ -312,12 +331,12 @@ struct SummonView: View {
                     }
                     .buttonStyle(.plain)
                     .contentShape(Rectangle())
-                    .disabled(!affordable || !available)
+                    .disabled(!affordable || !available || !levelUnlocked)
 
                     Text(costText(banner.cost))
                         .font(.system(size: 10, weight: .black))
                         .foregroundStyle(
-                            affordable && available
+                            affordable && available && levelUnlocked
                                 ? .white.opacity(0.9) : .red.opacity(0.9)
                         )
                         .lineLimit(1)
@@ -334,6 +353,24 @@ struct SummonView: View {
         .overlay {
             RoundedRectangle(cornerRadius: 8, style: .continuous)
                 .stroke(.white.opacity(0.22), lineWidth: 1)
+        }
+        .overlay {
+            if !levelUnlocked {
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(Color.black.opacity(0.48))
+                    .overlay {
+                        VStack(spacing: 6) {
+                            Image(systemName: "lock.fill")
+                                .font(.system(size: 16, weight: .black))
+                                .foregroundStyle(.orange)
+                            Text(
+                                "Ab Ascended Level \(banner.requiredAscendedLevel)"
+                            )
+                            .font(.system(size: 11, weight: .black))
+                            .foregroundStyle(.white)
+                        }
+                    }
+            }
         }
         .shadow(color: .black.opacity(0.38), radius: 8, y: 4)
     }
@@ -387,6 +424,12 @@ struct SummonView: View {
         lastBannerID = banner.id
         lastSummon = nil
 
+        guard isLevelUnlocked(banner) else {
+            message =
+                "Freischaltung ab Ascended Level \(banner.requiredAscendedLevel)"
+            return
+        }
+
         guard isAvailable(banner) else {
             message = "Limit erreicht"
             return
@@ -404,6 +447,12 @@ struct SummonView: View {
         confirmationBanner = nil
         lastBannerID = banner.id
         lastSummon = nil
+
+        guard isLevelUnlocked(banner) else {
+            message =
+                "Freischaltung ab Ascended Level \(banner.requiredAscendedLevel)"
+            return
+        }
 
         guard isAvailable(banner) else {
             message = "Limit erreicht"
@@ -493,6 +542,10 @@ struct SummonView: View {
         return summonCount(for: banner) < maxSummons
     }
 
+    private func isLevelUnlocked(_ banner: SummonBanner) -> Bool {
+        ascendedLevel >= banner.requiredAscendedLevel
+    }
+
     private func limitText(for banner: SummonBanner) -> String? {
         guard let maxSummons = banner.maxSummons else { return nil }
         return "\(summonCount(for: banner))/\(maxSummons)"
@@ -568,6 +621,7 @@ private struct SummonBannerInfoSheet: View {
     let cards: [AbilityCardDefinition]
     let currencies: [CurrencyDefinition]
     let summonCount: Int
+    let ascendedLevel: Int
 
     var body: some View {
         NavigationStack {
@@ -602,9 +656,18 @@ private struct SummonBannerInfoSheet: View {
             HStack(spacing: 8) {
                 infoPill(banner.category ?? "Standard")
                 infoPill(costText(banner.cost))
+                infoPill("Asc Lv. \(banner.requiredAscendedLevel)")
                 if let maxSummons = banner.maxSummons {
                     infoPill("\(summonCount)/\(maxSummons) used")
                 }
+            }
+
+            if ascendedLevel < banner.requiredAscendedLevel {
+                Text(
+                    "Freigeschaltet ab Ascended Level \(banner.requiredAscendedLevel)"
+                )
+                .font(.system(size: 12, weight: .black))
+                .foregroundStyle(.orange)
             }
         }
         .padding(16)

@@ -771,12 +771,32 @@ final class BattleSceneCoordinator {
     }
 
     private func loadModelScene(named modelName: String) -> SCNScene? {
-        SCNScene(named: "\(modelName).usdz")
-            ?? SCNScene(named: "3DModel/\(modelName).usdz")
-            ?? SCNScene(named: "3DModelleAnimation/\(modelName).usdz")
-            ?? SCNScene(named: "\(modelName).scn")
-            ?? SCNScene(named: "3DModel/\(modelName).scn")
-            ?? SCNScene(named: "3DModelleAnimation/\(modelName).scn")
+        let candidateNames = [
+            "\(modelName).usdz",
+            "3DClass/\(modelName).usdz",
+            "3DClassAnimation/\(modelName).usdz",
+            "3DHeroClasses/\(modelName).usdz",
+            "3DHeroClassesAnimation/\(modelName).usdz",
+            "3DModel/\(modelName).usdz",
+            "3DModelleAnimation/\(modelName).usdz",
+            "3DMonster/\(modelName).usdz",
+            "\(modelName).scn",
+            "3DClass/\(modelName).scn",
+            "3DClassAnimation/\(modelName).scn",
+            "3DHeroClasses/\(modelName).scn",
+            "3DHeroClassesAnimation/\(modelName).scn",
+            "3DModel/\(modelName).scn",
+            "3DModelleAnimation/\(modelName).scn",
+            "3DMonster/\(modelName).scn",
+        ]
+
+        for candidateName in candidateNames {
+            if let scene = SCNScene(named: candidateName) {
+                return scene
+            }
+        }
+
+        return nil
     }
 
     private func removeModelAnimations(from rootNode: SCNNode) {

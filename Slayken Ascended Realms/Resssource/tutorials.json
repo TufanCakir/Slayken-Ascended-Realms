@@ -1,0 +1,52 @@
+[
+    {
+        "id": "intro_1",
+        "title": "Prolog",
+        "objective":
+            "Besiege die Vorhut und bringe Tsayi unter 35 Prozent HP. Danach flieht der Boss.",
+        "player": {
+            "name": "Zaron",
+            "image": "preview_zaron",
+            "model": "shiro_animation",
+            "battleModel": "shiro",
+            "texture": "texture_shiro_original",
+            "element": "water",
+            "hp": 160,
+            "attack": 58
+        },
+        "enemies": [
+            {
+                "name": "Maaikatan",
+                "image": "",
+                "model": "maaikatan",
+                "battleModel": null,
+                "texture": null,
+                "element": "earth",
+                "hp": 94,
+                "attack": 16
+            },
+            {
+                "name": "Nanekihs",
+                "image": "",
+                "model": "nanekihs",
+                "battleModel": null,
+                "texture": null,
+                "element": "shadow",
+                "hp": 108,
+                "attack": 18
+            }
+        ],
+        "boss": {
+            "name": "Tsayi",
+            "image": "",
+            "model": "tsayi",
+            "battleModel": null,
+            "texture": null,
+            "element": "fire",
+            "hp": 210,
+            "attack": 22
+        },
+        "retreatEnemyIndex": 2,
+        "enemyRetreatThreshold": 0.35
+    }
+]

@@ -14,6 +14,15 @@ enum Turn {
     case enemy
 }
 
+struct BattleTutorialConfig {
+    let title: String
+    let objective: String
+    let retreatEnemyIndex: Int?
+    let enemyRetreatThreshold: CGFloat?
+    let onEnemyRetreat: () -> Void
+    let onBattleComplete: () -> Void
+}
+
 struct BattleView: View {
     @EnvironmentObject var theme: ThemeManager
     @EnvironmentObject var gameState: GameState
@@ -27,7 +36,9 @@ struct BattleView: View {
 
     let player: CharacterStats
     let enemy: CharacterStats
+    let enemiesOverride: [CharacterStats]?
     let onExit: () -> Void
+    let tutorialConfig: BattleTutorialConfig?
 
     @State private var currentTurn: Turn = .player
     @State private var playerHP: CGFloat = 1
@@ -54,12 +65,27 @@ struct BattleView: View {
     @State private var inspectedCard: AbilityCardDefinition?
     @State private var cardLongPressActive = false
     @State private var cardPressTask: Task<Void, Never>?
+    @State private var didTriggerTutorialRetreat = false
 
     private let maxMana: Double = 100
     private let baseAttackManaGain: Double = 18
     private let turnManaGain: Double = 12
     private let manaRegenPerTick: Double = 2
     private let manaRegenTickMilliseconds = 450
+
+    init(
+        player: CharacterStats,
+        enemy: CharacterStats,
+        enemiesOverride: [CharacterStats]? = nil,
+        onExit: @escaping () -> Void,
+        tutorialConfig: BattleTutorialConfig? = nil
+    ) {
+        self.player = player
+        self.enemy = enemy
+        self.enemiesOverride = enemiesOverride
+        self.onExit = onExit
+        self.tutorialConfig = tutorialConfig
+    }
 
     private var activeCards: [AbilityCardDefinition] {
         deckSlots
@@ -93,6 +119,10 @@ struct BattleView: View {
     }
 
     private var battleEnemies: [CharacterStats] {
+        if let enemiesOverride, !enemiesOverride.isEmpty {
+            return enemiesOverride
+        }
+
         if let selectedBattle = gameState.selectedBattle {
             return selectedBattle.battleEnemies
         }
@@ -168,6 +198,11 @@ struct BattleView: View {
                 }
 
             battleHUD
+
+            if let tutorialConfig, !showVictory, !showDefeat {
+                tutorialBanner(tutorialConfig)
+                    .zIndex(24)
+            }
 
             if showVictory {
                 VictoryView(
@@ -303,6 +338,33 @@ struct BattleView: View {
             }
             .buttonStyle(.plain)
         }
+    }
+
+    private func tutorialBanner(_ config: BattleTutorialConfig) -> some View {
+        VStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(config.title.uppercased())
+                    .font(.system(size: 11, weight: .black))
+                    .foregroundStyle(.yellow)
+                Text(config.objective)
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.92))
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .background(
+                Color.black.opacity(0.78),
+                in: RoundedRectangle(cornerRadius: 12, style: .continuous)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .stroke(.white.opacity(0.16), lineWidth: 1)
+            }
+            .padding(.top, 56)
+
+            Spacer()
+        }
+        .padding(.horizontal, 16)
     }
 
     private var enemyTitle: String {
@@ -981,6 +1043,7 @@ struct BattleView: View {
     private func attack(with card: AbilityCardDefinition?) {
         guard currentTurn == .player else { return }
         guard !showVictory && !showDefeat else { return }
+        guard !didTriggerTutorialRetreat else { return }
 
         if let card {
             let cost = Double(card.resolvedManaCost)
@@ -1012,6 +1075,16 @@ struct BattleView: View {
             enemyHPs[targetIndex] -= playerDamage
         }
 
+        if let tutorialConfig,
+            tutorialConfig.retreatEnemyIndex == targetIndex,
+            let threshold = tutorialConfig.enemyRetreatThreshold,
+            enemyHPs[targetIndex] > 0,
+            enemyHPs[targetIndex] <= threshold
+        {
+            triggerTutorialRetreat(using: tutorialConfig)
+            return
+        }
+
         if enemyHPs[targetIndex] <= 0 {
             enemyHPs[targetIndex] = 0
             defeatCurrentEnemy(at: targetIndex)
@@ -1023,8 +1096,34 @@ struct BattleView: View {
         }
     }
 
+    private func triggerTutorialRetreat(using config: BattleTutorialConfig) {
+        guard !didTriggerTutorialRetreat else { return }
+        didTriggerTutorialRetreat = true
+        isAuto = false
+        autoTask?.cancel()
+        manaRegenTask?.cancel()
+        attackingEnemyIndex = nil
+        currentParticleEffect = nil
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
+            config.onEnemyRetreat()
+        }
+    }
+
     private func defeatCurrentEnemy(at index: Int) {
         if aliveEnemyIndices.isEmpty {
+            if let tutorialConfig {
+                isAuto = false
+                autoTask?.cancel()
+                manaRegenTask?.cancel()
+                attackingEnemyIndex = nil
+                currentParticleEffect = nil
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+                    tutorialConfig.onBattleComplete()
+                }
+                return
+            }
+
             awardVictoryRewardsIfNeeded()
             isAuto = false
             autoTask?.cancel()
@@ -1098,7 +1197,8 @@ private struct CardBattleProgress {
     BattleView(
         player: samplePlayer,
         enemy: sampleEnemy,
-        onExit: {}
+        onExit: {},
+        tutorialConfig: nil
     )
     .environmentObject(GameState())
     .environmentObject(ThemeManager())

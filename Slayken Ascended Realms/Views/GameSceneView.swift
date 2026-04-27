@@ -15,9 +15,29 @@ struct GameSceneView: UIViewRepresentable {
     let autoMoveTarget: SIMD2<Float>?
     let groundTexture: String
     let skyboxTexture: String
+    let previewTransform: CharacterPreviewTransform?
+
+    init(
+        player: CharacterStats,
+        joystickVector: SIMD2<Float>,
+        autoMoveTarget: SIMD2<Float>?,
+        groundTexture: String,
+        skyboxTexture: String,
+        previewTransform: CharacterPreviewTransform? = nil
+    ) {
+        self.player = player
+        self.joystickVector = joystickVector
+        self.autoMoveTarget = autoMoveTarget
+        self.groundTexture = groundTexture
+        self.skyboxTexture = skyboxTexture
+        self.previewTransform = previewTransform
+    }
 
     func makeCoordinator() -> SceneCoordinator {
-        SceneCoordinator(player: player)
+        SceneCoordinator(
+            player: player,
+            previewTransform: previewTransform ?? .identity
+        )
     }
 
     func makeUIView(context: Context) -> SCNView {
@@ -48,6 +68,7 @@ final class SceneCoordinator {
     private let groundBaseDepth: CGFloat = 100
     private let groundThickness: CGFloat = 6
     private let player: CharacterStats
+    private let previewTransform: CharacterPreviewTransform
 
     private let playerNode = SCNNode()
     private let playerVisualNode = SCNNode()
@@ -64,8 +85,12 @@ final class SceneCoordinator {
     var joystickVector: SIMD2<Float> = .zero
     var autoMoveTarget: SIMD2<Float>?
 
-    init(player: CharacterStats) {
+    init(
+        player: CharacterStats,
+        previewTransform: CharacterPreviewTransform = .identity
+    ) {
         self.player = player
+        self.previewTransform = previewTransform
     }
 
     func start() {
@@ -320,7 +345,19 @@ final class SceneCoordinator {
         let height = max(bounds.max.y - bounds.min.y, 0.01)
         let scale = 10 / height
 
-        playerVisualNode.scale = SCNVector3(scale, scale, scale)
+        let previewScale = Float(previewTransform.scaleMultiplier ?? 1)
+        let resolvedScale = scale * previewScale
+        playerVisualNode.scale = SCNVector3(
+            resolvedScale,
+            resolvedScale,
+            resolvedScale
+        )
+
+        playerVisualNode.eulerAngles = SCNVector3(
+            Float((previewTransform.pitchDegrees ?? 0) * .pi / 180),
+            Float((previewTransform.yawDegrees ?? 0) * .pi / 180),
+            Float((previewTransform.rollDegrees ?? 0) * .pi / 180)
+        )
 
         // 6. In Parent einhängen
         playerNode.addChildNode(playerVisualNode)
@@ -328,7 +365,8 @@ final class SceneCoordinator {
         // 7. EXAKT auf Boden setzen
         playerNode.position = SCNVector3(
             0,
-            getGroundTopY() + playerHeightOffset,
+            getGroundTopY() + playerHeightOffset
+                + Float(previewTransform.verticalOffset ?? 0),
             0
         )
 
@@ -338,12 +376,32 @@ final class SceneCoordinator {
     }
 
     private func loadModelScene(named modelName: String) -> SCNScene? {
-        SCNScene(named: "\(modelName).usdz")
-            ?? SCNScene(named: "3DModel/\(modelName).usdz")
-            ?? SCNScene(named: "3DModelleAnimation/\(modelName).usdz")
-            ?? SCNScene(named: "\(modelName).scn")
-            ?? SCNScene(named: "3DModel/\(modelName).scn")
-            ?? SCNScene(named: "3DModelleAnimation/\(modelName).scn")
+        let candidateNames = [
+            "\(modelName).usdz",
+            "3DClass/\(modelName).usdz",
+            "3DClassAnimation/\(modelName).usdz",
+            "3DHeroClasses/\(modelName).usdz",
+            "3DHeroClassesAnimation/\(modelName).usdz",
+            "3DModel/\(modelName).usdz",
+            "3DModelleAnimation/\(modelName).usdz",
+            "3DMonster/\(modelName).usdz",
+            "\(modelName).scn",
+            "3DClass/\(modelName).scn",
+            "3DClassAnimation/\(modelName).scn",
+            "3DHeroClasses/\(modelName).scn",
+            "3DHeroClassesAnimation/\(modelName).scn",
+            "3DModel/\(modelName).scn",
+            "3DModelleAnimation/\(modelName).scn",
+            "3DMonster/\(modelName).scn",
+        ]
+
+        for candidateName in candidateNames {
+            if let scene = SCNScene(named: candidateName) {
+                return scene
+            }
+        }
+
+        return nil
     }
 
     private func applyCharacterTextureIfNeeded(

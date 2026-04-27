@@ -5,7 +5,7 @@
         "summonImage": "preview_zaron",
         "model": "zaron_animation",
         "battleModel": "zaron",
-        "texture": "warrior_textur_original",
+        "texture": "texture_zaron_original",
         "rarity": 5,
         "hp": 120,
         "attack": 55,
@@ -13,7 +13,7 @@
             {
                 "id": "original",
                 "name": "Original",
-                "texture": "zaron_textur_original",
+                "texture": "texture_zaron_original",
                 "summonImage": "preview_zaron"
             },
             {
@@ -30,7 +30,7 @@
         "summonImage": "preview_shela",
         "model": "shela_animation",
         "battleModel": "warriorin",
-        "texture": "shela_texture_original",
+        "texture": "texture_shela_original",
         "rarity": 4,
         "hp": 105,
         "attack": 48,
@@ -38,7 +38,7 @@
             {
                 "id": "original",
                 "name": "Original",
-                "texture": "shela_texture_original",
+                "texture": "texture_shela_original",
                 "summonImage": "preview_shela"
             },
             {
@@ -55,7 +55,7 @@
         "summonImage": "preview_shen",
         "model": "shen_animation",
         "battleModel": "shen",
-        "texture": "shen_texture_original",
+        "texture": "texture_shen_original",
         "rarity": 4,
         "hp": 105,
         "attack": 48,
@@ -63,7 +63,7 @@
             {
                 "id": "original",
                 "name": "Original",
-                "texture": "shen_texture_original",
+                "texture": "texture_shen_original",
                 "summonImage": "preview_shen"
             },
             {
@@ -80,7 +80,7 @@
         "summonImage": "preview_lafiya",
         "model": "lafiya_animation",
         "battleModel": "lafiya",
-        "texture": "lafiya_texture_original",
+        "texture": "texture_lafiya_original",
         "rarity": 4,
         "hp": 105,
         "attack": 48,
@@ -88,7 +88,7 @@
             {
                 "id": "original",
                 "name": "Original",
-                "texture": "lafiya_texture_original",
+                "texture": "texture_lafiya_original",
                 "summonImage": "preview_lafiya"
             },
             {

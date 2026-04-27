@@ -65,6 +65,7 @@ final class GameState: ObservableObject {
     private let mapKey = "selectedMapID"
     private let bgKey = "selectedBackgroundID"
     private let characterKey = "selectedCharacterModel"
+    private let characterDataKey = "selectedCharacterData"
     private let eventChapterKey = "activeEventChapterID"
     private let eventPointKey = "activeEventPointID"
     private let eventBattleKey = "activeEventBattleID"
@@ -135,7 +136,17 @@ final class GameState: ObservableObject {
             }
         }
 
-        if let savedCharacterModel = UserDefaults.standard.string(
+        if let savedCharacterData = UserDefaults.standard.data(
+            forKey: characterDataKey
+        ),
+            let character = try? JSONDecoder().decode(
+                CharacterStats.self,
+                from: savedCharacterData
+            )
+        {
+            player = character
+            upsertAvailableCharacter(character)
+        } else if let savedCharacterModel = UserDefaults.standard.string(
             forKey: characterKey
         ) {
             if let character = availableCharacters.first(where: {
@@ -176,7 +187,11 @@ final class GameState: ObservableObject {
 
     func saveCharacter(_ character: CharacterStats) {
         player = character
+        upsertAvailableCharacter(character)
         UserDefaults.standard.set(character.model, forKey: characterKey)
+        if let data = try? JSONEncoder().encode(character) {
+            UserDefaults.standard.set(data, forKey: characterDataKey)
+        }
     }
 
     func saveSummonedCharacter(
@@ -243,6 +258,7 @@ final class GameState: ObservableObject {
         UserDefaults.standard.removeObject(forKey: mapKey)
         UserDefaults.standard.removeObject(forKey: bgKey)
         UserDefaults.standard.removeObject(forKey: characterKey)
+        UserDefaults.standard.removeObject(forKey: characterDataKey)
         UserDefaults.standard.removeObject(forKey: eventChapterKey)
         UserDefaults.standard.removeObject(forKey: eventPointKey)
         UserDefaults.standard.removeObject(forKey: eventBattleKey)
@@ -276,12 +292,22 @@ final class GameState: ObservableObject {
     }
 
     private static func loadAvailableCharacters() -> [CharacterStats] {
-        loadGamePlayers().map { character in
+        let builtInCharacters = loadGamePlayers().map { character in
             character.withBattleModel(
                 character.battleModel
                     ?? makeBattleModelName(from: character.model)
             )
         }
+
+        let starterClassCharacters = loadCharacterClassDefinitions().flatMap {
+            definition -> [CharacterStats] in
+            guard definition.requiredAscendedLevel <= 1 else { return [] }
+            return definition.variants.map { variant in
+                variant.makeCharacter(named: definition.defaultName)
+            }
+        }
+
+        return builtInCharacters + starterClassCharacters
     }
 
     private static func makeBattleModelName(from modelName: String) -> String {
@@ -289,5 +315,15 @@ final class GameState: ObservableObject {
             return String(modelName.dropLast("_animation".count))
         }
         return modelName
+    }
+
+    private func upsertAvailableCharacter(_ character: CharacterStats) {
+        if let index = availableCharacters.firstIndex(where: {
+            $0.model == character.model
+        }) {
+            availableCharacters[index] = character
+        } else {
+            availableCharacters.append(character)
+        }
     }
 }

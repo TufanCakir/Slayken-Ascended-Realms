@@ -97,6 +97,39 @@
         ]
     },
     {
+        "id": "warrior",
+        "title": "Warrior",
+        "summary":
+            "Hohe Stabilitaet, starke Frontlinie und direkter Nahkampfdruck.",
+        "defaultName": "Draven",
+        "category": "standard",
+        "minAscendedLevel": 1,
+        "variants": [
+            {
+                "id": "male",
+                "title": "Male",
+                "image": "preview_warrior_male",
+                "model": "warrior_male_animation",
+                "battleModel": "warrior_male",
+                "texture": "texture_warrior_male_original",
+                "element": "earth",
+                "hp": 148,
+                "attack": 46
+            },
+            {
+                "id": "female",
+                "title": "Female",
+                "image": "preview_warrior_female",
+                "model": "warrior_female_animation",
+                "battleModel": "warrior_female",
+                "texture": "texture_warrior_female_original",
+                "element": "earth",
+                "hp": 142,
+                "attack": 48
+            }
+        ]
+    },
+    {
         "id": "girma",
         "title": "Girma",
         "summary":

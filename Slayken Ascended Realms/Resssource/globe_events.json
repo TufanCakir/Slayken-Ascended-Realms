@@ -8,83 +8,57 @@
             "id": "chapter_1_intro",
             "title": "Der erste Riss",
             "video": "intro",
-            "text": "Ein Portal oeffnet sich ueber dem Mondtor."
+            "text": "Ein Portal öffnet sich ueber dem Mondtor."
         },
         "points": [
             {
                 "id": "chapter_1_gate",
                 "title": "Mondtor",
-                "text":
-                    "Am Mondtor oeffnet sich ein Riss. Schlage dich von Node zu Node vor.",
+                "text": "Am Mondtor beginnt dein erster Story-Pfad.",
                 "mapImage": "realm_country",
                 "mapTexture": "realm_country",
                 "node": {
-                    "x": 0.3,
+                    "x": 0.30,
                     "y": 0.52
                 },
                 "cutscene": {
                     "id": "chapter_1_gate_intro",
                     "title": "Mondtor",
                     "video": "mondtor",
-                    "text": "Der Pfad am Mondtor ist instabil."
+                    "text": "Das alte Tor vibriert, als der Riss aufbricht."
                 },
                 "battles": [
                     {
                         "id": "chapter_1_battle_1",
                         "name": "Torwache",
-                        "description": "Der erste Waechter am Riss.",
+                        "description": "Der erste Wächter am Riss.",
                         "difficulty": 1,
                         "groundTexture": "realm_country",
                         "skyboxTexture": "realm_country",
                         "node": {
-                            "x": 0.1,
-                            "y": 0.64
+                            "x": 0.08,
+                            "y": 0.63
                         },
                         "cutscene": {
                             "id": "chapter_1_battle_1_cutscene",
                             "title": "Torwache",
                             "video": "torwache",
-                            "text": "Die Torwache stellt sich dir entgegen."
+                            "text": "Die erste Wache zieht ihre Klinge."
                         },
                         "enemy": {
                             "name": "Rift Guard",
                             "image": "sar_dragon",
                             "model": "tsayi",
                             "texture": null,
-                            "hp": 80,
-                            "attack": 3,
+                            "hp": 90,
+                            "attack": 6,
                             "element": "Fire"
                         },
-                        "enemies": [
-                            {
-                                "name": "Rift Scout",
-                                "image": "sar_dragon",
-                                "model": "krevas",
-                                "texture": null,
-                                "hp": 70,
-                                "attack": 3,
-                                "element": "Plant"
-                            },
-                            {
-                                "name": "Rift Guard",
-                                "image": "sar_dragon",
-                                "model": "jirgin",
-                                "texture": null,
-                                "hp": 90,
-                                "attack": 3,
-                                "element": "Storm"
-                            }
-                        ],
-                        "boss": {
-                            "name": "Gate Breaker",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 150,
-                            "attack": 3,
-                            "element": "Water"
+                        "xpReward": 120,
+                        "dailyRewardLimits": {
+                            "coins": 900,
+                            "crystals": 90
                         },
-                        "xpReward": 160,
                         "rewards": [
                             {
                                 "currency": "coins",
@@ -95,7 +69,18 @@
                                 "amount": 10
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Das ist erst der Anfang. Halte die Linie."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Wenn der Riss offen bleibt, kommt noch Schlimmeres."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_1_battle_2",
@@ -105,23 +90,23 @@
                         "groundTexture": "realm_fire",
                         "skyboxTexture": "realm_fire",
                         "node": {
-                            "x": 0.2,
-                            "y": 0.54
+                            "x": 0.16,
+                            "y": 0.56
                         },
-                        "cutscene": {
-                            "id": "chapter_1_battle_2_cutscene",
-                            "title": "Kristallspur",
-                            "video": "kristallspur",
-                            "text": "Die Kristalle zeigen den naechsten Gegner."
-                        },
+                        "cutscene": null,
                         "enemy": {
                             "name": "Crystal Shade",
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
                             "hp": 120,
-                            "attack": 14,
+                            "attack": 9,
                             "element": "Light"
+                        },
+                        "xpReward": 150,
+                        "dailyRewardLimits": {
+                            "coins": 1000,
+                            "crystals": 95
                         },
                         "rewards": [
                             {
@@ -130,10 +115,21 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 18
+                                "amount": 14
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Die Kristalle markieren einen alten Pfad."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Dann folgen wir ihm, bevor der Feind es tut."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_1_battle_3",
@@ -143,23 +139,28 @@
                         "groundTexture": "realm_ice",
                         "skyboxTexture": "realm_ice",
                         "node": {
-                            "x": 0.31,
+                            "x": 0.24,
                             "y": 0.61
                         },
                         "cutscene": {
                             "id": "chapter_1_battle_3_cutscene",
                             "title": "Rissbestie",
                             "video": "rissbestie",
-                            "text": "Die Bestie springt aus dem Riss."
+                            "text": "Ein wildes Brullen hallt durch den Nebel."
                         },
                         "enemy": {
                             "name": "Rift Beast",
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
-                            "hp": 140,
-                            "attack": 16,
+                            "hp": 150,
+                            "attack": 12,
                             "element": "Dark"
+                        },
+                        "xpReward": 180,
+                        "dailyRewardLimits": {
+                            "coins": 1100,
+                            "crystals": 100
                         },
                         "rewards": [
                             {
@@ -168,10 +169,19 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 20
+                                "amount": 18
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Diese Bestie wurde vom Riss verdorben."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Dann beenden wir ihr Leiden schnell."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_1_battle_4",
@@ -181,8 +191,8 @@
                         "groundTexture": "realm_void",
                         "skyboxTexture": "realm_void",
                         "node": {
-                            "x": 0.4,
-                            "y": 0.46
+                            "x": 0.33,
+                            "y": 0.47
                         },
                         "cutscene": null,
                         "enemy": {
@@ -190,9 +200,14 @@
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 160,
-                            "attack": 18,
+                            "hp": 170,
+                            "attack": 14,
                             "element": "Fire"
+                        },
+                        "xpReward": 210,
+                        "dailyRewardLimits": {
+                            "coins": 1200,
+                            "crystals": 110
                         },
                         "rewards": [
                             {
@@ -201,10 +216,21 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 22
+                                "amount": 20
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Die Splitter reagieren auf unsere Schritte."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Bleib wachsam. Sie koennen jederzeit explodieren."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_1_battle_5",
@@ -214,8 +240,8 @@
                         "groundTexture": "bg_country",
                         "skyboxTexture": "bg_country",
                         "node": {
-                            "x": 0.49,
-                            "y": 0.58
+                            "x": 0.42,
+                            "y": 0.57
                         },
                         "cutscene": null,
                         "enemy": {
@@ -223,9 +249,14 @@
                             "image": "sar_dragon",
                             "model": "tsayi",
                             "texture": null,
-                            "hp": 185,
-                            "attack": 20,
+                            "hp": 190,
+                            "attack": 16,
                             "element": "Water"
+                        },
+                        "xpReward": 240,
+                        "dailyRewardLimits": {
+                            "coins": 1300,
+                            "crystals": 120
                         },
                         "rewards": [
                             {
@@ -234,10 +265,20 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 25
+                                "amount": 22
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Im Nebel sieht man nur den nächsten Fehler."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Dann machen wir heute keinen."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_1_battle_6",
@@ -247,7 +288,7 @@
                         "groundTexture": "bg_fire",
                         "skyboxTexture": "bg_fire",
                         "node": {
-                            "x": 0.58,
+                            "x": 0.51,
                             "y": 0.42
                         },
                         "cutscene": null,
@@ -256,9 +297,14 @@
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
-                            "hp": 210,
-                            "attack": 23,
+                            "hp": 220,
+                            "attack": 18,
                             "element": "Plant"
+                        },
+                        "xpReward": 270,
+                        "dailyRewardLimits": {
+                            "coins": 1400,
+                            "crystals": 130
                         },
                         "rewards": [
                             {
@@ -267,10 +313,21 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 28
+                                "amount": 25
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Die Runen reagieren auf die Rissenergie."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Dann muessen wir ihren Kern zerschlagen."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_1_battle_7",
@@ -281,7 +338,7 @@
                         "groundTexture": "bg_ice",
                         "skyboxTexture": "bg_ice",
                         "node": {
-                            "x": 0.66,
+                            "x": 0.62,
                             "y": 0.55
                         },
                         "cutscene": null,
@@ -290,9 +347,14 @@
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
-                            "hp": 240,
-                            "attack": 25,
+                            "hp": 250,
+                            "attack": 20,
                             "element": "Storm"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 1500,
+                            "crystals": 140
                         },
                         "rewards": [
                             {
@@ -301,10 +363,20 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 32
+                                "amount": 28
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Der Schatten wird dichter. Wir nähern uns dem Kern."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Gut. Dann gibt es bald Antworten."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_1_battle_8",
@@ -315,7 +387,7 @@
                         "skyboxTexture": "bg_void",
                         "node": {
                             "x": 0.74,
-                            "y": 0.4
+                            "y": 0.40
                         },
                         "cutscene": null,
                         "enemy": {
@@ -323,9 +395,14 @@
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 270,
-                            "attack": 28,
+                            "hp": 280,
+                            "attack": 22,
                             "element": "Light"
+                        },
+                        "xpReward": 330,
+                        "dailyRewardLimits": {
+                            "coins": 1600,
+                            "crystals": 150
                         },
                         "rewards": [
                             {
@@ -334,10 +411,19 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 36
+                                "amount": 32
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text": "Zu schnell fuer rohe Gewalt."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Dann schneiden wir ihren Fluchtweg ab."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_1_battle_9",
@@ -356,9 +442,14 @@
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
-                            "hp": 310,
-                            "attack": 31,
+                            "hp": 320,
+                            "attack": 26,
                             "element": "Dark"
+                        },
+                        "xpReward": 360,
+                        "dailyRewardLimits": {
+                            "coins": 1750,
+                            "crystals": 165
                         },
                         "rewards": [
                             {
@@ -367,10 +458,21 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 42
+                                "amount": 38
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Nach diesem Gegner steht nur noch der Kern selbst."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Dann geben wir ihm keinen zweiten Schlag."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_1_battle_10",
@@ -387,16 +489,22 @@
                             "id": "chapter_1_battle_10_cutscene",
                             "title": "Risskern",
                             "video": "rissbestie",
-                            "text": "Der Kern des ersten Risses pulsiert."
+                            "text":
+                                "Der Kern des ersten Risses pulsiert direkt vor dir."
                         },
                         "enemy": {
                             "name": "Rift Core",
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
-                            "hp": 360,
-                            "attack": 35,
+                            "hp": 380,
+                            "attack": 30,
                             "element": "Fire"
+                        },
+                        "xpReward": 420,
+                        "dailyRewardLimits": {
+                            "coins": 1900,
+                            "crystals": 180
                         },
                         "rewards": [
                             {
@@ -405,10 +513,21 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 55
+                                "amount": 45
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Jetzt endet das erste Kapitel dieses Krieges."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Und das nächste beginnt bereits hinter dem Rauch."
+                            }
+                        ]
                     }
                 ]
             }
@@ -423,13 +542,14 @@
             "id": "chapter_2_intro",
             "title": "Splitter des Himmels",
             "video": "intro",
-            "text": "Himmelssplitter fallen auf eine neue Route."
+            "text":
+                "Der Sieg am Mondtor oeffnet einen Pfad in die zerbrochenen Himmel."
         },
         "points": [
             {
                 "id": "chapter_2_spire",
                 "title": "Wolkenspitze",
-                "text": "Die Route fuehrt durch schwebende Ruinen.",
+                "text": "Schwebende Ruinen fuehren dich in das zweite Kapitel.",
                 "mapImage": "bg_arena",
                 "mapTexture": "bg_arena",
                 "node": {
@@ -447,40 +567,62 @@
                         "skyboxTexture": "bg_arena",
                         "node": {
                             "x": 0.08,
-                            "y": 0.52
+                            "y": 0.54
                         },
-                        "cutscene": null,
+                        "cutscene": {
+                            "id": "chapter_2_battle_1_cutscene",
+                            "title": "Windwache",
+                            "video": "intro",
+                            "text":
+                                "Hoch ueber dem Reich pfeift der erste Sturm."
+                        },
                         "enemy": {
                             "name": "Wind Guard",
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
-                            "hp": 380,
-                            "attack": 36,
+                            "hp": 420,
+                            "attack": 32,
                             "element": "Water"
+                        },
+                        "xpReward": 460,
+                        "dailyRewardLimits": {
+                            "coins": 2000,
+                            "crystals": 185
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 700
+                                "amount": 720
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 60
+                                "amount": 48
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Hier oben fuehlt sich jeder Schritt leichter und gefährlicher an."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Dann verlieren wir besser nicht den Halt."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_2_battle_2",
                         "name": "Sturmrand",
-                        "description": "Der Wind wird staerker.",
+                        "description": "Der Wind schneidet durch die Route.",
                         "difficulty": 12,
                         "groundTexture": "bg_ice",
                         "skyboxTexture": "bg_ice",
                         "node": {
                             "x": 0.16,
-                            "y": 0.4
+                            "y": 0.41
                         },
                         "cutscene": null,
                         "enemy": {
@@ -488,21 +630,36 @@
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
-                            "hp": 410,
-                            "attack": 38,
+                            "hp": 460,
+                            "attack": 35,
                             "element": "Plant"
+                        },
+                        "xpReward": 500,
+                        "dailyRewardLimits": {
+                            "coins": 2150,
+                            "crystals": 195
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 760
+                                "amount": 800
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 64
+                                "amount": 54
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Die Splitter laden selbst den Wind mit Mana auf."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Dann drehen wir ihre Kraft gegen sie."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_2_battle_3",
@@ -521,21 +678,35 @@
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 440,
-                            "attack": 40,
+                            "hp": 500,
+                            "attack": 38,
                             "element": "Storm"
+                        },
+                        "xpReward": 540,
+                        "dailyRewardLimits": {
+                            "coins": 2300,
+                            "crystals": 205
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 820
+                                "amount": 880
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 68
+                                "amount": 58
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Etwas jagt uns durch die Wolken."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Dann drehen wir die Jagd um."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_2_battle_4",
@@ -546,7 +717,7 @@
                         "skyboxTexture": "bg_ice",
                         "node": {
                             "x": 0.32,
-                            "y": 0.45
+                            "y": 0.46
                         },
                         "cutscene": null,
                         "enemy": {
@@ -554,32 +725,47 @@
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
-                            "hp": 470,
-                            "attack": 42,
+                            "hp": 540,
+                            "attack": 40,
                             "element": "Light"
+                        },
+                        "xpReward": 580,
+                        "dailyRewardLimits": {
+                            "coins": 2450,
+                            "crystals": 215
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 900
+                                "amount": 960
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 72
+                                "amount": 64
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Ein falscher Tritt, und der Pfad verschwindet."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Dann gibt es nur vorwärts."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_2_battle_5",
                         "name": "Himmelsriss",
-                        "description": "Ein Riss oeffnet sich ueber dir.",
+                        "description": "Ein neuer Riss oeffnet sich ueber dir.",
                         "difficulty": 15,
                         "groundTexture": "bg_arena",
                         "skyboxTexture": "bg_arena",
                         "node": {
-                            "x": 0.4,
-                            "y": 0.6
+                            "x": 0.40,
+                            "y": 0.60
                         },
                         "cutscene": null,
                         "enemy": {
@@ -587,58 +773,88 @@
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
-                            "hp": 510,
-                            "attack": 45,
+                            "hp": 590,
+                            "attack": 43,
                             "element": "Dark"
+                        },
+                        "xpReward": 620,
+                        "dailyRewardLimits": {
+                            "coins": 2600,
+                            "crystals": 225
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 980
+                                "amount": 1040
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 78
+                                "amount": 70
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Der Himmel selbst reisst auf."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Dann muessen wir den Schnitt vernähen."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_2_battle_6",
-                        "name": "Aetherwache",
-                        "description": "Der Aether blockiert den Weg.",
+                        "name": "Ätherwache",
+                        "description": "Der Äther blockiert den Weg.",
                         "difficulty": 16,
                         "groundTexture": "bg_map",
                         "skyboxTexture": "bg_map",
                         "node": {
                             "x": 0.48,
-                            "y": 0.37
+                            "y": 0.38
                         },
                         "cutscene": null,
                         "enemy": {
-                            "name": "Aether Guard",
+                            "name": "Äther Guard",
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
-                            "hp": 550,
-                            "attack": 48,
+                            "hp": 640,
+                            "attack": 46,
                             "element": "Fire"
+                        },
+                        "xpReward": 660,
+                        "dailyRewardLimits": {
+                            "coins": 2750,
+                            "crystals": 235
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1060
+                                "amount": 1140
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 84
+                                "amount": 76
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Der Äther hier fuehlt sich kuenstlich an."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Jemand hält diesen Himmel absichtlich offen."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_2_battle_7",
-                        "name": "Sternfaenger",
+                        "name": "Sternfänger",
                         "description": "Ein Elitegegner sammelt Splitter.",
                         "difficulty": 17,
                         "groundTexture": "bg_ice",
@@ -653,42 +869,14 @@
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 590,
-                            "attack": 51,
+                            "hp": 700,
+                            "attack": 50,
                             "element": "Water"
                         },
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1150
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 90
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "chapter_2_battle_8",
-                        "name": "Nebelbruecke",
-                        "description": "Die Bruecke verschwindet im Nebel.",
-                        "difficulty": 18,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
-                        "node": {
-                            "x": 0.64,
-                            "y": 0.42
-                        },
-                        "cutscene": null,
-                        "enemy": {
-                            "name": "Fog Bridge",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 630,
-                            "attack": 54,
-                            "element": "Plant"
+                        "xpReward": 710,
+                        "dailyRewardLimits": {
+                            "coins": 2900,
+                            "crystals": 245
                         },
                         "rewards": [
                             {
@@ -697,10 +885,67 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 96
+                                "amount": 82
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Er hortet die Splitter wie Trophäen."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Dann nehmen wir ihm jeden einzelnen wieder ab."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_2_battle_8",
+                        "name": "Nebelbruecke",
+                        "description": "Die Bruecke verschwindet im Dunst.",
+                        "difficulty": 18,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.66,
+                            "y": 0.44
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Fog Bridge",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 760,
+                            "attack": 54,
+                            "element": "Plant"
+                        },
+                        "xpReward": 760,
+                        "dailyRewardLimits": {
+                            "coins": 3050,
+                            "crystals": 255
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1360
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 88
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text": "Die Bruecke prueft jeden Zweifel."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Dann gehen wir mit Gewissheit weiter."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_2_battle_9",
@@ -710,8 +955,8 @@
                         "groundTexture": "bg_void",
                         "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.72,
-                            "y": 0.62
+                            "x": 0.78,
+                            "y": 0.60
                         },
                         "cutscene": null,
                         "enemy": {
@@ -719,125 +964,90 @@
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
-                            "hp": 680,
-                            "attack": 57,
+                            "hp": 830,
+                            "attack": 58,
                             "element": "Storm"
+                        },
+                        "xpReward": 820,
+                        "dailyRewardLimits": {
+                            "coins": 3200,
+                            "crystals": 270
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1340
+                                "amount": 1490
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 104
+                                "amount": 96
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Der Sturm gehorcht jetzt einem Willen."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Dann zerbrechen wir diesen Willen."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_2_battle_10",
-                        "name": "Himmelsbrecher",
-                        "description": "Vorboss der Wolkenspitze.",
-                        "difficulty": 20,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
-                        "node": {
-                            "x": 0.8,
-                            "y": 0.46
-                        },
-                        "cutscene": null,
-                        "enemy": {
-                            "name": "Sky Breaker",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 730,
-                            "attack": 61,
-                            "element": "Light"
-                        },
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1450
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 112
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "chapter_2_battle_11",
-                        "name": "Splitterkrone",
-                        "description": "Die Krone der Splitter erwacht.",
-                        "difficulty": 21,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
-                        "node": {
-                            "x": 0.88,
-                            "y": 0.58
-                        },
-                        "cutscene": null,
-                        "enemy": {
-                            "name": "Shard Crown",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 790,
-                            "attack": 65,
-                            "element": "Dark"
-                        },
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1580
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 122
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "chapter_2_battle_12",
-                        "name": "Aetherlord",
+                        "name": "Ätherlord",
                         "description": "Boss des zweiten Kapitels.",
-                        "difficulty": 22,
+                        "difficulty": 20,
                         "groundTexture": "bg_void",
                         "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.95,
+                            "x": 0.92,
                             "y": 0.36
                         },
                         "cutscene": {
-                            "id": "chapter_2_battle_12_cutscene",
-                            "title": "Aetherlord",
+                            "id": "chapter_2_battle_10_cutscene",
+                            "title": "Ätherlord",
                             "video": "intro",
-                            "text": "Der Aetherlord steigt aus den Splittern."
+                            "text":
+                                "Der Herr der Splitter steigt aus dem Sturm."
                         },
                         "enemy": {
-                            "name": "Aether Lord",
+                            "name": "Äther Lord",
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
-                            "hp": 860,
-                            "attack": 70,
-                            "element": "Fire"
+                            "hp": 920,
+                            "attack": 64,
+                            "element": "Light"
+                        },
+                        "xpReward": 900,
+                        "dailyRewardLimits": {
+                            "coins": 3400,
+                            "crystals": 290
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1750
+                                "amount": 1680
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 140
+                                "amount": 110
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Das war also die Hand hinter dem zweiten Riss."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Und hinter ihm wartet bereits das Reich der Leere."
+                            }
+                        ]
                     }
                 ]
             }
@@ -852,63 +1062,83 @@
             "id": "chapter_3_intro",
             "title": "Koenigreich der Leere",
             "video": "intro",
-            "text": "Die Route fuehrt in ein leeres Reich."
+            "text": "Hinter den Splittern beginnt das dunkle Kernreich."
         },
         "points": [
             {
                 "id": "chapter_3_void",
                 "title": "Leerenpforte",
-                "text": "Die letzte Route fuehrt durch die Leere.",
+                "text": "Die letzte Route fuehrt in das Herz der Finsternis.",
                 "mapImage": "bg_void",
                 "mapTexture": "bg_void",
                 "node": {
                     "x": 0.46,
-                    "y": 0.5
+                    "y": 0.50
                 },
                 "cutscene": null,
                 "battles": [
                     {
                         "id": "chapter_3_battle_1",
                         "name": "Leerenwache",
-                        "description": "Erster Kampf in der Leere.",
-                        "difficulty": 23,
+                        "description": "Erster Kampf im Schattenreich.",
+                        "difficulty": 21,
                         "groundTexture": "bg_void",
                         "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.06,
-                            "y": 0.56
+                            "x": 0.08,
+                            "y": 0.57
                         },
-                        "cutscene": null,
+                        "cutscene": {
+                            "id": "chapter_3_battle_1_cutscene",
+                            "title": "Leerenwache",
+                            "video": "intro",
+                            "text":
+                                "Die Luft wird schwer, sobald du die Schwelle ueberschreitest."
+                        },
                         "enemy": {
                             "name": "Void Guard",
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
-                            "hp": 900,
-                            "attack": 72,
+                            "hp": 980,
+                            "attack": 68,
                             "element": "Water"
+                        },
+                        "xpReward": 960,
+                        "dailyRewardLimits": {
+                            "coins": 3600,
+                            "crystals": 300
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1850
+                                "amount": 1800
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 150
+                                "amount": 118
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Hier endet das Licht wirklich."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Dann tragen wir unseres selbst hinein."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_3_battle_2",
                         "name": "Schwarzer Pfad",
-                        "description": "Der Pfad zieht Licht aus der Map.",
-                        "difficulty": 24,
+                        "description": "Der Pfad zieht Licht aus der Umgebung.",
+                        "difficulty": 22,
                         "groundTexture": "bg_sar",
                         "skyboxTexture": "bg_sar",
                         "node": {
-                            "x": 0.13,
+                            "x": 0.14,
                             "y": 0.42
                         },
                         "cutscene": null,
@@ -917,31 +1147,45 @@
                             "image": "sar_dragon",
                             "model": "tsayi",
                             "texture": null,
-                            "hp": 960,
-                            "attack": 76,
+                            "hp": 1040,
+                            "attack": 72,
                             "element": "Plant"
+                        },
+                        "xpReward": 1020,
+                        "dailyRewardLimits": {
+                            "coins": 3750,
+                            "crystals": 315
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1980
+                                "amount": 1940
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 158
+                                "amount": 126
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text": "Der Boden frisst sogar das Mondlicht."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Dann halten wir den Kurs ohne Sterne."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_3_battle_3",
                         "name": "Kronenschatten",
                         "description": "Der Schatten einer alten Krone.",
-                        "difficulty": 25,
+                        "difficulty": 23,
                         "groundTexture": "bg_map",
                         "skyboxTexture": "bg_map",
                         "node": {
-                            "x": 0.2,
+                            "x": 0.22,
                             "y": 0.64
                         },
                         "cutscene": null,
@@ -950,31 +1194,46 @@
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 1020,
-                            "attack": 80,
+                            "hp": 1110,
+                            "attack": 76,
                             "element": "Storm"
+                        },
+                        "xpReward": 1080,
+                        "dailyRewardLimits": {
+                            "coins": 3900,
+                            "crystals": 330
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2120
+                                "amount": 2090
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 166
+                                "amount": 134
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Diese Krone herrschte schon vor dem Riss."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Und jetzt fordert sie Tribut."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_3_battle_4",
                         "name": "Nachtklaue",
                         "description": "Ein schneller Nachtgegner.",
-                        "difficulty": 26,
+                        "difficulty": 24,
                         "groundTexture": "bg_ice",
                         "skyboxTexture": "bg_ice",
                         "node": {
-                            "x": 0.27,
+                            "x": 0.30,
                             "y": 0.48
                         },
                         "cutscene": null,
@@ -983,31 +1242,45 @@
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
-                            "hp": 1080,
-                            "attack": 84,
+                            "hp": 1180,
+                            "attack": 80,
                             "element": "Light"
+                        },
+                        "xpReward": 1140,
+                        "dailyRewardLimits": {
+                            "coins": 4050,
+                            "crystals": 345
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2260
+                                "amount": 2250
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 174
+                                "amount": 142
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text": "Er bewegt sich wie ein Gedanke."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Dann stoppen wir ihn vor dem nächsten."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_3_battle_5",
                         "name": "Leerenritter",
                         "description": "Ein schwerer Ritter blockiert den Weg.",
-                        "difficulty": 27,
+                        "difficulty": 25,
                         "groundTexture": "bg_arena",
                         "skyboxTexture": "bg_arena",
                         "node": {
-                            "x": 0.34,
+                            "x": 0.38,
                             "y": 0.61
                         },
                         "cutscene": null,
@@ -1016,9 +1289,14 @@
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 1160,
-                            "attack": 88,
+                            "hp": 1260,
+                            "attack": 84,
                             "element": "Dark"
+                        },
+                        "xpReward": 1200,
+                        "dailyRewardLimits": {
+                            "coins": 4200,
+                            "crystals": 360
                         },
                         "rewards": [
                             {
@@ -1027,20 +1305,30 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 184
+                                "amount": 150
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Ein alter Eid hält ihn noch aufrecht."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Dann loesen wir diesen Eid hier und jetzt."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_3_battle_6",
                         "name": "Schwarze Forge",
                         "description": "Die Forge brennt ohne Licht.",
-                        "difficulty": 28,
+                        "difficulty": 26,
                         "groundTexture": "bg_fire",
                         "skyboxTexture": "bg_fire",
                         "node": {
-                            "x": 0.41,
+                            "x": 0.46,
                             "y": 0.39
                         },
                         "cutscene": null,
@@ -1049,31 +1337,47 @@
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 1240,
-                            "attack": 92,
+                            "hp": 1340,
+                            "attack": 89,
                             "element": "Fire"
+                        },
+                        "xpReward": 1280,
+                        "dailyRewardLimits": {
+                            "coins": 4400,
+                            "crystals": 380
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2600
+                                "amount": 2620
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 194
+                                "amount": 160
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Hier werden die Waffen der Leere geschmiedet."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Dann zerbrechen wir die Schmiede selbst."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_3_battle_7",
                         "name": "Abysskern",
                         "description": "Der Kern der Leere pulsiert.",
-                        "difficulty": 29,
+                        "difficulty": 27,
                         "groundTexture": "bg_void",
                         "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.49,
+                            "x": 0.55,
                             "y": 0.55
                         },
                         "cutscene": null,
@@ -1082,31 +1386,47 @@
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
-                            "hp": 1320,
-                            "attack": 96,
+                            "hp": 1430,
+                            "attack": 94,
                             "element": "Water"
+                        },
+                        "xpReward": 1360,
+                        "dailyRewardLimits": {
+                            "coins": 4600,
+                            "crystals": 400
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2780
+                                "amount": 2820
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 206
+                                "amount": 172
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Der Herzschlag der Leere ist fast greifbar."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Dann reissen wir ihm den Takt aus der Brust."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_3_battle_8",
                         "name": "Dunkelzirkel",
                         "description": "Ein Zirkel ruft neue Gegner.",
-                        "difficulty": 30,
+                        "difficulty": 28,
                         "groundTexture": "bg_map",
                         "skyboxTexture": "bg_map",
                         "node": {
-                            "x": 0.57,
+                            "x": 0.64,
                             "y": 0.44
                         },
                         "cutscene": null,
@@ -1115,66 +1435,47 @@
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
-                            "hp": 1410,
-                            "attack": 101,
+                            "hp": 1520,
+                            "attack": 100,
                             "element": "Plant"
+                        },
+                        "xpReward": 1450,
+                        "dailyRewardLimits": {
+                            "coins": 4800,
+                            "crystals": 420
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2980
+                                "amount": 3040
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 218
+                                "amount": 184
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Solange der Zirkel steht, endet der Kampf nie."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Dann schneiden wir das Ritual entzwei."
+                            }
+                        ]
                     },
                     {
                         "id": "chapter_3_battle_9",
-                        "name": "Knochentor",
-                        "description":
-                            "Das Tor oeffnet sich nur nach dem Sieg.",
-                        "difficulty": 31,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
-                        "node": {
-                            "x": 0.65,
-                            "y": 0.62
-                        },
-                        "cutscene": null,
-                        "enemy": {
-                            "name": "Bone Gate",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 1500,
-                            "attack": 106,
-                            "element": "Storm"
-                        },
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 3200
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 232
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "chapter_3_battle_10",
                         "name": "Leerenprinz",
-                        "description": "Ein Vorbote der Krone.",
-                        "difficulty": 32,
+                        "description": "Ein Vorbote der dunklen Krone.",
+                        "difficulty": 29,
                         "groundTexture": "bg_arena",
                         "skyboxTexture": "bg_arena",
                         "node": {
-                            "x": 0.72,
-                            "y": 0.4
+                            "x": 0.78,
+                            "y": 0.40
                         },
                         "cutscene": null,
                         "enemy": {
@@ -1182,158 +1483,91 @@
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 1600,
-                            "attack": 112,
+                            "hp": 1640,
+                            "attack": 108,
                             "element": "Light"
                         },
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 3440
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 248
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "chapter_3_battle_11",
-                        "name": "Aschekrone",
-                        "description": "Die Krone sammelt Asche.",
-                        "difficulty": 33,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
-                        "node": {
-                            "x": 0.79,
-                            "y": 0.57
-                        },
-                        "cutscene": null,
-                        "enemy": {
-                            "name": "Ash Crown",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 1710,
-                            "attack": 118,
-                            "element": "Dark"
+                        "xpReward": 1560,
+                        "dailyRewardLimits": {
+                            "coins": 5000,
+                            "crystals": 440
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3700
+                                "amount": 3300
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 266
+                                "amount": 198
                             }
                         ],
-                        "story": []
-                    },
-                    {
-                        "id": "chapter_3_battle_12",
-                        "name": "Schattenkoenig",
-                        "description": "Der Schattenkoenig erscheint.",
-                        "difficulty": 34,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
-                        "node": {
-                            "x": 0.86,
-                            "y": 0.46
-                        },
-                        "cutscene": null,
-                        "enemy": {
-                            "name": "Shadow King",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 1820,
-                            "attack": 124,
-                            "element": "Fire"
-                        },
-                        "rewards": [
+                        "story": [
                             {
-                                "currency": "coins",
-                                "amount": 3980
+                                "speaker": "Zaron",
+                                "text":
+                                    "Erträgt er wirklich diese Krone, oder trägt sie ihn?"
                             },
                             {
-                                "currency": "crystals",
-                                "amount": 286
+                                "speaker": "Shela",
+                                "text":
+                                    "Egal. Nach diesem Kampf bleibt nichts von beidem."
                             }
-                        ],
-                        "story": []
+                        ]
                     },
                     {
-                        "id": "chapter_3_battle_13",
-                        "name": "Kronentraeger",
-                        "description": "Der letzte Waechter vor dem Kern.",
-                        "difficulty": 35,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
-                        "node": {
-                            "x": 0.92,
-                            "y": 0.61
-                        },
-                        "cutscene": null,
-                        "enemy": {
-                            "name": "Crown Bearer",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 1950,
-                            "attack": 132,
-                            "element": "Water"
-                        },
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 4300
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 310
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "chapter_3_battle_14",
+                        "id": "chapter_3_battle_10",
                         "name": "Leerenkrone",
                         "description": "Finaler Boss des dritten Kapitels.",
-                        "difficulty": 36,
+                        "difficulty": 30,
                         "groundTexture": "bg_void",
                         "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.97,
+                            "x": 0.94,
                             "y": 0.34
                         },
                         "cutscene": {
-                            "id": "chapter_3_battle_14_cutscene",
+                            "id": "chapter_3_battle_10_cutscene",
                             "title": "Leerenkrone",
                             "video": "intro",
-                            "text": "Die Leerenkrone erwacht."
+                            "text":
+                                "Im Zentrum der Leere wartet die Krone selbst."
                         },
                         "enemy": {
                             "name": "Void Crown",
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
-                            "hp": 2100,
-                            "attack": 140,
-                            "element": "Plant"
+                            "hp": 1800,
+                            "attack": 118,
+                            "element": "Dark"
+                        },
+                        "xpReward": 1700,
+                        "dailyRewardLimits": {
+                            "coins": 5400,
+                            "crystals": 480
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 5000
+                                "amount": 3800
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 360
+                                "amount": 230
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text": "Hier endet die Spur aller drei Risse."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Dann lassen wir hier auch ihren Herrscher fallen."
+                            }
+                        ]
                     }
                 ]
             }

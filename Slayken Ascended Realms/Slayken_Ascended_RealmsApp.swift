@@ -40,6 +40,9 @@ struct Slayken_Ascended_RealmsApp: App {
             SummonBannerProgress.self,
             PlayerDailyLoginProgress.self,
             PlayerClaimedGift.self,
+            PlayerQuestClaim.self,
+            PlayerQuestCounter.self,
+            PlayerDailyBattleRewardCap.self,
         ])
     }
 }

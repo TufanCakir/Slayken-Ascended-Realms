@@ -1,0 +1,144 @@
+[
+    {
+        "id": "quest_ascended_level_3",
+        "title": "Ascend Further",
+        "subtitle":
+            "Erreiche Ascended Level 3 und schalte deine ersten Bonus-Rewards frei.",
+        "category": "Progress",
+        "sortOrder": 0,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "ascendedLevel",
+            "target": 3,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 80
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_monster_kills_12",
+        "title": "Rift Hunter",
+        "subtitle": "Besiege 12 Monster in Events oder normalen Kaempfen.",
+        "category": "Battle",
+        "sortOrder": 1,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "monsterKills",
+            "target": 12,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1800
+            },
+            {
+                "currency": "crystals",
+                "amount": 40
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_collect_coins_4000",
+        "title": "Festival Wallet",
+        "subtitle": "Sammle insgesamt 4000 Coins durch deine Aktivitaeten.",
+        "category": "Resources",
+        "sortOrder": 2,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "currencyCollect",
+            "target": 4000,
+            "currency": "coins"
+        },
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 60
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_collect_crystals_250",
+        "title": "Crystal Route",
+        "subtitle":
+            "Sammle 250 Crystals und sichere dir eine kostenlose Summon-Belohnung.",
+        "category": "Resources",
+        "sortOrder": 3,
+        "minAscendedLevel": 2,
+        "objective": {
+            "type": "currencyCollect",
+            "target": 250,
+            "currency": "crystals"
+        },
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_battle_victories_5",
+        "title": "Event Line Cleared",
+        "subtitle":
+            "Schliesse 5 Kaempfe erfolgreich ab und erhalte Bonus-Currency.",
+        "category": "Event",
+        "sortOrder": 4,
+        "minAscendedLevel": 2,
+        "objective": {
+            "type": "battleVictories",
+            "target": 5,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 2500
+            },
+            {
+                "currency": "crystals",
+                "amount": 90
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_character_choice_8",
+        "title": "Choose Your Ally",
+        "subtitle":
+            "Gewinne 8 Kaempfe und waehle danach einen Character als Reward aus.",
+        "category": "Event",
+        "sortOrder": 5,
+        "minAscendedLevel": 3,
+        "objective": {
+            "type": "battleVictories",
+            "target": 8,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": [
+            "aika",
+            "shela",
+            "zaron"
+        ]
+    }
+]

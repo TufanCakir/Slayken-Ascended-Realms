@@ -1,147 +1,96 @@
 [
     {
-        "id": "event_shadow_moon",
-        "title": "Event: Schattenmond",
-        "subtitle": "Eigenes Event mit eigenen Gegnern, Cutscenes und Story",
-        "minAscendedLevel": 2,
-        "mapTexture": "bg_sar",
+        "id": "event_coin_farm",
+        "title": "Event: Coin Farm",
+        "subtitle": "Goldrausch fuer schnelle Coin-Farmen",
+        "minAscendedLevel": 1,
+        "mapTexture": "bg_country",
         "cutscene": {
-            "id": "event_shadow_moon_intro",
-            "title": "Schattenmond erwacht",
+            "id": "event_coin_farm_intro",
+            "title": "Goldrausch",
             "video": "intro",
-            "text":
-                "Ein zeitlich begrenztes Portal oeffnet sich ueber dem Schattenmond."
+            "text": "Eine Schatzroute ist im Grenzland aufgebrochen."
         },
         "points": [
             {
-                "id": "event_shadow_moon_gate",
-                "title": "Schattenpfad",
-                "text":
-                    "Der Event-Pfad nutzt eigene Battles und kann komplett per JSON erweitert werden.",
-                "mapImage": "bg_sar",
-                "mapTexture": "bg_sar",
+                "id": "event_coin_farm_field",
+                "title": "Schatzfeld",
+                "text": "Ein Event zum reinen Coin-Farmen.",
+                "mapImage": "bg_country",
+                "mapTexture": "bg_country",
                 "node": {
-                    "x": 0.24,
-                    "y": 0.58
+                    "x": 0.34,
+                    "y": 0.50
                 },
-                "cutscene": {
-                    "id": "event_shadow_moon_gate_cutscene",
-                    "title": "Schattenpfad",
-                    "video": "mondtor",
-                    "text": "Die Luft wird kalt, als der Pfad sichtbar wird."
-                },
+                "cutscene": null,
                 "battles": [
                     {
-                        "id": "event_shadow_moon_battle_1",
-                        "name": "Dunkle Vorhut",
-                        "description": "Drei Gegner greifen nebeneinander an.",
-                        "difficulty": 3,
+                        "id": "event_coin_farm_battle_1",
+                        "name": "Kupferpfad",
+                        "description": "Der erste Schatzwächter.",
+                        "difficulty": 2,
                         "groundTexture": "bg_country",
                         "skyboxTexture": "bg_country",
                         "node": {
-                            "x": 0.20,
+                            "x": 0.10,
                             "y": 0.62
                         },
-                        "cutscene": {
-                            "id": "event_shadow_moon_battle_1_cutscene",
-                            "title": "Dunkle Vorhut",
-                            "video": "torwache",
-                            "text": "Die Vorhut blockiert den Weg."
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Coin Guard",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 140,
+                            "attack": 10,
+                            "element": "Plant"
                         },
-                        "enemies": [
-                            {
-                                "name": "Shadow Scout",
-                                "image": "sar_dragon",
-                                "model": "krevas",
-                                "hp": 95,
-                                "attack": 11,
-                                "element": "Dark"
-                            },
-                            {
-                                "name": "Moon Acolyte",
-                                "image": "sar_dragon",
-                                "model": "tsayi",
-                                "hp": 110,
-                                "attack": 13,
-                                "element": "Light"
-                            },
-                            {
-                                "name": "Rift Thorn",
-                                "image": "sar_dragon",
-                                "model": "nanekihs",
-                                "hp": 105,
-                                "attack": 12,
-                                "element": "Plant"
-                            }
-                        ],
-                        "xpReward": 210,
+                        "xpReward": 180,
+                        "dailyRewardLimits": {
+                            "coins": 2600,
+                            "crystals": 40
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 260
+                                "amount": 420
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 24
+                                "amount": 4
                             }
                         ],
                         "story": [
                             {
-                                "speaker": "Zaron",
-                                "text":
-                                    "Diese Gegner gehoeren nicht zur normalen Story. Das ist ein eigenes Event."
-                            },
-                            {
                                 "speaker": "Shela",
-                                "text":
-                                    "Dann koennen wir neue Event-Battles spaeter direkt in JSON eintragen."
+                                "text": "Hier riecht alles nach altem Gold."
                             }
                         ]
                     },
                     {
-                        "id": "event_shadow_moon_battle_2",
-                        "name": "Mondkern Bestie",
-                        "description": "Ein Event-Boss mit eigener Begleitung.",
-                        "difficulty": 5,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "id": "event_coin_farm_battle_2",
+                        "name": "Silberwache",
+                        "description": "Mehr Kisten, mehr Gegner.",
+                        "difficulty": 3,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
-                            "x": 0.42,
-                            "y": 0.48
+                            "x": 0.18,
+                            "y": 0.54
                         },
-                        "cutscene": {
-                            "id": "event_shadow_moon_battle_2_cutscene",
-                            "title": "Mondkern Bestie",
-                            "video": "rissbestie",
-                            "text": "Der Boss tritt aus dem Kern des Portals."
-                        },
-                        "enemies": [
-                            {
-                                "name": "Core Wisp",
-                                "image": "sar_dragon",
-                                "model": "masoyina",
-                                "hp": 120,
-                                "attack": 14,
-                                "element": "Water"
-                            },
-                            {
-                                "name": "Core Guard",
-                                "image": "sar_dragon",
-                                "model": "jirgin",
-                                "hp": 145,
-                                "attack": 16,
-                                "element": "Fire"
-                            }
-                        ],
-                        "boss": {
-                            "name": "Shadow Moon Beast",
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Silver Guard",
                             "image": "sar_dragon",
-                            "model": "krevas",
-                            "hp": 260,
-                            "attack": 28,
-                            "element": "Dark"
+                            "model": "jirgin",
+                            "hp": 170,
+                            "attack": 12,
+                            "element": "Water"
                         },
-                        "xpReward": 420,
+                        "xpReward": 220,
+                        "dailyRewardLimits": {
+                            "coins": 2800,
+                            "crystals": 40
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
@@ -149,143 +98,262 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 45
+                                "amount": 4
                             }
                         ],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text":
-                                    "Der Boss ist nicht allein. Wir muessen zuerst seine Begleiter brechen."
-                            },
-                            {
-                                "speaker": "Shela",
-                                "text":
-                                    "Nutze das richtige Element, sonst kostet der Kampf zu viel Mana."
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "id": "event_shadow_moon_ruins",
-                "title": "Event Ruinen",
-                "text": "Ein zweiter Event-Punkt fuer weitere JSON-Battles.",
-                "mapImage": "bg_sar",
-                "mapTexture": "bg_sar",
-                "node": {
-                    "x": 0.58,
-                    "y": 0.44
-                },
-                "cutscene": null,
-                "battles": [
+                        "story": []
+                    },
                     {
-                        "id": "event_shadow_moon_battle_3",
-                        "name": "Runen Echo",
-                        "description":
-                            "Kurzer Event-Kampf mit zwei verschiedenen Elementen.",
+                        "id": "event_coin_farm_battle_3",
+                        "name": "Schatzsturm",
+                        "description": "Der Pfad wird dichter.",
                         "difficulty": 4,
                         "groundTexture": "bg_fire",
                         "skyboxTexture": "bg_fire",
                         "node": {
-                            "x": 0.52,
-                            "y": 0.52
+                            "x": 0.26,
+                            "y": 0.60
                         },
                         "cutscene": null,
-                        "enemies": [
-                            {
-                                "name": "Rune Echo",
-                                "image": "sar_dragon",
-                                "model": "tsayi",
-                                "hp": 150,
-                                "attack": 17,
-                                "element": "Storm"
-                            },
-                            {
-                                "name": "Ash Keeper",
-                                "image": "sar_dragon",
-                                "model": "masoyina",
-                                "hp": 170,
-                                "attack": 19,
-                                "element": "Ash"
-                            }
-                        ],
-                        "xpReward": 300,
+                        "enemy": {
+                            "name": "Treasure Storm",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 210,
+                            "attack": 14,
+                            "element": "Fire"
+                        },
+                        "xpReward": 260,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 45
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 360
+                                "amount": 640
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 30
+                                "amount": 5
                             }
                         ],
                         "story": []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "event_coin_harvest",
-        "title": "Event: Coin Farm",
-        "subtitle": "Goldrausch fuer schnelle Muenzfarmen",
-        "minAscendedLevel": 1,
-        "mapTexture": "bg_country",
-        "cutscene": {
-            "id": "event_coin_harvest_intro",
-            "title": "Goldrausch",
-            "video": "intro",
-            "text":
-                "In einer offenen Schatzroute tauchen immer neue Muenztruhen und Waechter auf."
-        },
-        "points": [
-            {
-                "id": "event_coin_harvest_field",
-                "title": "Schatzfeld",
-                "text":
-                    "Farme hier Coins gegen immer staerkere Schatzwaechter.",
-                "mapImage": "bg_country",
-                "mapTexture": "bg_country",
-                "node": {
-                    "x": 0.34,
-                    "y": 0.50
-                },
-                "cutscene": {
-                    "id": "event_coin_harvest_field_cutscene",
-                    "title": "Schatzfeld",
-                    "video": "torwache",
-                    "text":
-                        "Ein ganzer Pfad voller Kisten fuehrt tief in das Farmgebiet."
-                },
-                "battles": [
+                    },
                     {
-                        "id": "event_coin_harvest_battle_1",
-                        "name": "Kupferwache",
-                        "description":
-                            "Shen verteidigt die erste Reihe der Schatzkisten.",
-                        "difficulty": 4,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "id": "event_coin_farm_battle_4",
+                        "name": "Kistenfalle",
+                        "description": "Zwischen den Kisten lauert ein Kern.",
+                        "difficulty": 5,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
                         "node": {
-                            "x": 0.18,
-                            "y": 0.58
+                            "x": 0.34,
+                            "y": 0.44
                         },
+                        "cutscene": null,
                         "enemy": {
-                            "name": "Shen der Kassenwache",
-                            "image": "preview_shen",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 180,
-                            "attack": 18,
-                            "element": "Earth"
+                            "name": "Crate Core",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 250,
+                            "attack": 16,
+                            "element": "Light"
                         },
-                        "xpReward": 180,
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3200,
+                            "crystals": 45
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 850
+                                "amount": 760
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 5
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_coin_farm_battle_5",
+                        "name": "Goldader",
+                        "description": "Die Route glitzert im Kampf.",
+                        "difficulty": 6,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.56
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Gold Vein",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 290,
+                            "attack": 18,
+                            "element": "Storm"
+                        },
+                        "xpReward": 340,
+                        "dailyRewardLimits": {
+                            "coins": 3400,
+                            "crystals": 50
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 900
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 6
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_coin_farm_battle_6",
+                        "name": "Muenzregen",
+                        "description": "Ueberall schlagen Splitter ein.",
+                        "difficulty": 7,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.40
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Coin Rain",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 340,
+                            "attack": 20,
+                            "element": "Water"
+                        },
+                        "xpReward": 380,
+                        "dailyRewardLimits": {
+                            "coins": 3600,
+                            "crystals": 50
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1040
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 6
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_coin_farm_battle_7",
+                        "name": "Kammerwacht",
+                        "description": "Der Eingang zur Schatzkammer.",
+                        "difficulty": 8,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.60,
+                            "y": 0.58
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Vault Guard",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 390,
+                            "attack": 23,
+                            "element": "Dark"
+                        },
+                        "xpReward": 430,
+                        "dailyRewardLimits": {
+                            "coins": 3900,
+                            "crystals": 55
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1220
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 7
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_coin_farm_battle_8",
+                        "name": "Siegeltruhe",
+                        "description": "Die Truhe lebt.",
+                        "difficulty": 9,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.70,
+                            "y": 0.46
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Seal Chest",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 460,
+                            "attack": 26,
+                            "element": "Fire"
+                        },
+                        "xpReward": 480,
+                        "dailyRewardLimits": {
+                            "coins": 4200,
+                            "crystals": 55
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1420
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 7
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_coin_farm_battle_9",
+                        "name": "Gildengrab",
+                        "description": "Die alten Hueter kehren zurueck.",
+                        "difficulty": 10,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.80,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Guild Grave",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 540,
+                            "attack": 30,
+                            "element": "Plant"
+                        },
+                        "xpReward": 540,
+                        "dailyRewardLimits": {
+                            "coins": 4500,
+                            "crystals": 60
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1660
                             },
                             {
                                 "currency": "crystals",
@@ -295,141 +363,112 @@
                         "story": []
                     },
                     {
-                        "id": "event_coin_harvest_battle_2",
-                        "name": "Truhensturm",
-                        "description":
-                            "Sinara beschwoert einen Schwall aus Schatzenergie.",
-                        "difficulty": 6,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "id": "event_coin_farm_battle_10",
+                        "name": "Goldkronenboss",
+                        "description": "Boss des Coin-Farm-Events.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
-                            "x": 0.42,
-                            "y": 0.44
+                            "x": 0.92,
+                            "y": 0.38
+                        },
+                        "cutscene": {
+                            "id": "event_coin_farm_battle_10_cutscene",
+                            "title": "Goldkronenboss",
+                            "video": "intro",
+                            "text":
+                                "Die Schatzkammer bebt unter einer goldenen Krone."
                         },
                         "enemy": {
-                            "name": "Sinara Goldweberin",
-                            "image": "preview_sennara",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 260,
-                            "attack": 24,
-                            "element": "Light"
-                        },
-                        "xpReward": 240,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1450
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_harvest_battle_3",
-                        "name": "Goldthron",
-                        "description":
-                            "Ein Bosskampf fuer maximale Coin-Ausbeute.",
-                        "difficulty": 8,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
-                        "node": {
-                            "x": 0.70,
-                            "y": 0.52
-                        },
-                        "enemies": [
-                            {
-                                "name": "Shen Tresorwache",
-                                "image": "preview_shen",
-                                "model": "nanekihs",
-                                "texture": null,
-                                "hp": 240,
-                                "attack": 22,
-                                "element": "Storm"
-                            }
-                        ],
-                        "boss": {
-                            "name": "Sinara vom Goldthron",
-                            "image": "preview_sennara",
-                            "model": "nanekihs",
-                            "texture": null,
-                            "hp": 420,
+                            "name": "Gold Crown",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 620,
                             "attack": 34,
                             "element": "Light"
                         },
-                        "xpReward": 320,
+                        "xpReward": 620,
+                        "dailyRewardLimits": {
+                            "coins": 5000,
+                            "crystals": 70
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2600
+                                "amount": 2100
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 20
+                                "amount": 10
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Wenn er fällt, gehoert der Schatz wieder dem Reich."
+                            }
+                        ]
                     }
                 ]
             }
         ]
     },
     {
-        "id": "event_xp_trials",
-        "title": "Event: XP Farm",
-        "subtitle": "Trainingsfeld fuer Charakter- und Account-XP",
+        "id": "event_crystal_farm",
+        "title": "Event: Crystal Farm",
+        "subtitle": "Kristallrisse fuer schnelle Crystal-Farmen",
         "minAscendedLevel": 2,
-        "mapTexture": "bg_arena",
+        "mapTexture": "bg_ice",
         "cutscene": {
-            "id": "event_xp_trials_intro",
-            "title": "Pruefungen der Halle",
-            "video": "kristallspur",
-            "text":
-                "In der Trainingshalle warten aufeinanderfolgende XP-Pruefungen."
+            "id": "event_crystal_farm_intro",
+            "title": "Kristallriss",
+            "video": "intro",
+            "text": "Ein Frostspalt wirft seltene Crystals aus."
         },
         "points": [
             {
-                "id": "event_xp_trials_hall",
-                "title": "Trainingshalle",
-                "text":
-                    "Besiege Shen und Sinara in Trainingsduellen fuer hohe XP-Werte.",
-                "mapImage": "bg_arena",
-                "mapTexture": "bg_arena",
+                "id": "event_crystal_farm_rift",
+                "title": "Kristallriss",
+                "text": "Ein Event zum reinen Crystal-Farmen.",
+                "mapImage": "bg_ice",
+                "mapTexture": "bg_ice",
                 "node": {
-                    "x": 0.46,
-                    "y": 0.46
+                    "x": 0.36,
+                    "y": 0.48
                 },
                 "cutscene": null,
                 "battles": [
                     {
-                        "id": "event_xp_trials_battle_1",
-                        "name": "Shens Lektion",
-                        "description":
-                            "Shen eröffnet die Trainingsserie mit einem kontrollierten Duell.",
-                        "difficulty": 7,
+                        "id": "event_crystal_farm_battle_1",
+                        "name": "Frostsplitter",
+                        "description": "Der erste Kristallhueter.",
+                        "difficulty": 4,
                         "groundTexture": "bg_ice",
                         "skyboxTexture": "bg_ice",
                         "node": {
-                            "x": 0.20,
-                            "y": 0.56
+                            "x": 0.10,
+                            "y": 0.60
                         },
+                        "cutscene": null,
                         "enemy": {
-                            "name": "Trainer Shen",
-                            "image": "preview_shen",
-                            "model": "nanekihs",
-                            "texture": null,
-                            "hp": 300,
-                            "attack": 28,
+                            "name": "Frost Shard",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 220,
+                            "attack": 16,
                             "element": "Water"
                         },
-                        "xpReward": 620,
+                        "xpReward": 260,
+                        "dailyRewardLimits": {
+                            "coins": 900,
+                            "crystals": 120
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 480
+                                "amount": 120
                             },
                             {
                                 "currency": "crystals",
@@ -439,31 +478,962 @@
                         "story": []
                     },
                     {
-                        "id": "event_xp_trials_battle_2",
-                        "name": "Sinaras Prüfung",
-                        "description":
-                            "Sinara testet dein Durchhaltevermoegen in einer zweiten Runde.",
-                        "difficulty": 9,
+                        "id": "event_crystal_farm_battle_2",
+                        "name": "Azurwelle",
+                        "description": "Kristalle schwimmen im Wind.",
+                        "difficulty": 5,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.52
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Azure Tide",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 250,
+                            "attack": 18,
+                            "element": "Storm"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 950,
+                            "crystals": 140
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 140
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 22
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_crystal_farm_battle_3",
+                        "name": "Prismakern",
+                        "description": "Der Riss wird heller.",
+                        "difficulty": 6,
                         "groundTexture": "bg_void",
                         "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.48,
-                            "y": 0.42
+                            "x": 0.26,
+                            "y": 0.58
                         },
+                        "cutscene": null,
                         "enemy": {
-                            "name": "Mentorin Sinara",
-                            "image": "preview_sennara",
-                            "model": "nanekihs",
-                            "texture": null,
-                            "hp": 420,
-                            "attack": 33,
+                            "name": "Prism Core",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 290,
+                            "attack": 20,
+                            "element": "Light"
+                        },
+                        "xpReward": 340,
+                        "dailyRewardLimits": {
+                            "coins": 1000,
+                            "crystals": 160
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 160
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 26
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_crystal_farm_battle_4",
+                        "name": "Spiegelfrost",
+                        "description": "Alles spaltet sich im Eis.",
+                        "difficulty": 7,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.34,
+                            "y": 0.44
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Mirror Frost",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 340,
+                            "attack": 23,
+                            "element": "Plant"
+                        },
+                        "xpReward": 380,
+                        "dailyRewardLimits": {
+                            "coins": 1100,
+                            "crystals": 180
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 180
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 30
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_crystal_farm_battle_5",
+                        "name": "Blauer Riss",
+                        "description": "Der Pfad pulsiert in Cyan.",
+                        "difficulty": 8,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.56
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Blue Rift",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 390,
+                            "attack": 25,
+                            "element": "Water"
+                        },
+                        "xpReward": 430,
+                        "dailyRewardLimits": {
+                            "coins": 1200,
+                            "crystals": 200
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 220
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 34
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_crystal_farm_battle_6",
+                        "name": "Kristallader",
+                        "description": "Der Boden selbst splittert auf.",
+                        "difficulty": 9,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.40
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Crystal Vein",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 450,
+                            "attack": 28,
+                            "element": "Dark"
+                        },
+                        "xpReward": 480,
+                        "dailyRewardLimits": {
+                            "coins": 1300,
+                            "crystals": 220
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 260
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 38
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_crystal_farm_battle_7",
+                        "name": "Frostkrone",
+                        "description": "Der Riss bildet eine Krone.",
+                        "difficulty": 10,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.62,
+                            "y": 0.58
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Frost Crown",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 520,
+                            "attack": 31,
+                            "element": "Light"
+                        },
+                        "xpReward": 540,
+                        "dailyRewardLimits": {
+                            "coins": 1400,
+                            "crystals": 240
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 300
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 44
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_crystal_farm_battle_8",
+                        "name": "Polarwacht",
+                        "description": "Die Hueter verdoppeln sich.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.72,
+                            "y": 0.46
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Polar Guard",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 600,
+                            "attack": 35,
+                            "element": "Fire"
+                        },
+                        "xpReward": 600,
+                        "dailyRewardLimits": {
+                            "coins": 1500,
+                            "crystals": 260
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 340
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 50
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_crystal_farm_battle_9",
+                        "name": "Schimmerkern",
+                        "description": "Vorboss des Risses.",
+                        "difficulty": 12,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Gleam Core",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 690,
+                            "attack": 39,
                             "element": "Storm"
                         },
-                        "xpReward": 980,
+                        "xpReward": 680,
+                        "dailyRewardLimits": {
+                            "coins": 1700,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 420
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 60
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_crystal_farm_battle_10",
+                        "name": "Kristallthron",
+                        "description": "Boss des Crystal-Events.",
+                        "difficulty": 13,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.92,
+                            "y": 0.36
+                        },
+                        "cutscene": {
+                            "id": "event_crystal_farm_battle_10_cutscene",
+                            "title": "Kristallthron",
+                            "video": "intro",
+                            "text":
+                                "Der Riss formt einen ganzen Thron aus Crystals."
+                        },
+                        "enemy": {
+                            "name": "Crystal Throne",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 780,
+                            "attack": 44,
+                            "element": "Water"
+                        },
+                        "xpReward": 760,
+                        "dailyRewardLimits": {
+                            "coins": 2000,
+                            "crystals": 360
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 520
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 78
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Wenn dieser Thron fällt, gehoeren die Crystals wieder uns."
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_skill_card_farm",
+        "title": "Event: Skill Card Farm",
+        "subtitle": "Farmt 1- bis 3-Stern-Skill-Karten",
+        "minAscendedLevel": 3,
+        "mapTexture": "festival_dusk",
+        "cutscene": {
+            "id": "event_skill_card_farm_intro",
+            "title": "Dusk Card Hunt",
+            "video": "intro",
+            "text": "Im Abendnebel erscheinen alte Karten-Siegel."
+        },
+        "points": [
+            {
+                "id": "event_skill_card_farm_dusk",
+                "title": "Sigil Route",
+                "text": "Ein Event fuer Skill-Karten aller Seltenheiten.",
+                "mapImage": "festival_dusk",
+                "mapTexture": "festival_dusk",
+                "node": {
+                    "x": 0.32,
+                    "y": 0.52
+                },
+                "cutscene": null,
+                "battles": [
+                    {
+                        "id": "event_skill_card_farm_battle_1",
+                        "name": "Bronze Sigil I",
+                        "description": "Ein erster 1-Stern-Drop.",
+                        "difficulty": 5,
+                        "groundTexture": "festival_dusk",
+                        "skyboxTexture": "festival_dusk",
+                        "node": {
+                            "x": 0.10,
+                            "y": 0.62
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Bronze Wisp",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 260,
+                            "attack": 18,
+                            "element": "Plant"
+                        },
+                        "xpReward": 320,
+                        "dailyRewardLimits": {
+                            "coins": 1200,
+                            "crystals": 120
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 180
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 10
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_skill_card_farm_battle_2",
+                        "name": "Bronze Sigil II",
+                        "description": "Noch eine einfache Karte.",
+                        "difficulty": 6,
+                        "groundTexture": "festival_dusk",
+                        "skyboxTexture": "festival_dusk",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.54
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Bronze Shade",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 300,
+                            "attack": 20,
+                            "element": "Fire"
+                        },
+                        "xpReward": 360,
+                        "dailyRewardLimits": {
+                            "coins": 1300,
+                            "crystals": 130
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 220
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 12
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_skill_card_farm_battle_3",
+                        "name": "Silver Echo I",
+                        "description": "Die ersten 2-Stern-Karten erscheinen.",
+                        "difficulty": 7,
+                        "groundTexture": "festival_dusk",
+                        "skyboxTexture": "festival_dusk",
+                        "node": {
+                            "x": 0.26,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Silver Echo",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 360,
+                            "attack": 24,
+                            "element": "Storm"
+                        },
+                        "xpReward": 410,
+                        "dailyRewardLimits": {
+                            "coins": 1450,
+                            "crystals": 145
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 280
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 14
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "crystal_blue",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_skill_card_farm_battle_4",
+                        "name": "Silver Echo II",
+                        "description": "Mehr mittlere Karten.",
+                        "difficulty": 8,
+                        "groundTexture": "festival_dusk",
+                        "skyboxTexture": "festival_dusk",
+                        "node": {
+                            "x": 0.34,
+                            "y": 0.46
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Silver Guard",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 420,
+                            "attack": 27,
+                            "element": "Water"
+                        },
+                        "xpReward": 470,
+                        "dailyRewardLimits": {
+                            "coins": 1600,
+                            "crystals": 160
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 340
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 16
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "crystal_blue",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_skill_card_farm_battle_5",
+                        "name": "Golden Dusk I",
+                        "description": "Die 3-Stern-Linie beginnt.",
+                        "difficulty": 9,
+                        "groundTexture": "festival_dusk",
+                        "skyboxTexture": "festival_dusk",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.56
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Golden Dusk",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 490,
+                            "attack": 30,
+                            "element": "Light"
+                        },
+                        "xpReward": 540,
+                        "dailyRewardLimits": {
+                            "coins": 1800,
+                            "crystals": 180
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 420
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 20
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "moon_guard",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_skill_card_farm_battle_6",
+                        "name": "Golden Dusk II",
+                        "description": "Stärkere 3-Stern-Jagd.",
+                        "difficulty": 10,
+                        "groundTexture": "festival_dusk",
+                        "skyboxTexture": "festival_dusk",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.40
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Gold Warden",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 560,
+                            "attack": 34,
+                            "element": "Dark"
+                        },
+                        "xpReward": 620,
+                        "dailyRewardLimits": {
+                            "coins": 2000,
+                            "crystals": 200
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 500
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 24
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "moon_guard",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_skill_card_farm_battle_7",
+                        "name": "Sigil Chorus",
+                        "description": "Mehrere Siegel antworten gleichzeitig.",
+                        "difficulty": 11,
+                        "groundTexture": "festival_dusk",
+                        "skyboxTexture": "festival_dusk",
+                        "node": {
+                            "x": 0.60,
+                            "y": 0.58
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Sigil Chorus",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 650,
+                            "attack": 38,
+                            "element": "Plant"
+                        },
+                        "xpReward": 700,
+                        "dailyRewardLimits": {
+                            "coins": 2200,
+                            "crystals": 220
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
                                 "amount": 620
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 28
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "crystal_blue",
+                                "amount": 1
+                            },
+                            {
+                                "cardID": "slash_red",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_skill_card_farm_battle_8",
+                        "name": "Runenfackel",
+                        "description": "Der Pfad glimmt violett.",
+                        "difficulty": 12,
+                        "groundTexture": "festival_dusk",
+                        "skyboxTexture": "festival_dusk",
+                        "node": {
+                            "x": 0.70,
+                            "y": 0.46
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Rune Torch",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 740,
+                            "attack": 42,
+                            "element": "Fire"
+                        },
+                        "xpReward": 790,
+                        "dailyRewardLimits": {
+                            "coins": 2400,
+                            "crystals": 240
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 760
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 32
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "moon_guard",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_skill_card_farm_battle_9",
+                        "name": "Siegelprinz",
+                        "description": "Vorboss der Kartenjagd.",
+                        "difficulty": 13,
+                        "groundTexture": "festival_dusk",
+                        "skyboxTexture": "festival_dusk",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Sigil Prince",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 840,
+                            "attack": 47,
+                            "element": "Storm"
+                        },
+                        "xpReward": 900,
+                        "dailyRewardLimits": {
+                            "coins": 2700,
+                            "crystals": 270
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 920
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 36
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "moon_guard",
+                                "amount": 1
+                            },
+                            {
+                                "cardID": "crystal_blue",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_skill_card_farm_battle_10",
+                        "name": "Dusk Grand Sigil",
+                        "description": "Boss des Skill-Card-Events.",
+                        "difficulty": 14,
+                        "groundTexture": "festival_dusk",
+                        "skyboxTexture": "festival_dusk",
+                        "node": {
+                            "x": 0.92,
+                            "y": 0.36
+                        },
+                        "cutscene": {
+                            "id": "event_skill_card_farm_battle_10_cutscene",
+                            "title": "Dusk Grand Sigil",
+                            "video": "intro",
+                            "text":
+                                "Ein uraltes Siegel oeffnet sich ueber dem Platz."
+                        },
+                        "enemy": {
+                            "name": "Grand Sigil",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 950,
+                            "attack": 52,
+                            "element": "Light"
+                        },
+                        "xpReward": 1040,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1120
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 42
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "moon_guard",
+                                "amount": 2
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Dieses Siegel trägt genug Macht fuer eine ganze Deck-Reihe."
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_festival_new_years",
+        "title": "Event: Festival Nights",
+        "subtitle": "Feierliche Festival-Route mit 10 Battles",
+        "minAscendedLevel": 2,
+        "mapTexture": "festival_new_years_eve",
+        "cutscene": {
+            "id": "event_festival_new_years_intro",
+            "title": "Festival Night",
+            "video": "intro",
+            "text":
+                "Zwischen Laternen und Feuerwerk oeffnet sich ein Event-Pfad."
+        },
+        "points": [
+            {
+                "id": "event_festival_new_years_plaza",
+                "title": "Countdown Plaza",
+                "text": "Festival-Event mit Feier, Chaos und Boss-Finale.",
+                "mapImage": "festival_new_years_eve",
+                "mapTexture": "festival_new_years_eve",
+                "node": {
+                    "x": 0.40,
+                    "y": 0.50
+                },
+                "cutscene": null,
+                "battles": [
+                    {
+                        "id": "event_festival_new_years_battle_1",
+                        "name": "Lichtertor",
+                        "description": "Die erste Festivalwache.",
+                        "difficulty": 4,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
+                        "node": {
+                            "x": 0.10,
+                            "y": 0.62
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Lantern Guard",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 240,
+                            "attack": 16,
+                            "element": "Light"
+                        },
+                        "xpReward": 280,
+                        "dailyRewardLimits": {
+                            "coins": 1800,
+                            "crystals": 140
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 240
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 18
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_festival_new_years_battle_2",
+                        "name": "Funkenpfad",
+                        "description": "Der Weg leuchtet unruhig.",
+                        "difficulty": 5,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.54
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Spark Trail",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 280,
+                            "attack": 18,
+                            "element": "Fire"
+                        },
+                        "xpReward": 320,
+                        "dailyRewardLimits": {
+                            "coins": 1900,
+                            "crystals": 150
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 300
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 22
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_festival_new_years_battle_3",
+                        "name": "Maskentanz",
+                        "description": "Zwischen Musik und Magie.",
+                        "difficulty": 6,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
+                        "node": {
+                            "x": 0.26,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Masked Echo",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 320,
+                            "attack": 20,
+                            "element": "Storm"
+                        },
+                        "xpReward": 360,
+                        "dailyRewardLimits": {
+                            "coins": 2000,
+                            "crystals": 160
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 360
                             },
                             {
                                 "currency": "crystals",
@@ -473,38 +1443,604 @@
                         "story": []
                     },
                     {
-                        "id": "event_xp_trials_battle_3",
-                        "name": "Doppeltraining",
-                        "description":
-                            "Beide neuen Kaempfer treten gemeinsam fuer maximale XP an.",
-                        "difficulty": 11,
-                        "groundTexture": "sar_bg",
-                        "skyboxTexture": "sar_bg",
+                        "id": "event_festival_new_years_battle_4",
+                        "name": "Silvesterfunke",
+                        "description": "Das Feuerwerk splittert Mana.",
+                        "difficulty": 7,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
                         "node": {
-                            "x": 0.76,
-                            "y": 0.50
+                            "x": 0.34,
+                            "y": 0.44
                         },
-                        "enemies": [
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "New Year Spark",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 380,
+                            "attack": 23,
+                            "element": "Water"
+                        },
+                        "xpReward": 410,
+                        "dailyRewardLimits": {
+                            "coins": 2200,
+                            "crystals": 175
+                        },
+                        "rewards": [
                             {
-                                "name": "Shen der Meisterklasse",
-                                "image": "preview_shen",
-                                "model": "tsayi",
-                                "texture": null,
-                                "hp": 360,
-                                "attack": 31,
-                                "element": "Fire"
+                                "currency": "coins",
+                                "amount": 440
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 28
                             }
                         ],
-                        "boss": {
-                            "name": "Sinara der Meisterklasse",
-                            "image": "preview_sennara",
+                        "story": []
+                    },
+                    {
+                        "id": "event_festival_new_years_battle_5",
+                        "name": "Buehnenriss",
+                        "description": "Der Festplatz bricht auf.",
+                        "difficulty": 8,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.56
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Stage Rift",
+                            "image": "sar_dragon",
                             "model": "tsayi",
-                            "texture": null,
+                            "hp": 430,
+                            "attack": 26,
+                            "element": "Dark"
+                        },
+                        "xpReward": 470,
+                        "dailyRewardLimits": {
+                            "coins": 2400,
+                            "crystals": 190
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 520
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 32
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_festival_new_years_battle_6",
+                        "name": "Countdown Bells",
+                        "description": "Jede Glocke ruft neue Gegner.",
+                        "difficulty": 9,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.40
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Countdown Bell",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 490,
+                            "attack": 29,
+                            "element": "Plant"
+                        },
+                        "xpReward": 530,
+                        "dailyRewardLimits": {
+                            "coins": 2600,
+                            "crystals": 205
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 620
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 36
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_festival_new_years_battle_7",
+                        "name": "Feuerwerkskranz",
+                        "description": "Die Lichter verdichten sich.",
+                        "difficulty": 10,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
+                        "node": {
+                            "x": 0.62,
+                            "y": 0.58
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Firework Ring",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
                             "hp": 560,
-                            "attack": 38,
+                            "attack": 32,
                             "element": "Light"
                         },
-                        "xpReward": 1450,
+                        "xpReward": 600,
+                        "dailyRewardLimits": {
+                            "coins": 2800,
+                            "crystals": 220
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 740
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 40
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_festival_new_years_battle_8",
+                        "name": "Mitternachtsnebel",
+                        "description": "Die Uhr rueckt näher.",
+                        "difficulty": 11,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
+                        "node": {
+                            "x": 0.72,
+                            "y": 0.46
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Midnight Mist",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 640,
+                            "attack": 36,
+                            "element": "Water"
+                        },
+                        "xpReward": 680,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 240
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 860
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 46
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_festival_new_years_battle_9",
+                        "name": "Sekundensturm",
+                        "description": "Vorboss vor dem Gong.",
+                        "difficulty": 12,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Second Storm",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 740,
+                            "attack": 40,
+                            "element": "Fire"
+                        },
+                        "xpReward": 770,
+                        "dailyRewardLimits": {
+                            "coins": 3300,
+                            "crystals": 260
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1020
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 52
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_festival_new_years_battle_10",
+                        "name": "Festival Crown",
+                        "description": "Boss des Festival-Events.",
+                        "difficulty": 13,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
+                        "node": {
+                            "x": 0.92,
+                            "y": 0.36
+                        },
+                        "cutscene": {
+                            "id": "event_festival_new_years_battle_10_cutscene",
+                            "title": "Festival Crown",
+                            "video": "intro",
+                            "text": "Das neue Jahr beginnt mit einem Bosskampf."
+                        },
+                        "enemy": {
+                            "name": "Festival Crown",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 860,
+                            "attack": 45,
+                            "element": "Storm"
+                        },
+                        "xpReward": 880,
+                        "dailyRewardLimits": {
+                            "coins": 3600,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1240
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 64
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Wenn dieser Boss fällt, gehoert die Nacht wieder den Feiernden."
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_story_arc",
+        "title": "Event: Story Arc",
+        "subtitle": "Ein eigenes Event mit längerem Storybogen",
+        "minAscendedLevel": 4,
+        "mapTexture": "bg_sar",
+        "cutscene": {
+            "id": "event_story_arc_intro",
+            "title": "Verlorene Chronik",
+            "video": "intro",
+            "text": "Eine alte Geschichte kehrt als Event-Pfad zurueck."
+        },
+        "points": [
+            {
+                "id": "event_story_arc_path",
+                "title": "Chronikpfad",
+                "text": "Story-Event mit 10 aufeinander aufbauenden Kämpfen.",
+                "mapImage": "bg_sar",
+                "mapTexture": "bg_sar",
+                "node": {
+                    "x": 0.36,
+                    "y": 0.50
+                },
+                "cutscene": null,
+                "battles": [
+                    {
+                        "id": "event_story_arc_battle_1",
+                        "name": "Archivtor",
+                        "description": "Der Eingang zur Chronik.",
+                        "difficulty": 6,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.10,
+                            "y": 0.62
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Archive Gate",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 300,
+                            "attack": 20,
+                            "element": "Plant"
+                        },
+                        "xpReward": 360,
+                        "dailyRewardLimits": {
+                            "coins": 1800,
+                            "crystals": 140
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 260
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 18
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Hinter diesem Tor liegt mehr als Beute."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Dann lesen wir die Wahrheit im Kampf."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_story_arc_battle_2",
+                        "name": "Seitenrufer",
+                        "description": "Alte Texte werden lebendig.",
+                        "difficulty": 7,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.54
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Page Caller",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 350,
+                            "attack": 22,
+                            "element": "Water"
+                        },
+                        "xpReward": 410,
+                        "dailyRewardLimits": {
+                            "coins": 1900,
+                            "crystals": 150
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 320
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 20
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Diese Schrift antwortet auf Blut und Mana."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_story_arc_battle_3",
+                        "name": "Runenkapitel",
+                        "description": "Das dritte Kapitel schlägt zurueck.",
+                        "difficulty": 8,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.26,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Rune Chapter",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 400,
+                            "attack": 25,
+                            "element": "Fire"
+                        },
+                        "xpReward": 460,
+                        "dailyRewardLimits": {
+                            "coins": 2100,
+                            "crystals": 160
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 380
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 24
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_story_arc_battle_4",
+                        "name": "Chroniksplitter",
+                        "description": "Die Geschichte zerbricht in Teile.",
+                        "difficulty": 9,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.34,
+                            "y": 0.44
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Chronicle Shard",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 460,
+                            "attack": 28,
+                            "element": "Storm"
+                        },
+                        "xpReward": 520,
+                        "dailyRewardLimits": {
+                            "coins": 2300,
+                            "crystals": 175
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 460
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 28
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_story_arc_battle_5",
+                        "name": "Namenloser Hof",
+                        "description": "Eine verlorene Halle wird sichtbar.",
+                        "difficulty": 10,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.56
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Nameless Court",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 520,
+                            "attack": 31,
+                            "element": "Dark"
+                        },
+                        "xpReward": 580,
+                        "dailyRewardLimits": {
+                            "coins": 2500,
+                            "crystals": 190
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 540
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 32
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_story_arc_battle_6",
+                        "name": "Hofschreiber",
+                        "description": "Der Schreiber bewacht das Siegel.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.40
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Court Scribe",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 590,
+                            "attack": 34,
+                            "element": "Light"
+                        },
+                        "xpReward": 650,
+                        "dailyRewardLimits": {
+                            "coins": 2700,
+                            "crystals": 205
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 640
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 36
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_story_arc_battle_7",
+                        "name": "Schweigekammer",
+                        "description": "Die Chronik spricht nicht mehr.",
+                        "difficulty": 12,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.62,
+                            "y": 0.58
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Silent Vault",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 670,
+                            "attack": 38,
+                            "element": "Water"
+                        },
+                        "xpReward": 730,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 220
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 760
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 40
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_story_arc_battle_8",
+                        "name": "Titelseite",
+                        "description": "Die Quelle der Geschichte ruft.",
+                        "difficulty": 13,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.72,
+                            "y": 0.46
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Title Page",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 760,
+                            "attack": 42,
+                            "element": "Plant"
+                        },
+                        "xpReward": 820,
+                        "dailyRewardLimits": {
+                            "coins": 3300,
+                            "crystals": 240
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
@@ -512,367 +2048,861 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 30
-                            }
-                        ],
-                        "story": []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "event_crystal_bloom",
-        "title": "Event: Crystal Farm",
-        "subtitle": "Kristallroute mit Sinara und Shen",
-        "minAscendedLevel": 3,
-        "mapTexture": "realm_fire",
-        "cutscene": {
-            "id": "event_crystal_bloom_intro",
-            "title": "Kristallbluete",
-            "video": "mondtor",
-            "text":
-                "Ein seltenes Kristallfeld oeffnet sich und lockt starke Beschuetzer an."
-        },
-        "points": [
-            {
-                "id": "event_crystal_bloom_cavern",
-                "title": "Kristallgrotte",
-                "text":
-                    "Hier liegt der Fokus auf Crystal-Rewards und schweren Elite-Kaempfen.",
-                "mapImage": "realm_fire",
-                "mapTexture": "realm_fire",
-                "node": {
-                    "x": 0.50,
-                    "y": 0.40
-                },
-                "cutscene": {
-                    "id": "event_crystal_bloom_cavern_cutscene",
-                    "title": "Kristallgrotte",
-                    "video": "kristallspur",
-                    "text":
-                        "Die Grotte pulsiert vor Energie und jede Kiste glimmt violett."
-                },
-                "battles": [
-                    {
-                        "id": "event_crystal_bloom_battle_1",
-                        "name": "Kristallklaue",
-                        "description":
-                            "Shen greift hier als schneller Kristalljaeger an.",
-                        "difficulty": 8,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
-                        "node": {
-                            "x": 0.22,
-                            "y": 0.50
-                        },
-                        "enemy": {
-                            "name": "Kristall Shen",
-                            "image": "preview_shen",
-                            "model": "nanekihs",
-                            "texture": null,
-                            "hp": 340,
-                            "attack": 30,
-                            "element": "Light"
-                        },
-                        "xpReward": 360,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 420
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 70
+                                "amount": 46
                             }
                         ],
                         "story": []
                     },
                     {
-                        "id": "event_crystal_bloom_battle_2",
-                        "name": "Sinaras Splitterstrom",
-                        "description":
-                            "Sinara laesst die Kristalle ueber das Feld kreisen.",
-                        "difficulty": 10,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
-                        "node": {
-                            "x": 0.52,
-                            "y": 0.38
-                        },
-                        "enemy": {
-                            "name": "Sinara Splitterweberin",
-                            "image": "preview_sennara",
-                            "model": "nanekihs",
-                            "texture": null,
-                            "hp": 500,
-                            "attack": 36,
-                            "element": "Dark"
-                        },
-                        "xpReward": 520,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 500
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 110
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_bloom_battle_3",
-                        "name": "Herz der Grotte",
-                        "description":
-                            "Der Bosskampf mit maximalem Crystal-Fokus.",
-                        "difficulty": 12,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
+                        "id": "event_story_arc_battle_9",
+                        "name": "Erstes Urteil",
+                        "description": "Vorboss der Chronik.",
+                        "difficulty": 14,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
                             "x": 0.82,
-                            "y": 0.48
+                            "y": 0.60
                         },
-                        "enemies": [
-                            {
-                                "name": "Shen Kristallwache",
-                                "image": "preview_shen",
-                                "model": "nanekihs",
-                                "texture": null,
-                                "hp": 420,
-                                "attack": 34,
-                                "element": "Storm"
-                            }
-                        ],
-                        "boss": {
-                            "name": "Sinara Kristallkronin",
-                            "image": "preview_sennara",
-                            "model": "nanekihs",
-                            "texture": null,
-                            "hp": 680,
-                            "attack": 44,
-                            "element": "Light"
-                        },
-                        "xpReward": 760,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 650
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 180
-                            }
-                        ],
-                        "story": []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "event_rift_dragon_ascension",
-        "title": "Event: Rift Dragon Ascension",
-        "subtitle": "Drachenfragmente steigen aus den Wasserpfaden auf",
-        "minAscendedLevel": 4,
-        "mapTexture": "festival_dragon",
-        "cutscene": {
-            "id": "event_rift_dragon_ascension_intro",
-            "title": "Rift Dragon Ascension",
-            "video": "intro",
-            "text":
-                "Uralte Drachenfragmente sammeln sich ueber den Wasserpfaden und rufen starke Waechter."
-        },
-        "points": [
-            {
-                "id": "event_rift_dragon_docks",
-                "title": "Drachenhafen",
-                "text":
-                    "Ein saisonaler Pfad mit Wasser, Nebel und aufsteigender Drachenenergie.",
-                "mapImage": "festival_dragon",
-                "mapTexture": "festival_dragon",
-                "node": {
-                    "x": 0.38,
-                    "y": 0.48
-                },
-                "cutscene": {
-                    "id": "event_rift_dragon_docks_cutscene",
-                    "title": "Drachenhafen",
-                    "video": "mondtor",
-                    "text":
-                        "Leuchtende Wellen tragen Splitter eines Rift-Drachen an Land."
-                },
-                "battles": [
-                    {
-                        "id": "event_rift_dragon_battle_1",
-                        "name": "Nebelruder",
-                        "description": "Shen sichert den ersten Wasserpfad.",
-                        "difficulty": 10,
-                        "groundTexture": "festival_dragon",
-                        "skyboxTexture": "festival_dragon",
-                        "node": {
-                            "x": 0.18,
-                            "y": 0.58
-                        },
+                        "cutscene": null,
                         "enemy": {
-                            "name": "Shen vom Nebelruder",
-                            "image": "preview_shen",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 420,
-                            "attack": 34,
-                            "element": "Water"
-                        },
-                        "xpReward": 520,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1500
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 65
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "event_rift_dragon_battle_2",
-                        "name": "Drachenfragment Tanz",
-                        "description":
-                            "Sinara bindet die Fragmentenergie und verstaerkt die Route.",
-                        "difficulty": 12,
-                        "groundTexture": "festival_dragon",
-                        "skyboxTexture": "festival_dragon",
-                        "node": {
-                            "x": 0.50,
-                            "y": 0.42
-                        },
-                        "enemy": {
-                            "name": "Sinara Fragmentweberin",
-                            "image": "preview_sennara",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 560,
-                            "attack": 41,
-                            "element": "Light"
-                        },
-                        "xpReward": 760,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2200
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 110
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "event_rift_dragon_battle_3",
-                        "name": "Ancient Rift Dragon",
-                        "description":
-                            "Ein uralter Rift-Drache materialisiert sich ueber dem Hafen.",
-                        "difficulty": 15,
-                        "groundTexture": "festival_dragon",
-                        "skyboxTexture": "festival_dragon",
-                        "node": {
-                            "x": 0.80,
-                            "y": 0.50
-                        },
-                        "enemies": [
-                            {
-                                "name": "Shen Drachenwaechter",
-                                "image": "preview_shen",
-                                "model": "tsayi",
-                                "texture": null,
-                                "hp": 500,
-                                "attack": 38,
-                                "element": "Storm"
-                            }
-                        ],
-                        "boss": {
-                            "name": "Ancient Rift Dragon",
-                            "image": "preview_sennara",
-                            "model": "tsayi",
-                            "texture": null,
+                            "name": "First Verdict",
+                            "image": "sar_dragon",
+                            "model": "krevas",
                             "hp": 860,
-                            "attack": 55,
-                            "element": "Dark"
+                            "attack": 47,
+                            "element": "Fire"
                         },
-                        "xpReward": 1200,
+                        "xpReward": 920,
+                        "dailyRewardLimits": {
+                            "coins": 3600,
+                            "crystals": 260
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3600
+                                "amount": 1060
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 180
+                                "amount": 52
                             }
                         ],
                         "story": []
+                    },
+                    {
+                        "id": "event_story_arc_battle_10",
+                        "name": "Chronikherz",
+                        "description": "Boss des Story-Events.",
+                        "difficulty": 15,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.92,
+                            "y": 0.36
+                        },
+                        "cutscene": {
+                            "id": "event_story_arc_battle_10_cutscene",
+                            "title": "Chronikherz",
+                            "video": "intro",
+                            "text": "Die Geschichte selbst fordert ein Ende."
+                        },
+                        "enemy": {
+                            "name": "Chronicle Heart",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 980,
+                            "attack": 54,
+                            "element": "Storm"
+                        },
+                        "xpReward": 1040,
+                        "dailyRewardLimits": {
+                            "coins": 4000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1240
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 64
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Jetzt schreiben wir das letzte Kapitel selbst."
+                            }
+                        ]
                     }
                 ]
             }
         ]
     },
     {
-        "id": "event_celestial_reset",
-        "title": "Event: Celestial Reset",
-        "subtitle": "Ein himmlischer Neubeginn mit Bonus-Routen",
-        "minAscendedLevel": 3,
-        "mapTexture": "festival_new_year",
+        "id": "event_easy_trials",
+        "title": "Event: Easy Trials",
+        "subtitle": "Leichte Event-Battles fuer schnelle Progression",
+        "minAscendedLevel": 1,
+        "mapTexture": "bg_country",
         "cutscene": {
-            "id": "event_celestial_reset_intro",
-            "title": "Celestial Reset",
+            "id": "event_easy_trials_intro",
+            "title": "Easy Trials",
             "video": "intro",
-            "text":
-                "Der Himmel richtet sich neu aus und entlaedt eine seltene Reset-Energie."
+            "text": "Ein leichter Trainingspfad ist fuer neue Helden geoeffnet."
         },
         "points": [
             {
-                "id": "event_celestial_reset_gate",
-                "title": "Sternentor",
-                "text":
-                    "Ein Event fuer Neustart-Boni, Summon-Energie und breite Ressourcenpakete.",
-                "mapImage": "festival_new_year",
-                "mapTexture": "festival_new_year",
+                "id": "event_easy_trials_field",
+                "title": "Anfängerroute",
+                "text": "Leichte Event-Battles mit moderaten Rewards.",
+                "mapImage": "bg_country",
+                "mapTexture": "bg_country",
                 "node": {
-                    "x": 0.44,
-                    "y": 0.40
+                    "x": 0.30,
+                    "y": 0.52
                 },
                 "cutscene": null,
                 "battles": [
                     {
-                        "id": "event_celestial_reset_battle_1",
-                        "name": "Reset Echo",
-                        "description":
-                            "Die erste Welle der himmlischen Ruecksetzung.",
-                        "difficulty": 9,
-                        "groundTexture": "festival_new_year",
-                        "skyboxTexture": "festival_new_year",
+                        "id": "event_easy_trials_battle_1",
+                        "name": "Leichter Schritt",
+                        "description": "Der erste Test.",
+                        "difficulty": 1,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
-                            "x": 0.22,
-                            "y": 0.54
+                            "x": 0.10,
+                            "y": 0.62
                         },
+                        "cutscene": null,
                         "enemy": {
-                            "name": "Shen des Sternentors",
-                            "image": "preview_shen",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 380,
-                            "attack": 31,
-                            "element": "Light"
+                            "name": "Trial Seed",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 90,
+                            "attack": 6,
+                            "element": "Plant"
                         },
-                        "xpReward": 540,
+                        "xpReward": 90,
+                        "dailyRewardLimits": {
+                            "coins": 900,
+                            "crystals": 60
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1300
+                                "amount": 90
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 6
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_easy_trials_battle_2",
+                        "name": "Leichte Welle",
+                        "description": "Ein weiterer Test.",
+                        "difficulty": 1,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.54
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Trial Wave",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 110,
+                            "attack": 7,
+                            "element": "Water"
+                        },
+                        "xpReward": 110,
+                        "dailyRewardLimits": {
+                            "coins": 950,
+                            "crystals": 65
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 110
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 7
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_easy_trials_battle_3",
+                        "name": "Leichte Glut",
+                        "description": "Kleiner Feuer-Test.",
+                        "difficulty": 2,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.26,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Trial Ember",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 130,
+                            "attack": 8,
+                            "element": "Fire"
+                        },
+                        "xpReward": 130,
+                        "dailyRewardLimits": {
+                            "coins": 1000,
+                            "crystals": 70
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 130
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 8
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_easy_trials_battle_4",
+                        "name": "Leichte Boe",
+                        "description": "Trainingskampf mit Tempo.",
+                        "difficulty": 2,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.34,
+                            "y": 0.44
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Trial Gust",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 150,
+                            "attack": 9,
+                            "element": "Storm"
+                        },
+                        "xpReward": 150,
+                        "dailyRewardLimits": {
+                            "coins": 1050,
+                            "crystals": 75
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 150
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 9
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_easy_trials_battle_5",
+                        "name": "Leichte Klinge",
+                        "description": "Die Mitte des Trainings.",
+                        "difficulty": 3,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.56
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Trial Blade",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 180,
+                            "attack": 10,
+                            "element": "Light"
+                        },
+                        "xpReward": 180,
+                        "dailyRewardLimits": {
+                            "coins": 1100,
+                            "crystals": 80
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 180
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 10
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_easy_trials_battle_6",
+                        "name": "Leichtes Echo",
+                        "description": "Noch mehr Uebung.",
+                        "difficulty": 3,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.40
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Trial Echo",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 210,
+                            "attack": 12,
+                            "element": "Dark"
+                        },
+                        "xpReward": 210,
+                        "dailyRewardLimits": {
+                            "coins": 1200,
+                            "crystals": 85
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 210
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 11
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_easy_trials_battle_7",
+                        "name": "Leichte Rune",
+                        "description": "Die Route zieht an.",
+                        "difficulty": 4,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.62,
+                            "y": 0.58
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Trial Rune",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 250,
+                            "attack": 14,
+                            "element": "Plant"
+                        },
+                        "xpReward": 240,
+                        "dailyRewardLimits": {
+                            "coins": 1300,
+                            "crystals": 90
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 240
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 12
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_easy_trials_battle_8",
+                        "name": "Leichte Krone",
+                        "description": "Vorboss der leichten Route.",
+                        "difficulty": 4,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.72,
+                            "y": 0.46
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Trial Crown",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 290,
+                            "attack": 16,
+                            "element": "Water"
+                        },
+                        "xpReward": 280,
+                        "dailyRewardLimits": {
+                            "coins": 1400,
+                            "crystals": 95
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 280
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 14
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_easy_trials_battle_9",
+                        "name": "Leichte Wacht",
+                        "description": "Der letzte Test vor dem Boss.",
+                        "difficulty": 5,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Trial Guard",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 340,
+                            "attack": 18,
+                            "element": "Fire"
+                        },
+                        "xpReward": 330,
+                        "dailyRewardLimits": {
+                            "coins": 1500,
+                            "crystals": 100
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 330
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 16
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_easy_trials_battle_10",
+                        "name": "Easy Trial Boss",
+                        "description": "Boss des leichten Events.",
+                        "difficulty": 5,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.92,
+                            "y": 0.36
+                        },
+                        "cutscene": {
+                            "id": "event_easy_trials_battle_10_cutscene",
+                            "title": "Easy Trial Boss",
+                            "video": "intro",
+                            "text": "Zeit fuer den letzten Trainingskampf."
+                        },
+                        "enemy": {
+                            "name": "Trial Master",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 400,
+                            "attack": 22,
+                            "element": "Light"
+                        },
+                        "xpReward": 390,
+                        "dailyRewardLimits": {
+                            "coins": 1700,
+                            "crystals": 110
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 400
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 18
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Wer diesen Boss schafft, ist bereit fuer mehr."
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_heavy_trials",
+        "title": "Event: Heavy Trials",
+        "subtitle": "Schwere Event-Battles fuer späte Teams",
+        "minAscendedLevel": 8,
+        "mapTexture": "bg_void",
+        "cutscene": {
+            "id": "event_heavy_trials_intro",
+            "title": "Heavy Trials",
+            "video": "intro",
+            "text": "Nur die stärksten Teams ueberleben diese Route."
+        },
+        "points": [
+            {
+                "id": "event_heavy_trials_gate",
+                "title": "Abyss Trials",
+                "text":
+                    "Schwere Event-Battles mit hohem Risiko und hohem Reward.",
+                "mapImage": "bg_void",
+                "mapTexture": "bg_void",
+                "node": {
+                    "x": 0.38,
+                    "y": 0.50
+                },
+                "cutscene": null,
+                "battles": [
+                    {
+                        "id": "event_heavy_trials_battle_1",
+                        "name": "Abyss Entry",
+                        "description": "Der erste schwere Test.",
+                        "difficulty": 18,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.10,
+                            "y": 0.62
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Abyss Entry",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 820,
+                            "attack": 46,
+                            "element": "Dark"
+                        },
+                        "xpReward": 760,
+                        "dailyRewardLimits": {
+                            "coins": 3200,
+                            "crystals": 220
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 980
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 38
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_heavy_trials_battle_2",
+                        "name": "Night Engine",
+                        "description": "Die Route wird brutaler.",
+                        "difficulty": 19,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.54
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Night Engine",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 900,
+                            "attack": 50,
+                            "element": "Fire"
+                        },
+                        "xpReward": 840,
+                        "dailyRewardLimits": {
+                            "coins": 3400,
+                            "crystals": 230
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1120
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 42
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_heavy_trials_battle_3",
+                        "name": "Void Hammer",
+                        "description": "Jeder Treffer zählt doppelt.",
+                        "difficulty": 20,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.26,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Void Hammer",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 980,
+                            "attack": 54,
+                            "element": "Storm"
+                        },
+                        "xpReward": 920,
+                        "dailyRewardLimits": {
+                            "coins": 3600,
+                            "crystals": 240
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1280
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 46
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_heavy_trials_battle_4",
+                        "name": "Black Arena",
+                        "description": "Kein Raum fuer Fehler.",
+                        "difficulty": 21,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.34,
+                            "y": 0.44
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Black Arena",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 1080,
+                            "attack": 58,
+                            "element": "Plant"
+                        },
+                        "xpReward": 1020,
+                        "dailyRewardLimits": {
+                            "coins": 3800,
+                            "crystals": 255
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1460
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 50
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_heavy_trials_battle_5",
+                        "name": "Rift Driver",
+                        "description": "Der Druck steigt.",
+                        "difficulty": 22,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.56
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Rift Driver",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 1180,
+                            "attack": 62,
+                            "element": "Water"
+                        },
+                        "xpReward": 1120,
+                        "dailyRewardLimits": {
+                            "coins": 4000,
+                            "crystals": 270
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1640
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 54
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_heavy_trials_battle_6",
+                        "name": "Grim Coil",
+                        "description": "Die Route windet sich enger.",
+                        "difficulty": 23,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.40
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Grim Coil",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 1290,
+                            "attack": 67,
+                            "element": "Light"
+                        },
+                        "xpReward": 1240,
+                        "dailyRewardLimits": {
+                            "coins": 4300,
+                            "crystals": 290
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1860
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 60
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_heavy_trials_battle_7",
+                        "name": "Ash Tyrant",
+                        "description": "Die schweren Trials kippen in Chaos.",
+                        "difficulty": 24,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.62,
+                            "y": 0.58
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Ash Tyrant",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 1410,
+                            "attack": 72,
+                            "element": "Fire"
+                        },
+                        "xpReward": 1360,
+                        "dailyRewardLimits": {
+                            "coins": 4600,
+                            "crystals": 310
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2100
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 66
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_heavy_trials_battle_8",
+                        "name": "Dread Axis",
+                        "description": "Jeder Schritt fuehlt sich falsch an.",
+                        "difficulty": 25,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.72,
+                            "y": 0.46
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Dread Axis",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 1540,
+                            "attack": 78,
+                            "element": "Storm"
+                        },
+                        "xpReward": 1500,
+                        "dailyRewardLimits": {
+                            "coins": 4900,
+                            "crystals": 330
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2380
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 72
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_heavy_trials_battle_9",
+                        "name": "Final Warden",
+                        "description": "Vorboss der schweren Route.",
+                        "difficulty": 26,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Final Warden",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 1680,
+                            "attack": 84,
+                            "element": "Dark"
+                        },
+                        "xpReward": 1650,
+                        "dailyRewardLimits": {
+                            "coins": 5200,
+                            "crystals": 350
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2680
                             },
                             {
                                 "currency": "crystals",
@@ -882,482 +2912,533 @@
                         "story": []
                     },
                     {
-                        "id": "event_celestial_reset_battle_2",
-                        "name": "Sternenprotokoll",
-                        "description":
-                            "Sinara oeffnet die zweite Schicht der Himmelsroute.",
-                        "difficulty": 11,
-                        "groundTexture": "festival_new_year",
-                        "skyboxTexture": "festival_new_year",
+                        "id": "event_heavy_trials_battle_10",
+                        "name": "Heavy Trial King",
+                        "description": "Boss des schweren Events.",
+                        "difficulty": 27,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.52,
-                            "y": 0.38
+                            "x": 0.92,
+                            "y": 0.36
+                        },
+                        "cutscene": {
+                            "id": "event_heavy_trials_battle_10_cutscene",
+                            "title": "Heavy Trial King",
+                            "video": "intro",
+                            "text":
+                                "Nur wenige erreichen diesen Boss ueberhaupt."
                         },
                         "enemy": {
-                            "name": "Sinara des Protokolls",
-                            "image": "preview_sennara",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 520,
-                            "attack": 39,
-                            "element": "Void"
-                        },
-                        "xpReward": 780,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1900
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 120
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "event_celestial_reset_battle_3",
-                        "name": "Celestial Crown",
-                        "description":
-                            "Bosskampf mit besonders wertigem Gesamtloot.",
-                        "difficulty": 14,
-                        "groundTexture": "festival_new_year",
-                        "skyboxTexture": "festival_new_year",
-                        "node": {
-                            "x": 0.82,
-                            "y": 0.46
-                        },
-                        "boss": {
-                            "name": "Crown of the Reset",
-                            "image": "preview_sennara",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 780,
-                            "attack": 52,
+                            "name": "Trial King",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 1840,
+                            "attack": 92,
                             "element": "Light"
                         },
-                        "xpReward": 1180,
+                        "xpReward": 1820,
+                        "dailyRewardLimits": {
+                            "coins": 5600,
+                            "crystals": 380
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3400
+                                "amount": 3040
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 210
+                                "amount": 92
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Ab hier zählt nur noch Stärke und Disziplin."
+                            }
+                        ]
                     }
                 ]
             }
         ]
     },
     {
-        "id": "event_lunar_rift_eclipse",
-        "title": "Event: Lunar Rift Eclipse",
-        "subtitle": "Nacht-Map mit Schattenloot und verdichteter Rift-Energie",
+        "id": "event_special_mix",
+        "title": "Event: Special Mix",
+        "subtitle": "Gemischtes Event mit Coins, Crystals und Karten",
         "minAscendedLevel": 5,
-        "mapTexture": "festival_moon",
+        "mapTexture": "bg_arena",
         "cutscene": {
-            "id": "event_lunar_rift_eclipse_intro",
-            "title": "Lunar Rift Eclipse",
-            "video": "mondtor",
-            "text":
-                "Eine dunkle Mondphase legt sich ueber die Route und macht Rift-Beute wertvoller."
-        },
-        "points": [
-            {
-                "id": "event_lunar_rift_eclipse_shore",
-                "title": "Eclipse Ufer",
-                "text":
-                    "Schattenfeinde, dichter Nebel und seltenere Crystal-Ausbeute praegen dieses Event.",
-                "mapImage": "festival_moon",
-                "mapTexture": "festival_moon",
-                "node": {
-                    "x": 0.40,
-                    "y": 0.52
-                },
-                "cutscene": null,
-                "battles": [
-                    {
-                        "id": "event_lunar_rift_eclipse_battle_1",
-                        "name": "Mondwacht",
-                        "description":
-                            "Shen blockiert den Pfad unter der Eclipse.",
-                        "difficulty": 11,
-                        "groundTexture": "festival_moon",
-                        "skyboxTexture": "festival_moon",
-                        "node": {
-                            "x": 0.18,
-                            "y": 0.58
-                        },
-                        "enemy": {
-                            "name": "Shen der Mondwacht",
-                            "image": "preview_shen",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 460,
-                            "attack": 36,
-                            "element": "Dark"
-                        },
-                        "xpReward": 640,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1400
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 95
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "event_lunar_rift_eclipse_battle_2",
-                        "name": "Schattenspindel",
-                        "description":
-                            "Sinara zieht die Mondenergie in die Rift-Fasern.",
-                        "difficulty": 13,
-                        "groundTexture": "festival_moon",
-                        "skyboxTexture": "festival_moon",
-                        "node": {
-                            "x": 0.50,
-                            "y": 0.42
-                        },
-                        "enemy": {
-                            "name": "Sinara der Eclipse",
-                            "image": "preview_sennara",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 620,
-                            "attack": 45,
-                            "element": "Dark"
-                        },
-                        "xpReward": 900,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2100
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 145
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "event_lunar_rift_eclipse_battle_3",
-                        "name": "Eclipse Heart",
-                        "description":
-                            "Das Herz der Finsternis konzentriert sich im letzten Kampf.",
-                        "difficulty": 16,
-                        "groundTexture": "festival_moon",
-                        "skyboxTexture": "festival_moon",
-                        "node": {
-                            "x": 0.82,
-                            "y": 0.48
-                        },
-                        "boss": {
-                            "name": "Heart of the Eclipse",
-                            "image": "preview_sennara",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 940,
-                            "attack": 58,
-                            "element": "Void"
-                        },
-                        "xpReward": 1320,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 3900
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 240
-                            }
-                        ],
-                        "story": []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "event_flame_rift_surge",
-        "title": "Event: Flame Rift Surge",
-        "subtitle": "Heisse Front mit Fire-Buffs und schnellen Kampfketten",
-        "minAscendedLevel": 4,
-        "mapTexture": "festival_summer",
-        "cutscene": {
-            "id": "event_flame_rift_surge_intro",
-            "title": "Flame Rift Surge",
-            "video": "rissbestie",
-            "text":
-                "Eine Feuerwelle durchschneidet die Rift-Linien und macht die Kaempfe aggressiver."
-        },
-        "points": [
-            {
-                "id": "event_flame_rift_surge_core",
-                "title": "Glutkern",
-                "text":
-                    "Eine schnelle, heiße Event-Route mit kompakten Kämpfen und starken Ressourcen.",
-                "mapImage": "festival_summer",
-                "mapTexture": "festival_summer",
-                "node": {
-                    "x": 0.42,
-                    "y": 0.46
-                },
-                "cutscene": null,
-                "battles": [
-                    {
-                        "id": "event_flame_rift_surge_battle_1",
-                        "name": "Aschenlauf",
-                        "description": "Shen jagt durch die erste Glutlinie.",
-                        "difficulty": 10,
-                        "groundTexture": "festival_summer",
-                        "skyboxTexture": "festival_summer",
-                        "node": {
-                            "x": 0.20,
-                            "y": 0.56
-                        },
-                        "enemy": {
-                            "name": "Shen der Aschenklinge",
-                            "image": "preview_shen",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 430,
-                            "attack": 37,
-                            "element": "Fire"
-                        },
-                        "xpReward": 600,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1550
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 70
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "event_flame_rift_surge_battle_2",
-                        "name": "Glutweberin",
-                        "description":
-                            "Sinara zieht Flammenadern durch das Schlachtfeld.",
-                        "difficulty": 12,
-                        "groundTexture": "festival_summer",
-                        "skyboxTexture": "festival_summer",
-                        "node": {
-                            "x": 0.50,
-                            "y": 0.40
-                        },
-                        "enemy": {
-                            "name": "Sinara der Flammenader",
-                            "image": "preview_sennara",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 590,
-                            "attack": 43,
-                            "element": "Fire"
-                        },
-                        "xpReward": 860,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2250
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 120
-                            }
-                        ],
-                        "story": []
-                    },
-                    {
-                        "id": "event_flame_rift_surge_battle_3",
-                        "name": "Surge Core",
-                        "description":
-                            "Der Flammenkern explodiert im finalen Bosskampf.",
-                        "difficulty": 15,
-                        "groundTexture": "festival_sommer",
-                        "skyboxTexture": "festival_sommer",
-                        "node": {
-                            "x": 0.82,
-                            "y": 0.50
-                        },
-                        "boss": {
-                            "name": "Surge Core Titan",
-                            "image": "preview_sennara",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 900,
-                            "attack": 57,
-                            "element": "Fire"
-                        },
-                        "xpReward": 1280,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 3700
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 210
-                            }
-                        ],
-                        "story": []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "id": "event_new_years_eve_festival",
-        "title": "Event: New Year's Eve Festival",
-        "subtitle":
-            "Festivalroute mit Countdown-Loot, Crystal-Boost und finalem Boss",
-        "minAscendedLevel": 6,
-        "mapTexture": "festival_new_years_eve",
-        "cutscene": {
-            "id": "event_new_years_eve_festival_intro",
-            "title": "New Year's Eve Festival",
+            "id": "event_special_mix_intro",
+            "title": "Special Mix",
             "video": "intro",
             "text":
-                "Kurz vor Mitternacht laden sich die Rift-Knoten auf und verwandeln das Festival in eine gefaehrliche Loot-Zone."
+                "Ein instabiles Event wirft alle Reward-Typen gleichzeitig aus."
         },
         "points": [
             {
-                "id": "event_new_years_eve_festival_plaza",
-                "title": "Countdown Plaza",
-                "text":
-                    "Zwischen Lichtboegen und Feuerwerk sammeln sich Rift-Energie, Eventgegner und besonders viele Crystals.",
-                "mapImage": "festival_new_years_eve",
-                "mapTexture": "festival_new_years_eve",
+                "id": "event_special_mix_hub",
+                "title": "Mix Arena",
+                "text": "Gemischtes Event mit allen Reward-Arten.",
+                "mapImage": "bg_arena",
+                "mapTexture": "bg_arena",
                 "node": {
-                    "x": 0.44,
-                    "y": 0.48
+                    "x": 0.40,
+                    "y": 0.50
                 },
                 "cutscene": null,
                 "battles": [
                     {
-                        "id": "event_new_years_eve_festival_battle_1",
-                        "name": "Spark Gate",
-                        "description":
-                            "Aika bewacht den ersten Festivalbogen und verteilt schnelle Lichtschlaege.",
-                        "difficulty": 12,
-                        "groundTexture": "festival_new_years_eve",
-                        "skyboxTexture": "festival_new_years_eve",
+                        "id": "event_special_mix_battle_1",
+                        "name": "Mix Start",
+                        "description": "Ein bunter Auftakt.",
+                        "difficulty": 7,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
                         "node": {
-                            "x": 0.20,
-                            "y": 0.58
+                            "x": 0.10,
+                            "y": 0.62
                         },
+                        "cutscene": null,
                         "enemy": {
-                            "name": "Aika of the Spark Gate",
-                            "image": "preview_aika",
-                            "model": "maaikatan",
-                            "texture": null,
-                            "hp": 520,
-                            "attack": 40,
-                            "element": "Light"
+                            "name": "Mix Scout",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 320,
+                            "attack": 22,
+                            "element": "Plant"
                         },
-                        "xpReward": 720,
+                        "xpReward": 360,
+                        "dailyRewardLimits": {
+                            "coins": 1600,
+                            "crystals": 140
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1850
+                                "amount": 280
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 110
+                                "amount": 16
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 1
                             }
                         ],
                         "story": []
                     },
                     {
-                        "id": "event_new_years_eve_festival_battle_2",
-                        "name": "Firework Chain",
-                        "description":
-                            "Zaron und Shen halten die Rift-Kette bis zum letzten Countdown.",
-                        "difficulty": 14,
-                        "groundTexture": "festival_new_years_eve",
-                        "skyboxTexture": "festival_new_years_eve",
+                        "id": "event_special_mix_battle_2",
+                        "name": "Mix Wave",
+                        "description": "Das Event wird unberechenbar.",
+                        "difficulty": 8,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
                         "node": {
-                            "x": 0.52,
+                            "x": 0.18,
+                            "y": 0.54
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Mix Wave",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 380,
+                            "attack": 25,
+                            "element": "Water"
+                        },
+                        "xpReward": 420,
+                        "dailyRewardLimits": {
+                            "coins": 1800,
+                            "crystals": 155
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 360
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 20
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "crystal_blue",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_special_mix_battle_3",
+                        "name": "Mix Ember",
+                        "description": "Mehr Rewards, mehr Druck.",
+                        "difficulty": 9,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.26,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Mix Ember",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 440,
+                            "attack": 28,
+                            "element": "Fire"
+                        },
+                        "xpReward": 480,
+                        "dailyRewardLimits": {
+                            "coins": 2000,
+                            "crystals": 170
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 460
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 24
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_special_mix_battle_4",
+                        "name": "Mix Mirror",
+                        "description": "Der Reward-Pool kippt.",
+                        "difficulty": 10,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.34,
+                            "y": 0.44
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Mix Mirror",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 500,
+                            "attack": 31,
+                            "element": "Light"
+                        },
+                        "xpReward": 550,
+                        "dailyRewardLimits": {
+                            "coins": 2200,
+                            "crystals": 185
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 560
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 28
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "crystal_blue",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_special_mix_battle_5",
+                        "name": "Mix Rift",
+                        "description": "Das Event verschmilzt die Pfade.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.56
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Mix Rift",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 570,
+                            "attack": 35,
+                            "element": "Dark"
+                        },
+                        "xpReward": 620,
+                        "dailyRewardLimits": {
+                            "coins": 2400,
+                            "crystals": 200
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 680
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 32
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "moon_guard",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_special_mix_battle_6",
+                        "name": "Mix Crown",
+                        "description": "Alles wird stärker.",
+                        "difficulty": 12,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.50,
                             "y": 0.40
                         },
-                        "enemies": [
-                            {
-                                "name": "Zaron of the Chain",
-                                "image": "preview_zaron",
-                                "model": "maaikatan",
-                                "texture": null,
-                                "hp": 430,
-                                "attack": 34,
-                                "element": "Fire"
-                            },
-                            {
-                                "name": "Shen of the Chain",
-                                "image": "preview_shen",
-                                "model": "maaikatan",
-                                "texture": null,
-                                "hp": 610,
-                                "attack": 46,
-                                "element": "Void"
-                            }
-                        ],
-                        "xpReward": 980,
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Mix Crown",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "hp": 650,
+                            "attack": 39,
+                            "element": "Storm"
+                        },
+                        "xpReward": 700,
+                        "dailyRewardLimits": {
+                            "coins": 2600,
+                            "crystals": 220
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2480
+                                "amount": 820
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 155
+                                "amount": 36
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "moon_guard",
+                                "amount": 1
                             }
                         ],
                         "story": []
                     },
                     {
-                        "id": "event_new_years_eve_festival_battle_3",
-                        "name": "Midnight Crown",
-                        "description":
-                            "Mit dem Glockenschlag erscheint der Boss im Zentrum des Festivals.",
-                        "difficulty": 17,
-                        "groundTexture": "festival_new_years_eve",
-                        "skyboxTexture": "festival_new_years_eve",
+                        "id": "event_special_mix_battle_7",
+                        "name": "Mix Spiral",
+                        "description": "Die Arena verdreht sich.",
+                        "difficulty": 13,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
                         "node": {
-                            "x": 0.82,
-                            "y": 0.48
+                            "x": 0.62,
+                            "y": 0.58
                         },
-                        "boss": {
-                            "name": "Midnight Crown Titan",
-                            "image": "preview_sifili",
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Mix Spiral",
+                            "image": "sar_dragon",
                             "model": "masoyina",
-                            "texture": null,
-                            "hp": 1040,
-                            "attack": 63,
-                            "element": "Light"
+                            "hp": 740,
+                            "attack": 43,
+                            "element": "Plant"
                         },
-                        "xpReward": 1460,
+                        "xpReward": 790,
+                        "dailyRewardLimits": {
+                            "coins": 2900,
+                            "crystals": 240
+                        },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 4200
+                                "amount": 980
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 260
+                                "amount": 42
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "crystal_blue",
+                                "amount": 1
+                            },
+                            {
+                                "cardID": "slash_red",
+                                "amount": 1
                             }
                         ],
                         "story": []
+                    },
+                    {
+                        "id": "event_special_mix_battle_8",
+                        "name": "Mix Echo",
+                        "description": "Die Gegner spiegeln sich.",
+                        "difficulty": 14,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.72,
+                            "y": 0.46
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Mix Echo",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "hp": 840,
+                            "attack": 48,
+                            "element": "Water"
+                        },
+                        "xpReward": 890,
+                        "dailyRewardLimits": {
+                            "coins": 3200,
+                            "crystals": 260
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1160
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 48
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "moon_guard",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_special_mix_battle_9",
+                        "name": "Mix Dominion",
+                        "description": "Vorboss der Mischroute.",
+                        "difficulty": 15,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.60
+                        },
+                        "cutscene": null,
+                        "enemy": {
+                            "name": "Mix Dominion",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "hp": 950,
+                            "attack": 54,
+                            "element": "Light"
+                        },
+                        "xpReward": 1000,
+                        "dailyRewardLimits": {
+                            "coins": 3500,
+                            "crystals": 280
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1360
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 54
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "moon_guard",
+                                "amount": 1
+                            },
+                            {
+                                "cardID": "crystal_blue",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_special_mix_battle_10",
+                        "name": "Special Mix Core",
+                        "description": "Boss des gemischten Events.",
+                        "difficulty": 16,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.92,
+                            "y": 0.36
+                        },
+                        "cutscene": {
+                            "id": "event_special_mix_battle_10_cutscene",
+                            "title": "Special Mix Core",
+                            "video": "intro",
+                            "text":
+                                "Alle Reward-Linien kollidieren in einem Kern."
+                        },
+                        "enemy": {
+                            "name": "Mix Core",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "hp": 1080,
+                            "attack": 60,
+                            "element": "Dark"
+                        },
+                        "xpReward": 1140,
+                        "dailyRewardLimits": {
+                            "coins": 3900,
+                            "crystals": 320
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1620
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 66
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "moon_guard",
+                                "amount": 2
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Dieses Event wirft alles gleichzeitig aus. Genau deswegen ist es so gefährlich."
+                            }
+                        ]
                     }
                 ]
             }

@@ -85,6 +85,13 @@ struct GlobeEventPoint: Codable, Identifiable {
 }
 
 struct GlobeBattle: Codable, Identifiable {
+    struct CardReward: Codable, Identifiable, Equatable {
+        let cardID: String
+        let amount: Int
+
+        var id: String { cardID }
+    }
+
     let id: String
     let name: String
     let description: String
@@ -99,6 +106,8 @@ struct GlobeBattle: Codable, Identifiable {
     let boss: CharacterStats?
     let xpReward: Int?
     let rewards: [CurrencyAmount]
+    let cardRewards: [CardReward]
+    let dailyRewardLimits: BattleRewardLimitDefinition?
     let story: [StoryLine]
 
     var resolvedNodeImage: String {
@@ -120,6 +129,8 @@ struct GlobeBattle: Codable, Identifiable {
         case boss
         case xpReward
         case rewards
+        case cardRewards
+        case dailyRewardLimits
         case story
     }
 
@@ -167,6 +178,15 @@ struct GlobeBattle: Codable, Identifiable {
                 [CurrencyAmount].self,
                 forKey: .rewards
             ) ?? []
+        cardRewards =
+            try container.decodeIfPresent(
+                [CardReward].self,
+                forKey: .cardRewards
+            ) ?? []
+        dailyRewardLimits = try container.decodeIfPresent(
+            BattleRewardLimitDefinition.self,
+            forKey: .dailyRewardLimits
+        )
         story =
             try container.decodeIfPresent([StoryLine].self, forKey: .story)
             ?? []

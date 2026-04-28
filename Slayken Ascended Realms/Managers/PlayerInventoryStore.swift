@@ -10,6 +10,9 @@ import SwiftData
 
 @MainActor
 enum PlayerInventoryStore {
+    private static let battleVictoryCounterKey = "battle_victories"
+    private static let monsterKillCounterKey = "monster_kills"
+
     static func ensureBalances(
         for currencies: [CurrencyDefinition],
         in context: ModelContext
@@ -46,8 +49,78 @@ enum PlayerInventoryStore {
                 context.insert(balance)
             }
             balance.amount += reward.amount
+
+            if reward.amount > 0 {
+                incrementQuestCounter(
+                    currencyEarnedCounterKey(for: reward.currency),
+                    by: reward.amount,
+                    in: context,
+                    shouldSave: false
+                )
+            }
         }
         save(context)
+    }
+
+    @discardableResult
+    static func addBattleRewards(
+        _ rewards: [CurrencyAmount],
+        in context: ModelContext,
+        limits: BattleFarmLimitDefinition? = nil
+    ) -> [CurrencyAmount] {
+        let limits = limits ?? loadBattleFarmLimitDefinition()
+        let cap = dailyBattleRewardCap(in: context)
+        resetBattleRewardCapIfNeeded(cap, in: context)
+
+        let filteredRewards = rewards.compactMap { reward -> CurrencyAmount? in
+            switch reward.currency {
+            case "coins":
+                let remaining = max(
+                    0,
+                    limits.battleCoinsPerDay - cap.coinsEarned
+                )
+                let allowedAmount = min(reward.amount, remaining)
+                guard allowedAmount > 0 else { return nil }
+                cap.coinsEarned += allowedAmount
+                return CurrencyAmount(
+                    currency: reward.currency,
+                    amount: allowedAmount
+                )
+            case "crystals":
+                let remaining = max(
+                    0,
+                    limits.battleCrystalsPerDay - cap.crystalsEarned
+                )
+                let allowedAmount = min(reward.amount, remaining)
+                guard allowedAmount > 0 else { return nil }
+                cap.crystalsEarned += allowedAmount
+                return CurrencyAmount(
+                    currency: reward.currency,
+                    amount: allowedAmount
+                )
+            default:
+                return reward
+            }
+        }
+
+        add(filteredRewards, in: context)
+        save(context)
+        return filteredRewards
+    }
+
+    static func dailyBattleFarmStatus(
+        in context: ModelContext
+    ) -> BattleFarmStatus {
+        let limits = loadBattleFarmLimitDefinition()
+        let cap = dailyBattleRewardCap(in: context)
+        resetBattleRewardCapIfNeeded(cap, in: context)
+
+        return BattleFarmStatus(
+            coinsEarnedToday: cap.coinsEarned,
+            crystalsEarnedToday: cap.crystalsEarned,
+            coinsDailyCap: limits.battleCoinsPerDay,
+            crystalsDailyCap: limits.battleCrystalsPerDay
+        )
     }
 
     static func canSpend(_ cost: [CurrencyAmount], in context: ModelContext)
@@ -140,6 +213,25 @@ enum PlayerInventoryStore {
     ) {
         guard !isBattleCompleted(battleID, in: context) else { return }
         context.insert(PlayerBattleProgress(battleID: battleID))
+        save(context)
+    }
+
+    static func recordBattleVictory(
+        defeatedEnemyCount: Int,
+        in context: ModelContext
+    ) {
+        incrementQuestCounter(
+            battleVictoryCounterKey,
+            by: 1,
+            in: context,
+            shouldSave: false
+        )
+        incrementQuestCounter(
+            monsterKillCounterKey,
+            by: max(0, defeatedEnemyCount),
+            in: context,
+            shouldSave: false
+        )
         save(context)
     }
 
@@ -397,6 +489,79 @@ enum PlayerInventoryStore {
         save(context)
     }
 
+    static func isQuestClaimed(_ questID: String, in context: ModelContext)
+        -> Bool
+    {
+        let descriptor = FetchDescriptor<PlayerQuestClaim>(
+            predicate: #Predicate { $0.questID == questID }
+        )
+        return ((try? context.fetchCount(descriptor)) ?? 0) > 0
+    }
+
+    static func questProgress(
+        for objective: QuestObjectiveDefinition,
+        in context: ModelContext
+    ) -> Int {
+        switch objective.type {
+        case .ascendedLevel:
+            return accountProgress(in: context).level
+        case .battleVictories:
+            return questCounterValue(for: battleVictoryCounterKey, in: context)
+        case .monsterKills:
+            return questCounterValue(for: monsterKillCounterKey, in: context)
+        case .currencyCollect:
+            return questCounterValue(
+                for: currencyEarnedCounterKey(
+                    for: objective.currency ?? "coins"
+                ),
+                in: context
+            )
+        }
+    }
+
+    static func canClaimQuest(
+        _ quest: QuestDefinition,
+        in context: ModelContext
+    )
+        -> Bool
+    {
+        guard !isQuestClaimed(quest.id, in: context) else { return false }
+        guard accountProgress(in: context).level >= quest.requiredAscendedLevel
+        else {
+            return false
+        }
+        return questProgress(for: quest.objective, in: context)
+            >= quest.objective.target
+    }
+
+    @discardableResult
+    static func claimQuest(
+        _ quest: QuestDefinition,
+        selectedCharacterID: String? = nil,
+        in context: ModelContext
+    ) -> Bool {
+        guard canClaimQuest(quest, in: context) else { return false }
+
+        if !quest.choiceCharacterRewardIDs.isEmpty {
+            guard let selectedCharacterID,
+                quest.choiceCharacterRewardIDs.contains(selectedCharacterID)
+            else {
+                return false
+            }
+            addOwned(characterID: selectedCharacterID, in: context)
+        }
+
+        add(quest.rewards, in: context)
+
+        for reward in quest.characterRewards {
+            addOwned(characterID: reward.characterID, in: context)
+        }
+
+        context.insert(PlayerQuestClaim(questID: quest.id))
+        save(context)
+        return true
+    }
+
     static func level(forXP xp: Int) -> Int {
         var level = 1
         var remainingXP = max(0, xp)
@@ -447,6 +612,81 @@ enum PlayerInventoryStore {
         context.insert(progress)
         save(context)
         return progress
+    }
+
+    private static func dailyBattleRewardCap(in context: ModelContext)
+        -> PlayerDailyBattleRewardCap
+    {
+        let descriptor = FetchDescriptor<PlayerDailyBattleRewardCap>(
+            predicate: #Predicate { $0.id == "battle_reward_cap" }
+        )
+        if let progress = try? context.fetch(descriptor).first {
+            return progress
+        }
+
+        let progress = PlayerDailyBattleRewardCap()
+        context.insert(progress)
+        save(context)
+        return progress
+    }
+
+    private static func resetBattleRewardCapIfNeeded(
+        _ cap: PlayerDailyBattleRewardCap,
+        in context: ModelContext
+    ) {
+        guard !Calendar.current.isDateInToday(cap.lastResetAt) else { return }
+        cap.lastResetAt = .now
+        cap.coinsEarned = 0
+        cap.crystalsEarned = 0
+        save(context)
+    }
+
+    private static func questCounter(
+        for key: String,
+        in context: ModelContext
+    ) -> PlayerQuestCounter {
+        let descriptor = FetchDescriptor<PlayerQuestCounter>(
+            predicate: #Predicate { $0.key == key }
+        )
+        if let counter = try? context.fetch(descriptor).first {
+            return counter
+        }
+
+        let counter = PlayerQuestCounter(key: key)
+        context.insert(counter)
+        save(context)
+        return counter
+    }
+
+    private static func questCounterValue(
+        for key: String,
+        in context: ModelContext
+    )
+        -> Int
+    {
+        let descriptor = FetchDescriptor<PlayerQuestCounter>(
+            predicate: #Predicate { $0.key == key }
+        )
+        return (try? context.fetch(descriptor).first?.value) ?? 0
+    }
+
+    private static func incrementQuestCounter(
+        _ key: String,
+        by amount: Int,
+        in context: ModelContext,
+        shouldSave: Bool
+    ) {
+        guard amount > 0 else { return }
+        let counter = questCounter(for: key, in: context)
+        counter.value += amount
+        if shouldSave {
+            save(context)
+        }
+    }
+
+    private static func currencyEarnedCounterKey(for currency: String) -> String
+    {
+        "currency_earned_\(currency)"
     }
 
     private static func nextDailyGiftIndex(

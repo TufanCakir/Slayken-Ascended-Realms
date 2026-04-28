@@ -46,25 +46,24 @@ struct LoadingOverlayView: View {
 
     var body: some View {
         ZStack {
-            backgroundLayer
 
             VStack(spacing: 0) {
                 topInfo
 
-                Spacer(minLength: 18)
+                Spacer(minLength: 24)
 
-                spinnerBlock
-                    .padding(.top, 10)
+                centerPanel
+                    .padding(.horizontal, 20)
 
                 Spacer(minLength: 20)
 
                 newsBlock
-                    .padding(.horizontal, 36)
+                    .padding(.horizontal, 20)
 
                 Spacer(minLength: 28)
 
                 bottomBrand
-                    .padding(.horizontal, 28)
+                    .padding(.horizontal, 20)
                     .padding(.bottom, 28)
             }
         }
@@ -78,44 +77,36 @@ struct LoadingOverlayView: View {
                 spin = true
             }
         }
-    }
+        .background {
+            ZStack {
+                if let theme = theme.selectedTheme {
+                    Image(theme.background)
+                        .resizable()
+                        .scaledToFill()
+                }
 
-    private var backgroundLayer: some View {
-        ZStack {
-            Color(red: 0.12, green: 0.15, blue: 0.22)
-                .ignoresSafeArea()
-
-            Image(newsImage)
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-                .opacity(0.12)
-                .blur(radius: 1.2)
-
-            LinearGradient(
-                colors: [
-                    Color.black.opacity(0.18),
-                    Color(red: 0.10, green: 0.13, blue: 0.20).opacity(0.92),
-                    Color.black.opacity(0.18),
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
+                LinearGradient(
+                    colors: [
+                        Color.black.opacity(0.2),
+                        Color.black.opacity(0.6),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            }
             .ignoresSafeArea()
-
-            Image(systemName: "sparkles")
-                .font(.system(size: 210, weight: .ultraLight))
-                .foregroundStyle(.white.opacity(0.055))
-                .offset(y: -120)
         }
     }
 
     private var topInfo: some View {
         HStack(alignment: .top) {
-            Text(appVersionText)
-                .font(.system(size: 11, weight: .bold))
-                .foregroundStyle(.white.opacity(0.68))
-                .lineLimit(1)
+            VStack(alignment: .leading, spacing: 4) {
+
+                Text("v\(appVersionText)")
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(.white.opacity(0.68))
+                    .lineLimit(1)
+            }
 
             Spacer()
 
@@ -161,54 +152,93 @@ struct LoadingOverlayView: View {
             .buttonStyle(.plain)
             .accessibilityLabel("Support oeffnen")
         }
-        .padding(.horizontal, 100)
+        .padding(.horizontal, 20)
+    }
+
+    private var centerPanel: some View {
+        VStack(spacing: 18) {
+            spinnerBlock
+
+            VStack(spacing: 6) {
+                Text("Entering Ascended Realms")
+                    .font(.system(size: 22, weight: .black))
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+
+                Text(
+                    "Deine Welt, Battle-Daten und Event-Pfade werden vorbereitet."
+                )
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(.white.opacity(0.76))
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+            }
+
+            progressBar
+        }
+        .padding(.horizontal, 18)
+        .padding(.vertical, 22)
+        .background(
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
     }
 
     private var spinnerBlock: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 14) {
             ZStack {
                 Circle()
-                    .stroke(Color.black.opacity(0.34), lineWidth: 7)
-                    .frame(width: 58, height: 58)
+                    .stroke(Color.white.opacity(0.12), lineWidth: 8)
+                    .frame(width: 72, height: 72)
 
                 Circle()
                     .trim(from: 0, to: 0.72)
                     .stroke(
                         AngularGradient(
                             colors: [
-                                .cyan.opacity(0.0),
-                                .cyan.opacity(0.95),
-                                .white.opacity(0.86),
+                                .blue,
+                                .blue,
+                                .white,
                             ],
                             center: .center
                         ),
                         style: StrokeStyle(lineWidth: 7, lineCap: .round)
                     )
-                    .frame(width: 58, height: 58)
+                    .frame(width: 72, height: 72)
                     .rotationEffect(.degrees(spin ? 360 : 0))
-                    .shadow(color: .cyan.opacity(0.75), radius: 10)
+                    .shadow(color: .blue.opacity(0.75), radius: 10)
             }
 
-            HStack(spacing: 9) {
+            HStack(spacing: 7) {
                 ForEach(Array("Loading"), id: \.self) { character in
                     Text(String(character))
-                        .font(.system(size: 19, weight: .light))
-                        .foregroundStyle(.white.opacity(0.78))
+                        .font(.system(size: 18, weight: .black))
+                        .foregroundStyle(.white.opacity(0.92))
                 }
                 Text(".")
-                    .font(.system(size: 22, weight: .light))
-                    .foregroundStyle(.white.opacity(0.78))
+                    .font(.system(size: 22, weight: .black))
+                    .foregroundStyle(
+                        Color(red: 0.20, green: 0.45, blue: 1.0).opacity(0.95)
+                    )
                     .opacity(progress > 0.25 ? 1 : 0.25)
                 Text(".")
-                    .font(.system(size: 22, weight: .light))
-                    .foregroundStyle(.white.opacity(0.78))
+                    .font(.system(size: 22, weight: .black))
+                    .foregroundStyle(
+                        Color(red: 0.20, green: 0.45, blue: 1.0).opacity(0.95)
+                    )
                     .opacity(progress > 0.55 ? 1 : 0.25)
                 Text(".")
-                    .font(.system(size: 22, weight: .light))
-                    .foregroundStyle(.white.opacity(0.78))
+                    .font(.system(size: 22, weight: .black))
+                    .foregroundStyle(
+                        Color(red: 0.20, green: 0.45, blue: 1.0).opacity(0.95)
+                    )
                     .opacity(progress > 0.82 ? 1 : 0.25)
             }
-            .tracking(8)
+            .tracking(3)
         }
     }
 
@@ -217,11 +247,17 @@ struct LoadingOverlayView: View {
             Image(newsImage)
                 .resizable()
                 .scaledToFill()
-                .frame(maxWidth: 330)
-                .frame(height: 112)
+                .frame(maxWidth: .infinity)
+                .frame(height: 128)
                 .clipped()
-                .overlay(Rectangle().stroke(.white.opacity(0.55), lineWidth: 2))
-                .shadow(color: .black.opacity(0.35), radius: 8, y: 4)
+                .clipShape(
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                )
+                .overlay {
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .stroke(.white.opacity(0.12), lineWidth: 1)
+                }
+                .shadow(color: .black.opacity(0.35), radius: 14, y: 8)
 
             VStack(spacing: 11) {
                 Text(tipTitle)
@@ -235,24 +271,34 @@ struct LoadingOverlayView: View {
                     .multilineTextAlignment(.center)
                     .lineSpacing(1)
                     .fixedSize(horizontal: false, vertical: true)
-
-                progressBar
-                    .padding(.top, 8)
             }
-            .frame(maxWidth: 330)
+            .frame(maxWidth: .infinity)
+        }
+        .padding(16)
+        .background(
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 24, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
         }
     }
 
     private var progressBar: some View {
-        VStack(spacing: 5) {
+        VStack(spacing: 8) {
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     Capsule()
-                        .fill(Color.black.opacity(0.46))
+                        .fill(Color.white.opacity(0.08))
                     Capsule()
                         .fill(
                             LinearGradient(
-                                colors: [.cyan, .white.opacity(0.86)],
+                                colors: [
+                                    .blue,
+                                    .blue,
+                                    .white,
+                                ],
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
@@ -263,24 +309,57 @@ struct LoadingOverlayView: View {
                                 geo.size.width * min(max(progress, 0), 1)
                             )
                         )
+                        .shadow(
+                            color: Color(red: 0.20, green: 0.45, blue: 1.0)
+                                .opacity(0.45),
+                            radius: 8,
+                            y: 2
+                        )
                 }
             }
-            .frame(height: 7)
+            .frame(height: 10)
 
-            Text("\(Int(progress * 100))%")
-                .font(.system(size: 10, weight: .black))
-                .foregroundStyle(.white.opacity(0.62))
+            HStack {
+                Text("Realm Sync")
+                    .font(.system(size: 11, weight: .black))
+                    .foregroundStyle(.white.opacity(0.72))
+
+                Spacer()
+
+                Text("\(Int(progress * 100))%")
+                    .font(.system(size: 11, weight: .black))
+                    .foregroundStyle(.white.opacity(0.82))
+            }
         }
     }
 
     private var bottomBrand: some View {
-        Text("SLAYKEN ASCENDED REALMS")
-            .font(.system(size: 15, weight: .medium))
-            .tracking(6)
-            .foregroundStyle(.white.opacity(0.48))
-            .lineLimit(1)
-            .minimumScaleFactor(0.52)
-            .frame(maxWidth: .infinity)
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("SLAYKEN ASCENDED REALMS")
+                    .font(.system(size: 14, weight: .black))
+                    .tracking(3)
+                    .foregroundStyle(.white.opacity(0.62))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.52)
+
+                Text("Loading battle systems, events and rewards")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.50))
+            }
+
+            Spacer()
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .background(
+            Color.black.opacity(0.30),
+            in: RoundedRectangle(cornerRadius: 20, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(.white.opacity(0.07), lineWidth: 1)
+        }
     }
 }
 

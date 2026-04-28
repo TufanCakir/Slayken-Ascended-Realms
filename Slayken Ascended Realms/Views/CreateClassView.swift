@@ -15,6 +15,14 @@ struct CreateClassView: View {
         case details
     }
 
+    private enum ClassCategory: String, CaseIterable, Identifiable {
+        case all = "Alle"
+        case standard = "Standardklassen"
+        case hero = "Heldenklassen"
+
+        var id: String { rawValue }
+    }
+
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var gameState: GameState
     @EnvironmentObject private var theme: ThemeManager
@@ -29,6 +37,7 @@ struct CreateClassView: View {
     @State private var expandedClassIDs: Set<String> = []
     @State private var standardClassesExpanded = true
     @State private var heroClassesExpanded = true
+    @State private var selectedCategory: ClassCategory = .all
 
     private let classDefinitions = loadCharacterClassDefinitions()
 
@@ -235,20 +244,61 @@ struct CreateClassView: View {
                 .font(.system(size: 16, weight: .bold))
                 .foregroundStyle(.white)
 
-            classSection(
-                title: "Standardklassen",
-                subtitle: "Sofort verfuegbar",
-                classes: standardClasses,
-                isExpanded: $standardClassesExpanded
-            )
+            categoryBar
 
-            if !heroClasses.isEmpty {
+            if selectedCategory != .hero {
+                classSection(
+                    title: "Standardklassen",
+                    subtitle: "Sofort verfuegbar",
+                    classes: standardClasses,
+                    isExpanded: $standardClassesExpanded
+                )
+            }
+
+            if !heroClasses.isEmpty, selectedCategory != .standard {
                 classSection(
                     title: "Heldenklassen",
                     subtitle: "Werden ueber dein Ascended Level freigeschaltet",
                     classes: heroClasses,
                     isExpanded: $heroClassesExpanded
                 )
+            }
+        }
+    }
+
+    private var categoryBar: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                ForEach(ClassCategory.allCases) { category in
+                    Button {
+                        selectedCategory = category
+                    } label: {
+                        Text(category.rawValue)
+                            .font(.system(size: 12, weight: .black))
+                            .foregroundStyle(
+                                selectedCategory == category ? .black : .white
+                            )
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 10)
+                            .background(
+                                selectedCategory == category
+                                    ? Color.yellow
+                                    : Color.black.opacity(0.32),
+                                in: Capsule()
+                            )
+                            .overlay {
+                                Capsule()
+                                    .stroke(
+                                        .white.opacity(
+                                            selectedCategory == category
+                                                ? 0 : 0.10
+                                        ),
+                                        lineWidth: 1
+                                    )
+                            }
+                    }
+                    .buttonStyle(.plain)
+                }
             }
         }
     }

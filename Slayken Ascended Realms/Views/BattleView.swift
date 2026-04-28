@@ -56,6 +56,8 @@ struct BattleView: View {
     @State private var playerMana: Double = 60
     @State private var awardedXP = 0
     @State private var awardedAscendedXP = 0
+    @State private var awardedRewards: [CurrencyAmount] = []
+    @State private var awardedCardRewards: [GlobeBattle.CardReward] = []
     @State private var levelBeforeVictory = 1
     @State private var levelAfterVictory = 1
     @State private var ascendedLevelBeforeVictory = 1
@@ -207,7 +209,8 @@ struct BattleView: View {
             if showVictory {
                 VictoryView(
                     currencies: loadCurrencyDefinitions(),
-                    rewards: gameState.activeBattleRewards,
+                    rewards: awardedRewards,
+                    cardRewards: awardedCardRewards,
                     xpReward: awardedXP,
                     ascendedXPReward: awardedAscendedXP,
                     levelBefore: levelBeforeVictory,
@@ -1150,11 +1153,20 @@ struct BattleView: View {
         )
         ascendedLevelBeforeVictory = accountProgressBefore.level
         awardedAscendedXP = awardedXP
-
-        PlayerInventoryStore.add(
+        awardedRewards = PlayerInventoryStore.addBattleRewards(
             gameState.activeBattleRewards,
-            in: modelContext
+            in: modelContext,
+            limits: gameState.selectedBattle?.dailyRewardLimits?
+                .resolvedFarmLimits
         )
+        awardedCardRewards = gameState.selectedBattle?.cardRewards ?? []
+        for cardReward in awardedCardRewards where cardReward.amount > 0 {
+            PlayerInventoryStore.addOwnedCard(
+                cardID: cardReward.cardID,
+                amount: cardReward.amount,
+                in: modelContext
+            )
+        }
         let progress = PlayerInventoryStore.addXP(
             awardedXP,
             to: player.model,
@@ -1166,6 +1178,10 @@ struct BattleView: View {
         )
         levelAfterVictory = progress.level
         ascendedLevelAfterVictory = accountProgressAfter.level
+        PlayerInventoryStore.recordBattleVictory(
+            defeatedEnemyCount: battleEnemies.count,
+            in: modelContext
+        )
 
         if let battleID = gameState.selectedBattle?.id {
             PlayerInventoryStore.markBattleCompleted(battleID, in: modelContext)

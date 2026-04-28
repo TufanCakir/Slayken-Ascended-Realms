@@ -197,3 +197,45 @@ final class ProcessedStoreTransaction {
         self.processedAt = processedAt
     }
 }
+
+@Model
+final class PlayerQuestClaim {
+    @Attribute(.unique) var questID: String
+    var claimedAt: Date
+
+    init(questID: String, claimedAt: Date = .now) {
+        self.questID = questID
+        self.claimedAt = claimedAt
+    }
+}
+
+@Model
+final class PlayerQuestCounter {
+    @Attribute(.unique) var key: String
+    var value: Int
+
+    init(key: String, value: Int = 0) {
+        self.key = key
+        self.value = value
+    }
+}
+
+@Model
+final class PlayerDailyBattleRewardCap {
+    @Attribute(.unique) var id: String
+    var lastResetAt: Date
+    var coinsEarned: Int
+    var crystalsEarned: Int
+
+    init(
+        id: String = "battle_reward_cap",
+        lastResetAt: Date = .now,
+        coinsEarned: Int = 0,
+        crystalsEarned: Int = 0
+    ) {
+        self.id = id
+        self.lastResetAt = lastResetAt
+        self.coinsEarned = coinsEarned
+        self.crystalsEarned = crystalsEarned
+    }
+}

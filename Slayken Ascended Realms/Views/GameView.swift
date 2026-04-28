@@ -41,6 +41,7 @@ struct GameView: View {
     @State private var showGlobeEvents = false
     @State private var showSummon = false
     @State private var showShop = false
+    @State private var showQuests = false
     @State private var showCharacter = false
     @State private var showCreateClass = false
     @State private var showGift = false
@@ -49,6 +50,7 @@ struct GameView: View {
 
     private let gifts = loadGiftBoxDefinitions()
     private let dailyLoginRewards = loadDailyLoginRewardDefinitions()
+    private let quests = loadQuestDefinitions()
 
     let onResetGame: () -> Void
     let onOpenTutorialArchive: () -> Void
@@ -203,6 +205,9 @@ struct GameView: View {
                     onShop: {
                         showShop = true
                     },
+                    onQuests: {
+                        showQuests = true
+                    },
                     onArchive: {
                         showStoryArchive = true
                     },
@@ -337,6 +342,17 @@ struct GameView: View {
                 .environmentObject(theme)
                 .background(.black)
             }
+            .fullScreenCover(isPresented: $showQuests) {
+                QuestView(
+                    quests: quests,
+                    onClose: {
+                        showQuests = false
+                    }
+                )
+                .environmentObject(gameState)
+                .environmentObject(theme)
+                .background(.black)
+            }
             .fullScreenCover(
                 isPresented: $showSummon,
                 onDismiss: {
@@ -429,6 +445,11 @@ struct GameView: View {
                             showGlobeEvents = false
                             selectedTab = .game
                             showShop = true
+                        },
+                        onQuests: {
+                            showGlobeEvents = false
+                            selectedTab = .game
+                            showQuests = true
                         },
                         onArchive: {
                             showGlobeEvents = false

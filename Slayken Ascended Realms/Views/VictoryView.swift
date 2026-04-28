@@ -16,6 +16,7 @@ struct VictoryView: View {
 
     let currencies: [CurrencyDefinition]
     let rewards: [CurrencyAmount]
+    let cardRewards: [GlobeBattle.CardReward]
     let xpReward: Int
     let ascendedXPReward: Int
     let levelBefore: Int
@@ -31,8 +32,10 @@ struct VictoryView: View {
         VStack {
 
             rewardRow
+            if !cardRewards.isEmpty {
+                cardRewardRow
+            }
             Spacer()
-            xpPanel
             ascendedXPPanel
             Spacer()
 
@@ -115,52 +118,17 @@ struct VictoryView: View {
         }
     }
 
-    private var xpPanel: some View {
-        VStack(spacing: 8) {
-            HStack {
-                Image(systemName: "sparkles")
-                    .font(.system(size: 15, weight: .black))
-                    .foregroundStyle(.yellow)
-
-                Text("XP +\(xpReward)")
-                    .font(.system(size: 15, weight: .black))
-
-                Spacer()
-
-                Text(
-                    levelAfter > levelBefore
-                        ? "Lv.\(levelBefore) -> Lv.\(levelAfter)"
-                        : "Lv.\(levelAfter)"
-                )
-                .font(.system(size: 13, weight: .black))
-                .foregroundStyle(
-                    levelAfter > levelBefore ? .green : .white.opacity(0.82)
+    private var cardRewardRow: some View {
+        HStack(spacing: 10) {
+            ForEach(cardRewards) { reward in
+                rewardItem(
+                    title: cardName(for: reward.cardID),
+                    subtitle: "+\(reward.amount)",
+                    imageName: cardImage(for: reward.cardID),
+                    systemName: "rectangle.stack.fill"
                 )
             }
-
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(Color.white.opacity(0.12))
-                    Capsule()
-                        .fill(
-                            LinearGradient(
-                                colors: [.yellow, .orange],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .frame(width: geo.size.width * 0.72)
-                }
-            }
-            .frame(height: 8)
         }
-        .padding(12)
-        .background(
-            Color.black.opacity(0.45),
-            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-        )
-        .foregroundStyle(.white)
     }
 
     private var ascendedXPPanel: some View {
@@ -215,23 +183,37 @@ struct VictoryView: View {
     private func rewardItem(currency: CurrencyDefinition, amount: Int)
         -> some View
     {
+        rewardItem(
+            title: currency.name,
+            subtitle: "+\(amount)",
+            imageName: currency.assetIcon,
+            systemName: currency.icon
+        )
+    }
+
+    private func rewardItem(
+        title: String,
+        subtitle: String,
+        imageName: String?,
+        systemName: String
+    ) -> some View {
         VStack(spacing: 6) {
-            if let asset = currency.assetIcon, UIImage(named: asset) != nil {
-                Image(asset)
+            if let imageName, UIImage(named: imageName) != nil {
+                Image(imageName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 28, height: 28)
             } else {
-                Image(systemName: currency.icon)
+                Image(systemName: systemName)
                     .font(.system(size: 20, weight: .bold))
                     .foregroundStyle(.yellow)
             }
 
-            Text("+\(amount)")
+            Text(subtitle)
                 .font(.system(size: 13, weight: .black))
                 .foregroundStyle(.white)
 
-            Text(currency.name)
+            Text(title)
                 .font(.system(size: 9, weight: .bold))
                 .foregroundStyle(.white.opacity(0.62))
                 .lineLimit(1)
@@ -242,6 +224,14 @@ struct VictoryView: View {
             in: RoundedRectangle(cornerRadius: 8, style: .continuous)
         )
     }
+
+    private func cardName(for cardID: String) -> String {
+        gameState.abilityCards.first(where: { $0.id == cardID })?.name ?? cardID
+    }
+
+    private func cardImage(for cardID: String) -> String? {
+        gameState.abilityCards.first(where: { $0.id == cardID })?.image
+    }
 }
 
 #Preview {
@@ -250,6 +240,9 @@ struct VictoryView: View {
         rewards: [
             CurrencyAmount(currency: "coins", amount: 120),
             CurrencyAmount(currency: "crystals", amount: 5),
+        ],
+        cardRewards: [
+            GlobeBattle.CardReward(cardID: "slash_red", amount: 1)
         ],
         xpReward: 140,
         ascendedXPReward: 140,

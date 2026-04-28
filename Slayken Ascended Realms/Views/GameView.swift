@@ -71,6 +71,7 @@ struct GameView: View {
 
     var body: some View {
         GeometryReader { geo in
+            let horizontalOverlayPadding: CGFloat = 16
 
             ZStack {
 
@@ -137,16 +138,17 @@ struct GameView: View {
                 }
 
                 VStack(spacing: 0) {
-                    VStack(spacing: 8) {
-                        GameHeaderView(currencies: gameState.currencies) {
-                            showNews = true
-                        }
-                        .padding()
+                    GameHeaderView(
+                        currencies: gameState.currencies,
+                        ascendedLevel: ascendedLevel,
+                        ascendedXP: ascendedXP,
+                        horizontalPadding: horizontalOverlayPadding
+                    ) {
+                        showNews = true
                     }
                     .zIndex(8)
 
                     Spacer()
-
                     // 🎮 TAB CONTENT
                     Group {
                         switch selectedTab {
@@ -174,25 +176,11 @@ struct GameView: View {
                 }
                 .zIndex(6)
 
-                GameSideDrawerView(
+                GameMiddleDrawerView(
+                    selectedTab: $selectedTab,
                     onTheme: {
                         activeSelectionSheet = .theme
                     },
-                    onSupport: {
-                        showSupport = true
-                    },
-                    onNews: {
-                        showNews = true
-                    },
-                    onSettings: {
-                        showSettings = true
-                    }
-                )
-                .frame(maxHeight: .infinity, alignment: .topTrailing)
-                .zIndex(12)
-
-                GameMiddleDrawerView(
-                    selectedTab: $selectedTab,
                     onSupport: {
                         showSupport = true
                     },
@@ -225,9 +213,10 @@ struct GameView: View {
                     },
                     onSettings: {
                         showSettings = true
-                    }
+                    },
+                    trailingPadding: horizontalOverlayPadding
                 )
-                .offset(y: -112)
+                .offset(y: -10)
                 .zIndex(11)
             }
             .sheet(item: $activeSelectionSheet) { selection in
@@ -400,32 +389,11 @@ struct GameView: View {
                         GameFooterView(selectedTab: $selectedTab)
                     }
 
-                    GameSideDrawerView(
-                        showTheme: false,
+                    GameMiddleDrawerView(
+                        selectedTab: $selectedTab,
                         onTheme: {
                             closeGlobeAndOpen(.theme)
                         },
-                        onSupport: {
-                            showGlobeEvents = false
-                            selectedTab = .game
-                            showSupport = true
-                        },
-                        onNews: {
-                            showGlobeEvents = false
-                            selectedTab = .game
-                            showNews = true
-                        },
-                        onSettings: {
-                            showGlobeEvents = false
-                            selectedTab = .game
-                            showSettings = true
-                        }
-                    )
-                    .frame(maxHeight: .infinity, alignment: .topTrailing)
-                    .zIndex(12)
-
-                    GameMiddleDrawerView(
-                        selectedTab: $selectedTab,
                         onSupport: {
                             showGlobeEvents = false
                             selectedTab = .game
@@ -480,7 +448,8 @@ struct GameView: View {
                             showGlobeEvents = false
                             selectedTab = .game
                             showSettings = true
-                        }
+                        },
+                        trailingPadding: horizontalOverlayPadding
                     )
                     .zIndex(11)
                 }
@@ -540,6 +509,10 @@ struct GameView: View {
 
     private var ascendedLevel: Int {
         accountProgress.first?.level ?? 1
+    }
+
+    private var ascendedXP: Int {
+        accountProgress.first?.xp ?? 0
     }
 
     private var activePreviewChapter: GlobeEventChapter? {

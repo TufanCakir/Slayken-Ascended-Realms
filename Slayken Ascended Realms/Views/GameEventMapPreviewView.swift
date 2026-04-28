@@ -388,6 +388,5 @@ struct GameEventMapPreviewView: View {
         onSelectPoint: { _ in },
         onSelectBattle: { _ in }
     )
-    .frame(height: 420)
     .background(.black)
 }

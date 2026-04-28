@@ -9,7 +9,6 @@ import SwiftUI
 
 struct GameFooterView: View {
     @Binding var selectedTab: GameTab
-    @State private var isExpanded = true
 
     private let tabs: [FooterTabItem] = [
         FooterTabItem(
@@ -55,52 +54,18 @@ struct GameFooterView: View {
     }
 
     var body: some View {
-        HStack(spacing: 8) {
-            Spacer(minLength: 0)
-
-            tabsView
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .frame(
-                    width: isExpanded ? expandedWidth : 0,
-                    alignment: .trailing
-                )
-                .clipped()
-                .background(
-                    Color.white.opacity(isExpanded ? 0.92 : 0)
-                        .background(
-                            isExpanded ? .ultraThinMaterial : .regularMaterial
-                        )
-                )
-                .clipShape(Capsule())
-                .shadow(
-                    color: .black.opacity(isExpanded ? 0.16 : 0),
-                    radius: 10,
-                    y: 3
-                )
-                .opacity(isExpanded ? 1 : 0)
-                .animation(
-                    .spring(response: 0.36, dampingFraction: 0.84),
-                    value: isExpanded
-                )
-
-            Button {
-                withAnimation(.spring(response: 0.36, dampingFraction: 0.84)) {
-                    isExpanded.toggle()
-                }
-            } label: {
-                Image(systemName: isExpanded ? "chevron.right" : "chevron.left")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(.black.opacity(0.72))
-                    .frame(width: 34, height: 46)
-                    .background(.white.opacity(0.92), in: Capsule())
-                    .shadow(color: .black.opacity(0.16), radius: 8, y: 2)
-            }
-            .buttonStyle(.plain)
-        }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 8)
-        .frame(maxWidth: .infinity, alignment: .trailing)
+        tabsView
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            .frame(width: expandedWidth)
+            .background(
+                Color.white.opacity(0.92).background(.ultraThinMaterial)
+            )
+            .clipShape(Capsule())
+            .shadow(color: .black.opacity(0.16), radius: 10, y: 3)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+            .frame(maxWidth: .infinity)
     }
 
     private func tabButton(_ item: FooterTabItem) -> some View {

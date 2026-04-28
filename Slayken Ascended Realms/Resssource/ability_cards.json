@@ -2,7 +2,7 @@
     {
         "id": "slash_red",
         "name": "Rift Slash",
-        "image": "bg_fire",
+        "image": "skill_rift_slash",
         "element": "Fire",
         "rarity": 1,
         "damageMultiplier": 1.18,
@@ -18,7 +18,7 @@
     {
         "id": "crystal_blue",
         "name": "Crystal Burst",
-        "image": "bg_ice",
+        "image": "skill_crystal_burst",
         "element": "Ice",
         "rarity": 2,
         "damageMultiplier": 1.14,
@@ -34,7 +34,7 @@
     {
         "id": "void_pulse",
         "name": "Void Pulse",
-        "image": "bg_void",
+        "image": "skill_void_pulse",
         "element": "Void",
         "rarity": 5,
         "damageMultiplier": 1.22,
@@ -50,7 +50,7 @@
     {
         "id": "moon_guard",
         "name": "Moon Guard",
-        "image": "bg_country",
+        "image": "skill_moon_guard",
         "element": "Light",
         "rarity": 3,
         "damageMultiplier": 1.08,
@@ -66,7 +66,7 @@
     {
         "id": "storm_edge",
         "name": "Storm Edge",
-        "image": "bg_arena",
+        "image": "skill_storm_edge",
         "element": "Storm",
         "rarity": 4,
         "damageMultiplier": 1.16,
@@ -82,7 +82,7 @@
     {
         "id": "ash_breaker",
         "name": "Ash Breaker",
-        "image": "bg_map",
+        "image": "skill_ash_breaker",
         "element": "Ash",
         "rarity": 5,
         "damageMultiplier": 1.20,

@@ -10,57 +10,81 @@ import SwiftUI
 struct GameHeaderView: View {
     let currencies: [CurrencyDefinition]
     let ascendedLevel: Int
-
-    @State private var isExpanded = true
+    let ascendedXP: Int
+    private let horizontalPadding: CGFloat
 
     init(
         currencies: [CurrencyDefinition] = [],
         ascendedLevel: Int = 1,
+        ascendedXP: Int = 0,
+        horizontalPadding: CGFloat = 34,
         onNews: @escaping () -> Void = {}
     ) {
         self.currencies = currencies
         self.ascendedLevel = ascendedLevel
+        self.ascendedXP = ascendedXP
+        self.horizontalPadding = horizontalPadding
     }
 
     var body: some View {
-        HStack(spacing: 8) {
+        topRow
+            .padding(.horizontal, horizontalPadding)
+        xpProgressBar
+            .padding()
+    }
+
+    private var topRow: some View {
+        HStack(spacing: 100) {
             ascendedBadge
-
-            Spacer(minLength: 12)
-
-            CurrencyBarView(currencies: currencies, compact: true)
-                .frame(
-                    width: isExpanded ? currencyWidth : 0,
-                    alignment: .trailing
-                )
-                .clipped()
-                .opacity(isExpanded ? 1 : 0)
-
-            Button {
-                withAnimation(.spring(response: 0.34, dampingFraction: 0.84)) {
-                    isExpanded.toggle()
-                }
-            } label: {
-                Image(systemName: isExpanded ? "chevron.right" : "chevron.left")
-                    .font(.system(size: 14, weight: .black))
-                    .foregroundStyle(.black.opacity(0.72))
-                    .frame(width: 34, height: 38)
-                    .background(.white.opacity(0.92), in: Capsule())
-                    .shadow(color: .black.opacity(0.16), radius: 8, y: 2)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(
-                isExpanded ? "Hide Resources" : "Show Resources"
-            )
+            resourceControls
         }
-        .padding(.horizontal, 14)
-        .padding(.top, 58)
-        .padding(.bottom, 8)
-        .frame(maxWidth: .infinity, alignment: .trailing)
-        .animation(
-            .spring(response: 0.34, dampingFraction: 0.84),
-            value: isExpanded
+    }
+
+    private var resourceControls: some View {
+        CurrencyBarView(currencies: currencies, compact: true)
+    }
+
+    private var xpProgressBar: some View {
+        VStack(spacing: 5) {
+            HStack(spacing: 6) {
+                Text("Ascended XP")
+                    .font(.system(size: 10, weight: .black))
+                    .foregroundStyle(.white.opacity(0.72))
+
+                Text("\(currentLevelXP)/\(xpRequiredForNextLevel)")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(.white)
+            }
+
+            GeometryReader { proxy in
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(.white.opacity(0.18))
+
+                    Capsule()
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color.yellow.opacity(0.95),
+                                    Color.orange.opacity(0.92),
+                                ],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .frame(width: proxy.size.width * xpProgress)
+                }
+            }
+            .frame(height: 8)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color.black.opacity(0.38), in: Capsule())
+        .overlay(
+            Capsule()
+                .stroke(.white.opacity(0.12), lineWidth: 1)
         )
+        .shadow(color: .black.opacity(0.16), radius: 8, y: 2)
     }
 
     private var ascendedBadge: some View {
@@ -87,15 +111,33 @@ struct GameHeaderView: View {
         )
     }
 
-    private var currencyWidth: CGFloat {
-        let count = max(currencies.count, 1)
-        return CGFloat((count * 76) + (max(0, count - 1) * 6))
+    private var xpRequiredForNextLevel: Int {
+        PlayerInventoryStore.xpNeededForNextLevel(ascendedLevel)
+    }
+
+    private var currentLevelXP: Int {
+        var remainingXP = max(0, ascendedXP)
+        var level = 1
+
+        while level < ascendedLevel {
+            remainingXP -= PlayerInventoryStore.xpNeededForNextLevel(level)
+            level += 1
+        }
+
+        return max(0, remainingXP)
+    }
+
+    private var xpProgress: CGFloat {
+        guard xpRequiredForNextLevel > 0 else { return 0 }
+        let progress = CGFloat(currentLevelXP) / CGFloat(xpRequiredForNextLevel)
+        return min(max(progress, 0), 1)
     }
 }
 
 #Preview {
     GameHeaderView(
         currencies: loadCurrencyDefinitions(),
-        ascendedLevel: 12
+        ascendedLevel: 12,
+        ascendedXP: 3200
     )
 }

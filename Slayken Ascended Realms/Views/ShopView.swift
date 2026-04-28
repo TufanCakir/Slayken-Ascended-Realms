@@ -200,12 +200,13 @@ struct ShopView: View {
         let purchaseCount =
             offerProgress.first(where: { $0.offerID == offer.id })?
             .purchaseCount ?? 0
+        let soldOut = !isAvailable(
+            maxPurchases: offer.maxPurchases,
+            count: purchaseCount
+        )
         let canBuy =
             canAfford(offer.cost)
-            && isAvailable(
-                maxPurchases: offer.maxPurchases,
-                count: purchaseCount
-            )
+            && !soldOut
 
         return VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .top, spacing: 12) {
@@ -245,10 +246,7 @@ struct ShopView: View {
                         buttonTitle(
                             canBuy: canBuy,
                             isFree: offer.cost.isEmpty,
-                            soldOut: !isAvailable(
-                                maxPurchases: offer.maxPurchases,
-                                count: purchaseCount
-                            )
+                            soldOut: soldOut
                         )
                     )
                     .font(.system(size: 13, weight: .black))
@@ -280,13 +278,14 @@ struct ShopView: View {
         let purchaseCount =
             offerProgress.first(where: { $0.offerID == offer.id })?
             .purchaseCount ?? 0
+        let soldOut = !isAvailable(
+            maxPurchases: offer.maxPurchases,
+            count: purchaseCount
+        )
         let canBuy =
             !owned
             && canAfford(offer.cost)
-            && isAvailable(
-                maxPurchases: offer.maxPurchases,
-                count: purchaseCount
-            )
+            && !soldOut
 
         return VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .top, spacing: 12) {
@@ -311,6 +310,9 @@ struct ShopView: View {
                 if owned {
                     tag("Owned")
                 }
+                if let maxPurchases = offer.maxPurchases {
+                    tag("\(purchaseCount)/\(maxPurchases)")
+                }
                 Spacer()
 
                 Button {
@@ -319,7 +321,9 @@ struct ShopView: View {
                     Text(
                         owned
                             ? "Bereits gekauft"
-                            : (canBuy ? "Skin kaufen" : "Nicht verfuegbar")
+                            : (soldOut
+                                ? "Ausverkauft"
+                                : (canBuy ? "Skin kaufen" : "Nicht genug"))
                     )
                     .font(.system(size: 13, weight: .black))
                     .foregroundStyle(canBuy ? .black : .white)
@@ -525,6 +529,14 @@ struct ShopView: View {
     }
 
     private func buySkin(_ offer: ShopSkinOfferDefinition) {
+        let count = PlayerInventoryStore.shopPurchaseCount(
+            for: offer.id,
+            in: modelContext
+        )
+        guard isAvailable(maxPurchases: offer.maxPurchases, count: count) else {
+            message = "Limit erreicht."
+            return
+        }
         guard
             !PlayerInventoryStore.ownsSkin(
                 characterID: offer.characterID,

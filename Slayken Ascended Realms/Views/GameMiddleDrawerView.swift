@@ -10,6 +10,7 @@ import SwiftUI
 struct GameMiddleDrawerView: View {
     @Binding var selectedTab: GameTab
 
+    let onTheme: () -> Void
     let onSupport: () -> Void
     let onNews: () -> Void
     let onCreateClass: () -> Void
@@ -21,6 +22,7 @@ struct GameMiddleDrawerView: View {
     let onGift: () -> Void
     let onDailyLogin: () -> Void
     let onSettings: () -> Void
+    let trailingPadding: CGFloat
 
     @State private var isExpanded = false
 
@@ -83,6 +85,11 @@ struct GameMiddleDrawerView: View {
             systemName: "calendar.badge.clock"
         ),
         MiddleDrawerActionItem(
+            id: .theme,
+            title: "Theme",
+            systemName: "paintbrush"
+        ),
+        MiddleDrawerActionItem(
             id: .support,
             title: "Support",
             systemName: "questionmark.circle"
@@ -95,9 +102,9 @@ struct GameMiddleDrawerView: View {
     ]
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 6) {
             drawerContent
-                .frame(width: isExpanded ? 148 : 0, alignment: .trailing)
+                .frame(width: isExpanded ? 138 : 0, alignment: .trailing)
                 .clipped()
                 .opacity(isExpanded ? 1 : 0)
 
@@ -108,12 +115,12 @@ struct GameMiddleDrawerView: View {
             } label: {
                 VStack(spacing: 0) {
                     Text("Menu")
-                        .font(.system(size: 15)).bold()
+                        .font(.system(size: 13, weight: .bold))
                         .rotationEffect(.degrees(90))
                         .fixedSize()
                 }
                 .foregroundStyle(.black)
-                .frame(width: 30, height: 100)
+                .frame(width: 28, height: 84)
                 .background(.white, in: Capsule())
                 .shadow(color: .black.opacity(0.18), radius: 8, y: 2)
             }
@@ -122,7 +129,7 @@ struct GameMiddleDrawerView: View {
                 isExpanded ? "Close Menu Drawer" : "Open Menu Drawer"
             )
         }
-        .padding(.trailing, 10)
+        .padding(.trailing, trailingPadding)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
         .animation(
             .spring(response: 0.34, dampingFraction: 0.84),
@@ -136,7 +143,7 @@ struct GameMiddleDrawerView: View {
                 actionButton(item)
             }
         }
-        .padding(9)
+        .padding(8)
         .background(Color.white.opacity(0.90).background(.ultraThinMaterial))
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
@@ -160,7 +167,7 @@ struct GameMiddleDrawerView: View {
             }
             .foregroundStyle(.gray)
             .padding(.horizontal, 8)
-            .frame(width: 124, height: 34)
+            .frame(width: 116, height: 32)
             .background(
                 Color.black.opacity(isActive(item.id) ? 0.12 : 0.06),
                 in: RoundedRectangle(cornerRadius: 8, style: .continuous)
@@ -174,6 +181,9 @@ struct GameMiddleDrawerView: View {
         switch action {
         case .home:
             selectedTab = .game
+        case .theme:
+            selectedTab = .game
+            onTheme()
         case .events:
             selectedTab = .events
         case .team:
@@ -220,6 +230,8 @@ struct GameMiddleDrawerView: View {
         switch action {
         case .home:
             return selectedTab == .game
+        case .theme:
+            return false
         case .events:
             return selectedTab == .events
         case .team:
@@ -245,6 +257,7 @@ struct GameMiddleDrawerView: View {
 
 private enum MiddleDrawerAction {
     case home
+    case theme
     case events
     case team
     case createClass
@@ -270,6 +283,7 @@ private struct MiddleDrawerActionItem: Identifiable {
 #Preview {
     GameMiddleDrawerView(
         selectedTab: .constant(.game),
+        onTheme: {},
         onSupport: {},
         onNews: {},
         onCreateClass: {},
@@ -280,6 +294,7 @@ private struct MiddleDrawerActionItem: Identifiable {
         onTutorialArchive: {},
         onGift: {},
         onDailyLogin: {},
-        onSettings: {}
+        onSettings: {},
+        trailingPadding: 16
     )
 }

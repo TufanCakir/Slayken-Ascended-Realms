@@ -35,6 +35,7 @@ struct StoryArchiveView: View {
                     .padding(.bottom, 36)
                 }
             }
+            .safeAreaPadding(.top, 6)
         }
         .fullScreenCover(item: $activeCutscene) { cutscene in
             EventCutsceneView(cutscene: cutscene) {

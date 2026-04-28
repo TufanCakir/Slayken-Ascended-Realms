@@ -9,20 +9,7 @@
         "rarity": 5,
         "hp": 120,
         "attack": 55,
-        "skins": [
-            {
-                "id": "original",
-                "name": "Original",
-                "texture": "texture_zaron_original",
-                "summonImage": "preview_zaron"
-            },
-            {
-                "id": "ascended",
-                "name": "Ascended",
-                "texture": "zaron_skin_ascended",
-                "summonImage": "preview_zaron"
-            }
-        ]
+        "skins": []
     },
     {
         "id": "shela",
@@ -34,20 +21,7 @@
         "rarity": 4,
         "hp": 105,
         "attack": 48,
-        "skins": [
-            {
-                "id": "original",
-                "name": "Original",
-                "texture": "texture_shela_original",
-                "summonImage": "preview_shela"
-            },
-            {
-                "id": "shadow",
-                "name": "Shadow",
-                "texture": "shela_skin_shadow",
-                "summonImage": "preview_shela"
-            }
-        ]
+        "skins": []
     },
     {
         "id": "shen",
@@ -59,20 +33,7 @@
         "rarity": 4,
         "hp": 105,
         "attack": 48,
-        "skins": [
-            {
-                "id": "original",
-                "name": "Original",
-                "texture": "texture_shen_original",
-                "summonImage": "preview_shen"
-            },
-            {
-                "id": "shadow",
-                "name": "Shadow",
-                "texture": "shen_skin_shadow",
-                "summonImage": "preview_shen"
-            }
-        ]
+        "skins": []
     },
     {
         "id": "lafiya",
@@ -84,19 +45,90 @@
         "rarity": 4,
         "hp": 105,
         "attack": 48,
-        "skins": [
-            {
-                "id": "original",
-                "name": "Original",
-                "texture": "texture_lafiya_original",
-                "summonImage": "preview_lafiya"
-            },
-            {
-                "id": "shadow",
-                "name": "Shadow",
-                "texture": "lafiya_skin_shadow",
-                "summonImage": "preview_lafiya"
-            }
-        ]
+        "skins": []
+    },
+    {
+        "id": "aika",
+        "name": "Aika",
+        "summonImage": "preview_aika",
+        "model": "aika_animation",
+        "battleModel": "aika",
+        "texture": "texture_aika_original",
+        "rarity": 4,
+        "hp": 104,
+        "attack": 47,
+        "skins": []
+    },
+    {
+        "id": "anjima",
+        "name": "Anjima",
+        "summonImage": "preview_anjima",
+        "model": "anjima_animation",
+        "battleModel": "anjima",
+        "texture": "texture_anjima_original",
+        "rarity": 4,
+        "hp": 109,
+        "attack": 49,
+        "skins": []
+    },
+    {
+        "id": "jefar",
+        "name": "Jefar",
+        "summonImage": "preview_jefar",
+        "model": "jefar_animation",
+        "battleModel": "jefar",
+        "texture": "texture_jefar_original",
+        "rarity": 3,
+        "hp": 98,
+        "attack": 44,
+        "skins": []
+    },
+    {
+        "id": "juji",
+        "name": "Juji",
+        "summonImage": "preview_juji",
+        "model": "juji_animation",
+        "battleModel": "juji",
+        "texture": "texture_juji_original",
+        "rarity": 3,
+        "hp": 96,
+        "attack": 43,
+        "skins": []
+    },
+    {
+        "id": "rana",
+        "name": "Rana",
+        "summonImage": "preview_rana",
+        "model": "rana_animation",
+        "battleModel": "rana",
+        "texture": "texture_rana_original",
+        "rarity": 4,
+        "hp": 108,
+        "attack": 50,
+        "skins": []
+    },
+    {
+        "id": "sanya",
+        "name": "Sanya",
+        "summonImage": "preview_sanya",
+        "model": "sanya_animation",
+        "battleModel": "sanya",
+        "texture": "texture_sanya_original",
+        "rarity": 4,
+        "hp": 110,
+        "attack": 51,
+        "skins": []
+    },
+    {
+        "id": "sifili",
+        "name": "Sifili",
+        "summonImage": "preview_sifili",
+        "model": "sifili_animation",
+        "battleModel": "sifili",
+        "texture": "texture_sifili_original",
+        "rarity": 5,
+        "hp": 124,
+        "attack": 58,
+        "skins": []
     }
 ]

@@ -40,6 +40,7 @@ struct GameView: View {
     @State private var showSettings = false
     @State private var showGlobeEvents = false
     @State private var showSummon = false
+    @State private var showShop = false
     @State private var showCharacter = false
     @State private var showCreateClass = false
     @State private var showGift = false
@@ -157,6 +158,8 @@ struct GameView: View {
                             EmptyView()
                         case .summon:
                             EmptyView()
+                        case .shop:
+                            EmptyView()
                         case .support:
                             SupportView()
                         }
@@ -196,6 +199,9 @@ struct GameView: View {
                     },
                     onCreateClass: {
                         showCreateClass = true
+                    },
+                    onShop: {
+                        showShop = true
                     },
                     onArchive: {
                         showStoryArchive = true
@@ -323,6 +329,14 @@ struct GameView: View {
                 .ignoresSafeArea()
                 .background(.black)
             }
+            .fullScreenCover(isPresented: $showShop) {
+                ShopView(onClose: {
+                    showShop = false
+                })
+                .environmentObject(gameState)
+                .environmentObject(theme)
+                .background(.black)
+            }
             .fullScreenCover(
                 isPresented: $showSummon,
                 onDismiss: {
@@ -411,6 +425,11 @@ struct GameView: View {
                             selectedTab = .game
                             showCreateClass = true
                         },
+                        onShop: {
+                            showGlobeEvents = false
+                            selectedTab = .game
+                            showShop = true
+                        },
                         onArchive: {
                             showGlobeEvents = false
                             selectedTab = .game
@@ -453,6 +472,8 @@ struct GameView: View {
                     showCharacter = true
                 } else if newTab == .summon {
                     showSummon = true
+                } else if newTab == .shop {
+                    showShop = true
                 } else {
                     if showGlobeEvents {
                         showGlobeEvents = false
@@ -462,6 +483,9 @@ struct GameView: View {
                     }
                     if showSummon {
                         showSummon = false
+                    }
+                    if showShop {
+                        showShop = false
                     }
                 }
             }

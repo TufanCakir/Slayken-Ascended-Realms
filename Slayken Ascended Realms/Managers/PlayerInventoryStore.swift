@@ -80,6 +80,33 @@ enum PlayerInventoryStore {
         save(context)
     }
 
+    static func ownsSkin(
+        characterID: String,
+        skinID: String,
+        in context: ModelContext
+    ) -> Bool {
+        let key = "\(characterID):\(skinID)"
+        let descriptor = FetchDescriptor<OwnedCharacterSkin>(
+            predicate: #Predicate { $0.id == key }
+        )
+        return ((try? context.fetchCount(descriptor)) ?? 0) > 0
+    }
+
+    static func addOwnedSkin(
+        characterID: String,
+        skinID: String,
+        in context: ModelContext
+    ) {
+        guard !ownsSkin(characterID: characterID, skinID: skinID, in: context)
+        else {
+            return
+        }
+        context.insert(
+            OwnedCharacterSkin(characterID: characterID, skinID: skinID)
+        )
+        save(context)
+    }
+
     static func setTeam(
         characterID: String,
         slotIndex: Int = 0,
@@ -150,14 +177,19 @@ enum PlayerInventoryStore {
         save(context)
     }
 
-    static func addOwnedCard(cardID: String, in context: ModelContext) {
+    static func addOwnedCard(
+        cardID: String,
+        amount: Int = 1,
+        in context: ModelContext
+    ) {
+        guard amount > 0 else { return }
         let descriptor = FetchDescriptor<OwnedAbilityCard>(
             predicate: #Predicate { $0.cardID == cardID }
         )
         if let existing = try? context.fetch(descriptor).first {
-            existing.count += 1
+            existing.count += amount
         } else {
-            context.insert(OwnedAbilityCard(cardID: cardID))
+            context.insert(OwnedAbilityCard(cardID: cardID, count: amount))
         }
         save(context)
     }
@@ -221,6 +253,12 @@ enum PlayerInventoryStore {
         summonProgress(for: bannerID, in: context)?.summonCount ?? 0
     }
 
+    static func shopPurchaseCount(for offerID: String, in context: ModelContext)
+        -> Int
+    {
+        shopOfferProgress(for: offerID, in: context)?.purchaseCount ?? 0
+    }
+
     static func claimGiftBox(
         _ gift: GiftBoxDefinition,
         in context: ModelContext
@@ -235,7 +273,9 @@ enum PlayerInventoryStore {
         return true
     }
 
-    static func isGiftClaimed(_ giftID: String, in context: ModelContext) -> Bool {
+    static func isGiftClaimed(_ giftID: String, in context: ModelContext)
+        -> Bool
+    {
         let descriptor = FetchDescriptor<PlayerClaimedGift>(
             predicate: #Predicate { $0.giftID == giftID }
         )
@@ -321,6 +361,42 @@ enum PlayerInventoryStore {
         return progress
     }
 
+    @discardableResult
+    static func incrementShopPurchaseCount(
+        for offerID: String,
+        in context: ModelContext
+    ) -> ShopOfferProgress {
+        let existing = shopOfferProgress(for: offerID, in: context)
+        let progress = existing ?? ShopOfferProgress(offerID: offerID)
+        if existing == nil {
+            context.insert(progress)
+        }
+        progress.purchaseCount += 1
+        save(context)
+        return progress
+    }
+
+    static func hasProcessedStoreTransaction(
+        _ transactionID: String,
+        in context: ModelContext
+    ) -> Bool {
+        let descriptor = FetchDescriptor<ProcessedStoreTransaction>(
+            predicate: #Predicate { $0.transactionID == transactionID }
+        )
+        return ((try? context.fetchCount(descriptor)) ?? 0) > 0
+    }
+
+    static func markStoreTransactionProcessed(
+        _ transactionID: String,
+        in context: ModelContext
+    ) {
+        guard !hasProcessedStoreTransaction(transactionID, in: context) else {
+            return
+        }
+        context.insert(ProcessedStoreTransaction(transactionID: transactionID))
+        save(context)
+    }
+
     static func level(forXP xp: Int) -> Int {
         var level = 1
         var remainingXP = max(0, xp)
@@ -343,6 +419,16 @@ enum PlayerInventoryStore {
     ) -> SummonBannerProgress? {
         let descriptor = FetchDescriptor<SummonBannerProgress>(
             predicate: #Predicate { $0.bannerID == bannerID }
+        )
+        return try? context.fetch(descriptor).first
+    }
+
+    private static func shopOfferProgress(
+        for offerID: String,
+        in context: ModelContext
+    ) -> ShopOfferProgress? {
+        let descriptor = FetchDescriptor<ShopOfferProgress>(
+            predicate: #Predicate { $0.offerID == offerID }
         )
         return try? context.fetch(descriptor).first
     }

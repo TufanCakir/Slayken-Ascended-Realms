@@ -160,3 +160,40 @@ final class PlayerClaimedGift {
         self.claimedAt = claimedAt
     }
 }
+
+@Model
+final class ShopOfferProgress {
+    @Attribute(.unique) var offerID: String
+    var purchaseCount: Int
+
+    init(offerID: String, purchaseCount: Int = 0) {
+        self.offerID = offerID
+        self.purchaseCount = purchaseCount
+    }
+}
+
+@Model
+final class OwnedCharacterSkin {
+    @Attribute(.unique) var id: String
+    var characterID: String
+    var skinID: String
+    var acquiredAt: Date
+
+    init(characterID: String, skinID: String, acquiredAt: Date = .now) {
+        self.id = "\(characterID):\(skinID)"
+        self.characterID = characterID
+        self.skinID = skinID
+        self.acquiredAt = acquiredAt
+    }
+}
+
+@Model
+final class ProcessedStoreTransaction {
+    @Attribute(.unique) var transactionID: String
+    var processedAt: Date
+
+    init(transactionID: String, processedAt: Date = .now) {
+        self.transactionID = transactionID
+        self.processedAt = processedAt
+    }
+}

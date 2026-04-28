@@ -59,7 +59,6 @@ struct TeamView: View {
         guard let selectedCharacter else { return nil }
         let selectedSkinID = selectedOwnedRecord?.selectedSkinID
         return selectedCharacter.skins.first { $0.id == selectedSkinID }
-            ?? selectedCharacter.skins.first
     }
 
     private var deckMultiplier: Double {
@@ -204,7 +203,7 @@ struct TeamView: View {
                     Text(
                         selectedCharacter == nil
                             ? "Tippen zum Auswaehlen"
-                            : "Skin: \(selectedSkin?.name ?? "Original")"
+                            : "Skin: \(selectedSkin?.name ?? "Kein Skin")"
                     )
                     .font(.system(size: 10, weight: .black))
                     .foregroundStyle(.white.opacity(0.74))

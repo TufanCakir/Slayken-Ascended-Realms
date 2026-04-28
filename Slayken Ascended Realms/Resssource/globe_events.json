@@ -344,8 +344,8 @@
                         "name": "Torbrecher",
                         "description": "Der Vorboss am Mondtor.",
                         "difficulty": 9,
-                        "groundTexture": "map",
-                        "skyboxTexture": "map",
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
                         "node": {
                             "x": 0.84,
                             "y": 0.52
@@ -608,8 +608,8 @@
                         "name": "Aetherwache",
                         "description": "Der Aether blockiert den Weg.",
                         "difficulty": 16,
-                        "groundTexture": "map",
-                        "skyboxTexture": "map",
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
                         "node": {
                             "x": 0.48,
                             "y": 0.37
@@ -773,8 +773,8 @@
                         "name": "Splitterkrone",
                         "description": "Die Krone der Splitter erwacht.",
                         "difficulty": 21,
-                        "groundTexture": "map",
-                        "skyboxTexture": "map",
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
                         "node": {
                             "x": 0.88,
                             "y": 0.58
@@ -938,8 +938,8 @@
                         "name": "Kronenschatten",
                         "description": "Der Schatten einer alten Krone.",
                         "difficulty": 25,
-                        "groundTexture": "map",
-                        "skyboxTexture": "map",
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
                         "node": {
                             "x": 0.2,
                             "y": 0.64
@@ -1103,8 +1103,8 @@
                         "name": "Dunkelzirkel",
                         "description": "Ein Zirkel ruft neue Gegner.",
                         "difficulty": 30,
-                        "groundTexture": "map",
-                        "skyboxTexture": "map",
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
                         "node": {
                             "x": 0.57,
                             "y": 0.44

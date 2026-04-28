@@ -11,6 +11,7 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
+    @EnvironmentObject var networkMonitor: NetworkMonitor
     @Environment(\.modelContext) private var modelContext
 
     private enum Screen {
@@ -150,6 +151,11 @@ struct RootView: View {
                 .environmentObject(theme)
                 .zIndex(200)
             }
+
+            if !networkMonitor.isConnected {
+                offlineOverlay
+                    .zIndex(500)
+            }
         }
         .animation(.smooth(duration: 0.45), value: currentScreenID)
         .onAppear {
@@ -157,6 +163,40 @@ struct RootView: View {
         }
         .onDisappear {
             loadingTask?.cancel()
+        }
+    }
+
+    private var offlineOverlay: some View {
+        ZStack {
+            Color.black.opacity(0.76)
+                .ignoresSafeArea()
+
+            VStack(spacing: 16) {
+                Image(systemName: "wifi.slash")
+                    .font(.system(size: 42, weight: .black))
+                    .foregroundStyle(.yellow)
+
+                Text("Internetverbindung benötigt")
+                    .font(.system(size: 24, weight: .black))
+                    .foregroundStyle(.white)
+
+                Text(
+                    "Slayken Ascended Realms kann aktuell nur mit aktiver Internetverbindung gespielt werden. Bitte verbinde dich mit dem Internet."
+                )
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(.white.opacity(0.82))
+                .multilineTextAlignment(.center)
+                .lineSpacing(3)
+            }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 28)
+            .background(Color.black.opacity(0.52))
+            .overlay {
+                RoundedRectangle(cornerRadius: 26, style: .continuous)
+                    .stroke(.white.opacity(0.12), lineWidth: 1)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+            .padding(.horizontal, 24)
         }
     }
 

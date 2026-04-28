@@ -25,11 +25,26 @@ struct GameFooterView: View {
             systemName: "sparkles"
         ),
         FooterTabItem(
+            tab: .shop,
+            systemName: "cart"
+        ),
+        FooterTabItem(
             tab: .events,
             systemName: "globe.europe.africa"
         ),
 
     ]
+
+    private var expandedWidth: CGFloat {
+        let buttonWidth: CGFloat = 34
+        let buttonPadding: CGFloat = 8
+        let spacing: CGFloat = 18
+        let horizontalInset: CGFloat = 32
+        let itemWidth = buttonWidth + (buttonPadding * 2)
+        let spacingWidth = CGFloat(max(tabs.count - 1, 0)) * spacing
+        return (CGFloat(tabs.count) * itemWidth) + spacingWidth
+            + horizontalInset
+    }
 
     private var tabsView: some View {
         HStack(spacing: 18) {
@@ -46,7 +61,10 @@ struct GameFooterView: View {
             tabsView
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
-                .frame(width: isExpanded ? 262 : 0, alignment: .trailing)
+                .frame(
+                    width: isExpanded ? expandedWidth : 0,
+                    alignment: .trailing
+                )
                 .clipped()
                 .background(
                     Color.white.opacity(isExpanded ? 0.92 : 0)
@@ -119,6 +137,8 @@ private struct FooterTabItem: Identifiable {
             return "Events"
         case .character:
             return "Character"
+        case .shop:
+            return "Shop"
         case .support:
             return "Support"
         case .summon:

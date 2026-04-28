@@ -10,5 +10,6 @@ enum GameTab {
     case events
     case character
     case summon
+    case shop
     case support
 }

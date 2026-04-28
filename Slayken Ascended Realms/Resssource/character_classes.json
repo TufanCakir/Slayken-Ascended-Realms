@@ -10,7 +10,7 @@
             {
                 "id": "male",
                 "title": "Male",
-                "image": "",
+                "image": "preview_assassine_male",
                 "model": "assassine_male_animation",
                 "battleModel": "assassine_male",
                 "texture": "texture_assassine_male_original",
@@ -21,7 +21,7 @@
             {
                 "id": "female",
                 "title": "Female",
-                "image": "",
+                "image": "preview_assassinin_female",
                 "model": "assassinin_female_animation",
                 "battleModel": "assassinin_female",
                 "texture": "texture_assassinin_female_original",
@@ -42,7 +42,7 @@
             {
                 "id": "male",
                 "title": "Male",
-                "image": "",
+                "image": "preview_mage_male",
                 "model": "mage_male_animation",
                 "battleModel": "mage_male",
                 "texture": "texture_mage_male_original",
@@ -53,7 +53,7 @@
             {
                 "id": "female",
                 "title": "Female",
-                "image": "",
+                "image": "preview_mage_female",
                 "model": "mage_female_animation",
                 "battleModel": "mage_female",
                 "texture": "texture_mage_female_original",
@@ -75,7 +75,7 @@
             {
                 "id": "male",
                 "title": "Male",
-                "image": "",
+                "image": "preview_archer_male",
                 "model": "archer_male_animation",
                 "battleModel": "archer_male",
                 "texture": "texture_archer_male_original",
@@ -86,7 +86,7 @@
             {
                 "id": "female",
                 "title": "Female",
-                "image": "",
+                "image": "preview_archer_male",
                 "model": "archer_female_animation",
                 "battleModel": "archer_female",
                 "texture": "texture_archer_female_original",
@@ -108,7 +108,7 @@
             {
                 "id": "hero",
                 "title": "Hero",
-                "image": "",
+                "image": "preview_girma",
                 "model": "girma_animation",
                 "battleModel": "girma",
                 "texture": "texture_girma_original",
@@ -130,7 +130,7 @@
             {
                 "id": "hero",
                 "title": "Hero",
-                "image": "",
+                "image": "preview_karshe",
                 "model": "karshe_animation",
                 "battleModel": "karshe",
                 "texture": "texture_karshe_original",
@@ -152,7 +152,7 @@
             {
                 "id": "hero",
                 "title": "Hero",
-                "image": "",
+                "image": "preview_kasa",
                 "model": "kasa_animation",
                 "battleModel": "kasa",
                 "texture": "texture_kasa_original",
@@ -174,7 +174,7 @@
             {
                 "id": "hero",
                 "title": "Hero",
-                "image": "",
+                "image": "preview_rukuni",
                 "model": "rukuni_animation",
                 "battleModel": "rukuni",
                 "texture": "texture_rukuni_original",
@@ -196,7 +196,7 @@
             {
                 "id": "hero",
                 "title": "Hero",
-                "image": "",
+                "image": "preview_shiro",
                 "model": "shiro_animation",
                 "battleModel": "shiro",
                 "texture": "texture_shiro_original",
@@ -218,7 +218,7 @@
             {
                 "id": "hero",
                 "title": "Hero",
-                "image": "",
+                "image": "preview_tsohon",
                 "model": "tsohon_animation",
                 "battleModel": "tsohon",
                 "texture": "texture_tsohon_original",
@@ -240,7 +240,7 @@
             {
                 "id": "hero",
                 "title": "Hero",
-                "image": "",
+                "image": "preview_wuri",
                 "model": "wuri_animation",
                 "battleModel": "wuri",
                 "texture": "texture_wuri_original",
@@ -262,7 +262,7 @@
             {
                 "id": "hero",
                 "title": "Hero",
-                "image": "",
+                "image": "preview_yanzu",
                 "model": "yanzu_animation",
                 "battleModel": "yanzu",
                 "texture": "texture_yanzu_original",

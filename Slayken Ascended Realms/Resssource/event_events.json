@@ -300,8 +300,8 @@
                         "description":
                             "Sinara beschwoert einen Schwall aus Schatzenergie.",
                         "difficulty": 6,
-                        "groundTexture": "map",
-                        "skyboxTexture": "map",
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
                         "node": {
                             "x": 0.42,
                             "y": 0.44

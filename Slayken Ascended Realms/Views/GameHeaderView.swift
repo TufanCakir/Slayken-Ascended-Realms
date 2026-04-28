@@ -89,10 +89,13 @@ struct GameHeaderView: View {
 
     private var currencyWidth: CGFloat {
         let count = max(currencies.count, 1)
-        return CGFloat(min(count, 4) * 76 + max(0, min(count, 4) - 1) * 6)
+        return CGFloat((count * 76) + (max(0, count - 1) * 6))
     }
 }
 
 #Preview {
-    GameHeaderView()
+    GameHeaderView(
+        currencies: loadCurrencyDefinitions(),
+        ascendedLevel: 12
+    )
 }

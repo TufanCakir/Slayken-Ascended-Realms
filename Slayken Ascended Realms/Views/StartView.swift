@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct StartView: View {
     @EnvironmentObject var gameState: GameState
@@ -13,8 +14,10 @@ struct StartView: View {
 
     let onStart: () -> Void
 
-    @State private var animate = false
-    @State private var pulse = false
+    @State private var currentBackgroundIndex = 0
+    @State private var backgroundRotationTask: Task<Void, Never>?
+
+    private let classDefinitions = loadCharacterClassDefinitions()
 
     private var appVersionText: String {
         let version =
@@ -28,130 +31,122 @@ struct StartView: View {
         String(Calendar.current.component(.year, from: Date()))
     }
 
+    private var previewBackgroundImages: [String] {
+        let summonPreviews = gameState.summonCharacters.map(\.summonImage)
+        let classPreviews = classDefinitions.flatMap { definition in
+            definition.variants.map(\.image)
+        }
+
+        var seen = Set<String>()
+        return (summonPreviews + classPreviews).filter { imageName in
+            guard seen.insert(imageName).inserted else { return false }
+            return UIImage(named: imageName) != nil
+        }
+    }
+
+    private var currentBackgroundImage: String? {
+        guard !previewBackgroundImages.isEmpty else { return nil }
+        let safeIndex = min(currentBackgroundIndex, previewBackgroundImages.count - 1)
+        return previewBackgroundImages[safeIndex]
+    }
+
     var body: some View {
         GeometryReader { proxy in
-            ZStack {
-                Color.white
-                    .ignoresSafeArea()
+            VStack(spacing: 0) {
+                versionLabel
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 12)
 
-                VStack(spacing: 0) {
-                    versionLabel
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, 8)
-                        .padding(.leading, 8)
+                Spacer()
 
-                    Spacer(minLength: proxy.size.height * 0.16)
+                centerContent
+                    .padding(.horizontal, 24)
 
-                    logoBlock
-                        .padding(.horizontal, 18)
-                        .opacity(animate ? 1 : 0)
-                        .offset(y: animate ? 0 : 16)
+                Spacer()
 
-                    Spacer()
-
-                    startPrompt
-                        .padding(.bottom, proxy.size.height * 0.18)
-
-                    Spacer(minLength: 24)
-
-                    copyrightLabel
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 18)
-                }
+                copyrightLabel
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 18)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .contentShape(Rectangle())
             .onTapGesture {
                 onStart()
             }
+            .background(backgroundView.ignoresSafeArea())
             .onAppear {
-                withAnimation(.easeOut(duration: 0.8)) {
-                    animate = true
-                }
-                withAnimation(
-                    .easeInOut(duration: 1.5).repeatForever(autoreverses: true)
-                ) {
-                    pulse = true
-                }
+                startBackgroundRotation()
+            }
+            .onDisappear {
+                backgroundRotationTask?.cancel()
             }
         }
+    }
+    
+    private var backgroundView: some View {
+        Group {
+            if let currentBackgroundImage {
+                Image(currentBackgroundImage)
+                    .resizable()
+                    .scaledToFill()
+                    .transition(.opacity)
+                    .id(currentBackgroundImage)
+            } else {
+                Color.black
+            }
+        }
+        .animation(.easeInOut(duration: 0.8), value: currentBackgroundImage)
     }
 
     private var versionLabel: some View {
         Text(appVersionText)
             .font(.system(size: 10, weight: .semibold, design: .serif))
-            .foregroundStyle(.black.opacity(0.35))
+            .foregroundStyle(.white.opacity(0.62))
+            .shadow(color: .black.opacity(0.55), radius: 6, y: 2)
     }
 
-    private var logoBlock: some View {
-        VStack(spacing: 0) {
-            ZStack {
-                Circle()
-                    .stroke(
-                        Color(red: 0.18, green: 0.43, blue: 0.92).opacity(0.58),
-                        lineWidth: 3
-                    )
-                    .frame(width: 190, height: 190)
-                    .scaleEffect(x: 1.35, y: 0.56)
-                    .rotationEffect(.degrees(-8))
-                    .offset(y: -2)
-
-                Text("S")
-                    .font(
-                        .system(size: 128, weight: .ultraLight, design: .serif)
-                    )
-                    .foregroundStyle(.black.opacity(0.14))
-                    .offset(y: -58)
-
-                HStack(spacing: 0) {
-                    Text("SLAYKEN")
-                    Text(" ASCENDED")
-                    Text(" REALMS")
-                }
-                .font(.system(size: 32, weight: .light, design: .serif))
-                .tracking(5)
-                .foregroundStyle(.black.opacity(0.88))
-                .lineLimit(1)
-                .minimumScaleFactor(0.48)
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, 8)
-
-                Rectangle()
-                    .fill(Color.black.opacity(0.64))
-                    .frame(height: 1)
-                    .padding(.horizontal, 4)
-                    .offset(y: 28)
+    private var centerContent: some View {
+        VStack(spacing: 22) {
+            VStack(spacing: 10) {
+                Text("SLAYKEN")
+                Text("ASCENDED")
+                Text("REALMS")
             }
-            .frame(maxWidth: .infinity)
-            .frame(height: 210)
+            .font(.system(size: 40, weight: .black, design: .serif))
+            .tracking(4)
+            .foregroundStyle(.white)
+            .multilineTextAlignment(.center)
+            .shadow(color: .black, radius: 18, y: 8)
+
+            startPrompt
         }
     }
 
     private var startPrompt: some View {
-        HStack(spacing: 14) {
-            decorativeLine
-
+        VStack(spacing: 10) {
             Text("Zum Starten\nantippen")
                 .font(.system(size: 13, weight: .semibold, design: .serif))
                 .multilineTextAlignment(.center)
-                .foregroundStyle(.black.opacity(pulse ? 0.42 : 0.20))
+                .foregroundStyle(.white)
+                .shadow(color: .black, radius: 18, y: 8)
                 .fixedSize(horizontal: true, vertical: true)
 
-            decorativeLine
+            HStack(spacing: 8) {
+                decorativeLine
+                Image(systemName: "sparkles")
+                    .font(.system(size: 10, weight: .black))
+                    .foregroundStyle(.blue)
+                decorativeLine
+            }
         }
-        .padding(.horizontal, 28)
+        .padding(.horizontal, 18)
+        .padding(.vertical, 14)
     }
 
     private var decorativeLine: some View {
-        HStack(spacing: 0) {
-            Rectangle()
-                .fill(Color.black.opacity(0.18))
-                .frame(height: 1)
-
-            Circle()
-                .fill(Color(red: 0.72, green: 0.63, blue: 0.22).opacity(0.42))
-                .frame(width: 5, height: 5)
-        }
-        .frame(width: 94)
+        Rectangle()
+            .fill(Color.white.opacity(0.24))
+            .frame(width: 54, height: 1)
     }
 
     private var copyrightLabel: some View {
@@ -164,10 +159,26 @@ struct StartView: View {
             )
             .font(.system(size: 7, weight: .regular, design: .serif))
         }
-        .foregroundStyle(.black.opacity(0.24))
+        .foregroundStyle(.white.opacity(0.54))
         .multilineTextAlignment(.center)
         .lineLimit(2)
         .minimumScaleFactor(0.7)
+        .shadow(color: .black.opacity(0.52), radius: 6, y: 2)
+    }
+
+    private func startBackgroundRotation() {
+        guard previewBackgroundImages.count > 1 else { return }
+        backgroundRotationTask?.cancel()
+        backgroundRotationTask = Task {
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(3))
+                if Task.isCancelled { break }
+                await MainActor.run {
+                    currentBackgroundIndex =
+                        (currentBackgroundIndex + 1) % previewBackgroundImages.count
+                }
+            }
+        }
     }
 }
 

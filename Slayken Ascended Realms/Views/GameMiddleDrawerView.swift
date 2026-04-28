@@ -13,6 +13,7 @@ struct GameMiddleDrawerView: View {
     let onSupport: () -> Void
     let onNews: () -> Void
     let onCreateClass: () -> Void
+    let onShop: () -> Void
     let onArchive: () -> Void
     let onEventArchive: () -> Void
     let onTutorialArchive: () -> Void
@@ -39,6 +40,11 @@ struct GameMiddleDrawerView: View {
             id: .summon,
             title: "Summon",
             systemName: "sparkles"
+        ),
+        MiddleDrawerActionItem(
+            id: .shop,
+            title: "Shop",
+            systemName: "cart"
         ),
         MiddleDrawerActionItem(
             id: .news,
@@ -171,6 +177,9 @@ struct GameMiddleDrawerView: View {
             onCreateClass()
         case .summon:
             selectedTab = .summon
+        case .shop:
+            selectedTab = .game
+            onShop()
         case .news:
             selectedTab = .game
             onNews()
@@ -210,6 +219,8 @@ struct GameMiddleDrawerView: View {
             return false
         case .summon:
             return selectedTab == .summon
+        case .shop:
+            return false
         case .news, .archive, .tutorialArchive, .eventArchive, .gift,
             .dailyLogin:
             return false
@@ -227,6 +238,7 @@ private enum MiddleDrawerAction {
     case team
     case createClass
     case summon
+    case shop
     case news
     case archive
     case tutorialArchive
@@ -249,6 +261,7 @@ private struct MiddleDrawerActionItem: Identifiable {
         onSupport: {},
         onNews: {},
         onCreateClass: {},
+        onShop: {},
         onArchive: {},
         onEventArchive: {},
         onTutorialArchive: {},

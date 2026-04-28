@@ -7,6 +7,7 @@
 
 import SwiftData
 import SwiftUI
+import UIKit
 
 struct CreateClassView: View {
     @Environment(\.modelContext) private var modelContext
@@ -397,11 +398,13 @@ struct CreateClassView: View {
             guard !isLocked else { return }
             selectedClassID = definition.id
         } label: {
-            HStack(alignment: .top, spacing: 12) {
-                VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .top, spacing: 14) {
+                classPreviewImage(for: definition)
+
+                VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 8) {
                         Text(definition.title)
-                            .font(.system(size: 18, weight: .black))
+                            .font(.system(size: 22, weight: .black))
                             .foregroundStyle(.white)
 
                         if definition.isHeroClass {
@@ -415,9 +418,11 @@ struct CreateClassView: View {
                     }
 
                     Text(definition.summary)
-                        .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(.white.opacity(0.72))
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.white.opacity(0.76))
                         .multilineTextAlignment(.leading)
+
+                    Spacer(minLength: 0)
 
                     if isLocked {
                         Text(
@@ -460,6 +465,54 @@ struct CreateClassView: View {
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .buttonStyle(.plain)
+    }
+
+    private func classPreviewImage(for definition: CharacterClassDefinition)
+        -> some View
+    {
+        let imageName = definition.defaultVariant?.image ?? ""
+        let hasImage = !imageName.isEmpty && UIImage(named: imageName) != nil
+
+        return ZStack(alignment: .bottomLeading) {
+            if hasImage {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFill()
+            } else {
+                LinearGradient(
+                    colors: [
+                        Color.white.opacity(0.16),
+                        Color.black.opacity(0.32),
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                Image(systemName: "person.crop.rectangle.stack.fill")
+                    .font(.system(size: 28, weight: .black))
+                    .foregroundStyle(.white.opacity(0.72))
+            }
+
+            LinearGradient(
+                colors: [
+                    .clear,
+                    Color.black.opacity(0.72),
+                ],
+                startPoint: .center,
+                endPoint: .bottom
+            )
+
+            Text(definition.defaultVariant?.title ?? "Class")
+                .font(.system(size: 10, weight: .black))
+                .foregroundStyle(.white.opacity(0.94))
+                .padding(.horizontal, 8)
+                .padding(.vertical, 6)
+        }
+        .frame(width: 108, height: 108)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(.white.opacity(0.12), lineWidth: 1)
+        }
     }
 }
 

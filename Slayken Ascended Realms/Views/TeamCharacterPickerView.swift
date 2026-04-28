@@ -72,8 +72,6 @@ struct TeamCharacterPickerView: View {
         .onAppear {
             selectedCharacterID =
                 selectedCharacterID ?? ownedCharacters.first?.id
-            selectedSkinID =
-                selectedSkinID ?? selectedCharacter?.skins.first?.id
         }
         .background {
             ZStack {
@@ -103,8 +101,11 @@ struct TeamCharacterPickerView: View {
         ) {
             ForEach(ownedCharacters) { character in
                 Button {
+                    let previousCharacterID = selectedCharacterID
                     selectedCharacterID = character.id
-                    selectedSkinID = character.skins.first?.id
+                    if previousCharacterID != character.id {
+                        selectedSkinID = nil
+                    }
                 } label: {
                     VStack(spacing: 7) {
                         image(
@@ -155,6 +156,23 @@ struct TeamCharacterPickerView: View {
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
+                        Button {
+                            selectedSkinID = nil
+                        } label: {
+                            Text("Kein Skin")
+                                .font(.system(size: 12, weight: .black))
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .background(
+                                    selectedSkinID == nil
+                                        ? Color.cyan.opacity(0.78)
+                                        : Color.black.opacity(0.46),
+                                    in: Capsule()
+                                )
+                        }
+                        .buttonStyle(.plain)
+
                         ForEach(selectedCharacter.skins) { skin in
                             Button {
                                 selectedSkinID = skin.id

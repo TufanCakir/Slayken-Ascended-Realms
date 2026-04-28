@@ -14,6 +14,7 @@ struct Slayken_Ascended_RealmsApp: App {
     @StateObject var gameState = GameState()
     @StateObject var theme = ThemeManager()
     @StateObject var musicManager = MusicManager()
+    @StateObject var networkMonitor = NetworkMonitor()
 
     var body: some Scene {
         WindowGroup {
@@ -21,6 +22,7 @@ struct Slayken_Ascended_RealmsApp: App {
                 .environmentObject(gameState)
                 .environmentObject(theme)
                 .environmentObject(musicManager)
+                .environmentObject(networkMonitor)
                 .onAppear {
                     musicManager.startPlaybackIfNeeded()
                 }

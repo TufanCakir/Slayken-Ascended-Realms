@@ -29,7 +29,7 @@
     {
         "id": 2,
         "name": "Map",
-        "mapImage": "map",
+        "mapImage": "bg_map",
         "difficulty": 1,
         "enemy": {
             "name": "Dragon",

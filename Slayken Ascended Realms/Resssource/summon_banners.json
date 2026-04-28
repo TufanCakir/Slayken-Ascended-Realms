@@ -1,10 +1,74 @@
 [
     {
+        "id": "release_free_character_gift",
+        "name": "Release Gift: Free Character",
+        "subtitle":
+            "Kostenloses Einmal-Banner. Garantiert einen Character und nur 1x nutzbar.",
+        "category": "Free",
+        "image": "bg_country",
+        "minAscendedLevel": 1,
+        "cost": [],
+        "maxSummons": 1,
+        "guarantee": {
+            "dropType": "character",
+            "rarity": 4,
+            "appliesOnSummon": 1
+        },
+        "rates": [
+            {
+                "rarity": 5,
+                "rate": 12.0
+            },
+            {
+                "rarity": 4,
+                "rate": 88.0
+            }
+        ],
+        "pool": [
+            {
+                "characterID": "zaron",
+                "weight": 15
+            },
+            {
+                "characterID": "sifili",
+                "weight": 15
+            },
+            {
+                "characterID": "shela",
+                "weight": 25
+            },
+            {
+                "characterID": "shen",
+                "weight": 25
+            },
+            {
+                "characterID": "lafiya",
+                "weight": 25
+            },
+            {
+                "characterID": "aika",
+                "weight": 24
+            },
+            {
+                "characterID": "anjima",
+                "weight": 24
+            },
+            {
+                "characterID": "rana",
+                "weight": 24
+            },
+            {
+                "characterID": "sanya",
+                "weight": 24
+            }
+        ]
+    },
+    {
         "id": "release_max_skill_gift",
         "name": "Release Gift: Max Skill",
         "subtitle":
             "Kostenloses Release Banner. Einmal nutzbar, garantiert ein 5-Star Skill.",
-        "category": "Special",
+        "category": "Free",
         "image": "bg_void",
         "minAscendedLevel": 1,
         "cost": [],
@@ -34,7 +98,8 @@
     {
         "id": "chapter_heroes",
         "name": "Chapter Heroes",
-        "subtitle": "Standard Character Banner mit Zaron und Shela.",
+        "subtitle":
+            "Reines Character Banner mit allen Story-Helden aus deinem Projekt.",
         "category": "Character",
         "image": "realm_country",
         "minAscendedLevel": 1,
@@ -47,37 +112,176 @@
         "rates": [
             {
                 "rarity": 5,
-                "rate": 2.5
+                "rate": 6.0
             },
             {
                 "rarity": 4,
-                "rate": 97.5
+                "rate": 74.0
+            },
+            {
+                "rarity": 3,
+                "rate": 20.0
             }
         ],
         "pool": [
             {
                 "characterID": "zaron",
-                "weight": 25
+                "weight": 12
+            },
+            {
+                "characterID": "sifili",
+                "weight": 10
             },
             {
                 "characterID": "shela",
-                "weight": 75
+                "weight": 28
             },
             {
                 "characterID": "shen",
-                "weight": 100
+                "weight": 28
             },
             {
                 "characterID": "lafiya",
-                "weight": 95
+                "weight": 28
+            },
+            {
+                "characterID": "aika",
+                "weight": 24
+            },
+            {
+                "characterID": "anjima",
+                "weight": 24
+            },
+            {
+                "characterID": "rana",
+                "weight": 24
+            },
+            {
+                "characterID": "sanya",
+                "weight": 24
+            },
+            {
+                "characterID": "jefar",
+                "weight": 22
+            },
+            {
+                "characterID": "juji",
+                "weight": 22
             }
         ]
     },
     {
-        "id": "event_shadow_hero_guarantee",
-        "name": "Schattenmond Hero",
+        "id": "rift_mixed_recruitment",
+        "name": "Rift Mixed Recruitment",
         "subtitle":
-            "Event Banner. Beim 10. Summon ist ein 5-Star Character garantiert.",
+            "Gemischtes Banner mit Charakteren und Skills aus mehreren Seltenheiten.",
+        "category": "Mixed",
+        "image": "realm_fire",
+        "minAscendedLevel": 2,
+        "cost": [
+            {
+                "currency": "coins",
+                "amount": 260
+            }
+        ],
+        "rates": [
+            {
+                "rarity": 5,
+                "rate": 5.0
+            },
+            {
+                "rarity": 4,
+                "rate": 20.0
+            },
+            {
+                "rarity": 3,
+                "rate": 25.0
+            },
+            {
+                "rarity": 2,
+                "rate": 20.0
+            },
+            {
+                "rarity": 1,
+                "rate": 30.0
+            }
+        ],
+        "pool": [
+            {
+                "characterID": "zaron",
+                "weight": 6
+            },
+            {
+                "characterID": "sifili",
+                "weight": 6
+            },
+            {
+                "characterID": "shela",
+                "weight": 14
+            },
+            {
+                "characterID": "shen",
+                "weight": 14
+            },
+            {
+                "characterID": "lafiya",
+                "weight": 14
+            },
+            {
+                "characterID": "aika",
+                "weight": 13
+            },
+            {
+                "characterID": "anjima",
+                "weight": 13
+            },
+            {
+                "characterID": "rana",
+                "weight": 13
+            },
+            {
+                "characterID": "sanya",
+                "weight": 13
+            },
+            {
+                "characterID": "jefar",
+                "weight": 12
+            },
+            {
+                "characterID": "juji",
+                "weight": 12
+            },
+            {
+                "cardID": "slash_red",
+                "weight": 34
+            },
+            {
+                "cardID": "crystal_blue",
+                "weight": 24
+            },
+            {
+                "cardID": "moon_guard",
+                "weight": 18
+            },
+            {
+                "cardID": "storm_edge",
+                "weight": 10
+            },
+            {
+                "cardID": "void_pulse",
+                "weight": 4
+            },
+            {
+                "cardID": "ash_breaker",
+                "weight": 4
+            }
+        ]
+    },
+    {
+        "id": "event_twilight_legends",
+        "name": "Twilight Legends",
+        "subtitle":
+            "Event Character Banner. Beim 10. Summon ist ein 5-Star Character garantiert.",
         "category": "Event",
         "image": "bg_sar",
         "minAscendedLevel": 7,
@@ -96,11 +300,15 @@
         "rates": [
             {
                 "rarity": 5,
-                "rate": 8.0
+                "rate": 10.0
             },
             {
                 "rarity": 4,
-                "rate": 92.0
+                "rate": 70.0
+            },
+            {
+                "rarity": 3,
+                "rate": 20.0
             }
         ],
         "pool": [
@@ -109,16 +317,44 @@
                 "weight": 20
             },
             {
-                "characterID": "shela",
-                "weight": 80
+                "characterID": "sifili",
+                "weight": 20
             },
             {
-                "characterID": "shen",
-                "weight": 100
+                "characterID": "sanya",
+                "weight": 18
+            },
+            {
+                "characterID": "anjima",
+                "weight": 18
+            },
+            {
+                "characterID": "rana",
+                "weight": 18
             },
             {
                 "characterID": "lafiya",
-                "weight": 95
+                "weight": 18
+            },
+            {
+                "characterID": "shen",
+                "weight": 18
+            },
+            {
+                "characterID": "shela",
+                "weight": 18
+            },
+            {
+                "characterID": "aika",
+                "weight": 18
+            },
+            {
+                "characterID": "jefar",
+                "weight": 14
+            },
+            {
+                "characterID": "juji",
+                "weight": 14
             }
         ]
     },

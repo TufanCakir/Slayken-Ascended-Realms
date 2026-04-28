@@ -82,7 +82,7 @@
     {
         "id": "ash_breaker",
         "name": "Ash Breaker",
-        "image": "map",
+        "image": "bg_map",
         "element": "Ash",
         "rarity": 5,
         "damageMultiplier": 1.20,

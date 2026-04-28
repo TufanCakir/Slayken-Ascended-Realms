@@ -5,14 +5,14 @@
         "objective":
             "Besiege die Vorhut und bringe Tsayi unter 35 Prozent HP. Danach flieht der Boss.",
         "player": {
-            "name": "Zaron",
-            "image": "preview_zaron",
-            "model": "shiro_animation",
+            "name": "Shiro",
+            "image": "preview_shiro",
+            "model": "shiro",
             "battleModel": "shiro",
             "texture": "texture_shiro_original",
             "element": "water",
-            "hp": 160,
-            "attack": 58
+            "hp": 300,
+            "attack": 308
         },
         "enemies": [
             {
@@ -22,8 +22,8 @@
                 "battleModel": null,
                 "texture": null,
                 "element": "earth",
-                "hp": 94,
-                "attack": 16
+                "hp": 600,
+                "attack": 10
             },
             {
                 "name": "Nanekihs",
@@ -32,7 +32,7 @@
                 "battleModel": null,
                 "texture": null,
                 "element": "shadow",
-                "hp": 108,
+                "hp": 608,
                 "attack": 18
             }
         ],
@@ -43,8 +43,8 @@
             "battleModel": null,
             "texture": null,
             "element": "fire",
-            "hp": 210,
-            "attack": 22
+            "hp": 600,
+            "attack": 10
         },
         "retreatEnemyIndex": 2,
         "enemyRetreatThreshold": 0.35

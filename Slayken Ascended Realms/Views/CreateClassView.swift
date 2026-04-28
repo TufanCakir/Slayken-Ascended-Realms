@@ -10,6 +10,11 @@ import SwiftUI
 import UIKit
 
 struct CreateClassView: View {
+    private enum CreationStep {
+        case classSelection
+        case details
+    }
+
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var gameState: GameState
     @EnvironmentObject private var theme: ThemeManager
@@ -17,9 +22,13 @@ struct CreateClassView: View {
     let onComplete: (CharacterStats) -> Void
 
     @State private var selectedClassID = ""
-    @State private var selectedVariantID = ""
+    @State private var selectedVariantByClassID: [String: String] = [:]
     @State private var characterName = ""
     @State private var ascendedLevel = 1
+    @State private var step: CreationStep = .classSelection
+    @State private var expandedClassIDs: Set<String> = []
+    @State private var standardClassesExpanded = true
+    @State private var heroClassesExpanded = true
 
     private let classDefinitions = loadCharacterClassDefinitions()
 
@@ -27,23 +36,35 @@ struct CreateClassView: View {
         ZStack {
 
             if let selectedClass, let selectedVariant {
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 18) {
-                        header
-                        previewCard(
-                            for: selectedClass,
-                            variant: selectedVariant
-                        )
-                        classPicker
-                        variantPicker(for: selectedClass)
-                        nameCard(for: selectedClass)
-                        confirmButton(for: selectedVariant)
+                if step == .classSelection {
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(spacing: 18) {
+                            selectionHeader
+                            classPicker
+                            continueButton
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.top, 18)
+                        .padding(.bottom, 24)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 18)
-                    .padding(.bottom, 24)
+                    .safeAreaPadding(.top, 12)
+                } else {
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(spacing: 18) {
+                            detailsHeader
+                            previewCard(
+                                for: selectedClass,
+                                variant: selectedVariant
+                            )
+                            nameCard(for: selectedClass)
+                            confirmButton(for: selectedVariant)
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.top, 18)
+                        .padding(.bottom, 24)
+                    }
+                    .safeAreaPadding(.top, 12)
                 }
-                .safeAreaPadding(.top, 12)
             } else {
                 unavailableState
                     .padding(.horizontal, 24)
@@ -55,6 +76,10 @@ struct CreateClassView: View {
             refreshAscendedLevel()
             if selectedClassID.isEmpty {
                 selectedClassID = classDefinitions[0].id
+            }
+            if expandedClassIDs.isEmpty, let firstClass = classDefinitions.first
+            {
+                expandedClassIDs.insert(firstClass.id)
             }
             syncSelectionWithActiveClass()
         }
@@ -88,8 +113,18 @@ struct CreateClassView: View {
     }
 
     private var selectedVariant: CharacterClassVariant? {
-        selectedClass?.variants.first { $0.id == selectedVariantID }
-            ?? selectedClass?.defaultVariant
+        guard let selectedClass else { return nil }
+        let selectedVariantID = selectedVariantByClassID[selectedClass.id]
+        return selectedClass.variants.first { $0.id == selectedVariantID }
+            ?? selectedClass.defaultVariant
+    }
+
+    private func preferredVariant(for definition: CharacterClassDefinition)
+        -> CharacterClassVariant?
+    {
+        let selectedVariantID = selectedVariantByClassID[definition.id]
+        return definition.variants.first { $0.id == selectedVariantID }
+            ?? definition.defaultVariant
     }
 
     private var previewCharacter: CharacterStats? {
@@ -107,14 +142,14 @@ struct CreateClassView: View {
         classDefinitions.filter(\.isHeroClass)
     }
 
-    private var header: some View {
+    private var selectionHeader: some View {
         VStack(spacing: 8) {
             Text("Create Class")
                 .font(.system(size: 30, weight: .black))
                 .foregroundStyle(.white)
 
             Text(
-                "Waehle deine Klasse, gib deinem Helden einen eigenen Namen und schalte spaeter Heldenklassen ueber dein Ascended Level frei."
+                "Waehle deine Klasse und direkt die passende Variante. Details wie Vorschau und Name kommen im naechsten Schritt."
             )
             .font(.system(size: 14, weight: .medium))
             .foregroundStyle(.white.opacity(0.82))
@@ -123,6 +158,40 @@ struct CreateClassView: View {
             Text("Ascended Level \(ascendedLevel)")
                 .font(.system(size: 12, weight: .black))
                 .foregroundStyle(.cyan.opacity(0.92))
+        }
+        .padding(.top, 20)
+    }
+
+    private var detailsHeader: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Button {
+                    step = .classSelection
+                } label: {
+                    Label("Zurueck", systemImage: "chevron.left")
+                        .font(.system(size: 13, weight: .black))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(Color.black.opacity(0.34), in: Capsule())
+                }
+                .buttonStyle(.plain)
+
+                Spacer()
+            }
+
+            VStack(spacing: 8) {
+                Text("Held fertigstellen")
+                    .font(.system(size: 28, weight: .black))
+                    .foregroundStyle(.white)
+
+                Text(
+                    "Gib deinem Charakter jetzt Namen und finalen Look, ohne wieder durch alle Klassen scrollen zu muessen."
+                )
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(.white.opacity(0.82))
+                .multilineTextAlignment(.center)
+            }
         }
         .padding(.top, 20)
     }
@@ -169,64 +238,17 @@ struct CreateClassView: View {
             classSection(
                 title: "Standardklassen",
                 subtitle: "Sofort verfuegbar",
-                classes: standardClasses
+                classes: standardClasses,
+                isExpanded: $standardClassesExpanded
             )
 
             if !heroClasses.isEmpty {
                 classSection(
                     title: "Heldenklassen",
                     subtitle: "Werden ueber dein Ascended Level freigeschaltet",
-                    classes: heroClasses
+                    classes: heroClasses,
+                    isExpanded: $heroClassesExpanded
                 )
-            }
-        }
-    }
-
-    private func variantPicker(for selectedClass: CharacterClassDefinition)
-        -> some View
-    {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Variante")
-                .font(.system(size: 16, weight: .bold))
-                .foregroundStyle(.white)
-
-            HStack(spacing: 12) {
-                ForEach(selectedClass.variants) { variant in
-                    Button {
-                        selectedVariantID = variant.id
-                    } label: {
-                        Text(variant.title)
-                            .font(.system(size: 15, weight: .bold))
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 14)
-                            .background(
-                                selectedVariantID == variant.id
-                                    ? Color.white.opacity(0.2)
-                                    : Color.black.opacity(0.28)
-                            )
-                            .overlay {
-                                RoundedRectangle(
-                                    cornerRadius: 16,
-                                    style: .continuous
-                                )
-                                .stroke(
-                                    .white.opacity(
-                                        selectedVariantID == variant.id
-                                            ? 0.22 : 0.08
-                                    ),
-                                    lineWidth: 1
-                                )
-                            }
-                            .clipShape(
-                                RoundedRectangle(
-                                    cornerRadius: 16,
-                                    style: .continuous
-                                )
-                            )
-                    }
-                    .buttonStyle(.plain)
-                }
             }
         }
     }
@@ -331,12 +353,14 @@ struct CreateClassView: View {
             return
         }
 
-        if selectedVariantID.isEmpty
+        let selectedVariantID = selectedVariantByClassID[selectedClass.id]
+        if selectedVariantID == nil
             || !selectedClass.variants.contains(where: {
                 $0.id == selectedVariantID
             })
         {
-            selectedVariantID = selectedClass.defaultVariant?.id ?? ""
+            selectedVariantByClassID[selectedClass.id] =
+                selectedClass.defaultVariant?.id ?? ""
         }
 
         if characterName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -371,20 +395,43 @@ struct CreateClassView: View {
     private func classSection(
         title: String,
         subtitle: String,
-        classes: [CharacterClassDefinition]
+        classes: [CharacterClassDefinition],
+        isExpanded: Binding<Bool>
     ) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.system(size: 14, weight: .black))
-                    .foregroundStyle(.white)
-                Text(subtitle)
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(.white.opacity(0.62))
-            }
+            Button {
+                withAnimation(.spring(response: 0.28, dampingFraction: 0.88)) {
+                    isExpanded.wrappedValue.toggle()
+                }
+            } label: {
+                HStack(spacing: 12) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(title)
+                            .font(.system(size: 14, weight: .black))
+                            .foregroundStyle(.white)
+                        Text(subtitle)
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundStyle(.white.opacity(0.62))
+                    }
 
-            ForEach(classes) { definition in
-                classCard(definition)
+                    Spacer()
+
+                    Image(
+                        systemName: isExpanded.wrappedValue
+                            ? "chevron.up" : "chevron.down"
+                    )
+                    .font(.system(size: 14, weight: .black))
+                    .foregroundStyle(.white.opacity(0.88))
+                    .frame(width: 30, height: 30)
+                    .background(Color.black.opacity(0.22), in: Circle())
+                }
+            }
+            .buttonStyle(.plain)
+
+            if isExpanded.wrappedValue {
+                ForEach(classes) { definition in
+                    classCard(definition)
+                }
             }
         }
     }
@@ -393,11 +440,10 @@ struct CreateClassView: View {
     {
         let isLocked = isClassLocked(definition)
         let isSelected = selectedClassID == definition.id
+        let isExpanded = expandedClassIDs.contains(definition.id)
+        let activeVariant = preferredVariant(for: definition)
 
-        return Button {
-            guard !isLocked else { return }
-            selectedClassID = definition.id
-        } label: {
+        return VStack(alignment: .leading, spacing: 14) {
             HStack(alignment: .top, spacing: 14) {
                 classPreviewImage(for: definition)
 
@@ -417,60 +463,209 @@ struct CreateClassView: View {
                         }
                     }
 
-                    Text(definition.summary)
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(.white.opacity(0.76))
-                        .multilineTextAlignment(.leading)
+                    if isExpanded {
+                        Text(definition.summary)
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(.white.opacity(0.76))
+                            .multilineTextAlignment(.leading)
 
-                    Spacer(minLength: 0)
-
-                    if isLocked {
+                        if isLocked {
+                            Text(
+                                "Freischaltung ab Ascended Level \(definition.requiredAscendedLevel)"
+                            )
+                            .font(.system(size: 11, weight: .black))
+                            .foregroundStyle(.orange.opacity(0.95))
+                        }
+                    } else {
                         Text(
-                            "Freischaltung ab Ascended Level \(definition.requiredAscendedLevel)"
+                            activeVariant?.title ?? definition.defaultVariant?
+                                .title ?? "Class"
                         )
-                        .font(.system(size: 11, weight: .black))
-                        .foregroundStyle(.orange.opacity(0.95))
+                        .font(.system(size: 12, weight: .black))
+                        .foregroundStyle(.white.opacity(0.68))
                     }
                 }
 
                 Spacer()
 
-                Image(
-                    systemName: isLocked
-                        ? "lock.fill"
-                        : isSelected ? "checkmark.circle.fill" : "circle"
-                )
-                .font(.system(size: 20, weight: .bold))
-                .foregroundStyle(
-                    isLocked
-                        ? .orange : isSelected ? .yellow : .white.opacity(0.45)
-                )
-            }
-            .padding(14)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(
-                Color.black.opacity(
-                    isLocked ? 0.22 : isSelected ? 0.54 : 0.34
-                )
-            )
-            .overlay {
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(
-                        isLocked
-                            ? .orange.opacity(0.16)
-                            : .white.opacity(isSelected ? 0.2 : 0.08),
-                        lineWidth: 1
+                VStack(spacing: 10) {
+                    Image(
+                        systemName: isLocked
+                            ? "lock.fill"
+                            : isSelected ? "checkmark.circle.fill" : "circle"
                     )
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundStyle(
+                        isLocked
+                            ? .orange
+                            : isSelected ? .yellow : .white.opacity(0.45)
+                    )
+
+                    Button {
+                        toggleExpansion(for: definition.id)
+                    } label: {
+                        Image(
+                            systemName: isExpanded
+                                ? "chevron.up" : "chevron.down"
+                        )
+                        .font(.system(size: 14, weight: .black))
+                        .foregroundStyle(.white.opacity(0.88))
+                        .frame(width: 28, height: 28)
+                        .background(Color.black.opacity(0.24), in: Circle())
+                    }
+                    .buttonStyle(.plain)
+                }
             }
+
+            if isExpanded {
+                if definition.variants.count > 1 {
+                    variantSwitchRow(
+                        for: definition,
+                        selectedVariantID: activeVariant?.id
+                    )
+                }
+
+                Button {
+                    guard !isLocked else { return }
+                    selectedClassID = definition.id
+                    step = .details
+                } label: {
+                    Text(isLocked ? "Ascended Level zu niedrig" : "Continue")
+                        .font(.system(size: 14, weight: .black))
+                        .foregroundStyle(isLocked ? .white : .black)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 13)
+                        .background(
+                            isLocked
+                                ? Color.gray.opacity(0.45)
+                                : Color(red: 0.93, green: 0.83, blue: 0.34)
+                        )
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: 16,
+                                style: .continuous
+                            )
+                        )
+                }
+                .buttonStyle(.plain)
+                .disabled(isLocked)
+            }
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            Color.black.opacity(
+                isLocked ? 0.22 : isSelected ? 0.54 : 0.34
+            )
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(
+                    isLocked
+                        ? .orange.opacity(0.16)
+                        : .white.opacity(isSelected ? 0.2 : 0.08),
+                    lineWidth: 1
+                )
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .onTapGesture {
+            guard !isLocked else { return }
+            selectedClassID = definition.id
+            withAnimation(.spring(response: 0.28, dampingFraction: 0.88)) {
+                if expandedClassIDs.contains(definition.id) {
+                    expandedClassIDs.remove(definition.id)
+                } else {
+                    expandedClassIDs.insert(definition.id)
+                }
+            }
+        }
+    }
+
+    private func variantSwitchRow(
+        for definition: CharacterClassDefinition,
+        selectedVariantID: String?
+    ) -> some View {
+        HStack(spacing: 10) {
+            ForEach(definition.variants) { variant in
+                Button {
+                    guard !isClassLocked(definition) else { return }
+                    selectedClassID = definition.id
+                    selectedVariantByClassID[definition.id] = variant.id
+                } label: {
+                    Text(variant.title)
+                        .font(.system(size: 13, weight: .black))
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(
+                            selectedVariantID == variant.id
+                                ? Color.white.opacity(0.20)
+                                : Color.black.opacity(0.28)
+                        )
+                        .overlay {
+                            RoundedRectangle(
+                                cornerRadius: 14,
+                                style: .continuous
+                            )
+                            .stroke(
+                                .white.opacity(
+                                    selectedVariantID == variant.id
+                                        ? 0.22 : 0.08
+                                ),
+                                lineWidth: 1
+                            )
+                        }
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: 14,
+                                style: .continuous
+                            )
+                        )
+                }
+                .buttonStyle(.plain)
+                .disabled(isClassLocked(definition))
+            }
+        }
+    }
+
+    private var continueButton: some View {
+        Button {
+            step = .details
+        } label: {
+            Text(
+                isSelectedClassLocked
+                    ? "Ascended Level zu niedrig"
+                    : "Continue"
+            )
+            .font(.system(size: 17, weight: .black))
+            .foregroundStyle(isSelectedClassLocked ? .white : .black)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(
+                isSelectedClassLocked
+                    ? Color.gray.opacity(0.45)
+                    : Color(red: 0.93, green: 0.83, blue: 0.34)
+            )
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .buttonStyle(.plain)
+        .disabled(isSelectedClassLocked)
+    }
+
+    private func toggleExpansion(for classID: String) {
+        if expandedClassIDs.contains(classID) {
+            expandedClassIDs.remove(classID)
+        } else {
+            expandedClassIDs.insert(classID)
+        }
     }
 
     private func classPreviewImage(for definition: CharacterClassDefinition)
         -> some View
     {
-        let imageName = definition.defaultVariant?.image ?? ""
+        let variant = preferredVariant(for: definition)
+        let imageName = variant?.image ?? ""
         let hasImage = !imageName.isEmpty && UIImage(named: imageName) != nil
 
         return ZStack(alignment: .bottomLeading) {
@@ -478,6 +673,7 @@ struct CreateClassView: View {
                 Image(imageName)
                     .resizable()
                     .scaledToFill()
+                    .padding(.top, 30)
             } else {
                 LinearGradient(
                     colors: [
@@ -501,7 +697,7 @@ struct CreateClassView: View {
                 endPoint: .bottom
             )
 
-            Text(definition.defaultVariant?.title ?? "Class")
+            Text(variant?.title ?? "Class")
                 .font(.system(size: 10, weight: .black))
                 .foregroundStyle(.white.opacity(0.94))
                 .padding(.horizontal, 8)

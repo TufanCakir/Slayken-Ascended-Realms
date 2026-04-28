@@ -86,7 +86,7 @@
             {
                 "id": "female",
                 "title": "Female",
-                "image": "preview_archer_male",
+                "image": "preview_archer_female",
                 "model": "archer_female_animation",
                 "battleModel": "archer_female",
                 "texture": "texture_archer_female_original",

@@ -537,7 +537,7 @@
         "id": "chapter_2",
         "title": "Story Kapitel 2",
         "subtitle": "Die Splitter des Himmels",
-        "mapTexture": "map2",
+        "mapTexture": "bg_arena",
         "cutscene": {
             "id": "chapter_2_intro",
             "title": "Splitter des Himmels",
@@ -1057,7 +1057,7 @@
         "id": "chapter_3",
         "title": "Story Kapitel 3",
         "subtitle": "Koenigreich der Leere",
-        "mapTexture": "map3",
+        "mapTexture": "bg_void",
         "cutscene": {
             "id": "chapter_3_intro",
             "title": "Koenigreich der Leere",

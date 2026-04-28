@@ -26,6 +26,8 @@ struct ShopView: View {
         [ShopOfferProgress]
     @Query(sort: \OwnedCharacterSkin.id) private var ownedSkins:
         [OwnedCharacterSkin]
+    @Query(sort: \PlayerCurrencyBalance.code) private var balances:
+        [PlayerCurrencyBalance]
 
     let onClose: () -> Void
 
@@ -45,7 +47,6 @@ struct ShopView: View {
                         currencies: gameState.currencies,
                         ascendedLevel: ascendedLevel
                     )
-                    heroSection
                     categoryBar
                     filteredSections
                 }
@@ -82,26 +83,6 @@ struct ShopView: View {
 
     private var ascendedLevel: Int {
         PlayerInventoryStore.accountProgress(in: modelContext).level
-    }
-
-    private var heroSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Shop")
-                .font(.system(size: 30, weight: .black))
-                .foregroundStyle(.white)
-
-            Text(
-                "Kaufe Ressourcen mit Coins, Crystals oder beidem, sichere dir Skins und lade Echtgeld-Crystals ueber StoreKit nach."
-            )
-            .font(.system(size: 14, weight: .semibold))
-            .foregroundStyle(.white.opacity(0.82))
-
-            if !resolvedMessage.isEmpty {
-                Text(resolvedMessage)
-                    .font(.system(size: 12, weight: .black))
-                    .foregroundStyle(.cyan.opacity(0.95))
-            }
-        }
     }
 
     private var offersSection: some View {
@@ -194,6 +175,45 @@ struct ShopView: View {
         Text(title)
             .font(.system(size: 18, weight: .black))
             .foregroundStyle(.white)
+    }
+
+    private func resourceBalanceCard(
+        title: String,
+        amount: Int,
+        assetName: String,
+        accent: Color
+    ) -> some View {
+        HStack(spacing: 12) {
+            Image(assetName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+                .padding(10)
+                .background(Color.white.opacity(0.10), in: Circle())
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.system(size: 12, weight: .black))
+                    .foregroundStyle(.white.opacity(0.72))
+                Text("\(amount)")
+                    .font(.system(size: 20, weight: .black))
+                    .foregroundStyle(.white)
+            }
+
+            Spacer()
+
+            Circle()
+                .fill(accent)
+                .frame(width: 10, height: 10)
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.black.opacity(0.34))
+        .overlay {
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(.white.opacity(0.10), lineWidth: 1)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
     }
 
     private func shopOfferCard(_ offer: ShopOfferDefinition) -> some View {
@@ -624,6 +644,14 @@ struct ShopView: View {
 
     private func canAfford(_ cost: [CurrencyAmount]) -> Bool {
         PlayerInventoryStore.canSpend(cost, in: modelContext)
+    }
+
+    private func amount(for code: String) -> Int {
+        balances.first(where: { $0.code == code })?.amount ?? 0
+    }
+
+    private func currencyName(for code: String) -> String {
+        gameState.currencies.first(where: { $0.code == code })?.name ?? code
     }
 
     private func isAvailable(maxPurchases: Int?, count: Int) -> Bool {

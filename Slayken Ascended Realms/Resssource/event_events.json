@@ -1217,5 +1217,150 @@
                 ]
             }
         ]
+    },
+    {
+        "id": "event_new_years_eve_festival",
+        "title": "Event: New Year's Eve Festival",
+        "subtitle":
+            "Festivalroute mit Countdown-Loot, Crystal-Boost und finalem Boss",
+        "minAscendedLevel": 6,
+        "mapTexture": "festival_new_years_eve",
+        "cutscene": {
+            "id": "event_new_years_eve_festival_intro",
+            "title": "New Year's Eve Festival",
+            "video": "intro",
+            "text":
+                "Kurz vor Mitternacht laden sich die Rift-Knoten auf und verwandeln das Festival in eine gefaehrliche Loot-Zone."
+        },
+        "points": [
+            {
+                "id": "event_new_years_eve_festival_plaza",
+                "title": "Countdown Plaza",
+                "text":
+                    "Zwischen Lichtboegen und Feuerwerk sammeln sich Rift-Energie, Eventgegner und besonders viele Crystals.",
+                "mapImage": "festival_new_years_eve",
+                "mapTexture": "festival_new_years_eve",
+                "node": {
+                    "x": 0.44,
+                    "y": 0.48
+                },
+                "cutscene": null,
+                "battles": [
+                    {
+                        "id": "event_new_years_eve_festival_battle_1",
+                        "name": "Spark Gate",
+                        "description":
+                            "Aika bewacht den ersten Festivalbogen und verteilt schnelle Lichtschlaege.",
+                        "difficulty": 12,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
+                        "node": {
+                            "x": 0.20,
+                            "y": 0.58
+                        },
+                        "enemy": {
+                            "name": "Aika of the Spark Gate",
+                            "image": "preview_aika",
+                            "model": "maaikatan",
+                            "texture": null,
+                            "hp": 520,
+                            "attack": 40,
+                            "element": "Light"
+                        },
+                        "xpReward": 720,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1850
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 110
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_new_years_eve_festival_battle_2",
+                        "name": "Firework Chain",
+                        "description":
+                            "Zaron und Shen halten die Rift-Kette bis zum letzten Countdown.",
+                        "difficulty": 14,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
+                        "node": {
+                            "x": 0.52,
+                            "y": 0.40
+                        },
+                        "enemies": [
+                            {
+                                "name": "Zaron of the Chain",
+                                "image": "preview_zaron",
+                                "model": "maaikatan",
+                                "texture": null,
+                                "hp": 430,
+                                "attack": 34,
+                                "element": "Fire"
+                            },
+                            {
+                                "name": "Shen of the Chain",
+                                "image": "preview_shen",
+                                "model": "maaikatan",
+                                "texture": null,
+                                "hp": 610,
+                                "attack": 46,
+                                "element": "Void"
+                            }
+                        ],
+                        "xpReward": 980,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2480
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 155
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_new_years_eve_festival_battle_3",
+                        "name": "Midnight Crown",
+                        "description":
+                            "Mit dem Glockenschlag erscheint der Boss im Zentrum des Festivals.",
+                        "difficulty": 17,
+                        "groundTexture": "festival_new_years_eve",
+                        "skyboxTexture": "festival_new_years_eve",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.48
+                        },
+                        "boss": {
+                            "name": "Midnight Crown Titan",
+                            "image": "preview_sifili",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1040,
+                            "attack": 63,
+                            "element": "Light"
+                        },
+                        "xpReward": 1460,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4200
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 260
+                            }
+                        ],
+                        "story": []
+                    }
+                ]
+            }
+        ]
     }
 ]

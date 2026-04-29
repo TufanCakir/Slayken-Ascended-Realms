@@ -25,6 +25,7 @@ struct SettingsView: View {
     @Query private var accountProgress: [PlayerAccountProgress]
     @Query private var seenCutscenes: [SeenCutsceneRecord]
     @Query private var summonProgress: [SummonBannerProgress]
+    @Query private var battleResourceStates: [PlayerBattleResourceState]
 
     let onClose: () -> Void
     let onReset: () -> Void
@@ -369,6 +370,9 @@ struct SettingsView: View {
         for progress in summonProgress {
             modelContext.delete(progress)
         }
+        for state in battleResourceStates {
+            modelContext.delete(state)
+        }
 
         try? modelContext.save()
         gameState.resetGameData()
@@ -393,6 +397,7 @@ struct SettingsView: View {
                 PlayerAccountProgress.self,
                 SeenCutsceneRecord.self,
                 SummonBannerProgress.self,
+                PlayerBattleResourceState.self,
             ],
             inMemory: true
         )

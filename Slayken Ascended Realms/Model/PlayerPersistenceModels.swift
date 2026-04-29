@@ -239,3 +239,26 @@ final class PlayerDailyBattleRewardCap {
         self.crystalsEarned = crystalsEarned
     }
 }
+
+@Model
+final class PlayerBattleResourceState {
+    @Attribute(.unique) var id: String
+    var currentEnergy: Int
+    var availableCoinsLimit: Int
+    var availableCrystalsLimit: Int
+    var lastUpdatedAt: Date
+
+    init(
+        id: String = "battle_resources",
+        currentEnergy: Int = 0,
+        availableCoinsLimit: Int = 0,
+        availableCrystalsLimit: Int = 0,
+        lastUpdatedAt: Date = .now
+    ) {
+        self.id = id
+        self.currentEnergy = currentEnergy
+        self.availableCoinsLimit = availableCoinsLimit
+        self.availableCrystalsLimit = availableCrystalsLimit
+        self.lastUpdatedAt = lastUpdatedAt
+    }
+}

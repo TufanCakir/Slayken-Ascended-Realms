@@ -20,17 +20,13 @@ struct QuestView: View {
         [PlayerQuestCounter]
     @Query(sort: \PlayerAccountProgress.id) private var accountProgress:
         [PlayerAccountProgress]
-    @Query(sort: \PlayerDailyBattleRewardCap.id) private var battleFarmCaps:
-        [PlayerDailyBattleRewardCap]
-
     let quests: [QuestDefinition]
     let onClose: () -> Void
 
     @State private var selectedCategory = "Alles"
     @State private var selectedChoiceCharacterByQuestID: [String: String] = [:]
     @State private var message = ""
-
-    private let farmLimit = loadBattleFarmLimitDefinition()
+    @State private var resourceRefreshDate = Date()
 
     var body: some View {
         NavigationStack {
@@ -66,23 +62,22 @@ struct QuestView: View {
         .task {
             _ = PlayerInventoryStore.dailyBattleFarmStatus(in: modelContext)
         }
+        .task {
+            while !Task.isCancelled {
+                resourceRefreshDate = .now
+                try? await Task.sleep(for: .seconds(20))
+            }
+        }
     }
 
     private var ascendedLevel: Int {
         accountProgress.first?.level ?? 1
     }
 
-    private var activeBattleFarmStatus: BattleFarmStatus {
-        let record = battleFarmCaps.first
-        let isSameDay =
-            record.map { Calendar.current.isDateInToday($0.lastResetAt) }
-            ?? false
-
-        return BattleFarmStatus(
-            coinsEarnedToday: isSameDay ? (record?.coinsEarned ?? 0) : 0,
-            crystalsEarnedToday: isSameDay ? (record?.crystalsEarned ?? 0) : 0,
-            coinsDailyCap: farmLimit.battleCoinsPerDay,
-            crystalsDailyCap: farmLimit.battleCrystalsPerDay
+    private var activeBattleFarmStatus: BattleResourceStatus {
+        PlayerInventoryStore.dailyBattleFarmStatus(
+            in: modelContext,
+            now: resourceRefreshDate
         )
     }
 
@@ -108,16 +103,26 @@ struct QuestView: View {
 
     private var farmLimitSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Taegliche Battle-Farm Limits")
+            Text("Battle Energie und Limits")
                 .font(.system(size: 18, weight: .black))
                 .foregroundStyle(.white)
 
             HStack(spacing: 12) {
                 farmStatCard(
+                    title: "Energie",
+                    value: "\(activeBattleFarmStatus.energy)",
+                    subtitle:
+                        "Von \(activeBattleFarmStatus.energyMaximum), +\(activeBattleFarmStatus.energyRegenerationPerMinute)/Min",
+                    assetName: nil,
+                    systemName: "bolt.fill",
+                    accent: .orange
+                )
+
+                farmStatCard(
                     title: "Coins",
                     value: "\(activeBattleFarmStatus.remainingCoins)",
                     subtitle:
-                        "Von \(activeBattleFarmStatus.coinsDailyCap) heute uebrig",
+                        "Von \(activeBattleFarmStatus.coinsLimitMaximum), +\(activeBattleFarmStatus.coinsRegenerationPerMinute)/Min",
                     assetName: "icon_coins",
                     systemName: "circle.hexagongrid.fill",
                     accent: .yellow
@@ -127,7 +132,7 @@ struct QuestView: View {
                     title: "Crystals",
                     value: "\(activeBattleFarmStatus.remainingCrystals)",
                     subtitle:
-                        "Von \(activeBattleFarmStatus.crystalsDailyCap) heute uebrig",
+                        "Von \(activeBattleFarmStatus.crystalsLimitMaximum), +\(activeBattleFarmStatus.crystalsRegenerationPerMinute)/Min",
                     assetName: "icon_crystals",
                     systemName: "diamond.fill",
                     accent: .cyan
@@ -135,7 +140,7 @@ struct QuestView: View {
             }
 
             Text(
-                "Battle-Rewards fuer Coins und Crystals resetten taeglich automatisch."
+                "Energie und Reward-Limits regenerieren automatisch jede Minute."
             )
             .font(.system(size: 12, weight: .semibold))
             .foregroundStyle(.white.opacity(0.72))
@@ -155,13 +160,13 @@ struct QuestView: View {
         title: String,
         value: String,
         subtitle: String,
-        assetName: String,
+        assetName: String?,
         systemName: String,
         accent: Color
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 8) {
-                if UIImage(named: assetName) != nil {
+                if let assetName, UIImage(named: assetName) != nil {
                     Image(assetName)
                         .resizable()
                         .scaledToFit()

@@ -41,36 +41,153 @@ struct QuestDefinition: Codable, Identifiable, Equatable {
     }
 }
 
-struct BattleFarmLimitDefinition: Codable, Equatable {
-    let battleCoinsPerDay: Int
-    let battleCrystalsPerDay: Int
+struct BattleEnergyConfigurationDefinition: Codable, Equatable {
+    let maximum: Int
+    let costPerBattle: Int
+    let regenerationPerMinute: Int
+}
+
+struct BattleRewardPoolConfigurationDefinition: Codable, Equatable {
+    let maximum: Int
+    let regenerationPerMinute: Int
+}
+
+struct BattleProgressionConfigurationDefinition: Codable, Equatable {
+    let energyMaximumGrowthPerAscendedLevel: Double
+    let energyRegenerationGrowthPerAscendedLevel: Double
+    let coinLimitMaximumGrowthPerAscendedLevel: Double
+    let coinRegenerationGrowthPerAscendedLevel: Double
+    let crystalLimitMaximumGrowthPerAscendedLevel: Double
+    let crystalRegenerationGrowthPerAscendedLevel: Double
+    let characterXPGrowthPerAscendedLevel: Double
+    let characterHPGrowthPerAscendedLevel: Double
+    let characterAttackGrowthPerAscendedLevel: Double
+    let characterHPGrowthPerCharacterLevel: Double
+    let characterAttackGrowthPerCharacterLevel: Double
+}
+
+struct BattleResourceConfigurationDefinition: Codable, Equatable {
+    let energy: BattleEnergyConfigurationDefinition
+    let coinLimit: BattleRewardPoolConfigurationDefinition
+    let crystalLimit: BattleRewardPoolConfigurationDefinition
+    let progression: BattleProgressionConfigurationDefinition
+}
+
+struct BattleEnergyResolvedConfiguration: Equatable {
+    let maximum: Int
+    let costPerBattle: Int
+    let regenerationPerMinute: Int
+}
+
+struct BattleRewardPoolResolvedConfiguration: Equatable {
+    let maximum: Int
+    let regenerationPerMinute: Int
+}
+
+struct BattleResourceResolvedConfiguration: Equatable {
+    let energy: BattleEnergyResolvedConfiguration
+    let coinLimit: BattleRewardPoolResolvedConfiguration
+    let crystalLimit: BattleRewardPoolResolvedConfiguration
+    let progression: BattleProgressionConfigurationDefinition
 }
 
 struct BattleRewardLimitDefinition: Codable, Equatable {
     let coins: Int?
     let crystals: Int?
 
-    var resolvedFarmLimits: BattleFarmLimitDefinition {
-        let fallback = loadBattleFarmLimitDefinition()
-        return BattleFarmLimitDefinition(
-            battleCoinsPerDay: coins ?? fallback.battleCoinsPerDay,
-            battleCrystalsPerDay: crystals ?? fallback.battleCrystalsPerDay
+    func resolvedLimits(
+        using configuration: BattleResourceResolvedConfiguration
+    )
+        -> BattleRewardLimitValues
+    {
+        BattleRewardLimitValues(
+            coins: coins ?? configuration.coinLimit.maximum,
+            crystals: crystals ?? configuration.crystalLimit.maximum
         )
     }
 }
 
-struct BattleFarmStatus: Equatable {
-    let coinsEarnedToday: Int
-    let crystalsEarnedToday: Int
-    let coinsDailyCap: Int
-    let crystalsDailyCap: Int
+struct BattleRewardLimitValues: Equatable {
+    let coins: Int
+    let crystals: Int
+}
+
+struct BattleResourceStatus: Equatable {
+    let energy: Int
+    let energyMaximum: Int
+    let energyCostPerBattle: Int
+    let energyRegenerationPerMinute: Int
+    let availableCoinsLimit: Int
+    let coinsLimitMaximum: Int
+    let coinsRegenerationPerMinute: Int
+    let availableCrystalsLimit: Int
+    let crystalsLimitMaximum: Int
+    let crystalsRegenerationPerMinute: Int
 
     var remainingCoins: Int {
-        max(0, coinsDailyCap - coinsEarnedToday)
+        max(0, availableCoinsLimit)
     }
 
     var remainingCrystals: Int {
-        max(0, crystalsDailyCap - crystalsEarnedToday)
+        max(0, availableCrystalsLimit)
+    }
+}
+
+extension BattleResourceConfigurationDefinition {
+    func resolved(forAscendedLevel ascendedLevel: Int)
+        -> BattleResourceResolvedConfiguration
+    {
+        let levelOffset = Double(max(0, ascendedLevel - 1))
+
+        return BattleResourceResolvedConfiguration(
+            energy: BattleEnergyResolvedConfiguration(
+                maximum: scaledInt(
+                    energy.maximum,
+                    growth: progression.energyMaximumGrowthPerAscendedLevel,
+                    levelOffset: levelOffset
+                ),
+                costPerBattle: energy.costPerBattle,
+                regenerationPerMinute: scaledInt(
+                    energy.regenerationPerMinute,
+                    growth: progression
+                        .energyRegenerationGrowthPerAscendedLevel,
+                    levelOffset: levelOffset
+                )
+            ),
+            coinLimit: BattleRewardPoolResolvedConfiguration(
+                maximum: scaledInt(
+                    coinLimit.maximum,
+                    growth: progression.coinLimitMaximumGrowthPerAscendedLevel,
+                    levelOffset: levelOffset
+                ),
+                regenerationPerMinute: scaledInt(
+                    coinLimit.regenerationPerMinute,
+                    growth: progression.coinRegenerationGrowthPerAscendedLevel,
+                    levelOffset: levelOffset
+                )
+            ),
+            crystalLimit: BattleRewardPoolResolvedConfiguration(
+                maximum: scaledInt(
+                    crystalLimit.maximum,
+                    growth: progression
+                        .crystalLimitMaximumGrowthPerAscendedLevel,
+                    levelOffset: levelOffset
+                ),
+                regenerationPerMinute: scaledInt(
+                    crystalLimit.regenerationPerMinute,
+                    growth: progression
+                        .crystalRegenerationGrowthPerAscendedLevel,
+                    levelOffset: levelOffset
+                )
+            ),
+            progression: progression
+        )
+    }
+
+    private func scaledInt(_ base: Int, growth: Double, levelOffset: Double)
+        -> Int
+    {
+        Int((Double(base) * pow(growth, levelOffset)).rounded())
     }
 }
 
@@ -79,13 +196,38 @@ func loadQuestDefinitions() -> [QuestDefinition] {
         .sorted { $0.sortOrder < $1.sortOrder }
 }
 
-func loadBattleFarmLimitDefinition() -> BattleFarmLimitDefinition {
+func loadBattleResourceConfiguration() -> BattleResourceConfigurationDefinition
+{
     JSONResourceLoader.load(
-        BattleFarmLimitDefinition.self,
-        resource: "farm_limits"
+        BattleResourceConfigurationDefinition.self,
+        resource: "battle_resources"
     )
-        ?? BattleFarmLimitDefinition(
-            battleCoinsPerDay: 8000,
-            battleCrystalsPerDay: 500
+        ?? BattleResourceConfigurationDefinition(
+            energy: BattleEnergyConfigurationDefinition(
+                maximum: 10,
+                costPerBattle: 1,
+                regenerationPerMinute: 1
+            ),
+            coinLimit: BattleRewardPoolConfigurationDefinition(
+                maximum: 3000,
+                regenerationPerMinute: 3000
+            ),
+            crystalLimit: BattleRewardPoolConfigurationDefinition(
+                maximum: 300,
+                regenerationPerMinute: 300
+            ),
+            progression: BattleProgressionConfigurationDefinition(
+                energyMaximumGrowthPerAscendedLevel: 1.08,
+                energyRegenerationGrowthPerAscendedLevel: 1.03,
+                coinLimitMaximumGrowthPerAscendedLevel: 1.12,
+                coinRegenerationGrowthPerAscendedLevel: 1.12,
+                crystalLimitMaximumGrowthPerAscendedLevel: 1.10,
+                crystalRegenerationGrowthPerAscendedLevel: 1.10,
+                characterXPGrowthPerAscendedLevel: 1.05,
+                characterHPGrowthPerAscendedLevel: 1.08,
+                characterAttackGrowthPerAscendedLevel: 1.07,
+                characterHPGrowthPerCharacterLevel: 1.12,
+                characterAttackGrowthPerCharacterLevel: 1.10
+            )
         )
 }

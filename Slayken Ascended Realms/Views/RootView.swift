@@ -100,9 +100,14 @@ struct RootView: View {
                 .environmentObject(theme)
 
             case .createClass:
-                CreateClassView {
-                    completeClassCreation(with: $0)
-                }
+                CreateClassView(
+                    onClose: {
+                        transition(to: .game)
+                    },
+                    onComplete: {
+                        completeClassCreation(with: $0)
+                    }
+                )
                 .environmentObject(gameState)
                 .environmentObject(theme)
 

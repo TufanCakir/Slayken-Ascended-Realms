@@ -27,6 +27,7 @@ struct CreateClassView: View {
     @EnvironmentObject private var gameState: GameState
     @EnvironmentObject private var theme: ThemeManager
 
+    let onClose: () -> Void
     let onComplete: (CharacterStats) -> Void
 
     @State private var selectedClassID = ""
@@ -153,6 +154,12 @@ struct CreateClassView: View {
 
     private var selectionHeader: some View {
         VStack(spacing: 8) {
+            HStack {
+                closeButton
+
+                Spacer()
+            }
+
             Text("Create Class")
                 .font(.system(size: 30, weight: .black))
                 .foregroundStyle(.white)
@@ -174,6 +181,10 @@ struct CreateClassView: View {
     private var detailsHeader: some View {
         VStack(spacing: 12) {
             HStack {
+                closeButton
+
+                Spacer()
+
                 Button {
                     step = .classSelection
                 } label: {
@@ -182,11 +193,9 @@ struct CreateClassView: View {
                         .foregroundStyle(.white)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 10)
-                        .background(Color.black.opacity(0.34), in: Capsule())
+                        .background(.white.opacity(0.12), in: Capsule())
                 }
                 .buttonStyle(.plain)
-
-                Spacer()
             }
 
             VStack(spacing: 8) {
@@ -203,6 +212,20 @@ struct CreateClassView: View {
             }
         }
         .padding(.top, 20)
+    }
+
+    private var closeButton: some View {
+        Button(action: onClose) {
+            Image(systemName: "xmark")
+                .font(.system(size: 14, weight: .black))
+                .foregroundStyle(.white)
+                .frame(width: 38, height: 38)
+                .background(
+                    .white.opacity(0.12),
+                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                )
+        }
+        .buttonStyle(.plain)
     }
 
     private func previewCard(
@@ -763,7 +786,7 @@ struct CreateClassView: View {
 }
 
 #Preview {
-    CreateClassView(onComplete: { _ in })
+    CreateClassView(onClose: {}, onComplete: { _ in })
         .environmentObject(GameState())
         .environmentObject(ThemeManager())
 }

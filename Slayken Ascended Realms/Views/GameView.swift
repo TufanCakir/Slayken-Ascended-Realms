@@ -47,6 +47,8 @@ struct GameView: View {
     @State private var showGift = false
     @State private var showDailyLogin = false
     @State private var selectedTab: GameTab = .game
+    @State private var resourceRefreshDate = Date()
+    @State private var battleResourceMessage = ""
 
     private let gifts = loadGiftBoxDefinitions()
     private let dailyLoginRewards = loadDailyLoginRewardDefinitions()
@@ -101,9 +103,7 @@ struct GameView: View {
                         showPopup: $showPopup,
                         battle: battle
                     ) {
-                        if let selectedEnemy {
-                            onStartBattle(selectedEnemy)
-                        }
+                        startSelectedBattleIfPossible()
                     }
                     .zIndex(30)
                 }
@@ -147,6 +147,18 @@ struct GameView: View {
                         showNews = true
                     }
                     .zIndex(8)
+
+                    battleResourceBar
+                        .padding(.horizontal, horizontalOverlayPadding)
+                        .padding(.top, 10)
+
+                    if !battleResourceMessage.isEmpty {
+                        Text(battleResourceMessage)
+                            .font(.system(size: 12, weight: .black))
+                            .foregroundStyle(.orange)
+                            .padding(.horizontal, horizontalOverlayPadding)
+                            .padding(.top, 8)
+                    }
 
                     Spacer()
                     // 🎮 TAB CONTENT
@@ -268,7 +280,6 @@ struct GameView: View {
                     showStoryArchive = false
                 }
                 .environmentObject(theme)
-                .ignoresSafeArea()
                 .background(.black)
             }
             .fullScreenCover(isPresented: $showEventArchive) {
@@ -309,15 +320,19 @@ struct GameView: View {
                 })
                 .environmentObject(gameState)
                 .environmentObject(theme)
-                .ignoresSafeArea()
                 .background(.black)
             }
             .fullScreenCover(isPresented: $showCreateClass) {
-                CreateClassView { character in
-                    gameState.saveCharacter(character)
-                    showCreateClass = false
-                    onOpenCreateClass()
-                }
+                CreateClassView(
+                    onClose: {
+                        showCreateClass = false
+                    },
+                    onComplete: { character in
+                        gameState.saveCharacter(character)
+                        showCreateClass = false
+                        onOpenCreateClass()
+                    }
+                )
                 .environmentObject(gameState)
                 .environmentObject(theme)
                 .ignoresSafeArea()
@@ -479,6 +494,12 @@ struct GameView: View {
                     }
                 }
             }
+            .task {
+                while !Task.isCancelled {
+                    resourceRefreshDate = .now
+                    try? await Task.sleep(for: .seconds(20))
+                }
+            }
         }
     }
 
@@ -513,6 +534,74 @@ struct GameView: View {
 
     private var ascendedXP: Int {
         accountProgress.first?.xp ?? 0
+    }
+
+    private var battleResourceStatus: BattleResourceStatus {
+        PlayerInventoryStore.dailyBattleFarmStatus(
+            in: modelContext,
+            now: resourceRefreshDate
+        )
+    }
+
+    private var battleResourceBar: some View {
+        HStack(spacing: 8) {
+            resourceChip(
+                title: "Energie",
+                value:
+                    "\(battleResourceStatus.energy)/\(battleResourceStatus.energyMaximum)",
+                systemName: "bolt.fill",
+                accent: .orange
+            )
+            resourceChip(
+                title: "Coin Limit",
+                value: "\(battleResourceStatus.remainingCoins)",
+                assetName: "icon_coins",
+                accent: .yellow
+            )
+            resourceChip(
+                title: "Crystal Limit",
+                value: "\(battleResourceStatus.remainingCrystals)",
+                assetName: "icon_crystals",
+                accent: .cyan
+            )
+        }
+    }
+
+    private func resourceChip(
+        title: String,
+        value: String,
+        assetName: String? = nil,
+        systemName: String = "circle.fill",
+        accent: Color
+    ) -> some View {
+        HStack(spacing: 7) {
+            if let assetName, UIImage(named: assetName) != nil {
+                Image(assetName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 16, height: 16)
+            } else {
+                Image(systemName: systemName)
+                    .font(.system(size: 14, weight: .black))
+                    .foregroundStyle(accent)
+            }
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text(title)
+                    .font(.system(size: 9, weight: .black))
+                    .foregroundStyle(.white.opacity(0.68))
+                Text(value)
+                    .font(.system(size: 12, weight: .black))
+                    .foregroundStyle(.white)
+            }
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+        .background(Color.black.opacity(0.46), in: Capsule())
+        .overlay {
+            Capsule()
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
     }
 
     private var activePreviewChapter: GlobeEventChapter? {
@@ -577,6 +666,7 @@ struct GameView: View {
     }
 
     private func startBattle(_ battle: GlobeBattle) {
+        battleResourceMessage = ""
         gameState.selectBattle(battle)
         selectedEnemy = battle.primaryEnemy
         currentStory = battle.story
@@ -584,6 +674,26 @@ struct GameView: View {
         withAnimation(.easeInOut(duration: 0.25)) {
             showStory = !battle.story.isEmpty
             showPopup = battle.story.isEmpty
+        }
+    }
+
+    private func startSelectedBattleIfPossible() {
+        let now = Date()
+        guard
+            PlayerInventoryStore.consumeBattleEnergyForStart(
+                in: modelContext,
+                now: now
+            )
+        else {
+            resourceRefreshDate = now
+            battleResourceMessage =
+                "Nicht genug Energie. +\(battleResourceStatus.energyRegenerationPerMinute) pro Minute."
+            return
+        }
+        resourceRefreshDate = now
+        battleResourceMessage = ""
+        if let selectedEnemy {
+            onStartBattle(selectedEnemy)
         }
     }
 

@@ -181,7 +181,7 @@
         "cost": [
             {
                 "currency": "crystals",
-                "amount": 2600
+                "amount": 2000
             }
         ],
         "rates": [
@@ -288,7 +288,7 @@
         "cost": [
             {
                 "currency": "crystals",
-                "amount": 1200
+                "amount": 3000
             }
         ],
         "maxSummons": 10,
@@ -368,7 +368,7 @@
         "cost": [
             {
                 "currency": "coins",
-                "amount": 100
+                "amount": 1000
             }
         ],
         "rates": [
@@ -394,7 +394,7 @@
         "cost": [
             {
                 "currency": "coins",
-                "amount": 280
+                "amount": 2800
             }
         ],
         "rates": [
@@ -420,7 +420,7 @@
         "cost": [
             {
                 "currency": "coins",
-                "amount": 300
+                "amount": 3000
             }
         ],
         "rates": [
@@ -446,7 +446,7 @@
         "cost": [
             {
                 "currency": "crystals",
-                "amount": 400
+                "amount": 300
             }
         ],
         "rates": [
@@ -502,7 +502,7 @@
         "cost": [
             {
                 "currency": "coins",
-                "amount": 3000
+                "amount": 6000
             }
         ],
         "rates": [

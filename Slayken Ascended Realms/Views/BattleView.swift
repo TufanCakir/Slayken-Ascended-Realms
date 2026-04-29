@@ -33,6 +33,8 @@ struct BattleView: View {
         [OwnedAbilityCard]
     @Query(sort: \PlayerCharacterProgress.characterID) private
         var characterProgress: [PlayerCharacterProgress]
+    @Query(sort: \PlayerAccountProgress.id) private var accountProgress:
+        [PlayerAccountProgress]
 
     let player: CharacterStats
     let enemy: CharacterStats
@@ -105,18 +107,15 @@ struct BattleView: View {
         playerProgress?.level ?? 1
     }
 
+    private var ascendedLevel: Int {
+        accountProgress.first?.level ?? 1
+    }
+
     private var leveledPlayer: CharacterStats {
-        let hpScale = pow(1.12, Double(playerLevel - 1))
-        let attackScale = pow(1.10, Double(playerLevel - 1))
-        return CharacterStats(
-            name: player.name,
-            image: player.image,
-            model: player.model,
-            battleModel: player.battleModel,
-            texture: player.texture,
-            element: player.element,
-            hp: player.hp * CGFloat(hpScale),
-            attack: player.attack * CGFloat(attackScale)
+        PlayerInventoryStore.scaledCharacterStats(
+            for: player,
+            characterLevel: playerLevel,
+            ascendedLevel: ascendedLevel
         )
     }
 
@@ -1156,8 +1155,7 @@ struct BattleView: View {
         awardedRewards = PlayerInventoryStore.addBattleRewards(
             gameState.activeBattleRewards,
             in: modelContext,
-            limits: gameState.selectedBattle?.dailyRewardLimits?
-                .resolvedFarmLimits
+            limits: gameState.selectedBattle?.dailyRewardLimits
         )
         awardedCardRewards = gameState.selectedBattle?.cardRewards ?? []
         for cardReward in awardedCardRewards where cardReward.amount > 0 {

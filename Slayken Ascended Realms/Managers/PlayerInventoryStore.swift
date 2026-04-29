@@ -66,22 +66,35 @@ enum PlayerInventoryStore {
     static func addBattleRewards(
         _ rewards: [CurrencyAmount],
         in context: ModelContext,
-        limits: BattleFarmLimitDefinition? = nil
+        limits: BattleRewardLimitDefinition? = nil,
+        now: Date = .now
     ) -> [CurrencyAmount] {
-        let limits = limits ?? loadBattleFarmLimitDefinition()
-        let cap = dailyBattleRewardCap(in: context)
-        resetBattleRewardCapIfNeeded(cap, in: context)
+        let baseConfiguration = loadBattleResourceConfiguration()
+        let configuration = baseConfiguration.resolved(
+            forAscendedLevel: accountProgress(in: context).level
+        )
+        let state = battleResourceState(
+            configuration: configuration,
+            in: context,
+            now: now
+        )
+        let resolvedLimits =
+            limits?.resolvedLimits(using: configuration)
+            ?? BattleRewardLimitValues(
+                coins: configuration.coinLimit.maximum,
+                crystals: configuration.crystalLimit.maximum
+            )
 
         let filteredRewards = rewards.compactMap { reward -> CurrencyAmount? in
             switch reward.currency {
             case "coins":
                 let remaining = max(
                     0,
-                    limits.battleCoinsPerDay - cap.coinsEarned
+                    min(state.availableCoinsLimit, resolvedLimits.coins)
                 )
                 let allowedAmount = min(reward.amount, remaining)
                 guard allowedAmount > 0 else { return nil }
-                cap.coinsEarned += allowedAmount
+                state.availableCoinsLimit -= allowedAmount
                 return CurrencyAmount(
                     currency: reward.currency,
                     amount: allowedAmount
@@ -89,11 +102,11 @@ enum PlayerInventoryStore {
             case "crystals":
                 let remaining = max(
                     0,
-                    limits.battleCrystalsPerDay - cap.crystalsEarned
+                    min(state.availableCrystalsLimit, resolvedLimits.crystals)
                 )
                 let allowedAmount = min(reward.amount, remaining)
                 guard allowedAmount > 0 else { return nil }
-                cap.crystalsEarned += allowedAmount
+                state.availableCrystalsLimit -= allowedAmount
                 return CurrencyAmount(
                     currency: reward.currency,
                     amount: allowedAmount
@@ -109,18 +122,61 @@ enum PlayerInventoryStore {
     }
 
     static func dailyBattleFarmStatus(
-        in context: ModelContext
-    ) -> BattleFarmStatus {
-        let limits = loadBattleFarmLimitDefinition()
-        let cap = dailyBattleRewardCap(in: context)
-        resetBattleRewardCapIfNeeded(cap, in: context)
-
-        return BattleFarmStatus(
-            coinsEarnedToday: cap.coinsEarned,
-            crystalsEarnedToday: cap.crystalsEarned,
-            coinsDailyCap: limits.battleCoinsPerDay,
-            crystalsDailyCap: limits.battleCrystalsPerDay
+        in context: ModelContext,
+        now: Date = .now
+    ) -> BattleResourceStatus {
+        let configuration = loadBattleResourceConfiguration().resolved(
+            forAscendedLevel: accountProgress(in: context).level
         )
+        let state = battleResourceState(
+            configuration: configuration,
+            in: context,
+            now: now
+        )
+
+        return BattleResourceStatus(
+            energy: state.currentEnergy,
+            energyMaximum: configuration.energy.maximum,
+            energyCostPerBattle: configuration.energy.costPerBattle,
+            energyRegenerationPerMinute: configuration.energy
+                .regenerationPerMinute,
+            availableCoinsLimit: state.availableCoinsLimit,
+            coinsLimitMaximum: configuration.coinLimit.maximum,
+            coinsRegenerationPerMinute: configuration.coinLimit
+                .regenerationPerMinute,
+            availableCrystalsLimit: state.availableCrystalsLimit,
+            crystalsLimitMaximum: configuration.crystalLimit.maximum,
+            crystalsRegenerationPerMinute: configuration.crystalLimit
+                .regenerationPerMinute
+        )
+    }
+
+    static func canStartBattle(
+        in context: ModelContext,
+        now: Date = .now
+    ) -> Bool {
+        let status = dailyBattleFarmStatus(in: context, now: now)
+        return status.energy >= status.energyCostPerBattle
+    }
+
+    @discardableResult
+    static func consumeBattleEnergyForStart(
+        in context: ModelContext,
+        now: Date = .now
+    ) -> Bool {
+        let configuration = loadBattleResourceConfiguration().resolved(
+            forAscendedLevel: accountProgress(in: context).level
+        )
+        let state = battleResourceState(
+            configuration: configuration,
+            in: context,
+            now: now
+        )
+        let energyCost = max(0, configuration.energy.costPerBattle)
+        guard state.currentEnergy >= energyCost else { return false }
+        state.currentEnergy -= energyCost
+        save(context)
+        return true
     }
 
     static func canSpend(_ cost: [CurrencyAmount], in context: ModelContext)
@@ -308,7 +364,10 @@ enum PlayerInventoryStore {
         }
 
         progress.xp += max(0, amount)
-        progress.level = level(forXP: progress.xp)
+        progress.level = level(
+            forCharacterXP: progress.xp,
+            ascendedLevel: accountProgress(in: context).level
+        )
         save(context)
         return progress
     }
@@ -562,6 +621,26 @@ enum PlayerInventoryStore {
         return true
     }
 
+    static func level(forCharacterXP xp: Int, ascendedLevel: Int) -> Int {
+        var level = 1
+        var remainingXP = max(0, xp)
+
+        while remainingXP
+            >= characterXPNeededForNextLevel(
+                level,
+                ascendedLevel: ascendedLevel
+            )
+        {
+            remainingXP -= characterXPNeededForNextLevel(
+                level,
+                ascendedLevel: ascendedLevel
+            )
+            level += 1
+        }
+
+        return level
+    }
+
     static func level(forXP xp: Int) -> Int {
         var level = 1
         var remainingXP = max(0, xp)
@@ -576,6 +655,56 @@ enum PlayerInventoryStore {
 
     static func xpNeededForNextLevel(_ level: Int) -> Int {
         Int((100.0 * pow(1.35, Double(max(1, level) - 1))).rounded())
+    }
+
+    static func characterXPNeededForNextLevel(
+        _ level: Int,
+        ascendedLevel: Int
+    ) -> Int {
+        let baseXP = Double(xpNeededForNextLevel(level))
+        let growth = loadBattleResourceConfiguration().progression
+            .characterXPGrowthPerAscendedLevel
+        let ascendedScale = pow(
+            Double(growth),
+            Double(max(0, ascendedLevel - 1))
+        )
+        return Int((baseXP * ascendedScale).rounded())
+    }
+
+    static func scaledCharacterStats(
+        for character: CharacterStats,
+        characterLevel: Int,
+        ascendedLevel: Int
+    ) -> CharacterStats {
+        let progression = loadBattleResourceConfiguration().progression
+        let characterHPScale = pow(
+            progression.characterHPGrowthPerCharacterLevel,
+            Double(max(0, characterLevel - 1))
+        )
+        let characterAttackScale = pow(
+            progression.characterAttackGrowthPerCharacterLevel,
+            Double(max(0, characterLevel - 1))
+        )
+        let ascendedHPScale = pow(
+            progression.characterHPGrowthPerAscendedLevel,
+            Double(max(0, ascendedLevel - 1))
+        )
+        let ascendedAttackScale = pow(
+            progression.characterAttackGrowthPerAscendedLevel,
+            Double(max(0, ascendedLevel - 1))
+        )
+
+        return CharacterStats(
+            name: character.name,
+            image: character.image,
+            model: character.model,
+            battleModel: character.battleModel,
+            texture: character.texture,
+            element: character.element,
+            hp: character.hp * CGFloat(characterHPScale * ascendedHPScale),
+            attack: character.attack
+                * CGFloat(characterAttackScale * ascendedAttackScale)
+        )
     }
 
     private static func summonProgress(
@@ -614,30 +743,67 @@ enum PlayerInventoryStore {
         return progress
     }
 
-    private static func dailyBattleRewardCap(in context: ModelContext)
-        -> PlayerDailyBattleRewardCap
-    {
-        let descriptor = FetchDescriptor<PlayerDailyBattleRewardCap>(
-            predicate: #Predicate { $0.id == "battle_reward_cap" }
+    private static func battleResourceState(
+        configuration: BattleResourceResolvedConfiguration,
+        in context: ModelContext,
+        now: Date
+    ) -> PlayerBattleResourceState {
+        let descriptor = FetchDescriptor<PlayerBattleResourceState>(
+            predicate: #Predicate { $0.id == "battle_resources" }
         )
-        if let progress = try? context.fetch(descriptor).first {
-            return progress
+        let state: PlayerBattleResourceState
+        if let existing = try? context.fetch(descriptor).first {
+            state = existing
+        } else {
+            state = PlayerBattleResourceState(
+                currentEnergy: configuration.energy.maximum,
+                availableCoinsLimit: configuration.coinLimit.maximum,
+                availableCrystalsLimit: configuration.crystalLimit.maximum,
+                lastUpdatedAt: now
+            )
+            context.insert(state)
+            save(context)
         }
 
-        let progress = PlayerDailyBattleRewardCap()
-        context.insert(progress)
-        save(context)
-        return progress
+        regenerateBattleResourcesIfNeeded(
+            state,
+            configuration: configuration,
+            in: context,
+            now: now
+        )
+        return state
     }
 
-    private static func resetBattleRewardCapIfNeeded(
-        _ cap: PlayerDailyBattleRewardCap,
-        in context: ModelContext
+    private static func regenerateBattleResourcesIfNeeded(
+        _ state: PlayerBattleResourceState,
+        configuration: BattleResourceResolvedConfiguration,
+        in context: ModelContext,
+        now: Date
     ) {
-        guard !Calendar.current.isDateInToday(cap.lastResetAt) else { return }
-        cap.lastResetAt = .now
-        cap.coinsEarned = 0
-        cap.crystalsEarned = 0
+        let elapsedSeconds = now.timeIntervalSince(state.lastUpdatedAt)
+        let elapsedMinutes = Int(elapsedSeconds / 60)
+        guard elapsedMinutes > 0 else { return }
+
+        state.currentEnergy = min(
+            configuration.energy.maximum,
+            state.currentEnergy
+                + (elapsedMinutes * configuration.energy.regenerationPerMinute)
+        )
+        state.availableCoinsLimit = min(
+            configuration.coinLimit.maximum,
+            state.availableCoinsLimit
+                + (elapsedMinutes
+                    * configuration.coinLimit.regenerationPerMinute)
+        )
+        state.availableCrystalsLimit = min(
+            configuration.crystalLimit.maximum,
+            state.availableCrystalsLimit
+                + (elapsedMinutes
+                    * configuration.crystalLimit.regenerationPerMinute)
+        )
+        state.lastUpdatedAt = state.lastUpdatedAt.addingTimeInterval(
+            TimeInterval(elapsedMinutes * 60)
+        )
         save(context)
     }
 

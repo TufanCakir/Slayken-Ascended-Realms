@@ -1,0 +1,28 @@
+{
+    "energy": {
+        "maximum": 10,
+        "costPerBattle": 1,
+        "regenerationPerMinute": 1
+    },
+    "coinLimit": {
+        "maximum": 3000,
+        "regenerationPerMinute": 3000
+    },
+    "crystalLimit": {
+        "maximum": 300,
+        "regenerationPerMinute": 300
+    },
+    "progression": {
+        "energyMaximumGrowthPerAscendedLevel": 1.08,
+        "energyRegenerationGrowthPerAscendedLevel": 1.03,
+        "coinLimitMaximumGrowthPerAscendedLevel": 1.12,
+        "coinRegenerationGrowthPerAscendedLevel": 1.12,
+        "crystalLimitMaximumGrowthPerAscendedLevel": 1.10,
+        "crystalRegenerationGrowthPerAscendedLevel": 1.10,
+        "characterXPGrowthPerAscendedLevel": 1.05,
+        "characterHPGrowthPerAscendedLevel": 1.08,
+        "characterAttackGrowthPerAscendedLevel": 1.07,
+        "characterHPGrowthPerCharacterLevel": 1.12,
+        "characterAttackGrowthPerCharacterLevel": 1.10
+    }
+}

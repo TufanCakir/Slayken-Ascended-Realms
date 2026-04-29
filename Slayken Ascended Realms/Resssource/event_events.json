@@ -42,15 +42,15 @@
                             "model": "krevas",
                             "hp": 140,
                             "attack": 10,
-                            "element": "Plant"
+                            "element": "Pflanze"
                         },
-                        "xpReward": 180,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2600,
-                            "crystals": 40
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
-                            {
+                            c{
                                 "currency": "coins",
                                 "amount": 420
                             },
@@ -86,10 +86,10 @@
                             "attack": 12,
                             "element": "Water"
                         },
-                        "xpReward": 220,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2800,
-                            "crystals": 40
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -123,10 +123,10 @@
                             "attack": 14,
                             "element": "Fire"
                         },
-                        "xpReward": 260,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 45
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -160,10 +160,10 @@
                             "attack": 16,
                             "element": "Light"
                         },
-                        "xpReward": 300,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3200,
-                            "crystals": 45
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -197,10 +197,10 @@
                             "attack": 18,
                             "element": "Storm"
                         },
-                        "xpReward": 340,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3400,
-                            "crystals": 50
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -234,10 +234,10 @@
                             "attack": 20,
                             "element": "Water"
                         },
-                        "xpReward": 380,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3600,
-                            "crystals": 50
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -271,10 +271,10 @@
                             "attack": 23,
                             "element": "Dark"
                         },
-                        "xpReward": 430,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3900,
-                            "crystals": 55
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -308,10 +308,10 @@
                             "attack": 26,
                             "element": "Fire"
                         },
-                        "xpReward": 480,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 4200,
-                            "crystals": 55
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -345,10 +345,10 @@
                             "attack": 30,
                             "element": "Plant"
                         },
-                        "xpReward": 540,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 4500,
-                            "crystals": 60
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -388,10 +388,10 @@
                             "attack": 34,
                             "element": "Light"
                         },
-                        "xpReward": 620,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 5000,
-                            "crystals": 70
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -460,10 +460,10 @@
                             "attack": 16,
                             "element": "Water"
                         },
-                        "xpReward": 260,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 900,
-                            "crystals": 120
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -497,10 +497,10 @@
                             "attack": 18,
                             "element": "Storm"
                         },
-                        "xpReward": 300,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 950,
-                            "crystals": 140
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -534,10 +534,10 @@
                             "attack": 20,
                             "element": "Light"
                         },
-                        "xpReward": 340,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1000,
-                            "crystals": 160
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -571,10 +571,10 @@
                             "attack": 23,
                             "element": "Plant"
                         },
-                        "xpReward": 380,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1100,
-                            "crystals": 180
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -608,10 +608,10 @@
                             "attack": 25,
                             "element": "Water"
                         },
-                        "xpReward": 430,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1200,
-                            "crystals": 200
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -645,10 +645,10 @@
                             "attack": 28,
                             "element": "Dark"
                         },
-                        "xpReward": 480,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1300,
-                            "crystals": 220
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -682,10 +682,10 @@
                             "attack": 31,
                             "element": "Light"
                         },
-                        "xpReward": 540,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1400,
-                            "crystals": 240
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -721,8 +721,8 @@
                         },
                         "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1500,
-                            "crystals": 260
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -756,10 +756,10 @@
                             "attack": 39,
                             "element": "Storm"
                         },
-                        "xpReward": 680,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1700,
-                            "crystals": 300
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -799,10 +799,10 @@
                             "attack": 44,
                             "element": "Water"
                         },
-                        "xpReward": 760,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2000,
-                            "crystals": 360
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -871,10 +871,10 @@
                             "attack": 18,
                             "element": "Plant"
                         },
-                        "xpReward": 320,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1200,
-                            "crystals": 120
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -914,10 +914,10 @@
                             "attack": 20,
                             "element": "Fire"
                         },
-                        "xpReward": 360,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1300,
-                            "crystals": 130
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -957,10 +957,10 @@
                             "attack": 24,
                             "element": "Storm"
                         },
-                        "xpReward": 410,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1450,
-                            "crystals": 145
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1000,10 +1000,10 @@
                             "attack": 27,
                             "element": "Water"
                         },
-                        "xpReward": 470,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1600,
-                            "crystals": 160
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1043,10 +1043,10 @@
                             "attack": 30,
                             "element": "Light"
                         },
-                        "xpReward": 540,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1800,
-                            "crystals": 180
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1086,10 +1086,10 @@
                             "attack": 34,
                             "element": "Dark"
                         },
-                        "xpReward": 620,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2000,
-                            "crystals": 200
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1129,10 +1129,10 @@
                             "attack": 38,
                             "element": "Plant"
                         },
-                        "xpReward": 700,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2200,
-                            "crystals": 220
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1176,10 +1176,10 @@
                             "attack": 42,
                             "element": "Fire"
                         },
-                        "xpReward": 790,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2400,
-                            "crystals": 240
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1219,10 +1219,10 @@
                             "attack": 47,
                             "element": "Storm"
                         },
-                        "xpReward": 900,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2700,
-                            "crystals": 270
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1272,10 +1272,10 @@
                             "attack": 52,
                             "element": "Light"
                         },
-                        "xpReward": 1040,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1351,10 +1351,10 @@
                             "attack": 16,
                             "element": "Light"
                         },
-                        "xpReward": 280,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1800,
-                            "crystals": 140
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1388,10 +1388,10 @@
                             "attack": 18,
                             "element": "Fire"
                         },
-                        "xpReward": 320,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1900,
-                            "crystals": 150
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1425,10 +1425,10 @@
                             "attack": 20,
                             "element": "Storm"
                         },
-                        "xpReward": 360,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2000,
-                            "crystals": 160
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1462,10 +1462,10 @@
                             "attack": 23,
                             "element": "Water"
                         },
-                        "xpReward": 410,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2200,
-                            "crystals": 175
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1499,10 +1499,10 @@
                             "attack": 26,
                             "element": "Dark"
                         },
-                        "xpReward": 470,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2400,
-                            "crystals": 190
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1536,10 +1536,10 @@
                             "attack": 29,
                             "element": "Plant"
                         },
-                        "xpReward": 530,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2600,
-                            "crystals": 205
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1575,8 +1575,8 @@
                         },
                         "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2800,
-                            "crystals": 220
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1610,10 +1610,10 @@
                             "attack": 36,
                             "element": "Water"
                         },
-                        "xpReward": 680,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 240
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1647,10 +1647,10 @@
                             "attack": 40,
                             "element": "Fire"
                         },
-                        "xpReward": 770,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3300,
-                            "crystals": 260
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1689,10 +1689,10 @@
                             "attack": 45,
                             "element": "Storm"
                         },
-                        "xpReward": 880,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3600,
-                            "crystals": 300
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1761,10 +1761,10 @@
                             "attack": 20,
                             "element": "Plant"
                         },
-                        "xpReward": 360,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1800,
-                            "crystals": 140
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1808,10 +1808,10 @@
                             "attack": 22,
                             "element": "Water"
                         },
-                        "xpReward": 410,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1900,
-                            "crystals": 150
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1851,10 +1851,10 @@
                             "attack": 25,
                             "element": "Fire"
                         },
-                        "xpReward": 460,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2100,
-                            "crystals": 160
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1888,10 +1888,10 @@
                             "attack": 28,
                             "element": "Storm"
                         },
-                        "xpReward": 520,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2300,
-                            "crystals": 175
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1925,10 +1925,10 @@
                             "attack": 31,
                             "element": "Dark"
                         },
-                        "xpReward": 580,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2500,
-                            "crystals": 190
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1962,10 +1962,10 @@
                             "attack": 34,
                             "element": "Light"
                         },
-                        "xpReward": 650,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2700,
-                            "crystals": 205
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -1999,10 +1999,10 @@
                             "attack": 38,
                             "element": "Water"
                         },
-                        "xpReward": 730,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 220
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2036,10 +2036,10 @@
                             "attack": 42,
                             "element": "Plant"
                         },
-                        "xpReward": 820,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3300,
-                            "crystals": 240
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2073,10 +2073,10 @@
                             "attack": 47,
                             "element": "Fire"
                         },
-                        "xpReward": 920,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3600,
-                            "crystals": 260
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2115,10 +2115,10 @@
                             "attack": 54,
                             "element": "Storm"
                         },
-                        "xpReward": 1040,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 4000,
-                            "crystals": 300
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2187,10 +2187,10 @@
                             "attack": 6,
                             "element": "Plant"
                         },
-                        "xpReward": 90,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 900,
-                            "crystals": 60
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2224,10 +2224,10 @@
                             "attack": 7,
                             "element": "Water"
                         },
-                        "xpReward": 110,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 950,
-                            "crystals": 65
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2261,10 +2261,10 @@
                             "attack": 8,
                             "element": "Fire"
                         },
-                        "xpReward": 130,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1000,
-                            "crystals": 70
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2298,10 +2298,10 @@
                             "attack": 9,
                             "element": "Storm"
                         },
-                        "xpReward": 150,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1050,
-                            "crystals": 75
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2335,10 +2335,10 @@
                             "attack": 10,
                             "element": "Light"
                         },
-                        "xpReward": 180,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1100,
-                            "crystals": 80
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2372,10 +2372,10 @@
                             "attack": 12,
                             "element": "Dark"
                         },
-                        "xpReward": 210,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1200,
-                            "crystals": 85
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2409,10 +2409,10 @@
                             "attack": 14,
                             "element": "Plant"
                         },
-                        "xpReward": 240,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1300,
-                            "crystals": 90
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2446,10 +2446,10 @@
                             "attack": 16,
                             "element": "Water"
                         },
-                        "xpReward": 280,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1400,
-                            "crystals": 95
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2483,10 +2483,10 @@
                             "attack": 18,
                             "element": "Fire"
                         },
-                        "xpReward": 330,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1500,
-                            "crystals": 100
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2525,10 +2525,10 @@
                             "attack": 22,
                             "element": "Light"
                         },
-                        "xpReward": 390,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1700,
-                            "crystals": 110
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2598,10 +2598,10 @@
                             "attack": 46,
                             "element": "Dark"
                         },
-                        "xpReward": 760,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3200,
-                            "crystals": 220
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2635,10 +2635,10 @@
                             "attack": 50,
                             "element": "Fire"
                         },
-                        "xpReward": 840,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3400,
-                            "crystals": 230
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2672,10 +2672,10 @@
                             "attack": 54,
                             "element": "Storm"
                         },
-                        "xpReward": 920,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3600,
-                            "crystals": 240
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2709,10 +2709,10 @@
                             "attack": 58,
                             "element": "Plant"
                         },
-                        "xpReward": 1020,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3800,
-                            "crystals": 255
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2746,10 +2746,10 @@
                             "attack": 62,
                             "element": "Water"
                         },
-                        "xpReward": 1120,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 4000,
-                            "crystals": 270
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2783,10 +2783,10 @@
                             "attack": 67,
                             "element": "Light"
                         },
-                        "xpReward": 1240,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 4300,
-                            "crystals": 290
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2820,10 +2820,10 @@
                             "attack": 72,
                             "element": "Fire"
                         },
-                        "xpReward": 1360,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 4600,
-                            "crystals": 310
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2857,10 +2857,10 @@
                             "attack": 78,
                             "element": "Storm"
                         },
-                        "xpReward": 1500,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 4900,
-                            "crystals": 330
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2894,10 +2894,10 @@
                             "attack": 84,
                             "element": "Dark"
                         },
-                        "xpReward": 1650,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 5200,
-                            "crystals": 350
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -2937,10 +2937,10 @@
                             "attack": 92,
                             "element": "Light"
                         },
-                        "xpReward": 1820,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 5600,
-                            "crystals": 380
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -3010,10 +3010,10 @@
                             "attack": 22,
                             "element": "Plant"
                         },
-                        "xpReward": 360,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1600,
-                            "crystals": 140
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -3053,10 +3053,10 @@
                             "attack": 25,
                             "element": "Water"
                         },
-                        "xpReward": 420,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 1800,
-                            "crystals": 155
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -3096,10 +3096,10 @@
                             "attack": 28,
                             "element": "Fire"
                         },
-                        "xpReward": 480,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2000,
-                            "crystals": 170
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -3139,10 +3139,10 @@
                             "attack": 31,
                             "element": "Light"
                         },
-                        "xpReward": 550,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2200,
-                            "crystals": 185
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -3182,10 +3182,10 @@
                             "attack": 35,
                             "element": "Dark"
                         },
-                        "xpReward": 620,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2400,
-                            "crystals": 200
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -3225,10 +3225,10 @@
                             "attack": 39,
                             "element": "Storm"
                         },
-                        "xpReward": 700,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2600,
-                            "crystals": 220
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -3268,10 +3268,10 @@
                             "attack": 43,
                             "element": "Plant"
                         },
-                        "xpReward": 790,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 2900,
-                            "crystals": 240
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -3315,10 +3315,10 @@
                             "attack": 48,
                             "element": "Water"
                         },
-                        "xpReward": 890,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3200,
-                            "crystals": 260
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -3358,10 +3358,10 @@
                             "attack": 54,
                             "element": "Light"
                         },
-                        "xpReward": 1000,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3500,
-                            "crystals": 280
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {
@@ -3411,10 +3411,10 @@
                             "attack": 60,
                             "element": "Dark"
                         },
-                        "xpReward": 1140,
+                        "xpReward": 600,
                         "dailyRewardLimits": {
-                            "coins": 3900,
-                            "crystals": 320
+                            "coins": 6000,
+                            "crystals": 600
                         },
                         "rewards": [
                             {

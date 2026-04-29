@@ -18,6 +18,7 @@ struct BattleSceneView: UIViewRepresentable {
     let enemyAttackID: Int
     let attackingEnemyIndex: Int?
     let particleEffect: String?
+    let particleTargetIndices: [Int]
     let particleEffects: [ParticleEffectDefinition]
     let groundTexture: String
     let skyboxTexture: String
@@ -62,7 +63,8 @@ struct BattleSceneView: UIViewRepresentable {
             enemyAttackID: enemyAttackID,
             attackingEnemyIndex: attackingEnemyIndex,
             selectedEnemyIndex: selectedEnemyIndex,
-            particleEffect: particleEffect
+            particleEffect: particleEffect,
+            particleTargetIndices: particleTargetIndices
         )
     }
 }
@@ -174,7 +176,8 @@ final class BattleSceneCoordinator {
         enemyAttackID: Int,
         attackingEnemyIndex: Int?,
         selectedEnemyIndex: Int,
-        particleEffect: String?
+        particleEffect: String?,
+        particleTargetIndices: [Int]
     ) {
         if playerAttackID != lastPlayerAttackID {
             lastPlayerAttackID = playerAttackID
@@ -186,7 +189,8 @@ final class BattleSceneCoordinator {
                     attacker: playerRootNode,
                     defender: enemyRootNodes[selectedEnemyIndex],
                     animationSeed: playerAttackID,
-                    particleEffect: particleEffect
+                    particleEffect: particleEffect,
+                    particleTargetIndices: particleTargetIndices
                 )
             }
         }
@@ -202,7 +206,8 @@ final class BattleSceneCoordinator {
                     attacker: enemyRootNodes[attackingEnemyIndex],
                     defender: playerRootNode,
                     animationSeed: enemyAttackID,
-                    particleEffect: nil
+                    particleEffect: nil,
+                    particleTargetIndices: []
                 )
             }
         }
@@ -387,7 +392,8 @@ final class BattleSceneCoordinator {
         attacker: SCNNode,
         defender: SCNNode,
         animationSeed: Int,
-        particleEffect: String?
+        particleEffect: String?,
+        particleTargetIndices: [Int]
     ) {
         attacker.removeAction(forKey: "attack")
         defender.removeAction(forKey: "hit")
@@ -434,10 +440,21 @@ final class BattleSceneCoordinator {
         let anticipationDelay = SCNAction.wait(duration: 0.03)
         let impact = SCNAction.run { [weak self, weak defender] _ in
             guard let self, let defender, let particleEffect else { return }
-            self.spawnParticleEffect(
-                named: particleEffect,
-                at: defender.presentation.position
-            )
+            if particleTargetIndices.isEmpty {
+                self.spawnParticleEffect(
+                    named: particleEffect,
+                    at: defender.presentation.position
+                )
+                return
+            }
+
+            for index in particleTargetIndices
+            where self.enemyRootNodes.indices.contains(index) {
+                self.spawnParticleEffect(
+                    named: particleEffect,
+                    at: self.enemyRootNodes[index].presentation.position
+                )
+            }
         }
 
         let attackerPose = makeAttackPoseAction(seed: animationSeed)
@@ -591,33 +608,16 @@ final class BattleSceneCoordinator {
         at position: SCNVector3
     ) {
         let definition = particleDefinition(for: effect)
-        let particles = SCNParticleSystem()
-        particles.birthRate = definition.resolvedBirthRate
-        particles.emissionDuration = definition.resolvedEmissionDuration
-        particles.particleLifeSpan = definition.resolvedLifeSpan
-        particles.particleLifeSpanVariation =
-            definition.resolvedLifeSpanVariation
-        particles.particleSize = definition.resolvedSize
-        particles.particleSizeVariation = definition.resolvedSizeVariation
-        particles.particleVelocity = definition.resolvedVelocity
-        particles.particleVelocityVariation =
-            definition.resolvedVelocityVariation
-        particles.spreadingAngle = definition.resolvedSpreadingAngle
-        particles.blendMode = .additive
-        particles.particleColor = UIColor(
-            red: definition.red,
-            green: definition.green,
-            blue: definition.blue,
-            alpha: definition.resolvedAlpha
-        )
-
         let node = SCNNode()
         node.position = SCNVector3(
             position.x,
             position.y + Float(definition.resolvedYOffset),
             position.z
         )
-        node.addParticleSystem(particles)
+        node.addChildNode(makeEffectCoreNode(for: definition, effect: effect))
+        for particles in makeParticleSystems(for: definition, effect: effect) {
+            node.addParticleSystem(particles)
+        }
         scene.rootNode.addChildNode(node)
         node.runAction(
             SCNAction.sequence([
@@ -625,6 +625,409 @@ final class BattleSceneCoordinator {
                 SCNAction.removeFromParentNode(),
             ])
         )
+    }
+
+    private func makeParticleSystems(
+        for definition: ParticleEffectDefinition,
+        effect: String
+    ) -> [SCNParticleSystem] {
+        switch effect.lowercased() {
+        case "fire":
+            return [
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .glow),
+                    birthRateMultiplier: 1.0,
+                    sizeMultiplier: 1.2,
+                    velocityMultiplier: 1.0,
+                    spreadingAngle: 88,
+                    acceleration: SCNVector3(0, 2.8, 0)
+                ),
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .ember),
+                    birthRateMultiplier: 0.55,
+                    sizeMultiplier: 0.55,
+                    velocityMultiplier: 1.35,
+                    spreadingAngle: 46,
+                    acceleration: SCNVector3(0, 4.2, 0)
+                ),
+                makeRingParticles(
+                    definition: definition,
+                    image: particleSprite(style: .smoke),
+                    birthRateMultiplier: 0.18,
+                    sizeMultiplier: 1.8,
+                    velocityMultiplier: 0.55
+                ),
+            ]
+        case "ice", "crystal":
+            return [
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .shard),
+                    birthRateMultiplier: 0.85,
+                    sizeMultiplier: 0.7,
+                    velocityMultiplier: 1.25,
+                    spreadingAngle: 58,
+                    acceleration: SCNVector3(0, -1.2, 0)
+                ),
+                makeRingParticles(
+                    definition: definition,
+                    image: particleSprite(style: .ring),
+                    birthRateMultiplier: 0.22,
+                    sizeMultiplier: 1.45,
+                    velocityMultiplier: 0.48
+                ),
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .mist),
+                    birthRateMultiplier: 0.34,
+                    sizeMultiplier: 1.3,
+                    velocityMultiplier: 0.42,
+                    spreadingAngle: 120,
+                    acceleration: SCNVector3(0, 0.8, 0)
+                ),
+            ]
+        case "void":
+            return [
+                makeRingParticles(
+                    definition: definition,
+                    image: particleSprite(style: .ring),
+                    birthRateMultiplier: 0.28,
+                    sizeMultiplier: 1.85,
+                    velocityMultiplier: 0.35
+                ),
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .glow),
+                    birthRateMultiplier: 0.9,
+                    sizeMultiplier: 1.0,
+                    velocityMultiplier: 0.9,
+                    spreadingAngle: 140,
+                    acceleration: SCNVector3(0, 0.5, 0)
+                ),
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .spark),
+                    birthRateMultiplier: 0.45,
+                    sizeMultiplier: 0.38,
+                    velocityMultiplier: 1.6,
+                    spreadingAngle: 38,
+                    acceleration: SCNVector3(0, 1.5, 0)
+                ),
+            ]
+        case "light":
+            return [
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .flare),
+                    birthRateMultiplier: 0.72,
+                    sizeMultiplier: 1.1,
+                    velocityMultiplier: 0.75,
+                    spreadingAngle: 62,
+                    acceleration: SCNVector3(0, 1.2, 0)
+                ),
+                makeRingParticles(
+                    definition: definition,
+                    image: particleSprite(style: .ring),
+                    birthRateMultiplier: 0.16,
+                    sizeMultiplier: 1.7,
+                    velocityMultiplier: 0.32
+                ),
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .spark),
+                    birthRateMultiplier: 0.38,
+                    sizeMultiplier: 0.28,
+                    velocityMultiplier: 1.3,
+                    spreadingAngle: 44,
+                    acceleration: SCNVector3(0, 2.0, 0)
+                ),
+            ]
+        case "storm":
+            return [
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .bolt),
+                    birthRateMultiplier: 0.78,
+                    sizeMultiplier: 0.7,
+                    velocityMultiplier: 1.7,
+                    spreadingAngle: 24,
+                    acceleration: SCNVector3(0, 0.4, 0)
+                ),
+                makeRingParticles(
+                    definition: definition,
+                    image: particleSprite(style: .ring),
+                    birthRateMultiplier: 0.20,
+                    sizeMultiplier: 1.35,
+                    velocityMultiplier: 0.62
+                ),
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .spark),
+                    birthRateMultiplier: 0.52,
+                    sizeMultiplier: 0.25,
+                    velocityMultiplier: 1.9,
+                    spreadingAngle: 32,
+                    acceleration: SCNVector3(0, 1.0, 0)
+                ),
+            ]
+        case "ash":
+            return [
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .smoke),
+                    birthRateMultiplier: 0.42,
+                    sizeMultiplier: 1.55,
+                    velocityMultiplier: 0.5,
+                    spreadingAngle: 128,
+                    acceleration: SCNVector3(0, 0.45, 0)
+                ),
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .ember),
+                    birthRateMultiplier: 0.28,
+                    sizeMultiplier: 0.45,
+                    velocityMultiplier: 1.25,
+                    spreadingAngle: 54,
+                    acceleration: SCNVector3(0, 1.8, 0)
+                ),
+                makeRingParticles(
+                    definition: definition,
+                    image: particleSprite(style: .ring),
+                    birthRateMultiplier: 0.12,
+                    sizeMultiplier: 1.8,
+                    velocityMultiplier: 0.28
+                ),
+            ]
+        default:
+            return [
+                makeBurstParticles(
+                    definition: definition,
+                    image: particleSprite(style: .glow),
+                    birthRateMultiplier: 0.9,
+                    sizeMultiplier: 1.0,
+                    velocityMultiplier: 1.0,
+                    spreadingAngle: definition.resolvedSpreadingAngle,
+                    acceleration: SCNVector3(0, 1.2, 0)
+                ),
+                makeRingParticles(
+                    definition: definition,
+                    image: particleSprite(style: .ring),
+                    birthRateMultiplier: 0.14,
+                    sizeMultiplier: 1.3,
+                    velocityMultiplier: 0.42
+                ),
+            ]
+        }
+    }
+
+    private func makeBurstParticles(
+        definition: ParticleEffectDefinition,
+        image: UIImage,
+        birthRateMultiplier: Double,
+        sizeMultiplier: Double,
+        velocityMultiplier: Double,
+        spreadingAngle: Double,
+        acceleration: SCNVector3
+    ) -> SCNParticleSystem {
+        let particles = SCNParticleSystem()
+        particles.loops = false
+        particles.birthRate = definition.resolvedBirthRate * birthRateMultiplier
+        particles.emissionDuration = definition.resolvedEmissionDuration
+        particles.particleLifeSpan = definition.resolvedLifeSpan
+        particles.particleLifeSpanVariation =
+            definition.resolvedLifeSpanVariation
+        particles.particleSize = definition.resolvedSize * sizeMultiplier
+        particles.particleSizeVariation = definition.resolvedSizeVariation
+        particles.particleVelocity =
+            definition.resolvedVelocity * velocityMultiplier
+        particles.particleVelocityVariation =
+            definition.resolvedVelocityVariation * velocityMultiplier
+        particles.spreadingAngle = spreadingAngle
+        particles.blendMode = .additive
+        particles.birthLocation = .surface
+        particles.emitterShape = SCNSphere(radius: 0.22)
+        particles.particleImage = image
+        particles.isLightingEnabled = true
+        particles.stretchFactor = 0.18
+        particles.dampingFactor = 0.12
+        particles.acceleration = acceleration
+        particles.particleColor = UIColor(
+            red: definition.red,
+            green: definition.green,
+            blue: definition.blue,
+            alpha: definition.resolvedAlpha
+        )
+        return particles
+    }
+
+    private func makeRingParticles(
+        definition: ParticleEffectDefinition,
+        image: UIImage,
+        birthRateMultiplier: Double,
+        sizeMultiplier: Double,
+        velocityMultiplier: Double
+    ) -> SCNParticleSystem {
+        let particles = SCNParticleSystem()
+        particles.loops = false
+        particles.birthRate = definition.resolvedBirthRate * birthRateMultiplier
+        particles.emissionDuration = max(
+            0.05,
+            definition.resolvedEmissionDuration * 0.75
+        )
+        particles.particleLifeSpan = definition.resolvedLifeSpan * 1.15
+        particles.particleLifeSpanVariation =
+            definition.resolvedLifeSpanVariation * 0.5
+        particles.particleSize = definition.resolvedSize * sizeMultiplier
+        particles.particleSizeVariation = definition.resolvedSizeVariation * 0.3
+        particles.particleVelocity =
+            definition.resolvedVelocity * velocityMultiplier
+        particles.particleVelocityVariation =
+            definition.resolvedVelocityVariation * 0.35
+        particles.spreadingAngle = 10
+        particles.blendMode = .additive
+        particles.birthLocation = .surface
+        particles.emitterShape = SCNTorus(ringRadius: 0.28, pipeRadius: 0.04)
+        particles.particleImage = image
+        particles.isLightingEnabled = true
+        particles.acceleration = SCNVector3(0, 0.15, 0)
+        particles.particleColor = UIColor(
+            red: definition.red,
+            green: definition.green,
+            blue: definition.blue,
+            alpha: definition.resolvedAlpha * 0.9
+        )
+        return particles
+    }
+
+    private func makeEffectCoreNode(
+        for definition: ParticleEffectDefinition,
+        effect: String
+    ) -> SCNNode {
+        let sphere = SCNSphere(
+            radius: effect.lowercased() == "void" ? 0.42 : 0.28
+        )
+        sphere.segmentCount = 24
+
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor(
+            red: definition.red,
+            green: definition.green,
+            blue: definition.blue,
+            alpha: min(1.0, definition.resolvedAlpha * 0.55)
+        )
+        material.emission.contents = UIColor(
+            red: definition.red,
+            green: definition.green,
+            blue: definition.blue,
+            alpha: 1.0
+        )
+        material.blendMode = .add
+        material.lightingModel = .constant
+        material.isDoubleSided = true
+        sphere.firstMaterial = material
+
+        let node = SCNNode(geometry: sphere)
+        node.opacity = 0.0
+        node.scale = SCNVector3(0.2, 0.2, 0.2)
+        node.runAction(
+            SCNAction.sequence([
+                SCNAction.group([
+                    SCNAction.fadeOpacity(to: 0.95, duration: 0.05),
+                    SCNAction.scale(to: 1.0, duration: 0.10),
+                ]),
+                SCNAction.group([
+                    SCNAction.fadeOut(duration: 0.20),
+                    SCNAction.scale(
+                        to: effect.lowercased() == "storm" ? 1.35 : 1.55,
+                        duration: 0.20
+                    ),
+                ]),
+                SCNAction.removeFromParentNode(),
+            ])
+        )
+        return node
+    }
+
+    private enum ParticleSpriteStyle {
+        case glow
+        case ember
+        case shard
+        case ring
+        case smoke
+        case mist
+        case flare
+        case spark
+        case bolt
+    }
+
+    private func particleSprite(style: ParticleSpriteStyle) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(
+            size: CGSize(width: 96, height: 96)
+        )
+        return renderer.image { context in
+            let cg = context.cgContext
+            cg.setAllowsAntialiasing(true)
+
+            switch style {
+            case .glow, .flare, .mist:
+                let colors =
+                    [
+                        UIColor.white
+                            .withAlphaComponent(style == .flare ? 1.0 : 0.9)
+                            .cgColor,
+                        UIColor.white
+                            .withAlphaComponent(style == .mist ? 0.12 : 0.0)
+                            .cgColor,
+                    ] as CFArray
+                let gradient = CGGradient(
+                    colorsSpace: CGColorSpaceCreateDeviceRGB(),
+                    colors: colors,
+                    locations: [0.0, 1.0]
+                )
+                cg.drawRadialGradient(
+                    gradient!,
+                    startCenter: CGPoint(x: 48, y: 48),
+                    startRadius: 2,
+                    endCenter: CGPoint(x: 48, y: 48),
+                    endRadius: style == .flare ? 44 : 38,
+                    options: .drawsAfterEndLocation
+                )
+            case .ember, .spark:
+                cg.setFillColor(UIColor.white.cgColor)
+                cg.fillEllipse(in: CGRect(x: 34, y: 34, width: 28, height: 28))
+            case .shard:
+                cg.setFillColor(UIColor.white.cgColor)
+                cg.move(to: CGPoint(x: 48, y: 10))
+                cg.addLine(to: CGPoint(x: 68, y: 48))
+                cg.addLine(to: CGPoint(x: 48, y: 86))
+                cg.addLine(to: CGPoint(x: 28, y: 48))
+                cg.closePath()
+                cg.fillPath()
+            case .ring:
+                cg.setStrokeColor(UIColor.white.withAlphaComponent(0.9).cgColor)
+                cg.setLineWidth(8)
+                cg.strokeEllipse(
+                    in: CGRect(x: 18, y: 18, width: 60, height: 60)
+                )
+            case .smoke:
+                cg.setFillColor(UIColor.white.withAlphaComponent(0.55).cgColor)
+                cg.fillEllipse(in: CGRect(x: 18, y: 22, width: 34, height: 34))
+                cg.fillEllipse(in: CGRect(x: 40, y: 18, width: 30, height: 30))
+                cg.fillEllipse(in: CGRect(x: 34, y: 40, width: 32, height: 32))
+            case .bolt:
+                cg.setFillColor(UIColor.white.cgColor)
+                cg.move(to: CGPoint(x: 44, y: 8))
+                cg.addLine(to: CGPoint(x: 62, y: 38))
+                cg.addLine(to: CGPoint(x: 50, y: 38))
+                cg.addLine(to: CGPoint(x: 62, y: 88))
+                cg.addLine(to: CGPoint(x: 34, y: 52))
+                cg.addLine(to: CGPoint(x: 46, y: 52))
+                cg.closePath()
+                cg.fillPath()
+            }
+        }
     }
 
     private func particleDefinition(for effect: String)
@@ -853,42 +1256,134 @@ final class BattleSceneCoordinator {
             ?? UIImage(named: "3DModel/\(textureName).png")
     }
 }
-#Preview {
-    BattleSceneView(
-        player: loadBattlePlayer(),
-        enemies: [
-            CharacterStats(
-                name: "Enemy A",
-                image: "1",
-                model: "shela",
-                hp: 100,
-                attack: 10
-            ),
-            CharacterStats(
-                name: "Enemy B",
-                image: "1",
-                model: "zaron",
-                hp: 120,
-                attack: 12
-            ),
-            CharacterStats(
-                name: "Enemy C",
-                image: "1",
-                model: "shela",
-                hp: 90,
-                attack: 9
-            ),
-        ],
-        enemyHPs: [0.72, 1.0, 0.45],
-        selectedEnemyIndex: 0,
-        playerAttackID: 0,
-        enemyAttackID: 0,
-        attackingEnemyIndex: nil,
-        particleEffect: "fire",
-        particleEffects: loadParticleEffects(),
-        groundTexture: "sar_bg",
-        skyboxTexture: "sar_bg",
-        onSelectEnemy: { _ in }
-    )
-    .ignoresSafeArea()
+#Preview("Battle Scene Skills") {
+    BattleScenePreviewContainer()
+        .ignoresSafeArea()
+}
+
+private struct BattleScenePreviewContainer: View {
+    @State private var selectedCardIndex = 0
+    @State private var playerAttackID = 1
+
+    private let previewCards = Array(loadAbilityCards().prefix(4))
+    private let previewEnemies = [
+        CharacterStats(
+            name: "Enemy A",
+            image: "1",
+            model: "zaron",
+            hp: 120,
+            attack: 12
+        ),
+        CharacterStats(
+            name: "Enemy B",
+            image: "1",
+            model: "shen",
+            hp: 140,
+            attack: 15
+        ),
+        CharacterStats(
+            name: "Enemy C",
+            image: "1",
+            model: "shela",
+            hp: 100,
+            attack: 10
+        ),
+    ]
+
+    private var selectedCard: AbilityCardDefinition? {
+        guard previewCards.indices.contains(selectedCardIndex) else {
+            return nil
+        }
+        return previewCards[selectedCardIndex]
+    }
+
+    private var particleTargetIndices: [Int] {
+        guard let selectedCard else { return [0] }
+        return selectedCard.isAOE ? Array(previewEnemies.indices) : [0]
+    }
+
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            BattleSceneView(
+                player: CharacterStats(
+                    name: "Preview Hero",
+                    image: "1",
+                    model: "aika",
+                    hp: 180,
+                    attack: 22
+                ),
+                enemies: previewEnemies,
+                enemyHPs: [1.0, 1.0, 1.0],
+                selectedEnemyIndex: 0,
+                playerAttackID: playerAttackID,
+                enemyAttackID: 0,
+                attackingEnemyIndex: nil,
+                particleEffect: selectedCard?.particleEffect,
+                particleTargetIndices: particleTargetIndices,
+                particleEffects: loadParticleEffects(),
+                groundTexture: "sar_bg",
+                skyboxTexture: "sar_bg",
+                onSelectEnemy: { _ in }
+            )
+
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Skill Preview")
+                    .font(.system(size: 16, weight: .black))
+
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(
+                            Array(previewCards.enumerated()),
+                            id: \.element.id
+                        ) {
+                            index,
+                            card in
+                            Button {
+                                selectedCardIndex = index
+                                playerAttackID += 1
+                            } label: {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(card.name)
+                                        .font(.system(size: 12, weight: .bold))
+                                        .lineLimit(1)
+                                    Text(card.isAOE ? "AOE" : "Single")
+                                        .font(
+                                            .system(size: 10, weight: .semibold)
+                                        )
+                                        .foregroundStyle(.white.opacity(0.75))
+                                }
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 10)
+                                .frame(width: 130, alignment: .leading)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .fill(
+                                            index == selectedCardIndex
+                                                ? Color.white.opacity(0.22)
+                                                : Color.black.opacity(0.3)
+                                        )
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(
+                                            Color.white.opacity(
+                                                index == selectedCardIndex
+                                                    ? 0.55 : 0.18
+                                            ),
+                                            lineWidth: 1
+                                        )
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+            }
+            .padding(16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color.black.opacity(0.26))
+        }
+        .background(Color.black)
+    }
 }

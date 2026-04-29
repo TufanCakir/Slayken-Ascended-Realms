@@ -44,8 +44,10 @@
         "duplicatesPerLevel": 3,
         "levelsPerStar": 6,
         "damageGrowth": 1.09,
+        "targeting": "allEnemies",
         "particleEffect": "void",
-        "description": "Dunkler Impuls mit violettem Einschlag."
+        "description":
+            "Dunkler Impuls mit violettem Einschlag, der alle Gegner trifft."
     },
     {
         "id": "moon_guard",
@@ -92,7 +94,9 @@
         "duplicatesPerLevel": 3,
         "levelsPerStar": 6,
         "damageGrowth": 1.09,
+        "targeting": "allEnemies",
         "particleEffect": "ash",
-        "description": "Schwerer Treffer mit dunkler Asche."
+        "description":
+            "Schwerer Aschebruch mit Flaechenschaden gegen mehrere Gegner."
     }
 ]

@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum AbilityCardTargeting: String, Codable, Equatable {
+    case single
+    case allEnemies
+}
+
 struct AbilityCardDefinition: Codable, Identifiable, Equatable {
     let id: String
     let name: String
@@ -22,6 +27,7 @@ struct AbilityCardDefinition: Codable, Identifiable, Equatable {
     let duplicatesPerLevel: Int?
     let levelsPerStar: Int?
     let damageGrowth: Double?
+    let targeting: AbilityCardTargeting?
 
     var resolvedRarity: Int { rarity ?? resolvedMaxStars }
     var resolvedManaCost: Int { manaCost ?? 35 }
@@ -30,6 +36,8 @@ struct AbilityCardDefinition: Codable, Identifiable, Equatable {
     var resolvedDuplicatesPerLevel: Int { max(1, duplicatesPerLevel ?? 2) }
     var resolvedLevelsPerStar: Int { max(1, levelsPerStar ?? 6) }
     var resolvedDamageGrowth: Double { damageGrowth ?? 1.08 }
+    var resolvedTargeting: AbilityCardTargeting { targeting ?? .single }
+    var isAOE: Bool { resolvedTargeting == .allEnemies }
 }
 
 func loadAbilityCards() -> [AbilityCardDefinition] {

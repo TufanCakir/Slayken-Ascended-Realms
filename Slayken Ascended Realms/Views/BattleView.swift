@@ -70,6 +70,7 @@ struct BattleView: View {
     @State private var cardLongPressActive = false
     @State private var cardPressTask: Task<Void, Never>?
     @State private var didTriggerTutorialRetreat = false
+    @State private var currentParticleTargetIndices: [Int] = []
 
     private let maxMana: Double = 100
     private let baseAttackManaGain: Double = 18
@@ -179,6 +180,7 @@ struct BattleView: View {
                 enemyAttackID: enemyAttackID,
                 attackingEnemyIndex: attackingEnemyIndex,
                 particleEffect: currentParticleEffect,
+                particleTargetIndices: currentParticleTargetIndices,
                 particleEffects: gameState.particleEffects,
                 groundTexture: gameState.activeGroundTexture,
                 skyboxTexture: gameState.activeSkyboxTexture,
@@ -930,9 +932,24 @@ struct BattleView: View {
 
     private func elementalMultiplier(for card: AbilityCardDefinition) -> Double
     {
-        GameElement(card.element).multiplier(
-            against: GameElement(currentEnemy.element)
+        elementalMultiplier(for: card, enemyIndex: safeSelectedEnemyIndex)
+    }
+
+    private func elementalMultiplier(
+        for card: AbilityCardDefinition,
+        enemyIndex: Int
+    ) -> Double {
+        guard activeEnemies.indices.contains(enemyIndex) else { return 1.0 }
+        return GameElement(card.element).multiplier(
+            against: GameElement(activeEnemies[enemyIndex].element)
         )
+    }
+
+    private func targetIndices(for card: AbilityCardDefinition?) -> [Int] {
+        if let card, card.isAOE {
+            return aliveEnemyIndices
+        }
+        return [safeSelectedEnemyIndex]
     }
 
     private func recoverMana(_ amount: Double) {
@@ -1057,25 +1074,23 @@ struct BattleView: View {
 
         currentTurn = .enemy
         currentParticleEffect = card?.particleEffect
+        currentParticleTargetIndices = targetIndices(for: card)
         playerAttackID += 1
 
         let targetIndex = safeSelectedEnemyIndex
         guard enemyHPs.indices.contains(targetIndex), enemyHPs[targetIndex] > 0
         else {
             selectNextTarget()
+            currentParticleTargetIndices = []
             currentTurn = .player
             return
         }
 
-        let multiplier = CGFloat(
-            card.map {
-                effectiveCardMultiplier($0) * elementalMultiplier(for: $0)
-            } ?? 1.0
+        let targetIndices = currentParticleTargetIndices
+        let defeatedIndices = applyAttackDamage(
+            with: card,
+            targetIndices: targetIndices
         )
-        let playerDamage = (leveledPlayer.attack * multiplier) / currentEnemy.hp
-        withAnimation(.easeOut(duration: 0.2)) {
-            enemyHPs[targetIndex] -= playerDamage
-        }
 
         if let tutorialConfig,
             tutorialConfig.retreatEnemyIndex == targetIndex,
@@ -1087,13 +1102,13 @@ struct BattleView: View {
             return
         }
 
-        if enemyHPs[targetIndex] <= 0 {
-            enemyHPs[targetIndex] = 0
-            defeatCurrentEnemy(at: targetIndex)
+        if !defeatedIndices.isEmpty {
+            defeatEnemies(at: defeatedIndices)
             return
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + battleDelay) {
+            currentParticleTargetIndices = []
             enemyAttack()
         }
     }
@@ -1106,13 +1121,83 @@ struct BattleView: View {
         manaRegenTask?.cancel()
         attackingEnemyIndex = nil
         currentParticleEffect = nil
+        currentParticleTargetIndices = []
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
             config.onEnemyRetreat()
         }
     }
 
+    private func applyAttackDamage(
+        with card: AbilityCardDefinition?,
+        targetIndices: [Int]
+    ) -> [Int] {
+        var defeatedIndices: [Int] = []
+
+        withAnimation(.easeOut(duration: 0.2)) {
+            for index in targetIndices where enemyHPs.indices.contains(index) {
+                guard enemyHPs[index] > 0 else { continue }
+
+                let multiplier = CGFloat(
+                    card.map {
+                        effectiveCardMultiplier($0)
+                            * elementalMultiplier(for: $0, enemyIndex: index)
+                    } ?? 1.0
+                )
+                let damage =
+                    (leveledPlayer.attack * multiplier)
+                    / activeEnemies[index].hp
+                enemyHPs[index] -= damage
+
+                if enemyHPs[index] <= 0 {
+                    enemyHPs[index] = 0
+                    defeatedIndices.append(index)
+                }
+            }
+        }
+
+        return defeatedIndices.sorted()
+    }
+
+    private func defeatEnemies(at indices: [Int]) {
+        let uniqueSortedIndices = Array(Set(indices)).sorted()
+        guard !uniqueSortedIndices.isEmpty else { return }
+
+        if aliveEnemyIndices.isEmpty {
+            if let tutorialConfig {
+                isAuto = false
+                autoTask?.cancel()
+                manaRegenTask?.cancel()
+                attackingEnemyIndex = nil
+                currentParticleEffect = nil
+                currentParticleTargetIndices = []
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+                    tutorialConfig.onBattleComplete()
+                }
+                return
+            }
+
+            awardVictoryRewardsIfNeeded()
+            isAuto = false
+            autoTask?.cancel()
+            manaRegenTask?.cancel()
+            attackingEnemyIndex = nil
+            currentParticleTargetIndices = []
+            showVictory = true
+            return
+        }
+
+        let lastIndex = uniqueSortedIndices.max() ?? safeSelectedEnemyIndex
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+            selectNextTarget(after: lastIndex)
+            currentParticleEffect = nil
+            currentParticleTargetIndices = []
+            enemyAttack()
+        }
+    }
+
     private func defeatCurrentEnemy(at index: Int) {
+        currentParticleTargetIndices = []
         if aliveEnemyIndices.isEmpty {
             if let tutorialConfig {
                 isAuto = false

@@ -9,6 +9,13 @@ import SwiftData
 import SwiftUI
 import UIKit
 
+private struct SelectedCardInfo: Identifiable {
+    let card: AbilityCardDefinition
+    let count: Int
+
+    var id: String { card.id }
+}
+
 struct CardCollectionView: View {
     let onClose: () -> Void
 
@@ -16,6 +23,7 @@ struct CardCollectionView: View {
     @EnvironmentObject private var gameState: GameState
     @Query(sort: \OwnedAbilityCard.acquiredAt) private var ownedCards:
         [OwnedAbilityCard]
+    @State private var selectedInfoCard: SelectedCardInfo?
 
     private var cards: [(AbilityCardDefinition, Int)] {
         ownedCards.compactMap { owned in
@@ -96,26 +104,75 @@ struct CardCollectionView: View {
             }
             .ignoresSafeArea()
         }
+        .sheet(item: $selectedInfoCard) { entry in
+            CardInfoSheet(
+                card: entry.card,
+                count: entry.count,
+                level: cardLevel(entry.card, count: entry.count),
+                stars: cardStars(
+                    entry.card,
+                    level: cardLevel(entry.card, count: entry.count)
+                ),
+                damage: cardDamage(
+                    entry.card,
+                    level: cardLevel(entry.card, count: entry.count),
+                    stars: cardStars(
+                        entry.card,
+                        level: cardLevel(entry.card, count: entry.count)
+                    )
+                )
+            )
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
+        }
     }
 
     private func cardView(_ card: AbilityCardDefinition, count: Int)
         -> some View
     {
-        VStack(alignment: .leading, spacing: 7) {
-            cardImage(card.image)
-                .frame(height: 178)
-                .clipShape(
-                    RoundedRectangle(cornerRadius: 6, style: .continuous)
-                )
+        let level = cardLevel(card, count: count)
+        let stars = cardStars(card, level: level)
+        let damage = cardDamage(card, level: level, stars: stars)
 
-            Text(card.name)
-                .font(.system(size: 13, weight: .black))
-                .foregroundStyle(.white)
-                .lineLimit(1)
+        return VStack(alignment: .leading, spacing: 7) {
+            ZStack(alignment: .topTrailing) {
+                cardImage(card.image)
+                    .frame(height: 178)
+                    .clipShape(
+                        RoundedRectangle(cornerRadius: 6, style: .continuous)
+                    )
 
-            let level = cardLevel(card, count: count)
-            let stars = cardStars(card, level: level)
-            let damage = cardDamage(card, level: level, stars: stars)
+                Button {
+                    selectedInfoCard = SelectedCardInfo(
+                        card: card,
+                        count: count
+                    )
+                } label: {
+                    Image(systemName: "info.circle.fill")
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundStyle(.white)
+                        .padding(8)
+                        .background(Color.black.opacity(0.5), in: Circle())
+                }
+                .buttonStyle(.plain)
+                .padding(8)
+            }
+
+            HStack(spacing: 8) {
+                Text(card.name)
+                    .font(.system(size: 13, weight: .black))
+                    .foregroundStyle(.white)
+                    .lineLimit(1)
+
+                Spacer(minLength: 0)
+
+                Text(card.isAOE ? "AOE" : "Single")
+                    .font(.system(size: 9, weight: .black))
+                    .foregroundStyle(.white.opacity(0.78))
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 3)
+                    .background(Color.white.opacity(0.12), in: Capsule())
+            }
 
             HStack {
                 Text(GameElement(card.element).displayName)
@@ -191,6 +248,96 @@ struct CardCollectionView: View {
                     .foregroundStyle(.white.opacity(0.78))
             }
         }
+    }
+}
+
+private struct CardInfoSheet: View {
+    let card: AbilityCardDefinition
+    let count: Int
+    let level: Int
+    let stars: Int
+    let damage: Double
+
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 16) {
+                cardHeader
+
+                infoRow("Element", GameElement(card.element).displayName)
+                infoRow("Ziel", card.isAOE ? "Alle Gegner" : "Ein Gegner")
+                infoRow("Mana", "\(card.resolvedManaCost) MP")
+                infoRow("Level", "\(level) / \(card.resolvedMaxLevel)")
+                infoRow("Sterne", "\(stars) / \(card.resolvedMaxStars)")
+                infoRow("Besitz", "x\(count)")
+                infoRow("DMG", "x\(String(format: "%.2f", damage))")
+
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Beschreibung")
+                        .font(.system(size: 13, weight: .black))
+                        .foregroundStyle(.white.opacity(0.85))
+                    Text(card.description)
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.72))
+                }
+            }
+            .padding(18)
+        }
+        .background(
+            LinearGradient(
+                colors: [Color.black.opacity(0.94), Color.cyan.opacity(0.18)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+    }
+
+    private var cardHeader: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Group {
+                if UIImage(named: card.image) != nil {
+                    Image(card.image)
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    ZStack {
+                        LinearGradient(
+                            colors: [
+                                .black.opacity(0.82), .cyan.opacity(0.36),
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 34, weight: .black))
+                            .foregroundStyle(.white.opacity(0.78))
+                    }
+                }
+            }
+            .frame(height: 200)
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+
+            Text(card.name)
+                .font(.system(size: 24, weight: .black))
+                .foregroundStyle(.white)
+        }
+    }
+
+    private func infoRow(_ title: String, _ value: String) -> some View {
+        HStack {
+            Text(title)
+                .font(.system(size: 12, weight: .black))
+                .foregroundStyle(.white.opacity(0.62))
+            Spacer()
+            Text(value)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundStyle(.white)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .background(
+            Color.white.opacity(0.08),
+            in: RoundedRectangle(cornerRadius: 12)
+        )
     }
 }
 

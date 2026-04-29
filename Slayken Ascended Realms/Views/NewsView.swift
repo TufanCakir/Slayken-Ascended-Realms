@@ -12,13 +12,26 @@ struct NewsView: View {
     var onClose: (() -> Void)? = nil
 
     @EnvironmentObject var theme: ThemeManager
+    @State private var selectedCategory = "Allgemein"
 
     private let items = loadNewsItems()
 
+    private var categories: [String] {
+        ["Allgemein", "Events", "Bug Fixes"]
+    }
+
     private var groupedItems: [(String, [NewsItemDefinition])] {
-        Dictionary(grouping: items, by: \.category)
-            .map { ($0.key, $0.value.sorted { $0.date > $1.date }) }
-            .sorted { $0.0 < $1.0 }
+        let filteredItems =
+            selectedCategory == "Allgemein"
+            ? items
+            : items.filter { normalizedCategory(for: $0) == selectedCategory }
+
+        return Dictionary(
+            grouping: filteredItems,
+            by: { normalizedCategory(for: $0) }
+        )
+        .map { ($0.key, $0.value.sorted { $0.date > $1.date }) }
+        .sorted { $0.0 < $1.0 }
     }
 
     var body: some View {
@@ -27,6 +40,7 @@ struct NewsView: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 22) {
                     header
+                    categoryBar
 
                     if items.isEmpty {
                         emptyState
@@ -111,6 +125,71 @@ struct NewsView: View {
             Color.white.opacity(0.08),
             in: RoundedRectangle(cornerRadius: 8, style: .continuous)
         )
+    }
+
+    private var categoryBar: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                ForEach(categories, id: \.self) { category in
+                    Button {
+                        selectedCategory = category
+                    } label: {
+                        Text(category)
+                            .font(.system(size: 12, weight: .black))
+                            .foregroundStyle(
+                                selectedCategory == category ? .black : .white
+                            )
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 10)
+                            .background(
+                                selectedCategory == category
+                                    ? Color.yellow
+                                    : Color.black.opacity(0.32),
+                                in: Capsule()
+                            )
+                            .overlay {
+                                Capsule()
+                                    .stroke(
+                                        .white.opacity(
+                                            selectedCategory == category
+                                                ? 0 : 0.10
+                                        ),
+                                        lineWidth: 1
+                                    )
+                            }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+    }
+
+    private func normalizedCategory(for item: NewsItemDefinition) -> String {
+        let rawCategory = item.category.lowercased()
+        let title = item.title.lowercased()
+        let subtitle = item.subtitle.lowercased()
+        let body = item.body.lowercased()
+        let tags = item.tags.joined(separator: " ").lowercased()
+        let combinedText = "\(rawCategory) \(title) \(subtitle) \(body) \(tags)"
+
+        if combinedText.contains("bug")
+            || combinedText.contains("fix")
+            || combinedText.contains("balance")
+            || combinedText.contains("maintenance")
+            || combinedText.contains("system update")
+        {
+            return "Bug Fixes"
+        }
+
+        if combinedText.contains("event")
+            || combinedText.contains("festival")
+            || combinedText.contains("rift")
+            || combinedText.contains("seasonal")
+        {
+            return "Events"
+        }
+
+        return "Allgemein"
     }
 
     private func newsSection(title: String, items: [NewsItemDefinition])

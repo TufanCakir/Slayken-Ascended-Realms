@@ -1,140 +1,304 @@
 [
     {
-        "id": "project_update_core_systems",
-        "category": "Neu Im Game",
-        "title": "Neue Systeme fuer Geschenke, Daily Login und Event-Farmen",
+        "id": "official_launch_slayken_ascended_realms",
+        "category": "Official Launch",
+        "title": "Slayken Ascended Realms ist offiziell im Projekt gestartet",
         "subtitle":
-            "Giftboxen, 30 Tage Daily Login und neue Farm-Events sind jetzt im Projekt angelegt.",
-        "image": "theme_epic",
-        "date": "2026-04-20",
+            "Core Loop, Battle, News, Quests, Summon, Shop und Archive sind jetzt gemeinsam spielbar aufgebaut.",
+        "image": "festival_new_year",
+        "date": "2026-04-25",
         "tags": [
-            "Giftbox",
-            "Daily Login",
-            "Events",
-            "Farm"
+            "Launch",
+            "Official",
+            "Core Systems",
+            "Release"
         ],
         "body":
-            "Im Projekt wurden mehrere neue Live-Systems vorbereitet. Es gibt jetzt ein getrenntes Giftbox-System fuer manuelle Geschenke an den Spieler, ein eigenes 30-Tage-Daily-Login-System mit separater JSON-Datei und neue Event-Kapitel fuer Coin Farm, XP Farm und Crystal Farm. Diese Inhalte sind so aufgebaut, dass du sie spaeter direkt ueber JSON erweitern und balancen kannst."
+            "Das Projekt hat jetzt einen deutlich volleren Release-Stand erreicht. GameView, BattleView, News, Daily Login, Giftboxen, Quests, Summon, Shop, Story-Archive und Event-Archive greifen miteinander und bilden zusammen den offiziellen Grundaufbau von Slayken Ascended Realms."
     },
     {
-        "id": "new_characters_shen_sennara",
-        "category": "Neue Charaktere",
-        "title": "Shen und Sennara sind im Projekt angekommen",
-        "subtitle":
-            "Beide Charaktere werden jetzt bereits in neuen Event-Inhalten eingesetzt.",
-        "image": "bg_sar",
-        "date": "2026-04-20",
-        "tags": [
-            "Shen",
-            "Sennara",
-            "3D Modelle",
-            "Events"
-        ],
-        "body":
-            "Mit Shen und Sennara sind zwei weitere Charaktere im Projekt vorhanden. Beide besitzen Modelle beziehungsweise Battle-Modelle und werden bereits in den neuen Event-JSONs als Gegner und Boss-Charaktere genutzt. Dadurch fuehlt sich der Event-Bereich nicht mehr nach Platzhaltern an, sondern zeigt schon neue Gesichter aus deiner eigenen Welt."
-    },
-    {
-        "id": "event_map_progression_expanded",
+        "id": "create_class_release_live",
         "category": "Neue Features",
-        "title": "Event Map, Nodes und Battle-Routen wurden erweitert",
+        "title":
+            "Create Class ist live und direkt aus dem Schnellmenue erreichbar",
         "subtitle":
-            "Point-Nodes und Battle-Nodes koennen jetzt sauber ueber JSON und Projektbilder gesteuert werden.",
-        "image": "realm_country",
-        "date": "2026-04-20",
+            "Standardklassen und Heldenklassen koennen jetzt als eigener Charakter vorbereitet werden.",
+        "image": "theme_epic",
+        "date": "2026-04-25",
         "tags": [
-            "Globe Event",
-            "Nodes",
-            "Battle Route",
-            "JSON"
+            "Create Class",
+            "Classes",
+            "Hero Classes",
+            "Menu"
         ],
         "body":
-            "Die GlobeEvent-Map wurde weiter ausgebaut. Point-Nodes und Battle-Nodes koennen ueber JSON mit eigenen Bildern beschrieben werden. Aktuell ist als Basis bereits chest_brown als Node-Darstellung eingebunden, damit neue Routen sofort sichtbar sind. Das System ist damit vorbereitet, spaeter pro Event eigene Icons, Truhen, Bossmarker oder Spezial-Node-PNGs einzusetzen."
+            "Mit Create Class steht jetzt ein eigener Charakter-Erstellungsbereich im Projekt. Spieler koennen zwischen Standardklassen wie Assassin, Mage, Archer und Warrior sowie mehreren Heldenklassen waehlen. Auch die Navigation aus dem Schnellmenue ist jetzt sauber eingebunden."
     },
     {
-        "id": "resource_farm_events_live",
-        "category": "Aktivitaeten",
-        "title": "Coin Farm, XP Farm und Crystal Farm vorbereitet",
+        "id": "quest_board_and_progression_release",
+        "category": "Quest Update",
+        "title":
+            "Quest Board, Battle-Ziele und Fortschrittsbelohnungen sind aktiv",
         "subtitle":
-            "Drei Event-Linien geben dir unterschiedliche Farm-Schwerpunkte.",
-        "image": "realm_fire",
-        "date": "2026-04-20",
+            "Ascended-Level, Siege, Kills und Waehrung werden jetzt fuer Quest-Fortschritt ausgewertet.",
+        "image": "realm_country",
+        "date": "2026-04-25",
         "tags": [
-            "Coin Farm",
-            "XP Farm",
-            "Crystal Farm",
+            "Quest",
+            "Ascended",
+            "Progression",
             "Rewards"
         ],
         "body":
-            "Die neuen Event-Kapitel sind auf unterschiedliche Belohnungen ausgelegt. Coin Farm konzentriert sich auf hohe Muenz-Rewards, XP Farm auf deutlich hoehere Erfahrung und Crystal Farm auf bessere Kristall-Ausbeute. Damit entsteht schon jetzt eine klare Trennung zwischen normalen Story-Kaempfen und gezielten Farm-Routen."
+            "Das Quest-System deckt jetzt mehrere Progressionsachsen gleichzeitig ab. Neben Ascended-Level gibt es Ziele fuer Battle-Victories, Monster-Kills sowie Waehrungsfortschritt. Damit bekommt das Projekt einen klareren Midterm-Grind mit sichtbaren Reward-Stufen."
     },
     {
-        "id": "seasonal_rift_events_expand",
-        "category": "Neu Im Game",
-        "title": "Neue saisonale Rift-Events erweitern die Event-Map",
+        "id": "choose_one_character_quest_reward",
+        "category": "Quest Update",
+        "title": "Bestimmte Quests lassen jetzt eine Figur direkt auswaehlen",
         "subtitle":
-            "Mehrere neue Event-Kapitel bringen eigene Stimmung, Bosse und staerkere Rewards.",
-        "image": "realm_moon_gate",
-        "date": "2026-04-20",
+            "Nicht jede Belohnung ist fest, einige Quests geben jetzt echte Character Choice Rewards.",
+        "image": "festival_dragon",
+        "date": "2026-04-25",
         "tags": [
-            "Rift Dragon Ascension",
-            "Celestial Reset",
-            "Lunar Rift Eclipse",
-            "Flame Rift Surge"
+            "Quest Reward",
+            "Choose Your Ally",
+            "Character Choice",
+            "Unlock"
         ],
         "body":
-            "Der Event-Bereich wurde um mehrere neue, eigenstaendige Kapitel erweitert. Mit Rift Dragon Ascension, Celestial Reset, Lunar Rift Eclipse und Flame Rift Surge entstehen jetzt deutlich staerkere Themen-Events mit eigenem Flair. Die neuen Kapitel orientieren sich an realen Feststimmungen und saisonalen Motiven, wurden aber bewusst in die Welt von Slayken Ascended Realms uebersetzt, damit der Stil originell bleibt und zur bestehenden Rift-Atmosphaere passt."
+            "Im Projekt sind jetzt Quests vorhanden, die nicht nur Coins oder Crystals geben, sondern eine direkte Charakter-Auswahl erlauben. Dadurch wirken spaetere Quest-Abschluesse wertiger und geben dem Spieler eine klarere Entscheidung statt nur linearen Standardrewards."
     },
     {
-        "id": "better_event_rewards_update",
-        "category": "Aktivitaeten",
-        "title": "Events geben jetzt deutlich staerkere Ressourcen",
-        "subtitle":
-            "Mehr Coins, mehr Crystals und hoehere XP-Werte machen Events wertvoller.",
-        "image": "bg_void",
-        "date": "2026-04-20",
-        "tags": [
-            "Rewards",
-            "Coins",
-            "Crystals",
-            "XP"
-        ],
-        "body":
-            "Die neuen Event-Kapitel wurden nicht nur thematisch erweitert, sondern auch belohnungstechnisch aufgewertet. Viele Event-Battles liefern jetzt spuerbar mehr Coins, bessere Crystal-Rewards und groessere XP-Ausbeute. Dadurch fuehlen sich Event-Routen klarer wie spezielle High-Value-Aktivitaeten an und geben dem Spieler einen echten Grund, zwischen Story, Farm und Seasonal-Events zu wechseln."
-    },
-    {
-        "id": "shen_sennara_event_presence",
-        "category": "Neue Charaktere",
-        "title": "Shen und Sennara praegen die neuen Event-Bosse",
-        "subtitle":
-            "Die beiden neueren Charaktere tauchen jetzt in mehreren Event-Routen als Waechter und Boss-Gegner auf.",
-        "image": "bg_ice",
-        "date": "2026-04-20",
-        "tags": [
-            "Shen",
-            "Sennara",
-            "Boss",
-            "Event Map"
-        ],
-        "body":
-            "Shen und Sennara sind nicht mehr nur vorhandene Projektressourcen, sondern werden aktiv in den Event-Kapiteln eingesetzt. Je nach Route treten sie als Waechter, Elitegegner oder Bosscharaktere auf und geben den neuen Events eine erkennbare Identitaet. Damit bekommen die neuen Inhalte auch visuell und spielerisch mehr Gewicht."
-    },
-    {
-        "id": "roadmap_next_content_drop",
-        "category": "Was Noch Kommt",
+        "id": "summon_banners_and_free_launch_gifts",
+        "category": "Summon",
         "title":
-            "Mehr Charaktere, mehr Events, mehr Maps und mehr Story sind geplant",
+            "Summon Banner, Free Launch Gifts und Skill Card Banner sind vorbereitet",
         "subtitle":
-            "Der aktuelle Stand ist nur der Anfang fuer den groesseren Content-Ausbau.",
-        "image": "realm_void",
-        "date": "2026-04-20",
+            "Charaktere, Karten und Event-Banner koennen jetzt ueber mehrere Banner-Typen verteilt werden.",
+        "image": "realm_fire",
+        "date": "2026-04-25",
         "tags": [
-            "Roadmap",
-            "Mehr Charaktere",
-            "Mehr Events",
-            "Mehr Maps",
-            "Story Kapitel"
+            "Summon",
+            "Banner",
+            "Launch Gift",
+            "Skill Cards"
         ],
         "body":
-            "Als naechste Ausbaustufe bieten sich mehr spielbare Charaktere, weitere Event-Typen, neue Maps, mehr Story-Kapitel und zusaetzliche Battle-Routen an. Auch neue Boss-Events, Spezial-Farm-Events, weitere Giftboxen, neue Daily-Login-Belohnungen und ein groesserer Story-Archiv-Bereich passen gut in den aktuellen Projektaufbau. Die vorhandenen JSON-Systeme sind bereits so flexibel, dass sich dieser Content Schritt fuer Schritt schnell erweitern laesst."
+            "Das Summon-System umfasst inzwischen Free Character Gifts, Max Skill Gifts, Heldenbanner, gemischte Recruitment-Banner und mehrere Skill-Star-Banner. Damit ist der Banner-Bereich nicht mehr nur ein Platzhalter, sondern ein richtiger Content-Baustein."
+    },
+    {
+        "id": "shop_store_and_resource_packs_online",
+        "category": "Shop",
+        "title":
+            "Shop, Crystal Packs und kostenlose Launch-Angebote sind im Projekt aktiv",
+        "subtitle":
+            "Kostenlose Packs, Coin- und Crystal-Angebote sowie Echtgeld-Packs sind jetzt strukturiert angelegt.",
+        "image": "bg_arena",
+        "date": "2026-04-25",
+        "tags": [
+            "Shop",
+            "StoreKit",
+            "Free Pack",
+            "Crystals"
+        ],
+        "body":
+            "Der Shop kombiniert kostenlose Einmal-Angebote, Ressourcen-Tauschpakete und StoreKit-Crystal-Packs. Einmalige Free Supply Offers, Echtgeld-Crystals und weitere Bundle-Strukturen sind jetzt datengetrieben im Projekt hinterlegt und koennen spaeter leicht erweitert werden."
+    },
+    {
+        "id": "daily_login_30_days_release",
+        "category": "Daily Login",
+        "title": "30 Tage Daily Login ist eingebaut",
+        "subtitle":
+            "Der Login-Bereich bringt taegliche Rewards, Streak-Fortschritt und eine eigene Reward-Datei mit.",
+        "image": "festival_moon",
+        "date": "2026-04-25",
+        "tags": [
+            "Daily Login",
+            "30 Days",
+            "Rewards",
+            "Streak"
+        ],
+        "body":
+            "Daily Login ist nicht mehr nur als Idee vorhanden, sondern als eigenes System mit Fortschritt, Reward-State und Claim-Logik. Das macht den Projektstand deutlich kompletter, weil damit ein taeglicher Wiedereinstieg mit sauberem Reward-Fluss moeglich wird."
+    },
+    {
+        "id": "giftboxes_and_maintenance_rewards",
+        "category": "Giftbox",
+        "title": "Giftboxen von Welcome bis Maintenance sind jetzt im Projekt",
+        "subtitle":
+            "Mehrere manuelle Geschenktypen geben Raum fuer Events, Launch-Compensation und Sonderaktionen.",
+        "image": "bg_map",
+        "date": "2026-04-25",
+        "tags": [
+            "Giftbox",
+            "Welcome",
+            "Maintenance",
+            "Manual Rewards"
+        ],
+        "body":
+            "Von Willkommensbox bis Maintenance Box gibt es jetzt mehrere Giftbox-Definitionen mit unterschiedlichen Rewards. Das System eignet sich fuer Launch-Geschenke, Event-Verteilungen, Entschaedigungen und spaetere Sonderaktionen ohne neue Code-Wege zu brauchen."
+    },
+    {
+        "id": "story_map_and_globe_routes_expanded",
+        "category": "Story",
+        "title":
+            "Story-Map, Globe Routes und Battle-Nodes wurden stark erweitert",
+        "subtitle":
+            "Story und Event-Kapitel laufen jetzt ueber mehrere Kartenpunkte und verbundene Battles.",
+        "image": "realm_moon_gate",
+        "date": "2026-04-25",
+        "tags": [
+            "Story",
+            "Globe Event",
+            "Battle Nodes",
+            "Map Progression"
+        ],
+        "body":
+            "Die Story- und Event-Struktur nutzt inzwischen mehrere Kapitel, Punkte, Cutscenes und Battle-Nodes. Das macht die Weltkarte deutlich naeher an einem echten Progressionsfluss und bereitet die spaetere Erweiterung um noch mehr Story-Linien sauber vor."
+    },
+    {
+        "id": "event_archive_and_story_archive_opened",
+        "category": "Archive",
+        "title":
+            "Story Archive und Event Archive sind jetzt als eigene Bereiche verfuegbar",
+        "subtitle":
+            "Bereits gesehene Inhalte koennen dadurch spaeter einfacher erneut besucht werden.",
+        "image": "realm_void",
+        "date": "2026-04-25",
+        "tags": [
+            "Archive",
+            "Story Log",
+            "Event Log",
+            "Replay"
+        ],
+        "body":
+            "Mit StoryArchiveView und EventArchiveView ist das Projekt jetzt nicht mehr rein linear. Inhalte koennen archiviert und spaeter wieder aufgerufen werden, was besonders fuer storylastige Event-Kapitel und Tutorial-Wiedergaben wichtig ist."
+    },
+    {
+        "id": "seasonal_festival_images_and_events",
+        "category": "Seasonal Events",
+        "title":
+            "Festival-Assets fuer Dragon, Moon, New Year und Sommer sind eingebunden",
+        "subtitle":
+            "Saisonale Bilder geben den News, Events und Themenbereichen mehr Identitaet.",
+        "image": "festival_summer",
+        "date": "2026-04-25",
+        "tags": [
+            "Festival",
+            "Dragon",
+            "Moon",
+            "New Year"
+        ],
+        "body":
+            "Mehrere Festival-Bilder sind im Projekt vorhanden und koennen fuer News, Seasonal Events und Themen eingesetzt werden. Dadurch fuehlen sich Rift-Events und offizielle Ankuendigungen deutlich naeher an echten Live-Operation-Inhalten an."
+    },
+    {
+        "id": "battle_energy_and_regen_system_release",
+        "category": "System Update",
+        "title":
+            "Battle Energie und Farm-Limits regenerieren jetzt automatisch",
+        "subtitle":
+            "Der alte Daily Reset wurde durch ein minutenbasiertes Energie- und Limit-System ersetzt.",
+        "image": "theme_fire",
+        "date": "2026-04-25",
+        "tags": [
+            "Energy",
+            "Farm Limit",
+            "Regeneration",
+            "Balance"
+        ],
+        "body":
+            "Battle-Ressourcen sind jetzt ueber eine eigene JSON-Datei konfigurierbar und regenerieren pro Minute. Energie, Coin-Limits und Crystal-Limits laufen damit nicht mehr ueber einen harten Daily Reset, sondern ueber ein klareres Live-System mit staendigem Wiederaufbau."
+    },
+    {
+        "id": "ascended_scaling_and_character_growth",
+        "category": "Progression",
+        "title":
+            "Ascended Scaling treibt jetzt Energie, Limits, HP, DMG und Character XP",
+        "subtitle":
+            "Mit jedem Ascended Level wachsen mehrere Systeme exponentiell weiter.",
+        "image": "bg_fire",
+        "date": "2026-04-25",
+        "tags": [
+            "Ascended",
+            "Scaling",
+            "HP",
+            "DMG"
+        ],
+        "body":
+            "Die Progression skaliert jetzt mehrere Werte gemeinsam. Energie-Maximum, Farm-Limits, Charakter-HP, Charakter-DMG und Character-XP-Kurven werden ueber definierte Growth-Faktoren berechnet. Dadurch fuehlt sich spaeteres Ascended-Level nicht nur kosmetisch, sondern systemisch relevant an."
+    },
+    {
+        "id": "playable_classes_and_hero_roster_expanded",
+        "category": "Neue Charaktere",
+        "title":
+            "Standardklassen und acht Heldenklassen sind im Projekt vorhanden",
+        "subtitle":
+            "Assassin, Mage, Archer, Warrior plus Girma bis Yanzu erweitern das Roster stark.",
+        "image": "bg_sar",
+        "date": "2026-04-25",
+        "tags": [
+            "Classes",
+            "Heroes",
+            "Roster",
+            "Variants"
+        ],
+        "body":
+            "Neben klassischen Rollen mit Male- und Female-Varianten besitzt das Projekt bereits mehrere benannte Heldenklassen. Das macht die Charakterbasis deutlich breiter und gibt Create Class, Summon und spaeteren Quest-Rewards eine stabile Content-Grundlage."
+    },
+    {
+        "id": "three_d_characters_monsters_and_animations",
+        "category": "3D Content",
+        "title":
+            "3D Charaktere, Monster und Animationsdateien sind breit ausgebaut",
+        "subtitle":
+            "Spieler, Klassen, Helden und Monster besitzen eigene Modell- und Animationspfade.",
+        "image": "bg_ice",
+        "date": "2026-04-25",
+        "tags": [
+            "3D",
+            "Monsters",
+            "Animations",
+            "USDZ"
+        ],
+        "body":
+            "Das Projekt enthaelt inzwischen viele USDZ-Ressourcen fuer spielbare Charaktere, Klassen, Hero Classes und Monster. Durch die getrennten Animation-Ordner ist die Grundlage fuer unterschiedliche Battle-Praesentationen und spaetere Spezialanimationen bereits vorhanden."
+    },
+    {
+        "id": "skill_cards_particles_and_battle_identity",
+        "category": "Combat",
+        "title":
+            "Skill Cards und Particle Effects geben Kaempfen mehr Identitaet",
+        "subtitle":
+            "Slash, Crystal, Void, Moon, Storm und Ash verfuegen ueber eigene Effekte und Kartenbilder.",
+        "image": "bg_void",
+        "date": "2026-04-25",
+        "tags": [
+            "Ability Cards",
+            "Particles",
+            "Combat",
+            "VFX"
+        ],
+        "body":
+            "Mehrere Ability Cards und zugehoerige Particle Effects sind bereits strukturiert hinterlegt. Dadurch bekommen Kaempfe nicht nur Schaden und Zahlen, sondern auch deutlich staerkere visuelle und thematische Unterschiede zwischen den Faehigkeiten."
+    },
+    {
+        "id": "music_themes_and_background_collection",
+        "category": "Presentation",
+        "title":
+            "Themes, Hintergruende und Musikspuren erweitern die Praesentation",
+        "subtitle":
+            "Mehrere Realm-, Festival- und Theme-Bilder sowie Main Tracks sind im Projekt verfuegbar.",
+        "image": "realm_ice",
+        "date": "2026-04-25",
+        "tags": [
+            "Themes",
+            "Backgrounds",
+            "Music",
+            "Presentation"
+        ],
+        "body":
+            "Mit Realm-Bildern, Festival-Motiven, Theme-Backdrops und mehreren Musikspuren ist die audiovisuelle Basis des Projekts inzwischen deutlich breiter. Das hilft News, Menues, Events und Kaempfen dabei, jeweils ihren eigenen Ton und ihre eigene Stimmung zu tragen."
     }
 ]

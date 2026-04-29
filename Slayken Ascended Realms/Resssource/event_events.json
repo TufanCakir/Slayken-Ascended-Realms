@@ -50,7 +50,7 @@
                             "crystals": 600
                         },
                         "rewards": [
-                            c{
+                            {
                                 "currency": "coins",
                                 "amount": 420
                             },
@@ -168,7 +168,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 760
+                                "amount": 640
                             },
                             {
                                 "currency": "crystals",

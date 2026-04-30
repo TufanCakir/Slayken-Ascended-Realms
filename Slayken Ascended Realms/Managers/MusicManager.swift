@@ -23,7 +23,7 @@ final class MusicManager: NSObject, ObservableObject {
     private let enabledKey = "music_enabled"
 
     override init() {
-        self.tracks = loadMusicTracks()
+        self.tracks = []
         let savedVolume =
             UserDefaults.standard.object(forKey: volumeKey) as? Double
         self.volume = savedVolume ?? 0.7
@@ -37,6 +37,14 @@ final class MusicManager: NSObject, ObservableObject {
     func startPlaybackIfNeeded() {
         guard !hasStartedPlayback else { return }
         hasStartedPlayback = true
+        playCurrentTrack()
+    }
+
+    func reloadTracks() {
+        tracks = loadMusicTracks()
+
+        guard hasStartedPlayback, isEnabled else { return }
+        currentIndex = min(currentIndex, max(tracks.count - 1, 0))
         playCurrentTrack()
     }
 
@@ -82,7 +90,10 @@ final class MusicManager: NSObject, ObservableObject {
 
     private func playCurrentTrack() {
         guard isEnabled else { return }
-        guard !tracks.isEmpty else { return }
+        guard !tracks.isEmpty else {
+            RemoteContentManager.logError("MusicManager: no tracks available")
+            return
+        }
         guard tracks.indices.contains(currentIndex) else {
             currentIndex = 0
             playCurrentTrack()
@@ -90,7 +101,12 @@ final class MusicManager: NSObject, ObservableObject {
         }
 
         let track = tracks[currentIndex]
-        guard let url = resourceURL(for: track.fileName) else { return }
+        guard let url = resourceURL(for: track.fileName) else {
+            RemoteContentManager.logError(
+                "MusicManager: missing track \(track.fileName)"
+            )
+            return
+        }
 
         do {
             let newPlayer = try AVAudioPlayer(contentsOf: url)
@@ -101,6 +117,9 @@ final class MusicManager: NSObject, ObservableObject {
             player = newPlayer
             currentTrackID = track.id
         } catch {
+            RemoteContentManager.logError(
+                "MusicManager failed for \(track.fileName): \(error.localizedDescription)"
+            )
             playNextTrack()
         }
     }
@@ -120,15 +139,29 @@ final class MusicManager: NSObject, ObservableObject {
 
         if let remoteURL = RemoteContentManager.cachedAssetURL(
             named: fileName,
-            preferredExtensions: fileExtension.isEmpty ? ["mp3", "m4a", "wav"] : []
+            preferredExtensions: fileExtension.isEmpty
+                ? ["mp3", "m4a", "wav"] : []
         ) {
+            RemoteContentManager.logInfo(
+                "MusicManager using remote cached track \(fileName)"
+            )
             return remoteURL
         }
 
-        return Bundle.main.url(
+        let bundledURL = Bundle.main.url(
             forResource: resourceName,
             withExtension: fileExtension.isEmpty ? nil : fileExtension
         )
+        if bundledURL != nil {
+            RemoteContentManager.logInfo(
+                "MusicManager falling back to bundled track \(fileName)"
+            )
+        } else {
+            RemoteContentManager.logError(
+                "MusicManager could not resolve track \(fileName)"
+            )
+        }
+        return bundledURL
     }
 }
 

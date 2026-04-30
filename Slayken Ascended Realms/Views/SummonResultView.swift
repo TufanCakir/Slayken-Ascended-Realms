@@ -126,9 +126,9 @@ struct SummonResultView: View {
         .background {
             ZStack {
                 if let theme = theme.selectedTheme {
-                    Image(theme.background)
-                        .resizable()
-                        .scaledToFill()
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
                 }
 
                 LinearGradient(
@@ -156,10 +156,10 @@ struct SummonResultView: View {
 
     private var resultImage: some View {
         Group {
-            if UIImage(named: imageName) != nil {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFit()
+            if RemoteContentManager.hasCachedOrBundledImage(named: imageName) {
+                RemoteAssetImage(imageName, contentMode: .fit) {
+                    Color.black.opacity(0.35)
+                }
             } else {
                 Image(systemName: "sparkles.rectangle.stack.fill")
                     .resizable()

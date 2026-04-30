@@ -63,9 +63,9 @@ struct SettingsView: View {
         .background {
             ZStack {
                 if let theme = theme.selectedTheme {
-                    Image(theme.background)
-                        .resizable()
-                        .scaledToFill()
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
                 }
 
                 LinearGradient(

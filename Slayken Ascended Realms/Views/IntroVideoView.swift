@@ -124,6 +124,9 @@ struct IntroVideoView: View {
             named: introVideo.video,
             preferredExtensions: ["mp4", "mov", "m4v"]
         ) {
+            RemoteContentManager.logInfo(
+                "IntroVideoView using remote cached video \(introVideo.video)"
+            )
             return remoteURL
         }
 
@@ -131,16 +134,30 @@ struct IntroVideoView: View {
             forResource: introVideo.video,
             withExtension: nil
         ) {
+            RemoteContentManager.logInfo(
+                "IntroVideoView falling back to bundled video \(introVideo.video)"
+            )
             return url
         }
 
         let name = (introVideo.video as NSString).deletingPathExtension
         let ext = (introVideo.video as NSString).pathExtension
-        guard !name.isEmpty else { return nil }
-        return Bundle.main.url(
+        guard !name.isEmpty else {
+            RemoteContentManager.logError(
+                "IntroVideoView: invalid video name \(introVideo.video)"
+            )
+            return nil
+        }
+        let bundledURL = Bundle.main.url(
             forResource: name,
             withExtension: ext.isEmpty ? "mp4" : ext
         )
+        if bundledURL == nil {
+            RemoteContentManager.logError(
+                "IntroVideoView: no remote or bundled video found for \(introVideo.video)"
+            )
+        }
+        return bundledURL
     }
 
     private func finish() {

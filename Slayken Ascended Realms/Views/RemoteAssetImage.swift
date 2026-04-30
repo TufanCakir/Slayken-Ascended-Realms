@@ -10,27 +10,50 @@ import UIKit
 
 struct RemoteAssetImage<Placeholder: View>: View {
     let imageName: String
+    let contentMode: ContentMode
     let placeholder: () -> Placeholder
+    @EnvironmentObject private var remoteContent: RemoteContentManager
 
     init(
         _ imageName: String,
+        contentMode: ContentMode = .fill,
         @ViewBuilder placeholder: @escaping () -> Placeholder
     ) {
         self.imageName = imageName
+        self.contentMode = contentMode
         self.placeholder = placeholder
     }
 
     var body: some View {
-        if let remoteImage = RemoteContentManager.cachedImage(named: imageName) {
-            Image(uiImage: remoteImage)
+        Group {
+            if let image = RemoteContentManager.cachedOrBundledImage(
+                named: imageName
+            ) {
+                configuredImage(Image(uiImage: image))
+            } else {
+                placeholder()
+            }
+        }
+        .task(id: imageName) {
+            await remoteContent.downloadAssetIfNeeded(named: imageName)
+        }
+    }
+
+    @ViewBuilder
+    private func configuredImage(_ image: Image) -> some View {
+        switch contentMode {
+        case .fit:
+            image
+                .resizable()
+                .scaledToFit()
+        case .fill:
+            image
                 .resizable()
                 .scaledToFill()
-        } else if UIImage(named: imageName) != nil {
-            Image(imageName)
+        @unknown default:
+            image
                 .resizable()
                 .scaledToFill()
-        } else {
-            placeholder()
         }
     }
 }

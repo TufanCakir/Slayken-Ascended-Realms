@@ -16,10 +16,10 @@ struct ThemeSelectView: View {
         NavigationStack {
             ZStack {
                 if let current = theme.selectedTheme {
-                    Image(current.background)
-                        .resizable()
-                        .scaledToFill()
-                        .ignoresSafeArea()
+                    RemoteAssetImage(current.background) {
+                        Color.black.opacity(0.4)
+                    }
+                    .ignoresSafeArea()
 
                     LinearGradient(
                         colors: [
@@ -46,12 +46,12 @@ struct ThemeSelectView: View {
                                 onClose()
                             } label: {
                                 ZStack(alignment: .bottomLeading) {
-                                    Image(item.background)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .clipShape(
-                                            RoundedRectangle(cornerRadius: 18)
-                                        )
+                                    RemoteAssetImage(item.background) {
+                                        Color.black.opacity(0.4)
+                                    }
+                                    .clipShape(
+                                        RoundedRectangle(cornerRadius: 18)
+                                    )
 
                                     LinearGradient(
                                         colors: [.clear, .black.opacity(0.8)],

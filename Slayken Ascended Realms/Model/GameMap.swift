@@ -36,7 +36,8 @@ func loadMaps() -> [GameMap] {
 
 func loadBackgrounds() -> [GameBackground] {
     do {
-        guard let data = JSONResourceLoader.loadData(resource: "backgrounds") else {
+        guard let data = JSONResourceLoader.loadData(resource: "backgrounds")
+        else {
             return []
         }
         let backgrounds = try JSONDecoder().decode(

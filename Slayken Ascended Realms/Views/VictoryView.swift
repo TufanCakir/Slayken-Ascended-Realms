@@ -88,9 +88,9 @@ struct VictoryView: View {
         .background {
             ZStack {
                 if let theme = theme.selectedTheme {
-                    Image(theme.background)
-                        .resizable()
-                        .scaledToFill()
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
                 }
 
                 LinearGradient(
@@ -198,11 +198,13 @@ struct VictoryView: View {
         systemName: String
     ) -> some View {
         VStack(spacing: 6) {
-            if let imageName, UIImage(named: imageName) != nil {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 28, height: 28)
+            if let imageName,
+                RemoteContentManager.hasCachedOrBundledImage(named: imageName)
+            {
+                RemoteAssetImage(imageName, contentMode: .fit) {
+                    Color.black.opacity(0.35)
+                }
+                .frame(width: 28, height: 28)
             } else {
                 Image(systemName: systemName)
                     .font(.system(size: 20, weight: .bold))

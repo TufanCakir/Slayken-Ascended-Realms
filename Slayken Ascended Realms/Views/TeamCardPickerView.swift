@@ -57,9 +57,9 @@ struct TeamCardPickerView: View {
         .background {
             ZStack {
                 if let theme = theme.selectedTheme {
-                    Image(theme.background)
-                        .resizable()
-                        .scaledToFill()
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
                 }
 
                 LinearGradient(
@@ -206,10 +206,10 @@ struct TeamCardPickerView: View {
 
     @ViewBuilder
     private func cardImage(_ imageName: String) -> some View {
-        if UIImage(named: imageName) != nil {
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
+        if RemoteContentManager.hasCachedOrBundledImage(named: imageName) {
+            RemoteAssetImage(imageName) {
+                Color.black.opacity(0.35)
+            }
         } else {
             ZStack {
                 LinearGradient(

@@ -17,7 +17,9 @@ struct StartView: View {
     @State private var currentBackgroundIndex = 0
     @State private var backgroundRotationTask: Task<Void, Never>?
 
-    private let classDefinitions = loadCharacterClassDefinitions()
+    private var classDefinitions: [CharacterClassDefinition] {
+        loadCharacterClassDefinitions()
+    }
 
     private var appVersionText: String {
         let version =
@@ -40,13 +42,18 @@ struct StartView: View {
         var seen = Set<String>()
         return (summonPreviews + classPreviews).filter { imageName in
             guard seen.insert(imageName).inserted else { return false }
-            return UIImage(named: imageName) != nil
+            return RemoteContentManager.hasCachedOrBundledImage(
+                named: imageName
+            )
         }
     }
 
     private var currentBackgroundImage: String? {
         guard !previewBackgroundImages.isEmpty else { return nil }
-        let safeIndex = min(currentBackgroundIndex, previewBackgroundImages.count - 1)
+        let safeIndex = min(
+            currentBackgroundIndex,
+            previewBackgroundImages.count - 1
+        )
         return previewBackgroundImages[safeIndex]
     }
 
@@ -82,15 +89,15 @@ struct StartView: View {
             }
         }
     }
-    
+
     private var backgroundView: some View {
         Group {
             if let currentBackgroundImage {
-                Image(currentBackgroundImage)
-                    .resizable()
-                    .scaledToFill()
-                    .transition(.opacity)
-                    .id(currentBackgroundImage)
+                RemoteAssetImage(currentBackgroundImage) {
+                    Color.black
+                }
+                .transition(.opacity)
+                .id(currentBackgroundImage)
             } else {
                 Color.black
             }
@@ -175,7 +182,8 @@ struct StartView: View {
                 if Task.isCancelled { break }
                 await MainActor.run {
                     currentBackgroundIndex =
-                        (currentBackgroundIndex + 1) % previewBackgroundImages.count
+                        (currentBackgroundIndex + 1)
+                        % previewBackgroundImages.count
                 }
             }
         }

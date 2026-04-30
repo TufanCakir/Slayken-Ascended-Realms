@@ -40,7 +40,9 @@ struct CreateClassView: View {
     @State private var heroClassesExpanded = true
     @State private var selectedCategory: ClassCategory = .all
 
-    private let classDefinitions = loadCharacterClassDefinitions()
+    private var classDefinitions: [CharacterClassDefinition] {
+        loadCharacterClassDefinitions()
+    }
 
     var body: some View {
         ZStack {
@@ -99,9 +101,9 @@ struct CreateClassView: View {
         .background {
             ZStack {
                 if let theme = theme.selectedTheme {
-                    Image(theme.background)
-                        .resizable()
-                        .scaledToFill()
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
                 }
 
                 LinearGradient(
@@ -739,14 +741,16 @@ struct CreateClassView: View {
     {
         let variant = preferredVariant(for: definition)
         let imageName = variant?.image ?? ""
-        let hasImage = !imageName.isEmpty && UIImage(named: imageName) != nil
+        let hasImage =
+            !imageName.isEmpty
+            && RemoteContentManager.hasCachedOrBundledImage(named: imageName)
 
         return ZStack(alignment: .bottomLeading) {
             if hasImage {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFill()
-                    .padding(.top, 30)
+                RemoteAssetImage(imageName) {
+                    Color.black.opacity(0.35)
+                }
+                .padding(.top, 30)
             } else {
                 LinearGradient(
                     colors: [

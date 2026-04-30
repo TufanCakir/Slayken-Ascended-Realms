@@ -70,9 +70,9 @@ struct CharacterSelectView: View {
         .background {
             ZStack {
                 if let theme = theme.selectedTheme {
-                    Image(theme.background)
-                        .resizable()
-                        .scaledToFill()
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
                 }
 
                 LinearGradient(
@@ -131,9 +131,9 @@ struct CharacterSelectView: View {
     private var background: some View {
         ZStack {
             if let theme = theme.selectedTheme {
-                Image(theme.background)
-                    .resizable()
-                    .scaledToFill()
+                RemoteAssetImage(theme.background) {
+                    Color.black.opacity(0.35)
+                }
             }
             LinearGradient(
                 colors: [
@@ -261,9 +261,9 @@ struct CharacterSelectView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.black.opacity(0.35))
         } else {
-            Image(character.image)
-                .resizable()
-                .scaledToFit()
+            RemoteAssetImage(character.image, contentMode: .fit) {
+                Color.black.opacity(0.35)
+            }
         }
     }
 }

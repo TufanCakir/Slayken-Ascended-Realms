@@ -123,23 +123,40 @@ struct EventCutsceneView: View {
     }
 
     private func cutsceneVideoURL() -> URL? {
-        guard let video = cutscene.video, !video.isEmpty else { return nil }
+        guard let video = cutscene.video, !video.isEmpty else {
+            RemoteContentManager.logError(
+                "EventCutsceneView: missing cutscene video for \(cutscene.id)"
+            )
+            return nil
+        }
 
         if let remoteURL = RemoteContentManager.cachedAssetURL(
             named: video,
             preferredExtensions: ["mp4", "mov", "m4v"]
         ) {
+            RemoteContentManager.logInfo(
+                "EventCutsceneView using remote cached video \(video)"
+            )
             return remoteURL
         }
 
         if let url = Bundle.main.url(forResource: video, withExtension: nil) {
+            RemoteContentManager.logInfo(
+                "EventCutsceneView falling back to bundled video \(video)"
+            )
             return url
         }
 
         if let url = Bundle.main.url(forResource: video, withExtension: "mp4") {
+            RemoteContentManager.logInfo(
+                "EventCutsceneView falling back to bundled mp4 \(video)"
+            )
             return url
         }
 
+        RemoteContentManager.logError(
+            "EventCutsceneView: no local or remote video found for \(video)"
+        )
         return nil
     }
 

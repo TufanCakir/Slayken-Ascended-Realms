@@ -35,9 +35,17 @@ struct ShopView: View {
     @State private var message = ""
     @State private var selectedCategory: ShopCategory = .all
 
-    private let shopOffers = loadShopOffers()
-    private let skinOffers = loadShopSkinOffers()
-    private let crystalPacks = loadStoreCrystalPacks()
+    private var shopOffers: [ShopOfferDefinition] {
+        loadShopOffers()
+    }
+
+    private var skinOffers: [ShopSkinOfferDefinition] {
+        loadShopSkinOffers()
+    }
+
+    private var crystalPacks: [StoreCrystalPackDefinition] {
+        loadStoreCrystalPacks()
+    }
 
     var body: some View {
         NavigationStack {
@@ -184,12 +192,12 @@ struct ShopView: View {
         accent: Color
     ) -> some View {
         HStack(spacing: 12) {
-            Image(assetName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24, height: 24)
-                .padding(10)
-                .background(Color.white.opacity(0.10), in: Circle())
+            RemoteAssetImage(assetName, contentMode: .fit) {
+                Color.white.opacity(0.08)
+            }
+            .frame(width: 24, height: 24)
+            .padding(10)
+            .background(Color.white.opacity(0.10), in: Circle())
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
@@ -459,14 +467,14 @@ struct ShopView: View {
 
     @ViewBuilder
     private func offerImage(_ imageName: String) -> some View {
-        if UIImage(named: imageName) != nil {
-            Image(imageName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 88, height: 88)
-                .clipShape(
-                    RoundedRectangle(cornerRadius: 16, style: .continuous)
-                )
+        if RemoteContentManager.hasCachedOrBundledImage(named: imageName) {
+            RemoteAssetImage(imageName, contentMode: .fit) {
+                Color.black.opacity(0.35)
+            }
+            .frame(width: 88, height: 88)
+            .clipShape(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+            )
         } else {
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .fill(
@@ -504,10 +512,10 @@ struct ShopView: View {
     private var backgroundView: some View {
         ZStack {
             if let selectedTheme = theme.selectedTheme {
-                Image(selectedTheme.background)
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+                RemoteAssetImage(selectedTheme.background) {
+                    Color.black.opacity(0.35)
+                }
+                .ignoresSafeArea()
             }
 
             LinearGradient(

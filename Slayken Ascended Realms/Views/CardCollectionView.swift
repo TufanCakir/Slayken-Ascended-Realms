@@ -88,9 +88,9 @@ struct CardCollectionView: View {
         .background {
             ZStack {
                 if let theme = theme.selectedTheme {
-                    Image(theme.background)
-                        .resizable()
-                        .scaledToFill()
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
                 }
 
                 LinearGradient(
@@ -232,10 +232,10 @@ struct CardCollectionView: View {
 
     @ViewBuilder
     private func cardImage(_ imageName: String) -> some View {
-        if UIImage(named: imageName) != nil {
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
+        if RemoteContentManager.hasCachedOrBundledImage(named: imageName) {
+            RemoteAssetImage(imageName) {
+                Color.black.opacity(0.35)
+            }
         } else {
             ZStack {
                 LinearGradient(
@@ -294,10 +294,12 @@ private struct CardInfoSheet: View {
     private var cardHeader: some View {
         VStack(alignment: .leading, spacing: 12) {
             Group {
-                if UIImage(named: card.image) != nil {
-                    Image(card.image)
-                        .resizable()
-                        .scaledToFill()
+                if RemoteContentManager.hasCachedOrBundledImage(
+                    named: card.image
+                ) {
+                    RemoteAssetImage(card.image) {
+                        Color.black.opacity(0.35)
+                    }
                 } else {
                     ZStack {
                         LinearGradient(

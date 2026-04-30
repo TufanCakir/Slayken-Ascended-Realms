@@ -193,11 +193,11 @@ struct GlobeEventView: View {
         ZStack {
             Color.black
 
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
-                .frame(width: size.width, height: size.height)
-                .clipped()
+            RemoteAssetImage(imageName) {
+                Color.black.opacity(0.35)
+            }
+            .frame(width: size.width, height: size.height)
+            .clipped()
 
             mapGrid(size: size, theme: theme)
                 .opacity(0.16)
@@ -437,15 +437,17 @@ struct GlobeEventView: View {
                         radius: isFocused ? 18 : 10
                     )
 
-                if UIImage(named: imageName) != nil {
-                    Image(imageName)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: imageSize, height: imageSize)
-                        .clipShape(Circle())
-                        .overlay(
-                            Circle().stroke(.white.opacity(0.55), lineWidth: 1)
-                        )
+                if RemoteContentManager.hasCachedOrBundledImage(
+                    named: imageName
+                ) {
+                    RemoteAssetImage(imageName) {
+                        Color.black.opacity(0.35)
+                    }
+                    .frame(width: imageSize, height: imageSize)
+                    .clipShape(Circle())
+                    .overlay(
+                        Circle().stroke(.white.opacity(0.55), lineWidth: 1)
+                    )
                 } else {
                     Image(systemName: fallbackIcon)
                         .font(
@@ -637,17 +639,17 @@ struct GlobeEventView: View {
             if let selectedPoint {
                 let battles = visibleBattles(for: selectedPoint)
                 HStack(spacing: 10) {
-                    Image(selectedPoint.mapImage)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 72, height: 46)
-                        .clipped()
-                        .overlay(
-                            Rectangle().stroke(
-                                .white.opacity(0.18),
-                                lineWidth: 1
-                            )
+                    RemoteAssetImage(selectedPoint.mapImage) {
+                        Color.black.opacity(0.35)
+                    }
+                    .frame(width: 72, height: 46)
+                    .clipped()
+                    .overlay(
+                        Rectangle().stroke(
+                            .white.opacity(0.18),
+                            lineWidth: 1
                         )
+                    )
 
                     VStack(alignment: .leading, spacing: 3) {
                         Text(selectedPoint.title)

@@ -118,8 +118,11 @@ final class SceneCoordinator {
         scene.rootNode.addChildNode(makeGround())
         scene.rootNode.addChildNode(makePlayer())
 
-        scene.background.contents = UIImage(named: "sar_bg")
-        scene.lightingEnvironment.contents = UIImage(named: "sar_bg")
+        let initialSkybox = RemoteContentManager.cachedOrBundledImage(
+            named: "bg_sar"
+        )
+        scene.background.contents = initialSkybox
+        scene.lightingEnvironment.contents = initialSkybox
     }
 
     func updateTextures(ground: String, skybox: String) {
@@ -128,9 +131,9 @@ final class SceneCoordinator {
 
         applyGroundTexture(named: currentGroundTexture)
 
-        let skyboxImage =
-            RemoteContentManager.cachedImage(named: currentSkyboxTexture)
-            ?? UIImage(named: currentSkyboxTexture)
+        let skyboxImage = RemoteContentManager.cachedOrBundledImage(
+            named: currentSkyboxTexture
+        )
         scene.background.contents = skyboxImage
         scene.lightingEnvironment.contents = skyboxImage
     }
@@ -218,7 +221,11 @@ final class SceneCoordinator {
         _ material: SCNMaterial,
         textureName: String
     ) {
-        guard let image = UIImage(named: textureName) else {
+        guard
+            let image = RemoteContentManager.cachedOrBundledImage(
+                named: textureName
+            )
+        else {
             material.diffuse.contents = nil
             if let box = groundBox {
                 box.width = groundBaseDepth
@@ -402,12 +409,6 @@ final class SceneCoordinator {
             return remoteScene
         }
 
-        for candidateName in candidateNames {
-            if let scene = SCNScene(named: candidateName) {
-                return scene
-            }
-        }
-
         return nil
     }
 
@@ -449,11 +450,7 @@ final class SceneCoordinator {
 
     private func loadTextureImage(named textureName: String) -> UIImage? {
         RemoteContentManager.cachedImage(named: textureName)
-            ?? UIImage(named: textureName)
-            ?? UIImage(named: "\(textureName).jpg")
-            ?? UIImage(named: "\(textureName).png")
-            ?? UIImage(named: "3DModel/\(textureName).jpg")
-            ?? UIImage(named: "3DModel/\(textureName).png")
+            ?? RemoteContentManager.cachedOrBundledImage(named: textureName)
     }
 
     @objc
@@ -633,8 +630,8 @@ final class SceneCoordinator {
 }
 
 private enum TextureNames {
-    static let ground = "sar_bg"
-    static let skybox = "sar_bg"
+    static let ground = "bg_sar"
+    static let skybox = "bg_sar"
 }
 #Preview {
     GameSceneView(

@@ -8,8 +8,17 @@
 import Foundation
 
 enum JSONResourceLoader {
+    private static var memoryCache = [String: Data]()
+
     static func loadData(resource: String) -> Data? {
-        if let cachedData = RemoteContentManager.cachedData(forResource: resource) {
+        if let cachedData = memoryCache[resource] {
+            return cachedData
+        }
+
+        if let cachedData = RemoteContentManager.cachedData(
+            forResource: resource
+        ) {
+            memoryCache[resource] = cachedData
             return cachedData
         }
 
@@ -19,10 +28,20 @@ enum JSONResourceLoader {
                 withExtension: "json"
             )
         else {
+            RemoteContentManager.logError(
+                "Missing bundled JSON resource \(resource).json"
+            )
             return nil
         }
 
-        return try? Data(contentsOf: url)
+        RemoteContentManager.logInfo(
+            "Falling back to bundled JSON resource \(resource).json"
+        )
+        guard let bundledData = try? Data(contentsOf: url) else {
+            return nil
+        }
+        memoryCache[resource] = bundledData
+        return bundledData
     }
 
     static func load<T: Decodable>(_ type: T.Type, resource: String) -> T? {
@@ -30,6 +49,9 @@ enum JSONResourceLoader {
             guard let data = loadData(resource: resource) else { return nil }
             return try JSONDecoder().decode(T.self, from: data)
         } catch {
+            RemoteContentManager.logError(
+                "Failed decoding \(resource).json: \(error.localizedDescription)"
+            )
             return nil
         }
     }
@@ -37,5 +59,9 @@ enum JSONResourceLoader {
     static func loadArray<T: Decodable>(_ type: T.Type, resource: String) -> [T]
     {
         load([T].self, resource: resource) ?? []
+    }
+
+    static func invalidateCache() {
+        memoryCache.removeAll()
     }
 }

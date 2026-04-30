@@ -72,57 +72,23 @@ final class GameState: ObservableObject {
     private let eventBattleKey = "activeEventBattleID"
 
     init() {
-        let loadedCharacters = Self.loadAvailableCharacters()
-        let loadedPlayer = loadedCharacters.first ?? loadBattlePlayer()
-        let loadedMaps = loadMaps()
-        let loadedBackgrounds = loadBackgrounds()
-        let loadedCurrencies = loadCurrencyDefinitions()
-        let loadedEventChapters = loadGlobeEventChapters()
-        let loadedSummonCharacters = loadSummonCharacters()
-        let loadedSummonBanners = loadSummonBanners()
-        let loadedAbilityCards = loadAbilityCards()
-        let loadedParticleEffects = loadParticleEffects()
-        let loadedNewsItems = loadNewsItems()
-
-        let defaultMap =
-            loadedMaps.first
-            ?? GameMap(
-                id: 0,
-                name: "Default",
-                mapImage: "map",
-                difficulty: 1,
-                enemy: CharacterStats(
-                    name: "Dummy",
-                    image: "acsended_riven",
-                    model: "riven",
-                    hp: 100,
-                    attack: 10
-                ),
-                story: []
-            )
-        let defaultBG =
-            loadedBackgrounds.first
-            ?? GameBackground(id: 0, name: "Default", image: "country")
-
-        self.player = loadedPlayer
-        self.availableCharacters = loadedCharacters
-        self.maps = loadedMaps
-        self.backgrounds = loadedBackgrounds
-        self.currencies = loadedCurrencies
-        self.eventChapters = loadedEventChapters
-        self.summonCharacters = loadedSummonCharacters
-        self.summonBanners = loadedSummonBanners
-        self.abilityCards = loadedAbilityCards
-        self.particleEffects = loadedParticleEffects
-        self.newsItems = loadedNewsItems
+        self.player = Self.placeholderCharacter
+        self.availableCharacters = []
+        self.maps = []
+        self.backgrounds = []
+        self.currencies = []
+        self.eventChapters = []
+        self.summonCharacters = []
+        self.summonBanners = []
+        self.abilityCards = []
+        self.particleEffects = []
+        self.newsItems = []
         self.selectedBattle = nil
-        self.activeEventChapterID = loadedEventChapters.first?.id
+        self.activeEventChapterID = nil
         self.activeEventPointID = nil
         self.activeEventBattleID = nil
-        self.selectedMap = defaultMap
-        self.selectedBackground = defaultBG
-
-        loadSelections()
+        self.selectedMap = Self.placeholderMap
+        self.selectedBackground = Self.placeholderBackground
     }
 
     func reloadContent() {
@@ -362,4 +328,27 @@ final class GameState: ObservableObject {
             availableCharacters.append(character)
         }
     }
+
+    private static let placeholderCharacter = CharacterStats(
+        name: "Hero",
+        image: "",
+        model: "",
+        hp: 100,
+        attack: 10
+    )
+
+    private static let placeholderMap = GameMap(
+        id: 0,
+        name: "Default",
+        mapImage: "",
+        difficulty: 1,
+        enemy: placeholderCharacter,
+        story: []
+    )
+
+    private static let placeholderBackground = GameBackground(
+        id: 0,
+        name: "Default",
+        image: ""
+    )
 }

@@ -50,9 +50,17 @@ struct GameView: View {
     @State private var resourceRefreshDate = Date()
     @State private var battleResourceMessage = ""
 
-    private let gifts = loadGiftBoxDefinitions()
-    private let dailyLoginRewards = loadDailyLoginRewardDefinitions()
-    private let quests = loadQuestDefinitions()
+    private var gifts: [GiftBoxDefinition] {
+        loadGiftBoxDefinitions()
+    }
+
+    private var dailyLoginRewards: [DailyLoginRewardDefinition] {
+        loadDailyLoginRewardDefinitions()
+    }
+
+    private var quests: [QuestDefinition] {
+        loadQuestDefinitions()
+    }
 
     let onResetGame: () -> Void
     let onOpenTutorialArchive: () -> Void
@@ -575,11 +583,13 @@ struct GameView: View {
         accent: Color
     ) -> some View {
         HStack(spacing: 7) {
-            if let assetName, UIImage(named: assetName) != nil {
-                Image(assetName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 16, height: 16)
+            if let assetName,
+                RemoteContentManager.hasCachedOrBundledImage(named: assetName)
+            {
+                RemoteAssetImage(assetName, contentMode: .fit) {
+                    Color.clear
+                }
+                .frame(width: 16, height: 16)
             } else {
                 Image(systemName: systemName)
                     .font(.system(size: 14, weight: .black))

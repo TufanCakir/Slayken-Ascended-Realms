@@ -76,9 +76,9 @@ struct TeamCharacterPickerView: View {
         .background {
             ZStack {
                 if let theme = theme.selectedTheme {
-                    Image(theme.background)
-                        .resizable()
-                        .scaledToFill()
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
                 }
 
                 LinearGradient(
@@ -251,8 +251,12 @@ struct TeamCharacterPickerView: View {
 
     @ViewBuilder
     private func image(_ imageName: String?, fallback: String) -> some View {
-        if let imageName, UIImage(named: imageName) != nil {
-            Image(imageName).resizable().scaledToFit()
+        if let imageName,
+            RemoteContentManager.hasCachedOrBundledImage(named: imageName)
+        {
+            RemoteAssetImage(imageName, contentMode: .fit) {
+                Color.black.opacity(0.42)
+            }
         } else {
             ZStack {
                 Color.black.opacity(0.42)

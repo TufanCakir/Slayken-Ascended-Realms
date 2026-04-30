@@ -89,7 +89,7 @@ private func defaultPlayer() -> CharacterStats {
         name: "Shen",
         image: "preview_shen",
         model: "shen",
-        texture: "shen_texture_original",
+        texture: "texture_shen_original",
         hp: 100,
         attack: 10
     )

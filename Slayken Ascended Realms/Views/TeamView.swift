@@ -286,10 +286,12 @@ struct TeamView: View {
     @ViewBuilder
     private func slotImage(_ imageName: String?, fallback: String) -> some View
     {
-        if let imageName, UIImage(named: imageName) != nil {
-            Image(imageName)
-                .resizable()
-                .scaledToFit()
+        if let imageName,
+            RemoteContentManager.hasCachedOrBundledImage(named: imageName)
+        {
+            RemoteAssetImage(imageName, contentMode: .fit) {
+                Color.black.opacity(0.35)
+            }
         } else {
             ZStack {
                 LinearGradient(

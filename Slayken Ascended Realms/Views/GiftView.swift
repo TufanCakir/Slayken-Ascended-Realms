@@ -178,7 +178,8 @@ struct GiftView: View {
         )
     }
 
-    private func characterRewardRow(_ reward: GiftCharacterReward) -> some View {
+    private func characterRewardRow(_ reward: GiftCharacterReward) -> some View
+    {
         let character = gameState.summonCharacters.first {
             $0.id == reward.characterID
         }

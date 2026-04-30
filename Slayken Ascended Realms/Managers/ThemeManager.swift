@@ -16,14 +16,15 @@ final class ThemeManager: ObservableObject {
     private let key = "selectedThemeID"
 
     init() {
-        loadThemes()
-        loadSelected()
     }
 
     func loadThemes() {
         guard
             let data = JSONResourceLoader.loadData(resource: "themes"),
-            let decoded = try? JSONDecoder().decode([GameTheme].self, from: data)
+            let decoded = try? JSONDecoder().decode(
+                [GameTheme].self,
+                from: data
+            )
         else {
             return
         }

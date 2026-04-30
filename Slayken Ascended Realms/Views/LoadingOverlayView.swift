@@ -24,7 +24,8 @@ struct LoadingOverlayView: View {
         progress: Double,
         background: String,
         title: String = "Entering Ascended Realms",
-        subtitle: String = "Deine Welt, Battle-Daten und Event-Pfade werden vorbereitet.",
+        subtitle: String =
+            "Deine Welt, Battle-Daten und Event-Pfade werden vorbereitet.",
         progressLabel: String = "Realm Sync",
         footerText: String = "Loading battle systems, events and rewards"
     ) {
@@ -44,14 +45,11 @@ struct LoadingOverlayView: View {
         return version?.isEmpty == false ? version ?? "1.0" : "1.0"
     }
 
-    private var newsImage: String {
-        if UIImage(named: "loading_news") != nil {
-            return "loading_news"
-        }
-        if UIImage(named: background) != nil {
+    private var newsImage: String? {
+        if RemoteContentManager.hasCachedOrBundledImage(named: background) {
             return background
         }
-        return "theme_epic"
+        return nil
     }
 
     private var tipTitle: String {
@@ -100,9 +98,9 @@ struct LoadingOverlayView: View {
         .background {
             ZStack {
                 if let theme = theme.selectedTheme {
-                    Image(theme.background)
-                        .resizable()
-                        .scaledToFill()
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
                 }
 
                 LinearGradient(
@@ -144,23 +142,11 @@ struct LoadingOverlayView: View {
                                 y: 3
                             )
 
-                        if UIImage(named: "support_icon") != nil {
-                            Image("support_icon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 26, height: 26)
-                                .shadow(
-                                    color: .black.opacity(0.18),
-                                    radius: 2,
-                                    y: 1
-                                )
-                        } else {
-                            Image(systemName: "envelope.fill")
-                                .font(.system(size: 20, weight: .black))
-                                .foregroundStyle(
-                                    Color(red: 0.12, green: 0.40, blue: 0.95)
-                                )
-                        }
+                        Image(systemName: "questionmark.bubble.fill")
+                            .font(.system(size: 20, weight: .black))
+                            .foregroundStyle(
+                                Color(red: 0.12, green: 0.40, blue: 0.95)
+                            )
                     }
 
                     Text("Support")
@@ -186,10 +172,10 @@ struct LoadingOverlayView: View {
                     .multilineTextAlignment(.center)
 
                 Text(subtitle)
-                .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(.white.opacity(0.76))
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.76))
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             progressBar
@@ -262,20 +248,26 @@ struct LoadingOverlayView: View {
 
     private var newsBlock: some View {
         VStack(spacing: 16) {
-            Image(newsImage)
-                .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity)
-                .frame(height: 128)
-                .clipped()
-                .clipShape(
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                )
-                .overlay {
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .stroke(.white.opacity(0.12), lineWidth: 1)
+            Group {
+                if let newsImage {
+                    RemoteAssetImage(newsImage) {
+                        loadingNewsPlaceholder
+                    }
+                } else {
+                    loadingNewsPlaceholder
                 }
-                .shadow(color: .black.opacity(0.35), radius: 14, y: 8)
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 128)
+            .clipped()
+            .clipShape(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(.white.opacity(0.12), lineWidth: 1)
+            }
+            .shadow(color: .black.opacity(0.35), radius: 14, y: 8)
 
             VStack(spacing: 11) {
                 Text(tipTitle)
@@ -300,6 +292,29 @@ struct LoadingOverlayView: View {
         .overlay {
             RoundedRectangle(cornerRadius: 24, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
+    }
+
+    private var loadingNewsPlaceholder: some View {
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color(red: 0.08, green: 0.12, blue: 0.16),
+                    Color(red: 0.16, green: 0.20, blue: 0.28),
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+
+            VStack(spacing: 8) {
+                Image(systemName: "newspaper.fill")
+                    .font(.system(size: 30, weight: .black))
+                    .foregroundStyle(.white.opacity(0.34))
+
+                Image(systemName: "sparkles")
+                    .font(.system(size: 14, weight: .black))
+                    .foregroundStyle(.cyan.opacity(0.75))
+            }
         }
     }
 

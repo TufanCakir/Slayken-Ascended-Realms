@@ -56,9 +56,9 @@ struct SummonView: View {
         .background {
             ZStack {
                 if let theme = themeManager.selectedTheme {
-                    Image(theme.background)
-                        .resizable()
-                        .scaledToFill()
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
                 }
 
                 LinearGradient(
@@ -570,7 +570,7 @@ struct SummonView: View {
 
     @ViewBuilder
     private func bannerBackground(_ imageName: String) -> some View {
-        if UIImage(named: imageName) == nil {
+        if !RemoteContentManager.hasCachedOrBundledImage(named: imageName) {
             ZStack(alignment: .trailing) {
                 LinearGradient(
                     colors: [
@@ -588,9 +588,9 @@ struct SummonView: View {
                     .padding(.trailing, 76)
             }
         } else {
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
+            RemoteAssetImage(imageName) {
+                Color.black.opacity(0.35)
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
+    @EnvironmentObject var musicManager: MusicManager
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var remoteContent: RemoteContentManager
     @Environment(\.modelContext) private var modelContext
@@ -34,132 +35,89 @@ struct RootView: View {
     @State private var activeEnemy: CharacterStats?
     @State private var isLoading = false
     @State private var loadingProgress = 0.0
-    @State private var loadingBackground = "theme_epic"
+    @State private var loadingBackground = ""
     @State private var loadingTask: Task<Void, Never>?
     @State private var pendingDailyReward: DailyLoginRewardState?
     @State private var activeTutorial: GameTutorialDefinition?
     @State private var activeIntroIndex = 0
     @State private var tutorialLaunchSource: TutorialLaunchSource = .initial
+    @State private var showStartupOptions = false
+    @State private var hasStartedStartupFlow = false
 
-    private let dailyLoginRewards = loadDailyLoginRewardDefinitions()
-    private let introVideos = loadIntroVideoDefinitions()
-    private let tutorials = loadTutorialDefinitions()
     private let introFlowKey = "hasCompletedIntroFlow"
+
+    private var dailyLoginRewards: [DailyLoginRewardDefinition] {
+        loadDailyLoginRewardDefinitions()
+    }
+
+    private var introVideos: [IntroVideoDefinition] {
+        loadIntroVideoDefinitions()
+    }
+
+    private var tutorials: [GameTutorialDefinition] {
+        loadTutorialDefinitions()
+    }
+
+    private var showsStartupLoadingView: Bool {
+        !remoteContent.hasCompletedInitialRefresh
+            || remoteContent.isPreparingStartupPlan
+    }
 
     var body: some View {
         ZStack {
-            switch currentScreen {
-            case .start:
-                StartView {
-                    startGameFlow()
-                }
-
-            case .introVideo:
-                if let activeIntroVideo {
-                    IntroVideoView(
-                        introVideo: activeIntroVideo,
-                        onFinish: {
-                            playNextIntroOrBeginTutorial()
-                        }
-                    )
-                    .id(activeIntroVideo.id)
-                }
-
-            case .tutorialBattle:
-                if let activeTutorial,
-                    let primaryEnemy = activeTutorial.primaryEnemy
-                {
-                    BattleView(
-                        player: activeTutorial.player,
-                        enemy: primaryEnemy,
-                        enemiesOverride: activeTutorial.allEnemies,
-                        onExit: {
-                            handleTutorialExit()
-                        },
-                        tutorialConfig: .init(
-                            title: activeTutorial.title,
-                            objective: activeTutorial.objective,
-                            retreatEnemyIndex: activeTutorial.retreatEnemyIndex,
-                            enemyRetreatThreshold: activeTutorial
-                                .enemyRetreatThreshold,
-                            onEnemyRetreat: completeTutorialBattle,
-                            onBattleComplete: completeTutorialBattle
-                        )
-                    )
-                }
-
-            case .tutorialArchive:
-                TutorialArchiveView(
-                    tutorials: tutorials,
-                    onClose: {
-                        resetToStart()
-                    },
-                    onReplay: { tutorial in
-                        replayTutorial(tutorial)
-                    }
-                )
-                .environmentObject(theme)
-
-            case .createClass:
-                CreateClassView(
-                    onClose: {
-                        transition(to: .game)
-                    },
-                    onComplete: {
-                        completeClassCreation(with: $0)
-                    }
-                )
-                .environmentObject(gameState)
-                .environmentObject(theme)
-
-            case .game:
-                GameView(
-                    onResetGame: {
-                        resetGameProgress()
-                    },
-                    onOpenTutorialArchive: {
-                        openTutorialArchive(fromGame: true)
-                    },
-                    onOpenCreateClass: {
-                        refreshDailyGift()
-                    }
-                ) { enemy in
-                    transition(to: .battle, enemy: enemy)
-                }
-            case .battle:
-                if let activeEnemy {
-                    BattleView(
-                        player: gameState.battlePlayer,
-                        enemy: activeEnemy,
-                        onExit: {
-                            gameState.clearBattleSelection()
-                            transition(to: .game)
-                        }
-                    )
-                }
+            if remoteContent.hasCompletedInitialRefresh {
+                contentLayer
+            } else {
+                Color.black.ignoresSafeArea()
             }
 
-            if isLoading || remoteContent.isRefreshing {
+            if isLoading {
                 LoadingOverlayView(
-                    progress: remoteContent.isRefreshing
-                        ? remoteContent.refreshProgress
-                        : loadingProgress,
+                    progress: loadingProgress,
                     background: loadingBackground,
-                    title: remoteContent.isRefreshing
-                        ? "Syncing Live Content"
-                        : "Entering Ascended Realms",
-                    subtitle: remoteContent.isRefreshing
-                        ? "Events, News, Bilder und 3D-Dateien werden live aktualisiert."
-                        : "Deine Welt, Battle-Daten und Event-Pfade werden vorbereitet.",
-                    progressLabel: remoteContent.isRefreshing
-                        ? remoteContent.statusText
-                        : "Realm Sync",
-                    footerText: remoteContent.isRefreshing
-                        ? "Live service update from your server cache"
-                        : "Loading battle systems, events and rewards"
+                    title: "Entering Ascended Realms",
+                    subtitle:
+                        "Deine Welt, Battle-Daten und Event-Pfade werden vorbereitet.",
+                    progressLabel: "Realm Sync",
+                    footerText: "Loading battle systems, events and rewards"
                 )
                 .environmentObject(theme)
                 .zIndex(100)
+            }
+
+            if showsStartupLoadingView {
+                RemoteLoadingView(
+                    plan: remoteContent.startupPlan,
+                    isPreparingPlan: remoteContent.isPreparingStartupPlan,
+                    isStarting: remoteContent.isRefreshing,
+                    progress: remoteContent.isRefreshing
+                        ? remoteContent.refreshProgress : 0.08,
+                    statusText: remoteContent.statusText,
+                    showOptions: $showStartupOptions,
+                    onPreloadAll: {
+                        startRemoteBootstrap(mode: .fullPreload)
+                    },
+                    onPlayWithoutPreload: {
+                        startRemoteBootstrap(mode: .bootstrap)
+                    }
+                )
+                .environmentObject(theme)
+                .zIndex(300)
+            }
+
+            if remoteContent.hasCompletedInitialRefresh
+                && remoteContent.isBackgroundPreloading
+            {
+                VStack {
+                    BackgroundPreloadIndicatorView(
+                        progress: remoteContent.backgroundPreloadProgress,
+                        statusText: remoteContent.backgroundStatusText
+                    )
+
+                    Spacer()
+                }
+                .transition(.move(edge: .top).combined(with: .opacity))
+                .zIndex(180)
             }
 
             if currentScreen == .game, let pendingDailyReward {
@@ -179,7 +137,11 @@ struct RootView: View {
         }
         .animation(.smooth(duration: 0.45), value: currentScreenID)
         .onAppear {
-            refreshDailyGift()
+            guard !hasStartedStartupFlow else { return }
+            hasStartedStartupFlow = true
+            Task {
+                await remoteContent.prepareStartupPlanIfNeeded()
+            }
         }
         .onDisappear {
             loadingTask?.cancel()
@@ -243,9 +205,9 @@ struct RootView: View {
         let assets = gameState.backgrounds.map(\.image)
         if assets.isEmpty {
             return [
-                "theme_epic", "theme_fire", "sar_bg", "map", "country",
-                "bg_arena", "fire",
-                "ice", "void",
+                "theme_epic", "theme_fire", "bg_sar", "bg_map", "bg_country",
+                "bg_arena", "bg_fire",
+                "bg_ice", "bg_void",
             ]
         }
 
@@ -253,10 +215,122 @@ struct RootView: View {
         return assets.filter { seen.insert($0).inserted }
     }
 
+    @ViewBuilder
+    private var contentLayer: some View {
+        switch currentScreen {
+        case .start:
+            StartView {
+                startGameFlow()
+            }
+
+        case .introVideo:
+            if let activeIntroVideo {
+                IntroVideoView(
+                    introVideo: activeIntroVideo,
+                    onFinish: {
+                        playNextIntroOrBeginTutorial()
+                    }
+                )
+                .id(activeIntroVideo.id)
+            }
+
+        case .tutorialBattle:
+            if let activeTutorial,
+                let primaryEnemy = activeTutorial.primaryEnemy
+            {
+                BattleView(
+                    player: activeTutorial.player,
+                    enemy: primaryEnemy,
+                    enemiesOverride: activeTutorial.allEnemies,
+                    onExit: {
+                        handleTutorialExit()
+                    },
+                    tutorialConfig: .init(
+                        title: activeTutorial.title,
+                        objective: activeTutorial.objective,
+                        retreatEnemyIndex: activeTutorial.retreatEnemyIndex,
+                        enemyRetreatThreshold: activeTutorial
+                            .enemyRetreatThreshold,
+                        onEnemyRetreat: completeTutorialBattle,
+                        onBattleComplete: completeTutorialBattle
+                    )
+                )
+            }
+
+        case .tutorialArchive:
+            TutorialArchiveView(
+                tutorials: tutorials,
+                onClose: {
+                    resetToStart()
+                },
+                onReplay: { tutorial in
+                    replayTutorial(tutorial)
+                }
+            )
+            .environmentObject(theme)
+
+        case .createClass:
+            CreateClassView(
+                onClose: {
+                    transition(to: .game)
+                },
+                onComplete: {
+                    completeClassCreation(with: $0)
+                }
+            )
+            .environmentObject(gameState)
+            .environmentObject(theme)
+
+        case .game:
+            GameView(
+                onResetGame: {
+                    resetGameProgress()
+                },
+                onOpenTutorialArchive: {
+                    openTutorialArchive(fromGame: true)
+                },
+                onOpenCreateClass: {
+                    refreshDailyGift()
+                }
+            ) { enemy in
+                transition(to: .battle, enemy: enemy)
+            }
+        case .battle:
+            if let activeEnemy {
+                BattleView(
+                    player: gameState.battlePlayer,
+                    enemy: activeEnemy,
+                    onExit: {
+                        gameState.clearBattleSelection()
+                        transition(to: .game)
+                    }
+                )
+            }
+        }
+    }
+
     private func transition(to screen: Screen, enemy: CharacterStats? = nil) {
         loadingTask?.cancel()
         loadingTask = Task {
             await runLoadingTransition(to: screen, enemy: enemy)
+        }
+    }
+
+    private func startRemoteBootstrap(mode: RemoteContentRefreshMode) {
+        guard !remoteContent.isRefreshing else { return }
+
+        Task {
+            await remoteContent.refreshContentIfNeeded(mode: mode)
+            gameState.reloadContent()
+            theme.loadThemes()
+            theme.loadSelected()
+            musicManager.reloadTracks()
+            musicManager.startPlaybackIfNeeded()
+            refreshDailyGift()
+
+            if mode == .bootstrap {
+                remoteContent.startBackgroundPreloadIfNeeded()
+            }
         }
     }
 
@@ -281,7 +355,7 @@ struct RootView: View {
     {
         let images = loadingImages
         loadingProgress = 0
-        loadingBackground = images.randomElement() ?? "bg_sar"
+        loadingBackground = images.randomElement() ?? ""
 
         withAnimation(.easeInOut(duration: 0.2)) {
             isLoading = true
@@ -439,4 +513,7 @@ struct RootView: View {
     RootView()
         .environmentObject(GameState())
         .environmentObject(ThemeManager())
+        .environmentObject(MusicManager())
+        .environmentObject(NetworkMonitor())
+        .environmentObject(RemoteContentManager.shared)
 }

@@ -25,15 +25,6 @@ struct Slayken_Ascended_RealmsApp: App {
                 .environmentObject(musicManager)
                 .environmentObject(networkMonitor)
                 .environmentObject(remoteContent)
-                .onAppear {
-                    musicManager.startPlaybackIfNeeded()
-                }
-                .task {
-                    await remoteContent.refreshContentIfNeeded()
-                    gameState.reloadContent()
-                    theme.loadThemes()
-                    theme.loadSelected()
-                }
         }
         .modelContainer(for: [
             PlayerCurrencyBalance.self,

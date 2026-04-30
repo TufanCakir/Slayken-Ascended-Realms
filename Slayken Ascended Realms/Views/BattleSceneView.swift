@@ -250,9 +250,9 @@ final class BattleSceneCoordinator {
 
     func updateEnvironment(groundTexture: String, skyboxTexture: String) {
         applyGroundTexture(named: groundTexture)
-        let skyboxImage =
-            RemoteContentManager.cachedImage(named: skyboxTexture)
-            ?? UIImage(named: skyboxTexture)
+        let skyboxImage = RemoteContentManager.cachedOrBundledImage(
+            named: skyboxTexture
+        )
         scene.background.contents = skyboxImage
         scene.lightingEnvironment.contents = skyboxImage
     }
@@ -364,7 +364,11 @@ final class BattleSceneCoordinator {
         _ material: SCNMaterial,
         textureName: String
     ) {
-        guard let image = UIImage(named: textureName) else {
+        guard
+            let image = RemoteContentManager.cachedOrBundledImage(
+                named: textureName
+            )
+        else {
             material.diffuse.contents = nil
             if let box = groundBox {
                 box.width = groundBaseDepth
@@ -1202,12 +1206,6 @@ final class BattleSceneCoordinator {
             return remoteScene
         }
 
-        for candidateName in candidateNames {
-            if let scene = SCNScene(named: candidateName) {
-                return scene
-            }
-        }
-
         return nil
     }
 
@@ -1259,11 +1257,7 @@ final class BattleSceneCoordinator {
 
     private func loadTextureImage(named textureName: String) -> UIImage? {
         RemoteContentManager.cachedImage(named: textureName)
-            ?? UIImage(named: textureName)
-            ?? UIImage(named: "\(textureName).jpg")
-            ?? UIImage(named: "\(textureName).png")
-            ?? UIImage(named: "3DModel/\(textureName).jpg")
-            ?? UIImage(named: "3DModel/\(textureName).png")
+            ?? RemoteContentManager.cachedOrBundledImage(named: textureName)
     }
 }
 #Preview("Battle Scene Skills") {
@@ -1331,8 +1325,8 @@ private struct BattleScenePreviewContainer: View {
                 particleEffect: selectedCard?.particleEffect,
                 particleTargetIndices: particleTargetIndices,
                 particleEffects: loadParticleEffects(),
-                groundTexture: "sar_bg",
-                skyboxTexture: "sar_bg",
+                groundTexture: "bg_sar",
+                skyboxTexture: "bg_sar",
                 onSelectEnemy: { _ in }
             )
 

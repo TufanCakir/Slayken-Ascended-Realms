@@ -166,11 +166,15 @@ struct QuestView: View {
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 8) {
-                if let assetName, UIImage(named: assetName) != nil {
-                    Image(assetName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
+                if let assetName,
+                    RemoteContentManager.hasCachedOrBundledImage(
+                        named: assetName
+                    )
+                {
+                    RemoteAssetImage(assetName, contentMode: .fit) {
+                        Color.clear
+                    }
+                    .frame(width: 24, height: 24)
                 } else {
                     Image(systemName: systemName)
                         .font(.system(size: 20, weight: .black))
@@ -419,12 +423,14 @@ struct QuestView: View {
         systemName: String
     ) -> some View {
         VStack(spacing: 6) {
-            if let imageName, UIImage(named: imageName) != nil {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 34, height: 34)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            if let imageName,
+                RemoteContentManager.hasCachedOrBundledImage(named: imageName)
+            {
+                RemoteAssetImage(imageName, contentMode: .fit) {
+                    Color.black.opacity(0.35)
+                }
+                .frame(width: 34, height: 34)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
             } else {
                 Image(systemName: systemName)
                     .font(.system(size: 20, weight: .black))
@@ -470,19 +476,20 @@ struct QuestView: View {
                                 if let preview = characterPreview(
                                     for: characterID
                                 ),
-                                    UIImage(named: preview) != nil
+                                    RemoteContentManager
+                                        .hasCachedOrBundledImage(named: preview)
                                 {
-                                    Image(preview)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 86, height: 86)
-                                        .clipped()
-                                        .clipShape(
-                                            RoundedRectangle(
-                                                cornerRadius: 16,
-                                                style: .continuous
-                                            )
+                                    RemoteAssetImage(preview) {
+                                        Color.black.opacity(0.35)
+                                    }
+                                    .frame(width: 86, height: 86)
+                                    .clipped()
+                                    .clipShape(
+                                        RoundedRectangle(
+                                            cornerRadius: 16,
+                                            style: .continuous
                                         )
+                                    )
                                 } else {
                                     Image(systemName: "person.crop.square")
                                         .font(.system(size: 30, weight: .black))
@@ -592,10 +599,10 @@ struct QuestView: View {
     private var backgroundView: some View {
         ZStack {
             if let selectedTheme = theme.selectedTheme {
-                Image(selectedTheme.background)
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+                RemoteAssetImage(selectedTheme.background) {
+                    Color.black.opacity(0.35)
+                }
+                .ignoresSafeArea()
             } else {
                 Color.black.ignoresSafeArea()
             }

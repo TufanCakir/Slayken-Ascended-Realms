@@ -7,8 +7,20 @@
 
 import Combine
 import Foundation
+import OSLog
 import SceneKit
 import UIKit
+
+enum RemoteContentError: LocalizedError {
+    case invalidHTTPStatusCode(Int, String)
+
+    var errorDescription: String? {
+        switch self {
+        case .invalidHTTPStatusCode(let statusCode, let url):
+            return "HTTP \(statusCode) for \(url)"
+        }
+    }
+}
 
 struct RemoteContentConfiguration: Codable {
     let enabled: Bool
@@ -32,77 +44,138 @@ struct RemoteContentAsset: Codable {
     let url: String
 }
 
+struct RemoteContentStartupPlan {
+    let pendingResourceCount: Int
+    let pendingAssetCount: Int
+    let estimatedDownloadBytes: Int64
+
+    var totalPendingCount: Int {
+        pendingResourceCount + pendingAssetCount
+    }
+
+    var formattedEstimatedSize: String {
+        let formatter = ByteCountFormatter()
+        formatter.allowedUnits = [.useMB, .useGB]
+        formatter.countStyle = .file
+        formatter.includesUnit = true
+        formatter.isAdaptive = true
+        return formatter.string(fromByteCount: estimatedDownloadBytes)
+    }
+}
+
+enum RemoteContentRefreshMode {
+    case bootstrap
+    case fullPreload
+}
+
 @MainActor
 final class RemoteContentManager: ObservableObject {
     static let shared = RemoteContentManager()
+    private nonisolated static let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "SlaykenAscendedRealms",
+        category: "RemoteContent"
+    )
 
     @Published private(set) var isRefreshing = false
     @Published private(set) var refreshProgress = 0.0
     @Published private(set) var statusText = "Live content idle"
     @Published private(set) var lastRefreshDate: Date?
     @Published private(set) var lastErrorMessage: String?
+    @Published private(set) var hasCompletedInitialRefresh = false
+    @Published private(set) var isPreparingStartupPlan = false
+    @Published private(set) var startupPlan: RemoteContentStartupPlan?
+    @Published private(set) var isBackgroundPreloading = false
+    @Published private(set) var backgroundPreloadProgress = 0.0
+    @Published private(set) var backgroundStatusText = "Background preload idle"
 
     private let fileManager = FileManager.default
+    private var cachedManifest: RemoteContentManifest?
+    private var assetDownloadTasks = [String: Task<Void, Never>]()
+    private var backgroundPreloadTask: Task<Void, Never>?
 
-    func refreshContentIfNeeded() async {
-        guard !isRefreshing else { return }
-        guard
-            let configuration = loadConfiguration(),
-            configuration.enabled,
-            let manifestURL = URL(string: configuration.manifestURL)
-        else {
-            return
+    nonisolated static func logDebug(_ message: String) {
+        logger.debug("\(message)")
+    }
+
+    nonisolated static func logInfo(_ message: String) {
+        logger.info("\(message)")
+    }
+
+    nonisolated static func logWarning(_ message: String) {
+        logger.warning("\(message)")
+    }
+
+    nonisolated static func logError(_ message: String) {
+        logger.error("\(message)")
+    }
+
+    func prepareStartupPlanIfNeeded() async {
+        guard !isPreparingStartupPlan else { return }
+        guard startupPlan == nil else { return }
+
+        isPreparingStartupPlan = true
+        statusText = "Preparing preload plan"
+        defer { isPreparingStartupPlan = false }
+
+        do {
+            try Self.ensureCacheDirectory()
+            let manifest = try await fetchManifest()
+            let versions = Self.loadCachedVersions()
+            startupPlan = buildStartupPlan(
+                manifest: manifest,
+                versions: versions
+            )
+            statusText = "Tap to choose preload mode"
+            lastErrorMessage = nil
+        } catch {
+            statusText = "Failed to prepare preload plan"
+            lastErrorMessage = error.localizedDescription
+            Self.logger.error(
+                "Failed to prepare startup plan: \(error.localizedDescription)"
+            )
         }
+    }
+
+    func refreshContentIfNeeded(mode: RemoteContentRefreshMode) async {
+        guard !isRefreshing else { return }
 
         isRefreshing = true
         refreshProgress = 0
-        statusText = "Loading live manifest"
-        defer { isRefreshing = false }
+        statusText =
+            mode == .fullPreload
+            ? "Loading live manifest"
+            : "Loading core game data and visuals"
+        defer {
+            isRefreshing = false
+            hasCompletedInitialRefresh = true
+        }
 
         do {
             try Self.ensureCacheDirectory()
 
-            let (manifestData, manifestResponse) = try await URLSession.shared.data(
-                from: manifestURL
-            )
-            try Self.validateHTTPResponse(manifestResponse)
-
-            let manifest = try JSONDecoder().decode(
-                RemoteContentManifest.self,
-                from: manifestData
-            )
-
+            let manifest = try await fetchManifest()
             var versions = Self.loadCachedVersions()
             var didChangeContent = false
-            let totalItems = manifest.resources.count + (manifest.assets?.count ?? 0)
+            var assetsToProcess = [RemoteContentAsset]()
+            var totalItems = manifest.resources.count
             var completedItems = 0
+            var failedItems = [String]()
 
             for resource in manifest.resources {
-                guard let resourceURL = URL(string: resource.url) else { continue }
                 statusText = "Checking \(resource.name).json"
 
-                let cacheURL = try Self.cacheFileURL(forResource: resource.name)
-                let hasMatchingVersion =
-                    versions[resource.name] == resource.version
-                    && fileManager.fileExists(atPath: cacheURL.path)
+                let result = await processResource(
+                    resource,
+                    versions: &versions
+                )
 
-                if hasMatchingVersion {
-                    completedItems += 1
-                    refreshProgress = Self.progressValue(
-                        completed: completedItems,
-                        total: totalItems
-                    )
-                    continue
+                if result.failedName != nil {
+                    failedItems.append(result.failedName!)
+                }
+                if result.didChangeContent {
+                    didChangeContent = true
                 }
 
-                statusText = "Downloading \(resource.name).json"
-                let (resourceData, resourceResponse) = try await URLSession.shared
-                    .data(from: resourceURL)
-                try Self.validateHTTPResponse(resourceResponse)
-
-                try resourceData.write(to: cacheURL, options: .atomic)
-                versions[resource.name] = resource.version
-                didChangeContent = true
                 completedItems += 1
                 refreshProgress = Self.progressValue(
                     completed: completedItems,
@@ -110,34 +183,32 @@ final class RemoteContentManager: ObservableObject {
                 )
             }
 
-            for asset in manifest.assets ?? [] {
-                guard let assetURL = URL(string: asset.url) else { continue }
+            assetsToProcess = assetsForStartup(
+                from: manifest,
+                mode: mode
+            )
+            totalItems = manifest.resources.count + assetsToProcess.count
+            refreshProgress = Self.progressValue(
+                completed: completedItems,
+                total: totalItems
+            )
+
+            for asset in assetsToProcess {
                 statusText = "Checking \(asset.name)"
 
-                let cacheURL = try Self.assetCacheFileURL(forAssetName: asset.name)
-                let versionKey = "asset:\(asset.name)"
-                let hasMatchingVersion =
-                    versions[versionKey] == (asset.version ?? "static")
-                    && fileManager.fileExists(atPath: cacheURL.path)
+                let result = await processAsset(
+                    asset,
+                    versions: &versions,
+                    updatePublishedProgress: false
+                )
 
-                if hasMatchingVersion {
-                    completedItems += 1
-                    refreshProgress = Self.progressValue(
-                        completed: completedItems,
-                        total: totalItems
-                    )
-                    continue
+                if result.failedName != nil {
+                    failedItems.append(result.failedName!)
+                }
+                if result.didChangeContent {
+                    didChangeContent = true
                 }
 
-                statusText = "Downloading \(asset.name)"
-                let (assetData, assetResponse) = try await URLSession.shared.data(
-                    from: assetURL
-                )
-                try Self.validateHTTPResponse(assetResponse)
-
-                try assetData.write(to: cacheURL, options: .atomic)
-                versions[versionKey] = asset.version ?? "static"
-                didChangeContent = true
                 completedItems += 1
                 refreshProgress = Self.progressValue(
                     completed: completedItems,
@@ -146,33 +217,125 @@ final class RemoteContentManager: ObservableObject {
             }
 
             try Self.saveCachedVersions(versions)
-            lastErrorMessage = nil
+            JSONResourceLoader.invalidateCache()
             refreshProgress = 1
+            startupPlan = buildStartupPlan(
+                manifest: manifest,
+                versions: versions
+            )
 
-            if didChangeContent {
-                statusText = "Live content updated"
+            if !failedItems.isEmpty {
+                statusText =
+                    mode == .fullPreload
+                    ? "Live content partially updated"
+                    : "Core content and visuals loaded with gaps"
+                lastErrorMessage =
+                    "Failed items: \(failedItems.prefix(5).joined(separator: ", "))"
                 lastRefreshDate = Date()
+                Self.logger.error(
+                    "Remote refresh completed with \(failedItems.count) failed item(s): \(failedItems.joined(separator: ", "))"
+                )
             } else {
-                statusText = "Live content already up to date"
+                lastErrorMessage = nil
+            }
+
+            if didChangeContent && failedItems.isEmpty {
+                statusText =
+                    mode == .fullPreload
+                    ? "Live content updated"
+                    : "Core content and visuals ready"
+                lastRefreshDate = Date()
+                Self.logger.info("Remote refresh completed with updates.")
+            } else if failedItems.isEmpty {
+                statusText =
+                    mode == .fullPreload
+                    ? "Live content already up to date"
+                    : "Core content and visuals already cached"
+                Self.logger.info(
+                    "Remote refresh completed. Cache already up to date."
+                )
             }
         } catch {
             refreshProgress = 1
-            statusText = "Live update failed"
+            statusText =
+                mode == .fullPreload
+                ? "Live update failed"
+                : "Core content load failed"
             lastErrorMessage = error.localizedDescription
+            Self.logger.error(
+                "Remote refresh failed: \(error.localizedDescription)"
+            )
         }
+    }
+
+    func startBackgroundPreloadIfNeeded() {
+        guard !isBackgroundPreloading else { return }
+
+        backgroundPreloadTask?.cancel()
+        backgroundPreloadTask = Task { [weak self] in
+            guard let self else { return }
+            await self.runBackgroundPreload()
+        }
+    }
+
+    func downloadAssetIfNeeded(named assetName: String) async {
+        let candidateNames = Self.assetCandidates(
+            for: assetName,
+            preferredExtensions: [
+                "png", "jpg", "jpeg", "webp", "usdz", "mp4", "mp3",
+            ]
+        )
+
+        if candidateNames.contains(where: { hasCachedAsset(named: $0) }) {
+            return
+        }
+
+        let taskKey = candidateNames.first ?? assetName
+        if let existingTask = assetDownloadTasks[taskKey] {
+            await existingTask.value
+            return
+        }
+
+        let task = Task { [weak self] in
+            guard let self else { return }
+            await self.runOnDemandAssetDownload(
+                requestedName: assetName,
+                candidateNames: candidateNames
+            )
+        }
+
+        assetDownloadTasks[taskKey] = task
+        await task.value
+        assetDownloadTasks[taskKey] = nil
     }
 
     nonisolated static func cachedData(forResource resource: String) -> Data? {
         guard let cacheURL = try? cacheFileURL(forResource: resource) else {
+            logger.error(
+                "Could not build cache path for resource \(resource).json"
+            )
             return nil
         }
 
-        return try? Data(contentsOf: cacheURL)
+        guard let data = try? Data(contentsOf: cacheURL) else {
+            logger.debug(
+                "No cached JSON found for \(resource).json at \(cacheURL.path)"
+            )
+            return nil
+        }
+
+        return data
     }
 
     nonisolated static func cachedImage(named imageName: String) -> UIImage? {
+        guard !imageName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        else {
+            return nil
+        }
+
         for candidate in imageCandidates(for: imageName) {
-            guard let url = try? assetCacheFileURL(forAssetName: candidate) else {
+            guard let url = try? assetCacheFileURL(forAssetName: candidate)
+            else {
                 continue
             }
 
@@ -184,10 +347,28 @@ final class RemoteContentManager: ObservableObject {
         return nil
     }
 
+    nonisolated static func cachedOrBundledImage(named imageName: String)
+        -> UIImage?
+    {
+        guard !imageName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        else {
+            return nil
+        }
+
+        return cachedImage(named: imageName)
+    }
+
+    nonisolated static func hasCachedOrBundledImage(named imageName: String)
+        -> Bool
+    {
+        cachedOrBundledImage(named: imageName) != nil
+    }
+
     nonisolated static func cachedScene(candidateNames: [String]) -> SCNScene? {
         for candidate in candidateNames {
             let fileName = URL(fileURLWithPath: candidate).lastPathComponent
-            guard let url = try? assetCacheFileURL(forAssetName: fileName) else {
+            guard let url = try? assetCacheFileURL(forAssetName: fileName)
+            else {
                 continue
             }
 
@@ -196,10 +377,14 @@ final class RemoteContentManager: ObservableObject {
             }
 
             if let scene = try? SCNScene(url: url, options: nil) {
+                logger.debug("Loaded remote cached scene \(fileName)")
                 return scene
             }
         }
 
+        logger.error(
+            "No remote cached scene found. Candidates: \(candidateNames.joined(separator: ", "))"
+        )
         return nil
     }
 
@@ -213,16 +398,490 @@ final class RemoteContentManager: ObservableObject {
         )
 
         for candidate in candidateNames {
-            guard let url = try? assetCacheFileURL(forAssetName: candidate) else {
+            guard let url = try? assetCacheFileURL(forAssetName: candidate)
+            else {
                 continue
             }
 
             if FileManager.default.fileExists(atPath: url.path) {
+                logger.debug("Resolved cached asset URL for \(candidate)")
                 return url
             }
         }
 
+        logger.error(
+            "No cached asset URL found for \(assetName). Candidates: \(candidateNames.joined(separator: ", "))"
+        )
         return nil
+    }
+
+    private func fetchManifest() async throws -> RemoteContentManifest {
+        if let cachedManifest {
+            Self.logger.info(
+                "Using cached manifest. Resources: \(cachedManifest.resources.count), Assets: \(cachedManifest.assets?.count ?? 0)"
+            )
+            return cachedManifest
+        }
+
+        guard
+            let configuration = loadConfiguration(),
+            configuration.enabled,
+            let manifestURL = URL(string: configuration.manifestURL)
+        else {
+            Self.logger.warning(
+                "Remote refresh skipped. Config missing, disabled, or manifest URL invalid."
+            )
+            throw URLError(.badURL)
+        }
+
+        Self.logger.info(
+            "Starting remote refresh from \(manifestURL.absoluteString)"
+        )
+
+        let (manifestData, manifestResponse) = try await URLSession.shared.data(
+            from: manifestURL
+        )
+        try Self.validateHTTPResponse(manifestResponse, url: manifestURL)
+        Self.logger.info("Manifest downloaded successfully.")
+
+        let manifest = try JSONDecoder().decode(
+            RemoteContentManifest.self,
+            from: manifestData
+        )
+        cachedManifest = manifest
+        Self.logger.info(
+            "Manifest decoded. Resources: \(manifest.resources.count), Assets: \(manifest.assets?.count ?? 0)"
+        )
+        return manifest
+    }
+
+    private func buildStartupPlan(
+        manifest: RemoteContentManifest,
+        versions: [String: String]
+    ) -> RemoteContentStartupPlan {
+        let pendingResourceCount = manifest.resources.reduce(into: 0) {
+            count,
+            resource in
+            if !isResourceCurrent(resource, versions: versions) {
+                count += 1
+            }
+        }
+        let pendingAssetCount = (manifest.assets ?? []).reduce(into: 0) {
+            count,
+            asset in
+            if !isAssetCurrent(asset, versions: versions) {
+                count += 1
+            }
+        }
+
+        let estimatedDownloadBytes =
+            manifest.resources.reduce(into: Int64(0)) { total, resource in
+                if !isResourceCurrent(resource, versions: versions) {
+                    total += Self.estimatedSize(
+                        for: resource.url,
+                        fallbackName: resource.name
+                    )
+                }
+            }
+            + (manifest.assets ?? []).reduce(into: Int64(0)) { total, asset in
+                if !isAssetCurrent(asset, versions: versions) {
+                    total += Self.estimatedSize(
+                        for: asset.url,
+                        fallbackName: asset.name
+                    )
+                }
+            }
+
+        return RemoteContentStartupPlan(
+            pendingResourceCount: pendingResourceCount,
+            pendingAssetCount: pendingAssetCount,
+            estimatedDownloadBytes: estimatedDownloadBytes
+        )
+    }
+
+    private func processResource(
+        _ resource: RemoteContentResource,
+        versions: inout [String: String]
+    ) async -> (didChangeContent: Bool, failedName: String?) {
+        guard let resourceURL = URL(string: resource.url) else {
+            Self.logger.error(
+                "Invalid resource URL for \(resource.name): \(resource.url)"
+            )
+            return (false, "\(resource.name).json")
+        }
+
+        do {
+            let cacheURL = try Self.cacheFileURL(forResource: resource.name)
+            let hasMatchingVersion =
+                versions[resource.name] == resource.version
+                && fileManager.fileExists(atPath: cacheURL.path)
+
+            if hasMatchingVersion {
+                Self.logger.debug(
+                    "Resource cache hit: \(resource.name).json version \(resource.version)"
+                )
+                return (false, nil)
+            }
+
+            Self.logger.info(
+                "Downloading resource \(resource.name).json from \(resourceURL.absoluteString)"
+            )
+
+            let (resourceData, resourceResponse) = try await URLSession.shared
+                .data(from: resourceURL)
+            try Self.validateHTTPResponse(resourceResponse, url: resourceURL)
+
+            try resourceData.write(to: cacheURL, options: .atomic)
+            Self.logger.info(
+                "Saved resource \(resource.name).json to cache: \(cacheURL.lastPathComponent)"
+            )
+            versions[resource.name] = resource.version
+            return (true, nil)
+        } catch {
+            Self.logger.error(
+                "Failed resource \(resource.name).json: \(error.localizedDescription)"
+            )
+            return (false, "\(resource.name).json")
+        }
+    }
+
+    private func processAsset(
+        _ asset: RemoteContentAsset,
+        versions: inout [String: String],
+        updatePublishedProgress: Bool
+    ) async -> (didChangeContent: Bool, failedName: String?) {
+        do {
+            let didChangeContent = try await downloadAsset(
+                asset,
+                versions: &versions,
+                updatePublishedProgress: updatePublishedProgress
+            )
+            return (didChangeContent, nil)
+        } catch {
+            Self.logger.error(
+                "Failed asset \(asset.name): \(error.localizedDescription)"
+            )
+            return (false, asset.name)
+        }
+    }
+
+    private func downloadAsset(
+        _ asset: RemoteContentAsset,
+        versions: inout [String: String],
+        updatePublishedProgress: Bool
+    ) async throws -> Bool {
+        guard let assetURL = URL(string: asset.url) else {
+            Self.logger.error(
+                "Invalid asset URL for \(asset.name): \(asset.url)"
+            )
+            throw URLError(.badURL)
+        }
+
+        let cacheURL = try Self.assetCacheFileURL(forAssetName: asset.name)
+        let versionKey = "asset:\(asset.name)"
+        let hasMatchingVersion =
+            versions[versionKey] == (asset.version ?? "static")
+            && fileManager.fileExists(atPath: cacheURL.path)
+
+        if hasMatchingVersion {
+            Self.logger.debug(
+                "Asset cache hit: \(asset.name) version \(asset.version ?? "static")"
+            )
+            return false
+        }
+
+        if updatePublishedProgress {
+            backgroundStatusText = "Downloading \(asset.name)"
+        }
+
+        Self.logger.info(
+            "Downloading asset \(asset.name) from \(assetURL.absoluteString)"
+        )
+
+        let assetData = try await downloadAssetData(
+            for: asset,
+            primaryURL: assetURL
+        )
+
+        try assetData.write(to: cacheURL, options: .atomic)
+        Self.logger.info(
+            "Saved asset \(asset.name) to cache: \(cacheURL.lastPathComponent)"
+        )
+        versions[versionKey] = asset.version ?? "static"
+        return true
+    }
+
+    private func downloadAssetData(
+        for asset: RemoteContentAsset,
+        primaryURL: URL
+    ) async throws -> Data {
+        do {
+            let (assetData, assetResponse) = try await URLSession.shared.data(
+                from: primaryURL
+            )
+            try Self.validateHTTPResponse(assetResponse, url: primaryURL)
+            return assetData
+        } catch let error as RemoteContentError {
+            guard case .invalidHTTPStatusCode(let statusCode, _) = error,
+                statusCode == 404
+            else {
+                throw error
+            }
+
+            for fallbackURL in Self.imageFallbackURLs(
+                for: asset,
+                primaryURL: primaryURL
+            ) {
+                do {
+                    Self.logger.info(
+                        "Retrying asset \(asset.name) with fallback URL \(fallbackURL.absoluteString)"
+                    )
+                    let (assetData, assetResponse) = try await URLSession.shared
+                        .data(
+                            from: fallbackURL
+                        )
+                    try Self.validateHTTPResponse(
+                        assetResponse,
+                        url: fallbackURL
+                    )
+                    return assetData
+                } catch {
+                    continue
+                }
+            }
+
+            throw error
+        }
+    }
+
+    private func runBackgroundPreload() async {
+        isBackgroundPreloading = true
+        backgroundPreloadProgress = 0
+        backgroundStatusText = "Preparing background preload"
+        defer {
+            isBackgroundPreloading = false
+            backgroundPreloadProgress = 1
+        }
+
+        do {
+            try Self.ensureCacheDirectory()
+            let manifest = try await fetchManifest()
+            var versions = Self.loadCachedVersions()
+            let assets = manifest.assets ?? []
+            let missingAssets = assets.filter {
+                !isAssetCurrent($0, versions: versions)
+            }
+
+            guard !missingAssets.isEmpty else {
+                backgroundStatusText = "All assets already cached"
+                return
+            }
+
+            for (index, asset) in missingAssets.enumerated() {
+                if Task.isCancelled {
+                    return
+                }
+
+                _ = await processAsset(
+                    asset,
+                    versions: &versions,
+                    updatePublishedProgress: true
+                )
+
+                backgroundPreloadProgress = Self.progressValue(
+                    completed: index + 1,
+                    total: missingAssets.count
+                )
+            }
+
+            try Self.saveCachedVersions(versions)
+            JSONResourceLoader.invalidateCache()
+            startupPlan = buildStartupPlan(
+                manifest: manifest,
+                versions: versions
+            )
+            backgroundStatusText = "Background preload complete"
+        } catch {
+            backgroundStatusText = "Background preload failed"
+            Self.logger.error(
+                "Background preload failed: \(error.localizedDescription)"
+            )
+        }
+    }
+
+    private func runOnDemandAssetDownload(
+        requestedName: String,
+        candidateNames: [String]
+    ) async {
+        do {
+            try Self.ensureCacheDirectory()
+            let manifest = try await fetchManifest()
+            var versions = Self.loadCachedVersions()
+
+            for candidate in candidateNames {
+                guard let asset = asset(named: candidate, in: manifest) else {
+                    continue
+                }
+
+                _ = await processAsset(
+                    asset,
+                    versions: &versions,
+                    updatePublishedProgress: false
+                )
+                try Self.saveCachedVersions(versions)
+                startupPlan = buildStartupPlan(
+                    manifest: manifest,
+                    versions: versions
+                )
+                return
+            }
+
+            Self.logger.debug("No on-demand asset found for \(requestedName)")
+        } catch {
+            Self.logger.error(
+                "On-demand asset download failed for \(requestedName): \(error.localizedDescription)"
+            )
+        }
+    }
+
+    private func asset(
+        named assetName: String,
+        in manifest: RemoteContentManifest
+    ) -> RemoteContentAsset? {
+        let normalizedAssetName = URL(fileURLWithPath: assetName)
+            .lastPathComponent
+        return (manifest.assets ?? []).first {
+            URL(fileURLWithPath: $0.name).lastPathComponent
+                == normalizedAssetName
+        }
+    }
+
+    private func assetsForStartup(
+        from manifest: RemoteContentManifest,
+        mode: RemoteContentRefreshMode
+    ) -> [RemoteContentAsset] {
+        let allAssets = manifest.assets ?? []
+
+        switch mode {
+        case .fullPreload:
+            return allAssets
+        case .bootstrap:
+            let immediateAssets = allAssets.filter(
+                Self.shouldLoadDuringBootstrap
+            )
+            let modelAssets = bootstrapCharacterModelAssets(from: manifest)
+            var seenAssetNames = Set<String>()
+
+            return (immediateAssets + modelAssets).filter { asset in
+                seenAssetNames.insert(asset.name).inserted
+            }
+        }
+    }
+
+    private func bootstrapCharacterModelAssets(
+        from manifest: RemoteContentManifest
+    ) -> [RemoteContentAsset] {
+        var requiredModelNames = Set<String>()
+
+        func appendCharacter(_ character: CharacterStats) {
+            let modelName = character.model.trimmingCharacters(
+                in: .whitespacesAndNewlines
+            )
+            if !modelName.isEmpty {
+                requiredModelNames.insert(modelName)
+            }
+
+            if let battleModel = character.battleModel?
+                .trimmingCharacters(in: .whitespacesAndNewlines),
+                !battleModel.isEmpty
+            {
+                requiredModelNames.insert(battleModel)
+            }
+        }
+
+        loadGamePlayers().forEach(appendCharacter)
+        appendCharacter(loadBattlePlayer())
+        loadSummonCharacters().forEach { appendCharacter($0.stats()) }
+        loadMaps().forEach { appendCharacter($0.enemy) }
+        loadTutorialDefinitions().forEach { tutorial in
+            appendCharacter(tutorial.player)
+            tutorial.allEnemies.forEach(appendCharacter)
+        }
+        loadGlobeEventChapters().forEach { chapter in
+            for point in chapter.points {
+                for battle in point.battles {
+                    battle.battleEnemies.forEach(appendCharacter)
+                }
+            }
+        }
+
+        for definition in loadCharacterClassDefinitions() {
+            for variant in definition.variants {
+                appendCharacter(
+                    variant.makeCharacter(named: definition.defaultName)
+                )
+            }
+        }
+
+        var resolvedAssets = [RemoteContentAsset]()
+        var seenAssetNames = Set<String>()
+
+        for modelName in requiredModelNames {
+            let candidateNames = Self.assetCandidates(
+                for: modelName,
+                preferredExtensions: ["usdz", "scn"]
+            )
+
+            for candidateName in candidateNames {
+                guard let asset = asset(named: candidateName, in: manifest)
+                else {
+                    continue
+                }
+
+                if seenAssetNames.insert(asset.name).inserted {
+                    resolvedAssets.append(asset)
+                }
+                break
+            }
+        }
+
+        return resolvedAssets
+    }
+
+    private func isResourceCurrent(
+        _ resource: RemoteContentResource,
+        versions: [String: String]
+    ) -> Bool {
+        guard let cacheURL = try? Self.cacheFileURL(forResource: resource.name)
+        else {
+            return false
+        }
+
+        return versions[resource.name] == resource.version
+            && fileManager.fileExists(atPath: cacheURL.path)
+    }
+
+    private func isAssetCurrent(
+        _ asset: RemoteContentAsset,
+        versions: [String: String]
+    ) -> Bool {
+        guard
+            let cacheURL = try? Self.assetCacheFileURL(forAssetName: asset.name)
+        else {
+            return false
+        }
+
+        let versionKey = "asset:\(asset.name)"
+        return versions[versionKey] == (asset.version ?? "static")
+            && fileManager.fileExists(atPath: cacheURL.path)
+    }
+
+    private func hasCachedAsset(named assetName: String) -> Bool {
+        guard let url = try? Self.assetCacheFileURL(forAssetName: assetName)
+        else {
+            return false
+        }
+        return fileManager.fileExists(atPath: url.path)
     }
 
     private func loadConfiguration() -> RemoteContentConfiguration? {
@@ -233,23 +892,39 @@ final class RemoteContentManager: ObservableObject {
             ),
             let data = try? Data(contentsOf: url)
         else {
+            Self.logger.error("remote_content_config.json missing from bundle.")
             return nil
         }
 
-        return try? JSONDecoder().decode(
-            RemoteContentConfiguration.self,
-            from: data
+        guard
+            let configuration = try? JSONDecoder().decode(
+                RemoteContentConfiguration.self,
+                from: data
+            )
+        else {
+            Self.logger.error("Failed to decode remote_content_config.json")
+            return nil
+        }
+
+        Self.logger.info(
+            "Loaded remote config. Enabled: \(configuration.enabled), manifest: \(configuration.manifestURL)"
         )
+        return configuration
     }
 
     private nonisolated static func validateHTTPResponse(
-        _ response: URLResponse
+        _ response: URLResponse,
+        url: URL
     ) throws {
-        guard
-            let httpResponse = response as? HTTPURLResponse,
-            (200 ... 299).contains(httpResponse.statusCode)
-        else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw URLError(.badServerResponse)
+        }
+
+        guard (200...299).contains(httpResponse.statusCode) else {
+            throw RemoteContentError.invalidHTTPStatusCode(
+                httpResponse.statusCode,
+                url.absoluteString
+            )
         }
     }
 
@@ -267,7 +942,8 @@ final class RemoteContentManager: ObservableObject {
         )
     }
 
-    private nonisolated static func cacheFileURL(forResource resource: String) throws
+    private nonisolated static func cacheFileURL(forResource resource: String)
+        throws
         -> URL
     {
         try cacheRootURL().appendingPathComponent("\(resource).json")
@@ -281,7 +957,9 @@ final class RemoteContentManager: ObservableObject {
         try cacheRootURL().appendingPathComponent("assets", isDirectory: true)
     }
 
-    private nonisolated static func assetCacheFileURL(forAssetName assetName: String) throws
+    private nonisolated static func assetCacheFileURL(
+        forAssetName assetName: String
+    ) throws
         -> URL
     {
         try assetCacheDirectoryURL().appendingPathComponent(
@@ -300,7 +978,9 @@ final class RemoteContentManager: ObservableObject {
         )
     }
 
-    private nonisolated static func imageCandidates(for imageName: String) -> [String] {
+    private nonisolated static func imageCandidates(for imageName: String)
+        -> [String]
+    {
         assetCandidates(
             for: imageName,
             preferredExtensions: ["png", "jpg", "jpeg", "webp"]
@@ -311,15 +991,150 @@ final class RemoteContentManager: ObservableObject {
         for assetName: String,
         preferredExtensions: [String]
     ) -> [String] {
-        var candidates = [assetName]
+        let trimmedName = assetName.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+        var candidates = [String]()
 
-        if !assetName.contains(".") {
-            candidates.append(
-                contentsOf: preferredExtensions.map { "\(assetName).\($0)" }
+        func appendCandidate(_ candidate: String) {
+            let normalizedCandidate = candidate.trimmingCharacters(
+                in: .whitespacesAndNewlines
             )
+            guard
+                !normalizedCandidate.isEmpty,
+                !candidates.contains(normalizedCandidate)
+            else {
+                return
+            }
+            candidates.append(normalizedCandidate)
+        }
+
+        appendCandidate(trimmedName)
+
+        for alias in assetAliases(for: trimmedName) {
+            appendCandidate(alias)
+        }
+
+        if !trimmedName.contains(".") {
+            for baseName in candidates {
+                for preferredExtension in preferredExtensions {
+                    appendCandidate("\(baseName).\(preferredExtension)")
+                }
+            }
         }
 
         return candidates
+    }
+
+    private nonisolated static func assetAliases(for assetName: String)
+        -> [String]
+    {
+        return []
+    }
+
+    private nonisolated static func shouldLoadDuringBootstrap(
+        _ asset: RemoteContentAsset
+    ) -> Bool {
+        let fileName = URL(fileURLWithPath: asset.name).lastPathComponent
+            .lowercased()
+        let path =
+            URL(string: asset.url)?.path.lowercased() ?? asset.url.lowercased()
+
+        if fileName.hasSuffix(".png")
+            || fileName.hasSuffix(".jpg")
+            || fileName.hasSuffix(".jpeg")
+            || fileName.hasSuffix(".webp")
+            || fileName.hasSuffix(".mp3")
+        {
+            return true
+        }
+
+        if path.hasSuffix(".png")
+            || path.hasSuffix(".jpg")
+            || path.hasSuffix(".jpeg")
+            || path.hasSuffix(".webp")
+            || path.hasSuffix(".mp3")
+        {
+            return true
+        }
+
+        return false
+    }
+
+    private nonisolated static func imageFallbackURLs(
+        for asset: RemoteContentAsset,
+        primaryURL: URL
+    ) -> [URL] {
+        let pathExtension = primaryURL.pathExtension.lowercased()
+        guard ["png", "jpg", "jpeg", "webp"].contains(pathExtension) else {
+            return []
+        }
+
+        let fallbackExtensions: [String]
+        if asset.name.hasPrefix("texture_") {
+            fallbackExtensions = ["jpg", "jpeg", "png", "webp"]
+        } else {
+            fallbackExtensions = ["png", "jpg", "jpeg", "webp"]
+        }
+
+        let assetFileName = URL(fileURLWithPath: asset.name).lastPathComponent
+        let assetBaseName = URL(fileURLWithPath: assetFileName)
+            .deletingPathExtension()
+            .lastPathComponent
+        let urlBaseName = primaryURL.deletingPathExtension().lastPathComponent
+        let baseName = assetBaseName.isEmpty ? urlBaseName : assetBaseName
+
+        return fallbackExtensions.compactMap { fallbackExtension in
+            guard fallbackExtension != pathExtension else { return nil }
+
+            var fallbackURL = primaryURL.deletingPathExtension()
+            fallbackURL.appendPathExtension(fallbackExtension)
+
+            guard
+                fallbackURL.lastPathComponent
+                    == "\(baseName).\(fallbackExtension)"
+            else {
+                fallbackURL.deleteLastPathComponent()
+                fallbackURL.appendPathComponent(
+                    "\(baseName).\(fallbackExtension)"
+                )
+                return fallbackURL
+            }
+
+            return fallbackURL
+        }
+    }
+
+    private nonisolated static func estimatedSize(
+        for urlString: String,
+        fallbackName: String
+    ) -> Int64 {
+        let lowercasedName =
+            (URL(string: urlString)?.pathExtension.isEmpty == false
+            ? urlString
+            : fallbackName).lowercased()
+
+        if lowercasedName.hasSuffix(".json") {
+            return 25_000
+        }
+        if lowercasedName.hasSuffix(".png")
+            || lowercasedName.hasSuffix(".jpg")
+            || lowercasedName.hasSuffix(".jpeg")
+            || lowercasedName.hasSuffix(".webp")
+        {
+            return 1_500_000
+        }
+        if lowercasedName.hasSuffix(".usdz") {
+            return 8_000_000
+        }
+        if lowercasedName.hasSuffix(".mp4") {
+            return 30_000_000
+        }
+        if lowercasedName.hasSuffix(".mp3") {
+            return 6_000_000
+        }
+
+        return 1_000_000
     }
 
     private nonisolated static func progressValue(
@@ -334,7 +1149,10 @@ final class RemoteContentManager: ObservableObject {
         guard
             let versionsURL = try? versionsFileURL(),
             let data = try? Data(contentsOf: versionsURL),
-            let decoded = try? JSONDecoder().decode([String: String].self, from: data)
+            let decoded = try? JSONDecoder().decode(
+                [String: String].self,
+                from: data
+            )
         else {
             return [:]
         }

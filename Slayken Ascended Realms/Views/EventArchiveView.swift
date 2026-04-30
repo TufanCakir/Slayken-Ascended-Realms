@@ -42,9 +42,9 @@ struct EventArchiveView: View {
         .background {
             ZStack {
                 if let theme = theme.selectedTheme {
-                    Image(theme.background)
-                        .resizable()
-                        .scaledToFill()
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
                 }
 
                 LinearGradient(
@@ -151,14 +151,14 @@ struct EventArchiveView: View {
     private func pointSection(_ point: GlobeEventPoint) -> some View {
         VStack(alignment: .leading, spacing: 9) {
             HStack(spacing: 10) {
-                Image(point.resolvedNodeImage)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 58, height: 42)
-                    .clipped()
-                    .overlay(
-                        Rectangle().stroke(.white.opacity(0.18), lineWidth: 1)
-                    )
+                RemoteAssetImage(point.resolvedNodeImage) {
+                    Color.black.opacity(0.35)
+                }
+                .frame(width: 58, height: 42)
+                .clipped()
+                .overlay(
+                    Rectangle().stroke(.white.opacity(0.18), lineWidth: 1)
+                )
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(point.title)

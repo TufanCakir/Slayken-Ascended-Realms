@@ -118,6 +118,13 @@ final class MusicManager: NSObject, ObservableObject {
             ? fileName
             : (fileName as NSString).deletingPathExtension
 
+        if let remoteURL = RemoteContentManager.cachedAssetURL(
+            named: fileName,
+            preferredExtensions: fileExtension.isEmpty ? ["mp3", "m4a", "wav"] : []
+        ) {
+            return remoteURL
+        }
+
         return Bundle.main.url(
             forResource: resourceName,
             withExtension: fileExtension.isEmpty ? nil : fileExtension

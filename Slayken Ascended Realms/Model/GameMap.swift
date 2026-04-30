@@ -23,13 +23,10 @@ struct GameBackground: Identifiable, Codable {
 }
 
 func loadMaps() -> [GameMap] {
-    guard let url = Bundle.main.url(forResource: "maps", withExtension: "json")
-    else {
-        return []
-    }
-
     do {
-        let data = try Data(contentsOf: url)
+        guard let data = JSONResourceLoader.loadData(resource: "maps") else {
+            return []
+        }
         let maps = try JSONDecoder().decode([GameMap].self, from: data)
         return maps
     } catch {
@@ -38,17 +35,10 @@ func loadMaps() -> [GameMap] {
 }
 
 func loadBackgrounds() -> [GameBackground] {
-    guard
-        let url = Bundle.main.url(
-            forResource: "backgrounds",
-            withExtension: "json"
-        )
-    else {
-        return []
-    }
-
     do {
-        let data = try Data(contentsOf: url)
+        guard let data = JSONResourceLoader.loadData(resource: "backgrounds") else {
+            return []
+        }
         let backgrounds = try JSONDecoder().decode(
             [GameBackground].self,
             from: data

@@ -125,6 +125,13 @@ struct EventCutsceneView: View {
     private func cutsceneVideoURL() -> URL? {
         guard let video = cutscene.video, !video.isEmpty else { return nil }
 
+        if let remoteURL = RemoteContentManager.cachedAssetURL(
+            named: video,
+            preferredExtensions: ["mp4", "mov", "m4v"]
+        ) {
+            return remoteURL
+        }
+
         if let url = Bundle.main.url(forResource: video, withExtension: nil) {
             return url
         }

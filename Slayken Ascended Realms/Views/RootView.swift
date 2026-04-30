@@ -12,6 +12,7 @@ struct RootView: View {
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
     @EnvironmentObject var networkMonitor: NetworkMonitor
+    @EnvironmentObject var remoteContent: RemoteContentManager
     @Environment(\.modelContext) private var modelContext
 
     private enum Screen {
@@ -138,10 +139,24 @@ struct RootView: View {
                 }
             }
 
-            if isLoading {
+            if isLoading || remoteContent.isRefreshing {
                 LoadingOverlayView(
-                    progress: loadingProgress,
-                    background: loadingBackground
+                    progress: remoteContent.isRefreshing
+                        ? remoteContent.refreshProgress
+                        : loadingProgress,
+                    background: loadingBackground,
+                    title: remoteContent.isRefreshing
+                        ? "Syncing Live Content"
+                        : "Entering Ascended Realms",
+                    subtitle: remoteContent.isRefreshing
+                        ? "Events, News, Bilder und 3D-Dateien werden live aktualisiert."
+                        : "Deine Welt, Battle-Daten und Event-Pfade werden vorbereitet.",
+                    progressLabel: remoteContent.isRefreshing
+                        ? remoteContent.statusText
+                        : "Realm Sync",
+                    footerText: remoteContent.isRefreshing
+                        ? "Live service update from your server cache"
+                        : "Loading battle systems, events and rewards"
                 )
                 .environmentObject(theme)
                 .zIndex(100)

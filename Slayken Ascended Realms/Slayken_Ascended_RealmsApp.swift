@@ -15,6 +15,7 @@ struct Slayken_Ascended_RealmsApp: App {
     @StateObject var theme = ThemeManager()
     @StateObject var musicManager = MusicManager()
     @StateObject var networkMonitor = NetworkMonitor()
+    @StateObject var remoteContent = RemoteContentManager.shared
 
     var body: some Scene {
         WindowGroup {
@@ -23,8 +24,15 @@ struct Slayken_Ascended_RealmsApp: App {
                 .environmentObject(theme)
                 .environmentObject(musicManager)
                 .environmentObject(networkMonitor)
+                .environmentObject(remoteContent)
                 .onAppear {
                     musicManager.startPlaybackIfNeeded()
+                }
+                .task {
+                    await remoteContent.refreshContentIfNeeded()
+                    gameState.reloadContent()
+                    theme.loadThemes()
+                    theme.loadSelected()
                 }
         }
         .modelContainer(for: [

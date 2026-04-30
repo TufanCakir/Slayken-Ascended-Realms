@@ -22,15 +22,8 @@ final class ThemeManager: ObservableObject {
 
     func loadThemes() {
         guard
-            let url = Bundle.main.url(
-                forResource: "themes",
-                withExtension: "json"
-            ),
-            let data = try? Data(contentsOf: url),
-            let decoded = try? JSONDecoder().decode(
-                [GameTheme].self,
-                from: data
-            )
+            let data = JSONResourceLoader.loadData(resource: "themes"),
+            let decoded = try? JSONDecoder().decode([GameTheme].self, from: data)
         else {
             return
         }

@@ -12,9 +12,10 @@ struct NewsView: View {
     var onClose: (() -> Void)? = nil
 
     @EnvironmentObject var theme: ThemeManager
+    @EnvironmentObject private var gameState: GameState
     @State private var selectedCategory = "Allgemein"
 
-    private let items = loadNewsItems()
+    private var items: [NewsItemDefinition] { gameState.newsItems }
 
     private var categories: [String] {
         ["Allgemein", "Events", "Bug Fixes"]
@@ -263,11 +264,7 @@ struct NewsView: View {
 
     @ViewBuilder
     private func newsImage(_ imageName: String) -> some View {
-        if UIImage(named: imageName) != nil {
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
-        } else {
+        RemoteAssetImage(imageName) {
             ZStack {
                 LinearGradient(
                     colors: [.blue.opacity(0.8), .black],
@@ -339,22 +336,16 @@ private struct NewsDetailView: View {
     }
 
     private var heroImage: some View {
-        Group {
-            if UIImage(named: item.image) != nil {
-                Image(item.image)
-                    .resizable()
-                    .scaledToFill()
-            } else {
-                ZStack {
-                    LinearGradient(
-                        colors: [.blue.opacity(0.8), .purple.opacity(0.55)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                    Image(systemName: "newspaper.fill")
-                        .font(.system(size: 54, weight: .black))
-                        .foregroundStyle(.white.opacity(0.75))
-                }
+        RemoteAssetImage(item.image) {
+            ZStack {
+                LinearGradient(
+                    colors: [.blue.opacity(0.8), .purple.opacity(0.55)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                Image(systemName: "newspaper.fill")
+                    .font(.system(size: 54, weight: .black))
+                    .foregroundStyle(.white.opacity(0.75))
             }
         }
         .frame(maxWidth: .infinity)
@@ -390,4 +381,5 @@ private struct NewsDetailView: View {
 #Preview {
     NewsView(onClose: {})
         .environmentObject(ThemeManager())
+        .environmentObject(GameState())
 }

@@ -8,7 +8,11 @@
 import Foundation
 
 enum JSONResourceLoader {
-    static func load<T: Decodable>(_ type: T.Type, resource: String) -> T? {
+    static func loadData(resource: String) -> Data? {
+        if let cachedData = RemoteContentManager.cachedData(forResource: resource) {
+            return cachedData
+        }
+
         guard
             let url = Bundle.main.url(
                 forResource: resource,
@@ -18,8 +22,12 @@ enum JSONResourceLoader {
             return nil
         }
 
+        return try? Data(contentsOf: url)
+    }
+
+    static func load<T: Decodable>(_ type: T.Type, resource: String) -> T? {
         do {
-            let data = try Data(contentsOf: url)
+            guard let data = loadData(resource: resource) else { return nil }
             return try JSONDecoder().decode(T.self, from: data)
         } catch {
             return nil

@@ -250,8 +250,11 @@ final class BattleSceneCoordinator {
 
     func updateEnvironment(groundTexture: String, skyboxTexture: String) {
         applyGroundTexture(named: groundTexture)
-        scene.background.contents = UIImage(named: skyboxTexture)
-        scene.lightingEnvironment.contents = UIImage(named: skyboxTexture)
+        let skyboxImage =
+            RemoteContentManager.cachedImage(named: skyboxTexture)
+            ?? UIImage(named: skyboxTexture)
+        scene.background.contents = skyboxImage
+        scene.lightingEnvironment.contents = skyboxImage
     }
 
     private func makeCamera() -> SCNNode {
@@ -1193,6 +1196,12 @@ final class BattleSceneCoordinator {
             "3DMonster/\(modelName).scn",
         ]
 
+        if let remoteScene = RemoteContentManager.cachedScene(
+            candidateNames: candidateNames
+        ) {
+            return remoteScene
+        }
+
         for candidateName in candidateNames {
             if let scene = SCNScene(named: candidateName) {
                 return scene
@@ -1249,7 +1258,8 @@ final class BattleSceneCoordinator {
     }
 
     private func loadTextureImage(named textureName: String) -> UIImage? {
-        UIImage(named: textureName)
+        RemoteContentManager.cachedImage(named: textureName)
+            ?? UIImage(named: textureName)
             ?? UIImage(named: "\(textureName).jpg")
             ?? UIImage(named: "\(textureName).png")
             ?? UIImage(named: "3DModel/\(textureName).jpg")

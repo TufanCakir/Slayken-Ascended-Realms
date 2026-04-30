@@ -120,6 +120,13 @@ struct IntroVideoView: View {
     }
 
     private func introVideoURL() -> URL? {
+        if let remoteURL = RemoteContentManager.cachedAssetURL(
+            named: introVideo.video,
+            preferredExtensions: ["mp4", "mov", "m4v"]
+        ) {
+            return remoteURL
+        }
+
         if let url = Bundle.main.url(
             forResource: introVideo.video,
             withExtension: nil

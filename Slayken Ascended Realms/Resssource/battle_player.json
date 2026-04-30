@@ -1,8 +1,0 @@
-{
-    "name": "Shen",
-    "image": "preview_shen",
-    "model": "shen",
-    "texture": "shen_texture_original",
-    "hp": 300,
-    "attack": 300
-}

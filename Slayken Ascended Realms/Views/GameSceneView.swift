@@ -128,10 +128,11 @@ final class SceneCoordinator {
 
         applyGroundTexture(named: currentGroundTexture)
 
-        scene.background.contents = UIImage(named: currentSkyboxTexture)
-        scene.lightingEnvironment.contents = UIImage(
-            named: currentSkyboxTexture
-        )
+        let skyboxImage =
+            RemoteContentManager.cachedImage(named: currentSkyboxTexture)
+            ?? UIImage(named: currentSkyboxTexture)
+        scene.background.contents = skyboxImage
+        scene.lightingEnvironment.contents = skyboxImage
     }
 
     private func makeCamera() -> SCNNode {
@@ -395,6 +396,12 @@ final class SceneCoordinator {
             "3DMonster/\(modelName).scn",
         ]
 
+        if let remoteScene = RemoteContentManager.cachedScene(
+            candidateNames: candidateNames
+        ) {
+            return remoteScene
+        }
+
         for candidateName in candidateNames {
             if let scene = SCNScene(named: candidateName) {
                 return scene
@@ -441,7 +448,8 @@ final class SceneCoordinator {
     }
 
     private func loadTextureImage(named textureName: String) -> UIImage? {
-        UIImage(named: textureName)
+        RemoteContentManager.cachedImage(named: textureName)
+            ?? UIImage(named: textureName)
             ?? UIImage(named: "\(textureName).jpg")
             ?? UIImage(named: "\(textureName).png")
             ?? UIImage(named: "3DModel/\(textureName).jpg")

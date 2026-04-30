@@ -67,13 +67,7 @@ func loadBattlePlayer() -> CharacterStats {
 }
 
 private func loadCharacters(named resourceName: String) -> [CharacterStats] {
-    guard
-        let url = Bundle.main.url(
-            forResource: resourceName,
-            withExtension: "json"
-        ),
-        let data = try? Data(contentsOf: url)
-    else {
+    guard let data = JSONResourceLoader.loadData(resource: resourceName) else {
         return []
     }
 

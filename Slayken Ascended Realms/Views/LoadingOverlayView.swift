@@ -11,10 +11,30 @@ import UIKit
 struct LoadingOverlayView: View {
     let progress: Double
     let background: String
+    let title: String
+    let subtitle: String
+    let progressLabel: String
+    let footerText: String
 
     @EnvironmentObject var theme: ThemeManager
     @State private var spin = false
     @State private var showSupport = false
+
+    init(
+        progress: Double,
+        background: String,
+        title: String = "Entering Ascended Realms",
+        subtitle: String = "Deine Welt, Battle-Daten und Event-Pfade werden vorbereitet.",
+        progressLabel: String = "Realm Sync",
+        footerText: String = "Loading battle systems, events and rewards"
+    ) {
+        self.progress = progress
+        self.background = background
+        self.title = title
+        self.subtitle = subtitle
+        self.progressLabel = progressLabel
+        self.footerText = footerText
+    }
 
     private var appVersionText: String {
         let version =
@@ -160,14 +180,12 @@ struct LoadingOverlayView: View {
             spinnerBlock
 
             VStack(spacing: 6) {
-                Text("Entering Ascended Realms")
+                Text(title)
                     .font(.system(size: 22, weight: .black))
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
 
-                Text(
-                    "Deine Welt, Battle-Daten und Event-Pfade werden vorbereitet."
-                )
+                Text(subtitle)
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundStyle(.white.opacity(0.76))
                 .multilineTextAlignment(.center)
@@ -320,7 +338,7 @@ struct LoadingOverlayView: View {
             .frame(height: 10)
 
             HStack {
-                Text("Realm Sync")
+                Text(progressLabel)
                     .font(.system(size: 11, weight: .black))
                     .foregroundStyle(.white.opacity(0.72))
 
@@ -343,7 +361,7 @@ struct LoadingOverlayView: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.52)
 
-                Text("Loading battle systems, events and rewards")
+                Text(footerText)
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(.white.opacity(0.50))
             }

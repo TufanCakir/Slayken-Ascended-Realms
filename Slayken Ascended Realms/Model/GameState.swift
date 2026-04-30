@@ -19,6 +19,7 @@ final class GameState: ObservableObject {
     @Published var summonBanners: [SummonBanner]
     @Published var abilityCards: [AbilityCardDefinition]
     @Published var particleEffects: [ParticleEffectDefinition]
+    @Published var newsItems: [NewsItemDefinition]
     @Published var selectedBattle: GlobeBattle?
     @Published var activeEventChapterID: String?
     @Published var activeEventPointID: String?
@@ -81,6 +82,7 @@ final class GameState: ObservableObject {
         let loadedSummonBanners = loadSummonBanners()
         let loadedAbilityCards = loadAbilityCards()
         let loadedParticleEffects = loadParticleEffects()
+        let loadedNewsItems = loadNewsItems()
 
         let defaultMap =
             loadedMaps.first
@@ -112,12 +114,46 @@ final class GameState: ObservableObject {
         self.summonBanners = loadedSummonBanners
         self.abilityCards = loadedAbilityCards
         self.particleEffects = loadedParticleEffects
+        self.newsItems = loadedNewsItems
         self.selectedBattle = nil
         self.activeEventChapterID = loadedEventChapters.first?.id
         self.activeEventPointID = nil
         self.activeEventBattleID = nil
         self.selectedMap = defaultMap
         self.selectedBackground = defaultBG
+
+        loadSelections()
+    }
+
+    func reloadContent() {
+        let currentMapID = selectedMap.id
+        let currentBackgroundID = selectedBackground.id
+
+        availableCharacters = Self.loadAvailableCharacters()
+        upsertAvailableCharacter(player)
+        maps = loadMaps()
+        backgrounds = loadBackgrounds()
+        currencies = loadCurrencyDefinitions()
+        eventChapters = loadGlobeEventChapters()
+        summonCharacters = loadSummonCharacters()
+        summonBanners = loadSummonBanners()
+        abilityCards = loadAbilityCards()
+        particleEffects = loadParticleEffects()
+        newsItems = loadNewsItems()
+
+        if let refreshedMap = maps.first(where: { $0.id == currentMapID }) {
+            selectedMap = refreshedMap
+        } else if let firstMap = maps.first {
+            selectedMap = firstMap
+        }
+
+        if let refreshedBackground = backgrounds.first(where: {
+            $0.id == currentBackgroundID
+        }) {
+            selectedBackground = refreshedBackground
+        } else if let firstBackground = backgrounds.first {
+            selectedBackground = firstBackground
+        }
 
         loadSelections()
     }

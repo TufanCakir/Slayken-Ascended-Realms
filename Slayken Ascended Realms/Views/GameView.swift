@@ -49,6 +49,16 @@ struct GameView: View {
     @State private var selectedTab: GameTab = .game
     @State private var resourceRefreshDate = Date()
     @State private var battleResourceMessage = ""
+    @State private var showNavigationSpinner = false
+    @State private var navigationSpinnerRotation = false
+    @State private var navigationSpinnerTask: Task<Void, Never>?
+
+    private enum ModalTabDestination {
+        case character
+        case summon
+        case shop
+        case events
+    }
 
     private var gifts: [GiftBoxDefinition] {
         loadGiftBoxDefinitions()
@@ -115,7 +125,7 @@ struct GameView: View {
                     }
                     .zIndex(30)
                 }
-                if selectedTab == .game && !showStory && !showPopup {
+                if shouldShowMapPreview {
                     ZStack {
                         if let chapter = activePreviewChapter {
                             GameEventMapPreviewView(
@@ -152,6 +162,7 @@ struct GameView: View {
                         ascendedXP: ascendedXP,
                         horizontalPadding: horizontalOverlayPadding
                     ) {
+                        triggerNavigationSpinner()
                         showNews = true
                     }
                     .zIndex(8)
@@ -199,45 +210,66 @@ struct GameView: View {
                 GameMiddleDrawerView(
                     selectedTab: $selectedTab,
                     onTheme: {
+                        triggerNavigationSpinner()
                         activeSelectionSheet = .theme
                     },
                     onSupport: {
+                        triggerNavigationSpinner()
                         showSupport = true
                     },
                     onNews: {
+                        triggerNavigationSpinner()
                         showNews = true
                     },
                     onCreateClass: {
+                        triggerNavigationSpinner()
                         showCreateClass = true
                     },
                     onShop: {
+                        triggerNavigationSpinner()
                         showShop = true
                     },
                     onQuests: {
+                        triggerNavigationSpinner()
                         showQuests = true
                     },
                     onArchive: {
+                        triggerNavigationSpinner()
                         showStoryArchive = true
                     },
                     onEventArchive: {
+                        triggerNavigationSpinner()
                         showEventArchive = true
                     },
                     onTutorialArchive: {
+                        triggerNavigationSpinner()
                         onOpenTutorialArchive()
                     },
                     onGift: {
+                        triggerNavigationSpinner()
                         showGift = true
                     },
                     onDailyLogin: {
+                        triggerNavigationSpinner()
                         showDailyLogin = true
                     },
                     onSettings: {
+                        triggerNavigationSpinner()
                         showSettings = true
                     },
                     trailingPadding: horizontalOverlayPadding
                 )
                 .offset(y: -10)
                 .zIndex(11)
+
+            }
+            .overlay(alignment: .bottomTrailing) {
+                if showNavigationSpinner {
+                    navigationSpinner
+                        .padding(.trailing, 22)
+                        .padding(.bottom, 118)
+                        .transition(.scale.combined(with: .opacity))
+                }
             }
             .sheet(item: $activeSelectionSheet) { selection in
                 switch selection {
@@ -317,9 +349,7 @@ struct GameView: View {
             .fullScreenCover(
                 isPresented: $showCharacter,
                 onDismiss: {
-                    if selectedTab == .character {
-                        selectedTab = .game
-                    }
+                    resetTabAfterModalDismiss(.character)
                 }
             ) {
                 CharacterSelectView(onClose: {
@@ -346,9 +376,15 @@ struct GameView: View {
                 .ignoresSafeArea()
                 .background(.black)
             }
-            .fullScreenCover(isPresented: $showShop) {
+            .fullScreenCover(
+                isPresented: $showShop,
+                onDismiss: {
+                    resetTabAfterModalDismiss(.shop)
+                }
+            ) {
                 ShopView(onClose: {
                     showShop = false
+                    selectedTab = .game
                 })
                 .environmentObject(gameState)
                 .environmentObject(theme)
@@ -368,9 +404,7 @@ struct GameView: View {
             .fullScreenCover(
                 isPresented: $showSummon,
                 onDismiss: {
-                    if selectedTab == .summon {
-                        selectedTab = .game
-                    }
+                    resetTabAfterModalDismiss(.summon)
                 }
             ) {
                 SummonView(
@@ -387,9 +421,7 @@ struct GameView: View {
             .fullScreenCover(
                 isPresented: $showGlobeEvents,
                 onDismiss: {
-                    if selectedTab == .events {
-                        selectedTab = .game
-                    }
+                    resetTabAfterModalDismiss(.events)
                 }
             ) {
                 ZStack {
@@ -480,12 +512,16 @@ struct GameView: View {
             }
             .onChange(of: selectedTab) { _, newTab in
                 if newTab == .events {
+                    triggerNavigationSpinner()
                     showGlobeEvents = true
                 } else if newTab == .character {
+                    triggerNavigationSpinner()
                     showCharacter = true
                 } else if newTab == .summon {
+                    triggerNavigationSpinner()
                     showSummon = true
                 } else if newTab == .shop {
+                    triggerNavigationSpinner()
                     showShop = true
                 } else {
                     if showGlobeEvents {
@@ -508,13 +544,103 @@ struct GameView: View {
                     try? await Task.sleep(for: .seconds(20))
                 }
             }
+            .onDisappear {
+                navigationSpinnerTask?.cancel()
+            }
+        }
+    }
+
+    private var shouldShowMapPreview: Bool {
+        !showStory
+            && !showPopup
+            && !showCharacter
+            && !showSummon
+            && !showShop
+            && !showGlobeEvents
+    }
+
+    private func resetTabAfterModalDismiss(_ destination: ModalTabDestination) {
+        switch destination {
+        case .character:
+            if selectedTab == .character {
+                selectedTab = .game
+            }
+        case .summon:
+            if selectedTab == .summon {
+                selectedTab = .game
+            }
+        case .shop:
+            if selectedTab == .shop {
+                selectedTab = .game
+            }
+        case .events:
+            if selectedTab == .events {
+                selectedTab = .game
+            }
         }
     }
 
     private func closeGlobeAndOpen(_ selection: ActiveSelectionSheet) {
+        triggerNavigationSpinner()
         showGlobeEvents = false
         selectedTab = .game
         activeSelectionSheet = selection
+    }
+
+    private var navigationSpinner: some View {
+        ZStack {
+            Circle()
+                .stroke(Color.black.opacity(0.28), lineWidth: 7)
+                .frame(width: 54, height: 54)
+
+            Circle()
+                .trim(from: 0.08, to: 0.74)
+                .stroke(
+                    AngularGradient(
+                        colors: [
+                            Color(red: 0.12, green: 0.78, blue: 1.0),
+                            Color(red: 0.15, green: 0.42, blue: 1.0),
+                            .white,
+                            Color(red: 0.12, green: 0.78, blue: 1.0),
+                        ],
+                        center: .center
+                    ),
+                    style: StrokeStyle(lineWidth: 6, lineCap: .round)
+                )
+                .frame(width: 54, height: 54)
+                .rotationEffect(.degrees(navigationSpinnerRotation ? 360 : 0))
+        }
+        .padding(10)
+        .background(Color.black.opacity(0.44))
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .shadow(color: .black.opacity(0.24), radius: 10, y: 6)
+        .allowsHitTesting(false)
+        .onAppear {
+            withAnimation(
+                .linear(duration: 0.9).repeatForever(autoreverses: false)
+            ) {
+                navigationSpinnerRotation = true
+            }
+        }
+    }
+
+    private func triggerNavigationSpinner(
+        duration: Duration = .milliseconds(650)
+    ) {
+        navigationSpinnerTask?.cancel()
+        navigationSpinnerRotation = false
+
+        withAnimation(.easeInOut(duration: 0.18)) {
+            showNavigationSpinner = true
+        }
+
+        navigationSpinnerTask = Task { @MainActor in
+            try? await Task.sleep(for: duration)
+            guard !Task.isCancelled else { return }
+            withAnimation(.easeInOut(duration: 0.2)) {
+                showNavigationSpinner = false
+            }
+        }
     }
 
     private var availableDailyReward: DailyLoginRewardState? {

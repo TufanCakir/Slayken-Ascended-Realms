@@ -392,8 +392,17 @@ enum PlayerInventoryStore {
         -> PlayerAccountProgress
     {
         let progress = accountProgress(in: context)
+        let previousLevel = progress.level
         progress.xp += max(0, amount)
         progress.level = level(forXP: progress.xp)
+
+        if progress.level > previousLevel {
+            refillBattleResourcesForAscendedLevelUp(
+                to: progress.level,
+                in: context
+            )
+        }
+
         save(context)
         return progress
     }
@@ -805,6 +814,37 @@ enum PlayerInventoryStore {
             TimeInterval(elapsedMinutes * 60)
         )
         save(context)
+    }
+
+    private static func refillBattleResourcesForAscendedLevelUp(
+        to ascendedLevel: Int,
+        in context: ModelContext,
+        now: Date = .now
+    ) {
+        let configuration = loadBattleResourceConfiguration().resolved(
+            forAscendedLevel: ascendedLevel
+        )
+        let descriptor = FetchDescriptor<PlayerBattleResourceState>(
+            predicate: #Predicate { $0.id == "battle_resources" }
+        )
+
+        let state =
+            (try? context.fetch(descriptor).first)
+            ?? PlayerBattleResourceState(
+                currentEnergy: configuration.energy.maximum,
+                availableCoinsLimit: configuration.coinLimit.maximum,
+                availableCrystalsLimit: configuration.crystalLimit.maximum,
+                lastUpdatedAt: now
+            )
+
+        if state.modelContext == nil {
+            context.insert(state)
+        }
+
+        state.currentEnergy = configuration.energy.maximum
+        state.availableCoinsLimit = configuration.coinLimit.maximum
+        state.availableCrystalsLimit = configuration.crystalLimit.maximum
+        state.lastUpdatedAt = now
     }
 
     private static func questCounter(

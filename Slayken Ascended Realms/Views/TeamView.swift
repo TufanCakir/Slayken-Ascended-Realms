@@ -188,12 +188,14 @@ struct TeamView: View {
                 .clipShape(
                     RoundedRectangle(cornerRadius: 5, style: .continuous)
                 )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5).stroke(
-                        .white.opacity(0.62),
-                        lineWidth: 1
-                    )
+                .background(
+                    Color.black.opacity(0.34),
+                    in: RoundedRectangle(cornerRadius: 26, style: .continuous)
                 )
+                .overlay {
+                    RoundedRectangle(cornerRadius: 26, style: .continuous)
+                        .stroke(.white.opacity(0.08), lineWidth: 1)
+                }
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(selectedCharacter?.name ?? "Character Slot")

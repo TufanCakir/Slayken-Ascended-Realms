@@ -27,35 +27,53 @@ struct GiftView: View {
     }
 
     var body: some View {
-        ZStack {
-            LinearGradient(
-                colors: [
-                    Color.black,
-                    activeTheme?.primary.color.opacity(0.72)
-                        ?? Color(red: 0.16, green: 0.12, blue: 0.12),
-                    activeTheme?.secondary.color.opacity(0.45)
-                        ?? Color(red: 0.28, green: 0.16, blue: 0.12),
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
 
-            VStack(spacing: 20) {
-                header
+        VStack(spacing: 20) {
+            header
 
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 14) {
-                        ForEach(gifts) { gift in
-                            giftCard(gift)
-                        }
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 14) {
+                    ForEach(gifts) { gift in
+                        giftCard(gift)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 24)
                 }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 24)
             }
-            .padding(.top, 20)
         }
+        .padding(.top, 20)
+        .background {
+            ZStack {
+                if let theme = theme.selectedTheme {
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
+                }
+
+                LinearGradient(
+                    colors: [
+                        Color.black.opacity(0.2),
+                        Color.black.opacity(0.6),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            }
+            .ignoresSafeArea()
+        }
+
+    }
+
+    private var backgroundFallback: some View {
+        LinearGradient(
+            colors: [
+                Color.black,
+                Color(red: 0.11, green: 0.08, blue: 0.07),
+                Color(red: 0.24, green: 0.14, blue: 0.12),
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
     }
 
     private var header: some View {
@@ -105,7 +123,7 @@ struct GiftView: View {
 
                 Image(systemName: gift.icon)
                     .font(.system(size: 22, weight: .bold))
-                    .foregroundStyle(accentColor)
+                    .foregroundStyle(.white)
             }
 
             Text(gift.message)
@@ -129,7 +147,7 @@ struct GiftView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
                     .background(
-                        accentColor,
+                        Color.white.opacity(0.14),
                         in: RoundedRectangle(
                             cornerRadius: 16,
                             style: .continuous
@@ -141,9 +159,10 @@ struct GiftView: View {
             .disabled(isClaimed)
             .opacity(isClaimed ? 0.65 : 1)
         }
-        .padding(18)
+        .padding()
         .background(
-            Color.white.opacity(0.08),
+            activeTheme?.accent.color
+                ?? Color(red: 0.94, green: 0.54, blue: 0.22),
             in: RoundedRectangle(cornerRadius: 24, style: .continuous)
         )
         .overlay(
@@ -157,7 +176,7 @@ struct GiftView: View {
 
         return HStack {
             Image(systemName: currency?.icon ?? "gift.fill")
-                .foregroundStyle(accentColor)
+                .foregroundStyle(.white)
                 .frame(width: 20)
 
             Text(currency?.name ?? reward.currency.capitalized)
@@ -187,15 +206,19 @@ struct GiftView: View {
         return HStack {
             Group {
                 if let summonImage = character?.summonImage {
-                    Image(summonImage)
-                        .resizable()
-                        .scaledToFill()
+                    RemoteAssetImage(summonImage, contentMode: .fill) {
+                        Image(systemName: "person.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(4)
+                            .foregroundStyle(.white)
+                    }
                 } else {
                     Image(systemName: "person.fill")
                         .resizable()
                         .scaledToFit()
                         .padding(4)
-                        .foregroundStyle(accentColor)
+                        .foregroundStyle(.white)
                 }
             }
             .frame(width: 24, height: 24)
@@ -208,8 +231,8 @@ struct GiftView: View {
             Spacer()
 
             Text("Charakter")
-                .font(.system(size: 13, weight: .black, design: .rounded))
-                .foregroundStyle(accentColor)
+                .font(.system(size: 16, weight: .black, design: .rounded))
+                .foregroundStyle(.white)
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
@@ -217,10 +240,5 @@ struct GiftView: View {
             Color.white.opacity(0.06),
             in: RoundedRectangle(cornerRadius: 14, style: .continuous)
         )
-    }
-
-    private var accentColor: Color {
-        activeTheme?.accent.color.opacity(0.9)
-            ?? Color(red: 0.86, green: 0.3, blue: 0.18)
     }
 }

@@ -8,44 +8,80 @@
 import SwiftUI
 
 struct DailyLoginView: View {
+    @EnvironmentObject var theme: ThemeManager
+
     let rewards: [DailyLoginRewardDefinition]
     let currencies: [CurrencyDefinition]
     let availableReward: DailyLoginRewardState?
     let onClaim: () -> Void
     let onClose: () -> Void
 
+    private var activeTheme: GameTheme? {
+        theme.selectedTheme ?? theme.themes.first
+    }
+
     private var highlightedDay: Int {
         availableReward?.dayNumber ?? 1
     }
 
+    private var cardStroke: LinearGradient {
+        LinearGradient(
+            colors: [
+                .white.opacity(0.24),
+                Color.cyan.opacity(0.16),
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    private var backgroundFallback: some View {
+        LinearGradient(
+            colors: [
+                Color.black,
+                Color(red: 0.11, green: 0.08, blue: 0.07),
+                Color(red: 0.24, green: 0.14, blue: 0.12),
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
     var body: some View {
-        ZStack {
-            LinearGradient(
-                colors: [
-                    Color.black,
-                    Color(red: 0.11, green: 0.08, blue: 0.07),
-                    Color(red: 0.24, green: 0.14, blue: 0.12),
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
 
-            VStack(spacing: 20) {
-                header
-                statusCard
+        VStack(spacing: 20) {
+            header
+            statusCard
 
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 12) {
-                        ForEach(rewards) { reward in
-                            rewardDayCard(reward)
-                        }
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 12) {
+                    ForEach(rewards) { reward in
+                        rewardDayCard(reward)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 24)
                 }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 24)
             }
-            .padding(.top, 20)
+        }
+        .padding(.top, 20)
+        .background {
+            ZStack {
+                if let theme = theme.selectedTheme {
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
+                    }
+                }
+
+                LinearGradient(
+                    colors: [
+                        Color.black.opacity(0.2),
+                        Color.black.opacity(0.6),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            }
+            .ignoresSafeArea()
         }
     }
 
@@ -117,15 +153,15 @@ struct DailyLoginView: View {
                     .foregroundStyle(.white.opacity(0.84))
             }
         }
-        .padding(20)
+        .padding()
         .background(
-            Color.white.opacity(0.08),
-            in: RoundedRectangle(cornerRadius: 24, style: .continuous)
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
         )
-        .overlay(
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .stroke(Color.white.opacity(0.1), lineWidth: 1)
-        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
         .padding(.horizontal, 20)
     }
 
@@ -144,7 +180,7 @@ struct DailyLoginView: View {
 
                 Image(systemName: reward.icon)
                     .foregroundStyle(
-                        isHighlighted ? Color.orange : .white.opacity(0.72)
+                        isHighlighted ? Color.white : .white.opacity(0.72)
                     )
             }
 
@@ -164,7 +200,7 @@ struct DailyLoginView: View {
                                 $0.code == item.currency
                             })?.icon ?? "gift.fill"
                         )
-                        .foregroundStyle(Color.orange)
+                        .foregroundStyle(.white)
                         .frame(width: 20)
 
                         Text(
@@ -191,20 +227,69 @@ struct DailyLoginView: View {
                 }
             }
         }
-        .padding(16)
+        .padding()
         .background(
-            (isHighlighted
-                ? Color.orange.opacity(0.18) : Color.white.opacity(0.07)),
-            in: RoundedRectangle(cornerRadius: 20, style: .continuous)
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
         )
-        .overlay(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(
-                    isHighlighted
-                        ? Color.orange.opacity(0.45)
-                        : Color.white.opacity(0.08),
-                    lineWidth: 1
-                )
-        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
     }
+}
+
+#Preview {
+    DailyLoginView(
+        rewards: [
+            DailyLoginRewardDefinition(
+                id: "preview-day-1",
+                day: 1,
+                title: "Willkommensbonus",
+                subtitle: "Ein starker Start fuer dein Abenteuer",
+                message: "Du hast deine erste Tagesbelohnung erhalten.",
+                buttonTitle: "Abholen",
+                icon: "star.fill",
+                rewards: [
+                    CurrencyAmount(currency: "gold", amount: 500),
+                    CurrencyAmount(currency: "gems", amount: 25),
+                ]
+            )
+        ],
+        currencies: [
+            CurrencyDefinition(
+                code: "gold",
+                name: "Gold",
+                icon: "crown.fill",
+                assetIcon: nil,
+                sortOrder: 0
+            ),
+            CurrencyDefinition(
+                code: "gems",
+                name: "Gems",
+                icon: "sparkles",
+                assetIcon: nil,
+                sortOrder: 1
+            ),
+        ],
+        availableReward: DailyLoginRewardState(
+            reward: DailyLoginRewardDefinition(
+                id: "preview-day-1",
+                day: 1,
+                title: "Willkommensbonus",
+                subtitle: "Ein starker Start fuer dein Abenteuer",
+                message: "Du hast deine erste Tagesbelohnung erhalten.",
+                buttonTitle: "Abholen",
+                icon: "star.fill",
+                rewards: [
+                    CurrencyAmount(currency: "gold", amount: 500),
+                    CurrencyAmount(currency: "gems", amount: 25),
+                ]
+            ),
+            dayNumber: 1
+        ),
+        onClaim: {},
+        onClose: {}
+    )
+    .environmentObject(ThemeManager())
 }

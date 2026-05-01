@@ -93,6 +93,7 @@ struct RootView: View {
                     progress: remoteContent.isRefreshing
                         ? remoteContent.refreshProgress : 0.08,
                     statusText: remoteContent.statusText,
+                    requiresMandatoryUpdate: remoteContent.requiresMandatoryUpdate,
                     showOptions: $showStartupOptions,
                     onPreloadAll: {
                         startRemoteBootstrap(mode: .fullPreload)

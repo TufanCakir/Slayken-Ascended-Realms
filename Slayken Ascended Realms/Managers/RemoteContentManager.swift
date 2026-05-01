@@ -28,6 +28,7 @@ struct RemoteContentConfiguration: Codable {
 }
 
 struct RemoteContentManifest: Codable {
+    let contentVersion: Int?
     let resources: [RemoteContentResource]
     let assets: [RemoteContentAsset]?
 }
@@ -68,9 +69,16 @@ enum RemoteContentRefreshMode {
     case fullPreload
 }
 
+private enum RemoteAssetMemoryCache {
+    nonisolated(unsafe) static let imageCache = NSCache<NSString, UIImage>()
+    nonisolated(unsafe) static let sceneCache = NSCache<NSString, SCNScene>()
+}
+
 @MainActor
 final class RemoteContentManager: ObservableObject {
     static let shared = RemoteContentManager()
+    private nonisolated static let installedContentVersionKey =
+        "installedRemoteContentVersion"
     private nonisolated static let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier ?? "SlaykenAscendedRealms",
         category: "RemoteContent"
@@ -84,6 +92,7 @@ final class RemoteContentManager: ObservableObject {
     @Published private(set) var hasCompletedInitialRefresh = false
     @Published private(set) var isPreparingStartupPlan = false
     @Published private(set) var startupPlan: RemoteContentStartupPlan?
+    @Published private(set) var requiresMandatoryUpdate = false
     @Published private(set) var isBackgroundPreloading = false
     @Published private(set) var backgroundPreloadProgress = 0.0
     @Published private(set) var backgroundStatusText = "Background preload idle"
@@ -121,11 +130,19 @@ final class RemoteContentManager: ObservableObject {
             try Self.ensureCacheDirectory()
             let manifest = try await fetchManifest()
             let versions = Self.loadCachedVersions()
+            let installedContentVersion = Self.installedContentVersion()
             startupPlan = buildStartupPlan(
                 manifest: manifest,
                 versions: versions
             )
-            statusText = "Tap to choose preload mode"
+            requiresMandatoryUpdate = Self.requiresMandatoryUpdate(
+                manifestVersion: manifest.contentVersion,
+                installedVersion: installedContentVersion
+            )
+            statusText =
+                requiresMandatoryUpdate
+                ? "Neues Inhalts-Update erforderlich"
+                : "Tap to choose preload mode"
             lastErrorMessage = nil
         } catch {
             statusText = "Failed to prepare preload plan"
@@ -141,13 +158,17 @@ final class RemoteContentManager: ObservableObject {
 
         isRefreshing = true
         refreshProgress = 0
+        let wasMandatoryUpdateRequired = requiresMandatoryUpdate
+        var shouldUnlockApp = !wasMandatoryUpdateRequired
         statusText =
             mode == .fullPreload
             ? "Loading live manifest"
             : "Loading core game data and visuals"
         defer {
             isRefreshing = false
-            hasCompletedInitialRefresh = true
+            if shouldUnlockApp {
+                hasCompletedInitialRefresh = true
+            }
         }
 
         do {
@@ -225,6 +246,10 @@ final class RemoteContentManager: ObservableObject {
             )
 
             if !failedItems.isEmpty {
+                if wasMandatoryUpdateRequired {
+                    requiresMandatoryUpdate = true
+                    shouldUnlockApp = false
+                }
                 statusText =
                     mode == .fullPreload
                     ? "Live content partially updated"
@@ -240,6 +265,9 @@ final class RemoteContentManager: ObservableObject {
             }
 
             if didChangeContent && failedItems.isEmpty {
+                Self.saveInstalledContentVersion(manifest.contentVersion)
+                requiresMandatoryUpdate = false
+                shouldUnlockApp = true
                 statusText =
                     mode == .fullPreload
                     ? "Live content updated"
@@ -247,6 +275,9 @@ final class RemoteContentManager: ObservableObject {
                 lastRefreshDate = Date()
                 Self.logger.info("Remote refresh completed with updates.")
             } else if failedItems.isEmpty {
+                Self.saveInstalledContentVersion(manifest.contentVersion)
+                requiresMandatoryUpdate = false
+                shouldUnlockApp = true
                 statusText =
                     mode == .fullPreload
                     ? "Live content already up to date"
@@ -257,6 +288,10 @@ final class RemoteContentManager: ObservableObject {
             }
         } catch {
             refreshProgress = 1
+            if wasMandatoryUpdateRequired {
+                requiresMandatoryUpdate = true
+                shouldUnlockApp = false
+            }
             statusText =
                 mode == .fullPreload
                 ? "Live update failed"
@@ -334,12 +369,22 @@ final class RemoteContentManager: ObservableObject {
         }
 
         for candidate in imageCandidates(for: imageName) {
+            if let cachedImage = RemoteAssetMemoryCache.imageCache.object(
+                forKey: candidate as NSString
+            ) {
+                return cachedImage
+            }
+
             guard let url = try? assetCacheFileURL(forAssetName: candidate)
             else {
                 continue
             }
 
             if let image = UIImage(contentsOfFile: url.path) {
+                RemoteAssetMemoryCache.imageCache.setObject(
+                    image,
+                    forKey: candidate as NSString
+                )
                 return image
             }
         }
@@ -361,7 +406,29 @@ final class RemoteContentManager: ObservableObject {
     nonisolated static func hasCachedOrBundledImage(named imageName: String)
         -> Bool
     {
-        cachedOrBundledImage(named: imageName) != nil
+        guard !imageName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        else {
+            return false
+        }
+
+        for candidate in imageCandidates(for: imageName) {
+            if RemoteAssetMemoryCache.imageCache.object(
+                forKey: candidate as NSString
+            ) != nil {
+                return true
+            }
+
+            guard let url = try? assetCacheFileURL(forAssetName: candidate)
+            else {
+                continue
+            }
+
+            if FileManager.default.fileExists(atPath: url.path) {
+                return true
+            }
+        }
+
+        return false
     }
 
     nonisolated static func cachedScene(candidateNames: [String]) -> SCNScene? {
@@ -376,7 +443,18 @@ final class RemoteContentManager: ObservableObject {
                 continue
             }
 
+            let cacheKey = url.path as NSString
+            if let cachedScene = RemoteAssetMemoryCache.sceneCache.object(
+                forKey: cacheKey
+            ) {
+                return cachedScene
+            }
+
             if let scene = try? SCNScene(url: url, options: nil) {
+                RemoteAssetMemoryCache.sceneCache.setObject(
+                    scene,
+                    forKey: cacheKey
+                )
                 logger.debug("Loaded remote cached scene \(fileName)")
                 return scene
             }
@@ -499,6 +577,30 @@ final class RemoteContentManager: ObservableObject {
         )
     }
 
+    private nonisolated static func installedContentVersion() -> Int? {
+        let defaults = UserDefaults.standard
+        guard defaults.object(forKey: installedContentVersionKey) != nil else {
+            return nil
+        }
+        return defaults.integer(forKey: installedContentVersionKey)
+    }
+
+    private nonisolated static func saveInstalledContentVersion(
+        _ version: Int?
+    ) {
+        guard let version else { return }
+        UserDefaults.standard.set(version, forKey: installedContentVersionKey)
+    }
+
+    private nonisolated static func requiresMandatoryUpdate(
+        manifestVersion: Int?,
+        installedVersion: Int?
+    ) -> Bool {
+        guard let manifestVersion else { return false }
+        guard let installedVersion else { return true }
+        return manifestVersion > installedVersion
+    }
+
     private func processResource(
         _ resource: RemoteContentResource,
         versions: inout [String: String]
@@ -531,7 +633,7 @@ final class RemoteContentManager: ObservableObject {
                 .data(from: resourceURL)
             try Self.validateHTTPResponse(resourceResponse, url: resourceURL)
 
-            try resourceData.write(to: cacheURL, options: .atomic)
+            try await Self.writeData(resourceData, to: cacheURL)
             Self.logger.info(
                 "Saved resource \(resource.name).json to cache: \(cacheURL.lastPathComponent)"
             )
@@ -603,7 +705,8 @@ final class RemoteContentManager: ObservableObject {
             primaryURL: assetURL
         )
 
-        try assetData.write(to: cacheURL, options: .atomic)
+        try await Self.writeData(assetData, to: cacheURL)
+        Self.removeCachedAsset(named: asset.name)
         Self.logger.info(
             "Saved asset \(asset.name) to cache: \(cacheURL.lastPathComponent)"
         )
@@ -924,6 +1027,32 @@ final class RemoteContentManager: ObservableObject {
             throw RemoteContentError.invalidHTTPStatusCode(
                 httpResponse.statusCode,
                 url.absoluteString
+            )
+        }
+    }
+
+    private nonisolated static func writeData(_ data: Data, to url: URL)
+        async throws
+    {
+        try await Task.detached(priority: .utility) {
+            try data.write(to: url, options: .atomic)
+        }.value
+    }
+
+    private nonisolated static func removeCachedAsset(named assetName: String) {
+        for candidate in assetCandidates(
+            for: assetName,
+            preferredExtensions: ["png", "jpg", "jpeg", "webp", "usdz", "scn"]
+        ) {
+            RemoteAssetMemoryCache.imageCache.removeObject(
+                forKey: candidate as NSString
+            )
+            guard let url = try? assetCacheFileURL(forAssetName: candidate)
+            else {
+                continue
+            }
+            RemoteAssetMemoryCache.sceneCache.removeObject(
+                forKey: url.path as NSString
             )
         }
     }

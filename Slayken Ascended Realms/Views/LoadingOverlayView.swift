@@ -223,24 +223,6 @@ struct LoadingOverlayView: View {
                         .font(.system(size: 18, weight: .black))
                         .foregroundStyle(.white.opacity(0.92))
                 }
-                Text(".")
-                    .font(.system(size: 22, weight: .black))
-                    .foregroundStyle(
-                        Color(red: 0.20, green: 0.45, blue: 1.0).opacity(0.95)
-                    )
-                    .opacity(progress > 0.25 ? 1 : 0.25)
-                Text(".")
-                    .font(.system(size: 22, weight: .black))
-                    .foregroundStyle(
-                        Color(red: 0.20, green: 0.45, blue: 1.0).opacity(0.95)
-                    )
-                    .opacity(progress > 0.55 ? 1 : 0.25)
-                Text(".")
-                    .font(.system(size: 22, weight: .black))
-                    .foregroundStyle(
-                        Color(red: 0.20, green: 0.45, blue: 1.0).opacity(0.95)
-                    )
-                    .opacity(progress > 0.82 ? 1 : 0.25)
             }
             .tracking(3)
         }
@@ -284,7 +266,7 @@ struct LoadingOverlayView: View {
             }
             .frame(maxWidth: .infinity)
         }
-        .padding(16)
+        .padding()
         .background(
             Color.black.opacity(0.34),
             in: RoundedRectangle(cornerRadius: 24, style: .continuous)
@@ -310,10 +292,6 @@ struct LoadingOverlayView: View {
                 Image(systemName: "newspaper.fill")
                     .font(.system(size: 30, weight: .black))
                     .foregroundStyle(.white.opacity(0.34))
-
-                Image(systemName: "sparkles")
-                    .font(.system(size: 14, weight: .black))
-                    .foregroundStyle(.cyan.opacity(0.75))
             }
         }
     }

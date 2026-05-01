@@ -18,18 +18,8 @@ struct DailyLoginPopupView: View {
         theme.selectedTheme ?? theme.themes.first
     }
 
-    private var panelFill: LinearGradient {
-        LinearGradient(
-            colors: [
-                Color.black.opacity(0.92),
-                activeTheme?.primary.color.opacity(0.8)
-                    ?? Color(red: 0.24, green: 0.16, blue: 0.12),
-                activeTheme?.secondary.color.opacity(0.5)
-                    ?? Color(red: 0.4, green: 0.24, blue: 0.18),
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
+    private var panelShape: RoundedRectangle {
+        RoundedRectangle(cornerRadius: 28, style: .continuous)
     }
 
     private var accentColor: Color {
@@ -103,18 +93,33 @@ struct DailyLoginPopupView: View {
                 }
                 .buttonStyle(.plain)
             }
-            .padding(24)
-            .frame(maxWidth: 360)
-            .background(
-                panelFill,
-                in: RoundedRectangle(cornerRadius: 28, style: .continuous)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 28, style: .continuous)
+            .padding()
+            .background {
+                ZStack {
+                    if let background = activeTheme?.background {
+                        RemoteAssetImage(background) {
+                            panelFallback
+                        }
+                    } else {
+                        panelFallback
+                    }
+
+                    LinearGradient(
+                        colors: [
+                            Color.black.opacity(0.42),
+                            Color.black.opacity(0.72),
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                }
+                .clipShape(panelShape)
+            }
+            .overlay {
+                panelShape
                     .stroke(.white.opacity(0.12), lineWidth: 1)
-            )
-            .shadow(color: .black.opacity(0.4), radius: 24, y: 16)
-            .padding(.horizontal, 24)
+            }
+            .padding()
         }
     }
 
@@ -141,8 +146,68 @@ struct DailyLoginPopupView: View {
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
         .background(
-            Color.white.opacity(0.08),
-            in: RoundedRectangle(cornerRadius: 16, style: .continuous)
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
+    }
+
+    private var panelFallback: some View {
+        LinearGradient(
+            colors: [
+                activeTheme?.primary.color.opacity(0.82)
+                    ?? Color(red: 0.14, green: 0.18, blue: 0.32),
+                activeTheme?.secondary.color.opacity(0.76)
+                    ?? Color(red: 0.08, green: 0.10, blue: 0.22),
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
         )
     }
+}
+
+#Preview {
+    let gameState = GameState()
+    gameState.currencies = [
+        CurrencyDefinition(
+            code: "gold",
+            name: "Gold",
+            icon: "crown.fill",
+            assetIcon: nil,
+            sortOrder: 0
+        ),
+        CurrencyDefinition(
+            code: "gems",
+            name: "Gems",
+            icon: "sparkles",
+            assetIcon: nil,
+            sortOrder: 1
+        ),
+    ]
+
+    return DailyLoginPopupView(
+        rewardState: DailyLoginRewardState(
+            reward: DailyLoginRewardDefinition(
+                id: "preview-day-7",
+                day: 7,
+                title: "Realm Bonus",
+                subtitle: "Dein Wochenbonus ist bereit.",
+                message:
+                    "Logge dich morgen wieder ein, um die naechste Belohnung freizuschalten.",
+                buttonTitle: "Belohnung abholen",
+                icon: "gift.fill",
+                rewards: [
+                    CurrencyAmount(currency: "gold", amount: 2500),
+                    CurrencyAmount(currency: "gems", amount: 120),
+                ]
+            ),
+            dayNumber: 7
+        ),
+        onClaim: {}
+    )
+    .environmentObject(gameState)
+    .environmentObject(ThemeManager())
 }

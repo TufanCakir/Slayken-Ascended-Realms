@@ -40,42 +40,29 @@ struct VictoryView: View {
             Spacer()
 
             Text("VICTORY")
-                .font(.system(size: 46, weight: .black))
+                .font(.system(size: 50, weight: .black))
                 .foregroundStyle(
-                    LinearGradient(
-                        colors: [
-                            theme.selectedTheme?.secondary.color ?? .white,
-                            theme.selectedTheme?.primary.color ?? .blue,
-                        ],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .shadow(
-                    color: (theme.selectedTheme?.glow.color ?? .blue).opacity(
-                        0.9
-                    ),
-                    radius: 18
+                    .white
                 )
 
             Button {
                 onContinue()
             } label: {
                 Text("Continue")
-                    .font(.system(size: 17, weight: .black))
+                    .font(.system(size: 16, weight: .black))
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 13)
                     .background(
-                        LinearGradient(
-                            colors: [
-                                theme.selectedTheme?.primary.color ?? .blue,
-                                theme.selectedTheme?.secondary.color ?? .purple,
-                            ],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        ),
-                        in: Capsule()
+                        Color.black.opacity(0.34),
+                        in: RoundedRectangle(
+                            cornerRadius: 26,
+                            style: .continuous
+                        )
                     )
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 26, style: .continuous)
+                            .stroke(.white.opacity(0.08), lineWidth: 1)
+                    }
                     .foregroundStyle(.white)
             }
             .padding(.top, 4)
@@ -172,11 +159,15 @@ struct VictoryView: View {
             }
             .frame(height: 8)
         }
-        .padding(12)
+        .padding()
         .background(
-            Color.black.opacity(0.45),
-            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
         )
+        .overlay {
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
         .foregroundStyle(.white)
     }
 
@@ -222,9 +213,13 @@ struct VictoryView: View {
         }
         .frame(width: 84, height: 76)
         .background(
-            Color.black.opacity(0.45),
-            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
         )
+        .overlay {
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
     }
 
     private func cardName(for cardID: String) -> String {

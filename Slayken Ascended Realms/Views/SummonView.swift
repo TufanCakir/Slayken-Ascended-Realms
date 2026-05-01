@@ -595,26 +595,6 @@ struct SummonView: View {
     }
 }
 
-#Preview("Summon Banners") {
-    SummonView(
-        banners: loadSummonBanners(),
-        characters: loadSummonCharacters(),
-        currencies: loadCurrencyDefinitions(),
-        onClose: {}
-    )
-    .environmentObject(GameState())
-    .environmentObject(ThemeManager())
-    .modelContainer(
-        for: [
-            PlayerCurrencyBalance.self,
-            OwnedSummonCharacter.self,
-            OwnedAbilityCard.self,
-            SummonBannerProgress.self,
-        ],
-        inMemory: true
-    )
-}
-
 private struct SummonBannerInfoSheet: View {
     let banner: SummonBanner
     let characters: [SummonCharacter]
@@ -707,12 +687,17 @@ private struct SummonBannerInfoSheet: View {
         infoSection(title: "Pool") {
             ForEach(poolRows, id: \.id) { row in
                 HStack(spacing: 10) {
-                    Image(row.image)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 42, height: 42)
-                        .clipped()
-                        .background(.white.opacity(0.08))
+                    RemoteAssetImage(row.image, contentMode: .fill) {
+                        Image(systemName: "sparkles.rectangle.stack.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(8)
+                            .foregroundStyle(.white.opacity(0.72))
+                            .background(.white.opacity(0.08))
+                    }
+                    .frame(width: 42, height: 42)
+                    .clipped()
+                    .background(.white.opacity(0.08))
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text(row.name)
@@ -830,4 +815,83 @@ private struct SummonBannerInfoSheet: View {
         let rarity: Int
         let weight: Double
     }
+}
+private struct SummonViewPreviewHost: View {
+    @Environment(\.modelContext) private var modelContext
+    @StateObject private var themeManager = ThemeManager()
+    @StateObject private var gameState = GameState()
+    @State private var didSeedPreviewData = false
+
+    private let previewBanners = loadSummonBanners()
+    private let previewCharacters = loadSummonCharacters()
+    private let previewCurrencies = loadCurrencyDefinitions()
+
+    var body: some View {
+        SummonView(
+            banners: previewBanners,
+            characters: previewCharacters,
+            currencies: previewCurrencies,
+            onClose: {}
+        )
+        .environmentObject(themeManager)
+        .environmentObject(gameState)
+        .task {
+            guard !didSeedPreviewData else { return }
+            didSeedPreviewData = true
+            seedPreviewData()
+            gameState.reloadContent()
+            themeManager.loadThemes()
+            themeManager.loadSelected()
+        }
+    }
+
+    private func seedPreviewData() {
+        for (index, currency) in previewCurrencies.enumerated() {
+            let amount = index == 0 ? 50_000 : 2_500
+            modelContext.insert(
+                PlayerCurrencyBalance(code: currency.code, amount: amount)
+            )
+        }
+
+        modelContext.insert(PlayerAccountProgress(level: 12, xp: 480))
+
+        if let firstBanner = previewBanners.first {
+            modelContext.insert(
+                SummonBannerProgress(
+                    bannerID: firstBanner.id,
+                    summonCount: 3
+                )
+            )
+        }
+
+        try? modelContext.save()
+    }
+}
+
+#Preview {
+    SummonViewPreviewHost()
+        .modelContainer(
+            for: [
+                PlayerCurrencyBalance.self,
+                OwnedSummonCharacter.self,
+                TeamMemberRecord.self,
+                PlayerBattleProgress.self,
+                PlayerDeckCardSlot.self,
+                OwnedAbilityCard.self,
+                PlayerCharacterProgress.self,
+                PlayerAccountProgress.self,
+                SeenCutsceneRecord.self,
+                SummonBannerProgress.self,
+                PlayerDailyLoginProgress.self,
+                PlayerClaimedGift.self,
+                ShopOfferProgress.self,
+                OwnedCharacterSkin.self,
+                ProcessedStoreTransaction.self,
+                PlayerQuestClaim.self,
+                PlayerQuestCounter.self,
+                PlayerDailyBattleRewardCap.self,
+                PlayerBattleResourceState.self,
+            ],
+            inMemory: true
+        )
 }

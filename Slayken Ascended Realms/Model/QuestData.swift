@@ -155,11 +155,7 @@ extension BattleResourceConfigurationDefinition {
                 )
             ),
             coinLimit: BattleRewardPoolResolvedConfiguration(
-                maximum: scaledInt(
-                    coinLimit.maximum,
-                    growth: progression.coinLimitMaximumGrowthPerAscendedLevel,
-                    levelOffset: levelOffset
-                ),
+                maximum: coinLimit.maximum + (max(0, ascendedLevel - 1) * 399),
                 regenerationPerMinute: scaledInt(
                     coinLimit.regenerationPerMinute,
                     growth: progression.coinRegenerationGrowthPerAscendedLevel,
@@ -167,12 +163,8 @@ extension BattleResourceConfigurationDefinition {
                 )
             ),
             crystalLimit: BattleRewardPoolResolvedConfiguration(
-                maximum: scaledInt(
-                    crystalLimit.maximum,
-                    growth: progression
-                        .crystalLimitMaximumGrowthPerAscendedLevel,
-                    levelOffset: levelOffset
-                ),
+                maximum: crystalLimit.maximum
+                    + (max(0, ascendedLevel - 1) * 399),
                 regenerationPerMinute: scaledInt(
                     crystalLimit.regenerationPerMinute,
                     growth: progression

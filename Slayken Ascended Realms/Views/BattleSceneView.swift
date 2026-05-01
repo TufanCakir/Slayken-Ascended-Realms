@@ -9,6 +9,10 @@ import SceneKit
 import SwiftUI
 import UIKit
 
+private enum BattleSceneNodeCache {
+    nonisolated(unsafe) static let modelCache = NSCache<NSString, SCNNode>()
+}
+
 struct BattleSceneView: UIViewRepresentable {
     let player: CharacterStats
     let enemies: [CharacterStats]
@@ -92,6 +96,8 @@ final class BattleSceneCoordinator {
     private var defeatedFighterNames: Set<String> = []
     private var lastPlayerAttackID = 0
     private var lastEnemyAttackID = 0
+    private var appliedGroundTexture = ""
+    private var appliedSkyboxTexture = ""
 
     init(
         player: CharacterStats,
@@ -249,12 +255,19 @@ final class BattleSceneCoordinator {
     }
 
     func updateEnvironment(groundTexture: String, skyboxTexture: String) {
-        applyGroundTexture(named: groundTexture)
-        let skyboxImage = RemoteContentManager.cachedOrBundledImage(
-            named: skyboxTexture
-        )
-        scene.background.contents = skyboxImage
-        scene.lightingEnvironment.contents = skyboxImage
+        if appliedGroundTexture != groundTexture {
+            applyGroundTexture(named: groundTexture)
+            appliedGroundTexture = groundTexture
+        }
+
+        if appliedSkyboxTexture != skyboxTexture {
+            let skyboxImage = RemoteContentManager.cachedOrBundledImage(
+                named: skyboxTexture
+            )
+            scene.background.contents = skyboxImage
+            scene.lightingEnvironment.contents = skyboxImage
+            appliedSkyboxTexture = skyboxTexture
+        }
     }
 
     private func makeCamera() -> SCNNode {
@@ -286,8 +299,9 @@ final class BattleSceneCoordinator {
         directional.type = .directional
         directional.intensity = 1400
         directional.castsShadow = true
-        directional.shadowMode = .deferred
-        directional.shadowSampleCount = 16
+        directional.shadowMode = .modulated
+        directional.shadowRadius = 3
+        directional.shadowSampleCount = 6
 
         let directionalNode = SCNNode()
         directionalNode.light = directional
@@ -1167,6 +1181,13 @@ final class BattleSceneCoordinator {
     private func loadModel(named modelName: String, textureName: String?)
         -> SCNNode
     {
+        let cacheKey = "\(modelName)|\(textureName ?? "-")" as NSString
+        if let cachedNode = BattleSceneNodeCache.modelCache.object(
+            forKey: cacheKey
+        ) {
+            return cachedNode.clone()
+        }
+
         let container = SCNNode()
 
         if let scene = loadModelScene(named: modelName) {
@@ -1177,7 +1198,8 @@ final class BattleSceneCoordinator {
             applyCharacterTextureIfNeeded(textureName, to: container)
         }
 
-        return container
+        BattleSceneNodeCache.modelCache.setObject(container, forKey: cacheKey)
+        return container.clone()
     }
 
     private func loadModelScene(named modelName: String) -> SCNScene? {

@@ -13,11 +13,11 @@ struct RemoteLoadingView: View {
     let isStarting: Bool
     let progress: Double
     let statusText: String
+    let requiresMandatoryUpdate: Bool
     @Binding var showOptions: Bool
     let onPreloadAll: () -> Void
     let onPlayWithoutPreload: () -> Void
 
-    @EnvironmentObject private var theme: ThemeManager
     @State private var spin = false
 
     private var estimatedSizeText: String {
@@ -27,42 +27,45 @@ struct RemoteLoadingView: View {
 
     private var summaryText: String {
         guard let plan else {
-            return "Manifest, Dateien und Cache werden geprueft."
+            return "Manifest und Cache werden geprueft."
         }
 
         if plan.totalPendingCount == 0 {
-            return "Alle bekannten Inhalte sind bereits im Cache vorhanden."
+            return "Alles ist bereit."
         }
 
-        return
-            "Volles Preload laedt ca. \(estimatedSizeText) mit \(plan.pendingResourceCount) Datenpaketen und \(plan.pendingAssetCount) Assets."
+        return "Ca. \(estimatedSizeText) für \(plan.totalPendingCount) Inhalte."
+    }
+
+    private var pendingResourceCountText: String {
+        "\(plan?.pendingResourceCount ?? 0)"
+    }
+
+    private var pendingAssetCountText: String {
+        "\(plan?.pendingAssetCount ?? 0)"
     }
 
     var body: some View {
         ZStack {
             backgroundLayer
 
-            VStack(spacing: 28) {
-                Spacer(minLength: 24)
+            VStack(spacing: 16) {
 
                 titleBlock
 
                 centerCard
-                    .padding(.horizontal, 24)
 
-                footerHint
-                    .padding(.horizontal, 24)
-
-                Spacer()
             }
 
-            if showOptions && !isStarting {
+            if shouldShowOverlay {
                 optionOverlay
             }
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            guard !isPreparingPlan, !isStarting else { return }
+            guard !requiresMandatoryUpdate, !isPreparingPlan, !isStarting else {
+                return
+            }
             showOptions = true
         }
         .onAppear {
@@ -75,58 +78,51 @@ struct RemoteLoadingView: View {
 
     private var backgroundLayer: some View {
         ZStack {
-            if let selectedTheme = theme.selectedTheme {
-                RemoteAssetImage(selectedTheme.background) {
-                    LinearGradient(
-                        colors: [
-                            Color(red: 0.04, green: 0.08, blue: 0.16),
-                            Color(red: 0.01, green: 0.02, blue: 0.05),
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                }
-            } else {
-                LinearGradient(
-                    colors: [
-                        Color(red: 0.04, green: 0.08, blue: 0.16),
-                        Color(red: 0.01, green: 0.02, blue: 0.05),
-                    ],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            }
-
             LinearGradient(
                 colors: [
-                    Color.black.opacity(0.15),
-                    Color.black.opacity(0.72),
+                    Color(red: 0.03, green: 0.07, blue: 0.14),
+                    Color(red: 0.01, green: 0.02, blue: 0.05),
+                    Color.black,
                 ],
-                startPoint: .top,
-                endPoint: .bottom
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
             )
+
+            Circle()
+                .fill(Color.cyan.opacity(0.16))
+                .frame(width: 220, height: 220)
+                .blur(radius: 36)
+                .offset(x: -120, y: -210)
+
+            Circle()
+                .fill(Color.blue.opacity(0.14))
+                .frame(width: 260, height: 260)
+                .blur(radius: 42)
+                .offset(x: 140, y: 220)
         }
         .ignoresSafeArea()
     }
 
     private var titleBlock: some View {
         VStack(spacing: 12) {
-            Text("Remote Loading")
-                .font(.system(size: 30, weight: .black))
+            Text("Realm Sync")
+                .font(.system(size: 32, weight: .black, design: .rounded))
                 .foregroundStyle(.white)
 
             Text(
-                "Waehlst du Voll-Preload, laedt die App alles direkt. Ohne Voll-Preload kannst du sofort starten und Inhalte werden spaeter nachgeladen."
+                requiresMandatoryUpdate
+                    ? "Update zuerst laden."
+                    : "Jetzt laden oder direkt starten."
             )
-            .font(.system(size: 14, weight: .semibold))
-            .foregroundStyle(.white.opacity(0.8))
+            .font(.system(size: 14, weight: .bold))
+            .foregroundStyle(.white.opacity(0.72))
             .multilineTextAlignment(.center)
             .padding(.horizontal, 28)
         }
     }
 
     private var centerCard: some View {
-        VStack(spacing: 18) {
+        VStack(spacing: 16) {
             if isStarting {
                 ZStack {
                     Circle()
@@ -140,7 +136,7 @@ struct RemoteLoadingView: View {
                         )
                         .stroke(
                             AngularGradient(
-                                colors: [.cyan, .blue, .white, .cyan],
+                                colors: [.blue, .white, .blue],
                                 center: .center
                             ),
                             style: StrokeStyle(lineWidth: 7, lineCap: .round)
@@ -157,109 +153,148 @@ struct RemoteLoadingView: View {
             VStack(spacing: 8) {
                 Text(
                     isStarting
-                        ? "Inhalte werden geladen"
-                        : "Tippe fuer Preload-Optionen"
+                        ? "Lade Inhalte"
+                        : requiresMandatoryUpdate
+                            ? "Update nötig"
+                            : "Download wählen"
                 )
-                .font(.system(size: 22, weight: .black))
+                .font(.system(size: 24, weight: .black, design: .rounded))
                 .foregroundStyle(.white)
 
                 Text(
                     isPreparingPlan
-                        ? "Preload-Plan wird aufgebaut." : summaryText
+                        ? "Plan wird vorbereitet." : summaryText
                 )
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(.white.opacity(0.82))
+                .font(.system(size: 14, weight: .bold))
+                .foregroundStyle(.white.opacity(0.76))
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
             }
 
+            if requiresMandatoryUpdate {
+                updateInfoBlock
+            }
+
             if isStarting || isPreparingPlan {
+                Text(isPreparingPlan ? "Plan wird vorbereitet" : statusText)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(.white.opacity(0.78))
+                    .multilineTextAlignment(.center)
+
                 progressBlock
             }
         }
         .padding(.horizontal, 22)
-        .padding(.vertical, 28)
-        .background(Color.black.opacity(0.4))
+        .padding(.vertical, 24)
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(red: 0.04, green: 0.10, blue: 0.22).opacity(0.94),
+                    Color(red: 0.02, green: 0.06, blue: 0.16).opacity(0.98),
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
         .overlay {
             RoundedRectangle(cornerRadius: 28, style: .continuous)
-                .stroke(.white.opacity(0.1), lineWidth: 1)
+                .stroke(
+                    LinearGradient(
+                        colors: [
+                            .white.opacity(0.24),
+                            Color.cyan.opacity(0.16),
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1
+                )
         }
         .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .shadow(color: Color.blue.opacity(0.16), radius: 18, y: 8)
+        .shadow(color: .black.opacity(0.38), radius: 26, y: 14)
+    }
+
+    private var updateInfoBlock: some View {
+        HStack(spacing: 10) {
+            infoPill(title: "Größe", value: estimatedSizeText)
+            infoPill(title: "Daten", value: pendingResourceCountText)
+            infoPill(title: "Assets", value: pendingAssetCountText)
+        }
     }
 
     private var progressBlock: some View {
-        VStack(spacing: 10) {
-            HStack {
-                Text(isPreparingPlan ? "Plan" : statusText)
-                    .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(.white.opacity(0.86))
-
-                Spacer()
-
-                Text(progressText)
-                    .font(.system(size: 13, weight: .black))
-                    .foregroundStyle(.white)
-            }
-
+        VStack(spacing: 8) {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     Capsule()
-                        .fill(.white.opacity(0.12))
+                        .fill(.white.opacity(0.10))
 
                     Capsule()
                         .fill(
                             LinearGradient(
                                 colors: [
-                                    Color(red: 0.12, green: 0.78, blue: 1.0),
-                                    Color(red: 0.15, green: 0.42, blue: 1.0),
+                                    Color(red: 0.16, green: 0.78, blue: 1.0),
+                                    Color(red: 0.12, green: 0.44, blue: 1.0),
+                                    .white,
                                 ],
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
                         )
-                        .frame(width: geometry.size.width * max(0.05, progress))
+                        .frame(
+                            width: max(
+                                18,
+                                geometry.size.width * min(max(progress, 0), 1)
+                            )
+                        )
                 }
             }
-            .frame(height: 12)
-        }
-    }
+            .frame(height: 8)
 
-    private var footerHint: some View {
-        VStack(spacing: 8) {
-            Text("Preload alles")
-                .font(.system(size: 14, weight: .black))
-                .foregroundStyle(.white)
+            HStack {
+                Text("Fortschritt")
+                    .font(.system(size: 11, weight: .black))
+                    .foregroundStyle(.white.opacity(0.66))
 
-            Text(
-                "Lädt die komplette Remote-Liste jetzt direkt. Ohne Preload kannst du sofort spielen und der Rest wird spaeter nachgeladen."
-            )
-            .font(.system(size: 12, weight: .semibold))
-            .foregroundStyle(.white.opacity(0.72))
-            .multilineTextAlignment(.center)
+                Spacer()
+
+                Text(progressText)
+                    .font(.system(size: 11, weight: .black))
+                    .foregroundStyle(.white.opacity(0.84))
+            }
         }
+        .padding(.top, 4)
     }
 
     private var optionOverlay: some View {
         ZStack {
-            Color.black.opacity(0.58)
+            Color.black
                 .ignoresSafeArea()
 
-            VStack(spacing: 18) {
-                Text("Preload waehlen")
-                    .font(.system(size: 24, weight: .black))
+            VStack(spacing: 16) {
+                Text("Download wählen")
+                    .font(.system(size: 24, weight: .black, design: .rounded))
                     .foregroundStyle(.white)
 
                 Text(
-                    "Volles Paket: ca. \(estimatedSizeText). Du kannst auch direkt starten, dann werden Inhalte beim Spielen und im Hintergrund geladen."
+                    requiresMandatoryUpdate
+                        ? "Ca. \(estimatedSizeText). Erst laden, dann spielen."
+                        : "Ca. \(estimatedSizeText). Oder direkt starten."
                 )
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(.white.opacity(0.82))
+                .font(.system(size: 14, weight: .bold))
+                .foregroundStyle(.white.opacity(0.78))
                 .multilineTextAlignment(.center)
 
-                VStack(spacing: 12) {
+                updateInfoBlock
+
+                VStack(spacing: 16) {
                     optionButton(
-                        title: "Preload alles",
-                        subtitle: "Lädt direkt alle bekannten Remote-Inhalte.",
+                        title: requiresMandatoryUpdate
+                            ? "Update herunterladen" : "Alles Laden",
+                        subtitle: requiresMandatoryUpdate
+                            ? "Lädt alles jetzt."
+                            : "Lädt alles sofort.",
                         fill: Color(red: 0.12, green: 0.42, blue: 1.0),
                         action: {
                             showOptions = false
@@ -267,38 +302,63 @@ struct RemoteLoadingView: View {
                         }
                     )
 
-                    optionButton(
-                        title: "Direkt spielen",
-                        subtitle:
-                            "Laedt nur die Spielbasis und den Rest spaeter.",
-                        fill: Color(red: 0.08, green: 0.56, blue: 0.38),
-                        action: {
-                            showOptions = false
-                            onPlayWithoutPreload()
-                        }
-                    )
+                    if !requiresMandatoryUpdate {
+                        optionButton(
+                            title: "Preload Laden",
+                            subtitle: "Rest später laden.",
+                            fill: Color(red: 0.08, green: 0.56, blue: 0.38),
+                            action: {
+                                showOptions = false
+                                onPlayWithoutPreload()
+                            }
+                        )
+                    }
 
-                    optionButton(
-                        title: "Abbrechen",
-                        subtitle:
-                            "Schliesst dieses Fenster. Tippe erneut fuer Optionen.",
-                        fill: Color.white.opacity(0.12),
-                        action: {
-                            showOptions = false
-                        }
-                    )
+                    if !requiresMandatoryUpdate {
+                        optionButton(
+                            title: "Abbrechen",
+                            subtitle: "Fenster schliessen.",
+                            fill: Color.white.opacity(0.12),
+                            action: {
+                                showOptions = false
+                            }
+                        )
+                    }
                 }
             }
-            .padding(.horizontal, 22)
-            .padding(.vertical, 24)
-            .background(Color.black.opacity(0.82))
+            .padding()
+            .background(
+                .ultraThinMaterial,
+                in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+            )
             .overlay {
                 RoundedRectangle(cornerRadius: 26, style: .continuous)
-                    .stroke(.white.opacity(0.12), lineWidth: 1)
+                    .stroke(.white.opacity(0.08), lineWidth: 1)
             }
             .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+            .shadow(color: Color.blue.opacity(0.16), radius: 18, y: 8)
+            .shadow(color: .black.opacity(0.38), radius: 28, y: 14)
             .padding(.horizontal, 22)
         }
+    }
+
+    private func infoPill(title: String, value: String) -> some View {
+        VStack(spacing: 4) {
+            Text(title)
+                .font(.system(size: 11, weight: .bold))
+                .foregroundStyle(.white.opacity(0.62))
+
+            Text(value)
+                .font(.system(size: 14, weight: .black))
+                .foregroundStyle(.white)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 12)
+        .background(Color.white.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
     private func optionButton(
@@ -319,19 +379,24 @@ struct RemoteLoadingView: View {
                     .foregroundStyle(.white.opacity(0.84))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 15)
+            .padding()
             .background(fill)
+            .overlay {
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(.white.opacity(0.16), lineWidth: 1)
+            }
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .shadow(color: fill.opacity(0.35), radius: 12, y: 6)
         }
         .buttonStyle(.plain)
     }
 
     private var progressText: String {
-        if isPreparingPlan {
-            return "..."
-        }
-        return "\(Int(progress * 100))%"
+        "\(Int(min(max(progress, 0), 1) * 100))%"
+    }
+
+    private var shouldShowOverlay: Bool {
+        !isStarting && (requiresMandatoryUpdate || showOptions)
     }
 
     private func updateSpinnerState(isAnimating: Bool) {
@@ -345,5 +410,31 @@ struct RemoteLoadingView: View {
         ) {
             spin = true
         }
+    }
+}
+
+#Preview {
+    PreviewRemoteLoadingView()
+}
+
+private struct PreviewRemoteLoadingView: View {
+    @State private var showOptions = true
+
+    var body: some View {
+        RemoteLoadingView(
+            plan: RemoteContentStartupPlan(
+                pendingResourceCount: 3,
+                pendingAssetCount: 7,
+                estimatedDownloadBytes: 268_435_456
+            ),
+            isPreparingPlan: false,
+            isStarting: false,
+            progress: 0.42,
+            statusText: "Bereit zum Laden",
+            requiresMandatoryUpdate: false,
+            showOptions: $showOptions,
+            onPreloadAll: {},
+            onPlayWithoutPreload: {}
+        )
     }
 }

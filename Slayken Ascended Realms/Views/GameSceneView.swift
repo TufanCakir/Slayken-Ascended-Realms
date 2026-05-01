@@ -9,6 +9,10 @@ import SceneKit
 import SwiftUI
 import UIKit
 
+private enum GameSceneNodeCache {
+    nonisolated(unsafe) static let modelCache = NSCache<NSString, SCNNode>()
+}
+
 struct GameSceneView: UIViewRepresentable {
     let player: CharacterStats
     let joystickVector: SIMD2<Float>
@@ -78,6 +82,8 @@ final class SceneCoordinator {
 
     private var currentGroundTexture = TextureNames.ground
     private var currentSkyboxTexture = TextureNames.skybox
+    private var appliedGroundTexture = ""
+    private var appliedSkyboxTexture = ""
 
     private var displayLink: CADisplayLink?
     private var lastUpdateTime: CFTimeInterval = 0
@@ -126,16 +132,27 @@ final class SceneCoordinator {
     }
 
     func updateTextures(ground: String, skybox: String) {
-        currentGroundTexture = ground
-        currentSkyboxTexture = skybox
+        if currentGroundTexture != ground {
+            currentGroundTexture = ground
+        }
 
-        applyGroundTexture(named: currentGroundTexture)
+        if currentSkyboxTexture != skybox {
+            currentSkyboxTexture = skybox
+        }
 
-        let skyboxImage = RemoteContentManager.cachedOrBundledImage(
-            named: currentSkyboxTexture
-        )
-        scene.background.contents = skyboxImage
-        scene.lightingEnvironment.contents = skyboxImage
+        if appliedGroundTexture != currentGroundTexture {
+            applyGroundTexture(named: currentGroundTexture)
+            appliedGroundTexture = currentGroundTexture
+        }
+
+        if appliedSkyboxTexture != currentSkyboxTexture {
+            let skyboxImage = RemoteContentManager.cachedOrBundledImage(
+                named: currentSkyboxTexture
+            )
+            scene.background.contents = skyboxImage
+            scene.lightingEnvironment.contents = skyboxImage
+            appliedSkyboxTexture = currentSkyboxTexture
+        }
     }
 
     private func makeCamera() -> SCNNode {
@@ -262,9 +279,9 @@ final class SceneCoordinator {
         directional.intensity = 1200
         directional.color = UIColor.white
         directional.castsShadow = true
-        directional.shadowMode = .deferred
-        directional.shadowRadius = 6
-        directional.shadowSampleCount = 16
+        directional.shadowMode = .modulated
+        directional.shadowRadius = 3
+        directional.shadowSampleCount = 6
         directional.shadowColor = UIColor.black.withAlphaComponent(0.35)
 
         let directionalNode = SCNNode()
@@ -327,11 +344,11 @@ final class SceneCoordinator {
 
     private func makePlayer() -> SCNNode {
         // 1. Model laden
-        if let modelScene = loadModelScene(named: player.model) {
-            for child in modelScene.rootNode.childNodes {
-                playerVisualNode.addChildNode(child.clone())
-            }
-            applyCharacterTextureIfNeeded(player.texture, to: playerVisualNode)
+        if let cachedModelNode = makePreparedModelNode(
+            modelName: player.model,
+            textureName: player.texture
+        ) {
+            playerVisualNode.addChildNode(cachedModelNode)
         }
 
         // 2. Z-UP → Y-UP Rotation ZUERST!
@@ -381,6 +398,29 @@ final class SceneCoordinator {
         loadAnimations()
 
         return playerNode
+    }
+
+    private func makePreparedModelNode(modelName: String, textureName: String?)
+        -> SCNNode?
+    {
+        let cacheKey = "\(modelName)|\(textureName ?? "-")" as NSString
+        if let cachedNode = GameSceneNodeCache.modelCache.object(
+            forKey: cacheKey
+        ) {
+            return cachedNode.clone()
+        }
+
+        guard let modelScene = loadModelScene(named: modelName) else {
+            return nil
+        }
+
+        let prototypeNode = SCNNode()
+        for child in modelScene.rootNode.childNodes {
+            prototypeNode.addChildNode(child.clone())
+        }
+        applyCharacterTextureIfNeeded(textureName, to: prototypeNode)
+        GameSceneNodeCache.modelCache.setObject(prototypeNode, forKey: cacheKey)
+        return prototypeNode.clone()
     }
 
     private func loadModelScene(named modelName: String) -> SCNScene? {

@@ -147,11 +147,11 @@ struct GameEventMapPreviewView: View {
             Color.black.opacity(0.08)
 
             if let texture {
-                Image(texture)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: size.width, height: size.height)
-                    .clipped()
+                RemoteAssetImage(texture) {
+                    Color.black.opacity(0.16)
+                }
+                .frame(width: size.width, height: size.height)
+                .clipped()
             }
 
         }

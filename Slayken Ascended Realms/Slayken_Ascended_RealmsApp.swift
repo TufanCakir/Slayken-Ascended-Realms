@@ -16,6 +16,7 @@ struct Slayken_Ascended_RealmsApp: App {
     @StateObject var musicManager = MusicManager()
     @StateObject var networkMonitor = NetworkMonitor()
     @StateObject var remoteContent = RemoteContentManager.shared
+    @StateObject var multiplayerManager = MultiplayerManager()
 
     var body: some Scene {
         WindowGroup {
@@ -25,6 +26,10 @@ struct Slayken_Ascended_RealmsApp: App {
                 .environmentObject(musicManager)
                 .environmentObject(networkMonitor)
                 .environmentObject(remoteContent)
+                .environmentObject(multiplayerManager)
+                .task {
+                    multiplayerManager.authenticatePlayer()
+                }
         }
         .modelContainer(for: [
             PlayerCurrencyBalance.self,

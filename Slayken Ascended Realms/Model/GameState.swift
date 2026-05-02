@@ -24,6 +24,8 @@ final class GameState: ObservableObject {
     @Published var activeEventChapterID: String?
     @Published var activeEventPointID: String?
     @Published var activeEventBattleID: String?
+    @Published var activeRaidLobby: RaidLobbyState?
+    @Published var activeRaidSession: ActiveRaidSession?
 
     var activeEventChapter: GlobeEventChapter? {
         eventChapters.first { $0.id == activeEventChapterID }
@@ -87,6 +89,8 @@ final class GameState: ObservableObject {
         self.activeEventChapterID = nil
         self.activeEventPointID = nil
         self.activeEventBattleID = nil
+        self.activeRaidLobby = nil
+        self.activeRaidSession = nil
         self.selectedMap = Self.placeholderMap
         self.selectedBackground = Self.placeholderBackground
     }
@@ -99,7 +103,7 @@ final class GameState: ObservableObject {
         upsertAvailableCharacter(player)
         maps = loadMaps()
         backgrounds = loadBackgrounds()
-        currencies = loadCurrencyDefinitions()
+        currencies = mergedCurrencyDefinitions()
         eventChapters = loadGlobeEventChapters()
         summonCharacters = loadSummonCharacters()
         summonBanners = loadSummonBanners()
@@ -256,6 +260,20 @@ final class GameState: ObservableObject {
         selectedBattle = nil
     }
 
+    func updateRaidLobby(_ lobby: RaidLobbyState?) {
+        activeRaidLobby = lobby
+        if lobby == nil {
+            activeRaidSession = nil
+        }
+    }
+
+    func updateRaidSession(_ session: ActiveRaidSession?) {
+        activeRaidSession = session
+        if session != nil {
+            selectedBattle = nil
+        }
+    }
+
     func resetGameData() {
         UserDefaults.standard.removeObject(forKey: mapKey)
         UserDefaults.standard.removeObject(forKey: bgKey)
@@ -326,6 +344,25 @@ final class GameState: ObservableObject {
             availableCharacters[index] = character
         } else {
             availableCharacters.append(character)
+        }
+    }
+
+    private func mergedCurrencyDefinitions() -> [CurrencyDefinition] {
+        var definitionsByCode = [String: CurrencyDefinition]()
+
+        for currency in loadCurrencyDefinitions() {
+            definitionsByCode[currency.code] = currency
+        }
+
+        for currency in loadRaidCurrencyDefinitions() {
+            definitionsByCode[currency.code] = currency
+        }
+
+        return definitionsByCode.values.sorted { lhs, rhs in
+            if lhs.sortOrder == rhs.sortOrder {
+                return lhs.code < rhs.code
+            }
+            return lhs.sortOrder < rhs.sortOrder
         }
     }
 

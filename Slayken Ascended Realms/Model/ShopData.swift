@@ -30,6 +30,92 @@ struct ShopSkinOfferDefinition: Codable, Identifiable, Equatable {
     let maxPurchases: Int?
 }
 
+struct CoopShopOfferDefinition: Codable, Identifiable, Equatable {
+    let id: String
+    let name: String
+    let subtitle: String?
+    let image: String
+    let cost: [CurrencyAmount]
+    let rewards: [CurrencyAmount]
+    let characterRewards: [StorePackCharacterReward]
+    let skinRewards: [StorePackSkinReward]
+    let cardRewards: [StorePackCardReward]
+    let maxPurchases: Int?
+
+    init(
+        id: String,
+        name: String,
+        subtitle: String?,
+        image: String,
+        cost: [CurrencyAmount],
+        rewards: [CurrencyAmount],
+        characterRewards: [StorePackCharacterReward] = [],
+        skinRewards: [StorePackSkinReward] = [],
+        cardRewards: [StorePackCardReward] = [],
+        maxPurchases: Int? = nil
+    ) {
+        self.id = id
+        self.name = name
+        self.subtitle = subtitle
+        self.image = image
+        self.cost = cost
+        self.rewards = rewards
+        self.characterRewards = characterRewards
+        self.skinRewards = skinRewards
+        self.cardRewards = cardRewards
+        self.maxPurchases = maxPurchases
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case subtitle
+        case image
+        case cost
+        case rewards
+        case characterRewards
+        case skinRewards
+        case cardRewards
+        case maxPurchases
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle)
+        image = try container.decode(String.self, forKey: .image)
+        cost =
+            try container.decodeIfPresent([CurrencyAmount].self, forKey: .cost)
+            ?? []
+        rewards =
+            try container.decodeIfPresent(
+                [CurrencyAmount].self,
+                forKey: .rewards
+            )
+            ?? []
+        characterRewards =
+            try container.decodeIfPresent(
+                [StorePackCharacterReward].self,
+                forKey: .characterRewards
+            ) ?? []
+        skinRewards =
+            try container.decodeIfPresent(
+                [StorePackSkinReward].self,
+                forKey: .skinRewards
+            ) ?? []
+        cardRewards =
+            try container.decodeIfPresent(
+                [StorePackCardReward].self,
+                forKey: .cardRewards
+            ) ?? []
+        maxPurchases = try container.decodeIfPresent(
+            Int.self,
+            forKey: .maxPurchases
+        )
+    }
+}
+
 struct StorePackCharacterReward: Codable, Identifiable, Equatable {
     let characterID: String
 
@@ -143,5 +229,12 @@ func loadStoreCrystalPacks() -> [StoreCrystalPackDefinition] {
     JSONResourceLoader.loadArray(
         StoreCrystalPackDefinition.self,
         resource: "store_crystal_packs"
+    )
+}
+
+func loadCoopShopOffers() -> [CoopShopOfferDefinition] {
+    JSONResourceLoader.loadArray(
+        CoopShopOfferDefinition.self,
+        resource: "shop_coop_offers"
     )
 }

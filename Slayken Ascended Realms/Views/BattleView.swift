@@ -26,6 +26,7 @@ struct BattleTutorialConfig {
 struct BattleView: View {
     @EnvironmentObject var theme: ThemeManager
     @EnvironmentObject var gameState: GameState
+    @EnvironmentObject var multiplayerManager: MultiplayerManager
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \PlayerDeckCardSlot.slotIndex) private var deckSlots:
         [PlayerDeckCardSlot]
@@ -41,6 +42,10 @@ struct BattleView: View {
     let enemiesOverride: [CharacterStats]?
     let onExit: () -> Void
     let tutorialConfig: BattleTutorialConfig?
+    let raidConfiguration: RaidBattleConfiguration?
+    let onRaidBossHPChanged: ((Int) -> Void)?
+    let onRaidCombatLog: ((String) -> Void)?
+    let onRaidFinished: ((Bool) -> Void)?
 
     @State private var currentTurn: Turn = .player
     @State private var playerHP: CGFloat = 1
@@ -69,6 +74,25 @@ struct BattleView: View {
     @State private var inspectedCard: AbilityCardDefinition?
     @State private var cardLongPressActive = false
     @State private var cardPressTask: Task<Void, Never>?
+
+    private var rewardCurrenciesForVictory: [CurrencyDefinition] {
+        var definitionsByCode = [String: CurrencyDefinition]()
+
+        for currency in loadCurrencyDefinitions() {
+            definitionsByCode[currency.code] = currency
+        }
+
+        for currency in raidConfiguration?.rewardCurrencyDefinitions ?? [] {
+            definitionsByCode[currency.code] = currency
+        }
+
+        return definitionsByCode.values.sorted { lhs, rhs in
+            if lhs.sortOrder == rhs.sortOrder {
+                return lhs.code < rhs.code
+            }
+            return lhs.sortOrder < rhs.sortOrder
+        }
+    }
     @State private var didTriggerTutorialRetreat = false
     @State private var currentParticleTargetIndices: [Int] = []
 
@@ -83,13 +107,21 @@ struct BattleView: View {
         enemy: CharacterStats,
         enemiesOverride: [CharacterStats]? = nil,
         onExit: @escaping () -> Void,
-        tutorialConfig: BattleTutorialConfig? = nil
+        tutorialConfig: BattleTutorialConfig? = nil,
+        raidConfiguration: RaidBattleConfiguration? = nil,
+        onRaidBossHPChanged: ((Int) -> Void)? = nil,
+        onRaidCombatLog: ((String) -> Void)? = nil,
+        onRaidFinished: ((Bool) -> Void)? = nil
     ) {
         self.player = player
         self.enemy = enemy
         self.enemiesOverride = enemiesOverride
         self.onExit = onExit
         self.tutorialConfig = tutorialConfig
+        self.raidConfiguration = raidConfiguration
+        self.onRaidBossHPChanged = onRaidBossHPChanged
+        self.onRaidCombatLog = onRaidCombatLog
+        self.onRaidFinished = onRaidFinished
     }
 
     private var activeCards: [AbilityCardDefinition] {
@@ -121,6 +153,10 @@ struct BattleView: View {
     }
 
     private var battleEnemies: [CharacterStats] {
+        if let raidConfiguration {
+            return [raidConfiguration.boss]
+        }
+
         if let enemiesOverride, !enemiesOverride.isEmpty {
             return enemiesOverride
         }
@@ -153,11 +189,17 @@ struct BattleView: View {
     }
 
     private var isBossWave: Bool {
+        if raidConfiguration != nil {
+            return true
+        }
         guard gameState.selectedBattle?.boss != nil else { return false }
         return safeSelectedEnemyIndex == activeEnemies.count - 1
     }
 
     private var battleXPReward: Int {
+        if let raidConfiguration {
+            return raidConfiguration.xpReward
+        }
         if let xpReward = gameState.selectedBattle?.xpReward {
             return xpReward
         }
@@ -174,6 +216,8 @@ struct BattleView: View {
             BattleSceneView(
                 player: leveledPlayer,
                 enemies: activeEnemies,
+                raidParticipants: raidConfiguration != nil
+                    ? multiplayerManager.activeRaid?.participants : nil,
                 enemyHPs: enemyHPs,
                 selectedEnemyIndex: safeSelectedEnemyIndex,
                 playerAttackID: playerAttackID,
@@ -182,8 +226,10 @@ struct BattleView: View {
                 particleEffect: currentParticleEffect,
                 particleTargetIndices: currentParticleTargetIndices,
                 particleEffects: gameState.particleEffects,
-                groundTexture: gameState.activeGroundTexture,
-                skyboxTexture: gameState.activeSkyboxTexture,
+                groundTexture: raidConfiguration?.groundTexture
+                    ?? gameState.activeGroundTexture,
+                skyboxTexture: raidConfiguration?.skyboxTexture
+                    ?? gameState.activeSkyboxTexture,
                 onSelectEnemy: { index in
                     selectEnemy(index)
                 }
@@ -209,7 +255,7 @@ struct BattleView: View {
 
             if showVictory {
                 VictoryView(
-                    currencies: loadCurrencyDefinitions(),
+                    currencies: rewardCurrenciesForVictory,
                     rewards: awardedRewards,
                     cardRewards: awardedCardRewards,
                     xpReward: awardedXP,
@@ -231,14 +277,36 @@ struct BattleView: View {
                     .zIndex(30)
             }
 
+            if let raidConfiguration,
+                let countdown = multiplayerManager.raidCountdownRemaining,
+                countdown > 0
+            {
+                raidCountdownOverlay(
+                    seconds: countdown,
+                    bossName: raidConfiguration.boss.name
+                )
+                .zIndex(28)
+            }
+
             if let inspectedCard {
                 cardInfoOverlay(for: inspectedCard)
                     .zIndex(25)
             }
         }
         .onAppear {
-            playerHP = 1
+            if let raidConfiguration {
+                playerHP =
+                    CGFloat(raidConfiguration.localParticipantHP)
+                    / max(CGFloat(raidConfiguration.localParticipantMaxHP), 1)
+            } else {
+                playerHP = 1
+            }
             enemyHPs = Array(repeating: 1, count: activeEnemies.count)
+            if let raidConfiguration, enemyHPs.indices.contains(0) {
+                enemyHPs[0] =
+                    CGFloat(raidConfiguration.startingBossHP)
+                    / max(raidConfiguration.boss.hp, 1)
+            }
             playerMana = 60
             selectedEnemyIndex = 0
             startManaRegen()
@@ -254,6 +322,14 @@ struct BattleView: View {
             } else if !enabled {
                 autoTask?.cancel()
             }
+        }
+        .onChange(of: multiplayerManager.latestResolvedRaidAction?.id) { _, _ in
+            applyResolvedRaidActionIfNeeded()
+        }
+        .onChange(of: multiplayerManager.latestResolvedRaidBossAttack?.id) {
+            _,
+            _ in
+            applyResolvedRaidBossAttackIfNeeded()
         }
         .onDisappear {
             autoTask?.cancel()
@@ -271,6 +347,9 @@ struct BattleView: View {
             HStack(alignment: .top, spacing: 0) {
                 VStack(alignment: .leading, spacing: 8) {
                     enemyHPPanel
+                    if raidConfiguration != nil, isLocalRaidTargeted {
+                        raidTargetWarning
+                    }
                     targetStrip
                 }
                 .padding(.leading, 14)
@@ -278,9 +357,14 @@ struct BattleView: View {
 
                 Spacer()
 
-                cardRail
-                    .padding(.trailing, 8)
-                    .padding(.top, 74)
+                VStack(alignment: .trailing, spacing: 10) {
+                    cardRail
+
+                    if raidConfiguration != nil {
+                        raidPartyPanel
+                    }
+                }
+                .padding()
             }
 
             Spacer()
@@ -388,17 +472,27 @@ struct BattleView: View {
     }
 
     private var playerHPPanel: some View {
-        VStack(alignment: .leading, spacing: 5) {
+        let localRaidParticipant = multiplayerManager.activeRaid?.participants
+            .first(where: \.isLocalPlayer)
+        let displayedPlayerHP =
+            raidConfiguration != nil
+            ? CGFloat(localRaidParticipant?.currentHP ?? 0) : leveledPlayer.hp
+        let displayedPlayerMaxHP =
+            raidConfiguration != nil
+            ? CGFloat(localRaidParticipant?.maxHP ?? 1) : leveledPlayer.hp
+        return VStack(alignment: .leading, spacing: 5) {
             battleHPBar(
                 title: player.name.uppercased(),
                 value: playerHP,
-                maximumHP: leveledPlayer.hp,
+                maximumHP: displayedPlayerMaxHP,
                 width: 220
             )
 
             HStack(spacing: 8) {
                 Text("DMG \(Int(leveledPlayer.attack))")
-                Text("HP \(Int(leveledPlayer.hp))")
+                Text(
+                    "HP \(Int(displayedPlayerHP))/\(Int(displayedPlayerMaxHP))"
+                )
                 Text(GameElement(player.element).displayName)
                     .foregroundStyle(GameElement(player.element).color)
             }
@@ -447,6 +541,182 @@ struct BattleView: View {
             }
             .frame(width: 220, height: 8)
         }
+    }
+
+    private var raidPartyPanel: some View {
+        let participants = multiplayerManager.activeRaid?.participants ?? []
+        let targetedParticipantID = multiplayerManager.activeRaid?
+            .bossTargetParticipantID
+
+        return VStack(alignment: .leading, spacing: 8) {
+            Text("RAID PARTY")
+                .font(.system(size: 11, weight: .black))
+                .foregroundStyle(.yellow)
+
+            VStack(spacing: 6) {
+                ForEach(participants) { participant in
+                    raidParticipantCard(
+                        participant,
+                        targetedParticipantID: targetedParticipantID
+                    )
+                }
+            }
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+        .frame(width: 118, alignment: .leading)
+        .background(
+            Color.black.opacity(0.52),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(.white.opacity(0.14), lineWidth: 1)
+        }
+    }
+
+    @ViewBuilder
+    private func raidParticipantPreviewImage(_ participant: RaidParticipant)
+        -> some View
+    {
+        let imageName =
+            participant.characterPreviewImage
+            ?? (participant.isLocalPlayer
+                ? leveledPlayer.image : participant.characterName)
+
+        if let imageName, !imageName.isEmpty {
+            RemoteAssetImage(imageName) {
+                raidParticipantPreviewFallback(participant)
+            }
+        } else {
+            raidParticipantPreviewFallback(participant)
+        }
+    }
+
+    private func raidParticipantPreviewFallback(_ participant: RaidParticipant)
+        -> some View
+    {
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color.black.opacity(0.9),
+                    Color.white.opacity(0.18),
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            Text(String(participant.displayName.prefix(1)))
+                .font(.system(size: 16, weight: .black))
+                .foregroundStyle(.white)
+        }
+    }
+
+    private func raidParticipantCard(
+        _ participant: RaidParticipant,
+        targetedParticipantID: String?
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 5) {
+            ZStack(alignment: .topLeading) {
+                raidParticipantPreviewImage(participant)
+                    .frame(height: 50)
+                    .padding(.top, 30)
+                    .clipShape(
+                        RoundedRectangle(cornerRadius: 7, style: .continuous)
+                    )
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 7, style: .continuous)
+                            .stroke(.white.opacity(0.16), lineWidth: 1)
+                    }
+            }
+
+            HStack(spacing: 3) {
+                if participant.isLocalPlayer {
+                    raidMiniBadge("YOU", fill: .cyan, text: .black)
+                }
+
+                if participant.isHost {
+                    raidMiniBadge("HOST", fill: .orange, text: .black)
+                }
+
+                if targetedParticipantID == participant.id {
+                    raidMiniBadge("TARGET", fill: .red, text: .white)
+                }
+            }
+            .padding(4)
+            Text(participant.characterName ?? participant.displayName)
+                .font(.system(size: 8, weight: .black))
+                .foregroundStyle(.white)
+                .lineLimit(1)
+
+            if let roleName = participant.roleName {
+                Text(roleName.uppercased())
+                    .font(.system(size: 6, weight: .black))
+                    .foregroundStyle(.white)
+                    .lineLimit(1)
+            }
+
+            GeometryReader { proxy in
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(Color.black.opacity(0.74))
+
+                    Capsule()
+                        .fill(
+                            LinearGradient(
+                                colors: participant.currentHP > 0
+                                    ? [.green, .mint]
+                                    : [.red.opacity(0.7), .red],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .frame(
+                            width: max(
+                                4,
+                                proxy.size.width
+                                    * CGFloat(participant.healthProgress)
+                            )
+                        )
+                }
+            }
+            .frame(height: 5)
+
+            Text("\(participant.currentHP)/\(participant.maxHP)")
+                .font(.system(size: 7, weight: .heavy))
+                .foregroundStyle(.white.opacity(0.72))
+        }
+        .padding(5)
+        .background(
+            targetedParticipantID == participant.id
+                ? Color.red.opacity(0.16) : Color.black.opacity(0.18),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
+    }
+
+    private func raidMiniBadge(
+        _ title: String,
+        fill: Color,
+        text: Color
+    ) -> some View {
+        Text(title)
+            .font(.system(size: 6, weight: .black))
+            .padding(.horizontal, 3)
+            .padding(.vertical, 2)
+            .background(fill.opacity(0.92), in: Capsule())
+            .foregroundStyle(text)
+    }
+
+    private var raidTargetWarning: some View {
+        Text("BOSS TARGETING YOU")
+            .font(.system(size: 11, weight: .black))
+            .foregroundStyle(.white)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(Color.red.opacity(0.84), in: Capsule())
+            .overlay {
+                Capsule()
+                    .stroke(.white.opacity(0.24), lineWidth: 1)
+            }
     }
 
     private var targetStrip: some View {
@@ -713,7 +983,9 @@ struct BattleView: View {
     }
 
     private var defeatOverlay: some View {
-        ZStack {
+        let isRaidBattle = raidConfiguration != nil
+
+        return ZStack {
             Color.black.opacity(0.68)
                 .ignoresSafeArea()
 
@@ -723,13 +995,17 @@ struct BattleView: View {
                     .foregroundStyle(.red)
 
                 VStack(spacing: 6) {
-                    Text("DEFEAT")
+                    Text(isRaidBattle ? "RAID FAILED" : "DEFEAT")
                         .font(.system(size: 38, weight: .black))
                         .foregroundStyle(.white)
 
-                    Text("Dein Team wurde besiegt.")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(.white.opacity(0.70))
+                    Text(
+                        isRaidBattle
+                            ? "Deine Gruppe wurde im Raid besiegt."
+                            : "Dein Team wurde besiegt."
+                    )
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.70))
                 }
 
                 HStack(spacing: 10) {
@@ -754,25 +1030,30 @@ struct BattleView: View {
                     Button {
                         returnHomeFromDefeat()
                     } label: {
-                        Label("Home", systemImage: "house.fill")
-                            .font(.system(size: 13, weight: .black))
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                            .background(
-                                Color.black.opacity(0.46),
-                                in: RoundedRectangle(
-                                    cornerRadius: 8,
-                                    style: .continuous
-                                )
+                        Label(
+                            isRaidBattle ? "Zurueck zur Lobby" : "Home",
+                            systemImage: isRaidBattle
+                                ? "arrow.uturn.backward.circle.fill"
+                                : "house.fill"
+                        )
+                        .font(.system(size: 13, weight: .black))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(
+                            Color.black.opacity(0.46),
+                            in: RoundedRectangle(
+                                cornerRadius: 8,
+                                style: .continuous
                             )
-                            .foregroundStyle(.white)
-                            .overlay {
-                                RoundedRectangle(
-                                    cornerRadius: 8,
-                                    style: .continuous
-                                )
-                                .stroke(.white.opacity(0.24), lineWidth: 1)
-                            }
+                        )
+                        .foregroundStyle(.white)
+                        .overlay {
+                            RoundedRectangle(
+                                cornerRadius: 8,
+                                style: .continuous
+                            )
+                            .stroke(.white.opacity(0.24), lineWidth: 1)
+                        }
                     }
                     .buttonStyle(.plain)
                 }
@@ -858,14 +1139,42 @@ struct BattleView: View {
     }
 
     private func retryBattle() {
-        playerHP = 1
-        enemyHPs = Array(repeating: 1, count: activeEnemies.count)
+        if raidConfiguration != nil {
+            multiplayerManager.restartRaidWithFullHP()
+            guard let activeRaid = multiplayerManager.activeRaid else { return }
+
+            if let localParticipant = activeRaid.participants.first(
+                where: \.isLocalPlayer
+            ) {
+                playerHP =
+                    CGFloat(localParticipant.currentHP)
+                    / max(CGFloat(localParticipant.maxHP), 1)
+            } else {
+                playerHP = 1
+            }
+
+            if enemyHPs.indices.contains(0) {
+                enemyHPs = Array(repeating: 0, count: activeEnemies.count)
+                enemyHPs[0] =
+                    CGFloat(activeRaid.bossHP)
+                    / max(activeEnemies[0].hp, 1)
+            } else {
+                enemyHPs = Array(repeating: 1, count: activeEnemies.count)
+            }
+        } else {
+            playerHP = 1
+            enemyHPs = Array(repeating: 1, count: activeEnemies.count)
+        }
+
         playerMana = 60
         selectedEnemyIndex = 0
         currentTurn = .player
+        currentParticleTargetIndices = []
         currentParticleEffect = nil
         attackingEnemyIndex = nil
+        showVictory = false
         showDefeat = false
+        didAwardRewards = false
         startManaRegen()
     }
 
@@ -968,10 +1277,13 @@ struct BattleView: View {
     private func scaledEnemy(_ base: CharacterStats, at index: Int)
         -> CharacterStats
     {
-        let difficulty = Double(gameState.selectedBattle?.difficulty ?? 1)
+        let difficulty = Double(
+            raidConfiguration?.difficulty ?? gameState.selectedBattle?
+                .difficulty ?? 1
+        )
         let waveScale = pow(1.07 + difficulty * 0.01, Double(index))
         let bossScale =
-            (gameState.selectedBattle?.boss != nil
+            ((raidConfiguration != nil || gameState.selectedBattle?.boss != nil)
                 && index == battleEnemies.count - 1) ? 1.55 : 1.0
         return CharacterStats(
             name: base.name,
@@ -1004,6 +1316,7 @@ struct BattleView: View {
 
     private func enemyAttack() {
         guard currentTurn == .enemy else { return }
+        guard raidConfiguration == nil else { return }
         currentParticleEffect = nil
         Task { @MainActor in
             await runEnemyTurn()
@@ -1033,9 +1346,16 @@ struct BattleView: View {
             try? await Task.sleep(for: .milliseconds(isFast ? 220 : 360))
 
             let enemyDamage = activeEnemies[index].attack / leveledPlayer.hp
+            let rawEnemyDamage = max(
+                1,
+                Int(activeEnemies[index].attack.rounded())
+            )
             withAnimation(.easeOut(duration: 0.2)) {
                 playerHP -= enemyDamage
             }
+            onRaidCombatLog?(
+                "\(activeEnemies[index].name) verursacht \(rawEnemyDamage) Schaden."
+            )
 
             if playerHP <= 0 {
                 playerHP = 0
@@ -1044,6 +1364,7 @@ struct BattleView: View {
                 manaRegenTask?.cancel()
                 attackingEnemyIndex = nil
                 showDefeat = true
+                onRaidFinished?(false)
                 return
             }
 
@@ -1059,6 +1380,7 @@ struct BattleView: View {
         guard currentTurn == .player else { return }
         guard !showVictory && !showDefeat else { return }
         guard !didTriggerTutorialRetreat else { return }
+        guard multiplayerManager.raidCountdownRemaining == nil else { return }
 
         if let card {
             let cost = Double(card.resolvedManaCost)
@@ -1083,6 +1405,11 @@ struct BattleView: View {
         }
 
         let targetIndices = currentParticleTargetIndices
+        if raidConfiguration != nil {
+            submitRaidAttack(card: card, targetIndices: targetIndices)
+            return
+        }
+
         let defeatedIndices = applyAttackDamage(
             with: card,
             targetIndices: targetIndices
@@ -1107,6 +1434,29 @@ struct BattleView: View {
             currentParticleTargetIndices = []
             enemyAttack()
         }
+    }
+
+    private func submitRaidAttack(
+        card: AbilityCardDefinition?,
+        targetIndices: [Int]
+    ) {
+        guard let targetIndex = targetIndices.first,
+            activeEnemies.indices.contains(targetIndex)
+        else {
+            currentParticleTargetIndices = []
+            currentTurn = .player
+            return
+        }
+
+        let actionName = card?.name ?? "Basisangriff"
+        let proposedDamage = calculateRaidDamage(
+            for: card,
+            targetIndex: targetIndex
+        )
+        multiplayerManager.submitRaidPlayerAction(
+            actionName: actionName,
+            proposedDamage: proposedDamage
+        )
     }
 
     private func triggerTutorialRetreat(using config: BattleTutorialConfig) {
@@ -1179,6 +1529,7 @@ struct BattleView: View {
             manaRegenTask?.cancel()
             attackingEnemyIndex = nil
             currentParticleTargetIndices = []
+            onRaidFinished?(true)
             showVictory = true
             return
         }
@@ -1212,6 +1563,7 @@ struct BattleView: View {
             autoTask?.cancel()
             manaRegenTask?.cancel()
             attackingEnemyIndex = nil
+            onRaidFinished?(true)
             showVictory = true
             return
         }
@@ -1234,11 +1586,13 @@ struct BattleView: View {
         ascendedLevelBeforeVictory = accountProgressBefore.level
         awardedAscendedXP = awardedXP
         awardedRewards = PlayerInventoryStore.addBattleRewards(
-            gameState.activeBattleRewards,
+            raidConfiguration?.rewards ?? gameState.activeBattleRewards,
             in: modelContext,
             limits: gameState.selectedBattle?.dailyRewardLimits
         )
-        awardedCardRewards = gameState.selectedBattle?.cardRewards ?? []
+        awardedCardRewards =
+            raidConfiguration?.cardRewards ?? gameState.selectedBattle?
+            .cardRewards ?? []
         for cardReward in awardedCardRewards where cardReward.amount > 0 {
             PlayerInventoryStore.addOwnedCard(
                 cardID: cardReward.cardID,
@@ -1251,6 +1605,18 @@ struct BattleView: View {
             to: player.model,
             in: modelContext
         )
+        if let raidParticipants = multiplayerManager.activeRaid?.participants {
+            let raidCharacterModels = Set(
+                raidParticipants.compactMap(\.characterModel)
+            )
+            for model in raidCharacterModels where model != player.model {
+                _ = PlayerInventoryStore.addXP(
+                    awardedXP,
+                    to: model,
+                    in: modelContext
+                )
+            }
+        }
         let accountProgressAfter = PlayerInventoryStore.addAccountXP(
             awardedAscendedXP,
             in: modelContext
@@ -1264,6 +1630,143 @@ struct BattleView: View {
 
         if let battleID = gameState.selectedBattle?.id {
             PlayerInventoryStore.markBattleCompleted(battleID, in: modelContext)
+        }
+    }
+
+    private func calculateRaidDamage(
+        for card: AbilityCardDefinition?,
+        targetIndex: Int
+    ) -> Int {
+        let multiplier = CGFloat(
+            card.map {
+                effectiveCardMultiplier($0)
+                    * elementalMultiplier(for: $0, enemyIndex: targetIndex)
+            } ?? 1.0
+        )
+        return max(1, Int((leveledPlayer.attack * multiplier).rounded()))
+    }
+
+    private func raidCountdownOverlay(seconds: Int, bossName: String)
+        -> some View
+    {
+        ZStack {
+            Color.black.opacity(0.45)
+                .ignoresSafeArea()
+
+            VStack(spacing: 12) {
+                Text("RAID STARTET")
+                    .font(.system(size: 16, weight: .black))
+                    .foregroundStyle(.yellow)
+
+                Text("\(seconds)")
+                    .font(.system(size: 68, weight: .black, design: .rounded))
+                    .foregroundStyle(.white)
+
+                Text("\(bossName) bereitet sich vor.")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(.white.opacity(0.82))
+            }
+            .padding(.horizontal, 28)
+            .padding(.vertical, 22)
+            .background(
+                Color.black.opacity(0.72),
+                in: RoundedRectangle(cornerRadius: 20, style: .continuous)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .stroke(.white.opacity(0.14), lineWidth: 1)
+            }
+        }
+    }
+
+    private var isLocalRaidTargeted: Bool {
+        guard let raidConfiguration else { return false }
+        return multiplayerManager.activeRaid?.bossTargetParticipantID
+            == raidConfiguration.localParticipantID
+    }
+
+    private func applyResolvedRaidActionIfNeeded() {
+        guard let raidConfiguration else { return }
+        guard let resolvedAction = multiplayerManager.latestResolvedRaidAction
+        else {
+            return
+        }
+        guard resolvedAction.sessionID == raidConfiguration.sessionID else {
+            return
+        }
+        guard enemyHPs.indices.contains(0) else { return }
+
+        currentParticleEffect = nil
+        currentParticleTargetIndices = []
+        onRaidBossHPChanged?(resolvedAction.resultingBossHP)
+        onRaidCombatLog?(
+            "\(resolvedAction.actorName) nutzt \(resolvedAction.actionName). Boss-HP: \(resolvedAction.resultingBossHP)"
+        )
+
+        withAnimation(.easeOut(duration: 0.2)) {
+            enemyHPs[0] =
+                CGFloat(resolvedAction.resultingBossHP)
+                / max(activeEnemies[0].hp, 1)
+        }
+
+        if resolvedAction.victory {
+            awardVictoryRewardsIfNeeded()
+            isAuto = false
+            autoTask?.cancel()
+            manaRegenTask?.cancel()
+            attackingEnemyIndex = nil
+            onRaidFinished?(true)
+            showVictory = true
+            return
+        }
+    }
+
+    private func applyResolvedRaidBossAttackIfNeeded() {
+        guard let raidConfiguration else { return }
+        guard
+            let resolvedAttack = multiplayerManager.latestResolvedRaidBossAttack
+        else {
+            return
+        }
+        guard resolvedAttack.sessionID == raidConfiguration.sessionID else {
+            return
+        }
+        guard
+            resolvedAttack.targetParticipantID
+                == raidConfiguration.localParticipantID
+        else {
+            currentTurn = .player
+            return
+        }
+
+        let normalizedHP =
+            CGFloat(resolvedAttack.resultingHP)
+            / max(CGFloat(raidConfiguration.localParticipantMaxHP), 1)
+        attackingEnemyIndex = 0
+        enemyAttackID += 1
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + battleDelay * 0.45) {
+            withAnimation(.easeOut(duration: 0.2)) {
+                playerHP = normalizedHP
+            }
+
+            if resolvedAttack.defeat || playerHP <= 0 {
+                playerHP = 0
+                isAuto = false
+                autoTask?.cancel()
+                manaRegenTask?.cancel()
+                attackingEnemyIndex = nil
+                showDefeat = true
+                onRaidFinished?(false)
+                return
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + battleDelay * 0.45)
+            {
+                attackingEnemyIndex = nil
+                recoverMana(turnManaGain)
+                currentTurn = .player
+            }
         }
     }
 }
@@ -1297,4 +1800,5 @@ private struct CardBattleProgress {
     )
     .environmentObject(GameState())
     .environmentObject(ThemeManager())
+    .environmentObject(MultiplayerManager())
 }

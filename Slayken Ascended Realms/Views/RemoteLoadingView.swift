@@ -14,9 +14,13 @@ struct RemoteLoadingView: View {
     let progress: Double
     let statusText: String
     let requiresMandatoryUpdate: Bool
+    let failureMessage: String?
+    let requiresRetry: Bool
+    let isConnected: Bool
     @Binding var showOptions: Bool
     let onPreloadAll: () -> Void
     let onPlayWithoutPreload: () -> Void
+    let onRetry: () -> Void
 
     @State private var spin = false
 
@@ -26,6 +30,10 @@ struct RemoteLoadingView: View {
     }
 
     private var summaryText: String {
+        if let failureMessage, !failureMessage.isEmpty {
+            return failureMessage
+        }
+
         guard let plan else {
             return "Manifest und Cache werden geprueft."
         }
@@ -110,9 +118,11 @@ struct RemoteLoadingView: View {
                 .foregroundStyle(.white)
 
             Text(
-                requiresMandatoryUpdate
-                    ? "Update zuerst laden."
-                    : "Jetzt laden oder direkt starten."
+                requiresRetry
+                    ? "Download erneut starten."
+                    : requiresMandatoryUpdate
+                        ? "Update zuerst laden."
+                        : "Jetzt laden oder direkt starten."
             )
             .font(.system(size: 14, weight: .bold))
             .foregroundStyle(.white.opacity(0.72))
@@ -152,11 +162,13 @@ struct RemoteLoadingView: View {
 
             VStack(spacing: 8) {
                 Text(
-                    isStarting
-                        ? "Lade Inhalte"
-                        : requiresMandatoryUpdate
-                            ? "Update nötig"
-                            : "Download wählen"
+                    requiresRetry
+                        ? "Laden fehlgeschlagen"
+                        : isStarting
+                            ? "Lade Inhalte"
+                            : requiresMandatoryUpdate
+                                ? "Update nötig"
+                                : "Download wählen"
                 )
                 .font(.system(size: 24, weight: .black, design: .rounded))
                 .foregroundStyle(.white)
@@ -175,7 +187,9 @@ struct RemoteLoadingView: View {
                 updateInfoBlock
             }
 
-            if isStarting || isPreparingPlan {
+            if requiresRetry {
+                retryBlock
+            } else if isStarting || isPreparingPlan {
                 Text(isPreparingPlan ? "Plan wird vorbereitet" : statusText)
                     .font(.system(size: 13, weight: .bold))
                     .foregroundStyle(.white.opacity(0.78))
@@ -183,6 +197,7 @@ struct RemoteLoadingView: View {
 
                 progressBlock
             }
+
         }
         .padding(.horizontal, 22)
         .padding(.vertical, 24)
@@ -359,6 +374,41 @@ struct RemoteLoadingView: View {
         }
     }
 
+    private var retryBlock: some View {
+        VStack(spacing: 14) {
+            Text(
+                isConnected
+                    ? "Verbindung wieder da. Starte den kompletten Download erneut."
+                    : "Bitte Internetverbindung wiederherstellen. Danach den kompletten Download erneut starten."
+            )
+            .font(.system(size: 13, weight: .bold))
+            .foregroundStyle(.white.opacity(0.78))
+            .multilineTextAlignment(.center)
+
+            Button(action: onRetry) {
+                Text(isConnected ? "Erneut laden" : "Warte auf Internet")
+                    .font(.system(size: 16, weight: .black))
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background(
+                        isConnected
+                            ? Color(red: 0.12, green: 0.42, blue: 1.0)
+                            : Color.white.opacity(0.10)
+                    )
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            .stroke(.white.opacity(0.16), lineWidth: 1)
+                    }
+                    .clipShape(
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    )
+            }
+            .buttonStyle(.plain)
+            .disabled(!isConnected)
+        }
+    }
+
     private func infoPill(title: String, value: String) -> some View {
         VStack(spacing: 4) {
             Text(title)
@@ -434,7 +484,8 @@ struct RemoteLoadingView: View {
     }
 
     private var shouldShowOverlay: Bool {
-        !isStarting && (requiresMandatoryUpdate || showOptions)
+        !requiresRetry && !isStarting
+            && (requiresMandatoryUpdate || showOptions)
     }
 
     private func updateSpinnerState(isAnimating: Bool) {
@@ -470,9 +521,13 @@ private struct PreviewRemoteLoadingView: View {
             progress: 0.42,
             statusText: "Bereit zum Laden",
             requiresMandatoryUpdate: false,
+            failureMessage: nil,
+            requiresRetry: false,
+            isConnected: true,
             showOptions: $showOptions,
             onPreloadAll: {},
-            onPlayWithoutPreload: {}
+            onPlayWithoutPreload: {},
+            onRetry: {}
         )
     }
 }

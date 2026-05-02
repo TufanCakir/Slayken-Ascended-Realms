@@ -93,6 +93,8 @@ final class RemoteContentManager: ObservableObject {
     @Published private(set) var isPreparingStartupPlan = false
     @Published private(set) var startupPlan: RemoteContentStartupPlan?
     @Published private(set) var requiresMandatoryUpdate = false
+    @Published private(set) var startupReloadRequired = false
+    @Published private(set) var startupFailureMessage: String?
     @Published private(set) var isBackgroundPreloading = false
     @Published private(set) var backgroundPreloadProgress = 0.0
     @Published private(set) var backgroundStatusText = "Background preload idle"
@@ -125,6 +127,8 @@ final class RemoteContentManager: ObservableObject {
         guard startupPlan == nil else { return }
 
         isPreparingStartupPlan = true
+        startupReloadRequired = false
+        startupFailureMessage = nil
         setStatusText("Preparing preload plan")
         defer { isPreparingStartupPlan = false }
 
@@ -147,8 +151,13 @@ final class RemoteContentManager: ObservableObject {
                     : "Tap to choose preload mode"
             )
             lastErrorMessage = nil
+            startupFailureMessage = nil
+            startupReloadRequired = false
         } catch {
             setStatusText("Failed to prepare preload plan")
+            startupFailureMessage =
+                "Download-Plan konnte nicht geladen werden. Bitte Verbindung prüfen und erneut laden."
+            startupReloadRequired = true
             lastErrorMessage = error.localizedDescription
             Self.logger.error(
                 "Failed to prepare startup plan: \(error.localizedDescription)"
@@ -156,13 +165,25 @@ final class RemoteContentManager: ObservableObject {
         }
     }
 
-    func refreshContentIfNeeded(mode: RemoteContentRefreshMode) async {
-        guard !isRefreshing else { return }
+    func retryStartupRefreshPreparation() async {
+        cachedManifest = nil
+        startupPlan = nil
+        startupReloadRequired = false
+        startupFailureMessage = nil
+        lastErrorMessage = nil
+        hasCompletedInitialRefresh = false
+        setRefreshProgress(0, force: true)
+        await prepareStartupPlanIfNeeded()
+    }
+
+    func refreshContentIfNeeded(mode: RemoteContentRefreshMode) async -> Bool {
+        guard !isRefreshing else { return false }
 
         isRefreshing = true
+        startupReloadRequired = false
+        startupFailureMessage = nil
+        lastErrorMessage = nil
         setRefreshProgress(0, force: true)
-        let wasMandatoryUpdateRequired = requiresMandatoryUpdate
-        var shouldUnlockApp = !wasMandatoryUpdateRequired
         setStatusText(
             mode == .fullPreload
                 ? "Loading live manifest"
@@ -170,9 +191,6 @@ final class RemoteContentManager: ObservableObject {
         )
         defer {
             isRefreshing = false
-            if shouldUnlockApp {
-                hasCompletedInitialRefresh = true
-            }
         }
 
         do {
@@ -256,21 +274,24 @@ final class RemoteContentManager: ObservableObject {
             )
 
             if !failedItems.isEmpty {
-                if wasMandatoryUpdateRequired {
-                    requiresMandatoryUpdate = true
-                    shouldUnlockApp = false
-                }
+                requiresMandatoryUpdate = true
+                hasCompletedInitialRefresh = false
+                startupReloadRequired = true
                 setStatusText(
                     mode == .fullPreload
-                        ? "Live content partially updated"
-                        : "Core content and visuals loaded with gaps"
+                        ? "Live update interrupted"
+                        : "Core content load interrupted"
                 )
+                let failureSummary =
+                    "Download unvollständig. Bitte bei stabiler Verbindung alles neu laden."
+                startupFailureMessage = failureSummary
                 lastErrorMessage =
-                    "Failed items: \(failedItems.prefix(5).joined(separator: ", "))"
+                    "\(failureSummary) Fehlende Inhalte: \(failedItems.prefix(5).joined(separator: ", "))"
                 lastRefreshDate = Date()
                 Self.logger.error(
                     "Remote refresh completed with \(failedItems.count) failed item(s): \(failedItems.joined(separator: ", "))"
                 )
+                return false
             } else {
                 lastErrorMessage = nil
             }
@@ -278,7 +299,7 @@ final class RemoteContentManager: ObservableObject {
             if didChangeContent && failedItems.isEmpty {
                 Self.saveInstalledContentVersion(manifest.contentVersion)
                 requiresMandatoryUpdate = false
-                shouldUnlockApp = true
+                hasCompletedInitialRefresh = true
                 setStatusText(
                     mode == .fullPreload
                         ? "Live content updated"
@@ -289,7 +310,7 @@ final class RemoteContentManager: ObservableObject {
             } else if failedItems.isEmpty {
                 Self.saveInstalledContentVersion(manifest.contentVersion)
                 requiresMandatoryUpdate = false
-                shouldUnlockApp = true
+                hasCompletedInitialRefresh = true
                 setStatusText(
                     mode == .fullPreload
                         ? "Live content already up to date"
@@ -299,21 +320,24 @@ final class RemoteContentManager: ObservableObject {
                     "Remote refresh completed. Cache already up to date."
                 )
             }
+            return true
         } catch {
             setRefreshProgress(1, force: true)
-            if wasMandatoryUpdateRequired {
-                requiresMandatoryUpdate = true
-                shouldUnlockApp = false
-            }
+            requiresMandatoryUpdate = true
+            hasCompletedInitialRefresh = false
+            startupReloadRequired = true
             setStatusText(
                 mode == .fullPreload
                     ? "Live update failed"
                     : "Core content load failed"
             )
+            startupFailureMessage =
+                "Verbindung unterbrochen oder Download fehlgeschlagen. Bitte alles erneut laden."
             lastErrorMessage = error.localizedDescription
             Self.logger.error(
                 "Remote refresh failed: \(error.localizedDescription)"
             )
+            return false
         }
     }
 

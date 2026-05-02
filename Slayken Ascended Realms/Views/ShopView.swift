@@ -11,6 +11,7 @@ import SwiftUI
 struct ShopView: View {
     private enum ShopCategory: String, CaseIterable, Identifiable {
         case all = "Alles"
+        case coop = "Coop"
         case resources = "Ressourcen"
         case skins = "Skins"
         case crystals = "Echtgeld"
@@ -45,6 +46,10 @@ struct ShopView: View {
 
     private var crystalPacks: [StoreCrystalPackDefinition] {
         loadStoreCrystalPacks()
+    }
+
+    private var coopOffers: [CoopShopOfferDefinition] {
+        loadCoopShopOffers()
     }
 
     var body: some View {
@@ -98,6 +103,15 @@ struct ShopView: View {
             sectionTitle("Ressourcen")
             ForEach(shopOffers) { offer in
                 shopOfferCard(offer)
+            }
+        }
+    }
+
+    private var coopSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            sectionTitle("Coop Shop")
+            ForEach(coopOffers) { offer in
+                coopOfferCard(offer)
             }
         }
     }
@@ -167,9 +181,12 @@ struct ShopView: View {
     private var filteredSections: some View {
         switch selectedCategory {
         case .all:
+            coopSection
             offersSection
             skinsSection
             crystalPacksSection
+        case .coop:
+            coopSection
         case .resources:
             offersSection
         case .skins:
@@ -283,6 +300,79 @@ struct ShopView: View {
                     .padding(.vertical, 10)
                     .background(
                         canBuy ? Color.yellow : Color.gray.opacity(0.38)
+                    )
+                    .clipShape(Capsule())
+                }
+                .buttonStyle(.plain)
+                .disabled(!canBuy)
+            }
+        }
+        .padding(16)
+        .background(Color.black.opacity(0.34))
+        .overlay {
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(.white.opacity(0.10), lineWidth: 1)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+    }
+
+    private func coopOfferCard(_ offer: CoopShopOfferDefinition) -> some View {
+        let purchaseCount =
+            offerProgress.first(where: { $0.offerID == offer.id })?
+            .purchaseCount ?? 0
+        let soldOut = !isAvailable(
+            maxPurchases: offer.maxPurchases,
+            count: purchaseCount
+        )
+        let canBuy =
+            canAfford(offer.cost)
+            && !soldOut
+
+        return VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
+                offerImage(offer.image)
+
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(offer.name)
+                        .font(.system(size: 20, weight: .black))
+                        .foregroundStyle(.white)
+                    if let subtitle = offer.subtitle {
+                        Text(subtitle)
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(.white.opacity(0.74))
+                    }
+                    tag("Coop")
+                }
+                Spacer()
+            }
+
+            Text("Belohnung: \(coopOfferRewardsText(offer))")
+                .font(.system(size: 12, weight: .black))
+                .foregroundStyle(.white.opacity(0.9))
+
+            HStack(spacing: 10) {
+                tag(costText(offer.cost))
+                if let maxPurchases = offer.maxPurchases {
+                    tag("\(purchaseCount)/\(maxPurchases)")
+                }
+                Spacer()
+
+                Button {
+                    buyCoopOffer(offer)
+                } label: {
+                    Text(
+                        buttonTitle(
+                            canBuy: canBuy,
+                            isFree: offer.cost.isEmpty,
+                            soldOut: soldOut
+                        )
+                    )
+                    .font(.system(size: 13, weight: .black))
+                    .foregroundStyle(canBuy ? .black : .white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(
+                        canBuy ? Color.orange : Color.gray.opacity(0.38)
                     )
                     .clipShape(Capsule())
                 }
@@ -591,6 +681,56 @@ struct ShopView: View {
         message = "\(offer.name) freigeschaltet."
     }
 
+    private func buyCoopOffer(_ offer: CoopShopOfferDefinition) {
+        let count = PlayerInventoryStore.shopPurchaseCount(
+            for: offer.id,
+            in: modelContext
+        )
+        guard isAvailable(maxPurchases: offer.maxPurchases, count: count) else {
+            message = "Limit erreicht."
+            return
+        }
+        guard PlayerInventoryStore.canSpend(offer.cost, in: modelContext) else {
+            message = "Nicht genug Waehrung."
+            return
+        }
+        guard PlayerInventoryStore.spend(offer.cost, in: modelContext) else {
+            message = "Nicht genug Waehrung."
+            return
+        }
+
+        PlayerInventoryStore.add(offer.rewards, in: modelContext)
+
+        for characterReward in offer.characterRewards {
+            PlayerInventoryStore.addOwned(
+                characterID: characterReward.characterID,
+                in: modelContext
+            )
+        }
+
+        for skinReward in offer.skinRewards {
+            PlayerInventoryStore.addOwnedSkin(
+                characterID: skinReward.characterID,
+                skinID: skinReward.skinID,
+                in: modelContext
+            )
+        }
+
+        for cardReward in offer.cardRewards {
+            PlayerInventoryStore.addOwnedCard(
+                cardID: cardReward.cardID,
+                amount: cardReward.amount,
+                in: modelContext
+            )
+        }
+
+        PlayerInventoryStore.incrementShopPurchaseCount(
+            for: offer.id,
+            in: modelContext
+        )
+        message = "\(offer.name) gekauft."
+    }
+
     private func buyCrystalPack(_ pack: StoreCrystalPackDefinition) async {
         _ = await storeKitManager.purchase(pack)
     }
@@ -638,6 +778,43 @@ struct ShopView: View {
         }
 
         return parts.joined(separator: " + ")
+    }
+
+    private func coopOfferRewardsText(_ offer: CoopShopOfferDefinition)
+        -> String
+    {
+        var parts: [String] = []
+
+        if !offer.rewards.isEmpty {
+            parts.append(rewardsText(offer.rewards))
+        }
+
+        for characterReward in offer.characterRewards {
+            let name =
+                gameState.summonCharacters.first(where: {
+                    $0.id == characterReward.characterID
+                })?.name ?? characterReward.characterID
+            parts.append("Charakter \(name)")
+        }
+
+        for skinReward in offer.skinRewards {
+            let characterName =
+                gameState.summonCharacters.first(where: {
+                    $0.id == skinReward.characterID
+                })?.name ?? skinReward.characterID
+            parts.append("Skin \(characterName): \(skinReward.skinID)")
+        }
+
+        for cardReward in offer.cardRewards {
+            let cardName =
+                loadAbilityCards().first(where: { $0.id == cardReward.cardID })?
+                .name
+                ?? cardReward.cardID
+            parts.append("\(cardReward.amount)x Karte \(cardName)")
+        }
+
+        return parts.isEmpty
+            ? "Nur Freischaltung" : parts.joined(separator: " + ")
     }
 
     private func costText(_ cost: [CurrencyAmount]) -> String {

@@ -16,6 +16,7 @@ private enum BattleSceneNodeCache {
 struct BattleSceneView: UIViewRepresentable {
     let player: CharacterStats
     let enemies: [CharacterStats]
+    let raidParticipants: [RaidParticipant]?
     let enemyHPs: [CGFloat]
     let selectedEnemyIndex: Int
     let playerAttackID: Int
@@ -32,6 +33,7 @@ struct BattleSceneView: UIViewRepresentable {
         BattleSceneCoordinator(
             player: player,
             enemies: enemies,
+            raidParticipants: raidParticipants,
             particleEffects: particleEffects,
             onSelectEnemy: onSelectEnemy
         )
@@ -56,6 +58,7 @@ struct BattleSceneView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: SCNView, context: Context) {
+        context.coordinator.updateRaidParticipants(raidParticipants)
         context.coordinator.updateEnvironment(
             groundTexture: groundTexture,
             skyboxTexture: skyboxTexture
@@ -80,12 +83,14 @@ final class BattleSceneCoordinator {
 
     private let playerStats: CharacterStats
     private let enemyStats: [CharacterStats]
+    private var raidParticipants: [RaidParticipant]
     private let particleEffectDefinitions: [String: ParticleEffectDefinition]
     private let onSelectEnemy: (Int) -> Void
 
     private let cameraNode = SCNNode()
     private let playerRootNode = SCNNode()
     private var enemyRootNodes: [SCNNode] = []
+    private var allyRootNodes: [SCNNode] = []
     private var fighterModelContainers: [String: SCNNode] = [:]
     private var groundNode = SCNNode()
     private var enemyHPNodes: [SCNNode] = []
@@ -102,6 +107,7 @@ final class BattleSceneCoordinator {
     init(
         player: CharacterStats,
         enemies: [CharacterStats],
+        raidParticipants: [RaidParticipant]?,
         particleEffects: [ParticleEffectDefinition],
         onSelectEnemy: @escaping (Int) -> Void
     ) {
@@ -117,12 +123,35 @@ final class BattleSceneCoordinator {
                     attack: 10
                 )
             ] : enemies
+        self.raidParticipants = raidParticipants ?? []
         self.particleEffectDefinitions = Dictionary(
             uniqueKeysWithValues: particleEffects.map {
                 ($0.id.lowercased(), $0)
             }
         )
         self.onSelectEnemy = onSelectEnemy
+    }
+
+    private var isRaidMode: Bool {
+        !raidParticipants.isEmpty
+    }
+
+    func updateRaidParticipants(_ participants: [RaidParticipant]?) {
+        let updatedParticipants = participants ?? []
+        guard
+            participantSignature(for: updatedParticipants)
+                != participantSignature(for: raidParticipants)
+        else {
+            return
+        }
+
+        raidParticipants = updatedParticipants
+        guard !scene.rootNode.childNodes.isEmpty else { return }
+        updateCameraForCurrentMode()
+        rebuildRaidAllies()
+        if isRaidMode {
+            repositionRaidBossAndPlayer()
+        }
     }
 
     func installTapGesture(on view: SCNView) {
@@ -245,6 +274,7 @@ final class BattleSceneCoordinator {
             scene.rootNode.addChildNode(enemyNode)
         }
         scene.rootNode.addChildNode(playerNode)
+        rebuildRaidAllies()
 
         updateEnvironment(
             groundTexture: groundTexture,
@@ -272,15 +302,24 @@ final class BattleSceneCoordinator {
 
     private func makeCamera() -> SCNNode {
         let camera = SCNCamera()
-        camera.fieldOfView = 100
+        camera.fieldOfView = isRaidMode ? 76 : 100
 
         cameraNode.camera = camera
-
-        // 🔥 SIDE VIEW (leicht schräg von rechts)
-        cameraNode.position = SCNVector3(0, 5, 20)
-        cameraNode.look(at: SCNVector3(0, 0, 0))
+        updateCameraForCurrentMode()
 
         return cameraNode
+    }
+
+    private func updateCameraForCurrentMode() {
+        cameraNode.camera?.fieldOfView = isRaidMode ? 72 : 100
+
+        if isRaidMode {
+            cameraNode.position = SCNVector3(0, 12, 70)
+            cameraNode.look(at: SCNVector3(0, 4, -4))
+        } else {
+            cameraNode.position = SCNVector3(0, 5, 20)
+            cameraNode.look(at: SCNVector3(0, 0, 0))
+        }
     }
 
     private func makeLights() -> SCNNode {
@@ -1132,22 +1171,205 @@ final class BattleSceneCoordinator {
         let zOffset: Float = 10
 
         if isEnemy {
-            let spacing: Float = 8
-            let centerOffset = (Float(total - 1) * spacing) * 0.5
-            root.position = SCNVector3(
-                -xOffset + Float(index) * spacing - centerOffset,
-                groundY + yOffset,
-                -zOffset
-            )
+            if isRaidMode {
+                root.position = SCNVector3(0, groundY + yOffset, -2.8)
+            } else {
+                let spacing: Float = 8
+                let centerOffset = (Float(total - 1) * spacing) * 0.5
+                root.position = SCNVector3(
+                    -xOffset + Float(index) * spacing - centerOffset,
+                    groundY + yOffset,
+                    -zOffset
+                )
+            }
             root.eulerAngles.y = Float.pi
             addEnemyHUD(to: root, index: index)
             enemyRootNodes.append(root)
         } else {
-            root.position = SCNVector3(xOffset, groundY + yOffset, zOffset)
+            if isRaidMode {
+                let slots = visibleRaidParticipants
+                let localSlot = max(
+                    0,
+                    slots.firstIndex(where: \.isLocalPlayer) ?? 0
+                )
+                root.position = raidParticipantPosition(
+                    slot: localSlot,
+                    totalSlots: max(slots.count, 1),
+                    groundY: groundY + yOffset
+                )
+            } else {
+                root.position = SCNVector3(xOffset, groundY + yOffset, zOffset)
+            }
             root.eulerAngles.y = 0
         }
 
         return root
+    }
+
+    private var visibleRaidParticipants: [RaidParticipant] {
+        raidParticipants.filter {
+            $0.connectionState == .inRaid || $0.connectionState == .connected
+        }
+    }
+
+    private func rebuildRaidAllies() {
+        allyRootNodes.forEach { node in
+            fighterModelContainers[node.name ?? ""] = nil
+            node.removeFromParentNode()
+        }
+        allyRootNodes.removeAll()
+
+        guard isRaidMode else { return }
+
+        let participants = visibleRaidParticipants
+        let allyParticipants = participants.filter { !$0.isLocalPlayer }
+        let groundY = getGroundTopY() + 3
+
+        for participant in allyParticipants {
+            let slot =
+                participants.firstIndex(where: { $0.id == participant.id }) ?? 0
+            let node = makeRaidAllyNode(
+                participant: participant,
+                slot: slot,
+                totalSlots: max(participants.count, 1),
+                groundY: groundY
+            )
+            allyRootNodes.append(node)
+            scene.rootNode.addChildNode(node)
+        }
+    }
+
+    private func repositionRaidBossAndPlayer() {
+        let groundY = getGroundTopY() + 3
+        if let bossNode = enemyRootNodes.first {
+            bossNode.position = SCNVector3(0, groundY, -2.8)
+        }
+
+        let participants = visibleRaidParticipants
+        let localSlot = participants.firstIndex(where: \.isLocalPlayer) ?? 0
+        playerRootNode.position = raidParticipantPosition(
+            slot: localSlot,
+            totalSlots: max(participants.count, 1),
+            groundY: groundY
+        )
+    }
+
+    private func raidParticipantPosition(
+        slot: Int,
+        totalSlots: Int,
+        groundY: Float
+    ) -> SCNVector3 {
+
+        let safeTotalSlots = max(totalSlots, 1)
+
+        let startAngle = Double.pi * 0.0
+        let endAngle = Double.pi * 1.0
+
+        let progress =
+            safeTotalSlots == 1
+            ? 0.5
+            : Double(slot) / Double(safeTotalSlots - 1)
+
+        let angle = startAngle + (endAngle - startAngle) * progress
+
+        let radius: Float = 10.0
+        let centerZ: Float = 30
+
+        // NEU
+        let centerX: Float = 3.0
+
+        return SCNVector3(
+            centerX + Float(cos(angle)) * radius,
+            groundY,
+            centerZ + Float(sin(angle)) * radius
+        )
+    }
+
+    private func makeRaidAllyNode(
+        participant: RaidParticipant,
+        slot: Int,
+        totalSlots: Int,
+        groundY: Float
+    ) -> SCNNode {
+        let root = SCNNode()
+        root.name = "ally_\(participant.id)"
+
+        let modelContainer = SCNNode()
+        let allyModelName = participant.characterModel ?? playerStats.model
+        let allyTextureName =
+            participant.characterTexture ?? playerStats.texture
+        let modelNode = loadModel(
+            named: allyModelName,
+            textureName: allyTextureName
+        )
+        modelContainer.addChildNode(modelNode)
+        root.addChildNode(modelContainer)
+        fighterModelContainers[root.name ?? ""] = modelContainer
+
+        let bounds = modelNode.boundingBox
+        let centerX = (bounds.min.x + bounds.max.x) * 0.5
+        let centerZ = (bounds.min.z + bounds.max.z) * 0.5
+        modelNode.pivot = SCNMatrix4MakeTranslation(
+            centerX,
+            bounds.min.y,
+            centerZ
+        )
+
+        let height = max(bounds.max.y - bounds.min.y, 0.01)
+        let scale: Float = 3.7 / height
+        modelContainer.scale = SCNVector3(scale, scale, scale)
+        modelContainer.eulerAngles = SCNVector3(-Float.pi / 2, Float.pi / 2, 0)
+        modelContainer.opacity = participant.currentHP > 0 ? 0.86 : 0.25
+        modelContainer.runAction(makeIdleBounceAction(), forKey: "idle")
+
+        root.position = raidParticipantPosition(
+            slot: slot,
+            totalSlots: totalSlots,
+            groundY: groundY
+        )
+        root.eulerAngles.y = 0
+        addRaidAllyMarker(to: root, participant: participant)
+
+        return root
+    }
+
+    private func addRaidAllyMarker(
+        to root: SCNNode,
+        participant: RaidParticipant
+    ) {
+        let ring = SCNNode(
+            geometry: SCNTorus(ringRadius: 1.0, pipeRadius: 0.04)
+        )
+        ring.geometry?.firstMaterial?.diffuse.contents = raidRoleColor(
+            for: participant
+        )
+        ring.eulerAngles.x = Float.pi / 2
+        ring.position = SCNVector3(0, 0.02, 0)
+        root.addChildNode(ring)
+    }
+
+    private func raidRoleColor(for participant: RaidParticipant) -> UIColor {
+        switch participant.role {
+        case .tank:
+            return .systemBlue
+        case .healer:
+            return .systemGreen
+        case .damageDealer:
+            return .systemRed
+        case .supporter:
+            return .systemCyan
+        case nil:
+            return participant.isBot ? .systemTeal : .white
+        }
+    }
+
+    private func participantSignature(for participants: [RaidParticipant])
+        -> String
+    {
+        participants.map { participant in
+            "\(participant.id)-\(participant.currentHP)-\(participant.connectionState.rawValue)"
+        }
+        .joined(separator: "|")
     }
 
     private func addEnemyHUD(to root: SCNNode, index: Int) {
@@ -1339,6 +1561,7 @@ private struct BattleScenePreviewContainer: View {
                     attack: 22
                 ),
                 enemies: previewEnemies,
+                raidParticipants: nil,
                 enemyHPs: [1.0, 1.0, 1.0],
                 selectedEnemyIndex: 0,
                 playerAttackID: playerAttackID,

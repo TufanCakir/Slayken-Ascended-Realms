@@ -103,12 +103,18 @@ struct RootView: View {
                     statusText: remoteContent.statusText,
                     requiresMandatoryUpdate: remoteContent
                         .requiresMandatoryUpdate,
+                    failureMessage: remoteContent.startupFailureMessage,
+                    requiresRetry: remoteContent.startupReloadRequired,
+                    isConnected: networkMonitor.isConnected,
                     showOptions: $showStartupOptions,
                     onPreloadAll: {
                         startRemoteBootstrap(mode: .fullPreload)
                     },
                     onPlayWithoutPreload: {
                         startRemoteBootstrap(mode: .bootstrap)
+                    },
+                    onRetry: {
+                        retryStartupLoading()
                     }
                 )
                 .environmentObject(theme)
@@ -197,7 +203,9 @@ struct RootView: View {
                     .foregroundStyle(.white)
 
                 Text(
-                    "Slayken Ascended Realms kann aktuell nur mit aktiver Internetverbindung gespielt werden. Bitte verbinde dich mit dem Internet."
+                    remoteContent.startupReloadRequired
+                        ? "Die Verbindung ist während des Ladens abgebrochen. Das Spiel bleibt gesperrt, bis du nach Wiederverbindung den Download neu startest."
+                        : "Slayken Ascended Realms kann aktuell nur mit aktiver Internetverbindung gespielt werden. Bitte verbinde dich mit dem Internet."
                 )
                 .font(.system(size: 14, weight: .semibold))
                 .foregroundStyle(.white.opacity(0.82))
@@ -357,7 +365,11 @@ struct RootView: View {
         guard !remoteContent.isRefreshing else { return }
 
         Task {
-            await remoteContent.refreshContentIfNeeded(mode: mode)
+            let didRefreshSucceed = await remoteContent.refreshContentIfNeeded(
+                mode: mode
+            )
+            guard didRefreshSucceed else { return }
+
             gameState.reloadContent()
             theme.loadThemes()
             theme.loadSelected()
@@ -368,6 +380,14 @@ struct RootView: View {
             if mode == .bootstrap {
                 remoteContent.startBackgroundPreloadIfNeeded()
             }
+        }
+    }
+
+    private func retryStartupLoading() {
+        guard !remoteContent.isRefreshing else { return }
+
+        Task {
+            await remoteContent.retryStartupRefreshPreparation()
         }
     }
 

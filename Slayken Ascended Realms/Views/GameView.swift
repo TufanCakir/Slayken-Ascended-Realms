@@ -22,6 +22,8 @@ struct GameView: View {
 
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
+    @EnvironmentObject var multiplayerManager: MultiplayerManager
+    @EnvironmentObject var remoteContent: RemoteContentManager
     @Environment(\.modelContext) private var modelContext
     @Query private var completedBattles: [PlayerBattleProgress]
     @Query private var accountProgress: [PlayerAccountProgress]
@@ -52,6 +54,7 @@ struct GameView: View {
     @State private var showNavigationSpinner = false
     @State private var navigationSpinnerRotation = false
     @State private var navigationSpinnerTask: Task<Void, Never>?
+    @State private var showMultiplayerLobby = false
 
     private enum ModalTabDestination {
         case character
@@ -167,9 +170,12 @@ struct GameView: View {
                     }
                     .zIndex(8)
 
-                    battleResourceBar
-                        .padding(.horizontal, horizontalOverlayPadding)
-                        .padding(.top, 10)
+                    VStack(spacing: 10) {
+                        battleResourceBar
+                        coopRaidButton
+                    }
+                    .padding(.horizontal, horizontalOverlayPadding)
+                    .padding(.top, 10)
 
                     if !battleResourceMessage.isEmpty {
                         Text(battleResourceMessage)
@@ -290,6 +296,47 @@ struct GameView: View {
                 }
                 .ignoresSafeArea()
                 .background(.black)
+            }
+            .fullScreenCover(isPresented: $showMultiplayerLobby) {
+                CoopRaidFlowView {
+                    multiplayerManager.leaveLobby()
+                    showMultiplayerLobby = false
+                }
+                .environmentObject(multiplayerManager)
+                .environmentObject(theme)
+                .environmentObject(remoteContent)
+            }
+            .fullScreenCover(
+                isPresented: Binding(
+                    get: { multiplayerManager.activeRaid != nil },
+                    set: { isPresented in
+                        if !isPresented {
+                            multiplayerManager.endRaid()
+                        }
+                    }
+                )
+            ) {
+                BattleView(
+                    player: gameState.battlePlayer,
+                    enemy: multiplayerManager.activeRaid?.battleConfiguration
+                        .boss ?? gameState.battlePlayer,
+                    enemiesOverride: multiplayerManager.activeRaid.map {
+                        [$0.battleConfiguration.boss]
+                    },
+                    onExit: {
+                        multiplayerManager.endRaid()
+                    },
+                    tutorialConfig: nil,
+                    raidConfiguration: multiplayerManager.activeRaid?
+                        .battleConfiguration,
+                    onRaidBossHPChanged: nil,
+                    onRaidCombatLog: nil,
+                    onRaidFinished: { victory in
+                        multiplayerManager.setRaidOutcome(victory: victory)
+                    }
+                )
+                .environmentObject(gameState)
+                .environmentObject(theme)
             }
             .fullScreenCover(isPresented: $showGift) {
                 GiftView(
@@ -547,6 +594,15 @@ struct GameView: View {
             .onDisappear {
                 navigationSpinnerTask?.cancel()
             }
+            .onChange(of: multiplayerManager.lobbyState) { _, newValue in
+                gameState.updateRaidLobby(newValue)
+            }
+            .onChange(of: multiplayerManager.activeRaid) { _, newValue in
+                if newValue != nil {
+                    showMultiplayerLobby = false
+                }
+                gameState.updateRaidSession(newValue)
+            }
         }
     }
 
@@ -699,6 +755,32 @@ struct GameView: View {
                 accent: .cyan
             )
         }
+    }
+
+    private var coopRaidButton: some View {
+        Button {
+            multiplayerManager.ensureLocalLobbyState()
+            showMultiplayerLobby = true
+        } label: {
+            Label(
+                multiplayerManager.activeRaid == nil
+                    ? "Coop Raid" : "Raid aktiv",
+                systemImage: multiplayerManager.activeRaid == nil
+                    ? "person.3.sequence.fill"
+                    : "flame.fill"
+            )
+            .font(.system(size: 13, weight: .black))
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .background(Color.black.opacity(0.38), in: Capsule())
+            .overlay(
+                Capsule()
+                    .stroke(.white.opacity(0.12), lineWidth: 1)
+            )
+            .foregroundStyle(.white)
+        }
+        .buttonStyle(.plain)
+        .frame(maxWidth: .infinity, alignment: .center)
     }
 
     private func resourceChip(
@@ -858,4 +940,5 @@ struct GameView: View {
     GameView(onStartBattle: { _ in })
         .environmentObject(GameState())
         .environmentObject(ThemeManager())
+        .environmentObject(MultiplayerManager())
 }

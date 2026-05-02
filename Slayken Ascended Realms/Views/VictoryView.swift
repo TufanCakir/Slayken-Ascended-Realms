@@ -28,47 +28,23 @@ struct VictoryView: View {
     var onContinue: () -> Void
 
     var body: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 22) {
+                Spacer(minLength: 12)
 
-        VStack {
-
-            rewardRow
-            if !cardRewards.isEmpty {
-                cardRewardRow
+                victoryHeader
+                levelSummaryRow
+                rewardSection
+                if !cardRewards.isEmpty {
+                    cardRewardSection
+                }
+                ascendedXPPanel
+                continueButton
             }
-            Spacer()
-            ascendedXPPanel
-            Spacer()
-
-            Text("VICTORY")
-                .font(.system(size: 50, weight: .black))
-                .foregroundStyle(
-                    .white
-                )
-
-            Button {
-                onContinue()
-            } label: {
-                Text("Continue")
-                    .font(.system(size: 16, weight: .black))
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 13)
-                    .background(
-                        Color.black.opacity(0.34),
-                        in: RoundedRectangle(
-                            cornerRadius: 26,
-                            style: .continuous
-                        )
-                    )
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 26, style: .continuous)
-                            .stroke(.white.opacity(0.08), lineWidth: 1)
-                    }
-                    .foregroundStyle(.white)
-            }
-            .padding(.top, 4)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 28)
         }
-        .padding()
-        .padding(.horizontal, 24)
         .onAppear {
             animate = true
         }
@@ -93,6 +69,89 @@ struct VictoryView: View {
         }
     }
 
+    private var victoryHeader: some View {
+        VStack(spacing: 10) {
+            Image(systemName: "crown.fill")
+                .font(.system(size: 28, weight: .black))
+                .foregroundStyle(.yellow)
+                .scaleEffect(animate ? 1 : 0.88)
+                .animation(
+                    .spring(response: 0.5, dampingFraction: 0.7),
+                    value: animate
+                )
+
+            Text("VICTORY")
+                .font(.system(size: 46, weight: .black, design: .serif))
+                .foregroundStyle(.white)
+
+            Text("Du hast \(defeatedEnemies) Gegner besiegt.")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(.white.opacity(0.76))
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    private var levelSummaryRow: some View {
+        HStack(spacing: 12) {
+            summaryCard(
+                title: "Char XP",
+                value: "+\(xpReward)",
+                detail: levelAfter > levelBefore
+                    ? "Lv. \(levelBefore) -> \(levelAfter)"
+                    : "Lv. \(levelAfter)",
+                accent: .green
+            )
+
+            summaryCard(
+                title: "Ascended XP",
+                value: "+\(ascendedXPReward)",
+                detail: ascendedLevelAfter > ascendedLevelBefore
+                    ? "Asc. \(ascendedLevelBefore) -> \(ascendedLevelAfter)"
+                    : "Asc. \(ascendedLevelAfter)",
+                accent: .yellow
+            )
+        }
+    }
+
+    private var rewardSection: some View {
+        VStack(spacing: 12) {
+            sectionTitle("Belohnungen")
+            rewardRow
+        }
+    }
+
+    private var cardRewardSection: some View {
+        VStack(spacing: 12) {
+            sectionTitle("Karten")
+            cardRewardRow
+        }
+    }
+
+    private func sectionTitle(_ title: String) -> some View {
+        Text(title)
+            .font(.system(size: 14, weight: .black))
+            .foregroundStyle(.white.opacity(0.8))
+            .frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    private var continueButton: some View {
+        Button {
+            onContinue()
+        } label: {
+            Text("Continue")
+                .font(.system(size: 16, weight: .black))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 14)
+                .background(
+                    Color.white.opacity(0.92),
+                    in: RoundedRectangle(cornerRadius: 22, style: .continuous)
+                )
+                .foregroundStyle(.black)
+        }
+        .buttonStyle(.plain)
+    }
+
     private var rewardRow: some View {
         HStack(spacing: 10) {
             ForEach(rewards) { reward in
@@ -103,6 +162,7 @@ struct VictoryView: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity, alignment: .center)
     }
 
     private var cardRewardRow: some View {
@@ -116,6 +176,7 @@ struct VictoryView: View {
                 )
             }
         }
+        .frame(maxWidth: .infinity, alignment: .center)
     }
 
     private var ascendedXPPanel: some View {
@@ -169,6 +230,39 @@ struct VictoryView: View {
                 .stroke(.white.opacity(0.08), lineWidth: 1)
         }
         .foregroundStyle(.white)
+        .frame(maxWidth: .infinity)
+    }
+
+    private func summaryCard(
+        title: String,
+        value: String,
+        detail: String,
+        accent: Color
+    ) -> some View {
+        VStack(spacing: 6) {
+            Text(title)
+                .font(.system(size: 11, weight: .black))
+                .foregroundStyle(.white.opacity(0.66))
+
+            Text(value)
+                .font(.system(size: 22, weight: .black))
+                .foregroundStyle(.white)
+
+            Text(detail)
+                .font(.system(size: 11, weight: .bold))
+                .foregroundStyle(accent)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity, minHeight: 96)
+        .padding(.horizontal, 10)
+        .background(
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 24, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
     }
 
     private func rewardItem(currency: CurrencyDefinition, amount: Int)

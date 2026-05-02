@@ -13,6 +13,7 @@ struct RemoteAssetImage<Placeholder: View>: View {
     let contentMode: ContentMode
     let placeholder: () -> Placeholder
     @EnvironmentObject private var remoteContent: RemoteContentManager
+    @State private var resolvedImage: UIImage?
 
     init(
         _ imageName: String,
@@ -26,16 +27,31 @@ struct RemoteAssetImage<Placeholder: View>: View {
 
     var body: some View {
         Group {
-            if let image = RemoteContentManager.cachedOrBundledImage(
-                named: imageName
-            ) {
+            if let image = resolvedImage
+                ?? RemoteContentManager.memoryCachedImage(named: imageName)
+            {
                 configuredImage(Image(uiImage: image))
             } else {
                 placeholder()
             }
         }
         .task(id: imageName) {
+            resolvedImage = RemoteContentManager.memoryCachedImage(
+                named: imageName
+            )
+            if resolvedImage == nil {
+                resolvedImage =
+                    await RemoteContentManager.loadCachedOrBundledImage(
+                        named: imageName
+                    )
+            }
             await remoteContent.downloadAssetIfNeeded(named: imageName)
+            if resolvedImage == nil {
+                resolvedImage =
+                    await RemoteContentManager.loadCachedOrBundledImage(
+                        named: imageName
+                    )
+            }
         }
     }
 

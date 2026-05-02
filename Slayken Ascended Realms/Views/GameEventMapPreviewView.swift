@@ -316,20 +316,16 @@ struct GameEventMapPreviewView: View {
                 )
                 .shadow(color: .black.opacity(0.34), radius: 5, y: 2)
 
-            if RemoteContentManager.hasCachedOrBundledImage(named: imageName) {
-                RemoteAssetImage(imageName) {
-                    Color.black.opacity(0.35)
-                }
-                .frame(width: size, height: size)
-                .clipShape(Circle())
-                .overlay(
-                    Circle().stroke(.white.opacity(0.55), lineWidth: 1)
-                )
-            } else {
+            RemoteAssetImage(imageName) {
                 Image(systemName: fallbackIcon)
                     .font(.system(size: isSelected ? 15 : 13, weight: .black))
                     .foregroundStyle(.black.opacity(0.72))
             }
+            .frame(width: size, height: size)
+            .clipShape(Circle())
+            .overlay(
+                Circle().stroke(.white.opacity(0.55), lineWidth: 1)
+            )
         }
         .frame(width: 60, height: 52)
     }

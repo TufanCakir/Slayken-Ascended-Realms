@@ -570,7 +570,7 @@ struct SummonView: View {
 
     @ViewBuilder
     private func bannerBackground(_ imageName: String) -> some View {
-        if !RemoteContentManager.hasCachedOrBundledImage(named: imageName) {
+        RemoteAssetImage(imageName) {
             ZStack(alignment: .trailing) {
                 LinearGradient(
                     colors: [
@@ -586,10 +586,6 @@ struct SummonView: View {
                     .font(.system(size: 54, weight: .light))
                     .foregroundStyle(.white.opacity(0.22))
                     .padding(.trailing, 76)
-            }
-        } else {
-            RemoteAssetImage(imageName) {
-                Color.black.opacity(0.35)
             }
         }
     }

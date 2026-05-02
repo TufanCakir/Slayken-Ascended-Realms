@@ -16,6 +16,7 @@ struct StartView: View {
 
     @State private var currentBackgroundIndex = 0
     @State private var backgroundRotationTask: Task<Void, Never>?
+    @State private var resolvedPreviewBackgroundImages = [String]()
 
     private var classDefinitions: [CharacterClassDefinition] {
         loadCharacterClassDefinitions()
@@ -40,21 +41,18 @@ struct StartView: View {
         }
 
         var seen = Set<String>()
-        return (summonPreviews + classPreviews).filter { imageName in
-            guard seen.insert(imageName).inserted else { return false }
-            return RemoteContentManager.hasCachedOrBundledImage(
-                named: imageName
-            )
+        return (summonPreviews + classPreviews).filter {
+            seen.insert($0).inserted
         }
     }
 
     private var currentBackgroundImage: String? {
-        guard !previewBackgroundImages.isEmpty else { return nil }
+        guard !resolvedPreviewBackgroundImages.isEmpty else { return nil }
         let safeIndex = min(
             currentBackgroundIndex,
-            previewBackgroundImages.count - 1
+            resolvedPreviewBackgroundImages.count - 1
         )
-        return previewBackgroundImages[safeIndex]
+        return resolvedPreviewBackgroundImages[safeIndex]
     }
 
     var body: some View {
@@ -83,6 +81,19 @@ struct StartView: View {
             .background(backgroundView.ignoresSafeArea())
             .onAppear {
                 startBackgroundRotation()
+            }
+            .task(id: previewBackgroundImages) {
+                let imageNames = previewBackgroundImages
+                let resolvedNames = await Task.detached(priority: .utility) {
+                    imageNames.filter {
+                        RemoteContentManager.hasCachedOrBundledImage(named: $0)
+                    }
+                }.value
+                resolvedPreviewBackgroundImages = resolvedNames
+                currentBackgroundIndex = min(
+                    currentBackgroundIndex,
+                    max(resolvedNames.count - 1, 0)
+                )
             }
             .onDisappear {
                 backgroundRotationTask?.cancel()

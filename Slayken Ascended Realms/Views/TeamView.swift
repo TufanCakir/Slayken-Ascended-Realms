@@ -288,11 +288,18 @@ struct TeamView: View {
     @ViewBuilder
     private func slotImage(_ imageName: String?, fallback: String) -> some View
     {
-        if let imageName,
-            RemoteContentManager.hasCachedOrBundledImage(named: imageName)
-        {
+        if let imageName {
             RemoteAssetImage(imageName, contentMode: .fit) {
-                Color.black.opacity(0.35)
+                ZStack {
+                    LinearGradient(
+                        colors: [.black.opacity(0.76), .cyan.opacity(0.34)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    Image(systemName: fallback)
+                        .font(.system(size: 24, weight: .black))
+                        .foregroundStyle(.white.opacity(0.78))
+                }
             }
         } else {
             ZStack {

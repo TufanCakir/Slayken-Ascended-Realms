@@ -175,9 +175,11 @@ struct GiftView: View {
         let currency = gameState.currencies.first { $0.code == reward.currency }
 
         return HStack {
-            Image(systemName: currency?.icon ?? "gift.fill")
-                .foregroundStyle(.white)
-                .frame(width: 20)
+            currencyIconView(
+                assetIconName: currency?.assetIcon,
+                symbolName: currency?.icon
+            )
+            .frame(width: 20, height: 20)
 
             Text(currency?.name ?? reward.currency.capitalized)
                 .font(.system(size: 14, weight: .bold, design: .rounded))
@@ -195,6 +197,23 @@ struct GiftView: View {
             Color.white.opacity(0.06),
             in: RoundedRectangle(cornerRadius: 14, style: .continuous)
         )
+    }
+
+    @ViewBuilder
+    private func currencyIconView(
+        assetIconName: String?,
+        symbolName: String?
+    ) -> some View {
+        if let assetIconName,
+            RemoteContentManager.hasCachedOrBundledImage(named: assetIconName)
+        {
+            RemoteAssetImage(assetIconName, contentMode: .fit) {
+                Color.clear
+            }
+        } else {
+            Image(systemName: symbolName ?? "gift.fill")
+                .foregroundStyle(.white)
+        }
     }
 
     private func characterRewardRow(_ reward: GiftCharacterReward) -> some View

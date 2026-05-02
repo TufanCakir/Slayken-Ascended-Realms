@@ -437,24 +437,18 @@ struct GlobeEventView: View {
                         radius: isFocused ? 18 : 10
                     )
 
-                if RemoteContentManager.hasCachedOrBundledImage(
-                    named: imageName
-                ) {
-                    RemoteAssetImage(imageName) {
-                        Color.black.opacity(0.35)
-                    }
-                    .frame(width: imageSize, height: imageSize)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle().stroke(.white.opacity(0.55), lineWidth: 1)
-                    )
-                } else {
+                RemoteAssetImage(imageName) {
                     Image(systemName: fallbackIcon)
                         .font(
                             .system(size: isFocused ? 19 : 16, weight: .black)
                         )
                         .foregroundStyle(.black.opacity(0.72))
                 }
+                .frame(width: imageSize, height: imageSize)
+                .clipShape(Circle())
+                .overlay(
+                    Circle().stroke(.white.opacity(0.55), lineWidth: 1)
+                )
 
                 TrianglePointer()
                     .fill(theme?.glow.color ?? .yellow)

@@ -166,13 +166,11 @@ struct QuestView: View {
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 8) {
-                if let assetName,
-                    RemoteContentManager.hasCachedOrBundledImage(
-                        named: assetName
-                    )
-                {
+                if let assetName {
                     RemoteAssetImage(assetName, contentMode: .fit) {
-                        Color.clear
+                        Image(systemName: systemName)
+                            .font(.system(size: 20, weight: .black))
+                            .foregroundStyle(accent)
                     }
                     .frame(width: 24, height: 24)
                 } else {
@@ -222,7 +220,7 @@ struct QuestView: View {
                             .padding(.vertical, 10)
                             .background(
                                 selectedCategory == category
-                                    ? Color.yellow
+                                    ? Color.blue
                                     : Color.black.opacity(0.32),
                                 in: Capsule()
                             )
@@ -283,7 +281,7 @@ struct QuestView: View {
                 )
                 .font(.system(size: 24, weight: .black))
                 .foregroundStyle(
-                    claimed ? .green : unlocked ? .yellow : .white.opacity(0.56)
+                    claimed ? .green : unlocked ? .blue : .white.opacity(0.56)
                 )
             }
 
@@ -344,13 +342,13 @@ struct QuestView: View {
                         && selectedChoice == nil)
             )
         }
-        .padding(16)
+        .padding()
         .background(
             Color.black.opacity(0.34),
-            in: RoundedRectangle(cornerRadius: 20, style: .continuous)
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
         )
         .overlay {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
         }
     }
@@ -423,11 +421,12 @@ struct QuestView: View {
         systemName: String
     ) -> some View {
         VStack(spacing: 6) {
-            if let imageName,
-                RemoteContentManager.hasCachedOrBundledImage(named: imageName)
-            {
+            if let imageName {
                 RemoteAssetImage(imageName, contentMode: .fit) {
-                    Color.black.opacity(0.35)
+                    Image(systemName: systemName)
+                        .font(.system(size: 20, weight: .black))
+                        .foregroundStyle(.yellow)
+                        .frame(width: 34, height: 34)
                 }
                 .frame(width: 34, height: 34)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -475,12 +474,24 @@ struct QuestView: View {
                             VStack(spacing: 8) {
                                 if let preview = characterPreview(
                                     for: characterID
-                                ),
-                                    RemoteContentManager
-                                        .hasCachedOrBundledImage(named: preview)
-                                {
+                                ) {
                                     RemoteAssetImage(preview) {
-                                        Color.black.opacity(0.35)
+                                        Image(systemName: "person.crop.square")
+                                            .font(
+                                                .system(
+                                                    size: 30,
+                                                    weight: .black
+                                                )
+                                            )
+                                            .foregroundStyle(.yellow)
+                                            .frame(width: 86, height: 86)
+                                            .background(
+                                                Color.white.opacity(0.06),
+                                                in: RoundedRectangle(
+                                                    cornerRadius: 16,
+                                                    style: .continuous
+                                                )
+                                            )
                                     }
                                     .frame(width: 86, height: 86)
                                     .clipped()

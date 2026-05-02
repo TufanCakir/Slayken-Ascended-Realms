@@ -142,7 +142,7 @@ struct ShopView: View {
                             .padding(.vertical, 10)
                             .background(
                                 selectedCategory == category
-                                    ? Color.yellow
+                                    ? Color.blue
                                     : Color.black.opacity(0.32),
                                 in: Capsule()
                             )
@@ -467,15 +467,7 @@ struct ShopView: View {
 
     @ViewBuilder
     private func offerImage(_ imageName: String) -> some View {
-        if RemoteContentManager.hasCachedOrBundledImage(named: imageName) {
-            RemoteAssetImage(imageName, contentMode: .fit) {
-                Color.black.opacity(0.35)
-            }
-            .frame(width: 88, height: 88)
-            .clipShape(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-            )
-        } else {
+        RemoteAssetImage(imageName, contentMode: .fit) {
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .fill(
                     LinearGradient(
@@ -487,13 +479,16 @@ struct ShopView: View {
                         endPoint: .bottomTrailing
                     )
                 )
-                .frame(width: 88, height: 88)
                 .overlay {
                     Image(systemName: "shippingbox.fill")
                         .font(.system(size: 26, weight: .black))
                         .foregroundStyle(.white.opacity(0.68))
                 }
         }
+        .frame(width: 88, height: 88)
+        .clipShape(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+        )
     }
 
     private func tag(_ value: String) -> some View {

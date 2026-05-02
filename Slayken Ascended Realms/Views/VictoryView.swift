@@ -189,11 +189,11 @@ struct VictoryView: View {
         systemName: String
     ) -> some View {
         VStack(spacing: 6) {
-            if let imageName,
-                RemoteContentManager.hasCachedOrBundledImage(named: imageName)
-            {
+            if let imageName {
                 RemoteAssetImage(imageName, contentMode: .fit) {
-                    Color.black.opacity(0.35)
+                    Image(systemName: systemName)
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundStyle(.yellow)
                 }
                 .frame(width: 28, height: 28)
             } else {

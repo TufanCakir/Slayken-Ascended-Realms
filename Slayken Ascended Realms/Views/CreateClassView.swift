@@ -741,14 +741,23 @@ struct CreateClassView: View {
     {
         let variant = preferredVariant(for: definition)
         let imageName = variant?.image ?? ""
-        let hasImage =
-            !imageName.isEmpty
-            && RemoteContentManager.hasCachedOrBundledImage(named: imageName)
 
         return ZStack(alignment: .bottomLeading) {
-            if hasImage {
+            if !imageName.isEmpty {
                 RemoteAssetImage(imageName) {
-                    Color.black.opacity(0.35)
+                    ZStack {
+                        LinearGradient(
+                            colors: [
+                                Color.white.opacity(0.16),
+                                Color.black.opacity(0.32),
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                        Image(systemName: "person.crop.rectangle.stack.fill")
+                            .font(.system(size: 28, weight: .black))
+                            .foregroundStyle(.white.opacity(0.72))
+                    }
                 }
                 .padding(.top, 30)
             } else {

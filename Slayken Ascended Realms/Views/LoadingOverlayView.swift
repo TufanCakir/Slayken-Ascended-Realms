@@ -6,87 +6,43 @@
 //
 
 import SwiftUI
-import UIKit
 
 struct LoadingOverlayView: View {
-    let progress: Double
-    let background: String
     let title: String
     let subtitle: String
-    let progressLabel: String
-    let footerText: String
+    let progress: Double?
+    let statusText: String?
 
-    @EnvironmentObject var theme: ThemeManager
     @State private var spin = false
-    @State private var showSupport = false
 
     init(
-        progress: Double,
-        background: String,
         title: String = "Entering Ascended Realms",
         subtitle: String =
             "Deine Welt, Battle-Daten und Event-Pfade werden vorbereitet.",
-        progressLabel: String = "Realm Sync",
-        footerText: String = "Loading battle systems, events and rewards"
+        progress: Double? = nil,
+        statusText: String? = nil
     ) {
-        self.progress = progress
-        self.background = background
         self.title = title
         self.subtitle = subtitle
-        self.progressLabel = progressLabel
-        self.footerText = footerText
+        self.progress = progress
+        self.statusText = statusText
     }
 
-    private var appVersionText: String {
-        let version =
-            Bundle.main.object(
-                forInfoDictionaryKey: "CFBundleShortVersionString"
-            ) as? String
-        return version?.isEmpty == false ? version ?? "1.0" : "1.0"
+    private var normalizedProgress: Double? {
+        guard let progress else { return nil }
+        return min(max(progress, 0), 1)
     }
 
-    private var newsImage: String? {
-        if RemoteContentManager.hasCachedOrBundledImage(named: background) {
-            return background
-        }
-        return nil
-    }
-
-    private var tipTitle: String {
-        progress < 0.5 ? "New Realm Path" : "Tips Battle"
-    }
-
-    private var tipBody: String {
-        progress < 0.5
-            ? "Waehle Kapitel-Nodes auf der World Map und schalte Battle-Nodes nach und nach frei."
-            : "Skill Cards loesen eigene 3D-Partikel aus. Normale Taps bleiben schnelle Basisangriffe."
+    private var progressText: String {
+        "\(Int((normalizedProgress ?? 0) * 100))%"
     }
 
     var body: some View {
         ZStack {
+            Color.black.ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                topInfo
-
-                Spacer(minLength: 24)
-
-                centerPanel
-                    .padding(.horizontal, 20)
-
-                Spacer(minLength: 20)
-
-                newsBlock
-                    .padding(.horizontal, 20)
-
-                Spacer(minLength: 28)
-
-                bottomBrand
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 28)
-            }
-        }
-        .sheet(isPresented: $showSupport) {
-            SupportView()
+            centerPanel
+                .padding(.horizontal, 20)
         }
         .onAppear {
             withAnimation(
@@ -95,90 +51,39 @@ struct LoadingOverlayView: View {
                 spin = true
             }
         }
-        .background {
-            ZStack {
-                if let theme = theme.selectedTheme {
-                    RemoteAssetImage(theme.background) {
-                        Color.black.opacity(0.35)
-                    }
-                }
-
-                LinearGradient(
-                    colors: [
-                        Color.black.opacity(0.2),
-                        Color.black.opacity(0.6),
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            }
-            .ignoresSafeArea()
-        }
-    }
-
-    private var topInfo: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: 4) {
-
-                Text("v\(appVersionText)")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundStyle(.white.opacity(0.68))
-                    .lineLimit(1)
-            }
-
-            Spacer()
-
-            Button {
-                showSupport = true
-            } label: {
-                VStack(spacing: 0) {
-                    ZStack {
-                        Circle()
-                            .fill(.white.opacity(0.92))
-                            .frame(width: 40, height: 40)
-                            .shadow(
-                                color: .black.opacity(0.28),
-                                radius: 8,
-                                y: 3
-                            )
-
-                        Image(systemName: "questionmark.bubble.fill")
-                            .font(.system(size: 20, weight: .black))
-                            .foregroundStyle(
-                                Color(red: 0.12, green: 0.40, blue: 0.95)
-                            )
-                    }
-
-                    Text("Support")
-                        .font(.system(size: 10, weight: .black))
-                        .foregroundStyle(.white.opacity(0.92))
-                        .shadow(color: .black.opacity(0.45), radius: 3, y: 1)
-                }
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Support oeffnen")
-        }
-        .padding(.horizontal, 20)
     }
 
     private var centerPanel: some View {
         VStack(spacing: 18) {
             spinnerBlock
 
-            VStack(spacing: 6) {
-                Text(title)
-                    .font(.system(size: 22, weight: .black))
-                    .foregroundStyle(.white)
-                    .multilineTextAlignment(.center)
+            Text(title)
+                .font(.system(size: 22, weight: .black))
+                .foregroundStyle(.white)
+                .multilineTextAlignment(.center)
 
-                Text(subtitle)
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(.white.opacity(0.76))
+            Text(subtitle)
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(.white.opacity(0.76))
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+
+            if let statusText, !statusText.isEmpty {
+                Text(statusText)
+                    .font(.system(size: 12, weight: .black))
+                    .foregroundStyle(.white.opacity(0.88))
                     .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 10)
+                    .background(
+                        Color.white.opacity(0.08),
+                        in: Capsule()
+                    )
             }
 
-            progressBar
+            if let normalizedProgress {
+                progressBlock(progress: normalizedProgress)
+            }
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 22)
@@ -190,6 +95,7 @@ struct LoadingOverlayView: View {
             RoundedRectangle(cornerRadius: 26, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
         }
+        .shadow(color: .black.opacity(0.4), radius: 20, y: 10)
     }
 
     private var spinnerBlock: some View {
@@ -228,86 +134,19 @@ struct LoadingOverlayView: View {
         }
     }
 
-    private var newsBlock: some View {
-        VStack(spacing: 16) {
-            Group {
-                if let newsImage {
-                    RemoteAssetImage(newsImage) {
-                        loadingNewsPlaceholder
-                    }
-                } else {
-                    loadingNewsPlaceholder
-                }
-            }
-            .frame(maxWidth: .infinity)
-            .frame(height: 128)
-            .clipped()
-            .clipShape(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-            )
-            .overlay {
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(.white.opacity(0.12), lineWidth: 1)
-            }
-            .shadow(color: .black.opacity(0.35), radius: 14, y: 8)
-
-            VStack(spacing: 11) {
-                Text(tipTitle)
-                    .font(.system(size: 18, weight: .black))
-                    .foregroundStyle(Color(red: 0.92, green: 0.77, blue: 0.36))
-                    .multilineTextAlignment(.center)
-
-                Text(tipBody)
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(.white.opacity(0.88))
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(1)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .padding()
-        .background(
-            Color.black.opacity(0.34),
-            in: RoundedRectangle(cornerRadius: 24, style: .continuous)
-        )
-        .overlay {
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .stroke(.white.opacity(0.08), lineWidth: 1)
-        }
-    }
-
-    private var loadingNewsPlaceholder: some View {
-        ZStack {
-            LinearGradient(
-                colors: [
-                    Color(red: 0.08, green: 0.12, blue: 0.16),
-                    Color(red: 0.16, green: 0.20, blue: 0.28),
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-
-            VStack(spacing: 8) {
-                Image(systemName: "newspaper.fill")
-                    .font(.system(size: 30, weight: .black))
-                    .foregroundStyle(.white.opacity(0.34))
-            }
-        }
-    }
-
-    private var progressBar: some View {
+    private func progressBlock(progress: Double) -> some View {
         VStack(spacing: 8) {
-            GeometryReader { geo in
+            GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     Capsule()
-                        .fill(Color.white.opacity(0.08))
+                        .fill(Color.white.opacity(0.10))
+
                     Capsule()
                         .fill(
                             LinearGradient(
                                 colors: [
-                                    .blue,
-                                    .blue,
+                                    Color(red: 0.16, green: 0.78, blue: 1.0),
+                                    Color(red: 0.12, green: 0.44, blue: 1.0),
                                     .white,
                                 ],
                                 startPoint: .leading,
@@ -317,64 +156,32 @@ struct LoadingOverlayView: View {
                         .frame(
                             width: max(
                                 16,
-                                geo.size.width * min(max(progress, 0), 1)
+                                geometry.size.width * progress
                             )
-                        )
-                        .shadow(
-                            color: Color(red: 0.20, green: 0.45, blue: 1.0)
-                                .opacity(0.45),
-                            radius: 8,
-                            y: 2
                         )
                 }
             }
-            .frame(height: 10)
+            .frame(height: 8)
 
             HStack {
-                Text(progressLabel)
+                Text("Fortschritt")
                     .font(.system(size: 11, weight: .black))
-                    .foregroundStyle(.white.opacity(0.72))
+                    .foregroundStyle(.white.opacity(0.64))
 
                 Spacer()
 
-                Text("\(Int(progress * 100))%")
+                Text(progressText)
                     .font(.system(size: 11, weight: .black))
-                    .foregroundStyle(.white.opacity(0.82))
+                    .foregroundStyle(.white.opacity(0.86))
             }
         }
+        .padding(.top, 2)
     }
 
-    private var bottomBrand: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("SLAYKEN ASCENDED REALMS")
-                    .font(.system(size: 14, weight: .black))
-                    .tracking(3)
-                    .foregroundStyle(.white.opacity(0.62))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.52)
-
-                Text(footerText)
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(.white.opacity(0.50))
-            }
-
-            Spacer()
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 14)
-        .background(
-            Color.black.opacity(0.30),
-            in: RoundedRectangle(cornerRadius: 20, style: .continuous)
-        )
-        .overlay {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(.white.opacity(0.07), lineWidth: 1)
-        }
-    }
 }
 
 #Preview {
-    LoadingOverlayView(progress: 0.62, background: "theme_epic")
-        .environmentObject(ThemeManager())
+    LoadingOverlayView(
+        statusText: "Loading core game data and visuals"
+    )
 }

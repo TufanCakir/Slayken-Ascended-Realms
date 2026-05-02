@@ -144,7 +144,7 @@ struct NewsView: View {
                             .padding(.vertical, 10)
                             .background(
                                 selectedCategory == category
-                                    ? Color.yellow
+                                    ? Color.blue
                                     : Color.black.opacity(0.32),
                                 in: Capsule()
                             )

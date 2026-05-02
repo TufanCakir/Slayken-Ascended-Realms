@@ -33,16 +33,16 @@ struct RootView: View {
 
     @State private var currentScreen: Screen = .start
     @State private var activeEnemy: CharacterStats?
-    @State private var isLoading = false
-    @State private var loadingProgress = 0.0
-    @State private var loadingBackground = ""
-    @State private var loadingTask: Task<Void, Never>?
     @State private var pendingDailyReward: DailyLoginRewardState?
     @State private var activeTutorial: GameTutorialDefinition?
     @State private var activeIntroIndex = 0
     @State private var tutorialLaunchSource: TutorialLaunchSource = .initial
     @State private var showStartupOptions = false
     @State private var hasStartedStartupFlow = false
+    @State private var showStartTransitionOverlay = false
+    @State private var startTransitionTask: Task<Void, Never>?
+    @State private var gameEntryLoadingStatusText =
+        "Start-Assets werden geladen"
 
     private let introFlowKey = "hasCompletedIntroFlow"
 
@@ -63,6 +63,28 @@ struct RootView: View {
             || remoteContent.isPreparingStartupPlan
     }
 
+    private var showsActiveRemoteLoadingOverlay: Bool {
+        remoteContent.isPreparingStartupPlan || remoteContent.isRefreshing
+    }
+
+    private var showsGameEntryLoadingOverlay: Bool {
+        showStartTransitionOverlay && !showsActiveRemoteLoadingOverlay
+    }
+
+    private var startupLoadingBackground: String {
+        if let themeBackground = theme.selectedTheme?.background,
+            !themeBackground.isEmpty
+        {
+            return themeBackground
+        }
+
+        return loadingImages.first ?? "theme_epic"
+    }
+
+    private var gameEntryLoadingBackground: String {
+        startupLoadingBackground
+    }
+
     var body: some View {
         ZStack {
             if remoteContent.hasCompletedInitialRefresh {
@@ -71,21 +93,7 @@ struct RootView: View {
                 Color.black.ignoresSafeArea()
             }
 
-            if isLoading {
-                LoadingOverlayView(
-                    progress: loadingProgress,
-                    background: loadingBackground,
-                    title: "Entering Ascended Realms",
-                    subtitle:
-                        "Deine Welt, Battle-Daten und Event-Pfade werden vorbereitet.",
-                    progressLabel: "Realm Sync",
-                    footerText: "Loading battle systems, events and rewards"
-                )
-                .environmentObject(theme)
-                .zIndex(100)
-            }
-
-            if showsStartupLoadingView {
+            if showsStartupLoadingView && !showsActiveRemoteLoadingOverlay {
                 RemoteLoadingView(
                     plan: remoteContent.startupPlan,
                     isPreparingPlan: remoteContent.isPreparingStartupPlan,
@@ -93,7 +101,8 @@ struct RootView: View {
                     progress: remoteContent.isRefreshing
                         ? remoteContent.refreshProgress : 0.08,
                     statusText: remoteContent.statusText,
-                    requiresMandatoryUpdate: remoteContent.requiresMandatoryUpdate,
+                    requiresMandatoryUpdate: remoteContent
+                        .requiresMandatoryUpdate,
                     showOptions: $showStartupOptions,
                     onPreloadAll: {
                         startRemoteBootstrap(mode: .fullPreload)
@@ -104,6 +113,30 @@ struct RootView: View {
                 )
                 .environmentObject(theme)
                 .zIndex(300)
+            }
+
+            if showsActiveRemoteLoadingOverlay {
+                LoadingOverlayView(
+                    title: "Realm Sync",
+                    subtitle:
+                        "Remote content, battle data und assets werden geladen.",
+                    progress: remoteContent.refreshProgress,
+                    statusText: remoteContent.statusText
+                )
+                .environmentObject(theme)
+                .zIndex(320)
+            }
+
+            if showsGameEntryLoadingOverlay {
+                LoadingOverlayView(
+                    title: "Entering Ascended Realms",
+                    subtitle: "Die Welt wird fuer deinen Start vorbereitet.",
+                    progress: nil,
+                    statusText: gameEntryLoadingStatusText
+                )
+                .environmentObject(theme)
+                .transition(.opacity)
+                .zIndex(310)
             }
 
             if remoteContent.hasCompletedInitialRefresh
@@ -145,7 +178,7 @@ struct RootView: View {
             }
         }
         .onDisappear {
-            loadingTask?.cancel()
+            startTransitionTask?.cancel()
         }
     }
 
@@ -311,9 +344,12 @@ struct RootView: View {
     }
 
     private func transition(to screen: Screen, enemy: CharacterStats? = nil) {
-        loadingTask?.cancel()
-        loadingTask = Task {
-            await runLoadingTransition(to: screen, enemy: enemy)
+        withAnimation(.smooth(duration: 0.35)) {
+            activeEnemy = enemy
+            currentScreen = screen
+            if screen != .battle {
+                activeEnemy = nil
+            }
         }
     }
 
@@ -336,59 +372,14 @@ struct RootView: View {
     }
 
     private func resetToStart() {
-        loadingTask?.cancel()
         gameState.clearBattleSelection()
         activeEnemy = nil
         activeIntroIndex = 0
         activeTutorial = nil
-        loadingProgress = 0
         refreshDailyGift()
 
         withAnimation(.smooth(duration: 0.35)) {
-            isLoading = false
             currentScreen = .start
-        }
-    }
-
-    @MainActor
-    private func runLoadingTransition(to screen: Screen, enemy: CharacterStats?)
-        async
-    {
-        let images = loadingImages
-        loadingProgress = 0
-        loadingBackground = images.randomElement() ?? ""
-
-        withAnimation(.easeInOut(duration: 0.2)) {
-            isLoading = true
-        }
-
-        let steps = 24
-        for step in 1...steps {
-            if Task.isCancelled {
-                return
-            }
-
-            try? await Task.sleep(for: .milliseconds(70))
-
-            let progress = Double(step) / Double(steps)
-
-            withAnimation(.linear(duration: 0.07)) {
-                loadingProgress = progress
-            }
-        }
-
-        withAnimation(.smooth(duration: 0.45)) {
-            activeEnemy = enemy
-            currentScreen = screen
-            if screen != .battle {
-                activeEnemy = nil
-            }
-        }
-
-        try? await Task.sleep(for: .milliseconds(120))
-
-        withAnimation(.easeInOut(duration: 0.2)) {
-            isLoading = false
         }
     }
 
@@ -440,13 +431,138 @@ struct RootView: View {
 
     private func startGameFlow() {
         if hasCompletedIntroFlow || introTutorial == nil {
-            transition(to: .game)
+            beginGameEntryTransition()
         } else if !openingIntroVideos.isEmpty {
             activeIntroIndex = 0
             tutorialLaunchSource = .initial
             transition(to: .introVideo)
         } else {
             beginTutorialBattle()
+        }
+    }
+
+    private func beginGameEntryTransition() {
+        guard !showStartTransitionOverlay else { return }
+
+        startTransitionTask?.cancel()
+        gameEntryLoadingStatusText = "Start-Assets werden geladen"
+        withAnimation(.easeInOut(duration: 0.2)) {
+            showStartTransitionOverlay = true
+        }
+
+        startTransitionTask = Task {
+            await preloadGameEntryAssets()
+            if Task.isCancelled { return }
+
+            await MainActor.run {
+                transition(to: .game)
+            }
+
+            try? await Task.sleep(for: .milliseconds(150))
+            if Task.isCancelled { return }
+
+            await MainActor.run {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    showStartTransitionOverlay = false
+                }
+                startTransitionTask = nil
+            }
+        }
+    }
+
+    private func preloadGameEntryAssets() async {
+        await preloadImageAsset(
+            named: gameEntryLoadingBackground,
+            status: "Lade Start-Hintergrund"
+        )
+        await preloadImageAsset(
+            named: gameState.activeSkyboxTexture,
+            status: "Lade Skybox"
+        )
+        await preloadImageAsset(
+            named: gameState.activeGroundTexture,
+            status: "Lade Boden-Textur"
+        )
+
+        if let playerTexture = gameState.player.texture, !playerTexture.isEmpty
+        {
+            await preloadImageAsset(
+                named: playerTexture,
+                status: "Lade Charakter-Textur"
+            )
+        }
+
+        await preloadModelAsset(
+            named: gameState.player.model,
+            status: "Lade Charakter-Modell"
+        )
+    }
+
+    private func preloadImageAsset(named assetName: String, status: String)
+        async
+    {
+        let trimmedName = assetName.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+        guard !trimmedName.isEmpty else { return }
+
+        while !Task.isCancelled {
+            await MainActor.run {
+                gameEntryLoadingStatusText = status
+            }
+
+            if RemoteContentManager.hasCachedOrBundledImage(named: trimmedName)
+            {
+                return
+            }
+
+            await remoteContent.downloadAssetIfNeeded(named: trimmedName)
+
+            if RemoteContentManager.hasCachedOrBundledImage(named: trimmedName)
+            {
+                return
+            }
+
+            await MainActor.run {
+                gameEntryLoadingStatusText = "\(status) erneut"
+            }
+            try? await Task.sleep(for: .milliseconds(400))
+        }
+    }
+
+    private func preloadModelAsset(named assetName: String, status: String)
+        async
+    {
+        let trimmedName = assetName.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+        guard !trimmedName.isEmpty else { return }
+
+        while !Task.isCancelled {
+            await MainActor.run {
+                gameEntryLoadingStatusText = status
+            }
+
+            if RemoteContentManager.cachedAssetURL(
+                named: trimmedName,
+                preferredExtensions: ["usdz", "scn"]
+            ) != nil {
+                return
+            }
+
+            await remoteContent.downloadAssetIfNeeded(named: trimmedName)
+
+            if RemoteContentManager.cachedAssetURL(
+                named: trimmedName,
+                preferredExtensions: ["usdz", "scn"]
+            ) != nil {
+                return
+            }
+
+            await MainActor.run {
+                gameEntryLoadingStatusText = "\(status) erneut"
+            }
+            try? await Task.sleep(for: .milliseconds(400))
         }
     }
 

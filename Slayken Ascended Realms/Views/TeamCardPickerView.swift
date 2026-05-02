@@ -206,11 +206,7 @@ struct TeamCardPickerView: View {
 
     @ViewBuilder
     private func cardImage(_ imageName: String) -> some View {
-        if RemoteContentManager.hasCachedOrBundledImage(named: imageName) {
-            RemoteAssetImage(imageName) {
-                Color.black.opacity(0.35)
-            }
-        } else {
+        RemoteAssetImage(imageName) {
             ZStack {
                 LinearGradient(
                     colors: [.black.opacity(0.82), .cyan.opacity(0.36)],

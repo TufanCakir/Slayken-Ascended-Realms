@@ -232,11 +232,7 @@ struct CardCollectionView: View {
 
     @ViewBuilder
     private func cardImage(_ imageName: String) -> some View {
-        if RemoteContentManager.hasCachedOrBundledImage(named: imageName) {
-            RemoteAssetImage(imageName) {
-                Color.black.opacity(0.35)
-            }
-        } else {
+        RemoteAssetImage(imageName) {
             ZStack {
                 LinearGradient(
                     colors: [.black.opacity(0.82), .cyan.opacity(0.36)],
@@ -294,13 +290,7 @@ private struct CardInfoSheet: View {
     private var cardHeader: some View {
         VStack(alignment: .leading, spacing: 12) {
             Group {
-                if RemoteContentManager.hasCachedOrBundledImage(
-                    named: card.image
-                ) {
-                    RemoteAssetImage(card.image) {
-                        Color.black.opacity(0.35)
-                    }
-                } else {
+                RemoteAssetImage(card.image) {
                     ZStack {
                         LinearGradient(
                             colors: [

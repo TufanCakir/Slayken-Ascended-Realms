@@ -195,13 +195,17 @@ struct DailyLoginView: View {
             VStack(spacing: 8) {
                 ForEach(reward.rewards) { item in
                     HStack {
-                        Image(
-                            systemName: currencies.first(where: {
+                        currencyIconView(
+                            assetIconName: currencies.first(where: {
                                 $0.code == item.currency
-                            })?.icon ?? "gift.fill"
+                            })?
+                            .assetIcon,
+                            symbolName: currencies.first(where: {
+                                $0.code == item.currency
+                            })?
+                            .icon
                         )
-                        .foregroundStyle(.white)
-                        .frame(width: 20)
+                        .frame(width: 20, height: 20)
 
                         Text(
                             currencies.first(where: { $0.code == item.currency }
@@ -235,6 +239,23 @@ struct DailyLoginView: View {
         .overlay {
             RoundedRectangle(cornerRadius: 26, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
+    }
+
+    @ViewBuilder
+    private func currencyIconView(
+        assetIconName: String?,
+        symbolName: String?
+    ) -> some View {
+        if let assetIconName,
+            RemoteContentManager.hasCachedOrBundledImage(named: assetIconName)
+        {
+            RemoteAssetImage(assetIconName, contentMode: .fit) {
+                Color.clear
+            }
+        } else {
+            Image(systemName: symbolName ?? "gift.fill")
+                .foregroundStyle(.white)
         }
     }
 }

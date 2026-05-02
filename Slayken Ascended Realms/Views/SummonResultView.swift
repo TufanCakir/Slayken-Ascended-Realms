@@ -156,11 +156,7 @@ struct SummonResultView: View {
 
     private var resultImage: some View {
         Group {
-            if RemoteContentManager.hasCachedOrBundledImage(named: imageName) {
-                RemoteAssetImage(imageName, contentMode: .fit) {
-                    Color.black.opacity(0.35)
-                }
-            } else {
+            RemoteAssetImage(imageName, contentMode: .fit) {
                 Image(systemName: "sparkles.rectangle.stack.fill")
                     .resizable()
                     .scaledToFit()

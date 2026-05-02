@@ -251,11 +251,14 @@ struct TeamCharacterPickerView: View {
 
     @ViewBuilder
     private func image(_ imageName: String?, fallback: String) -> some View {
-        if let imageName,
-            RemoteContentManager.hasCachedOrBundledImage(named: imageName)
-        {
+        if let imageName {
             RemoteAssetImage(imageName, contentMode: .fit) {
-                Color.black.opacity(0.42)
+                ZStack {
+                    Color.black.opacity(0.42)
+                    Image(systemName: fallback)
+                        .font(.system(size: 34, weight: .black))
+                        .foregroundStyle(.white.opacity(0.72))
+                }
             }
         } else {
             ZStack {

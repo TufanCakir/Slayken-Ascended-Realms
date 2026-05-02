@@ -48,11 +48,12 @@ struct CurrencyBarView: View {
 
     @ViewBuilder
     private func currencyIcon(_ currency: CurrencyDefinition) -> some View {
-        if let assetIcon = currency.assetIcon,
-            RemoteContentManager.hasCachedOrBundledImage(named: assetIcon)
-        {
+        if let assetIcon = currency.assetIcon {
             RemoteAssetImage(assetIcon, contentMode: .fit) {
-                Color.clear
+                Image(systemName: currency.icon)
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(.white.opacity(0.92))
             }
         } else {
             Image(systemName: currency.icon)

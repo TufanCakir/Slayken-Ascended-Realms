@@ -843,7 +843,7 @@ struct BattleView: View {
 
     @ViewBuilder
     private func cardImage(_ imageName: String) -> some View {
-        if !RemoteContentManager.hasCachedOrBundledImage(named: imageName) {
+        RemoteAssetImage(imageName) {
             ZStack {
                 LinearGradient(
                     colors: [.black.opacity(0.86), .blue.opacity(0.55)],
@@ -853,10 +853,6 @@ struct BattleView: View {
                 Image(systemName: "sparkles")
                     .font(.system(size: 22, weight: .black))
                     .foregroundStyle(.white.opacity(0.84))
-            }
-        } else {
-            RemoteAssetImage(imageName) {
-                Color.black.opacity(0.35)
             }
         }
     }

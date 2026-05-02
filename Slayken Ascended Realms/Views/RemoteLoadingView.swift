@@ -224,7 +224,19 @@ struct RemoteLoadingView: View {
     }
 
     private var progressBlock: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 10) {
+            HStack(spacing: 10) {
+                progressStatPill(
+                    title: "Geladen",
+                    value: progressText
+                )
+
+                progressStatPill(
+                    title: "Fehlt",
+                    value: remainingProgressText
+                )
+            }
+
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     Capsule()
@@ -259,10 +271,15 @@ struct RemoteLoadingView: View {
 
                 Spacer()
 
-                Text(progressText)
+                Text("\(progressText) geladen")
                     .font(.system(size: 11, weight: .black))
                     .foregroundStyle(.white.opacity(0.84))
             }
+
+            Text("\(remainingProgressText) fehlen noch")
+                .font(.system(size: 11, weight: .bold))
+                .foregroundStyle(.white.opacity(0.62))
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.top, 4)
     }
@@ -328,7 +345,7 @@ struct RemoteLoadingView: View {
             }
             .padding()
             .background(
-                .ultraThinMaterial,
+                Color.black.opacity(0.34),
                 in: RoundedRectangle(cornerRadius: 26, style: .continuous)
             )
             .overlay {
@@ -359,6 +376,23 @@ struct RemoteLoadingView: View {
         .padding(.vertical, 12)
         .background(Color.white.opacity(0.08))
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+
+    private func progressStatPill(title: String, value: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(.system(size: 10, weight: .bold))
+                .foregroundStyle(.white.opacity(0.58))
+
+            Text(value)
+                .font(.system(size: 14, weight: .black))
+                .foregroundStyle(.white)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .background(Color.white.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
     }
 
     private func optionButton(
@@ -393,6 +427,10 @@ struct RemoteLoadingView: View {
 
     private var progressText: String {
         "\(Int(min(max(progress, 0), 1) * 100))%"
+    }
+
+    private var remainingProgressText: String {
+        "\(100 - Int(min(max(progress, 0), 1) * 100))%"
     }
 
     private var shouldShowOverlay: Bool {

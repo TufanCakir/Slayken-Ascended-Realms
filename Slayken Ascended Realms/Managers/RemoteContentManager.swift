@@ -102,6 +102,8 @@ final class RemoteContentManager: ObservableObject {
     private var assetDownloadTasks = [String: Task<Void, Never>]()
     private var backgroundPreloadTask: Task<Void, Never>?
 
+    private let progressUpdateThreshold = 0.01
+
     nonisolated static func logDebug(_ message: String) {
         logger.debug("\(message)")
     }
@@ -123,13 +125,13 @@ final class RemoteContentManager: ObservableObject {
         guard startupPlan == nil else { return }
 
         isPreparingStartupPlan = true
-        statusText = "Preparing preload plan"
+        setStatusText("Preparing preload plan")
         defer { isPreparingStartupPlan = false }
 
         do {
             try Self.ensureCacheDirectory()
             let manifest = try await fetchManifest()
-            let versions = Self.loadCachedVersions()
+            let versions = await Self.loadCachedVersions()
             let installedContentVersion = Self.installedContentVersion()
             startupPlan = buildStartupPlan(
                 manifest: manifest,
@@ -139,13 +141,14 @@ final class RemoteContentManager: ObservableObject {
                 manifestVersion: manifest.contentVersion,
                 installedVersion: installedContentVersion
             )
-            statusText =
+            setStatusText(
                 requiresMandatoryUpdate
-                ? "Neues Inhalts-Update erforderlich"
-                : "Tap to choose preload mode"
+                    ? "Neues Inhalts-Update erforderlich"
+                    : "Tap to choose preload mode"
+            )
             lastErrorMessage = nil
         } catch {
-            statusText = "Failed to prepare preload plan"
+            setStatusText("Failed to prepare preload plan")
             lastErrorMessage = error.localizedDescription
             Self.logger.error(
                 "Failed to prepare startup plan: \(error.localizedDescription)"
@@ -157,13 +160,14 @@ final class RemoteContentManager: ObservableObject {
         guard !isRefreshing else { return }
 
         isRefreshing = true
-        refreshProgress = 0
+        setRefreshProgress(0, force: true)
         let wasMandatoryUpdateRequired = requiresMandatoryUpdate
         var shouldUnlockApp = !wasMandatoryUpdateRequired
-        statusText =
+        setStatusText(
             mode == .fullPreload
-            ? "Loading live manifest"
-            : "Loading core game data and visuals"
+                ? "Loading live manifest"
+                : "Loading core game data and visuals"
+        )
         defer {
             isRefreshing = false
             if shouldUnlockApp {
@@ -175,7 +179,7 @@ final class RemoteContentManager: ObservableObject {
             try Self.ensureCacheDirectory()
 
             let manifest = try await fetchManifest()
-            var versions = Self.loadCachedVersions()
+            var versions = await Self.loadCachedVersions()
             var didChangeContent = false
             var assetsToProcess = [RemoteContentAsset]()
             var totalItems = manifest.resources.count
@@ -183,7 +187,7 @@ final class RemoteContentManager: ObservableObject {
             var failedItems = [String]()
 
             for resource in manifest.resources {
-                statusText = "Checking \(resource.name).json"
+                setStatusText("Checking \(resource.name).json")
 
                 let result = await processResource(
                     resource,
@@ -198,9 +202,11 @@ final class RemoteContentManager: ObservableObject {
                 }
 
                 completedItems += 1
-                refreshProgress = Self.progressValue(
-                    completed: completedItems,
-                    total: totalItems
+                setRefreshProgress(
+                    Self.progressValue(
+                        completed: completedItems,
+                        total: totalItems
+                    )
                 )
             }
 
@@ -209,13 +215,15 @@ final class RemoteContentManager: ObservableObject {
                 mode: mode
             )
             totalItems = manifest.resources.count + assetsToProcess.count
-            refreshProgress = Self.progressValue(
-                completed: completedItems,
-                total: totalItems
+            setRefreshProgress(
+                Self.progressValue(
+                    completed: completedItems,
+                    total: totalItems
+                )
             )
 
             for asset in assetsToProcess {
-                statusText = "Checking \(asset.name)"
+                setStatusText("Checking \(asset.name)")
 
                 let result = await processAsset(
                     asset,
@@ -231,15 +239,17 @@ final class RemoteContentManager: ObservableObject {
                 }
 
                 completedItems += 1
-                refreshProgress = Self.progressValue(
-                    completed: completedItems,
-                    total: totalItems
+                setRefreshProgress(
+                    Self.progressValue(
+                        completed: completedItems,
+                        total: totalItems
+                    )
                 )
             }
 
-            try Self.saveCachedVersions(versions)
+            try await Self.saveCachedVersions(versions)
             JSONResourceLoader.invalidateCache()
-            refreshProgress = 1
+            setRefreshProgress(1, force: true)
             startupPlan = buildStartupPlan(
                 manifest: manifest,
                 versions: versions
@@ -250,10 +260,11 @@ final class RemoteContentManager: ObservableObject {
                     requiresMandatoryUpdate = true
                     shouldUnlockApp = false
                 }
-                statusText =
+                setStatusText(
                     mode == .fullPreload
-                    ? "Live content partially updated"
-                    : "Core content and visuals loaded with gaps"
+                        ? "Live content partially updated"
+                        : "Core content and visuals loaded with gaps"
+                )
                 lastErrorMessage =
                     "Failed items: \(failedItems.prefix(5).joined(separator: ", "))"
                 lastRefreshDate = Date()
@@ -268,34 +279,37 @@ final class RemoteContentManager: ObservableObject {
                 Self.saveInstalledContentVersion(manifest.contentVersion)
                 requiresMandatoryUpdate = false
                 shouldUnlockApp = true
-                statusText =
+                setStatusText(
                     mode == .fullPreload
-                    ? "Live content updated"
-                    : "Core content and visuals ready"
+                        ? "Live content updated"
+                        : "Core content and visuals ready"
+                )
                 lastRefreshDate = Date()
                 Self.logger.info("Remote refresh completed with updates.")
             } else if failedItems.isEmpty {
                 Self.saveInstalledContentVersion(manifest.contentVersion)
                 requiresMandatoryUpdate = false
                 shouldUnlockApp = true
-                statusText =
+                setStatusText(
                     mode == .fullPreload
-                    ? "Live content already up to date"
-                    : "Core content and visuals already cached"
+                        ? "Live content already up to date"
+                        : "Core content and visuals already cached"
+                )
                 Self.logger.info(
                     "Remote refresh completed. Cache already up to date."
                 )
             }
         } catch {
-            refreshProgress = 1
+            setRefreshProgress(1, force: true)
             if wasMandatoryUpdateRequired {
                 requiresMandatoryUpdate = true
                 shouldUnlockApp = false
             }
-            statusText =
+            setStatusText(
                 mode == .fullPreload
-                ? "Live update failed"
-                : "Core content load failed"
+                    ? "Live update failed"
+                    : "Core content load failed"
+            )
             lastErrorMessage = error.localizedDescription
             Self.logger.error(
                 "Remote refresh failed: \(error.localizedDescription)"
@@ -392,6 +406,25 @@ final class RemoteContentManager: ObservableObject {
         return nil
     }
 
+    nonisolated static func memoryCachedImage(named imageName: String)
+        -> UIImage?
+    {
+        guard !imageName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        else {
+            return nil
+        }
+
+        for candidate in imageCandidates(for: imageName) {
+            if let cachedImage = RemoteAssetMemoryCache.imageCache.object(
+                forKey: candidate as NSString
+            ) {
+                return cachedImage
+            }
+        }
+
+        return nil
+    }
+
     nonisolated static func cachedOrBundledImage(named imageName: String)
         -> UIImage?
     {
@@ -401,6 +434,14 @@ final class RemoteContentManager: ObservableObject {
         }
 
         return cachedImage(named: imageName)
+    }
+
+    nonisolated static func loadCachedOrBundledImage(named imageName: String)
+        async -> UIImage?
+    {
+        await Task.detached(priority: .utility) {
+            cachedOrBundledImage(named: imageName)
+        }.value
     }
 
     nonisolated static func hasCachedOrBundledImage(named imageName: String)
@@ -693,7 +734,7 @@ final class RemoteContentManager: ObservableObject {
         }
 
         if updatePublishedProgress {
-            backgroundStatusText = "Downloading \(asset.name)"
+            setBackgroundStatusText("Downloading \(asset.name)")
         }
 
         Self.logger.info(
@@ -759,24 +800,24 @@ final class RemoteContentManager: ObservableObject {
 
     private func runBackgroundPreload() async {
         isBackgroundPreloading = true
-        backgroundPreloadProgress = 0
-        backgroundStatusText = "Preparing background preload"
+        setBackgroundPreloadProgress(0, force: true)
+        setBackgroundStatusText("Preparing background preload")
         defer {
             isBackgroundPreloading = false
-            backgroundPreloadProgress = 1
+            setBackgroundPreloadProgress(1, force: true)
         }
 
         do {
             try Self.ensureCacheDirectory()
             let manifest = try await fetchManifest()
-            var versions = Self.loadCachedVersions()
+            var versions = await Self.loadCachedVersions()
             let assets = manifest.assets ?? []
             let missingAssets = assets.filter {
                 !isAssetCurrent($0, versions: versions)
             }
 
             guard !missingAssets.isEmpty else {
-                backgroundStatusText = "All assets already cached"
+                setBackgroundStatusText("All assets already cached")
                 return
             }
 
@@ -791,21 +832,23 @@ final class RemoteContentManager: ObservableObject {
                     updatePublishedProgress: true
                 )
 
-                backgroundPreloadProgress = Self.progressValue(
-                    completed: index + 1,
-                    total: missingAssets.count
+                setBackgroundPreloadProgress(
+                    Self.progressValue(
+                        completed: index + 1,
+                        total: missingAssets.count
+                    )
                 )
             }
 
-            try Self.saveCachedVersions(versions)
+            try await Self.saveCachedVersions(versions)
             JSONResourceLoader.invalidateCache()
             startupPlan = buildStartupPlan(
                 manifest: manifest,
                 versions: versions
             )
-            backgroundStatusText = "Background preload complete"
+            setBackgroundStatusText("Background preload complete")
         } catch {
-            backgroundStatusText = "Background preload failed"
+            setBackgroundStatusText("Background preload failed")
             Self.logger.error(
                 "Background preload failed: \(error.localizedDescription)"
             )
@@ -819,7 +862,7 @@ final class RemoteContentManager: ObservableObject {
         do {
             try Self.ensureCacheDirectory()
             let manifest = try await fetchManifest()
-            var versions = Self.loadCachedVersions()
+            var versions = await Self.loadCachedVersions()
 
             for candidate in candidateNames {
                 guard let asset = asset(named: candidate, in: manifest) else {
@@ -831,7 +874,7 @@ final class RemoteContentManager: ObservableObject {
                     versions: &versions,
                     updatePublishedProgress: false
                 )
-                try Self.saveCachedVersions(versions)
+                try await Self.saveCachedVersions(versions)
                 startupPlan = buildStartupPlan(
                     manifest: manifest,
                     versions: versions
@@ -857,6 +900,43 @@ final class RemoteContentManager: ObservableObject {
             URL(fileURLWithPath: $0.name).lastPathComponent
                 == normalizedAssetName
         }
+    }
+
+    private func setStatusText(_ newValue: String) {
+        guard statusText != newValue else { return }
+        statusText = newValue
+    }
+
+    private func setBackgroundStatusText(_ newValue: String) {
+        guard backgroundStatusText != newValue else { return }
+        backgroundStatusText = newValue
+    }
+
+    private func setRefreshProgress(_ newValue: Double, force: Bool = false) {
+        let clampedValue = min(1, max(0, newValue))
+        guard
+            force
+                || abs(refreshProgress - clampedValue)
+                    >= progressUpdateThreshold
+                || clampedValue == 0
+                || clampedValue == 1
+        else { return }
+        refreshProgress = clampedValue
+    }
+
+    private func setBackgroundPreloadProgress(
+        _ newValue: Double,
+        force: Bool = false
+    ) {
+        let clampedValue = min(1, max(0, newValue))
+        guard
+            force
+                || abs(backgroundPreloadProgress - clampedValue)
+                    >= progressUpdateThreshold
+                || clampedValue == 0
+                || clampedValue == 1
+        else { return }
+        backgroundPreloadProgress = clampedValue
     }
 
     private func assetsForStartup(
@@ -1274,25 +1354,31 @@ final class RemoteContentManager: ObservableObject {
         return min(1, max(0, Double(completed) / Double(total)))
     }
 
-    private nonisolated static func loadCachedVersions() -> [String: String] {
-        guard
-            let versionsURL = try? versionsFileURL(),
-            let data = try? Data(contentsOf: versionsURL),
-            let decoded = try? JSONDecoder().decode(
-                [String: String].self,
-                from: data
-            )
-        else {
-            return [:]
-        }
+    private nonisolated static func loadCachedVersions() async -> [String:
+        String]
+    {
+        await Task.detached(priority: .utility) {
+            guard
+                let versionsURL = try? versionsFileURL(),
+                let data = try? Data(contentsOf: versionsURL),
+                let decoded = try? JSONDecoder().decode(
+                    [String: String].self,
+                    from: data
+                )
+            else {
+                return [:]
+            }
 
-        return decoded
+            return decoded
+        }.value
     }
 
     private nonisolated static func saveCachedVersions(
         _ versions: [String: String]
-    ) throws {
+    ) async throws {
         let data = try JSONEncoder().encode(versions)
-        try data.write(to: versionsFileURL(), options: .atomic)
+        try await Task.detached(priority: .utility) {
+            try data.write(to: versionsFileURL(), options: .atomic)
+        }.value
     }
 }

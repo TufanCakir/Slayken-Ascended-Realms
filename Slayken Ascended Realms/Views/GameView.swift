@@ -709,11 +709,11 @@ struct GameView: View {
         accent: Color
     ) -> some View {
         HStack(spacing: 7) {
-            if let assetName,
-                RemoteContentManager.hasCachedOrBundledImage(named: assetName)
-            {
+            if let assetName {
                 RemoteAssetImage(assetName, contentMode: .fit) {
-                    Color.clear
+                    Image(systemName: systemName)
+                        .font(.system(size: 14, weight: .black))
+                        .foregroundStyle(accent)
                 }
                 .frame(width: 16, height: 16)
             } else {

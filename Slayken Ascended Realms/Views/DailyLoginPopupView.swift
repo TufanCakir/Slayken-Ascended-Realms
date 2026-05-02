@@ -18,10 +18,6 @@ struct DailyLoginPopupView: View {
         theme.selectedTheme ?? theme.themes.first
     }
 
-    private var panelShape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: 28, style: .continuous)
-    }
-
     private var accentColor: Color {
         activeTheme?.accent.color.opacity(0.9)
             ?? Color(red: 0.86, green: 0.3, blue: 0.18)
@@ -43,11 +39,11 @@ struct DailyLoginPopupView: View {
                         .font(
                             .system(size: 16, weight: .bold, design: .rounded)
                         )
-                        .foregroundStyle(accentColor)
+                        .foregroundStyle(.white)
 
                     Image(systemName: rewardState.reward.icon)
                         .font(.system(size: 34, weight: .bold))
-                        .foregroundStyle(accentColor)
+                        .foregroundStyle(.white)
 
                     Text(rewardState.reward.title)
                         .font(.system(size: 28, weight: .black, design: .serif))
@@ -83,41 +79,31 @@ struct DailyLoginPopupView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
                         .background(
-                            accentColor,
+                            Color.black.opacity(0.34),
                             in: RoundedRectangle(
-                                cornerRadius: 16,
+                                cornerRadius: 26,
                                 style: .continuous
                             )
                         )
+                        .overlay {
+                            RoundedRectangle(
+                                cornerRadius: 26,
+                                style: .continuous
+                            )
+                            .stroke(.white.opacity(0.08), lineWidth: 1)
+                        }
                         .foregroundStyle(.white)
                 }
                 .buttonStyle(.plain)
             }
             .padding()
-            .background {
-                ZStack {
-                    if let background = activeTheme?.background {
-                        RemoteAssetImage(background) {
-                            panelFallback
-                        }
-                    } else {
-                        panelFallback
-                    }
-
-                    LinearGradient(
-                        colors: [
-                            Color.black.opacity(0.42),
-                            Color.black.opacity(0.72),
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                }
-                .clipShape(panelShape)
-            }
+            .background(
+                Color.black.opacity(0.34),
+                in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+            )
             .overlay {
-                panelShape
-                    .stroke(.white.opacity(0.12), lineWidth: 1)
+                RoundedRectangle(cornerRadius: 26, style: .continuous)
+                    .stroke(.white.opacity(0.08), lineWidth: 1)
             }
             .padding()
         }
@@ -127,9 +113,11 @@ struct DailyLoginPopupView: View {
         let currency = gameState.currencies.first { $0.code == reward.currency }
 
         return HStack(spacing: 12) {
-            Image(systemName: currency?.icon ?? "gift.fill")
-                .frame(width: 22, height: 22)
-                .foregroundStyle(accentColor)
+            currencyIconView(
+                assetIconName: currency?.assetIcon,
+                symbolName: currency?.icon
+            )
+            .frame(width: 22, height: 22)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(currency?.name ?? reward.currency.capitalized)
@@ -155,17 +143,21 @@ struct DailyLoginPopupView: View {
         }
     }
 
-    private var panelFallback: some View {
-        LinearGradient(
-            colors: [
-                activeTheme?.primary.color.opacity(0.82)
-                    ?? Color(red: 0.14, green: 0.18, blue: 0.32),
-                activeTheme?.secondary.color.opacity(0.76)
-                    ?? Color(red: 0.08, green: 0.10, blue: 0.22),
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
+    @ViewBuilder
+    private func currencyIconView(
+        assetIconName: String?,
+        symbolName: String?
+    ) -> some View {
+        if let assetIconName,
+            RemoteContentManager.hasCachedOrBundledImage(named: assetIconName)
+        {
+            RemoteAssetImage(assetIconName, contentMode: .fit) {
+                Color.clear
+            }
+        } else {
+            Image(systemName: symbolName ?? "gift.fill")
+                .foregroundStyle(.white)
+        }
     }
 }
 

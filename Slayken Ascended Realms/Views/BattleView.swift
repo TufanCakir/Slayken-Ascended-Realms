@@ -575,59 +575,11 @@ struct BattleView: View {
         }
     }
 
-    @ViewBuilder
-    private func raidParticipantPreviewImage(_ participant: RaidParticipant)
-        -> some View
-    {
-        let imageName =
-            participant.characterPreviewImage
-            ?? (participant.isLocalPlayer
-                ? leveledPlayer.image : participant.characterName)
-
-        if let imageName, !imageName.isEmpty {
-            RemoteAssetImage(imageName) {
-                raidParticipantPreviewFallback(participant)
-            }
-        } else {
-            raidParticipantPreviewFallback(participant)
-        }
-    }
-
-    private func raidParticipantPreviewFallback(_ participant: RaidParticipant)
-        -> some View
-    {
-        ZStack {
-            LinearGradient(
-                colors: [
-                    Color.black.opacity(0.9),
-                    Color.white.opacity(0.18),
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            Text(String(participant.displayName.prefix(1)))
-                .font(.system(size: 16, weight: .black))
-                .foregroundStyle(.white)
-        }
-    }
-
     private func raidParticipantCard(
         _ participant: RaidParticipant,
         targetedParticipantID: String?
     ) -> some View {
         VStack(alignment: .leading, spacing: 5) {
-            ZStack(alignment: .topLeading) {
-                raidParticipantPreviewImage(participant)
-                    .frame(height: 50)
-                    .padding(.top, 30)
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 7, style: .continuous)
-                    )
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 7, style: .continuous)
-                            .stroke(.white.opacity(0.16), lineWidth: 1)
-                    }
-            }
 
             HStack(spacing: 3) {
                 if participant.isLocalPlayer {

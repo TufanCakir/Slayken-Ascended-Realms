@@ -8,7 +8,15 @@
 import SwiftUI
 import UIKit
 
+private struct StartBackgroundAsset {
+    let name: String
+    let image: UIImage
+}
+
 struct StartView: View {
+    private let backgroundRotationInterval = 2.0
+    private let backgroundFadeDuration = 0.70
+
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
 
@@ -17,6 +25,11 @@ struct StartView: View {
     @State private var currentBackgroundIndex = 0
     @State private var backgroundRotationTask: Task<Void, Never>?
     @State private var resolvedPreviewBackgroundImages = [String]()
+    @State private var preloadedBackgroundAssets = [StartBackgroundAsset]()
+    @State private var displayedBackgroundImage: StartBackgroundAsset?
+    @State private var fadingBackgroundImage: StartBackgroundAsset?
+    @State private var displayedBackgroundOpacity = 1.0
+    @State private var fadingBackgroundOpacity = 0.0
 
     private var classDefinitions: [CharacterClassDefinition] {
         loadCharacterClassDefinitions()
@@ -46,13 +59,13 @@ struct StartView: View {
         }
     }
 
-    private var currentBackgroundImage: String? {
-        guard !resolvedPreviewBackgroundImages.isEmpty else { return nil }
+    private var currentBackgroundAsset: StartBackgroundAsset? {
+        guard !preloadedBackgroundAssets.isEmpty else { return nil }
         let safeIndex = min(
             currentBackgroundIndex,
-            resolvedPreviewBackgroundImages.count - 1
+            preloadedBackgroundAssets.count - 1
         )
-        return resolvedPreviewBackgroundImages[safeIndex]
+        return preloadedBackgroundAssets[safeIndex]
     }
 
     var body: some View {
@@ -80,20 +93,39 @@ struct StartView: View {
             }
             .background(backgroundView.ignoresSafeArea())
             .onAppear {
+                syncDisplayedBackgroundImage()
                 startBackgroundRotation()
             }
             .task(id: previewBackgroundImages) {
                 let imageNames = previewBackgroundImages
-                let resolvedNames = await Task.detached(priority: .utility) {
-                    imageNames.filter {
-                        RemoteContentManager.hasCachedOrBundledImage(named: $0)
-                    }
-                }.value
-                resolvedPreviewBackgroundImages = resolvedNames
+                var resolvedAssets = [StartBackgroundAsset]()
+
+                for imageName in imageNames {
+                    guard
+                        RemoteContentManager.hasCachedOrBundledImage(
+                            named: imageName
+                        )
+                    else { continue }
+                    guard
+                        let image =
+                            await RemoteContentManager
+                            .loadCachedOrBundledImage(named: imageName)
+                    else { continue }
+                    resolvedAssets.append(
+                        StartBackgroundAsset(name: imageName, image: image)
+                    )
+                }
+                resolvedPreviewBackgroundImages = resolvedAssets.map(\.name)
+                preloadedBackgroundAssets = resolvedAssets
                 currentBackgroundIndex = min(
                     currentBackgroundIndex,
-                    max(resolvedNames.count - 1, 0)
+                    max(resolvedAssets.count - 1, 0)
                 )
+                syncDisplayedBackgroundImage()
+                startBackgroundRotation()
+            }
+            .onChange(of: currentBackgroundIndex) { _, _ in
+                syncDisplayedBackgroundImage()
             }
             .onDisappear {
                 backgroundRotationTask?.cancel()
@@ -102,18 +134,24 @@ struct StartView: View {
     }
 
     private var backgroundView: some View {
-        Group {
-            if let currentBackgroundImage {
-                RemoteAssetImage(currentBackgroundImage) {
-                    Color.black
-                }
-                .transition(.opacity)
-                .id(currentBackgroundImage)
+        ZStack {
+            if let fadingBackgroundImage {
+                Image(uiImage: fadingBackgroundImage.image)
+                    .resizable()
+                    .scaledToFill()
+                    .opacity(fadingBackgroundOpacity)
+            }
+
+            if let displayedBackgroundImage {
+                Image(uiImage: displayedBackgroundImage.image)
+                    .resizable()
+                    .scaledToFill()
+                    .opacity(displayedBackgroundOpacity)
+                    .id(displayedBackgroundImage.name)
             } else {
                 Color.black
             }
         }
-        .animation(.easeInOut(duration: 0.8), value: currentBackgroundImage)
     }
 
     private var versionLabel: some View {
@@ -185,17 +223,54 @@ struct StartView: View {
     }
 
     private func startBackgroundRotation() {
-        guard previewBackgroundImages.count > 1 else { return }
         backgroundRotationTask?.cancel()
+        guard preloadedBackgroundAssets.count > 1 else { return }
         backgroundRotationTask = Task {
             while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(3))
+                try? await Task.sleep(for: .seconds(backgroundRotationInterval))
                 if Task.isCancelled { break }
                 await MainActor.run {
                     currentBackgroundIndex =
                         (currentBackgroundIndex + 1)
-                        % previewBackgroundImages.count
+                        % preloadedBackgroundAssets.count
                 }
+            }
+        }
+    }
+
+    private func syncDisplayedBackgroundImage() {
+        guard let currentBackgroundAsset else {
+            displayedBackgroundImage = nil
+            fadingBackgroundImage = nil
+            displayedBackgroundOpacity = 1
+            fadingBackgroundOpacity = 0
+            return
+        }
+
+        guard displayedBackgroundImage?.name != currentBackgroundAsset.name
+        else {
+            displayedBackgroundOpacity = 1
+            fadingBackgroundOpacity = 0
+            return
+        }
+
+        let previousBackgroundImage = displayedBackgroundImage
+        let fadeDuration = backgroundFadeDuration
+
+        fadingBackgroundImage = previousBackgroundImage
+        fadingBackgroundOpacity = previousBackgroundImage == nil ? 0 : 1
+        displayedBackgroundImage = currentBackgroundAsset
+        displayedBackgroundOpacity = 0
+
+        Task { @MainActor in
+            await Task.yield()
+            withAnimation(.easeInOut(duration: fadeDuration)) {
+                displayedBackgroundOpacity = 1
+                fadingBackgroundOpacity = 0
+            }
+            try? await Task.sleep(for: .seconds(fadeDuration + 0.05))
+            if fadingBackgroundImage?.name == previousBackgroundImage?.name {
+                fadingBackgroundImage = nil
             }
         }
     }

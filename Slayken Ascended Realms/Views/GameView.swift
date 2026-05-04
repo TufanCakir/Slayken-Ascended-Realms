@@ -160,22 +160,33 @@ struct GameView: View {
 
                 VStack(spacing: 0) {
                     GameHeaderView(
+                        playerName: gameState.player.name,
+                        playerPreviewImage: gameState.player.image,
                         currencies: gameState.currencies,
                         ascendedLevel: ascendedLevel,
                         ascendedXP: ascendedXP,
-                        horizontalPadding: horizontalOverlayPadding
-                    ) {
-                        triggerNavigationSpinner()
-                        showNews = true
-                    }
+                        energy: battleResourceStatus.energy,
+                        maxEnergy: battleResourceStatus.energyMaximum,
+                        horizontalPadding: horizontalOverlayPadding,
+                        onOpenShop: {
+                            triggerNavigationSpinner()
+                            showShop = true
+                        },
+                        onOpenQuests: {
+                            triggerNavigationSpinner()
+                            showQuests = true
+                        },
+                        onOpenCoop: {
+                            triggerNavigationSpinner()
+                            multiplayerManager.ensureLocalLobbyState()
+                            showMultiplayerLobby = true
+                        }
+                    )
                     .zIndex(8)
 
-                    VStack(spacing: 10) {
-                        battleResourceBar
-                        coopRaidButton
-                    }
-                    .padding(.horizontal, horizontalOverlayPadding)
-                    .padding(.top, 10)
+                    battleResourceBar
+                        .padding(.horizontal, horizontalOverlayPadding)
+                        .padding(.top, 10)
 
                     if !battleResourceMessage.isEmpty {
                         Text(battleResourceMessage)
@@ -736,13 +747,6 @@ struct GameView: View {
     private var battleResourceBar: some View {
         HStack(spacing: 8) {
             resourceChip(
-                title: "Energie",
-                value:
-                    "\(battleResourceStatus.energy)/\(battleResourceStatus.energyMaximum)",
-                systemName: "bolt.fill",
-                accent: .orange
-            )
-            resourceChip(
                 title: "Coin Limit",
                 value: "\(battleResourceStatus.remainingCoins)",
                 assetName: "icon_coins",
@@ -754,6 +758,7 @@ struct GameView: View {
                 assetName: "icon_crystals",
                 accent: .cyan
             )
+            coopRaidButton
         }
     }
 
@@ -764,13 +769,13 @@ struct GameView: View {
         } label: {
             Label(
                 multiplayerManager.activeRaid == nil
-                    ? "Coop Raid" : "Raid aktiv",
+                    ? "Coop" : "Raid aktiv",
                 systemImage: multiplayerManager.activeRaid == nil
                     ? "person.3.sequence.fill"
                     : "flame.fill"
             )
-            .font(.system(size: 13, weight: .black))
-            .padding(.horizontal, 16)
+            .font(.system(size: 12, weight: .black))
+            .padding(.horizontal, 14)
             .padding(.vertical, 10)
             .background(Color.black.opacity(0.38), in: Capsule())
             .overlay(
@@ -780,7 +785,6 @@ struct GameView: View {
             .foregroundStyle(.white)
         }
         .buttonStyle(.plain)
-        .frame(maxWidth: .infinity, alignment: .center)
     }
 
     private func resourceChip(

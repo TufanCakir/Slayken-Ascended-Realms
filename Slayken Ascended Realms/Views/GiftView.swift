@@ -161,14 +161,13 @@ struct GiftView: View {
         }
         .padding()
         .background(
-            activeTheme?.accent.color
-                ?? Color(red: 0.94, green: 0.54, blue: 0.22),
-            in: RoundedRectangle(cornerRadius: 24, style: .continuous)
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
         )
-        .overlay(
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .stroke(Color.white.opacity(0.1), lineWidth: 1)
-        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
     }
 
     private func rewardRow(_ reward: CurrencyAmount) -> some View {

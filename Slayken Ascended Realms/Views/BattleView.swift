@@ -56,6 +56,8 @@ struct BattleView: View {
     @State private var isAuto = false
     @State private var isFast = false
     @State private var playerAttackID = 0
+    @State private var allyAttackID = 0
+    @State private var allyAttackerParticipantID: String?
     @State private var enemyAttackID = 0
     @State private var attackingEnemyIndex: Int?
     @State private var didAwardRewards = false
@@ -221,6 +223,8 @@ struct BattleView: View {
                 enemyHPs: enemyHPs,
                 selectedEnemyIndex: safeSelectedEnemyIndex,
                 playerAttackID: playerAttackID,
+                allyAttackID: allyAttackID,
+                allyAttackerParticipantID: allyAttackerParticipantID,
                 enemyAttackID: enemyAttackID,
                 attackingEnemyIndex: attackingEnemyIndex,
                 particleEffect: currentParticleEffect,
@@ -1650,6 +1654,10 @@ struct BattleView: View {
 
         currentParticleEffect = nil
         currentParticleTargetIndices = []
+        if resolvedAction.actorID != raidConfiguration.localParticipantID {
+            allyAttackerParticipantID = resolvedAction.actorID
+            allyAttackID += 1
+        }
         onRaidBossHPChanged?(resolvedAction.resultingBossHP)
         onRaidCombatLog?(
             "\(resolvedAction.actorName) nutzt \(resolvedAction.actionName). Boss-HP: \(resolvedAction.resultingBossHP)"

@@ -167,7 +167,7 @@ struct CreateClassView: View {
                 .foregroundStyle(.white)
 
             Text(
-                "Waehle deine Klasse und direkt die passende Variante. Details wie Vorschau und Name kommen im naechsten Schritt."
+                "Wähle deine Klasse und direkt die passende Variante. Details wie Vorschau und Name kommen im nächsten Schritt."
             )
             .font(.system(size: 14, weight: .medium))
             .foregroundStyle(.white.opacity(0.82))
@@ -190,7 +190,7 @@ struct CreateClassView: View {
                 Button {
                     step = .classSelection
                 } label: {
-                    Label("Zurueck", systemImage: "chevron.left")
+                    Label("Zurück", systemImage: "chevron.left")
                         .font(.system(size: 13, weight: .black))
                         .foregroundStyle(.white)
                         .padding(.horizontal, 14)
@@ -206,7 +206,7 @@ struct CreateClassView: View {
                     .foregroundStyle(.white)
 
                 Text(
-                    "Gib deinem Charakter jetzt Namen und finalen Look, ohne wieder durch alle Klassen scrollen zu muessen."
+                    "Gib deinem Charakter jetzt Namen und finalen Look, ohne wieder durch alle Klassen scrollen zu müssen."
                 )
                 .font(.system(size: 14, weight: .medium))
                 .foregroundStyle(.white.opacity(0.82))
@@ -274,7 +274,7 @@ struct CreateClassView: View {
             if selectedCategory != .hero {
                 classSection(
                     title: "Standardklassen",
-                    subtitle: "Sofort verfuegbar",
+                    subtitle: "Sofort verfügbar",
                     classes: standardClasses,
                     isExpanded: $standardClassesExpanded
                 )
@@ -283,7 +283,7 @@ struct CreateClassView: View {
             if !heroClasses.isEmpty, selectedCategory != .standard {
                 classSection(
                     title: "Heldenklassen",
-                    subtitle: "Werden ueber dein Ascended Level freigeschaltet",
+                    subtitle: "Werden über dein Ascended Level freigeschaltet",
                     classes: heroClasses,
                     isExpanded: $heroClassesExpanded
                 )

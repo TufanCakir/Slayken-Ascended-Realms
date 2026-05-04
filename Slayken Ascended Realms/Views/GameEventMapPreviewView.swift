@@ -55,17 +55,36 @@ struct GameEventMapPreviewView: View {
             return nextUnlockedBattle(in: point).map {
                 nodeID(forBattleID: $0.id)
             }
-                ?? nodeID(forPointID: point.id)
+                ?? visibleBattles.first.map { nodeID(forBattleID: $0.id) }
         }
 
         if let chapter {
             return nextUnlockedPoint(in: chapter).map {
                 nodeID(forPointID: $0.id)
             }
-                ?? nodeID(forPointID: chapter.points.first?.id ?? "")
+                ?? chapter.points.first.map { nodeID(forPointID: $0.id) }
         }
 
         return nil
+    }
+
+    private var scrollFocusSignature: String {
+        let target = focusedNodeID ?? "none"
+
+        if point != nil {
+            let visibleBattleIDs = visibleBattles.map(\.id).joined(
+                separator: "|"
+            )
+            let completedIDs = completedBattleIDs.sorted().joined(
+                separator: "|"
+            )
+            return "battle:\(target):\(visibleBattleIDs):\(completedIDs)"
+        }
+
+        let pointIDs =
+            chapter?.points.map(\.id).joined(separator: "|") ?? "none"
+        let completedIDs = completedBattleIDs.sorted().joined(separator: "|")
+        return "point:\(target):\(pointIDs):\(completedIDs)"
     }
 
     var body: some View {
@@ -134,7 +153,7 @@ struct GameEventMapPreviewView: View {
                     .onAppear {
                         scrollToFocusedNode(with: proxy)
                     }
-                    .onChange(of: focusedNodeID) { _, _ in
+                    .onChange(of: scrollFocusSignature) { _, _ in
                         scrollToFocusedNode(with: proxy)
                     }
                 }
@@ -354,7 +373,9 @@ struct GameEventMapPreviewView: View {
 
     private func scrollToFocusedNode(with proxy: ScrollViewProxy) {
         guard let focusedNodeID else { return }
-        DispatchQueue.main.async {
+        Task { @MainActor in
+            await Task.yield()
+            try? await Task.sleep(for: .milliseconds(45))
             withAnimation(.easeInOut(duration: 0.35)) {
                 proxy.scrollTo(
                     focusedNodeID,

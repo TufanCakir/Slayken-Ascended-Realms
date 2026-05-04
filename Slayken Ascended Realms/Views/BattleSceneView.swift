@@ -20,6 +20,8 @@ struct BattleSceneView: UIViewRepresentable {
     let enemyHPs: [CGFloat]
     let selectedEnemyIndex: Int
     let playerAttackID: Int
+    let allyAttackID: Int
+    let allyAttackerParticipantID: String?
     let enemyAttackID: Int
     let attackingEnemyIndex: Int?
     let particleEffect: String?
@@ -67,6 +69,8 @@ struct BattleSceneView: UIViewRepresentable {
         context.coordinator.updateSelectedEnemy(selectedEnemyIndex)
         context.coordinator.updateAttackTriggers(
             playerAttackID: playerAttackID,
+            allyAttackID: allyAttackID,
+            allyAttackerParticipantID: allyAttackerParticipantID,
             enemyAttackID: enemyAttackID,
             attackingEnemyIndex: attackingEnemyIndex,
             selectedEnemyIndex: selectedEnemyIndex,
@@ -100,6 +104,7 @@ final class BattleSceneCoordinator {
     private var groundMaterials: [SCNMaterial] = []
     private var defeatedFighterNames: Set<String> = []
     private var lastPlayerAttackID = 0
+    private var lastAllyAttackID = 0
     private var lastEnemyAttackID = 0
     private var appliedGroundTexture = ""
     private var appliedSkyboxTexture = ""
@@ -208,6 +213,8 @@ final class BattleSceneCoordinator {
 
     func updateAttackTriggers(
         playerAttackID: Int,
+        allyAttackID: Int,
+        allyAttackerParticipantID: String?,
         enemyAttackID: Int,
         attackingEnemyIndex: Int?,
         selectedEnemyIndex: Int,
@@ -226,6 +233,25 @@ final class BattleSceneCoordinator {
                     animationSeed: playerAttackID,
                     particleEffect: particleEffect,
                     particleTargetIndices: particleTargetIndices
+                )
+            }
+        }
+
+        if allyAttackID != lastAllyAttackID {
+            lastAllyAttackID = allyAttackID
+            if allyAttackID > 0,
+                let allyAttackerParticipantID,
+                let attacker = allyRootNode(for: allyAttackerParticipantID),
+                let defender = enemyRootNodes.first,
+                attacker.opacity > 0.05,
+                defender.opacity > 0.05
+            {
+                playAttackAnimation(
+                    attacker: attacker,
+                    defender: defender,
+                    animationSeed: allyAttackID,
+                    particleEffect: nil,
+                    particleTargetIndices: []
                 )
             }
         }
@@ -579,6 +605,10 @@ final class BattleSceneCoordinator {
     private func modelContainer(for root: SCNNode) -> SCNNode? {
         guard let name = root.name else { return nil }
         return fighterModelContainers[name]
+    }
+
+    private func allyRootNode(for participantID: String) -> SCNNode? {
+        allyRootNodes.first { $0.name == "ally_\(participantID)" }
     }
 
     private func makeAttackPoseAction(seed: Int) -> SCNAction {
@@ -1565,6 +1595,8 @@ private struct BattleScenePreviewContainer: View {
                 enemyHPs: [1.0, 1.0, 1.0],
                 selectedEnemyIndex: 0,
                 playerAttackID: playerAttackID,
+                allyAttackID: 0,
+                allyAttackerParticipantID: nil,
                 enemyAttackID: 0,
                 attackingEnemyIndex: nil,
                 particleEffect: selectedCard?.particleEffect,

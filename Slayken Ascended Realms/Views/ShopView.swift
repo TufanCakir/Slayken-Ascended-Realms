@@ -57,6 +57,8 @@ struct ShopView: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 18) {
                     GameHeaderView(
+                        playerName: gameState.player.name,
+                        playerPreviewImage: gameState.player.image,
                         currencies: gameState.currencies,
                         ascendedLevel: ascendedLevel
                     )

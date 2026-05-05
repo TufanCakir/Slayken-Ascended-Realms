@@ -1,0 +1,88 @@
+[
+    {
+        "id": "daily_free_supply",
+        "name": "Daily Free Supply",
+        "subtitle": "Kostenloses Starter-Paket. Nur 1x verfuegbar.",
+        "category": "Free",
+        "image": "gift",
+        "cost": [],
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 500
+            },
+            {
+                "currency": "crystals",
+                "amount": 10
+            }
+        ],
+        "maxPurchases": 1
+    },
+    {
+        "id": "coin_cache_for_crystals",
+        "name": "Coin Cache",
+        "subtitle": "Tausche Crystals gegen einen grossen Coin-Schub.",
+        "category": "Coins",
+        "image": "icon_coins",
+        "cost": [
+            {
+                "currency": "crystals",
+                "amount": 25
+            }
+        ],
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1800
+            }
+        ]
+    },
+    {
+        "id": "crystal_cache_for_coins",
+        "name": "Crystal Cache",
+        "subtitle":
+            "Tausche Coins gegen Crystals fuer Banner und Shop-Angebote.",
+        "category": "Crystals",
+        "image": "icon_crystals",
+        "cost": [
+            {
+                "currency": "coins",
+                "amount": 2200
+            }
+        ],
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 18
+            }
+        ]
+    },
+    {
+        "id": "adventurer_combo_pack",
+        "name": "Adventurer Combo Pack",
+        "subtitle":
+            "Bezahle mit Coins und Crystals zusammen fuer gemischte Ressourcen.",
+        "category": "Combo",
+        "image": "icon_crystals",
+        "cost": [
+            {
+                "currency": "coins",
+                "amount": 1200
+            },
+            {
+                "currency": "crystals",
+                "amount": 12
+            }
+        ],
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1500
+            },
+            {
+                "currency": "crystals",
+                "amount": 20
+            }
+        ]
+    }
+]

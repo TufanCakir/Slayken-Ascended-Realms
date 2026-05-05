@@ -371,6 +371,8 @@ struct GameView: View {
                         showDailyLogin = false
                     }
                 )
+                .environmentObject(gameState)
+                .environmentObject(theme)
                 .background(.black)
             }
             .fullScreenCover(isPresented: $showStoryArchive) {
@@ -938,11 +940,4 @@ struct GameView: View {
         )
         _ = PlayerInventoryStore.claimGiftBox(gift, in: modelContext)
     }
-}
-
-#Preview {
-    GameView(onStartBattle: { _ in })
-        .environmentObject(GameState())
-        .environmentObject(ThemeManager())
-        .environmentObject(MultiplayerManager())
 }

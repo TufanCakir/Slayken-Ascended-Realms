@@ -1,0 +1,179 @@
+[
+    {
+        "id": "launch_login_day_1",
+        "day": 1,
+        "title": "Launch Tag 1",
+        "subtitle": "Realm Start",
+        "message":
+            "Zum Start der Reiche gibt es sofort Vorrat fuer deinen ersten Run.",
+        "buttonTitle": "Launch Tag 1 abholen",
+        "icon": "sparkles",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1200
+            },
+            {
+                "currency": "crystals",
+                "amount": 60
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": "launch_login_day_2",
+        "day": 2,
+        "title": "Launch Tag 2",
+        "subtitle": "Mehr Reserven",
+        "message": "Der Launch-Kalender schiebt weitere Ressourcen nach.",
+        "buttonTitle": "Launch Tag 2 abholen",
+        "icon": "shippingbox.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1600
+            },
+            {
+                "currency": "crystals",
+                "amount": 75
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "launch_login_day_3",
+        "day": 3,
+        "title": "Launch Tag 3",
+        "subtitle": "Skill-Boost",
+        "message": "Ein zusaetzlicher Karten-Boost fuer fruehe Kaempfe.",
+        "buttonTitle": "Launch Tag 3 abholen",
+        "icon": "bolt.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1800
+            },
+            {
+                "currency": "crystals",
+                "amount": 80
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 2
+            }
+        ]
+    },
+    {
+        "id": "launch_login_day_4",
+        "day": 4,
+        "title": "Launch Tag 4",
+        "subtitle": "Team-Zuwachs",
+        "message": "Der Launch belohnt treue Rueckkehr mit einem Charakter.",
+        "buttonTitle": "Launch Tag 4 abholen",
+        "icon": "person.2.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 2200
+            },
+            {
+                "currency": "crystals",
+                "amount": 95
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "zaron"
+            }
+        ],
+        "cardRewards": []
+    },
+    {
+        "id": "launch_login_day_5",
+        "day": 5,
+        "title": "Launch Tag 5",
+        "subtitle": "Premium-Reserve",
+        "message": "Noch mehr Kristalle fuer Banner und fruehe Builds.",
+        "buttonTitle": "Launch Tag 5 abholen",
+        "icon": "diamond.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 2600
+            },
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "launch_login_day_6",
+        "day": 6,
+        "title": "Launch Tag 6",
+        "subtitle": "Kampfkern",
+        "message": "Kurz vor dem Finale gibt es noch einmal Skill-Karten.",
+        "buttonTitle": "Launch Tag 6 abholen",
+        "icon": "shield.lefthalf.filled",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 3200
+            },
+            {
+                "currency": "crystals",
+                "amount": 140
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 3
+            }
+        ]
+    },
+    {
+        "id": "launch_login_day_7",
+        "day": 7,
+        "title": "Launch Finale",
+        "subtitle": "Startkrone",
+        "message":
+            "Der Abschluss des Launch-Events bringt Charakter und starke Ressourcen.",
+        "buttonTitle": "Launch Finale abholen",
+        "icon": "crown.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 5000
+            },
+            {
+                "currency": "crystals",
+                "amount": 220
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "aika"
+            }
+        ],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 4
+            }
+        ]
+    }
+]

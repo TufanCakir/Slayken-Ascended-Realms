@@ -1,0 +1,1016 @@
+[
+    {
+        "id": "quest_ascended_level_3",
+        "title": "Ascend Further",
+        "subtitle":
+            "Erreiche Ascended Level 3 und schalte deine ersten Bonus-Rewards frei.",
+        "category": "Progress",
+        "sortOrder": 0,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "ascendedLevel",
+            "target": 3,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 80
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_ascended_level_5",
+        "title": "Higher Calling",
+        "subtitle":
+            "Erreiche Ascended Level 5 und sichere dir mehr Ressourcen.",
+        "category": "Progress",
+        "sortOrder": 1,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "ascendedLevel",
+            "target": 5,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 3000
+            },
+            {
+                "currency": "crystals",
+                "amount": 100
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_battle_victories_1",
+        "title": "First Win",
+        "subtitle": "Gewinne deinen ersten Kampf.",
+        "category": "Battle",
+        "sortOrder": 2,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "battleVictories",
+            "target": 1,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 800
+            },
+            {
+                "currency": "crystals",
+                "amount": 20
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_monster_kills_10",
+        "title": "Rift Hunter I",
+        "subtitle": "Besiege 10 Monster in Events oder normalen Kaempfen.",
+        "category": "Battle",
+        "sortOrder": 3,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "monsterKills",
+            "target": 10,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1500
+            },
+            {
+                "currency": "crystals",
+                "amount": 30
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_collect_coins_4000",
+        "title": "Festival Wallet",
+        "subtitle": "Sammle insgesamt 4000 Coins durch deine Aktivitaeten.",
+        "category": "Resources",
+        "sortOrder": 4,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "currencyCollect",
+            "target": 4000,
+            "currency": "coins"
+        },
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 60
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_collect_crystals_250",
+        "title": "Crystal Route",
+        "subtitle":
+            "Sammle 250 Crystals und sichere dir eine kostenlose Summon-Belohnung.",
+        "category": "Resources",
+        "sortOrder": 5,
+        "minAscendedLevel": 2,
+        "objective": {
+            "type": "currencyCollect",
+            "target": 250,
+            "currency": "crystals"
+        },
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_battle_victories_5",
+        "title": "Event Line Cleared",
+        "subtitle":
+            "Schliesse 5 Kaempfe erfolgreich ab und erhalte Bonus-Currency.",
+        "category": "Battle",
+        "sortOrder": 6,
+        "minAscendedLevel": 2,
+        "objective": {
+            "type": "battleVictories",
+            "target": 5,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 2500
+            },
+            {
+                "currency": "crystals",
+                "amount": 90
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_character_choice_8",
+        "title": "Choose Your Ally",
+        "subtitle":
+            "Gewinne 8 Kaempfe und waehle danach einen Character als Reward aus.",
+        "category": "Battle",
+        "sortOrder": 7,
+        "minAscendedLevel": 3,
+        "objective": {
+            "type": "battleVictories",
+            "target": 8,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": [
+            "zaron",
+            "shela",
+            "shen",
+            "lafiya",
+            "juji",
+            "aika",
+            "sanya",
+            "sifili",
+            "jefar",
+            "anjima",
+            "rana"
+        ]
+    },
+    {
+        "id": "quest_ascended_level_10",
+        "title": "Ascended Vanguard",
+        "subtitle": "Erreiche Ascended Level 10.",
+        "category": "Progress",
+        "sortOrder": 8,
+        "minAscendedLevel": 3,
+        "objective": {
+            "type": "ascendedLevel",
+            "target": 10,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 8000
+            },
+            {
+                "currency": "crystals",
+                "amount": 250
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "zaron"
+            }
+        ],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_monster_kills_25",
+        "title": "Rift Hunter II",
+        "subtitle": "Besiege 25 Monster in Kaempfen.",
+        "category": "Battle",
+        "sortOrder": 9,
+        "minAscendedLevel": 4,
+        "objective": {
+            "type": "monsterKills",
+            "target": 25,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 4000
+            },
+            {
+                "currency": "crystals",
+                "amount": 110
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_battle_victories_15",
+        "title": "Battle Path I",
+        "subtitle": "Gewinne 15 Kaempfe.",
+        "category": "Battle",
+        "sortOrder": 10,
+        "minAscendedLevel": 4,
+        "objective": {
+            "type": "battleVictories",
+            "target": 15,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 5000
+            },
+            {
+                "currency": "crystals",
+                "amount": 130
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_collect_coins_20000",
+        "title": "Gold Reserve I",
+        "subtitle": "Sammle 20000 Coins.",
+        "category": "Resources",
+        "sortOrder": 11,
+        "minAscendedLevel": 5,
+        "objective": {
+            "type": "currencyCollect",
+            "target": 20000,
+            "currency": "coins"
+        },
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 180
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_collect_crystals_500",
+        "title": "Crystal Route II",
+        "subtitle": "Sammle 500 Crystals.",
+        "category": "Resources",
+        "sortOrder": 12,
+        "minAscendedLevel": 5,
+        "objective": {
+            "type": "currencyCollect",
+            "target": 500,
+            "currency": "crystals"
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 6000
+            },
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_ascended_level_20",
+        "title": "Skybreaker",
+        "subtitle": "Erreiche Ascended Level 20.",
+        "category": "Progress",
+        "sortOrder": 13,
+        "minAscendedLevel": 8,
+        "objective": {
+            "type": "ascendedLevel",
+            "target": 20,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 15000
+            },
+            {
+                "currency": "crystals",
+                "amount": 400
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "aika"
+            }
+        ],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_monster_kills_50",
+        "title": "Rift Hunter III",
+        "subtitle": "Besiege 50 Monster in Kaempfen.",
+        "category": "Battle",
+        "sortOrder": 14,
+        "minAscendedLevel": 8,
+        "objective": {
+            "type": "monsterKills",
+            "target": 50,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 9000
+            },
+            {
+                "currency": "crystals",
+                "amount": 180
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_battle_victories_30",
+        "title": "Battle Path II",
+        "subtitle": "Gewinne 30 Kaempfe.",
+        "category": "Battle",
+        "sortOrder": 15,
+        "minAscendedLevel": 8,
+        "objective": {
+            "type": "battleVictories",
+            "target": 30,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 10000
+            },
+            {
+                "currency": "crystals",
+                "amount": 220
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_collect_coins_50000",
+        "title": "Gold Reserve II",
+        "subtitle": "Sammle 50000 Coins.",
+        "category": "Resources",
+        "sortOrder": 16,
+        "minAscendedLevel": 10,
+        "objective": {
+            "type": "currencyCollect",
+            "target": 50000,
+            "currency": "coins"
+        },
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 250
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_collect_crystals_1000",
+        "title": "Crystal Route III",
+        "subtitle": "Sammle 1000 Crystals.",
+        "category": "Resources",
+        "sortOrder": 17,
+        "minAscendedLevel": 10,
+        "objective": {
+            "type": "currencyCollect",
+            "target": 1000,
+            "currency": "crystals"
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 12000
+            },
+            {
+                "currency": "crystals",
+                "amount": 180
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_ascended_level_30",
+        "title": "Realm Champion",
+        "subtitle": "Erreiche Ascended Level 30.",
+        "category": "Progress",
+        "sortOrder": 18,
+        "minAscendedLevel": 15,
+        "objective": {
+            "type": "ascendedLevel",
+            "target": 30,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 22000
+            },
+            {
+                "currency": "crystals",
+                "amount": 550
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "shen"
+            }
+        ],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_monster_kills_100",
+        "title": "Rift Hunter IV",
+        "subtitle": "Besiege 100 Monster in Kaempfen.",
+        "category": "Battle",
+        "sortOrder": 19,
+        "minAscendedLevel": 15,
+        "objective": {
+            "type": "monsterKills",
+            "target": 100,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 15000
+            },
+            {
+                "currency": "crystals",
+                "amount": 260
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_battle_victories_60",
+        "title": "Battle Path III",
+        "subtitle": "Gewinne 60 Kaempfe.",
+        "category": "Battle",
+        "sortOrder": 20,
+        "minAscendedLevel": 15,
+        "objective": {
+            "type": "battleVictories",
+            "target": 60,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 18000
+            },
+            {
+                "currency": "crystals",
+                "amount": 300
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_ascended_level_40",
+        "title": "Void Walker",
+        "subtitle": "Erreiche Ascended Level 40.",
+        "category": "Progress",
+        "sortOrder": 21,
+        "minAscendedLevel": 20,
+        "objective": {
+            "type": "ascendedLevel",
+            "target": 40,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 32000
+            },
+            {
+                "currency": "crystals",
+                "amount": 750
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "juji"
+            }
+        ],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_collect_coins_100000",
+        "title": "Gold Reserve III",
+        "subtitle": "Sammle 100000 Coins.",
+        "category": "Resources",
+        "sortOrder": 22,
+        "minAscendedLevel": 20,
+        "objective": {
+            "type": "currencyCollect",
+            "target": 100000,
+            "currency": "coins"
+        },
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 350
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_collect_crystals_2500",
+        "title": "Crystal Route IV",
+        "subtitle": "Sammle 2500 Crystals.",
+        "category": "Resources",
+        "sortOrder": 23,
+        "minAscendedLevel": 20,
+        "objective": {
+            "type": "currencyCollect",
+            "target": 2500,
+            "currency": "crystals"
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 22000
+            },
+            {
+                "currency": "crystals",
+                "amount": 350
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_ascended_level_50",
+        "title": "Master of Realms",
+        "subtitle": "Erreiche Ascended Level 50.",
+        "category": "Progress",
+        "sortOrder": 24,
+        "minAscendedLevel": 25,
+        "objective": {
+            "type": "ascendedLevel",
+            "target": 50,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 45000
+            },
+            {
+                "currency": "crystals",
+                "amount": 1000
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": [
+            "zaron",
+            "shen",
+            "aika",
+            "juji",
+            "shela"
+        ]
+    },
+    {
+        "id": "quest_monster_kills_250",
+        "title": "Rift Hunter V",
+        "subtitle": "Besiege 250 Monster in Kaempfen.",
+        "category": "Battle",
+        "sortOrder": 25,
+        "minAscendedLevel": 25,
+        "objective": {
+            "type": "monsterKills",
+            "target": 250,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 30000
+            },
+            {
+                "currency": "crystals",
+                "amount": 500
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_battle_victories_120",
+        "title": "Battle Path IV",
+        "subtitle": "Gewinne 120 Kaempfe.",
+        "category": "Battle",
+        "sortOrder": 26,
+        "minAscendedLevel": 25,
+        "objective": {
+            "type": "battleVictories",
+            "target": 120,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 32000
+            },
+            {
+                "currency": "crystals",
+                "amount": 520
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_ascended_level_75",
+        "title": "Beyond the Rift",
+        "subtitle": "Erreiche Ascended Level 75.",
+        "category": "Progress",
+        "sortOrder": 27,
+        "minAscendedLevel": 30,
+        "objective": {
+            "type": "ascendedLevel",
+            "target": 75,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 65000
+            },
+            {
+                "currency": "crystals",
+                "amount": 1500
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": [
+            "zaron",
+            "shen",
+            "aika",
+            "juji",
+            "shela",
+            "lafiya",
+            "sanya"
+        ]
+    },
+    {
+        "id": "quest_collect_coins_250000",
+        "title": "Gold Reserve IV",
+        "subtitle": "Sammle 250000 Coins.",
+        "category": "Resources",
+        "sortOrder": 28,
+        "minAscendedLevel": 30,
+        "objective": {
+            "type": "currencyCollect",
+            "target": 250000,
+            "currency": "coins"
+        },
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 700
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_collect_crystals_5000",
+        "title": "Crystal Route V",
+        "subtitle": "Sammle 5000 Crystals.",
+        "category": "Resources",
+        "sortOrder": 29,
+        "minAscendedLevel": 30,
+        "objective": {
+            "type": "currencyCollect",
+            "target": 5000,
+            "currency": "crystals"
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 50000
+            },
+            {
+                "currency": "crystals",
+                "amount": 800
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_ascended_level_100",
+        "title": "Endless Ascension",
+        "subtitle": "Erreiche Ascended Level 100.",
+        "category": "Progress",
+        "sortOrder": 30,
+        "minAscendedLevel": 40,
+        "objective": {
+            "type": "ascendedLevel",
+            "target": 100,
+            "currency": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 100000
+            },
+            {
+                "currency": "crystals",
+                "amount": 2500
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": [
+            "zaron",
+            "shela",
+            "shen",
+            "lafiya",
+            "juji",
+            "aika",
+            "sanya",
+            "sifili",
+            "jefar",
+            "anjima",
+            "rana"
+        ]
+    },
+    {
+        "id": "quest_daily_login_1",
+        "title": "Daily Einstieg",
+        "subtitle": "Hole 1 Daily-Login-Belohnung ab.",
+        "category": "Onboarding",
+        "sortOrder": 31,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "dailyLoginClaims",
+            "target": 1,
+            "currency": null,
+            "referenceID": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1000
+            },
+            {
+                "currency": "crystals",
+                "amount": 25
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_daily_login_7",
+        "title": "Weekly Return",
+        "subtitle": "Hole 7 Daily-Login-Belohnungen ab.",
+        "category": "Onboarding",
+        "sortOrder": 32,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "dailyLoginClaims",
+            "target": 7,
+            "currency": null,
+            "referenceID": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 4000
+            },
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_summon_1",
+        "title": "First Summon",
+        "subtitle": "Fuehre 1 Summon aus.",
+        "category": "Onboarding",
+        "sortOrder": 33,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "summons",
+            "target": 1,
+            "currency": null,
+            "referenceID": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1200
+            },
+            {
+                "currency": "crystals",
+                "amount": 40
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_summon_10",
+        "title": "Banner Seeker",
+        "subtitle": "Fuehre 10 Summons aus.",
+        "category": "Onboarding",
+        "sortOrder": 34,
+        "minAscendedLevel": 2,
+        "objective": {
+            "type": "summons",
+            "target": 10,
+            "currency": null,
+            "referenceID": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 5000
+            },
+            {
+                "currency": "crystals",
+                "amount": 180
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_team_setup_1",
+        "title": "Form a Team",
+        "subtitle": "Setze mindestens 1 Charakter in dein Team.",
+        "category": "Onboarding",
+        "sortOrder": 35,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "teamMembers",
+            "target": 1,
+            "currency": null,
+            "referenceID": null
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 900
+            },
+            {
+                "currency": "crystals",
+                "amount": 20
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_story_battle_chapter_1_1",
+        "title": "Open the Gate",
+        "subtitle": "Beende den ersten Story-Kampf am Mondtor.",
+        "category": "Story",
+        "sortOrder": 36,
+        "minAscendedLevel": 1,
+        "objective": {
+            "type": "storyBattleCompletion",
+            "target": 1,
+            "currency": null,
+            "referenceID": "chapter_1_battle_1"
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1400
+            },
+            {
+                "currency": "crystals",
+                "amount": 35
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_story_battles_chapter_1_10",
+        "title": "Moon Gate Advance",
+        "subtitle": "Schliesse 10 Story-Kaempfe in Kapitel 1 ab.",
+        "category": "Story",
+        "sortOrder": 37,
+        "minAscendedLevel": 2,
+        "objective": {
+            "type": "storyBattleCompletion",
+            "target": 10,
+            "currency": null,
+            "referenceID": "chapter_1"
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 6000
+            },
+            {
+                "currency": "crystals",
+                "amount": 180
+            }
+        ],
+        "characterRewards": [],
+        "choiceCharacterRewardIDs": []
+    },
+    {
+        "id": "quest_complete_chapter_1",
+        "title": "Chapter One Cleared",
+        "subtitle": "Beende Story Kapitel 1 komplett.",
+        "category": "Story",
+        "sortOrder": 38,
+        "minAscendedLevel": 3,
+        "objective": {
+            "type": "chapterCompletion",
+            "target": 1,
+            "currency": null,
+            "referenceID": "chapter_1"
+        },
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 12000
+            },
+            {
+                "currency": "crystals",
+                "amount": 320
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "shen"
+            }
+        ],
+        "choiceCharacterRewardIDs": []
+    }
+]

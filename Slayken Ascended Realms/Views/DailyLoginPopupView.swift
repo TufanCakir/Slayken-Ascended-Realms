@@ -66,7 +66,13 @@ struct DailyLoginPopupView: View {
 
                 VStack(spacing: 10) {
                     ForEach(rewardState.reward.rewards) { reward in
-                        rewardRow(reward)
+                        currencyRewardRow(reward)
+                    }
+                    ForEach(rewardState.reward.characterRewards) { reward in
+                        characterRewardRow(reward)
+                    }
+                    ForEach(rewardState.reward.cardRewards) { reward in
+                        cardRewardRow(reward)
                     }
                 }
 
@@ -109,7 +115,7 @@ struct DailyLoginPopupView: View {
         }
     }
 
-    private func rewardRow(_ reward: CurrencyAmount) -> some View {
+    private func currencyRewardRow(_ reward: CurrencyAmount) -> some View {
         let currency = gameState.currencies.first { $0.code == reward.currency }
 
         return HStack(spacing: 12) {
@@ -125,6 +131,77 @@ struct DailyLoginPopupView: View {
                     .foregroundStyle(.white)
 
                 Text("+\(reward.amount)")
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.72))
+            }
+
+            Spacer()
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+        .background(
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
+    }
+
+    private func characterRewardRow(_ reward: GiftCharacterReward) -> some View
+    {
+        let character = gameState.summonCharacters.first {
+            $0.id == reward.characterID
+        }
+
+        return HStack(spacing: 12) {
+            rewardPreviewImage(
+                character?.summonImage,
+                fallbackSystemName: "person.fill"
+            )
+            .frame(width: 22, height: 22)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(character?.name ?? reward.characterID)
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundStyle(.white)
+
+                Text("Neuer Charakter")
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.72))
+            }
+
+            Spacer()
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+        .background(
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
+    }
+
+    private func cardRewardRow(_ reward: GiftCardReward) -> some View {
+        let card = gameState.abilityCards.first { $0.id == reward.cardID }
+
+        return HStack(spacing: 12) {
+            rewardPreviewImage(
+                card?.image,
+                fallbackSystemName: "rectangle.stack.fill"
+            )
+            .frame(width: 22, height: 22)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(card?.name ?? reward.cardID)
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundStyle(.white)
+
+                Text("Skill-Karte x\(reward.amount)")
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundStyle(.white.opacity(0.72))
             }
@@ -159,6 +236,24 @@ struct DailyLoginPopupView: View {
                 .foregroundStyle(.white)
         }
     }
+
+    @ViewBuilder
+    private func rewardPreviewImage(
+        _ imageName: String?,
+        fallbackSystemName: String
+    ) -> some View {
+        if let imageName,
+            RemoteContentManager.hasCachedOrBundledImage(named: imageName)
+        {
+            RemoteAssetImage(imageName, contentMode: .fill) {
+                Color.clear
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        } else {
+            Image(systemName: fallbackSystemName)
+                .foregroundStyle(.white)
+        }
+    }
 }
 
 #Preview {
@@ -179,6 +274,40 @@ struct DailyLoginPopupView: View {
             sortOrder: 1
         ),
     ]
+    gameState.summonCharacters = [
+        SummonCharacter(
+            id: "zaron",
+            name: "Zaron",
+            summonImage: "preview_zaron",
+            model: "zaron",
+            battleModel: nil,
+            texture: nil,
+            element: nil,
+            rarity: 5,
+            hp: 1200,
+            attack: 240,
+            skins: []
+        )
+    ]
+    gameState.abilityCards = [
+        AbilityCardDefinition(
+            id: "slash_red",
+            name: "Slash Red",
+            image: "skill_slash_red",
+            element: "fire",
+            rarity: 3,
+            damageMultiplier: 1.3,
+            particleEffect: "slash",
+            description: "Preview card",
+            manaCost: 15,
+            maxLevel: 30,
+            maxStars: 5,
+            duplicatesPerLevel: 2,
+            levelsPerStar: 6,
+            damageGrowth: 1.08,
+            targeting: .single
+        )
+    ]
 
     return DailyLoginPopupView(
         rewardState: DailyLoginRewardState(
@@ -194,7 +323,9 @@ struct DailyLoginPopupView: View {
                 rewards: [
                     CurrencyAmount(currency: "gold", amount: 2500),
                     CurrencyAmount(currency: "gems", amount: 120),
-                ]
+                ],
+                characterRewards: [GiftCharacterReward(characterID: "zaron")],
+                cardRewards: [GiftCardReward(cardID: "slash_red", amount: 1)]
             ),
             dayNumber: 7
         ),

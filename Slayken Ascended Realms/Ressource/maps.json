@@ -1,0 +1,155 @@
+[
+    {
+        "id": 1,
+        "name": "SAR",
+        "mapImage": "bg_sar",
+        "difficulty": 1,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "model": "shela",
+            "hp": 80,
+            "attack": 10
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Ein dunkler Drache bedroht das Land..."
+            },
+            {
+                "speaker": "Dragon",
+                "text": "Du wagst es, mich herauszufordern?"
+            },
+            {
+                "speaker": "Hero",
+                "text": "Ich werde dich stoppen!"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Map",
+        "mapImage": "bg_map",
+        "difficulty": 1,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "model": "shela",
+            "hp": 80,
+            "attack": 10
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Ein neues Gebiet voller Gefahren..."
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Kingdom",
+        "mapImage": "bg_country",
+        "difficulty": 2,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "model": "shela",
+            "hp": 120,
+            "attack": 14
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Das Königreich steht kurz vor dem Fall..."
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Ice Realm",
+        "mapImage": "bg_ice",
+        "difficulty": 3,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "model": "shela",
+            "hp": 160,
+            "attack": 16
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Eisige Winde schneiden durch deine Haut..."
+            },
+            {
+                "speaker": "Dragon",
+                "text": "Hier endet deine Reise."
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Fire Lands",
+        "mapImage": "bg_fire",
+        "difficulty": 4,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "model": "shela",
+            "hp": 200,
+            "attack": 20
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Flammen lodern überall um dich herum..."
+            },
+            {
+                "speaker": "Hero",
+                "text": "Ich gebe nicht auf!"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Void",
+        "mapImage": "bg_void",
+        "difficulty": 5,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "model": "shela",
+            "hp": 260,
+            "attack": 25
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Die Leere verschlingt alles..."
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Arena",
+        "mapImage": "bg_arena",
+        "difficulty": 6,
+        "enemy": {
+            "name": "Dragon",
+            "image": "sar_dragon",
+            "model": "shela",
+            "hp": 300,
+            "attack": 30
+        },
+        "story": [
+            {
+                "speaker": "Narrator",
+                "text": "Die letzte Prüfung beginnt..."
+            },
+            {
+                "speaker": "Dragon",
+                "text": "Zeig mir deine wahre Stärke!"
+            }
+        ]
+    }
+]

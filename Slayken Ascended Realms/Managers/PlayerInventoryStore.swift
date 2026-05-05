@@ -483,6 +483,16 @@ enum PlayerInventoryStore {
         }
 
         add(availableGift.reward.rewards, in: context)
+        for characterReward in availableGift.reward.characterRewards {
+            addOwned(characterID: characterReward.characterID, in: context)
+        }
+        for cardReward in availableGift.reward.cardRewards {
+            addOwnedCard(
+                cardID: cardReward.cardID,
+                amount: cardReward.amount,
+                in: context
+            )
+        }
 
         let progress = dailyLoginProgress(in: context)
         let calendar = Calendar.current
@@ -582,6 +592,19 @@ enum PlayerInventoryStore {
                 for: currencyEarnedCounterKey(
                     for: objective.currency ?? "coins"
                 ),
+                in: context
+            )
+        case .summons:
+            return totalSummonCount(in: context)
+        case .dailyLoginClaims:
+            return dailyLoginProgress(in: context).totalClaims
+        case .teamMembers:
+            return teamMemberCount(in: context)
+        case .storyBattleCompletion:
+            return storyBattleProgress(for: objective.referenceID, in: context)
+        case .chapterCompletion:
+            return chapterCompletionProgress(
+                for: objective.referenceID,
                 in: context
             )
         }
@@ -724,6 +747,70 @@ enum PlayerInventoryStore {
             predicate: #Predicate { $0.bannerID == bannerID }
         )
         return try? context.fetch(descriptor).first
+    }
+
+    private static func totalSummonCount(in context: ModelContext) -> Int {
+        let descriptor = FetchDescriptor<SummonBannerProgress>()
+        let records = (try? context.fetch(descriptor)) ?? []
+        return records.reduce(0) { $0 + max(0, $1.summonCount) }
+    }
+
+    private static func teamMemberCount(in context: ModelContext) -> Int {
+        let descriptor = FetchDescriptor<TeamMemberRecord>()
+        let records = (try? context.fetch(descriptor)) ?? []
+        return Set(records.map(\.slotIndex)).count
+    }
+
+    private static func storyBattleProgress(
+        for referenceID: String?,
+        in context: ModelContext
+    ) -> Int {
+        let descriptor = FetchDescriptor<PlayerBattleProgress>()
+        let completed = (try? context.fetch(descriptor)) ?? []
+
+        guard let referenceID, !referenceID.isEmpty else {
+            return completed.filter { $0.battleID.hasPrefix("chapter_") }.count
+        }
+
+        if referenceID.contains("_battle_") {
+            return completed.contains(where: { $0.battleID == referenceID })
+                ? 1 : 0
+        }
+
+        let chapterBattleIDs = storyBattleIDs(forChapterID: referenceID)
+        guard !chapterBattleIDs.isEmpty else { return 0 }
+        return completed.filter { chapterBattleIDs.contains($0.battleID) }.count
+    }
+
+    private static func chapterCompletionProgress(
+        for referenceID: String?,
+        in context: ModelContext
+    ) -> Int {
+        guard let referenceID, !referenceID.isEmpty else { return 0 }
+        let chapterBattleIDs = storyBattleIDs(forChapterID: referenceID)
+        guard !chapterBattleIDs.isEmpty else { return 0 }
+
+        let descriptor = FetchDescriptor<PlayerBattleProgress>()
+        let completedBattleIDs = Set(
+            ((try? context.fetch(descriptor)) ?? []).map(\.battleID)
+        )
+        return chapterBattleIDs.allSatisfy { completedBattleIDs.contains($0) }
+            ? 1 : 0
+    }
+
+    private static func storyBattleIDs(forChapterID chapterID: String) -> Set<
+        String
+    > {
+        let chapters = loadGlobeEventChapters()
+        guard let chapter = chapters.first(where: { $0.id == chapterID }) else {
+            return []
+        }
+
+        return Set(
+            chapter.points.flatMap { point in
+                point.battles.map(\.id)
+            }
+        )
     }
 
     private static func shopOfferProgress(

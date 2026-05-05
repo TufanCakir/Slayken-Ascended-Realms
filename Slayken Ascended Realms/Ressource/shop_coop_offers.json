@@ -1,0 +1,174 @@
+[
+    {
+        "id": "coop-character-zaron",
+        "name": "Zaron",
+        "subtitle": "Schalte Zaron direkt mit Lava Sigils frei.",
+        "image": "preview_zaron",
+        "cost": [
+            {
+                "currency": "lava_sigil",
+                "amount": 6000
+            }
+        ],
+        "rewards": [],
+        "characterRewards": [
+            {
+                "characterID": "zaron"
+            }
+        ],
+        "skinRewards": [],
+        "cardRewards": [],
+        "maxPurchases": 1
+    },
+    {
+        "id": "coop-resource-moon-crystals",
+        "name": "Moon Crystal Cache",
+        "subtitle": "Tausche Moon Tokens gegen Crystals.",
+        "image": "coop_coin_moon",
+        "cost": [
+            {
+                "currency": "moon_token",
+                "amount": 1800
+            }
+        ],
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ],
+        "characterRewards": [],
+        "skinRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "coop-resource-void-coins",
+        "name": "Void Coin Vault",
+        "subtitle": "Void Cores gegen eine größere Coin-Lieferung.",
+        "image": "coop_coin_void",
+        "cost": [
+            {
+                "currency": "void_core",
+                "amount": 1400
+            }
+        ],
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 2200
+            }
+        ],
+        "characterRewards": [],
+        "skinRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "coop-character-aika",
+        "name": "Aika",
+        "subtitle": "Sichere dir Aika über Moon Tokens.",
+        "image": "preview_aika",
+        "cost": [
+            {
+                "currency": "moon_token",
+                "amount": 3008
+            }
+        ],
+        "rewards": [],
+        "characterRewards": [
+            {
+                "characterID": "aika"
+            }
+        ],
+        "skinRewards": [],
+        "cardRewards": [],
+        "maxPurchases": 1
+    },
+    {
+        "id": "coop-resource-lava-bundle",
+        "name": "Ashen Supply Bundle",
+        "subtitle": "Lava Sigils gegen Coins und Crystals gleichzeitig.",
+        "image": "coop_coin_lava",
+        "cost": [
+            {
+                "currency": "lava_sigil",
+                "amount": 1200
+            }
+        ],
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 500
+            },
+            {
+                "currency": "crystals",
+                "amount": 20
+            }
+        ],
+        "characterRewards": [],
+        "skinRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "coop-card-ash-breaker",
+        "name": "Ash Breaker Karte",
+        "subtitle": "Lava Sigils gegen eine offensive Skill-Karte.",
+        "image": "skill_ash_breaker.png",
+        "cost": [
+            {
+                "currency": "lava_sigil",
+                "amount": 1000
+            }
+        ],
+        "rewards": [],
+        "characterRewards": [],
+        "skinRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "ash_breaker",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": "coop-card-moon-guard",
+        "name": "Moon Guard Karte",
+        "subtitle": "Moon Tokens gegen eine defensive Skill-Karte.",
+        "image": "skill_moon_guard.png",
+        "cost": [
+            {
+                "currency": "moon_token",
+                "amount": 1000
+            }
+        ],
+        "rewards": [],
+        "characterRewards": [],
+        "skinRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "moon_guard",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": "coop-card-void-pulse",
+        "name": "Void Pulse Karte",
+        "subtitle": "Void Cores gegen eine spätere Void-Skill-Karte.",
+        "image": "skill_void_pulse.png",
+        "cost": [
+            {
+                "currency": "void_core",
+                "amount": 80
+            }
+        ],
+        "rewards": [],
+        "characterRewards": [],
+        "skinRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "void_pulse",
+                "amount": 1
+            }
+        ]
+    }
+]

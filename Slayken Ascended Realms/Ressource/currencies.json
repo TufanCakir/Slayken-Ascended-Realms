@@ -1,0 +1,37 @@
+[
+    {
+        "code": "coins",
+        "name": "Coins",
+        "icon": "circle.hexagongrid.fill",
+        "assetIcon": "icon_coins",
+        "sortOrder": 0
+    },
+    {
+        "code": "crystals",
+        "name": "Crystals",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "sortOrder": 1
+    },
+    {
+        "code": "lava_sigil",
+        "name": "Lava Sigil",
+        "icon": "flame.fill",
+        "assetIcon": "coop_coin_lava",
+        "sortOrder": 210
+    },
+    {
+        "code": "moon_token",
+        "name": "Moon Token",
+        "icon": "moon.stars.fill",
+        "assetIcon": "coop_coin_moon",
+        "sortOrder": 211
+    },
+    {
+        "code": "void_core",
+        "name": "Void Core",
+        "icon": "sparkles",
+        "assetIcon": "coop_coin_void",
+        "sortOrder": 212
+    }
+]

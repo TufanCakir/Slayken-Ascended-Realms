@@ -1,0 +1,180 @@
+[
+    {
+        "id": "festival_login_day_1",
+        "day": 1,
+        "title": "Festival Tag 1",
+        "subtitle": "Eroeffnung",
+        "message": "Das Festival beginnt mit einer grosszuegigen Startgabe.",
+        "buttonTitle": "Festival Tag 1 abholen",
+        "icon": "party.popper.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1400
+            },
+            {
+                "currency": "crystals",
+                "amount": 70
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "festival_login_day_2",
+        "day": 2,
+        "title": "Festival Tag 2",
+        "subtitle": "Lichterpfad",
+        "message": "Noch mehr Kristalle waehrend der Feierlichkeiten.",
+        "buttonTitle": "Festival Tag 2 abholen",
+        "icon": "sparkles",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1700
+            },
+            {
+                "currency": "crystals",
+                "amount": 90
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": "festival_login_day_3",
+        "day": 3,
+        "title": "Festival Tag 3",
+        "subtitle": "Kartenfunken",
+        "message": "Das Festival bringt einen kleinen Skill-Karten-Schub.",
+        "buttonTitle": "Festival Tag 3 abholen",
+        "icon": "wand.and.stars",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 2100
+            },
+            {
+                "currency": "crystals",
+                "amount": 100
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 2
+            }
+        ]
+    },
+    {
+        "id": "festival_login_day_4",
+        "day": 4,
+        "title": "Festival Tag 4",
+        "subtitle": "Gaeste des Festes",
+        "message": "Ein neuer Charakter schliesst sich im Festtrubel an.",
+        "buttonTitle": "Festival Tag 4 abholen",
+        "icon": "person.3.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 2600
+            },
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "shen"
+            }
+        ],
+        "cardRewards": []
+    },
+    {
+        "id": "festival_login_day_5",
+        "day": 5,
+        "title": "Festival Tag 5",
+        "subtitle": "Sternenlager",
+        "message":
+            "Ein dichter Mix aus Coins und Crystals fuer weitere Upgrades.",
+        "buttonTitle": "Festival Tag 5 abholen",
+        "icon": "star.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 3200
+            },
+            {
+                "currency": "crystals",
+                "amount": 145
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "festival_login_day_6",
+        "day": 6,
+        "title": "Festival Tag 6",
+        "subtitle": "Klingenlied",
+        "message":
+            "Kurz vor dem Finale gibt es noch einmal Skill-Karten fuer dein Deck.",
+        "buttonTitle": "Festival Tag 6 abholen",
+        "icon": "music.note.list",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 3800
+            },
+            {
+                "currency": "crystals",
+                "amount": 170
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 3
+            }
+        ]
+    },
+    {
+        "id": "festival_login_day_7",
+        "day": 7,
+        "title": "Festival Finale",
+        "subtitle": "Grosse Schlussgabe",
+        "message":
+            "Das Festival endet mit einem starken Abschluss aus Ressourcen, Charakter und Karten.",
+        "buttonTitle": "Festival Finale abholen",
+        "icon": "crown.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 6200
+            },
+            {
+                "currency": "crystals",
+                "amount": 260
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "shela"
+            }
+        ],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 4
+            }
+        ]
+    }
+]

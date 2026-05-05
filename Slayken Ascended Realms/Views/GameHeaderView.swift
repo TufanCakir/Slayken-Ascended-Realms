@@ -433,10 +433,6 @@ struct GameHeaderView: View {
             definitionsByCode[currency.code] = currency
         }
 
-        for currency in loadRaidCurrencyDefinitions() {
-            definitionsByCode[currency.code] = currency
-        }
-
         for balance in currencyBalances
         where definitionsByCode[balance.code] == nil {
             definitionsByCode[balance.code] = synthesizedCurrencyDefinition(
@@ -477,44 +473,17 @@ struct GameHeaderView: View {
     private func synthesizedCurrencyDefinition(for code: String)
         -> CurrencyDefinition
     {
-        switch code {
-        case "lava_sigil":
-            CurrencyDefinition(
-                code: code,
-                name: "Lava Sigil",
-                icon: "flame.fill",
-                assetIcon: "coop_coin_lava.png",
-                sortOrder: 210
-            )
-        case "moon_token":
-            CurrencyDefinition(
-                code: code,
-                name: "Moon Token",
-                icon: "moon.stars.fill",
-                assetIcon: "coop_coin_moon.png",
-                sortOrder: 211
-            )
-        case "void_core":
-            CurrencyDefinition(
-                code: code,
-                name: "Void Core",
-                icon: "sparkles",
-                assetIcon: "coop_coin_void.png",
-                sortOrder: 212
-            )
-        default:
-            CurrencyDefinition(
-                code: code,
-                name:
-                    code
-                    .split(separator: "_")
-                    .map { $0.capitalized }
-                    .joined(separator: " "),
-                icon: "shippingbox.fill",
-                assetIcon: nil,
-                sortOrder: 900
-            )
-        }
+        CurrencyDefinition(
+            code: code,
+            name:
+                code
+                .split(separator: "_")
+                .map { $0.capitalized }
+                .joined(separator: " "),
+            icon: "shippingbox.fill",
+            assetIcon: nil,
+            sortOrder: 900
+        )
     }
 
     private func jumpDestinations(for currency: CurrencyDefinition)
@@ -587,8 +556,7 @@ struct GameHeaderView: View {
             GameHeaderView(
                 playerName: "Tufan",
                 playerPreviewImage: "preview_shen",
-                currencies: loadCurrencyDefinitions()
-                    + loadRaidCurrencyDefinitions(),
+                currencies: loadCurrencyDefinitions(),
                 ascendedLevel: 12,
                 ascendedXP: 3200,
                 energy: 18,

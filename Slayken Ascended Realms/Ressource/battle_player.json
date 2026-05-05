@@ -1,0 +1,8 @@
+{
+    "name": "Zaron",
+    "image": "preview_zaron",
+    "model": "zaron",
+    "texture": "texture_zaron_original",
+    "hp": 300,
+    "attack": 300
+}

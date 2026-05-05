@@ -7,42 +7,96 @@
 
 import Foundation
 
-private enum GlobeNodeChest {
-    static let pointChests = [
-        "chest_brown",
-        "chest_silver",
-        "chest_gold",
-        "chest_black",
-        "chest_white",
-    ]
+struct GlobeNodeChestRule: Codable, Hashable {
+    let minDifficulty: Int?
+    let maxDifficulty: Int?
+    let images: [String]
 
-    static let battleChests = [
-        "chest_brown",
-        "chest_silver",
-        "chest_gold",
-        "chest_black",
-        "chest_white",
-    ]
+    func matches(difficulty: Int) -> Bool {
+        let minimum = minDifficulty ?? .min
+        let maximum = maxDifficulty ?? .max
+        return minimum...maximum ~= difficulty
+    }
+}
+
+struct GlobeNodeChestConfig: Codable, Hashable {
+    let pointImages: [String]
+    let battleRules: [GlobeNodeChestRule]
+    let battleFallbackImages: [String]
+    let defaultImage: String
+}
+
+private enum GlobeNodeChestConfigStore {
+    private static let fallbackConfig = GlobeNodeChestConfig(
+        pointImages: [
+            "chest_brown",
+            "chest_silver",
+            "chest_gold",
+            "chest_black",
+            "chest_white",
+        ],
+        battleRules: [
+            GlobeNodeChestRule(
+                minDifficulty: 1,
+                maxDifficulty: 4,
+                images: ["chest_brown"]
+            ),
+            GlobeNodeChestRule(
+                minDifficulty: 5,
+                maxDifficulty: 7,
+                images: ["chest_silver"]
+            ),
+            GlobeNodeChestRule(
+                minDifficulty: 8,
+                maxDifficulty: 10,
+                images: ["chest_white"]
+            ),
+            GlobeNodeChestRule(
+                minDifficulty: 11,
+                maxDifficulty: 13,
+                images: ["chest_black"]
+            ),
+        ],
+        battleFallbackImages: [
+            "chest_gold",
+            "chest_black",
+        ],
+        defaultImage: "chest_brown"
+    )
+
+    static let shared: GlobeNodeChestConfig = {
+        let config = JSONResourceLoader.loadArray(
+            GlobeNodeChestConfig.self,
+            resource: "globe_node_chests"
+        ).first
+
+        return config ?? fallbackConfig
+    }()
 
     static func pointImage(for id: String) -> String {
-        let index = abs(id.hashValue) % pointChests.count
-        return pointChests[index]
+        image(from: shared.pointImages, id: id) ?? shared.defaultImage
     }
 
     static func battleImage(for id: String, difficulty: Int) -> String {
-        switch difficulty {
-        case 1...4:
-            return "chest_brown"
-        case 5...7:
-            return "chest_silver"
-        case 8...10:
-            return "chest_white"
-        case 11...13:
-            return "chest_black"
-        default:
-            let index = abs(id.hashValue) % 2
-            return index == 0 ? "chest_gold" : "chest_black"
+        let ruleImages =
+            shared.battleRules.first(where: {
+                $0.matches(difficulty: difficulty)
+            })?
+            .images
+
+        if let image = image(from: ruleImages ?? [], id: id) {
+            return image
         }
+
+        return image(from: shared.battleFallbackImages, id: id)
+            ?? shared.defaultImage
+    }
+
+    private static func image(from images: [String], id: String) -> String? {
+        let validImages = images.filter { !$0.isEmpty }
+        guard !validImages.isEmpty else { return nil }
+        let index = abs(id.hashValue) % validImages.count
+        return validImages[index]
     }
 }
 
@@ -80,11 +134,17 @@ struct GlobeEventPoint: Codable, Identifiable {
     let battles: [GlobeBattle]
 
     var resolvedNodeImage: String {
-        nodeImage ?? GlobeNodeChest.pointImage(for: id)
+        nodeImage ?? GlobeNodeChestConfigStore.pointImage(for: id)
     }
 }
 
 struct GlobeBattle: Codable, Identifiable {
+    struct CharacterReward: Codable, Identifiable, Equatable {
+        let characterID: String
+
+        var id: String { characterID }
+    }
+
     struct CardReward: Codable, Identifiable, Equatable {
         let cardID: String
         let amount: Int
@@ -106,12 +166,17 @@ struct GlobeBattle: Codable, Identifiable {
     let boss: CharacterStats?
     let xpReward: Int?
     let rewards: [CurrencyAmount]
+    let characterRewards: [CharacterReward]
     let cardRewards: [CardReward]
     let dailyRewardLimits: BattleRewardLimitDefinition?
     let story: [StoryLine]
 
     var resolvedNodeImage: String {
-        nodeImage ?? GlobeNodeChest.battleImage(for: id, difficulty: difficulty)
+        nodeImage
+            ?? GlobeNodeChestConfigStore.battleImage(
+                for: id,
+                difficulty: difficulty
+            )
     }
 
     enum CodingKeys: String, CodingKey {
@@ -129,6 +194,7 @@ struct GlobeBattle: Codable, Identifiable {
         case boss
         case xpReward
         case rewards
+        case characterRewards
         case cardRewards
         case dailyRewardLimits
         case story
@@ -177,6 +243,11 @@ struct GlobeBattle: Codable, Identifiable {
             try container.decodeIfPresent(
                 [CurrencyAmount].self,
                 forKey: .rewards
+            ) ?? []
+        characterRewards =
+            try container.decodeIfPresent(
+                [CharacterReward].self,
+                forKey: .characterRewards
             ) ?? []
         cardRewards =
             try container.decodeIfPresent(

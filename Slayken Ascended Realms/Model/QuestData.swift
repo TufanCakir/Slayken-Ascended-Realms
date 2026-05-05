@@ -12,12 +12,18 @@ enum QuestObjectiveType: String, Codable {
     case battleVictories
     case monsterKills
     case currencyCollect
+    case summons
+    case dailyLoginClaims
+    case teamMembers
+    case storyBattleCompletion
+    case chapterCompletion
 }
 
 struct QuestObjectiveDefinition: Codable, Equatable {
     let type: QuestObjectiveType
     let target: Int
     let currency: String?
+    let referenceID: String?
 }
 
 struct QuestCharacterReward: Codable, Equatable {

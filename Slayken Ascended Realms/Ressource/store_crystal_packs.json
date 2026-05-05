@@ -1,0 +1,108 @@
+[
+    {
+        "id": "crystals_small",
+        "productID": "com.slayken.ascendedrealms.crystals.small",
+        "name": "Crystal Pack S",
+        "subtitle": "Kleines Echtgeld-Paket fuer schnelle Banner-Summons.",
+        "image": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ]
+    },
+    {
+        "id": "crystals_small_bonus",
+        "productID": "com.slayken.ascendedrealms.crystals.smallbonus",
+        "name": "Crystal Bonus Pack",
+        "subtitle": "Mehr Crystals mit kleinem Bonus fuer Banner und Shop.",
+        "image": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 180
+            },
+            {
+                "currency": "crystals",
+                "amount": 100
+            }
+        ]
+    },
+    {
+        "id": "crystals_medium",
+        "productID": "com.slayken.ascendedrealms.crystals.medium",
+        "name": "Crystal Pack M",
+        "subtitle": "Mittleres Echtgeld-Paket mit Bonus-Crystals.",
+        "image": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 230
+            }
+        ]
+    },
+    {
+        "id": "crystals_character_bundle",
+        "productID": "com.slayken.ascendedrealms.crystals.characterbundle",
+        "name": "Hero Starter Bundle",
+        "subtitle": "Crystals plus ein sofort freigeschalteter Charakter.",
+        "image": "preview_lafiya",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 200
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "lafiya"
+            }
+        ]
+    },
+    {
+        "id": "crystals_large",
+        "productID": "com.slayken.ascendedrealms.crystals.large",
+        "name": "Crystal Pack L",
+        "subtitle": "Grosses Echtgeld-Paket fuer Events, Shop und Summons.",
+        "image": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 340
+            }
+        ]
+    },
+    {
+        "id": "crystals_special_mixed",
+        "productID": "com.slayken.ascendedrealms.crystals.specialmixed",
+        "name": "Special Mixed Bundle",
+        "subtitle": "Grosses Spezialpaket mit Crystals, Charakter und Karten.",
+        "image": "preview_sifili",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 420
+            },
+            {
+                "currency": "coins",
+                "amount": 2500
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "sifili"
+            }
+        ],
+        "cardRewards": [
+            {
+                "cardID": "void_pulse",
+                "amount": 1
+            },
+            {
+                "cardID": "storm_edge",
+                "amount": 2
+            }
+        ]
+    }
+]

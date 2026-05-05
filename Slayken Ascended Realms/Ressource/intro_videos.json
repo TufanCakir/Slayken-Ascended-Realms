@@ -1,0 +1,10 @@
+[
+    {
+        "id": "opening_intro_1",
+        "flow": "opening",
+        "order": 1,
+        "title": "Ankunft",
+        "text": "Der Riss oeffnet sich und zieht dich in die Ascended Realms.",
+        "video": "intro_original.mp4"
+    }
+]

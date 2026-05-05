@@ -16,6 +16,7 @@ struct VictoryView: View {
 
     let currencies: [CurrencyDefinition]
     let rewards: [CurrencyAmount]
+    let characterRewards: [GlobeBattle.CharacterReward]
     let cardRewards: [GlobeBattle.CardReward]
     let xpReward: Int
     let ascendedXPReward: Int
@@ -35,6 +36,9 @@ struct VictoryView: View {
                 victoryHeader
                 levelSummaryRow
                 rewardSection
+                if !characterRewards.isEmpty {
+                    characterRewardSection
+                }
                 if !cardRewards.isEmpty {
                     cardRewardSection
                 }
@@ -128,6 +132,13 @@ struct VictoryView: View {
         }
     }
 
+    private var characterRewardSection: some View {
+        VStack(spacing: 12) {
+            sectionTitle("Charaktere")
+            characterRewardRow
+        }
+    }
+
     private func sectionTitle(_ title: String) -> some View {
         Text(title)
             .font(.system(size: 14, weight: .black))
@@ -173,6 +184,20 @@ struct VictoryView: View {
                     subtitle: "+\(reward.amount)",
                     imageName: cardImage(for: reward.cardID),
                     systemName: "rectangle.stack.fill"
+                )
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    private var characterRewardRow: some View {
+        HStack(spacing: 10) {
+            ForEach(characterRewards) { reward in
+                rewardItem(
+                    title: characterName(for: reward.characterID),
+                    subtitle: "Neu",
+                    imageName: characterImage(for: reward.characterID),
+                    systemName: "person.fill"
                 )
             }
         }
@@ -320,6 +345,16 @@ struct VictoryView: View {
         gameState.abilityCards.first(where: { $0.id == cardID })?.name ?? cardID
     }
 
+    private func characterName(for characterID: String) -> String {
+        gameState.summonCharacters.first(where: { $0.id == characterID })?.name
+            ?? characterID
+    }
+
+    private func characterImage(for characterID: String) -> String? {
+        gameState.summonCharacters.first(where: { $0.id == characterID })?
+            .summonImage
+    }
+
     private func cardImage(for cardID: String) -> String? {
         gameState.abilityCards.first(where: { $0.id == cardID })?.image
     }
@@ -331,6 +366,9 @@ struct VictoryView: View {
         rewards: [
             CurrencyAmount(currency: "coins", amount: 120),
             CurrencyAmount(currency: "crystals", amount: 5),
+        ],
+        characterRewards: [
+            GlobeBattle.CharacterReward(characterID: "zaron")
         ],
         cardRewards: [
             GlobeBattle.CardReward(cardID: "slash_red", amount: 1)

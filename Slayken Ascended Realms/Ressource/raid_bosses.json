@@ -1,0 +1,382 @@
+[
+    {
+        "id": "tutorial-colossus",
+        "name": "Ashen Colossus",
+        "maxHP": 1800,
+        "attack": 70,
+        "recommendedPartySize": 4,
+        "summary": "Ein erster Coop-Raidboss fuer 2 bis 4 Spieler.",
+        "model": "nanekihs",
+        "texture": null,
+        "element": "fire",
+        "groundTexture": "bg_coop_lava",
+        "skyboxTexture": "bg_coop_lava",
+        "difficulty": 2,
+        "recommendedCharacterLevel": 5,
+        "startCountdownSeconds": 5,
+        "xpReward": 180,
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 240
+            },
+            {
+                "currency": "crystals",
+                "amount": 12
+            }
+        ],
+        "coopCurrencies": [
+            {
+                "code": "lava_sigil",
+                "name": "Lava Sigil",
+                "icon": "flame.fill",
+                "assetIcon": "coop_coin_lava.png",
+                "amount": 30,
+                "sortOrder": 210
+            }
+        ],
+        "cardRewards": [],
+        "partyCharacters": [
+            {
+                "id": "zaron",
+                "displayName": "Zaron",
+                "model": "zaron",
+                "texture": "texture_zaron_original",
+                "previewImage": "preview_zaron"
+            },
+            {
+                "id": "aika",
+                "displayName": "Aika",
+                "model": "aika",
+                "texture": "texture_aika_original",
+                "previewImage": "preview_aika"
+            },
+            {
+                "id": "juji",
+                "displayName": "Juji",
+                "model": "juji",
+                "texture": "texture_juji_original",
+                "previewImage": "preview_juji"
+            },
+            {
+                "id": "shen",
+                "displayName": "Shen",
+                "model": "shen",
+                "texture": "texture_shen_original",
+                "previewImage": "preview_shen"
+            }
+        ],
+        "raidRoles": [
+            {
+                "id": "ashen-tank",
+                "role": "tank",
+                "displayName": "Tank",
+                "summary":
+                    "Zieht Boss-Angriffe, hat mehr Leben und blockt einen Teil des Schadens.",
+                "preferredCount": 1,
+                "attackBonusPercent": 3,
+                "maxHPBonusPercent": 30,
+                "healPower": 0,
+                "shieldValue": 90,
+                "bossDamageReductionPercent": 30,
+                "tauntWeight": 4
+            },
+            {
+                "id": "ashen-healer",
+                "role": "healer",
+                "displayName": "Healer",
+                "summary":
+                    "Heilt angeschlagene Gruppenmitglieder und haelt den Raid stabil.",
+                "preferredCount": 1,
+                "attackBonusPercent": 0,
+                "maxHPBonusPercent": 15,
+                "healPower": 220,
+                "shieldValue": 25,
+                "bossDamageReductionPercent": 5,
+                "tauntWeight": 1
+            },
+            {
+                "id": "ashen-damage",
+                "role": "damageDealer",
+                "displayName": "Damage Dealer",
+                "summary":
+                    "Verursacht hohen Schaden und drueckt die Boss-HP schnell herunter.",
+                "preferredCount": 1,
+                "attackBonusPercent": 35,
+                "maxHPBonusPercent": 0,
+                "healPower": 0,
+                "shieldValue": 0,
+                "bossDamageReductionPercent": 0,
+                "tauntWeight": 1
+            },
+            {
+                "id": "ashen-support",
+                "role": "supporter",
+                "displayName": "Supporter",
+                "summary":
+                    "Staerkt die Gruppe mit Schutz und kleinen Angriffs-Buffs.",
+                "preferredCount": 1,
+                "attackBonusPercent": 12,
+                "maxHPBonusPercent": 12,
+                "healPower": 80,
+                "shieldValue": 60,
+                "bossDamageReductionPercent": 8,
+                "tauntWeight": 1
+            }
+        ]
+    },
+    {
+        "id": "moon-sentinel",
+        "name": "Moon Sentinel",
+        "maxHP": 3200,
+        "attack": 110,
+        "recommendedPartySize": 4,
+        "summary":
+            "Ein mittlerer Raidboss mit solider Ausdauer und konstantem Druck.",
+        "model": "jirgin",
+        "texture": null,
+        "element": "ice",
+        "groundTexture": "festival_moon",
+        "skyboxTexture": "festival_moon",
+        "difficulty": 4,
+        "recommendedCharacterLevel": 10,
+        "startCountdownSeconds": 5,
+        "xpReward": 260,
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 420
+            },
+            {
+                "currency": "crystals",
+                "amount": 18
+            }
+        ],
+        "coopCurrencies": [
+            {
+                "code": "moon_token",
+                "name": "Moon Token",
+                "icon": "moon.stars.fill",
+                "assetIcon": "coop_coin_moon.png",
+                "amount": 30,
+                "sortOrder": 211
+            }
+        ],
+        "cardRewards": [],
+        "partyCharacters": [
+            {
+                "id": "shela",
+                "displayName": "Shela",
+                "model": "shela",
+                "texture": "texture_shela_original",
+                "previewImage": "preview_shela"
+            },
+            {
+                "id": "lafiya",
+                "displayName": "Lafiya",
+                "model": "lafiya",
+                "texture": "texture_lafiya_original",
+                "previewImage": "preview_lafiya"
+            },
+            {
+                "id": "sanya",
+                "displayName": "Sanya",
+                "model": "sanya",
+                "texture": "texture_sanya_original",
+                "previewImage": "preview_sanya"
+            },
+            {
+                "id": "shiro",
+                "displayName": "Shiro",
+                "model": "shiro",
+                "texture": "texture_shiro_original",
+                "previewImage": "preview_shiro"
+            }
+        ],
+        "raidRoles": [
+            {
+                "id": "moon-tank",
+                "role": "tank",
+                "displayName": "Tank",
+                "summary":
+                    "Bindet den Boss vorne und nimmt schwere Treffer auf sich.",
+                "preferredCount": 1,
+                "attackBonusPercent": 4,
+                "maxHPBonusPercent": 35,
+                "healPower": 0,
+                "shieldValue": 100,
+                "bossDamageReductionPercent": 28,
+                "tauntWeight": 4
+            },
+            {
+                "id": "moon-healer",
+                "role": "healer",
+                "displayName": "Healer",
+                "summary":
+                    "Haelt die Gruppe mit staerkeren Heilungen im Kampf.",
+                "preferredCount": 1,
+                "attackBonusPercent": 0,
+                "maxHPBonusPercent": 18,
+                "healPower": 260,
+                "shieldValue": 30,
+                "bossDamageReductionPercent": 6,
+                "tauntWeight": 1
+            },
+            {
+                "id": "moon-damage",
+                "role": "damageDealer",
+                "displayName": "Damage Dealer",
+                "summary":
+                    "Fokussiert konstanten DPS fuer schnellere Bossphasen.",
+                "preferredCount": 1,
+                "attackBonusPercent": 38,
+                "maxHPBonusPercent": 0,
+                "healPower": 0,
+                "shieldValue": 0,
+                "bossDamageReductionPercent": 0,
+                "tauntWeight": 1
+            },
+            {
+                "id": "moon-support",
+                "role": "supporter",
+                "displayName": "Supporter",
+                "summary":
+                    "Bringt Schild und kleine Buffs in laengeren Kaempfen.",
+                "preferredCount": 1,
+                "attackBonusPercent": 14,
+                "maxHPBonusPercent": 15,
+                "healPower": 90,
+                "shieldValue": 75,
+                "bossDamageReductionPercent": 10,
+                "tauntWeight": 1
+            }
+        ]
+    },
+    {
+        "id": "void-revenant",
+        "name": "Void Revenant",
+        "maxHP": 5200,
+        "attack": 155,
+        "recommendedPartySize": 4,
+        "summary":
+            "Ein spaeterer Coop-Raid mit hoeherem Bossdruck und laengerem Kampf.",
+        "model": "krevas",
+        "texture": null,
+        "element": "void",
+        "groundTexture": "bg_void",
+        "skyboxTexture": "bg_void",
+        "difficulty": 6,
+        "recommendedCharacterLevel": 18,
+        "startCountdownSeconds": 5,
+        "xpReward": 360,
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 700
+            },
+            {
+                "currency": "crystals",
+                "amount": 28
+            }
+        ],
+        "coopCurrencies": [
+            {
+                "code": "void_core",
+                "name": "Void Core",
+                "icon": "sparkles",
+                "assetIcon": "coop_coin_void.png",
+                "amount": 30,
+                "sortOrder": 212
+            }
+        ],
+        "cardRewards": [],
+        "partyCharacters": [
+            {
+                "id": "wuri",
+                "displayName": "Wuri",
+                "model": "wuri",
+                "texture": "texture_wuri_original",
+                "previewImage": "preview_wuri"
+            },
+            {
+                "id": "rukuni",
+                "displayName": "Rukuni",
+                "model": "rukuni",
+                "texture": "texture_rukuni_original",
+                "previewImage": "preview_rukuni"
+            },
+            {
+                "id": "kasa",
+                "displayName": "Kasa",
+                "model": "kasa",
+                "texture": "texture_kasa_original",
+                "previewImage": "preview_kasa"
+            },
+            {
+                "id": "tsohon",
+                "displayName": "Tsohon",
+                "model": "tsohon",
+                "texture": "texture_tsohon_original",
+                "previewImage": "preview_tsohon"
+            }
+        ],
+        "raidRoles": [
+            {
+                "id": "void-tank",
+                "role": "tank",
+                "displayName": "Tank",
+                "summary":
+                    "Zieht die haertesten Treffer und stabilisiert die Front.",
+                "preferredCount": 1,
+                "attackBonusPercent": 5,
+                "maxHPBonusPercent": 38,
+                "healPower": 0,
+                "shieldValue": 120,
+                "bossDamageReductionPercent": 30,
+                "tauntWeight": 4
+            },
+            {
+                "id": "void-healer",
+                "role": "healer",
+                "displayName": "Healer",
+                "summary":
+                    "Braucht gutes Timing, um den Burst-Schaden des Bosses abzufangen.",
+                "preferredCount": 1,
+                "attackBonusPercent": 0,
+                "maxHPBonusPercent": 20,
+                "healPower": 300,
+                "shieldValue": 35,
+                "bossDamageReductionPercent": 7,
+                "tauntWeight": 1
+            },
+            {
+                "id": "void-damage",
+                "role": "damageDealer",
+                "displayName": "Damage Dealer",
+                "summary":
+                    "Muss den Boss zuegig druecken, bevor der Druck zu hoch wird.",
+                "preferredCount": 1,
+                "attackBonusPercent": 42,
+                "maxHPBonusPercent": 0,
+                "healPower": 0,
+                "shieldValue": 0,
+                "bossDamageReductionPercent": 0,
+                "tauntWeight": 1
+            },
+            {
+                "id": "void-support",
+                "role": "supporter",
+                "displayName": "Supporter",
+                "summary":
+                    "Hilft mit Schutz und Offensiv-Buffs gegen spaetere Bosse.",
+                "preferredCount": 1,
+                "attackBonusPercent": 16,
+                "maxHPBonusPercent": 16,
+                "healPower": 100,
+                "shieldValue": 85,
+                "bossDamageReductionPercent": 11,
+                "tauntWeight": 1
+            }
+        ]
+    }
+]

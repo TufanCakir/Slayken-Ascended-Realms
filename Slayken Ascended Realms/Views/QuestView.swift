@@ -20,6 +20,14 @@ struct QuestView: View {
         [PlayerQuestCounter]
     @Query(sort: \PlayerAccountProgress.id) private var accountProgress:
         [PlayerAccountProgress]
+    @Query(sort: \SummonBannerProgress.bannerID) private
+        var summonProgressRecords: [SummonBannerProgress]
+    @Query(sort: \TeamMemberRecord.slotIndex) private var teamMembers:
+        [TeamMemberRecord]
+    @Query(sort: \PlayerDailyLoginProgress.id) private var dailyLoginProgress:
+        [PlayerDailyLoginProgress]
+    @Query(sort: \PlayerBattleProgress.battleID) private var completedBattles:
+        [PlayerBattleProgress]
     let quests: [QuestDefinition]
     let onClose: () -> Void
 
@@ -561,6 +569,18 @@ struct QuestView: View {
         case .currencyCollect:
             let currency = quest.objective.currency ?? "coins"
             return questCounterValue(for: "currency_earned_\(currency)")
+        case .summons:
+            return summonProgressRecords.reduce(0) {
+                $0 + max(0, $1.summonCount)
+            }
+        case .dailyLoginClaims:
+            return dailyLoginProgress.first?.totalClaims ?? 0
+        case .teamMembers:
+            return Set(teamMembers.map(\.slotIndex)).count
+        case .storyBattleCompletion:
+            return storyBattleProgress(for: quest.objective.referenceID)
+        case .chapterCompletion:
+            return chapterCompletionProgress(for: quest.objective.referenceID)
         }
     }
 
@@ -579,11 +599,57 @@ struct QuestView: View {
         case .currencyCollect:
             return
                 "\(currencyName(for: quest.objective.currency ?? "coins")) \(current)/\(quest.objective.target)"
+        case .summons:
+            return "Summons \(current)/\(quest.objective.target)"
+        case .dailyLoginClaims:
+            return "Logins \(current)/\(quest.objective.target)"
+        case .teamMembers:
+            return "Team \(current)/\(quest.objective.target)"
+        case .storyBattleCompletion:
+            return "Story-Kaempfe \(current)/\(quest.objective.target)"
+        case .chapterCompletion:
+            return "Kapitel abgeschlossen \(current)/\(quest.objective.target)"
         }
     }
 
     private func questCounterValue(for key: String) -> Int {
         questCounters.first(where: { $0.key == key })?.value ?? 0
+    }
+
+    private func storyBattleProgress(for referenceID: String?) -> Int {
+        let completedBattleIDs = Set(completedBattles.map(\.battleID))
+
+        guard let referenceID, !referenceID.isEmpty else {
+            return completedBattleIDs.filter { $0.hasPrefix("chapter_") }.count
+        }
+
+        if referenceID.contains("_battle_") {
+            return completedBattleIDs.contains(referenceID) ? 1 : 0
+        }
+
+        let chapterBattleIDs = storyBattleIDs(forChapterID: referenceID)
+        guard !chapterBattleIDs.isEmpty else { return 0 }
+        return chapterBattleIDs.filter { completedBattleIDs.contains($0) }.count
+    }
+
+    private func chapterCompletionProgress(for referenceID: String?) -> Int {
+        guard let referenceID, !referenceID.isEmpty else { return 0 }
+        let completedBattleIDs = Set(completedBattles.map(\.battleID))
+        let chapterBattleIDs = storyBattleIDs(forChapterID: referenceID)
+        guard !chapterBattleIDs.isEmpty else { return 0 }
+        return chapterBattleIDs.allSatisfy { completedBattleIDs.contains($0) }
+            ? 1 : 0
+    }
+
+    private func storyBattleIDs(forChapterID chapterID: String) -> [String] {
+        let chapters = loadGlobeEventChapters()
+        guard let chapter = chapters.first(where: { $0.id == chapterID }) else {
+            return []
+        }
+
+        return chapter.points.flatMap { point in
+            point.battles.map(\.id)
+        }
     }
 
     private func currencyName(for code: String) -> String {

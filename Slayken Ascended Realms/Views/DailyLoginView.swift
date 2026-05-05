@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct DailyLoginView: View {
+    @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
+    @State private var didScrollToHighlightedDay = false
+    @State private var revealCards = false
 
     let rewards: [DailyLoginRewardDefinition]
     let currencies: [CurrencyDefinition]
@@ -47,20 +50,52 @@ struct DailyLoginView: View {
         )
     }
 
+    private var rewardGridRows: [GridItem] {
+        [
+            GridItem(.fixed(228), spacing: 14, alignment: .top),
+            GridItem(.fixed(228), spacing: 14, alignment: .top),
+        ]
+    }
+
     var body: some View {
 
         VStack(spacing: 20) {
             header
             statusCard
 
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 12) {
-                    ForEach(rewards) { reward in
-                        rewardDayCard(reward)
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHGrid(rows: rewardGridRows, spacing: 14) {
+                        ForEach(rewards) { reward in
+                            rewardDayCard(reward)
+                                .frame(width: 290, height: 228, alignment: .top)
+                                .opacity(cardOpacity(for: reward))
+                                .offset(y: cardOffset(for: reward))
+                                .animation(
+                                    .spring(
+                                        response: 0.55,
+                                        dampingFraction: 0.84
+                                    )
+                                    .delay(cardAnimationDelay(for: reward)),
+                                    value: revealCards
+                                )
+                                .id(reward.day)
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 24)
+                }
+                .onAppear {
+                    guard !didScrollToHighlightedDay else { return }
+                    didScrollToHighlightedDay = true
+                    revealCards = false
+                    DispatchQueue.main.async {
+                        revealCards = true
+                        withAnimation(.easeInOut(duration: 0.4)) {
+                            proxy.scrollTo(highlightedDay, anchor: .center)
+                        }
                     }
                 }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 24)
             }
         }
         .padding(.top, 20)
@@ -194,40 +229,15 @@ struct DailyLoginView: View {
 
             VStack(spacing: 8) {
                 ForEach(reward.rewards) { item in
-                    HStack {
-                        currencyIconView(
-                            assetIconName: currencies.first(where: {
-                                $0.code == item.currency
-                            })?
-                            .assetIcon,
-                            symbolName: currencies.first(where: {
-                                $0.code == item.currency
-                            })?
-                            .icon
-                        )
-                        .frame(width: 20, height: 20)
+                    currencyRewardRow(item)
+                }
 
-                        Text(
-                            currencies.first(where: { $0.code == item.currency }
-                            )?.name ?? item.currency.capitalized
-                        )
-                        .font(
-                            .system(size: 14, weight: .bold, design: .rounded)
-                        )
-                        .foregroundStyle(.white)
+                ForEach(reward.characterRewards) { item in
+                    characterRewardRow(item)
+                }
 
-                        Spacer()
-
-                        Text("+\(item.amount)")
-                            .font(
-                                .system(
-                                    size: 14,
-                                    weight: .black,
-                                    design: .rounded
-                                )
-                            )
-                            .foregroundStyle(.white.opacity(0.88))
-                    }
+                ForEach(reward.cardRewards) { item in
+                    cardRewardRow(item)
                 }
             }
         }
@@ -240,6 +250,25 @@ struct DailyLoginView: View {
             RoundedRectangle(cornerRadius: 26, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
         }
+        .shadow(
+            color: isHighlighted ? .orange.opacity(0.16) : .clear,
+            radius: 18
+        )
+    }
+
+    private func cardAnimationDelay(for reward: DailyLoginRewardDefinition)
+        -> Double
+    {
+        let distanceFromHighlight = abs(reward.day - highlightedDay)
+        return min(Double(distanceFromHighlight) * 0.035, 0.42)
+    }
+
+    private func cardOpacity(for reward: DailyLoginRewardDefinition) -> Double {
+        revealCards || reward.day == highlightedDay ? 1 : 0
+    }
+
+    private func cardOffset(for reward: DailyLoginRewardDefinition) -> CGFloat {
+        revealCards || reward.day == highlightedDay ? 0 : 22
     }
 
     @ViewBuilder
@@ -255,6 +284,93 @@ struct DailyLoginView: View {
             }
         } else {
             Image(systemName: symbolName ?? "gift.fill")
+                .foregroundStyle(.white)
+        }
+    }
+
+    private func currencyRewardRow(_ reward: CurrencyAmount) -> some View {
+        let currency = currencies.first { $0.code == reward.currency }
+
+        return HStack {
+            currencyIconView(
+                assetIconName: currency?.assetIcon,
+                symbolName: currency?.icon
+            )
+            .frame(width: 20, height: 20)
+
+            Text(currency?.name ?? reward.currency.capitalized)
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .foregroundStyle(.white)
+
+            Spacer()
+
+            Text("+\(reward.amount)")
+                .font(.system(size: 14, weight: .black, design: .rounded))
+                .foregroundStyle(.white.opacity(0.88))
+        }
+    }
+
+    private func characterRewardRow(_ reward: GiftCharacterReward) -> some View
+    {
+        let character = gameState.summonCharacters.first {
+            $0.id == reward.characterID
+        }
+
+        return HStack(spacing: 10) {
+            rewardPreviewImage(
+                character?.summonImage,
+                fallbackSystemName: "person.fill"
+            )
+            .frame(width: 24, height: 24)
+
+            Text(character?.name ?? reward.characterID)
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .foregroundStyle(.white)
+
+            Spacer()
+
+            Text("Charakter")
+                .font(.system(size: 12, weight: .black, design: .rounded))
+                .foregroundStyle(.orange.opacity(0.9))
+        }
+    }
+
+    private func cardRewardRow(_ reward: GiftCardReward) -> some View {
+        let card = gameState.abilityCards.first { $0.id == reward.cardID }
+
+        return HStack(spacing: 10) {
+            rewardPreviewImage(
+                card?.image,
+                fallbackSystemName: "rectangle.stack.fill"
+            )
+            .frame(width: 24, height: 24)
+
+            Text(card?.name ?? reward.cardID)
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .foregroundStyle(.white)
+
+            Spacer()
+
+            Text("x\(reward.amount)")
+                .font(.system(size: 12, weight: .black, design: .rounded))
+                .foregroundStyle(.cyan.opacity(0.9))
+        }
+    }
+
+    @ViewBuilder
+    private func rewardPreviewImage(
+        _ imageName: String?,
+        fallbackSystemName: String
+    ) -> some View {
+        if let imageName,
+            RemoteContentManager.hasCachedOrBundledImage(named: imageName)
+        {
+            RemoteAssetImage(imageName, contentMode: .fill) {
+                Color.white.opacity(0.08)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        } else {
+            Image(systemName: fallbackSystemName)
                 .foregroundStyle(.white)
         }
     }
@@ -305,12 +421,15 @@ struct DailyLoginView: View {
                 rewards: [
                     CurrencyAmount(currency: "gold", amount: 500),
                     CurrencyAmount(currency: "gems", amount: 25),
-                ]
+                ],
+                characterRewards: [GiftCharacterReward(characterID: "zaron")],
+                cardRewards: [GiftCardReward(cardID: "slash_red", amount: 1)]
             ),
             dayNumber: 1
         ),
         onClaim: {},
         onClose: {}
     )
+    .environmentObject(GameState())
     .environmentObject(ThemeManager())
 }

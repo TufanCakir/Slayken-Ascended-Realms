@@ -108,14 +108,71 @@ struct DailyLoginRewardState: Equatable {
     let dayNumber: Int
 }
 
+struct LoginRewardCampaign: Identifiable, Equatable {
+    let id: String
+    let title: String
+    let subtitle: String
+    let resource: String
+    let rewards: [DailyLoginRewardDefinition]
+}
+
+private struct LoginRewardCampaignManifest: Codable, Identifiable, Equatable {
+    let id: String
+    let title: String
+    let subtitle: String
+    let resource: String
+}
+
 func loadGiftBoxDefinitions() -> [GiftBoxDefinition] {
     JSONResourceLoader.loadArray(GiftBoxDefinition.self, resource: "gift")
 }
 
-func loadDailyLoginRewardDefinitions() -> [DailyLoginRewardDefinition] {
+func loadDailyLoginRewardDefinitions(resource: String = "daily_login")
+    -> [DailyLoginRewardDefinition]
+{
     JSONResourceLoader.loadArray(
         DailyLoginRewardDefinition.self,
-        resource: "daily_login"
+        resource: resource
     )
     .sorted { $0.day < $1.day }
+}
+
+func loadLoginRewardCampaigns() -> [LoginRewardCampaign] {
+    let manifests = JSONResourceLoader.loadArray(
+        LoginRewardCampaignManifest.self,
+        resource: "login_campaigns"
+    )
+
+    let fallbackManifests = [
+        LoginRewardCampaignManifest(
+            id: "daily_login",
+            title: "Daily Login",
+            subtitle: "30 Tage Login-Belohnungen",
+            resource: "daily_login"
+        ),
+        LoginRewardCampaignManifest(
+            id: "event_login_launch",
+            title: "Launch Login",
+            subtitle: "Event-Login zum Release",
+            resource: "event_login_launch"
+        ),
+        LoginRewardCampaignManifest(
+            id: "event_login_festival",
+            title: "Festival Login",
+            subtitle: "Event-Login mit Spezialbelohnungen",
+            resource: "event_login_festival"
+        ),
+    ]
+
+    return (manifests.isEmpty ? fallbackManifests : manifests).map { manifest in
+        LoginRewardCampaign(
+            id: manifest.id,
+            title: manifest.title,
+            subtitle: manifest.subtitle,
+            resource: manifest.resource,
+            rewards: loadDailyLoginRewardDefinitions(
+                resource: manifest.resource
+            )
+        )
+    }
 }

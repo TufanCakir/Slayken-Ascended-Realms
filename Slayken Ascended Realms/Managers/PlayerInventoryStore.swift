@@ -445,11 +445,12 @@ enum PlayerInventoryStore {
     static func dailyLoginGift(
         from rewards: [DailyLoginRewardDefinition],
         now: Date = .now,
+        progressID: String = "daily_login",
         in context: ModelContext
     ) -> DailyLoginRewardState? {
         guard !rewards.isEmpty else { return nil }
 
-        let progress = dailyLoginProgress(in: context)
+        let progress = dailyLoginProgress(id: progressID, in: context)
         guard
             let nextIndex = nextDailyGiftIndex(
                 progress: progress,
@@ -470,12 +471,14 @@ enum PlayerInventoryStore {
     static func claimDailyLoginGift(
         from rewards: [DailyLoginRewardDefinition],
         now: Date = .now,
+        progressID: String = "daily_login",
         in context: ModelContext
     ) -> DailyLoginRewardState? {
         guard
             let availableGift = dailyLoginGift(
                 from: rewards,
                 now: now,
+                progressID: progressID,
                 in: context
             )
         else {
@@ -494,7 +497,7 @@ enum PlayerInventoryStore {
             )
         }
 
-        let progress = dailyLoginProgress(in: context)
+        let progress = dailyLoginProgress(id: progressID, in: context)
         let calendar = Calendar.current
 
         if let lastClaimedAt = progress.lastClaimedAt,
@@ -823,17 +826,20 @@ enum PlayerInventoryStore {
         return try? context.fetch(descriptor).first
     }
 
-    private static func dailyLoginProgress(in context: ModelContext)
+    private static func dailyLoginProgress(
+        id: String = "daily_login",
+        in context: ModelContext
+    )
         -> PlayerDailyLoginProgress
     {
         let descriptor = FetchDescriptor<PlayerDailyLoginProgress>(
-            predicate: #Predicate { $0.id == "daily_login" }
+            predicate: #Predicate { $0.id == id }
         )
         if let progress = try? context.fetch(descriptor).first {
             return progress
         }
 
-        let progress = PlayerDailyLoginProgress()
+        let progress = PlayerDailyLoginProgress(id: id)
         context.insert(progress)
         save(context)
         return progress

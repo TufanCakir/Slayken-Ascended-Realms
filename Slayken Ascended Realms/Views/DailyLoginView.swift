@@ -13,10 +13,15 @@ struct DailyLoginView: View {
     @State private var didScrollToHighlightedDay = false
     @State private var revealCards = false
 
+    let campaigns: [LoginRewardCampaign]
+    let selectedCampaignID: String?
+    let campaignTitle: String
+    let campaignSubtitle: String
     let rewards: [DailyLoginRewardDefinition]
     let currencies: [CurrencyDefinition]
     let availableReward: DailyLoginRewardState?
     let onClaim: () -> Void
+    let onSelectCampaign: (String) -> Void
     let onClose: () -> Void
 
     private var activeTheme: GameTheme? {
@@ -50,25 +55,18 @@ struct DailyLoginView: View {
         )
     }
 
-    private var rewardGridRows: [GridItem] {
-        [
-            GridItem(.fixed(228), spacing: 14, alignment: .top),
-            GridItem(.fixed(228), spacing: 14, alignment: .top),
-        ]
-    }
-
     var body: some View {
 
         VStack(spacing: 20) {
             header
+            campaignSelector
             statusCard
 
             ScrollViewReader { proxy in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHGrid(rows: rewardGridRows, spacing: 14) {
+                ScrollView(.vertical, showsIndicators: true) {
+                    LazyVStack(spacing: 14) {
                         ForEach(rewards) { reward in
                             rewardDayCard(reward)
-                                .frame(width: 290, height: 228, alignment: .top)
                                 .opacity(cardOpacity(for: reward))
                                 .offset(y: cardOffset(for: reward))
                                 .animation(
@@ -92,8 +90,19 @@ struct DailyLoginView: View {
                     DispatchQueue.main.async {
                         revealCards = true
                         withAnimation(.easeInOut(duration: 0.4)) {
-                            proxy.scrollTo(highlightedDay, anchor: .center)
+                            proxy.scrollTo(highlightedDay, anchor: .top)
                         }
+                    }
+                }
+                .onChange(of: selectedCampaignID) { _, _ in
+                    didScrollToHighlightedDay = false
+                    revealCards = false
+                    DispatchQueue.main.async {
+                        revealCards = true
+                        withAnimation(.easeInOut(duration: 0.35)) {
+                            proxy.scrollTo(highlightedDay, anchor: .top)
+                        }
+                        didScrollToHighlightedDay = true
                     }
                 }
             }
@@ -123,11 +132,11 @@ struct DailyLoginView: View {
     private var header: some View {
         HStack {
             VStack(alignment: .leading, spacing: 6) {
-                Text("Daily Login")
+                Text(campaignTitle)
                     .font(.system(size: 30, weight: .black, design: .serif))
                     .foregroundStyle(.white)
 
-                Text("30 Tage Login-Belohnungen")
+                Text(campaignSubtitle)
                     .font(.system(size: 14, weight: .medium, design: .rounded))
                     .foregroundStyle(.white.opacity(0.7))
             }
@@ -146,11 +155,70 @@ struct DailyLoginView: View {
         .padding(.horizontal, 20)
     }
 
+    private var campaignSelector: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                ForEach(campaigns) { campaign in
+                    Button {
+                        onSelectCampaign(campaign.id)
+                    } label: {
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(campaign.title)
+                                .font(
+                                    .system(
+                                        size: 13,
+                                        weight: .black,
+                                        design: .rounded
+                                    )
+                                )
+                            Text(campaign.subtitle)
+                                .font(
+                                    .system(
+                                        size: 10,
+                                        weight: .medium,
+                                        design: .rounded
+                                    )
+                                )
+                                .lineLimit(1)
+                                .opacity(0.78)
+                        }
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(
+                            selectedCampaignID == campaign.id
+                                ? Color.white.opacity(0.18)
+                                : Color.black.opacity(0.28),
+                            in: RoundedRectangle(
+                                cornerRadius: 16,
+                                style: .continuous
+                            )
+                        )
+                        .overlay {
+                            RoundedRectangle(
+                                cornerRadius: 16,
+                                style: .continuous
+                            )
+                            .stroke(
+                                selectedCampaignID == campaign.id
+                                    ? .white.opacity(0.18)
+                                    : .white.opacity(0.08),
+                                lineWidth: 1
+                            )
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(.horizontal, 20)
+        }
+    }
+
     private var statusCard: some View {
         VStack(spacing: 14) {
             Text(
                 availableReward == nil
-                    ? "Heute bereits eingesammelt" : "Belohnung verfuegbar"
+                    ? "Heute bereits eingesammelt" : "Belohnung verfügbar"
             )
             .font(.system(size: 12, weight: .black, design: .rounded))
             .tracking(2)
@@ -182,7 +250,7 @@ struct DailyLoginView: View {
                 }
                 .buttonStyle(.plain)
             } else {
-                Text("Komm morgen wieder fuer den naechsten Kalendertag.")
+                Text("Komm morgen wieder für den nächsten Kalendertag.")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.white.opacity(0.84))
@@ -378,12 +446,24 @@ struct DailyLoginView: View {
 
 #Preview {
     DailyLoginView(
+        campaigns: [
+            LoginRewardCampaign(
+                id: "daily_login",
+                title: "Daily Login",
+                subtitle: "30 Tage Login-Belohnungen",
+                resource: "daily_login",
+                rewards: []
+            )
+        ],
+        selectedCampaignID: "daily_login",
+        campaignTitle: "Daily Login",
+        campaignSubtitle: "30 Tage Login-Belohnungen",
         rewards: [
             DailyLoginRewardDefinition(
                 id: "preview-day-1",
                 day: 1,
                 title: "Willkommensbonus",
-                subtitle: "Ein starker Start fuer dein Abenteuer",
+                subtitle: "Ein starker Start für dein Abenteuer",
                 message: "Du hast deine erste Tagesbelohnung erhalten.",
                 buttonTitle: "Abholen",
                 icon: "star.fill",
@@ -414,7 +494,7 @@ struct DailyLoginView: View {
                 id: "preview-day-1",
                 day: 1,
                 title: "Willkommensbonus",
-                subtitle: "Ein starker Start fuer dein Abenteuer",
+                subtitle: "Ein starker Start für dein Abenteuer",
                 message: "Du hast deine erste Tagesbelohnung erhalten.",
                 buttonTitle: "Abholen",
                 icon: "star.fill",
@@ -428,6 +508,7 @@ struct DailyLoginView: View {
             dayNumber: 1
         ),
         onClaim: {},
+        onSelectCampaign: { _ in },
         onClose: {}
     )
     .environmentObject(GameState())

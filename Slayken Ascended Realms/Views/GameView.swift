@@ -48,6 +48,7 @@ struct GameView: View {
     @State private var showCreateClass = false
     @State private var showGift = false
     @State private var showDailyLogin = false
+    @State private var activeLoginCampaignID: String?
     @State private var selectedTab: GameTab = .game
     @State private var resourceRefreshDate = Date()
     @State private var battleResourceMessage = ""
@@ -67,8 +68,8 @@ struct GameView: View {
         loadGiftBoxDefinitions()
     }
 
-    private var dailyLoginRewards: [DailyLoginRewardDefinition] {
-        loadDailyLoginRewardDefinitions()
+    private var loginCampaigns: [LoginRewardCampaign] {
+        loadLoginRewardCampaigns()
     }
 
     private var quests: [QuestDefinition] {
@@ -268,6 +269,7 @@ struct GameView: View {
                     },
                     onDailyLogin: {
                         triggerNavigationSpinner()
+                        activeLoginCampaignID = preferredLoginCampaignID
                         showDailyLogin = true
                     },
                     onSettings: {
@@ -363,10 +365,18 @@ struct GameView: View {
             }
             .fullScreenCover(isPresented: $showDailyLogin) {
                 DailyLoginView(
-                    rewards: dailyLoginRewards,
+                    campaigns: loginCampaigns,
+                    selectedCampaignID: activeLoginCampaign?.id,
+                    campaignTitle: activeLoginCampaign?.title ?? "Daily Login",
+                    campaignSubtitle: activeLoginCampaign?.subtitle
+                        ?? "Login-Belohnungen",
+                    rewards: activeLoginCampaign?.rewards ?? [],
                     currencies: gameState.currencies,
-                    availableReward: availableDailyReward,
+                    availableReward: activeAvailableLoginReward,
                     onClaim: claimDailyGiftFromMenu,
+                    onSelectCampaign: { campaignID in
+                        activeLoginCampaignID = campaignID
+                    },
                     onClose: {
                         showDailyLogin = false
                     }
@@ -557,6 +567,7 @@ struct GameView: View {
                         onDailyLogin: {
                             showGlobeEvents = false
                             selectedTab = .game
+                            activeLoginCampaignID = preferredLoginCampaignID
                             showDailyLogin = true
                         },
                         onSettings: {
@@ -713,10 +724,29 @@ struct GameView: View {
     }
 
     private var availableDailyReward: DailyLoginRewardState? {
-        PlayerInventoryStore.dailyLoginGift(
-            from: dailyLoginRewards,
-            in: modelContext
+        loginCampaignReward(
+            for: loginCampaigns.first { $0.id == "daily_login" }
         )
+    }
+
+    private var activeLoginCampaign: LoginRewardCampaign? {
+        if let activeLoginCampaignID,
+            let campaign = loginCampaigns.first(where: {
+                $0.id == activeLoginCampaignID
+            })
+        {
+            return campaign
+        }
+
+        return loginCampaigns.first
+    }
+
+    private var activeAvailableLoginReward: DailyLoginRewardState? {
+        loginCampaignReward(for: activeLoginCampaign)
+    }
+
+    private var preferredLoginCampaignID: String? {
+        nextAvailableLoginCampaign()?.id ?? loginCampaigns.first?.id
     }
 
     private var storyArchiveChapters: [GlobeEventChapter] {
@@ -922,15 +952,42 @@ struct GameView: View {
     }
 
     private func claimDailyGiftFromMenu() {
+        guard let campaign = activeLoginCampaign else {
+            showDailyLogin = false
+            return
+        }
+
         PlayerInventoryStore.ensureBalances(
             for: gameState.currencies,
             in: modelContext
         )
         _ = PlayerInventoryStore.claimDailyLoginGift(
-            from: dailyLoginRewards,
+            from: campaign.rewards,
+            progressID: campaign.id,
             in: modelContext
         )
-        showDailyLogin = false
+        if let nextCampaign = nextAvailableLoginCampaign() {
+            activeLoginCampaignID = nextCampaign.id
+        } else {
+            showDailyLogin = false
+        }
+    }
+
+    private func loginCampaignReward(for campaign: LoginRewardCampaign?)
+        -> DailyLoginRewardState?
+    {
+        guard let campaign, !campaign.rewards.isEmpty else { return nil }
+        return PlayerInventoryStore.dailyLoginGift(
+            from: campaign.rewards,
+            progressID: campaign.id,
+            in: modelContext
+        )
+    }
+
+    private func nextAvailableLoginCampaign() -> LoginRewardCampaign? {
+        loginCampaigns.first { campaign in
+            loginCampaignReward(for: campaign) != nil
+        }
     }
 
     private func claimGiftFromMenu(_ gift: GiftBoxDefinition) {

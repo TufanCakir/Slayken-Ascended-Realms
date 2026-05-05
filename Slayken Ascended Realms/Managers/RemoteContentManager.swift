@@ -105,6 +105,8 @@ final class RemoteContentManager: ObservableObject {
     private var backgroundPreloadTask: Task<Void, Never>?
 
     private let progressUpdateThreshold = 0.01
+    private let refreshRetryLimit = 3
+    private let refreshRetryDelayNanoseconds: UInt64 = 800_000_000
 
     nonisolated static func logDebug(_ message: String) {
         logger.debug("\(message)")
@@ -207,7 +209,7 @@ final class RemoteContentManager: ObservableObject {
             for resource in manifest.resources {
                 setStatusText("Checking \(resource.name).json")
 
-                let result = await processResource(
+                let result = await processResourceWithRetries(
                     resource,
                     versions: &versions
                 )
@@ -243,7 +245,7 @@ final class RemoteContentManager: ObservableObject {
             for asset in assetsToProcess {
                 setStatusText("Checking \(asset.name)")
 
-                let result = await processAsset(
+                let result = await processAssetWithRetries(
                     asset,
                     versions: &versions,
                     updatePublishedProgress: false
@@ -282,8 +284,7 @@ final class RemoteContentManager: ObservableObject {
                         ? "Live update interrupted"
                         : "Core content load interrupted"
                 )
-                let failureSummary =
-                    "Download unvollständig. Bitte bei stabiler Verbindung alles neu laden."
+                let failureSummary = failureSummary(for: failedItems)
                 startupFailureMessage = failureSummary
                 lastErrorMessage =
                     "\(failureSummary) Fehlende Inhalte: \(failedItems.prefix(5).joined(separator: ", "))"
@@ -732,6 +733,71 @@ final class RemoteContentManager: ObservableObject {
         }
     }
 
+    private func processResourceWithRetries(
+        _ resource: RemoteContentResource,
+        versions: inout [String: String]
+    ) async -> (didChangeContent: Bool, failedName: String?) {
+        var lastResult = (
+            didChangeContent: false, failedName: Optional<String>.none
+        )
+
+        for attempt in 1...refreshRetryLimit {
+            let result = await processResource(resource, versions: &versions)
+            lastResult.didChangeContent =
+                lastResult.didChangeContent || result.didChangeContent
+
+            guard let failedName = result.failedName else {
+                lastResult.failedName = nil
+                return lastResult
+            }
+
+            lastResult.failedName = failedName
+            guard attempt < refreshRetryLimit else { break }
+
+            setStatusText(
+                "Retry \(attempt + 1)/\(refreshRetryLimit): \(resource.name).json"
+            )
+            try? await Task.sleep(nanoseconds: refreshRetryDelayNanoseconds)
+        }
+
+        return lastResult
+    }
+
+    private func processAssetWithRetries(
+        _ asset: RemoteContentAsset,
+        versions: inout [String: String],
+        updatePublishedProgress: Bool
+    ) async -> (didChangeContent: Bool, failedName: String?) {
+        var lastResult = (
+            didChangeContent: false, failedName: Optional<String>.none
+        )
+
+        for attempt in 1...refreshRetryLimit {
+            let result = await processAsset(
+                asset,
+                versions: &versions,
+                updatePublishedProgress: updatePublishedProgress
+            )
+            lastResult.didChangeContent =
+                lastResult.didChangeContent || result.didChangeContent
+
+            guard let failedName = result.failedName else {
+                lastResult.failedName = nil
+                return lastResult
+            }
+
+            lastResult.failedName = failedName
+            guard attempt < refreshRetryLimit else { break }
+
+            setStatusText(
+                "Retry \(attempt + 1)/\(refreshRetryLimit): \(asset.name)"
+            )
+            try? await Task.sleep(nanoseconds: refreshRetryDelayNanoseconds)
+        }
+
+        return lastResult
+    }
+
     private func downloadAsset(
         _ asset: RemoteContentAsset,
         versions: inout [String: String],
@@ -924,6 +990,24 @@ final class RemoteContentManager: ObservableObject {
             URL(fileURLWithPath: $0.name).lastPathComponent
                 == normalizedAssetName
         }
+    }
+
+    private func failureSummary(for failedItems: [String]) -> String {
+        let assetFailures = failedItems.filter { $0.contains(".") }
+        let resourceFailures = failedItems.filter { !$0.contains(".") }
+
+        if !assetFailures.isEmpty && resourceFailures.isEmpty {
+            return
+                "Einige Assets fehlen oder sind nicht erreichbar. Bitte Dateinamen, URLs und Manifest prüfen und danach alles erneut laden."
+        }
+
+        if !resourceFailures.isEmpty && assetFailures.isEmpty {
+            return
+                "Einige JSON-Daten konnten nicht geladen werden. Bitte Verbindung und Remote-Dateien prüfen und danach alles erneut laden."
+        }
+
+        return
+            "Download unvollständig. Bitte Verbindung, Manifest und fehlende Remote-Dateien prüfen und danach alles erneut laden."
     }
 
     private func setStatusText(_ newValue: String) {

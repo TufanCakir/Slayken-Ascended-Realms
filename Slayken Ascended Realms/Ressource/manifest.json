@@ -1,0 +1,1066 @@
+{
+    "contentVersion": 22,
+    "resources": [
+        {
+            "name": "login_campaigns",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/login_campaigns.json"
+        },
+        {
+            "name": "event_login_launch",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/event_login_launch.json"
+        },
+        {
+            "name": "event_login_festival",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/event_login_festival.json"
+        },
+        {
+            "name": "globe_node_chests",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/globe_node_chests.json"
+        },
+        {
+            "name": "shop_coop_offers",
+            "version": "4",
+            "url": "https://remote.tufancakir.com/shop_coop_offers.json"
+        },
+        {
+            "name": "raid_bosses",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/raid_bosses.json"
+        },
+        {
+            "name": "ability_cards",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/ability_cards.json"
+        },
+        {
+            "name": "backgrounds",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/backgrounds.json"
+        },
+        {
+            "name": "battle_player",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/battle_player.json"
+        },
+        {
+            "name": "battle_resources",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/battle_resources.json"
+        },
+        {
+            "name": "character_classes",
+            "version": "3",
+            "url": "https://remote.tufancakir.com/character_classes.json"
+        },
+        {
+            "name": "currencies",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/currencies.json"
+        },
+        {
+            "name": "daily_login",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/daily_login.json"
+        },
+        {
+            "name": "event_events",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/event_events.json"
+        },
+        {
+            "name": "farm_limits",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/farm_limits.json"
+        },
+        {
+            "name": "game_player",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/game_player.json"
+        },
+        {
+            "name": "gift",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/gift.json"
+        },
+        {
+            "name": "globe_events",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/globe_events.json"
+        },
+        {
+            "name": "intro_videos",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/intro_videos.json"
+        },
+        {
+            "name": "maps",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/maps.json"
+        },
+        {
+            "name": "music",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/music.json"
+        },
+        {
+            "name": "news_items",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/news_items.json"
+        },
+        {
+            "name": "particle_effects",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/particle_effects.json"
+        },
+        {
+            "name": "quests",
+            "version": "6",
+            "url": "https://remote.tufancakir.com/quests.json"
+        },
+        {
+            "name": "shop_offers",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/shop_offers.json"
+        },
+        {
+            "name": "shop_skins",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/shop_skins.json"
+        },
+        {
+            "name": "store_crystal_packs",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/store_crystal_packs.json"
+        },
+        {
+            "name": "summon_banners",
+            "version": "4",
+            "url": "https://remote.tufancakir.com/summon_banners.json"
+        },
+        {
+            "name": "summon_characters",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/summon_characters.json"
+        },
+        {
+            "name": "themes",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/themes.json"
+        },
+        {
+            "name": "tutorials",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/tutorials.json"
+        }
+    ],
+    "assets": [
+        {
+            "name": "bg_sar.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/bg_sar.png"
+        },
+        {
+            "name": "bg_country.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/bg_country.png"
+        },
+        {
+            "name": "bg_ice.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/bg_ice.png"
+        },
+        {
+            "name": "bg_fire.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/bg_fire.png"
+        },
+        {
+            "name": "bg_void.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/bg_void.png"
+        },
+        {
+            "name": "bg_map.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/bg_map.png"
+        },
+        {
+            "name": "bg_arena.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/bg_arena.png"
+        },
+        {
+            "name": "chest_gold.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/chest_gold.png"
+        },
+        {
+            "name": "chest_black.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/chest_black.png"
+        },
+        {
+            "name": "chest_brown.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/chest_brown.png"
+        },
+        {
+            "name": "chest_silver.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/chest_silver.png"
+        },
+        {
+            "name": "chest_white.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/chest_white.png"
+        },
+        {
+            "name": "festival_dragon.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/festival_dragon.png"
+        },
+        {
+            "name": "festival_moon.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/festival_moon.png"
+        },
+        {
+            "name": "festival_new_year.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/festival_new_year.png"
+        },
+        {
+            "name": "festival_summer.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/festival_summer.png"
+        },
+        {
+            "name": "festival_dusk.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/festival_dusk.png"
+        },
+        {
+            "name": "festival_new_years_eve.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/festival_new_years_eve.png"
+        },
+        {
+            "name": "icon_coins.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/icon_coins.png"
+        },
+        {
+            "name": "icon_crystals.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/icon_crystals.png"
+        },
+        {
+            "name": "skill_ash_breaker.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_ash_breaker.png"
+        },
+        {
+            "name": "skill_crystal_burst.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/skill_crystal_burst.png"
+        },
+        {
+            "name": "skill_moon_guard.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_moon_guard.png"
+        },
+        {
+            "name": "skill_rift_slash.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_rift_slash.png"
+        },
+        {
+            "name": "skill_storm_edge.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_storm_edge.png"
+        },
+        {
+            "name": "skill_void_pulse.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_void_pulse.png"
+        },
+        {
+            "name": "realm_country.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/realm_country.png"
+        },
+        {
+            "name": "realm_fire.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/realm_fire.png"
+        },
+        {
+            "name": "realm_ice.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/realm_ice.png"
+        },
+        {
+            "name": "realm_moon_gate.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/realm_moon_gate.png"
+        },
+        {
+            "name": "realm_void.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/realm_void.png"
+        },
+        {
+            "name": "bg_coop_lava.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/bg_coop_lava.png"
+        },
+        {
+            "name": "coop_coin_lava.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/coop_coin_lava.png"
+        },
+        {
+            "name": "coop_coin_moon.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/coop_coin_moon.png"
+        },
+        {
+            "name": "coop_coin_void.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/coop_coin_void.png"
+        },
+        {
+            "name": "theme_epic.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/theme_epic.png"
+        },
+        {
+            "name": "theme_fire.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/theme_fire.png"
+        },
+        {
+            "name": "preview_zaron.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_zaron.png"
+        },
+        {
+            "name": "preview_yanzu.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_yanzu.png"
+        },
+        {
+            "name": "preview_wuri.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_wuri.png"
+        },
+        {
+            "name": "preview_warrior_male.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_warrior_male.png"
+        },
+        {
+            "name": "preview_warrior_female.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_warrior_female.png"
+        },
+        {
+            "name": "preview_tsohon.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_tsohon.png"
+        },
+        {
+            "name": "preview_sifili.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_sifili.png"
+        },
+        {
+            "name": "preview_shiro.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_shiro.png"
+        },
+        {
+            "name": "preview_shen.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_shen.png"
+        },
+        {
+            "name": "preview_lafiya.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_lafiya.png"
+        },
+        {
+            "name": "preview_shela.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_shela.png"
+        },
+        {
+            "name": "preview_sanya.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_sanya.png"
+        },
+        {
+            "name": "preview_rukuni.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_rukuni.png"
+        },
+        {
+            "name": "preview_rana.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_rana.png"
+        },
+        {
+            "name": "preview_mage_male.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_mage_male.png"
+        },
+        {
+            "name": "preview_mage_female.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_mage_female.png"
+        },
+        {
+            "name": "preview_kasa.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_kasa.png"
+        },
+        {
+            "name": "preview_karshe.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_karshe.png"
+        },
+        {
+            "name": "preview_juji.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_juji.png"
+        },
+        {
+            "name": "preview_jefar.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_jefar.png"
+        },
+        {
+            "name": "preview_girma.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_girma.png"
+        },
+        {
+            "name": "preview_assassinin_female.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_assassinin_female.png"
+        },
+        {
+            "name": "preview_assassine_male.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_assassine_male.png"
+        },
+        {
+            "name": "preview_archer_male.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_archer_male.png"
+        },
+        {
+            "name": "preview_archer_female.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_archer_female.png"
+        },
+        {
+            "name": "preview_monk_female.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_monk_female.png"
+        },
+        {
+            "name": "preview_monk_male.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_monk_male.png"
+        },
+        {
+            "name": "preview_anjima.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_anjima.png"
+        },
+        {
+            "name": "preview_aika.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_aika.png"
+        },
+        {
+            "name": "texture_zaron_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_zaron_original.png"
+        },
+        {
+            "name": "texture_yanzu_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_yanzu_original.png"
+        },
+        {
+            "name": "texture_wuri_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_wuri_original.png"
+        },
+        {
+            "name": "texture_warrior_male_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_warrior_male_original.png"
+        },
+        {
+            "name": "texture_warrior_female_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_warrior_female_original.png"
+        },
+        {
+            "name": "texture_tsohon_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_tsohon_original.png"
+        },
+        {
+            "name": "texture_sifili_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_sifili_original.png"
+        },
+        {
+            "name": "texture_shiro_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_shiro_original.png"
+        },
+        {
+            "name": "texture_shen_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_shen_original.png"
+        },
+        {
+            "name": "texture_shela_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_shela_original.png"
+        },
+        {
+            "name": "texture_sanya_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_sanya_original.png"
+        },
+        {
+            "name": "texture_rukuni_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_rukuni_original.png"
+        },
+        {
+            "name": "texture_rana_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_rana_original.png"
+        },
+        {
+            "name": "texture_mage_male_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_mage_male_original.png"
+        },
+        {
+            "name": "texture_mage_female_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_mage_female_original.png"
+        },
+        {
+            "name": "texture_monk_female_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_monk_female_original.png"
+        },
+        {
+            "name": "texture_monk_male_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_monk_male_original.png"
+        },
+        {
+            "name": "texture_lafiya_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_lafiya_original.png"
+        },
+        {
+            "name": "texture_kasa_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_kasa_original.png"
+        },
+        {
+            "name": "texture_karshe_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_karshe_original.png"
+        },
+        {
+            "name": "texture_juji_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_juji_original.png"
+        },
+        {
+            "name": "texture_jefar_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_jefar_original.png"
+        },
+        {
+            "name": "texture_girma_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_girma_original.png"
+        },
+        {
+            "name": "texture_assassinin_female_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_assassinin_female_original.png"
+        },
+        {
+            "name": "texture_assassine_male_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_assassine_male_original.png"
+        },
+        {
+            "name": "texture_archer_male_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_archer_male_original.png"
+        },
+        {
+            "name": "texture_archer_female_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_archer_female_original.png"
+        },
+        {
+            "name": "texture_anjima_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_anjima_original.png"
+        },
+        {
+            "name": "texture_aika_original.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/texture_aika_original.png"
+        },
+        {
+            "name": "aika.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DCharactere/aika.usdz"
+        },
+        {
+            "name": "anjima.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DCharactere/anjima.usdz"
+        },
+        {
+            "name": "jefar.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DCharactere/jefar.usdz"
+        },
+        {
+            "name": "juji.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DCharactere/juji.usdz"
+        },
+        {
+            "name": "lafiya.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DCharactere/lafiya.usdz"
+        },
+        {
+            "name": "rana.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DCharactere/rana.usdz"
+        },
+        {
+            "name": "sanya.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DCharactere/sanya.usdz"
+        },
+        {
+            "name": "shela.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DCharactere/shela.usdz"
+        },
+        {
+            "name": "shen.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DCharactere/shen.usdz"
+        },
+        {
+            "name": "sifili.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DCharactere/sifili.usdz"
+        },
+        {
+            "name": "zaron.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DCharactere/zaron.usdz"
+        },
+        {
+            "name": "aika_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DCharactereAnimation/aika_animation.usdz"
+        },
+        {
+            "name": "anjima_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DCharactereAnimation/anjima_animation.usdz"
+        },
+        {
+            "name": "jefar_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DCharactereAnimation/jefar_animation.usdz"
+        },
+        {
+            "name": "juji_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DCharactereAnimation/juji_animation.usdz"
+        },
+        {
+            "name": "lafiya_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DCharactereAnimation/lafiya_animation.usdz"
+        },
+        {
+            "name": "rana_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DCharactereAnimation/rana_animation.usdz"
+        },
+        {
+            "name": "sanya_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DCharactereAnimation/sanya_animation.usdz"
+        },
+        {
+            "name": "shela_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DCharactereAnimation/shela_animation.usdz"
+        },
+        {
+            "name": "shen_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DCharactereAnimation/shen_animation.usdz"
+        },
+        {
+            "name": "sifili_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DCharactereAnimation/sifili_animation.usdz"
+        },
+        {
+            "name": "zaron_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DCharactereAnimation/zaron_animation.usdz"
+        },
+        {
+            "name": "monk_male_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DClassAnimation/monk_male_animation.usdz"
+        },
+        {
+            "name": "monk_female_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DClassAnimation/monk_female_animation.usdz"
+        },
+        {
+            "name": "archer_female.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DClass/archer_female.usdz"
+        },
+        {
+            "name": "archer_male.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DClass/archer_male.usdz"
+        },
+        {
+            "name": "assassine_male.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DClass/assassine_male.usdz"
+        },
+        {
+            "name": "assassinin_female.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DClass/assassinin_female.usdz"
+        },
+        {
+            "name": "mage_female.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DClass/mage_female.usdz"
+        },
+        {
+            "name": "mage_male.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DClass/mage_male.usdz"
+        },
+        {
+            "name": "warrior_female.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DClass/warrior_female.usdz"
+        },
+        {
+            "name": "warrior_male.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DClass/warrior_male.usdz"
+        },
+        {
+            "name": "monk_male.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DClass/monk_male.usdz"
+        },
+        {
+            "name": "monk_female.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DClass/monk_female.usdz"
+        },
+        {
+            "name": "girma.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DHeroClasses/girma.usdz"
+        },
+        {
+            "name": "karshe.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DHeroClasses/karshe.usdz"
+        },
+        {
+            "name": "kasa.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DHeroClasses/kasa.usdz"
+        },
+        {
+            "name": "rukuni.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DHeroClasses/rukuni.usdz"
+        },
+        {
+            "name": "shiro.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DHeroClasses/shiro.usdz"
+        },
+        {
+            "name": "tsohon.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DHeroClasses/tsohon.usdz"
+        },
+        {
+            "name": "wuri.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DHeroClasses/wuri.usdz"
+        },
+        {
+            "name": "yanzu.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DHeroClasses/yanzu.usdz"
+        },
+        {
+            "name": "archer_female_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DClassAnimation/archer_female_animation.usdz"
+        },
+        {
+            "name": "archer_male_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DClassAnimation/archer_male_animation.usdz"
+        },
+        {
+            "name": "assassine_male_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DClassAnimation/assassine_male_animation.usdz"
+        },
+        {
+            "name": "assassinin_female_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DClassAnimation/assassinin_female_animation.usdz"
+        },
+        {
+            "name": "mage_female_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DClassAnimation/mage_female_animation.usdz"
+        },
+        {
+            "name": "mage_male_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DClassAnimation/mage_male_animation.usdz"
+        },
+        {
+            "name": "warrior_female_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DClassAnimation/warrior_female_animation.usdz"
+        },
+        {
+            "name": "warrior_male_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DClassAnimation/warrior_male_animation.usdz"
+        },
+        {
+            "name": "girma_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DHeroClassesAnimation/girma_animation.usdz"
+        },
+        {
+            "name": "karshe_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DHeroClassesAnimation/karshe_animation.usdz"
+        },
+        {
+            "name": "kasa_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DHeroClassesAnimation/kasa_animation.usdz"
+        },
+        {
+            "name": "rukuni_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DHeroClassesAnimation/rukuni_animation.usdz"
+        },
+        {
+            "name": "shiro_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DHeroClassesAnimation/shiro_animation.usdz"
+        },
+        {
+            "name": "tsohon_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DHeroClassesAnimation/tsohon_animation.usdz"
+        },
+        {
+            "name": "wuri_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DHeroClassesAnimation/wuri_animation.usdz"
+        },
+        {
+            "name": "yanzu_animation.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DHeroClassesAnimation/yanzu_animation.usdz"
+        },
+        {
+            "name": "jirgin.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DMonster/jirgin.usdz"
+        },
+        {
+            "name": "krevas.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DMonster/krevas.usdz"
+        },
+        {
+            "name": "maaikatan.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DMonster/maaikatan.usdz"
+        },
+        {
+            "name": "masoyina.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DMonster/masoyina.usdz"
+        },
+        {
+            "name": "nanekihs.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DMonster/nanekihs.usdz"
+        },
+        {
+            "name": "tsayi.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DMonster/tsayi.usdz"
+        },
+        {
+            "name": "intro.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/intro.mp4"
+        },
+        {
+            "name": "intro_original.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/intro_original.mp4"
+        },
+        {
+            "name": "kristallspur.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/kristallspur.mp4"
+        },
+        {
+            "name": "mondtor.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/mondtor.mp4"
+        },
+        {
+            "name": "rissbestie.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/rissbestie.mp4"
+        },
+        {
+            "name": "torwache.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/torwache.mp4"
+        },
+        {
+            "name": "music1.mp3",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Music/music1.mp3"
+        },
+        {
+            "name": "music2.mp3",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Music/music2.mp3"
+        }
+    ]
+}

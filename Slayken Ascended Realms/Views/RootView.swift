@@ -31,9 +31,14 @@ struct RootView: View {
         case archive
     }
 
+    private struct PendingLoginPopup: Equatable {
+        let campaign: LoginRewardCampaign
+        let rewardState: DailyLoginRewardState
+    }
+
     @State private var currentScreen: Screen = .start
     @State private var activeEnemy: CharacterStats?
-    @State private var pendingDailyReward: DailyLoginRewardState?
+    @State private var pendingLoginPopup: PendingLoginPopup?
     @State private var activeTutorial: GameTutorialDefinition?
     @State private var activeIntroIndex = 0
     @State private var tutorialLaunchSource: TutorialLaunchSource = .initial
@@ -46,8 +51,8 @@ struct RootView: View {
 
     private let introFlowKey = "hasCompletedIntroFlow"
 
-    private var dailyLoginRewards: [DailyLoginRewardDefinition] {
-        loadDailyLoginRewardDefinitions()
+    private var loginCampaigns: [LoginRewardCampaign] {
+        loadLoginRewardCampaigns()
     }
 
     private var introVideos: [IntroVideoDefinition] {
@@ -160,10 +165,11 @@ struct RootView: View {
                 .zIndex(180)
             }
 
-            if currentScreen == .game, let pendingDailyReward {
+            if currentScreen == .game, let pendingLoginPopup {
                 DailyLoginPopupView(
-                    rewardState: pendingDailyReward,
-                    onClaim: claimDailyGift
+                    campaignTitle: pendingLoginPopup.campaign.title,
+                    rewardState: pendingLoginPopup.rewardState,
+                    onClaim: claimLoginGift
                 )
                 .environmentObject(gameState)
                 .environmentObject(theme)
@@ -332,7 +338,7 @@ struct RootView: View {
                     openTutorialArchive(fromGame: true)
                 },
                 onOpenCreateClass: {
-                    refreshDailyGift()
+                    refreshLoginPopups()
                 }
             ) { enemy in
                 transition(to: .battle, enemy: enemy)
@@ -365,21 +371,14 @@ struct RootView: View {
         guard !remoteContent.isRefreshing else { return }
 
         Task {
+            guard networkMonitor.isConnected else { return }
+
             let didRefreshSucceed = await remoteContent.refreshContentIfNeeded(
                 mode: mode
             )
             guard didRefreshSucceed else { return }
 
-            gameState.reloadContent()
-            theme.loadThemes()
-            theme.loadSelected()
-            musicManager.reloadTracks()
-            musicManager.startPlaybackIfNeeded()
-            refreshDailyGift()
-
-            if mode == .bootstrap {
-                remoteContent.startBackgroundPreloadIfNeeded()
-            }
+            completeRemoteRefresh(mode: mode)
         }
     }
 
@@ -388,6 +387,27 @@ struct RootView: View {
 
         Task {
             await remoteContent.retryStartupRefreshPreparation()
+            guard networkMonitor.isConnected else { return }
+
+            let didRefreshSucceed = await remoteContent.refreshContentIfNeeded(
+                mode: .fullPreload
+            )
+            guard didRefreshSucceed else { return }
+
+            completeRemoteRefresh(mode: .fullPreload)
+        }
+    }
+
+    private func completeRemoteRefresh(mode: RemoteContentRefreshMode) {
+        gameState.reloadContent()
+        theme.loadThemes()
+        theme.loadSelected()
+        musicManager.reloadTracks()
+        musicManager.startPlaybackIfNeeded()
+        refreshLoginPopups()
+
+        if mode == .bootstrap {
+            remoteContent.startBackgroundPreloadIfNeeded()
         }
     }
 
@@ -396,34 +416,52 @@ struct RootView: View {
         activeEnemy = nil
         activeIntroIndex = 0
         activeTutorial = nil
-        refreshDailyGift()
+        refreshLoginPopups()
 
         withAnimation(.smooth(duration: 0.35)) {
             currentScreen = .start
         }
     }
 
-    private func refreshDailyGift() {
+    private func refreshLoginPopups() {
         PlayerInventoryStore.ensureBalances(
             for: gameState.currencies,
             in: modelContext
         )
-        pendingDailyReward = PlayerInventoryStore.dailyLoginGift(
-            from: dailyLoginRewards,
-            in: modelContext
-        )
+        pendingLoginPopup = nextPendingLoginPopup()
     }
 
-    private func claimDailyGift() {
+    private func claimLoginGift() {
+        guard let pendingLoginPopup else { return }
+
         PlayerInventoryStore.ensureBalances(
             for: gameState.currencies,
             in: modelContext
         )
         _ = PlayerInventoryStore.claimDailyLoginGift(
-            from: dailyLoginRewards,
+            from: pendingLoginPopup.campaign.rewards,
+            progressID: pendingLoginPopup.campaign.id,
             in: modelContext
         )
-        pendingDailyReward = nil
+        self.pendingLoginPopup = nextPendingLoginPopup()
+    }
+
+    private func nextPendingLoginPopup() -> PendingLoginPopup? {
+        for campaign in loginCampaigns {
+            guard !campaign.rewards.isEmpty else { continue }
+            if let rewardState = PlayerInventoryStore.dailyLoginGift(
+                from: campaign.rewards,
+                progressID: campaign.id,
+                in: modelContext
+            ) {
+                return PendingLoginPopup(
+                    campaign: campaign,
+                    rewardState: rewardState
+                )
+            }
+        }
+
+        return nil
     }
 
     private var hasCompletedIntroFlow: Bool {

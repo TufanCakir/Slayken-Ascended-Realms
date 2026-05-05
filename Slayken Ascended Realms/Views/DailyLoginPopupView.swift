@@ -11,6 +11,7 @@ struct DailyLoginPopupView: View {
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
 
+    let campaignTitle: String
     let rewardState: DailyLoginRewardState
     let onClaim: () -> Void
 
@@ -29,7 +30,7 @@ struct DailyLoginPopupView: View {
                 .ignoresSafeArea()
 
             VStack(spacing: 18) {
-                Text("DAILY LOGIN")
+                Text(campaignTitle.uppercased())
                     .font(.system(size: 13, weight: .black, design: .rounded))
                     .tracking(3)
                     .foregroundStyle(.white.opacity(0.72))
@@ -310,6 +311,7 @@ struct DailyLoginPopupView: View {
     ]
 
     return DailyLoginPopupView(
+        campaignTitle: "Daily Login",
         rewardState: DailyLoginRewardState(
             reward: DailyLoginRewardDefinition(
                 id: "preview-day-7",

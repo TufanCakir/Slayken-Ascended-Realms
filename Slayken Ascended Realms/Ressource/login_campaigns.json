@@ -1,0 +1,20 @@
+[
+    {
+        "id": "daily_login",
+        "title": "Daily Login",
+        "subtitle": "30 Tage Login-Belohnungen",
+        "resource": "daily_login"
+    },
+    {
+        "id": "event_login_launch",
+        "title": "Launch Login",
+        "subtitle": "Event-Login zum Release",
+        "resource": "event_login_launch"
+    },
+    {
+        "id": "event_login_festival",
+        "title": "Festival Login",
+        "subtitle": "Event-Login mit Spezialbelohnungen",
+        "resource": "event_login_festival"
+    }
+]

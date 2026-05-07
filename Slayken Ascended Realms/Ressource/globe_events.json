@@ -1,941 +1,2469 @@
 [
-  {
-    "id": "chapter_1",
-    "title": "Story Kapitel 1",
-    "subtitle": "Der erste Riss im Reich",
-    "mapTexture": "realm_country",
-    "cutscene": {
-      "id": "chapter_1_intro",
-      "title": "Der erste Riss",
-      "video": "intro",
-      "text": "Ein Portal öffnet sich über dem Mondtor."
-    },
-    "points": [
-      {
-        "id": "chapter_1_gate",
-        "title": "Mondtor",
-        "text": "Am Mondtor beginnt dein erster Story-Pfad.",
-        "mapImage": "realm_country",
+    {
+        "id": "chapter_1",
+        "title": "Story Kapitel 1",
+        "subtitle": "Der erste Riss im Reich",
         "mapTexture": "realm_country",
-        "node": {
-          "x": 0.12,
-          "y": 0.58
-        },
         "cutscene": {
-          "id": "chapter_1_gate_intro",
-          "title": "Mondtor",
-          "video": "mondtor",
-          "text": "Das alte Tor vibriert, als der Riss aufbricht."
+            "id": "chapter_1_intro",
+            "title": "Der erste Riss",
+            "video": "intro",
+            "text": "Ein Portal öffnet sich über dem Mondtor."
         },
-        "battles": [
-          {
-            "id": "chapter_1_battle_1",
-            "name": "Torwache I",
-            "description": "Der erste Wächter am Riss.",
-            "difficulty": 1,
-            "groundTexture": "realm_country",
-            "skyboxTexture": "realm_country",
-            "node": { "x": 0.06, "y": 0.72 },
-            "enemy": {
-              "name": "Rift Guard I",
-              "image": "sar_dragon",
-              "model": "tsayi",
-              "texture": null,
-              "hp": 90,
-              "attack": 6,
-              "element": "Fire"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 120 },
-              { "currency": "crystals", "amount": 10 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Zaron", "text": "Das ist erst der Anfang." },
-              { "speaker": "Shela", "text": "Dann drücken wir direkt vor." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_2",
-            "name": "Kristallspur",
-            "description": "Eine leuchtende Spur führt tiefer in die Route.",
-            "difficulty": 1,
-            "groundTexture": "realm_fire",
-            "skyboxTexture": "realm_fire",
-            "node": { "x": 0.11, "y": 0.66 },
-            "enemy": {
-              "name": "Crystal Shade",
-              "image": "sar_dragon",
-              "model": "jirgin",
-              "texture": null,
-              "hp": 102,
-              "attack": 7,
-              "element": "Light"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 135 },
-              { "currency": "crystals", "amount": 11 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Shela", "text": "Die Kristalle markieren einen alten Pfad." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_3",
-            "name": "Rissbestie",
-            "description": "Ein aggressiver Gegner direkt am Torbogen.",
-            "difficulty": 2,
-            "groundTexture": "realm_ice",
-            "skyboxTexture": "realm_ice",
-            "node": { "x": 0.16, "y": 0.61 },
-            "enemy": {
-              "name": "Rift Beast",
-              "image": "sar_dragon",
-              "model": "krevas",
-              "texture": null,
-              "hp": 118,
-              "attack": 8,
-              "element": "Dark"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 150 },
-              { "currency": "crystals", "amount": 12 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [
-              { "cardID": "slash_red", "amount": 1 }
-            ],
-            "story": [
-              { "speaker": "Zaron", "text": "Diese Bestie wurde vom Riss verdorben." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_4",
-            "name": "Mondsplitter",
-            "description": "Splitterenergie sammelt sich im Boden.",
-            "difficulty": 2,
-            "groundTexture": "realm_void",
-            "skyboxTexture": "realm_void",
-            "node": { "x": 0.21, "y": 0.55 },
-            "enemy": {
-              "name": "Moon Shard",
-              "image": "sar_dragon",
-              "model": "jirgin",
-              "texture": null,
-              "hp": 134,
-              "attack": 9,
-              "element": "Fire"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 165 },
-              { "currency": "crystals", "amount": 13 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Shela", "text": "Die Splitter reagieren auf unsere Schritte." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_5",
-            "name": "Nebelpfad",
-            "description": "Ein Kampf im dichten Nebel.",
-            "difficulty": 3,
-            "groundTexture": "bg_country",
-            "skyboxTexture": "bg_country",
-            "node": { "x": 0.26, "y": 0.66 },
-            "enemy": {
-              "name": "Mist Lurker",
-              "image": "sar_dragon",
-              "model": "tsayi",
-              "texture": null,
-              "hp": 150,
-              "attack": 10,
-              "element": "Water"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 180 },
-              { "currency": "crystals", "amount": 14 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Zaron", "text": "Im Nebel sieht man nur den nächsten Fehler." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_6",
-            "name": "Runenwache",
-            "description": "Alte Runen erwachen mitten auf dem Pfad.",
-            "difficulty": 3,
-            "groundTexture": "bg_fire",
-            "skyboxTexture": "bg_fire",
-            "node": { "x": 0.31, "y": 0.60 },
-            "enemy": {
-              "name": "Rune Guard",
-              "image": "sar_dragon",
-              "model": "krevas",
-              "texture": null,
-              "hp": 168,
-              "attack": 11,
-              "element": "Plant"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 195 },
-              { "currency": "crystals", "amount": 15 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [
-              { "cardID": "slash_red", "amount": 1 }
-            ],
-            "story": [
-              { "speaker": "Shela", "text": "Die Runen reagieren auf die Rissenergie." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_7",
-            "name": "Schattenriss",
-            "description": "Der Riss wirft bereits einen Schatten über das Tal.",
-            "difficulty": 4,
-            "groundTexture": "bg_ice",
-            "skyboxTexture": "bg_ice",
-            "node": { "x": 0.36, "y": 0.52 },
-            "enemy": {
-              "name": "Shadow Rift",
-              "image": "sar_dragon",
-              "model": "krevas",
-              "texture": null,
-              "hp": 186,
-              "attack": 12,
-              "element": "Storm"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 210 },
-              { "currency": "crystals", "amount": 16 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Zaron", "text": "Der Schatten wird dichter." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_8",
-            "name": "Mondklinge",
-            "description": "Ein schneller Elitegegner schneidet durch die Formation.",
-            "difficulty": 4,
-            "groundTexture": "bg_void",
-            "skyboxTexture": "bg_void",
-            "node": { "x": 0.41, "y": 0.45 },
-            "enemy": {
-              "name": "Moon Blade",
-              "image": "sar_dragon",
-              "model": "jirgin",
-              "texture": null,
-              "hp": 205,
-              "attack": 13,
-              "element": "Light"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 225 },
-              { "currency": "crystals", "amount": 17 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Shela", "text": "Zu schnell für rohe Gewalt." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_9",
-            "name": "Torbrecher",
-            "description": "Ein schwerer Vorstossgegner verteidigt den Mittelpfad.",
-            "difficulty": 5,
-            "groundTexture": "bg_map",
-            "skyboxTexture": "bg_map",
-            "node": { "x": 0.46, "y": 0.56 },
-            "enemy": {
-              "name": "Gate Breaker",
-              "image": "sar_dragon",
-              "model": "masoyina",
-              "texture": null,
-              "hp": 225,
-              "attack": 14,
-              "element": "Dark"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 240 },
-              { "currency": "crystals", "amount": 18 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [
-              { "cardID": "slash_red", "amount": 1 }
-            ],
-            "story": [
-              { "speaker": "Zaron", "text": "Nach diesem Gegner wird der Weg offener." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_10",
-            "name": "Rissknoten",
-            "description": "Der erste Meilenstein des Mondtors.",
-            "difficulty": 5,
-            "groundTexture": "bg_sar",
-            "skyboxTexture": "bg_sar",
-            "node": { "x": 0.51, "y": 0.48 },
-            "enemy": {
-              "name": "Rift Knot",
-              "image": "sar_dragon",
-              "model": "masoyina",
-              "texture": null,
-              "hp": 248,
-              "attack": 15,
-              "element": "Fire"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 260 },
-              { "currency": "crystals", "amount": 20 }
-            ],
-            "characterRewards": [
-              { "characterID": "zaron" }
-            ],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Shela", "text": "Der Knoten hält den ganzen Pfad zusammen." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_11",
-            "name": "Aschenstufe",
-            "description": "Der Boden wird heisser und enger.",
-            "difficulty": 6,
-            "groundTexture": "bg_fire",
-            "skyboxTexture": "bg_fire",
-            "node": { "x": 0.56, "y": 0.39 },
-            "enemy": {
-              "name": "Ash Stepper",
-              "image": "sar_dragon",
-              "model": "tsayi",
-              "texture": null,
-              "hp": 272,
-              "attack": 17,
-              "element": "Fire"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 280 },
-              { "currency": "crystals", "amount": 21 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Zaron", "text": "Wir sind noch nicht einmal in der Mitte." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_12",
-            "name": "Kronensplitter",
-            "description": "Splitter einer alten Macht blockieren die Route.",
-            "difficulty": 6,
-            "groundTexture": "realm_country",
-            "skyboxTexture": "realm_country",
-            "node": { "x": 0.61, "y": 0.31 },
-            "enemy": {
-              "name": "Crown Fragment",
-              "image": "sar_dragon",
-              "model": "jirgin",
-              "texture": null,
-              "hp": 296,
-              "attack": 18,
-              "element": "Light"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 300 },
-              { "currency": "crystals", "amount": 22 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [
-              { "cardID": "slash_red", "amount": 1 }
-            ],
-            "story": [
-              { "speaker": "Shela", "text": "Hier wurde alte Macht zerbrochen." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_13",
-            "name": "Windriss",
-            "description": "Eine schnelle Windfront zwingt dich in Bewegung.",
-            "difficulty": 7,
-            "groundTexture": "bg_ice",
-            "skyboxTexture": "bg_ice",
-            "node": { "x": 0.66, "y": 0.40 },
-            "enemy": {
-              "name": "Wind Rift",
-              "image": "sar_dragon",
-              "model": "krevas",
-              "texture": null,
-              "hp": 320,
-              "attack": 20,
-              "element": "Storm"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 325 },
-              { "currency": "crystals", "amount": 24 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Zaron", "text": "Der Pfad wird schneller als wir." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_14",
-            "name": "Dunkelader",
-            "description": "Schwarze Energie zieht durch den Boden.",
-            "difficulty": 7,
-            "groundTexture": "bg_void",
-            "skyboxTexture": "bg_void",
-            "node": { "x": 0.71, "y": 0.50 },
-            "enemy": {
-              "name": "Dark Vein",
-              "image": "sar_dragon",
-              "model": "masoyina",
-              "texture": null,
-              "hp": 345,
-              "attack": 21,
-              "element": "Dark"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 350 },
-              { "currency": "crystals", "amount": 26 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Shela", "text": "Der Boden selbst wirkt feindlich." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_15",
-            "name": "Nebelzirkel",
-            "description": "Ein kleiner Ritualkreis speist den Riss.",
-            "difficulty": 8,
-            "groundTexture": "bg_country",
-            "skyboxTexture": "bg_country",
-            "node": { "x": 0.76, "y": 0.60 },
-            "enemy": {
-              "name": "Mist Circle",
-              "image": "sar_dragon",
-              "model": "tsayi",
-              "texture": null,
-              "hp": 372,
-              "attack": 23,
-              "element": "Water"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 380 },
-              { "currency": "crystals", "amount": 28 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [
-              { "cardID": "slash_red", "amount": 2 }
-            ],
-            "story": [
-              { "speaker": "Zaron", "text": "Solange der Zirkel steht, bleibt der Druck." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_16",
-            "name": "Wolkenklaue",
-            "description": "Ein Luftjäger zwingt dich vom Rand zur Mitte.",
-            "difficulty": 8,
-            "groundTexture": "bg_arena",
-            "skyboxTexture": "bg_arena",
-            "node": { "x": 0.81, "y": 0.51 },
-            "enemy": {
-              "name": "Cloud Claw",
-              "image": "sar_dragon",
-              "model": "jirgin",
-              "texture": null,
-              "hp": 400,
-              "attack": 24,
-              "element": "Light"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 410 },
-              { "currency": "crystals", "amount": 30 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Shela", "text": "Er schneidet den Weg in zwei Teile." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_17",
-            "name": "Schwarzer Pfad",
-            "description": "Ein enger Korridor führt in den Kernbereich.",
-            "difficulty": 9,
-            "groundTexture": "bg_map",
-            "skyboxTexture": "bg_map",
-            "node": { "x": 0.86, "y": 0.43 },
-            "enemy": {
-              "name": "Black Path",
-              "image": "sar_dragon",
-              "model": "krevas",
-              "texture": null,
-              "hp": 430,
-              "attack": 26,
-              "element": "Dark"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 440 },
-              { "currency": "crystals", "amount": 33 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Zaron", "text": "Jetzt zieht der Riss uns aktiv nach vorne." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_18",
-            "name": "Sternenfalle",
-            "description": "Leuchtende Splitter bilden eine Falle über dem Weg.",
-            "difficulty": 9,
-            "groundTexture": "realm_fire",
-            "skyboxTexture": "realm_fire",
-            "node": { "x": 0.90, "y": 0.35 },
-            "enemy": {
-              "name": "Star Trap",
-              "image": "sar_dragon",
-              "model": "masoyina",
-              "texture": null,
-              "hp": 462,
-              "attack": 28,
-              "element": "Fire"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 470 },
-              { "currency": "crystals", "amount": 36 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [
-              { "cardID": "slash_red", "amount": 2 }
-            ],
-            "story": [
-              { "speaker": "Shela", "text": "Die Splitter stehen wie Minen in der Luft." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_19",
-            "name": "Rissgarde",
-            "description": "Die Kernwache schiebt dich an den Kartenrand.",
-            "difficulty": 10,
-            "groundTexture": "realm_ice",
-            "skyboxTexture": "realm_ice",
-            "node": { "x": 0.84, "y": 0.24 },
-            "enemy": {
-              "name": "Rift Guard II",
-              "image": "sar_dragon",
-              "model": "tsayi",
-              "texture": null,
-              "hp": 495,
-              "attack": 30,
-              "element": "Storm"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 510 },
-              { "currency": "crystals", "amount": 40 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Zaron", "text": "Der Kern ist nah. Ich spüre seinen Druck." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_20",
-            "name": "Mondpuls",
-            "description": "Ein Machtpuls reisst den Pfad für einen Moment auf.",
-            "difficulty": 10,
-            "groundTexture": "realm_void",
-            "skyboxTexture": "realm_void",
-            "node": { "x": 0.77, "y": 0.18 },
-            "enemy": {
-              "name": "Moon Pulse",
-              "image": "sar_dragon",
-              "model": "jirgin",
-              "texture": null,
-              "hp": 530,
-              "attack": 32,
-              "element": "Light"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 550 },
-              { "currency": "crystals", "amount": 44 }
-            ],
-            "characterRewards": [
-              { "characterID": "aika" }
-            ],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Shela", "text": "Der Puls öffnet die letzte Route." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_21",
-            "name": "Leuchtader",
-            "description": "Der Kern speist jetzt alle Routen auf einmal.",
-            "difficulty": 11,
-            "groundTexture": "bg_country",
-            "skyboxTexture": "bg_country",
-            "node": { "x": 0.70, "y": 0.26 },
-            "enemy": {
-              "name": "Glow Vein",
-              "image": "sar_dragon",
-              "model": "masoyina",
-              "texture": null,
-              "hp": 566,
-              "attack": 34,
-              "element": "Plant"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 590 },
-              { "currency": "crystals", "amount": 48 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [
-              { "cardID": "slash_red", "amount": 2 }
-            ],
-            "story": [
-              { "speaker": "Zaron", "text": "Jetzt ist jeder Schritt ein Treffer gegen den Kern." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_22",
-            "name": "Wachbrecher",
-            "description": "Eine schwere Wache steht kurz vor dem Herzen des Pfads.",
-            "difficulty": 11,
-            "groundTexture": "bg_fire",
-            "skyboxTexture": "bg_fire",
-            "node": { "x": 0.63, "y": 0.19 },
-            "enemy": {
-              "name": "Ward Breaker",
-              "image": "sar_dragon",
-              "model": "krevas",
-              "texture": null,
-              "hp": 604,
-              "attack": 36,
-              "element": "Fire"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 630 },
-              { "currency": "crystals", "amount": 52 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Shela", "text": "Nur noch die innere Schale fehlt." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_23",
-            "name": "Ritualbrand",
-            "description": "Der Boden glimmt vom letzten Ritual.",
-            "difficulty": 12,
-            "groundTexture": "bg_sar",
-            "skyboxTexture": "bg_sar",
-            "node": { "x": 0.56, "y": 0.14 },
-            "enemy": {
-              "name": "Ritual Burn",
-              "image": "sar_dragon",
-              "model": "tsayi",
-              "texture": null,
-              "hp": 644,
-              "attack": 38,
-              "element": "Dark"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 680 },
-              { "currency": "crystals", "amount": 56 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Zaron", "text": "Hier wurde bereits geopfert." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_24",
-            "name": "Dunkelklinge",
-            "description": "Eine schnelle Kernwache mit scharfen Richtungswechseln.",
-            "difficulty": 12,
-            "groundTexture": "bg_map",
-            "skyboxTexture": "bg_map",
-            "node": { "x": 0.49, "y": 0.22 },
-            "enemy": {
-              "name": "Dark Blade",
-              "image": "sar_dragon",
-              "model": "jirgin",
-              "texture": null,
-              "hp": 686,
-              "attack": 40,
-              "element": "Light"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 730 },
-              { "currency": "crystals", "amount": 60 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [
-              { "cardID": "slash_red", "amount": 2 }
-            ],
-            "story": [
-              { "speaker": "Shela", "text": "Sie verteidigen jetzt nur noch den Kern." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_25",
-            "name": "Kernkanal",
-            "description": "Ein schmaler Kanal direkt unter dem Rissherz.",
-            "difficulty": 13,
-            "groundTexture": "bg_arena",
-            "skyboxTexture": "bg_arena",
-            "node": { "x": 0.42, "y": 0.16 },
-            "enemy": {
-              "name": "Core Channel",
-              "image": "sar_dragon",
-              "model": "masoyina",
-              "texture": null,
-              "hp": 730,
-              "attack": 42,
-              "element": "Water"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 790 },
-              { "currency": "crystals", "amount": 65 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Zaron", "text": "Von hier an gibt es kein Zurueck mehr." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_26",
-            "name": "Mondherz",
-            "description": "Ein leuchtender Pulsgegner direkt vor dem Schlussabschnitt.",
-            "difficulty": 13,
-            "groundTexture": "bg_void",
-            "skyboxTexture": "bg_void",
-            "node": { "x": 0.35, "y": 0.24 },
-            "enemy": {
-              "name": "Moon Heart",
-              "image": "sar_dragon",
-              "model": "krevas",
-              "texture": null,
-              "hp": 776,
-              "attack": 44,
-              "element": "Storm"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 850 },
-              { "currency": "crystals", "amount": 70 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [
-              { "cardID": "slash_red", "amount": 3 }
-            ],
-            "story": [
-              { "speaker": "Shela", "text": "Das Herz des Pfads schlägt gegen uns." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_27",
-            "name": "Kernwelle",
-            "description": "Der Riss schickt Wellen aus reiner Druckenergie.",
-            "difficulty": 14,
-            "groundTexture": "bg_ice",
-            "skyboxTexture": "bg_ice",
-            "node": { "x": 0.28, "y": 0.18 },
-            "enemy": {
-              "name": "Core Wave",
-              "image": "sar_dragon",
-              "model": "tsayi",
-              "texture": null,
-              "hp": 824,
-              "attack": 46,
-              "element": "Plant"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 920 },
-              { "currency": "crystals", "amount": 76 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Zaron", "text": "Er versucht uns vom Ende wegzudruecken." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_28",
-            "name": "Leerenwacht",
-            "description": "Die letzte Verteidigung des äusseren Kerns.",
-            "difficulty": 14,
-            "groundTexture": "bg_country",
-            "skyboxTexture": "bg_country",
-            "node": { "x": 0.21, "y": 0.25 },
-            "enemy": {
-              "name": "Void Watch",
-              "image": "sar_dragon",
-              "model": "jirgin",
-              "texture": null,
-              "hp": 874,
-              "attack": 48,
-              "element": "Dark"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 990 },
-              { "currency": "crystals", "amount": 82 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [
-              { "cardID": "slash_red", "amount": 3 }
-            ],
-            "story": [
-              { "speaker": "Shela", "text": "Nur noch zwei Schritte bis zum Herzschlag." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_29",
-            "name": "Kernhammer",
-            "description": "Ein schwerer Gegner bewacht die letzte Stufe.",
-            "difficulty": 15,
-            "groundTexture": "bg_fire",
-            "skyboxTexture": "bg_fire",
-            "node": { "x": 0.14, "y": 0.19 },
-            "enemy": {
-              "name": "Core Hammer",
-              "image": "sar_dragon",
-              "model": "masoyina",
-              "texture": null,
-              "hp": 926,
-              "attack": 52,
-              "element": "Fire"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 1070 },
-              { "currency": "crystals", "amount": 90 }
-            ],
-            "characterRewards": [],
-            "cardRewards": [],
-            "story": [
-              { "speaker": "Zaron", "text": "Der nächste Schlag entscheidet über das Tor." }
-            ]
-          },
-          {
-            "id": "chapter_1_battle_30",
-            "name": "Risskern",
-            "description": "Boss des ersten Kapitels und Schlussstein des Mondtors.",
-            "difficulty": 16,
-            "groundTexture": "bg_sar",
-            "skyboxTexture": "bg_sar",
-            "node": { "x": 0.08, "y": 0.12 },
-            "cutscene": {
-              "id": "chapter_1_battle_30_cutscene",
-              "title": "Risskern",
-              "video": "rissbestie",
-              "text": "Der Kern des ersten Risses pulsiert direkt vor dir."
-            },
-            "enemy": {
-              "name": "Rift Core",
-              "image": "sar_dragon",
-              "model": "masoyina",
-              "texture": null,
-              "hp": 1000,
-              "attack": 58,
-              "element": "Fire"
-            },
-            "xpReward": 300,
-            "dailyRewardLimits": { "coins": 3000, "crystals": 300 },
-            "rewards": [
-              { "currency": "coins", "amount": 1200 },
-              { "currency": "crystals", "amount": 100 }
-            ],
-            "characterRewards": [
-              { "characterID": "shen" }
-            ],
-            "cardRewards": [
-              { "cardID": "slash_red", "amount": 4 }
-            ],
-            "story": [
-              { "speaker": "Shela", "text": "Jetzt endet das erste Kapitel dieses Krieges." },
-              { "speaker": "Zaron", "text": "Und das nächste beginnt hinter dem Rauch." }
-            ]
-          }
+        "points": [
+            {
+                "id": "chapter_1_gate",
+                "title": "Mondtor",
+                "text": "Am Mondtor beginnt dein erster Story-Pfad.",
+                "mapImage": "realm_country",
+                "mapTexture": "realm_country",
+                "node": {
+                    "x": 0.12,
+                    "y": 0.58
+                },
+                "cutscene": {
+                    "id": "chapter_1_gate_intro",
+                    "title": "Mondtor",
+                    "video": "mondtor",
+                    "text": "Das alte Tor vibriert, als der Riss aufbricht."
+                },
+                "battles": [
+                    {
+                        "id": "chapter_1_battle_1",
+                        "name": "Torwache I",
+                        "description": "Der erste Wächter am Riss.",
+                        "difficulty": 1,
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
+                        "node": {
+                            "x": 0.06,
+                            "y": 0.72
+                        },
+                        "enemy": {
+                            "name": "Rift Guard I",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 90,
+                            "attack": 6,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 120
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 10
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Das ist erst der Anfang."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Dann drücken wir direkt vor."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_2",
+                        "name": "Kristallspur",
+                        "description":
+                            "Eine leuchtende Spur führt tiefer in die Route.",
+                        "difficulty": 1,
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
+                        "node": {
+                            "x": 0.11,
+                            "y": 0.66
+                        },
+                        "enemy": {
+                            "name": "Crystal Shade",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 102,
+                            "attack": 7,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 135
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 11
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Die Kristalle markieren einen alten Pfad."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_3",
+                        "name": "Rissbestie",
+                        "description":
+                            "Ein aggressiver Gegner direkt am Torbogen.",
+                        "difficulty": 2,
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
+                        "node": {
+                            "x": 0.16,
+                            "y": 0.61
+                        },
+                        "enemy": {
+                            "name": "Rift Beast",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 118,
+                            "attack": 8,
+                            "element": "Dark"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 150
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 12
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 1
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Diese Bestie wurde vom Riss verdorben."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_4",
+                        "name": "Mondsplitter",
+                        "description": "Splitterenergie sammelt sich im Boden.",
+                        "difficulty": 2,
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
+                        "node": {
+                            "x": 0.21,
+                            "y": 0.55
+                        },
+                        "enemy": {
+                            "name": "Moon Shard",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 134,
+                            "attack": 9,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 165
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 13
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Die Splitter reagieren auf unsere Schritte."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_5",
+                        "name": "Nebelpfad",
+                        "description": "Ein Kampf im dichten Nebel.",
+                        "difficulty": 3,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.26,
+                            "y": 0.66
+                        },
+                        "enemy": {
+                            "name": "Mist Lurker",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 150,
+                            "attack": 10,
+                            "element": "Water"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 180
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 14
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Im Nebel sieht man nur den nächsten Fehler."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_6",
+                        "name": "Runenwache",
+                        "description":
+                            "Alte Runen erwachen mitten auf dem Pfad.",
+                        "difficulty": 3,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.31,
+                            "y": 0.60
+                        },
+                        "enemy": {
+                            "name": "Rune Guard",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 168,
+                            "attack": 11,
+                            "element": "Plant"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 195
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 15
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 1
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Die Runen reagieren auf die Rissenergie."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_7",
+                        "name": "Schattenriss",
+                        "description":
+                            "Der Riss wirft bereits einen Schatten über das Tal.",
+                        "difficulty": 4,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.36,
+                            "y": 0.52
+                        },
+                        "enemy": {
+                            "name": "Shadow Rift",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 186,
+                            "attack": 12,
+                            "element": "Storm"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 210
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 16
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Der Schatten wird dichter."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_8",
+                        "name": "Mondklinge",
+                        "description":
+                            "Ein schneller Elitegegner schneidet durch die Formation.",
+                        "difficulty": 4,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.41,
+                            "y": 0.45
+                        },
+                        "enemy": {
+                            "name": "Moon Blade",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 205,
+                            "attack": 13,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 225
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 17
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text": "Zu schnell für rohe Gewalt."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_9",
+                        "name": "Torbrecher",
+                        "description":
+                            "Ein schwerer Vorstossgegner verteidigt den Mittelpfad.",
+                        "difficulty": 5,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.46,
+                            "y": 0.56
+                        },
+                        "enemy": {
+                            "name": "Gate Breaker",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 225,
+                            "attack": 14,
+                            "element": "Dark"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 240
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 18
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 1
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Nach diesem Gegner wird der Weg offener."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_10",
+                        "name": "Rissknoten",
+                        "description": "Der erste Meilenstein des Mondtors.",
+                        "difficulty": 5,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.51,
+                            "y": 0.48
+                        },
+                        "enemy": {
+                            "name": "Rift Knot",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 248,
+                            "attack": 15,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 260
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 20
+                            }
+                        ],
+                        "characterRewards": [
+                            {
+                                "characterID": "zaron"
+                            }
+                        ],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Der Knoten hält den ganzen Pfad zusammen."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_11",
+                        "name": "Aschenstufe",
+                        "description": "Der Boden wird heisser und enger.",
+                        "difficulty": 6,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.56,
+                            "y": 0.39
+                        },
+                        "enemy": {
+                            "name": "Ash Stepper",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 272,
+                            "attack": 17,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 280
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 21
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Wir sind noch nicht einmal in der Mitte."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_12",
+                        "name": "Kronensplitter",
+                        "description":
+                            "Splitter einer alten Macht blockieren die Route.",
+                        "difficulty": 6,
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
+                        "node": {
+                            "x": 0.61,
+                            "y": 0.31
+                        },
+                        "enemy": {
+                            "name": "Crown Fragment",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 296,
+                            "attack": 18,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 300
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 22
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 1
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text": "Hier wurde alte Macht zerbrochen."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_13",
+                        "name": "Windriss",
+                        "description":
+                            "Eine schnelle Windfront zwingt dich in Bewegung.",
+                        "difficulty": 7,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.66,
+                            "y": 0.40
+                        },
+                        "enemy": {
+                            "name": "Wind Rift",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 320,
+                            "attack": 20,
+                            "element": "Storm"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 325
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 24
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Der Pfad wird schneller als wir."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_14",
+                        "name": "Dunkelader",
+                        "description":
+                            "Schwarze Energie zieht durch den Boden.",
+                        "difficulty": 7,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.71,
+                            "y": 0.50
+                        },
+                        "enemy": {
+                            "name": "Dark Vein",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 345,
+                            "attack": 21,
+                            "element": "Dark"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 350
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 26
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text": "Der Boden selbst wirkt feindlich."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_15",
+                        "name": "Nebelzirkel",
+                        "description":
+                            "Ein kleiner Ritualkreis speist den Riss.",
+                        "difficulty": 8,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.76,
+                            "y": 0.60
+                        },
+                        "enemy": {
+                            "name": "Mist Circle",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 372,
+                            "attack": 23,
+                            "element": "Water"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 380
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 28
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 2
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Solange der Zirkel steht, bleibt der Druck."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_16",
+                        "name": "Wolkenklaue",
+                        "description":
+                            "Ein Luftjäger zwingt dich vom Rand zur Mitte.",
+                        "difficulty": 8,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.81,
+                            "y": 0.51
+                        },
+                        "enemy": {
+                            "name": "Cloud Claw",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 400,
+                            "attack": 24,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 410
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 30
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text": "Er schneidet den Weg in zwei Teile."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_17",
+                        "name": "Schwarzer Pfad",
+                        "description":
+                            "Ein enger Korridor führt in den Kernbereich.",
+                        "difficulty": 9,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.86,
+                            "y": 0.43
+                        },
+                        "enemy": {
+                            "name": "Black Path",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 430,
+                            "attack": 26,
+                            "element": "Dark"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 440
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 33
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Jetzt zieht der Riss uns aktiv nach vorne."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_18",
+                        "name": "Sternenfalle",
+                        "description":
+                            "Leuchtende Splitter bilden eine Falle über dem Weg.",
+                        "difficulty": 9,
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
+                        "node": {
+                            "x": 0.90,
+                            "y": 0.35
+                        },
+                        "enemy": {
+                            "name": "Star Trap",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 462,
+                            "attack": 28,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 470
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 36
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 2
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Die Splitter stehen wie Minen in der Luft."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_19",
+                        "name": "Rissgarde",
+                        "description":
+                            "Die Kernwache schiebt dich an den Kartenrand.",
+                        "difficulty": 10,
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
+                        "node": {
+                            "x": 0.84,
+                            "y": 0.24
+                        },
+                        "enemy": {
+                            "name": "Rift Guard II",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 495,
+                            "attack": 30,
+                            "element": "Storm"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 510
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 40
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Der Kern ist nah. Ich spüre seinen Druck."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_20",
+                        "name": "Mondpuls",
+                        "description":
+                            "Ein Machtpuls reisst den Pfad für einen Moment auf.",
+                        "difficulty": 10,
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
+                        "node": {
+                            "x": 0.77,
+                            "y": 0.18
+                        },
+                        "enemy": {
+                            "name": "Moon Pulse",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 530,
+                            "attack": 32,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 550
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 44
+                            }
+                        ],
+                        "characterRewards": [
+                            {
+                                "characterID": "aika"
+                            }
+                        ],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text": "Der Puls öffnet die letzte Route."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_21",
+                        "name": "Leuchtader",
+                        "description":
+                            "Der Kern speist jetzt alle Routen auf einmal.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.70,
+                            "y": 0.26
+                        },
+                        "enemy": {
+                            "name": "Glow Vein",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 566,
+                            "attack": 34,
+                            "element": "Plant"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 590
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 48
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 2
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Jetzt ist jeder Schritt ein Treffer gegen den Kern."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_22",
+                        "name": "Wachbrecher",
+                        "description":
+                            "Eine schwere Wache steht kurz vor dem Herzen des Pfads.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.63,
+                            "y": 0.19
+                        },
+                        "enemy": {
+                            "name": "Ward Breaker",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 604,
+                            "attack": 36,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 630
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 52
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text": "Nur noch die innere Schale fehlt."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_23",
+                        "name": "Ritualbrand",
+                        "description": "Der Boden glimmt vom letzten Ritual.",
+                        "difficulty": 12,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.56,
+                            "y": 0.14
+                        },
+                        "enemy": {
+                            "name": "Ritual Burn",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 644,
+                            "attack": 38,
+                            "element": "Dark"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 680
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 56
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Hier wurde bereits geopfert."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_24",
+                        "name": "Dunkelklinge",
+                        "description":
+                            "Eine schnelle Kernwache mit scharfen Richtungswechseln.",
+                        "difficulty": 12,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.49,
+                            "y": 0.22
+                        },
+                        "enemy": {
+                            "name": "Dark Blade",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 686,
+                            "attack": 40,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 730
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 60
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 2
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Sie verteidigen jetzt nur noch den Kern."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_25",
+                        "name": "Kernkanal",
+                        "description":
+                            "Ein schmaler Kanal direkt unter dem Rissherz.",
+                        "difficulty": 13,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.16
+                        },
+                        "enemy": {
+                            "name": "Core Channel",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 730,
+                            "attack": 42,
+                            "element": "Water"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 790
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 65
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Von hier an gibt es kein Zurueck mehr."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_26",
+                        "name": "Mondherz",
+                        "description":
+                            "Ein leuchtender Pulsgegner direkt vor dem Schlussabschnitt.",
+                        "difficulty": 13,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.35,
+                            "y": 0.24
+                        },
+                        "enemy": {
+                            "name": "Moon Heart",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 776,
+                            "attack": 44,
+                            "element": "Storm"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 850
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 70
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 3
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text": "Das Herz des Pfads schlägt gegen uns."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_27",
+                        "name": "Kernwelle",
+                        "description":
+                            "Der Riss schickt Wellen aus reiner Druckenergie.",
+                        "difficulty": 14,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.28,
+                            "y": 0.18
+                        },
+                        "enemy": {
+                            "name": "Core Wave",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 824,
+                            "attack": 46,
+                            "element": "Plant"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 920
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 76
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Er versucht uns vom Ende wegzudruecken."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_28",
+                        "name": "Leerenwacht",
+                        "description":
+                            "Die letzte Verteidigung des äusseren Kerns.",
+                        "difficulty": 14,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.21,
+                            "y": 0.25
+                        },
+                        "enemy": {
+                            "name": "Void Watch",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 874,
+                            "attack": 48,
+                            "element": "Dark"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 990
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 82
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 3
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Nur noch zwei Schritte bis zum Herzschlag."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_29",
+                        "name": "Kernhammer",
+                        "description":
+                            "Ein schwerer Gegner bewacht die letzte Stufe.",
+                        "difficulty": 15,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.14,
+                            "y": 0.19
+                        },
+                        "enemy": {
+                            "name": "Core Hammer",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 926,
+                            "attack": 52,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1070
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 90
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Der nächste Schlag entscheidet über das Tor."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_30",
+                        "name": "Risskern",
+                        "description":
+                            "Der erste Kern bricht auf und öffnet den zweiten Pfad des Mondtors.",
+                        "difficulty": 16,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.08,
+                            "y": 0.12
+                        },
+                        "cutscene": {
+                            "id": "chapter_1_battle_30_cutscene",
+                            "title": "Risskern",
+                            "video": "rissbestie",
+                            "text":
+                                "Der Kern des ersten Risses pulsiert direkt vor dir."
+                        },
+                        "enemy": {
+                            "name": "Rift Core",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1000,
+                            "attack": 58,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1200
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 100
+                            }
+                        ],
+                        "characterRewards": [
+                            {
+                                "characterID": "shen"
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 4
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Der erste Kern ist offen, aber der Riss lebt weiter."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Hinter dem Rauch liegt noch eine tiefere Route."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_31",
+                        "name": "Aschesaum",
+                        "description":
+                            "Hinter dem aufgebrochenen Kern beginnt ein neuer Randpfad.",
+                        "difficulty": 16,
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
+                        "node": {
+                            "x": 0.16,
+                            "y": 0.10
+                        },
+                        "enemy": {
+                            "name": "Ash Fringe",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1060,
+                            "attack": 60,
+                            "element": "Dark"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1280
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 104
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Der Pfad geht weiter. Das war nur die erste Schale."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_32",
+                        "name": "Kernsplitterfeld",
+                        "description":
+                            "Überall liegen Splitter des ersten Kerns.",
+                        "difficulty": 17,
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
+                        "node": {
+                            "x": 0.25,
+                            "y": 0.08
+                        },
+                        "enemy": {
+                            "name": "Core Splinters",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1125,
+                            "attack": 62,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1360
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 108
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 4
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Diese Splitter tragen noch immer Kampfdruck in sich."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_33",
+                        "name": "Mondrissrampe",
+                        "description":
+                            "Eine schmale Rampe führt wieder nach oben.",
+                        "difficulty": 17,
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
+                        "node": {
+                            "x": 0.34,
+                            "y": 0.12
+                        },
+                        "enemy": {
+                            "name": "Moon Rift Ramp",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1190,
+                            "attack": 64,
+                            "element": "Storm"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1440
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 112
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Er zieht uns wieder nach oben zur zweiten Schale."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_34",
+                        "name": "Nebelzunge",
+                        "description":
+                            "Der Riss streckt eine lange Front aus Nebel nach dir aus.",
+                        "difficulty": 18,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.44,
+                            "y": 0.09
+                        },
+                        "enemy": {
+                            "name": "Mist Tongue",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1260,
+                            "attack": 66,
+                            "element": "Water"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1530
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 116
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Die Route atmet jetzt selbst."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_35",
+                        "name": "Runenkamm",
+                        "description":
+                            "Runenlinien bündeln die zweite Phase des Mondtors.",
+                        "difficulty": 18,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.54,
+                            "y": 0.13
+                        },
+                        "enemy": {
+                            "name": "Rune Ridge",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1335,
+                            "attack": 68,
+                            "element": "Plant"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1620
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 120
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 4
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Hier wurde der zweite Kern vorbereitet."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_36",
+                        "name": "Leuchtgrat",
+                        "description":
+                            "Ein heller Grat schiebt sich über das Tal.",
+                        "difficulty": 19,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.64,
+                            "y": 0.09
+                        },
+                        "enemy": {
+                            "name": "Glow Ridge",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1415,
+                            "attack": 70,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1710
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 124
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Die Route spannt sich ueber die halbe Karte."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_37",
+                        "name": "Sternenbogen",
+                        "description":
+                            "Die Schlacht springt in einem weiten Bogen zur Kartenmitte.",
+                        "difficulty": 19,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.73,
+                            "y": 0.14
+                        },
+                        "enemy": {
+                            "name": "Star Arc",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1495,
+                            "attack": 72,
+                            "element": "Dark"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1800
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 128
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Jetzt fuehlt es sich wie ein zweites Kapitel im selben Tor an."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_38",
+                        "name": "Kernsaum II",
+                        "description":
+                            "Ein zweiter Saum aus Kernenergie schneidet den Weg ein.",
+                        "difficulty": 20,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.10
+                        },
+                        "enemy": {
+                            "name": "Core Fringe II",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1580,
+                            "attack": 74,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1900
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 132
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 5
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Die zweite Schale stemmt sich jetzt gegen uns."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_39",
+                        "name": "Mondwall",
+                        "description":
+                            "Eine massive Front zwingt dich in die naechste Kurve.",
+                        "difficulty": 20,
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
+                        "node": {
+                            "x": 0.90,
+                            "y": 0.18
+                        },
+                        "enemy": {
+                            "name": "Moon Wall",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1670,
+                            "attack": 77,
+                            "element": "Storm"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2000
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 136
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Halte die Linie. Danach knicken wir nach oben ab."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_40",
+                        "name": "Zwielichtgarde",
+                        "description":
+                            "Die Elitewache des zweiten Kerns erwartet dich.",
+                        "difficulty": 21,
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
+                        "node": {
+                            "x": 0.86,
+                            "y": 0.30
+                        },
+                        "cutscene": {
+                            "id": "chapter_1_battle_40_cutscene",
+                            "title": "Zwielichtgarde",
+                            "video": "mondtor",
+                            "text":
+                                "Die zweite Garde schirmt den inneren Rissring ab."
+                        },
+                        "enemy": {
+                            "name": "Twilight Guard",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1765,
+                            "attack": 80,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2120
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 142
+                            }
+                        ],
+                        "characterRewards": [
+                            {
+                                "characterID": "aika"
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 5
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Diese Wache steht auf dem eigentlichen Innenring."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_41",
+                        "name": "Rissstufe",
+                        "description":
+                            "Der Innenring fuehrt in klaren Stufen weiter nach oben.",
+                        "difficulty": 21,
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
+                        "node": {
+                            "x": 0.78,
+                            "y": 0.40
+                        },
+                        "enemy": {
+                            "name": "Rift Stair",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1860,
+                            "attack": 83,
+                            "element": "Water"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2240
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 148
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Jetzt fuehrt uns der Ring selbst nach oben."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_42",
+                        "name": "Leerenweg",
+                        "description":
+                            "Der Weg kippt in den dunkleren Teil des Kerns.",
+                        "difficulty": 22,
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
+                        "node": {
+                            "x": 0.69,
+                            "y": 0.49
+                        },
+                        "enemy": {
+                            "name": "Void Track",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1960,
+                            "attack": 86,
+                            "element": "Dark"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2360
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 154
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 5
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Hier spueren wir den echten Sog des Mondtors."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_43",
+                        "name": "Sternenspeer",
+                        "description":
+                            "Eine schnelle Speerspitze stoesst aus dem Kernring hervor.",
+                        "difficulty": 22,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.60,
+                            "y": 0.58
+                        },
+                        "enemy": {
+                            "name": "Star Spear",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 2065,
+                            "attack": 89,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2480
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 160
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Noch ein Bogen, dann stehen wir ueber dem ersten Startpunkt."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_44",
+                        "name": "Mondbogen II",
+                        "description":
+                            "Der Ring zieht als breite Kurve ueber die Kartenmitte.",
+                        "difficulty": 23,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.68
+                        },
+                        "enemy": {
+                            "name": "Moon Arc II",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 2175,
+                            "attack": 92,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2610
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 166
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 6
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Wir kreisen jetzt ueber dem ganzen Tal."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_45",
+                        "name": "Risswacht Prime",
+                        "description":
+                            "Die vorletzte Wache drueckt mit voller Kernkraft.",
+                        "difficulty": 23,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.40,
+                            "y": 0.78
+                        },
+                        "enemy": {
+                            "name": "Rift Watch Prime",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 2290,
+                            "attack": 96,
+                            "element": "Plant"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2740
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 172
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Von hier aus sieht man den Abschlussring."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_46",
+                        "name": "Herzader",
+                        "description":
+                            "Eine leuchtende Ader verbindet Innenring und Abschlusskern.",
+                        "difficulty": 24,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.31,
+                            "y": 0.86
+                        },
+                        "enemy": {
+                            "name": "Heart Vein",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 2410,
+                            "attack": 100,
+                            "element": "Storm"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2880
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 178
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 6
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Das ist die letzte Versorgungsader des Tors."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_47",
+                        "name": "Abschlussbogen",
+                        "description":
+                            "Die finale Linie fuehrt in einem klaren Bogen zum letzten Kern.",
+                        "difficulty": 24,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.23,
+                            "y": 0.81
+                        },
+                        "enemy": {
+                            "name": "Closing Arc",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 2535,
+                            "attack": 104,
+                            "element": "Water"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3020
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 184
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Noch drei Schritte. Dann knackt das Tor vollstaendig."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_48",
+                        "name": "Endwacht",
+                        "description":
+                            "Der letzte Ring der Verteidigung steht direkt vor dir.",
+                        "difficulty": 25,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.16,
+                            "y": 0.72
+                        },
+                        "enemy": {
+                            "name": "End Watch",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 2665,
+                            "attack": 108,
+                            "element": "Dark"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3160
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 190
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 7
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Die Luft ist still. Das ist nie ein gutes Zeichen."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_49",
+                        "name": "Torherz",
+                        "description":
+                            "Das Herz des gesamten Mondtors zeigt sich offen.",
+                        "difficulty": 25,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.10,
+                            "y": 0.62
+                        },
+                        "enemy": {
+                            "name": "Gate Heart",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 2800,
+                            "attack": 112,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3320
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 198
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Jetzt sehen wir den wirklichen Ursprung des ersten Kapitels."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "chapter_1_battle_50",
+                        "name": "Mondtor-Kern",
+                        "description":
+                            "Der finale Boss von Kapitel 1 und der wahre Schlussstein des Mondtors.",
+                        "difficulty": 26,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.06,
+                            "y": 0.52
+                        },
+                        "cutscene": {
+                            "id": "chapter_1_battle_50_cutscene",
+                            "title": "Mondtor-Kern",
+                            "video": "rissbestie",
+                            "text":
+                                "Der wahre Kern des Mondtors erhebt sich hinter dem gebrochenen Ring."
+                        },
+                        "enemy": {
+                            "name": "Moon Gate Core",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 3000,
+                            "attack": 120,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "dailyRewardLimits": {
+                            "coins": 3000,
+                            "crystals": 300
+                        },
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3600
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 220
+                            }
+                        ],
+                        "characterRewards": [
+                            {
+                                "characterID": "shen"
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 8
+                            }
+                        ],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Jetzt faellt der wahre Schlussstein."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Kapitel eins endet hier. Hinter diesem Bruch wartet das naechste Reich."
+                            }
+                        ]
+                    }
+                ]
+            }
         ]
-      }
-    ]
-  }
+    }
 ]

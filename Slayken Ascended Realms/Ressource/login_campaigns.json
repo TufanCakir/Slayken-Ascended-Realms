@@ -16,5 +16,11 @@
         "title": "Festival Login",
         "subtitle": "Event-Login mit Spezialbelohnungen",
         "resource": "event_login_festival"
+    },
+    {
+        "id": "event_login_summer",
+        "title": "Summer Login",
+        "subtitle": "Sommer-Event mit Bonus-Rewards",
+        "resource": "event_login_summer"
     }
 ]

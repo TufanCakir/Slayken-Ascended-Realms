@@ -401,6 +401,24 @@ final class RemoteContentManager: ObservableObject {
         return data
     }
 
+    nonisolated static func cachedResourceNames() -> [String] {
+        guard
+            let cacheRootURL = try? cacheRootURL(),
+            let fileURLs = try? FileManager.default.contentsOfDirectory(
+                at: cacheRootURL,
+                includingPropertiesForKeys: nil
+            )
+        else {
+            return []
+        }
+
+        return fileURLs
+            .filter { $0.pathExtension.lowercased() == "json" }
+            .map { $0.deletingPathExtension().lastPathComponent }
+            .filter { $0 != "resource_versions" }
+            .sorted()
+    }
+
     nonisolated static func cachedImage(named imageName: String) -> UIImage? {
         guard !imageName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         else {

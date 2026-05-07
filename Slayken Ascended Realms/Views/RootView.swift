@@ -168,6 +168,8 @@ struct RootView: View {
             if currentScreen == .game, let pendingLoginPopup {
                 DailyLoginPopupView(
                     campaignTitle: pendingLoginPopup.campaign.title,
+                    campaignSubtitle: pendingLoginPopup.campaign.subtitle,
+                    rewards: pendingLoginPopup.campaign.rewards,
                     rewardState: pendingLoginPopup.rewardState,
                     onClaim: claimLoginGift
                 )

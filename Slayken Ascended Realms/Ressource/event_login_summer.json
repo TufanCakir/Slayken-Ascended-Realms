@@ -1,0 +1,131 @@
+[
+    {
+        "id": "event_login_summer_day_1",
+        "day": 1,
+        "title": "Sommerbonus Tag 1",
+        "subtitle": "Start in die Sonne",
+        "message": "Zum Eventstart gibt es Coins und Crystals fuer deinen Einstieg.",
+        "buttonTitle": "Tag 1 abholen",
+        "icon": "sun.max.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1500
+            },
+            {
+                "currency": "crystals",
+                "amount": 50
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_summer_day_2",
+        "day": 2,
+        "title": "Sommerbonus Tag 2",
+        "subtitle": "Waermerer Loot",
+        "message": "Mehr Vorrat fuer deinen Fortschritt im Sommer-Event.",
+        "buttonTitle": "Tag 2 abholen",
+        "icon": "flame.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 1800
+            },
+            {
+                "currency": "crystals",
+                "amount": 70
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 3
+            }
+        ]
+    },
+    {
+        "id": "event_login_summer_day_3",
+        "day": 3,
+        "title": "Sommerbonus Tag 3",
+        "subtitle": "Hitzewelle",
+        "message": "Zum dritten Login gibt es einen staerkeren Tagesbonus.",
+        "buttonTitle": "Tag 3 abholen",
+        "icon": "sparkles",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 2200
+            },
+            {
+                "currency": "crystals",
+                "amount": 90
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 4
+            }
+        ]
+    },
+    {
+        "id": "event_login_summer_day_4",
+        "day": 4,
+        "title": "Sommerbonus Tag 4",
+        "subtitle": "Event-Vorrat",
+        "message": "Ein dichter Reward-Tag fuer deinen weiteren Aufbau.",
+        "buttonTitle": "Tag 4 abholen",
+        "icon": "shippingbox.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 2600
+            },
+            {
+                "currency": "crystals",
+                "amount": 110
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 5
+            }
+        ]
+    },
+    {
+        "id": "event_login_summer_day_5",
+        "day": 5,
+        "title": "Sommerbonus Tag 5",
+        "subtitle": "Highlight-Tag",
+        "message": "Zum Abschluss wartet ein groesserer Event-Bonus.",
+        "buttonTitle": "Tag 5 abholen",
+        "icon": "crown.fill",
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 3200
+            },
+            {
+                "currency": "crystals",
+                "amount": 150
+            }
+        ],
+        "characterRewards": [
+            {
+                "characterID": "girma"
+            }
+        ],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 6
+            }
+        ]
+    }
+]

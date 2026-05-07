@@ -52,17 +52,11 @@ struct GameEventMapPreviewView: View {
         }
 
         if let point {
-            return nextUnlockedBattle(in: point).map {
-                nodeID(forBattleID: $0.id)
-            }
-                ?? visibleBattles.first.map { nodeID(forBattleID: $0.id) }
+            return visibleBattles.first.map { nodeID(forBattleID: $0.id) }
         }
 
         if let chapter {
-            return nextUnlockedPoint(in: chapter).map {
-                nodeID(forPointID: $0.id)
-            }
-                ?? chapter.points.first.map { nodeID(forPointID: $0.id) }
+            return chapter.points.first.map { nodeID(forPointID: $0.id) }
         }
 
         return nil
@@ -90,10 +84,7 @@ struct GameEventMapPreviewView: View {
     var body: some View {
         GeometryReader { geo in
             let viewportSize = geo.size
-            let contentSize = CGSize(
-                width: max(geo.size.width * 2.15, 980),
-                height: max(geo.size.height * 1.08, geo.size.height)
-            )
+            let contentSize = resolvedContentSize(for: viewportSize)
 
             ZStack(alignment: .topLeading) {
                 ScrollViewReader { proxy in
@@ -159,6 +150,22 @@ struct GameEventMapPreviewView: View {
                 }
             }
         }
+    }
+
+    private func resolvedContentSize(for viewportSize: CGSize) -> CGSize {
+        if let texture,
+            let image = RemoteContentManager.cachedOrBundledImage(named: texture)
+        {
+            return CGSize(
+                width: max(image.size.width, viewportSize.width),
+                height: max(image.size.height, viewportSize.height)
+            )
+        }
+
+        return CGSize(
+            width: max(viewportSize.width * 2.15, 980),
+            height: max(viewportSize.height * 1.08, viewportSize.height)
+        )
     }
 
     private func mapTexture(size: CGSize) -> some View {
@@ -379,7 +386,7 @@ struct GameEventMapPreviewView: View {
             withAnimation(.easeInOut(duration: 0.35)) {
                 proxy.scrollTo(
                     focusedNodeID,
-                    anchor: UnitPoint(x: 0.5, y: 0.62)
+                    anchor: UnitPoint(x: 0.12, y: 0.9)
                 )
             }
         }

@@ -123,6 +123,31 @@ private struct LoginRewardCampaignManifest: Codable, Identifiable, Equatable {
     let resource: String
 }
 
+private func isLoginCampaignResource(_ resourceName: String) -> Bool {
+    if resourceName == "daily_login" {
+        return true
+    }
+
+    return resourceName.hasPrefix("event_login_")
+        || resourceName.hasSuffix("_login")
+        || resourceName.contains("_login_")
+}
+
+private func inferredLoginCampaignTitle(for resourceName: String) -> String {
+    resourceName
+        .split(separator: "_")
+        .map { word in
+            word.prefix(1).uppercased() + word.dropFirst().lowercased()
+        }
+        .joined(separator: " ")
+}
+
+private func inferredLoginCampaignSubtitle(for resourceName: String) -> String {
+    resourceName == "daily_login"
+        ? "Remote Daily-Login-Belohnungen"
+        : "Remote Event-Login-Belohnungen"
+}
+
 func loadGiftBoxDefinitions() -> [GiftBoxDefinition] {
     JSONResourceLoader.loadArray(GiftBoxDefinition.self, resource: "gift")
 }
@@ -164,15 +189,42 @@ func loadLoginRewardCampaigns() -> [LoginRewardCampaign] {
         ),
     ]
 
-    return (manifests.isEmpty ? fallbackManifests : manifests).map { manifest in
-        LoginRewardCampaign(
+    let configuredManifests = manifests.isEmpty ? fallbackManifests : manifests
+    let configuredByResource = Dictionary(
+        uniqueKeysWithValues: configuredManifests.map { ($0.resource, $0) }
+    )
+    let autoDiscoveredResources = RemoteContentManager.cachedResourceNames().filter(
+        isLoginCampaignResource
+    )
+
+    let mergedResources = Array(
+        Set(configuredByResource.keys).union(autoDiscoveredResources)
+    )
+    .sorted { lhs, rhs in
+        if lhs == "daily_login" { return true }
+        if rhs == "daily_login" { return false }
+        return lhs < rhs
+    }
+
+    return mergedResources.compactMap { resourceName in
+        let rewards = loadDailyLoginRewardDefinitions(resource: resourceName)
+        guard !rewards.isEmpty else { return nil }
+
+        let manifest =
+            configuredByResource[resourceName]
+            ?? LoginRewardCampaignManifest(
+                id: resourceName,
+                title: inferredLoginCampaignTitle(for: resourceName),
+                subtitle: inferredLoginCampaignSubtitle(for: resourceName),
+                resource: resourceName
+            )
+
+        return LoginRewardCampaign(
             id: manifest.id,
             title: manifest.title,
             subtitle: manifest.subtitle,
             resource: manifest.resource,
-            rewards: loadDailyLoginRewardDefinitions(
-                resource: manifest.resource
-            )
+            rewards: rewards
         )
     }
 }

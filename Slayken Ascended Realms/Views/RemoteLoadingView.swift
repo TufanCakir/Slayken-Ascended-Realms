@@ -97,15 +97,27 @@ struct RemoteLoadingView: View {
             )
 
             Circle()
-                .fill(Color.cyan.opacity(0.16))
+                .fill(
+                    RadialGradient(
+                        colors: [Color.cyan.opacity(0.16), .clear],
+                        center: .center,
+                        startRadius: 12,
+                        endRadius: 110
+                    )
+                )
                 .frame(width: 220, height: 220)
-                .blur(radius: 36)
                 .offset(x: -120, y: -210)
 
             Circle()
-                .fill(Color.blue.opacity(0.14))
+                .fill(
+                    RadialGradient(
+                        colors: [Color.blue.opacity(0.14), .clear],
+                        center: .center,
+                        startRadius: 16,
+                        endRadius: 130
+                    )
+                )
                 .frame(width: 260, height: 260)
-                .blur(radius: 42)
                 .offset(x: 140, y: 220)
         }
         .ignoresSafeArea()
@@ -499,35 +511,5 @@ struct RemoteLoadingView: View {
         ) {
             spin = true
         }
-    }
-}
-
-#Preview {
-    PreviewRemoteLoadingView()
-}
-
-private struct PreviewRemoteLoadingView: View {
-    @State private var showOptions = true
-
-    var body: some View {
-        RemoteLoadingView(
-            plan: RemoteContentStartupPlan(
-                pendingResourceCount: 3,
-                pendingAssetCount: 7,
-                estimatedDownloadBytes: 268_435_456
-            ),
-            isPreparingPlan: false,
-            isStarting: false,
-            progress: 0.42,
-            statusText: "Bereit zum Laden",
-            requiresMandatoryUpdate: false,
-            failureMessage: nil,
-            requiresRetry: false,
-            isConnected: true,
-            showOptions: $showOptions,
-            onPreloadAll: {},
-            onPlayWithoutPreload: {},
-            onRetry: {}
-        )
     }
 }

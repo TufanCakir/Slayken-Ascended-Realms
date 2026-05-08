@@ -514,13 +514,13 @@ final class BattleSceneCoordinator {
             start.z + direction.z * lungeDistance
         )
 
-        let windup = SCNAction.move(to: windupPosition, duration: 0.08)
+        let windup = SCNAction.move(to: windupPosition, duration: 0.03)
         windup.timingMode = .easeOut
 
-        let dash = SCNAction.move(to: lungePosition, duration: 0.15)
+        let dash = SCNAction.move(to: lungePosition, duration: 0.07)
         dash.timingMode = .easeInEaseOut
 
-        let recover = SCNAction.move(to: start, duration: 0.18)
+        let recover = SCNAction.move(to: start, duration: 0.08)
         recover.timingMode = .easeOut
 
         let anticipationDelay = SCNAction.wait(duration: 0.03)
@@ -1534,137 +1534,4 @@ final class BattleSceneCoordinator {
             ?? RemoteContentManager.cachedOrBundledImage(named: textureName)
     }
 }
-#Preview("Battle Scene Skills") {
-    BattleScenePreviewContainer()
-        .ignoresSafeArea()
-}
 
-private struct BattleScenePreviewContainer: View {
-    @State private var selectedCardIndex = 0
-    @State private var playerAttackID = 1
-
-    private let previewCards = Array(loadAbilityCards().prefix(4))
-    private let previewEnemies = [
-        CharacterStats(
-            name: "Enemy A",
-            image: "1",
-            model: "zaron",
-            hp: 120,
-            attack: 12
-        ),
-        CharacterStats(
-            name: "Enemy B",
-            image: "1",
-            model: "shen",
-            hp: 140,
-            attack: 15
-        ),
-        CharacterStats(
-            name: "Enemy C",
-            image: "1",
-            model: "shela",
-            hp: 100,
-            attack: 10
-        ),
-    ]
-
-    private var selectedCard: AbilityCardDefinition? {
-        guard previewCards.indices.contains(selectedCardIndex) else {
-            return nil
-        }
-        return previewCards[selectedCardIndex]
-    }
-
-    private var particleTargetIndices: [Int] {
-        guard let selectedCard else { return [0] }
-        return selectedCard.isAOE ? Array(previewEnemies.indices) : [0]
-    }
-
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            BattleSceneView(
-                player: CharacterStats(
-                    name: "Preview Hero",
-                    image: "1",
-                    model: "aika",
-                    hp: 180,
-                    attack: 22
-                ),
-                enemies: previewEnemies,
-                raidParticipants: nil,
-                enemyHPs: [1.0, 1.0, 1.0],
-                selectedEnemyIndex: 0,
-                playerAttackID: playerAttackID,
-                allyAttackID: 0,
-                allyAttackerParticipantID: nil,
-                enemyAttackID: 0,
-                attackingEnemyIndex: nil,
-                particleEffect: selectedCard?.particleEffect,
-                particleTargetIndices: particleTargetIndices,
-                particleEffects: loadParticleEffects(),
-                groundTexture: "bg_sar",
-                skyboxTexture: "bg_sar",
-                onSelectEnemy: { _ in }
-            )
-
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Skill Preview")
-                    .font(.system(size: 16, weight: .black))
-
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 10) {
-                        ForEach(
-                            Array(previewCards.enumerated()),
-                            id: \.element.id
-                        ) {
-                            index,
-                            card in
-                            Button {
-                                selectedCardIndex = index
-                                playerAttackID += 1
-                            } label: {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(card.name)
-                                        .font(.system(size: 12, weight: .bold))
-                                        .lineLimit(1)
-                                    Text(card.isAOE ? "AOE" : "Single")
-                                        .font(
-                                            .system(size: 10, weight: .semibold)
-                                        )
-                                        .foregroundStyle(.white.opacity(0.75))
-                                }
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 10)
-                                .frame(width: 130, alignment: .leading)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .fill(
-                                            index == selectedCardIndex
-                                                ? Color.white.opacity(0.22)
-                                                : Color.black.opacity(0.3)
-                                        )
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(
-                                            Color.white.opacity(
-                                                index == selectedCardIndex
-                                                    ? 0.55 : 0.18
-                                            ),
-                                            lineWidth: 1
-                                        )
-                                )
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                }
-            }
-            .padding(16)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.black.opacity(0.26))
-        }
-        .background(Color.black)
-    }
-}

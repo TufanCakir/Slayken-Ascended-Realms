@@ -178,12 +178,3 @@ struct TutorialArchiveView: View {
         return "\(tutorial.allEnemies.count)x Gegner"
     }
 }
-
-#Preview {
-    TutorialArchiveView(
-        tutorials: loadTutorialDefinitions(),
-        onClose: {},
-        onReplay: { _ in }
-    )
-    .environmentObject(ThemeManager())
-}

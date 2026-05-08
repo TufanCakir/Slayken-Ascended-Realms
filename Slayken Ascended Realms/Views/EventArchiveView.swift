@@ -13,6 +13,7 @@ struct EventArchiveView: View {
 
     @EnvironmentObject private var theme: ThemeManager
     @State private var activeCutscene: GlobeEventCutscene?
+    @State private var countdownNow = Date()
 
     private var activeTheme: GameTheme? {
         theme.selectedTheme ?? theme.themes.first
@@ -57,6 +58,12 @@ struct EventArchiveView: View {
                 )
             }
             .ignoresSafeArea()
+        }
+        .task {
+            while !Task.isCancelled {
+                countdownNow = .now
+                try? await Task.sleep(for: .seconds(60))
+            }
         }
     }
 
@@ -126,6 +133,16 @@ struct EventArchiveView: View {
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(.white.opacity(0.68))
                     .lineLimit(2)
+
+                if let timingText = EventDateSupport.displayText(
+                    endsAt: chapter.endsAt,
+                    now: countdownNow
+                ) {
+                    Text(timingText)
+                        .font(.system(size: 10, weight: .black))
+                        .foregroundStyle(activeTheme?.glow.color ?? .yellow)
+                        .lineLimit(1)
+                }
             }
 
             if let cutscene = chapter.cutscene {
@@ -279,11 +296,4 @@ struct EventArchiveView: View {
         }
         .buttonStyle(.plain)
     }
-}
-
-#Preview {
-    EventArchiveView(
-        chapters: loadGlobeEventChapters().filter { $0.id.hasPrefix("event_") }
-    ) {}
-    .environmentObject(ThemeManager())
 }

@@ -426,27 +426,4 @@ struct SettingsView: View {
         guard !rewards.isEmpty else { return false }
         return progress.totalClaims >= rewards.count
     }
-
-}
-
-#Preview {
-    SettingsView(onClose: {}, onReset: {}, onOpenTutorialArchive: {})
-        .environmentObject(GameState())
-        .environmentObject(ThemeManager())
-        .modelContainer(
-            for: [
-                PlayerCurrencyBalance.self,
-                OwnedSummonCharacter.self,
-                TeamMemberRecord.self,
-                PlayerBattleProgress.self,
-                PlayerDeckCardSlot.self,
-                OwnedAbilityCard.self,
-                PlayerCharacterProgress.self,
-                PlayerAccountProgress.self,
-                SeenCutsceneRecord.self,
-                SummonBannerProgress.self,
-                PlayerBattleResourceState.self,
-            ],
-            inMemory: true
-        )
 }

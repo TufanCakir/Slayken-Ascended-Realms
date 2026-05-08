@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 struct SummonResultView: View {
     let result: SummonDrop
@@ -163,29 +162,6 @@ struct SummonResultView: View {
                     .foregroundStyle(.white.opacity(0.68))
                     .padding(44)
             }
-        }
-    }
-
-    private var background: some View {
-        ZStack {
-            LinearGradient(
-                colors: [
-                    Color.black, Color(red: 0.12, green: 0.16, blue: 0.18),
-                    Color.black,
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-
-            Circle()
-                .fill(Color.yellow.opacity(0.15))
-                .frame(width: 300)
-                .blur(radius: 80)
-                .scaleEffect(animate ? 1.2 : 0.8)
-                .animation(
-                    .easeInOut(duration: 1.2).repeatForever(autoreverses: true),
-                    value: animate
-                )
         }
     }
 }

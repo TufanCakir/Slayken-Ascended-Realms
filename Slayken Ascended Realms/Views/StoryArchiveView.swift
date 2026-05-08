@@ -272,8 +272,3 @@ struct StoryArchiveView: View {
         .buttonStyle(.plain)
     }
 }
-
-#Preview {
-    StoryArchiveView(chapters: loadGlobeEventChapters()) {}
-        .environmentObject(ThemeManager())
-}

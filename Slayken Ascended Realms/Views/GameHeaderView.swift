@@ -539,36 +539,3 @@ struct GameHeaderView: View {
         return min(max(progress, 0), 1)
     }
 }
-
-#Preview {
-    ZStack {
-        LinearGradient(
-            colors: [
-                Color(red: 0.16, green: 0.32, blue: 0.60),
-                Color(red: 0.04, green: 0.10, blue: 0.20),
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
-
-        VStack(spacing: 0) {
-            GameHeaderView(
-                playerName: "Tufan",
-                playerPreviewImage: "preview_shen",
-                currencies: loadCurrencyDefinitions(),
-                ascendedLevel: 12,
-                ascendedXP: 3200,
-                energy: 18,
-                maxEnergy: 20
-            )
-            .padding(.top, 10)
-
-            Spacer()
-        }
-    }
-    .frame(width: 393, height: 180, alignment: .top)
-    .environmentObject(RemoteContentManager.shared)
-    .modelContainer(for: [PlayerCurrencyBalance.self], inMemory: true)
-    .preferredColorScheme(.dark)
-}

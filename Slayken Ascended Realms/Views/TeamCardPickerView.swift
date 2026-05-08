@@ -7,7 +7,6 @@
 
 import SwiftData
 import SwiftUI
-import UIKit
 
 struct TeamCardPickerView: View {
     let slotIndex: Int

@@ -187,8 +187,7 @@ struct CharacterSelectView: View {
                 .padding(.bottom, 18)
             }
         }
-        .background(.black.opacity(0.28))
-        .background(.ultraThinMaterial.opacity(0.45))
+        .background(.black.opacity(0.46))
     }
 
     private var saveButtonColor: Color {
@@ -266,10 +265,4 @@ struct CharacterSelectView: View {
             }
         }
     }
-}
-
-#Preview {
-    CharacterSelectView()
-        .environmentObject(GameState())
-        .environmentObject(ThemeManager())
 }

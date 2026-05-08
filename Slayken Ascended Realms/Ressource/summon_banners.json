@@ -1,146 +1,148 @@
 [
-   {
-  "id": "launch_free_character_banner",
-  "name": "Launch Gift: Free Character",
-  "subtitle": "Kostenloses Launch-Banner. Einmal nutzbar und garantiert 1 Character.",
-  "category": "Free",
-  "image": "bg_country",
-  "minAscendedLevel": 1,
-  "cost": [],
-  "maxSummons": 1,
-  "guarantee": {
-    "dropType": "character",
-    "rarity": 4,
-    "appliesOnSummon": 1
-  },
-  "rates": [
     {
-      "rarity": 5,
-      "rate": 15.0
+        "id": "launch_free_character_banner",
+        "name": "Launch Gift: Free Character",
+        "subtitle":
+            "Kostenloses Launch-Banner. Einmal nutzbar und garantiert 1 Character.",
+        "category": "Free",
+        "image": "bg_country",
+        "minAscendedLevel": 1,
+        "cost": [],
+        "maxSummons": 1,
+        "guarantee": {
+            "dropType": "character",
+            "rarity": 4,
+            "appliesOnSummon": 1
+        },
+        "rates": [
+            {
+                "rarity": 5,
+                "rate": 15.0
+            },
+            {
+                "rarity": 4,
+                "rate": 85.0
+            }
+        ],
+        "pool": [
+            {
+                "characterID": "aika",
+                "weight": 20
+            },
+            {
+                "characterID": "anjima",
+                "weight": 20
+            },
+            {
+                "characterID": "jefar",
+                "weight": 20
+            },
+            {
+                "characterID": "juji",
+                "weight": 20
+            },
+            {
+                "characterID": "lafiya",
+                "weight": 20
+            },
+            {
+                "characterID": "rana",
+                "weight": 20
+            },
+            {
+                "characterID": "sanya",
+                "weight": 20
+            },
+            {
+                "characterID": "shela",
+                "weight": 20
+            },
+            {
+                "characterID": "shen",
+                "weight": 20
+            },
+            {
+                "characterID": "zaron",
+                "weight": 20
+            },
+            {
+                "characterID": "sifili",
+                "weight": 20
+            }
+        ]
     },
     {
-      "rarity": 4,
-      "rate": 85.0
-    }
-  ],
-  "pool": [
-    {
-      "characterID": "aika",
-      "weight": 20
+        "id": "tutorial_banner",
+        "name": "Launch Gift: Free Character",
+        "subtitle":
+            "Kostenloses tutorial-Banner. Einmal nutzbar und garantiert 1 Character.",
+        "category": "Free",
+        "image": "realm_country",
+        "minAscendedLevel": 1,
+        "cost": [],
+        "maxSummons": 1,
+        "guarantee": {
+            "dropType": "character",
+            "rarity": 4,
+            "appliesOnSummon": 1
+        },
+        "rates": [
+            {
+                "rarity": 5,
+                "rate": 15.0
+            },
+            {
+                "rarity": 4,
+                "rate": 85.0
+            }
+        ],
+        "pool": [
+            {
+                "characterID": "aika",
+                "weight": 20
+            },
+            {
+                "characterID": "anjima",
+                "weight": 20
+            },
+            {
+                "characterID": "jefar",
+                "weight": 20
+            },
+            {
+                "characterID": "juji",
+                "weight": 20
+            },
+            {
+                "characterID": "lafiya",
+                "weight": 20
+            },
+            {
+                "characterID": "rana",
+                "weight": 20
+            },
+            {
+                "characterID": "sanya",
+                "weight": 20
+            },
+            {
+                "characterID": "shela",
+                "weight": 20
+            },
+            {
+                "characterID": "shen",
+                "weight": 20
+            },
+            {
+                "characterID": "zaron",
+                "weight": 20
+            },
+            {
+                "characterID": "sifili",
+                "weight": 20
+            }
+        ]
     },
-    {
-      "characterID": "anjima",
-      "weight": 20
-    },
-    {
-      "characterID": "jefar",
-      "weight": 20
-    },
-    {
-      "characterID": "juji",
-      "weight": 20
-    },
-    {
-      "characterID": "lafiya",
-      "weight": 20
-    },
-    {
-      "characterID": "rana",
-      "weight": 20
-    },
-    {
-      "characterID": "sanya",
-      "weight": 20
-    },
-    {
-      "characterID": "shela",
-      "weight": 20
-    },
-    {
-      "characterID": "shen",
-      "weight": 20
-    },
-    {
-      "characterID": "zaron",
-      "weight": 20
-    },
-    {
-      "characterID": "sifili",
-      "weight": 20
-    }
-  ]
-},
-   {
-  "id": "tutorial_banner",
-  "name": "Launch Gift: Free Character",
-  "subtitle": "Kostenloses tutorial-Banner. Einmal nutzbar und garantiert 1 Character.",
-  "category": "Free",
-  "image": "realm_country",
-  "minAscendedLevel": 1,
-  "cost": [],
-  "maxSummons": 1,
-  "guarantee": {
-    "dropType": "character",
-    "rarity": 4,
-    "appliesOnSummon": 1
-  },
-  "rates": [
-    {
-      "rarity": 5,
-      "rate": 15.0
-    },
-    {
-      "rarity": 4,
-      "rate": 85.0
-    }
-  ],
-  "pool": [
-    {
-      "characterID": "aika",
-      "weight": 20
-    },
-    {
-      "characterID": "anjima",
-      "weight": 20
-    },
-    {
-      "characterID": "jefar",
-      "weight": 20
-    },
-    {
-      "characterID": "juji",
-      "weight": 20
-    },
-    {
-      "characterID": "lafiya",
-      "weight": 20
-    },
-    {
-      "characterID": "rana",
-      "weight": 20
-    },
-    {
-      "characterID": "sanya",
-      "weight": 20
-    },
-    {
-      "characterID": "shela",
-      "weight": 20
-    },
-    {
-      "characterID": "shen",
-      "weight": 20
-    },
-    {
-      "characterID": "zaron",
-      "weight": 20
-    },
-    {
-      "characterID": "sifili",
-      "weight": 20
-    }
-  ]
-},
     {
         "id": "release_max_skill_gift",
         "name": "Release Gift: Max Skill",
@@ -436,40 +438,40 @@
             }
         ]
     },
- {
-    "id": "skill_star_1",
-    "name": "1-Star Skill Banner",
-    "subtitle": "Gueltiges Einsteiger-Banner fuer 1-Star Skills.",
-    "category": "Skill",
-    "image": "realm_fire",
-    "minAscendedLevel": 1,
-    "cost": [
-        {
-            "currency": "coins",
-            "amount": 1000
-        }
-    ],
-    "rates": [
-        {
-            "rarity": 1,
-            "rate": 100.0
-        }
-    ],
-    "pool": [
-        {
-            "cardID": "slash_red",
-            "weight": 60
-        },
-        {
-            "cardID": "light_flare",
-            "weight": 20
-        },
-        {
-            "cardID": "neutral_spark",
-            "weight": 20
-        }
-    ]
-},
+    {
+        "id": "skill_star_1",
+        "name": "1-Star Skill Banner",
+        "subtitle": "Gueltiges Einsteiger-Banner fuer 1-Star Skills.",
+        "category": "Skill",
+        "image": "realm_fire",
+        "minAscendedLevel": 1,
+        "cost": [
+            {
+                "currency": "coins",
+                "amount": 1000
+            }
+        ],
+        "rates": [
+            {
+                "rarity": 1,
+                "rate": 100.0
+            }
+        ],
+        "pool": [
+            {
+                "cardID": "slash_red",
+                "weight": 60
+            },
+            {
+                "cardID": "light_flare",
+                "weight": 20
+            },
+            {
+                "cardID": "neutral_spark",
+                "weight": 20
+            }
+        ]
+    },
     {
         "id": "skill_star_2",
         "name": "2-Star Skill Banner",

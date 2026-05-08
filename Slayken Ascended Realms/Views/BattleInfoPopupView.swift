@@ -235,12 +235,3 @@ struct BattleInfoPopupView: View {
         .padding(.top, 2)
     }
 }
-
-#Preview {
-    BattleInfoPopupView(
-        showPopup: .constant(true),
-        battle: loadGlobeEventChapters().first!.points.first!.battles.first!,
-        onStart: {}
-    )
-    .environmentObject(ThemeManager())
-}

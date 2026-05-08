@@ -10,11 +10,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 2500
+                "amount": 620
             },
             {
                 "currency": "crystals",
-                "amount": 120
+                "amount": 24
             }
         ],
         "characterRewards": [
@@ -34,11 +34,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 4000
+                "amount": 1000
             },
             {
                 "currency": "crystals",
-                "amount": 220
+                "amount": 44
             }
         ],
         "characterRewards": []
@@ -54,11 +54,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 6000
+                "amount": 1500
             },
             {
                 "currency": "crystals",
-                "amount": 150
+                "amount": 30
             }
         ],
         "characterRewards": []
@@ -74,11 +74,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 2000
+                "amount": 500
             },
             {
                 "currency": "crystals",
-                "amount": 350
+                "amount": 70
             }
         ],
         "characterRewards": [
@@ -97,11 +97,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 12000
+                "amount": 3000
             },
             {
                 "currency": "crystals",
-                "amount": 700
+                "amount": 80
             }
         ],
         "characterRewards": [
@@ -121,11 +121,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 5000
+                "amount": 1250
             },
             {
                 "currency": "crystals",
-                "amount": 280
+                "amount": 56
             }
         ],
         "characterRewards": []

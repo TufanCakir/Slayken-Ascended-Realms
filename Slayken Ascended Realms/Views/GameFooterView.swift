@@ -58,9 +58,7 @@ struct GameFooterView: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
             .frame(width: expandedWidth)
-            .background(
-                Color.white.opacity(0.92).background(.ultraThinMaterial)
-            )
+            .background(Color.white.opacity(0.92))
             .clipShape(Capsule())
             .shadow(color: .black.opacity(0.16), radius: 10, y: 3)
             .padding(.horizontal, 14)
@@ -110,8 +108,4 @@ private struct FooterTabItem: Identifiable {
             return "Summon"
         }
     }
-}
-
-#Preview {
-    GameFooterView(selectedTab: .constant(.game))
 }

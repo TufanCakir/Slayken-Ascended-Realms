@@ -11,7 +11,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 1000
+                "amount": 400
             }
         ],
         "characterRewards": [],
@@ -29,7 +29,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 1200
+                "amount": 480
             }
         ],
         "characterRewards": [],
@@ -47,7 +47,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 1400
+                "amount": 560
             }
         ],
         "characterRewards": [],
@@ -65,7 +65,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 1600
+                "amount": 640
             }
         ],
         "characterRewards": [],
@@ -83,7 +83,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 1800
+                "amount": 720
             }
         ],
         "characterRewards": [],
@@ -101,7 +101,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 2000
+                "amount": 800
             }
         ],
         "characterRewards": [],
@@ -119,7 +119,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 2500
+                "amount": 1000
             }
         ],
         "characterRewards": [],
@@ -137,7 +137,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 2200
+                "amount": 880
             }
         ],
         "characterRewards": [],
@@ -155,7 +155,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 2400
+                "amount": 960
             }
         ],
         "characterRewards": [],
@@ -173,7 +173,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 2600
+                "amount": 1040
             }
         ],
         "characterRewards": [],
@@ -191,7 +191,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 2800
+                "amount": 1120
             }
         ],
         "characterRewards": [],
@@ -209,7 +209,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 3000
+                "amount": 1200
             }
         ],
         "characterRewards": [],
@@ -227,7 +227,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 3200
+                "amount": 1280
             }
         ],
         "characterRewards": [],
@@ -245,7 +245,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 4000
+                "amount": 1600
             }
         ],
         "characterRewards": [],
@@ -263,7 +263,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 3500
+                "amount": 1400
             }
         ],
         "characterRewards": [],
@@ -281,7 +281,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 3800
+                "amount": 1520
             }
         ],
         "characterRewards": [],
@@ -299,7 +299,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 4100
+                "amount": 1640
             }
         ],
         "characterRewards": [],
@@ -317,7 +317,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 4400
+                "amount": 1760
             }
         ],
         "characterRewards": [],
@@ -335,7 +335,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 4700
+                "amount": 1880
             }
         ],
         "characterRewards": [],
@@ -353,7 +353,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 5000
+                "amount": 2000
             }
         ],
         "characterRewards": [],
@@ -372,7 +372,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 6500
+                "amount": 2500
             }
         ],
         "characterRewards": [],
@@ -390,7 +390,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 5600
+                "amount": 2240
             }
         ],
         "characterRewards": [],
@@ -408,7 +408,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 5900
+                "amount": 2360
             }
         ],
         "characterRewards": [],
@@ -426,7 +426,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 6200
+                "amount": 2480
             }
         ],
         "characterRewards": [],
@@ -444,7 +444,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 7000
+                "amount": 2500
             }
         ],
         "characterRewards": [],
@@ -462,7 +462,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 7600
+                "amount": 2500
             }
         ],
         "characterRewards": [],
@@ -480,7 +480,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 8200
+                "amount": 2500
             }
         ],
         "characterRewards": [],
@@ -498,7 +498,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 9500
+                "amount": 2500
             }
         ],
         "characterRewards": [],
@@ -516,7 +516,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 11000
+                "amount": 2500
             }
         ],
         "characterRewards": [],
@@ -535,7 +535,7 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 15000
+                "amount": 2500
             }
         ],
         "characterRewards": [],

@@ -20,8 +20,6 @@
                 "node": {
                     "x": 0.24,
                     "y": 0.63,
-                    "anchorX": 0.5,
-                    "anchorY": 0.65
                 },
                 "cutscene": {
                     "id": "chapter_1_gate_intro",
@@ -52,17 +50,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 120
+                                "amount": 50
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 10
+                                "amount": 3
                             }
                         ],
                         "characterRewards": [],
@@ -101,17 +99,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 135
+                                "amount": 60
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 11
+                                "amount": 3
                             }
                         ],
                         "characterRewards": [],
@@ -147,17 +145,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 150
+                                "amount": 70
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 12
+                                "amount": 4
                             }
                         ],
                         "characterRewards": [],
@@ -196,17 +194,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 165
+                                "amount": 70
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 13
+                                "amount": 4
                             }
                         ],
                         "characterRewards": [],
@@ -241,17 +239,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 180
+                                "amount": 80
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 14
+                                "amount": 4
                             }
                         ],
                         "characterRewards": [],
@@ -287,17 +285,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 195
+                                "amount": 90
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 15
+                                "amount": 4
                             }
                         ],
                         "characterRewards": [],
@@ -338,17 +336,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 210
+                                "amount": 90
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 16
+                                "amount": 5
                             }
                         ],
                         "characterRewards": [],
@@ -383,17 +381,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 225
+                                "amount": 100
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 17
+                                "amount": 5
                             }
                         ],
                         "characterRewards": [],
@@ -428,17 +426,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 240
+                                "amount": 110
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 18
+                                "amount": 5
                             }
                         ],
                         "characterRewards": [],
@@ -478,17 +476,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 260
+                                "amount": 120
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 20
+                                "amount": 6
                             }
                         ],
                         "characterRewards": [
@@ -527,17 +525,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 280
+                                "amount": 130
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 21
+                                "amount": 6
                             }
                         ],
                         "characterRewards": [],
@@ -573,17 +571,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 300
+                                "amount": 140
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 22
+                                "amount": 7
                             }
                         ],
                         "characterRewards": [],
@@ -623,17 +621,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 325
+                                "amount": 150
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 24
+                                "amount": 7
                             }
                         ],
                         "characterRewards": [],
@@ -668,17 +666,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 350
+                                "amount": 160
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 26
+                                "amount": 8
                             }
                         ],
                         "characterRewards": [],
@@ -713,17 +711,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 380
+                                "amount": 170
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 28
+                                "amount": 8
                             }
                         ],
                         "characterRewards": [],
@@ -764,17 +762,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 410
+                                "amount": 180
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 30
+                                "amount": 9
                             }
                         ],
                         "characterRewards": [],
@@ -809,17 +807,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 440
+                                "amount": 200
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 33
+                                "amount": 10
                             }
                         ],
                         "characterRewards": [],
@@ -855,17 +853,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 470
+                                "amount": 210
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 36
+                                "amount": 11
                             }
                         ],
                         "characterRewards": [],
@@ -906,17 +904,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 510
+                                "amount": 230
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 40
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -952,17 +950,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 550
+                                "amount": 250
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 44
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [
@@ -1001,17 +999,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 590
+                                "amount": 270
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 48
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1052,17 +1050,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 630
+                                "amount": 280
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 52
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1096,17 +1094,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 680
+                                "amount": 310
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 56
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1141,17 +1139,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 730
+                                "amount": 330
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 60
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1192,17 +1190,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 790
+                                "amount": 360
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 65
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1237,17 +1235,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 850
+                                "amount": 380
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 70
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1287,17 +1285,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 920
+                                "amount": 410
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 76
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1333,17 +1331,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 990
+                                "amount": 450
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 82
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1384,17 +1382,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1070
+                                "amount": 480
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 90
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1437,17 +1435,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1200
+                                "amount": 540
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 100
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [
@@ -1497,17 +1495,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1280
+                                "amount": 580
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 104
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1543,17 +1541,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1360
+                                "amount": 610
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 108
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1594,17 +1592,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1440
+                                "amount": 650
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 112
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1640,17 +1638,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1530
+                                "amount": 690
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 116
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1685,17 +1683,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1620
+                                "amount": 730
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 120
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1736,17 +1734,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1710
+                                "amount": 770
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 124
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1782,17 +1780,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1800
+                                "amount": 810
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 128
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1828,17 +1826,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1900
+                                "amount": 860
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 132
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1879,17 +1877,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2000
+                                "amount": 900
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 136
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -1932,17 +1930,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2120
+                                "amount": 950
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 142
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [
@@ -1987,17 +1985,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2240
+                                "amount": 1010
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 148
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -2033,17 +2031,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2360
+                                "amount": 1060
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 154
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -2084,17 +2082,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2480
+                                "amount": 1120
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 160
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -2130,17 +2128,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2610
+                                "amount": 1170
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 166
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -2181,17 +2179,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2740
+                                "amount": 1230
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 172
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -2227,17 +2225,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2880
+                                "amount": 1300
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 178
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -2278,17 +2276,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3020
+                                "amount": 1360
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 184
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -2324,17 +2322,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3160
+                                "amount": 1420
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 190
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -2375,17 +2373,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3320
+                                "amount": 1490
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 198
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [],
@@ -2428,17 +2426,17 @@
                         },
                         "xpReward": 300,
                         "dailyRewardLimits": {
-                            "coins": 3000,
-                            "crystals": 300
+                            "coins": 1200,
+                            "crystals": 60
                         },
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3600
+                                "amount": 1620
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 220
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 struct NewsView: View {
     var onClose: (() -> Void)? = nil
@@ -18,7 +17,11 @@ struct NewsView: View {
     private var items: [NewsItemDefinition] { gameState.newsItems }
 
     private var categories: [String] {
-        ["Allgemein", "Events", "Bug Fixes"]
+        let dynamicCategories = Set(items.map { normalizedCategory(for: $0) })
+            .subtracting(["Allgemein"])
+            .sorted()
+
+        return ["Allgemein"] + dynamicCategories
     }
 
     private var groupedItems: [(String, [NewsItemDefinition])] {
@@ -188,6 +191,25 @@ struct NewsView: View {
             || combinedText.contains("seasonal")
         {
             return "Events"
+        }
+
+        if combinedText.contains("login") {
+            return "Logins"
+        }
+
+        if combinedText.contains("summon")
+            || combinedText.contains("banner")
+            || combinedText.contains("character")
+        {
+            return "Summon"
+        }
+
+        if combinedText.contains("shop")
+            || combinedText.contains("angebot")
+            || combinedText.contains("pack")
+            || combinedText.contains("skin")
+        {
+            return "Shop"
         }
 
         return "Allgemein"
@@ -376,10 +398,4 @@ private struct NewsDetailView: View {
             }
         }
     }
-}
-
-#Preview {
-    NewsView(onClose: {})
-        .environmentObject(ThemeManager())
-        .environmentObject(GameState())
 }

@@ -165,8 +165,3 @@ struct SupportView: View {
         }
     }
 }
-
-#Preview {
-    SupportView()
-        .environmentObject(ThemeManager())
-}

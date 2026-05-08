@@ -7,7 +7,6 @@
 
 import SwiftData
 import SwiftUI
-import UIKit
 
 struct TeamView: View {
     private enum ActiveSheet: Identifiable {

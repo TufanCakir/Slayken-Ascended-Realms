@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 struct VictoryView: View {
     @EnvironmentObject var theme: ThemeManager
@@ -163,8 +162,12 @@ struct VictoryView: View {
         .buttonStyle(.plain)
     }
 
+    private let rewardColumns = [
+        GridItem(.adaptive(minimum: 72, maximum: 90), spacing: 10)
+    ]
+
     private var rewardRow: some View {
-        HStack(spacing: 10) {
+        LazyVGrid(columns: rewardColumns, spacing: 10) {
             ForEach(rewards) { reward in
                 if let currency = currencies.first(where: {
                     $0.code == reward.currency
@@ -173,11 +176,11 @@ struct VictoryView: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity, alignment: .center)
+        .frame(maxWidth: .infinity)
     }
 
     private var cardRewardRow: some View {
-        HStack(spacing: 10) {
+        LazyVGrid(columns: rewardColumns, spacing: 10) {
             ForEach(cardRewards) { reward in
                 rewardItem(
                     title: cardName(for: reward.cardID),
@@ -187,11 +190,11 @@ struct VictoryView: View {
                 )
             }
         }
-        .frame(maxWidth: .infinity, alignment: .center)
+        .frame(maxWidth: .infinity)
     }
 
     private var characterRewardRow: some View {
-        HStack(spacing: 10) {
+        LazyVGrid(columns: rewardColumns, spacing: 10) {
             ForEach(characterRewards) { reward in
                 rewardItem(
                     title: characterName(for: reward.characterID),
@@ -201,7 +204,7 @@ struct VictoryView: View {
                 )
             }
         }
-        .frame(maxWidth: .infinity, alignment: .center)
+        .frame(maxWidth: .infinity)
     }
 
     private var ascendedXPPanel: some View {
@@ -329,8 +332,9 @@ struct VictoryView: View {
                 .font(.system(size: 9, weight: .bold))
                 .foregroundStyle(.white.opacity(0.62))
                 .lineLimit(1)
+                .minimumScaleFactor(0.7)
         }
-        .frame(width: 84, height: 76)
+        .frame(width: 76, height: 72)
         .background(
             Color.black.opacity(0.34),
             in: RoundedRectangle(cornerRadius: 26, style: .continuous)
@@ -358,30 +362,4 @@ struct VictoryView: View {
     private func cardImage(for cardID: String) -> String? {
         gameState.abilityCards.first(where: { $0.id == cardID })?.image
     }
-}
-
-#Preview {
-    VictoryView(
-        currencies: loadCurrencyDefinitions(),
-        rewards: [
-            CurrencyAmount(currency: "coins", amount: 120),
-            CurrencyAmount(currency: "crystals", amount: 5),
-        ],
-        characterRewards: [
-            GlobeBattle.CharacterReward(characterID: "zaron")
-        ],
-        cardRewards: [
-            GlobeBattle.CardReward(cardID: "slash_red", amount: 1)
-        ],
-        xpReward: 140,
-        ascendedXPReward: 140,
-        levelBefore: 1,
-        levelAfter: 2,
-        ascendedLevelBefore: 1,
-        ascendedLevelAfter: 2,
-        defeatedEnemies: 3,
-        onContinue: {}
-    )
-    .environmentObject(GameState())
-    .environmentObject(ThemeManager())
 }

@@ -10,9 +10,11 @@ import SwiftUI
 struct DailyLoginPopupView: View {
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
+    @State private var countdownNow = Date()
 
     let campaignTitle: String
     let campaignSubtitle: String
+    let campaignEndsAt: String?
     let rewards: [DailyLoginRewardDefinition]
     let rewardState: DailyLoginRewardState
     let onClaim: () -> Void
@@ -28,15 +30,6 @@ struct DailyLoginPopupView: View {
 
     private var highlightedDay: Int {
         rewardState.dayNumber
-    }
-
-    private var campaignBackground: String? {
-        rewardState.reward.background
-            ?? rewards.first {
-                ($0.background ?? "")
-                    .trimmingCharacters(in: .whitespacesAndNewlines)
-                    .isEmpty == false
-            }?.background
     }
 
     var body: some View {
@@ -76,32 +69,29 @@ struct DailyLoginPopupView: View {
                 .buttonStyle(.plain)
             }
             .padding(18)
-            .background {
-                loginBackgroundImage(
-                    named: campaignBackground,
-                    fallback: popupBackgroundFallback
-                )
-                .clipShape(
-                    RoundedRectangle(cornerRadius: 28, style: .continuous)
-                )
-            }
+            .background(
+                LinearGradient(
+                    colors: [
+                        Color(red: 0.05, green: 0.17, blue: 0.28).opacity(0.98),
+                        Color(red: 0.03, green: 0.09, blue: 0.18).opacity(0.98),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                ),
+                in: RoundedRectangle(cornerRadius: 28, style: .continuous)
+            )
             .overlay {
                 RoundedRectangle(cornerRadius: 28, style: .continuous)
                     .stroke(.white.opacity(0.12), lineWidth: 1)
             }
             .padding(16)
         }
-    }
-
-    private var popupBackgroundFallback: LinearGradient {
-        LinearGradient(
-            colors: [
-                Color(red: 0.05, green: 0.17, blue: 0.28).opacity(0.98),
-                Color(red: 0.03, green: 0.09, blue: 0.18).opacity(0.98),
-            ],
-            startPoint: .top,
-            endPoint: .bottom
-        )
+        .task {
+            while !Task.isCancelled {
+                countdownNow = .now
+                try? await Task.sleep(for: .seconds(60))
+            }
+        }
     }
 
     private var headerBlock: some View {
@@ -114,70 +104,44 @@ struct DailyLoginPopupView: View {
                 .font(.system(size: 13, weight: .bold, design: .rounded))
                 .foregroundStyle(.white.opacity(0.7))
                 .multilineTextAlignment(.center)
+
+            if let timingText = EventDateSupport.displayText(
+                endsAt: campaignEndsAt,
+                now: countdownNow
+            ) {
+                Text(timingText)
+                    .font(.system(size: 11, weight: .black, design: .rounded))
+                    .foregroundStyle(accentColor)
+                    .multilineTextAlignment(.center)
+            }
         }
     }
 
     private var featuredRewardCard: some View {
-        VStack(spacing: 10) {
-            Text("Tag \(rewardState.dayNumber)")
-                .font(.system(size: 14, weight: .black, design: .rounded))
-                .tracking(2)
-                .foregroundStyle(.white.opacity(0.72))
-
-            ZStack {
-                Circle()
-                    .fill(accentColor.opacity(0.18))
-                    .frame(width: 112, height: 112)
-
-                rewardIconView(
-                    assetIconName: rewardState.reward.assetIcon,
-                    symbolName: rewardState.reward.icon,
-                    tintColor: .white
-                )
-                .frame(width: 52, height: 52)
-            }
-
-            Text(rewardState.reward.title)
-                .font(.system(size: 24, weight: .black, design: .rounded))
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.white)
-
-            Text(rewardState.reward.message)
-                .font(.system(size: 14, weight: .semibold, design: .rounded))
-                .foregroundStyle(.white.opacity(0.84))
-                .multilineTextAlignment(.center)
-
-            VStack(spacing: 8) {
-                ForEach(rewardState.reward.rewards) { reward in
-                    currencyRewardRow(reward)
-                }
-                ForEach(rewardState.reward.characterRewards) { reward in
-                    characterRewardRow(reward)
-                }
-                ForEach(rewardState.reward.cardRewards) { reward in
-                    cardRewardRow(reward)
-                }
-            }
-        }
-        .padding(16)
-        .background {
+        ZStack {
             loginBackgroundImage(
                 named: rewardState.reward.background,
-                fallback: Color.white.opacity(0.06)
+                fallback: Color.black.opacity(0.2)
             )
-            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         }
+        .frame(height: 260)
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: 24,
+                style: .continuous
+            )
+        )
         .overlay {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(.white.opacity(0.1), lineWidth: 1)
+            RoundedRectangle(
+                cornerRadius: 24,
+                style: .continuous
+            )
+            .stroke(.white.opacity(0.08), lineWidth: 1)
         }
     }
 
     private var rewardCalendarList: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Alle Login-Boni")
-                .font(.system(size: 15, weight: .black, design: .rounded))
-                .foregroundStyle(.white)
 
             ScrollView(.vertical, showsIndicators: true) {
                 LazyVStack(spacing: 8) {
@@ -185,7 +149,7 @@ struct DailyLoginPopupView: View {
                         rewardCalendarRow(reward)
                     }
                 }
-                .padding(.trailing, 4)
+                .padding(.top)
             }
             .frame(maxHeight: 250)
         }
@@ -241,21 +205,13 @@ struct DailyLoginPopupView: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
-        .background {
-            loginBackgroundImage(
-                named: reward.background,
-                fallback: isActive
-                    ? Color.white.opacity(0.10)
-                    : Color.black.opacity(0.18)
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        }
+        .background(
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+        )
         .overlay {
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .stroke(
-                    isActive ? accentColor.opacity(0.7) : .white.opacity(0.06),
-                    lineWidth: 1
-                )
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
         }
     }
 
@@ -432,9 +388,9 @@ struct DailyLoginPopupView: View {
     }
 
     @ViewBuilder
-    private func loginBackgroundImage<Fallback: View>(
+    private func loginBackgroundImage(
         named imageName: String?,
-        fallback: Fallback
+        fallback: Color
     ) -> some View {
         if let imageName,
             !imageName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -442,126 +398,10 @@ struct DailyLoginPopupView: View {
             RemoteAssetImage(imageName, contentMode: .fill) {
                 fallback
             }
-            .overlay(Color.black.opacity(0.32))
+            .clipped()
+            .overlay(Color.black.opacity(0.12))
         } else {
             fallback
         }
     }
-}
-
-#Preview {
-    let gameState = GameState()
-    gameState.currencies = [
-        CurrencyDefinition(
-            code: "gold",
-            name: "Gold",
-            icon: "crown.fill",
-            assetIcon: nil,
-            sortOrder: 0
-        ),
-        CurrencyDefinition(
-            code: "gems",
-            name: "Gems",
-            icon: "sparkles",
-            assetIcon: nil,
-            sortOrder: 1
-        ),
-    ]
-    gameState.summonCharacters = [
-        SummonCharacter(
-            id: "zaron",
-            name: "Zaron",
-            summonImage: "preview_zaron",
-            model: "zaron",
-            battleModel: nil,
-            texture: nil,
-            element: nil,
-            rarity: 5,
-            hp: 1200,
-            attack: 240,
-            skins: []
-        )
-    ]
-    gameState.abilityCards = [
-        AbilityCardDefinition(
-            id: "slash_red",
-            name: "Slash Red",
-            image: "skill_slash_red",
-            element: "fire",
-            rarity: 3,
-            damageMultiplier: 1.3,
-            particleEffect: "slash",
-            description: "Preview card",
-            manaCost: 15,
-            maxLevel: 30,
-            maxStars: 5,
-            duplicatesPerLevel: 2,
-            levelsPerStar: 6,
-            damageGrowth: 1.08,
-            targeting: .single
-        )
-    ]
-
-    let previewRewards = [
-        DailyLoginRewardDefinition(
-            id: "preview-day-6",
-            day: 6,
-            title: "Crystal Surge",
-            subtitle: "Mehr Vorrat",
-            message: "Vorschau-Belohnung fuer die Kampagnenliste.",
-            buttonTitle: "Tag 6 abholen",
-            icon: "sparkles",
-            assetIcon: nil,
-            rewards: [
-                CurrencyAmount(currency: "gems", amount: 120)
-            ],
-            characterRewards: [],
-            cardRewards: []
-        ),
-        DailyLoginRewardDefinition(
-            id: "preview-day-7",
-            day: 7,
-            title: "Realm Bonus",
-            subtitle: "Dein Wochenbonus ist bereit.",
-            message:
-                "Logge dich morgen wieder ein, um die naechste Belohnung freizuschalten.",
-            buttonTitle: "Belohnung abholen",
-            icon: "gift.fill",
-            assetIcon: nil,
-            rewards: [
-                CurrencyAmount(currency: "gold", amount: 2500),
-                CurrencyAmount(currency: "gems", amount: 120),
-            ],
-            characterRewards: [GiftCharacterReward(characterID: "zaron")],
-            cardRewards: [GiftCardReward(cardID: "slash_red", amount: 1)]
-        ),
-        DailyLoginRewardDefinition(
-            id: "preview-day-8",
-            day: 8,
-            title: "Hero Drop",
-            subtitle: "Seltener Bonus",
-            message: "Noch ein Beispiel fuer die Popup-Liste.",
-            buttonTitle: "Tag 8 abholen",
-            icon: "star.fill",
-            assetIcon: nil,
-            rewards: [
-                CurrencyAmount(currency: "gold", amount: 3200)
-            ],
-            characterRewards: [],
-            cardRewards: [GiftCardReward(cardID: "slash_red", amount: 2)]
-        ),
-    ]
-
-    return DailyLoginPopupView(
-        campaignTitle: "Login Bonus",
-        campaignSubtitle: "Alle Belohnungen dieser Kampagne im Ueberblick",
-        rewards: previewRewards,
-        rewardState: DailyLoginRewardState(
-            reward: previewRewards[1],
-            dayNumber: 7
-        ),
-        onClaim: {}
-    )
-    .environmentObject(gameState)
-    .environmentObject(ThemeManager())
 }

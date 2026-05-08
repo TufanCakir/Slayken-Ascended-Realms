@@ -484,7 +484,7 @@ enum PlayerInventoryStore {
             nodeID: node.id,
             in: context
         )
-        progress.rank += 1
+        progress.rank = min(progress.rank + 1, node.maxRank)
         progress.updatedAt = .now
         save(context)
         return true

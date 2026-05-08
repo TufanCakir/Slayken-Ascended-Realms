@@ -12,11 +12,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 1200
+                "amount": 480
             },
             {
                 "currency": "crystals",
-                "amount": 60
+                "amount": 18
             }
         ],
         "characterRewards": [],
@@ -39,11 +39,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 1600
+                "amount": 640
             },
             {
                 "currency": "crystals",
-                "amount": 75
+                "amount": 22
             }
         ],
         "characterRewards": [],
@@ -61,11 +61,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 1800
+                "amount": 720
             },
             {
                 "currency": "crystals",
-                "amount": 80
+                "amount": 24
             }
         ],
         "characterRewards": [],
@@ -88,11 +88,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 2200
+                "amount": 880
             },
             {
                 "currency": "crystals",
-                "amount": 95
+                "amount": 28
             }
         ],
         "characterRewards": [
@@ -114,11 +114,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 2600
+                "amount": 1040
             },
             {
                 "currency": "crystals",
-                "amount": 120
+                "amount": 30
             }
         ],
         "characterRewards": [],
@@ -136,11 +136,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 3200
+                "amount": 1280
             },
             {
                 "currency": "crystals",
-                "amount": 140
+                "amount": 30
             }
         ],
         "characterRewards": [],
@@ -164,11 +164,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 5000
+                "amount": 2000
             },
             {
                 "currency": "crystals",
-                "amount": 220
+                "amount": 30
             }
         ],
         "characterRewards": [

@@ -208,6 +208,7 @@ final class GameState: ObservableObject {
     }
 
     func selectEventChapter(_ chapter: GlobeEventChapter) {
+        selectedBattle = nil
         activeEventChapterID = chapter.id
         activeEventPointID = nil
         activeEventBattleID = nil
@@ -220,6 +221,7 @@ final class GameState: ObservableObject {
         _ point: GlobeEventPoint,
         in chapter: GlobeEventChapter
     ) {
+        selectedBattle = nil
         activeEventChapterID = chapter.id
         activeEventPointID = point.id
         activeEventBattleID = nil
@@ -229,6 +231,7 @@ final class GameState: ObservableObject {
     }
 
     func clearActiveEventPoint() {
+        selectedBattle = nil
         activeEventPointID = nil
         activeEventBattleID = nil
         UserDefaults.standard.removeObject(forKey: eventPointKey)
@@ -312,22 +315,12 @@ final class GameState: ObservableObject {
     }
 
     private static func loadAvailableCharacters() -> [CharacterStats] {
-        let builtInCharacters = loadGamePlayers().map { character in
+        loadGamePlayers().map { character in
             character.withBattleModel(
                 character.battleModel
                     ?? makeBattleModelName(from: character.model)
             )
         }
-
-        let starterClassCharacters = loadCharacterClassDefinitions().flatMap {
-            definition -> [CharacterStats] in
-            guard definition.requiredAscendedLevel <= 1 else { return [] }
-            return definition.variants.map { variant in
-                variant.makeCharacter(named: definition.defaultName)
-            }
-        }
-
-        return builtInCharacters + starterClassCharacters
     }
 
     private static func makeBattleModelName(from modelName: String) -> String {

@@ -43,7 +43,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 450
+                                "amount": 200
                             }
                         ]
                     },
@@ -71,7 +71,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 500
+                                "amount": 220
                             }
                         ]
                     },
@@ -99,7 +99,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 560
+                                "amount": 250
                             }
                         ]
                     },
@@ -127,7 +127,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 620
+                                "amount": 280
                             }
                         ]
                     },
@@ -155,7 +155,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 700
+                                "amount": 320
                             }
                         ]
                     },
@@ -183,7 +183,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 780
+                                "amount": 350
                             }
                         ]
                     },
@@ -211,7 +211,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 860
+                                "amount": 390
                             }
                         ]
                     },
@@ -239,7 +239,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 940
+                                "amount": 420
                             }
                         ]
                     },
@@ -267,7 +267,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1020
+                                "amount": 460
                             }
                         ]
                     },
@@ -295,7 +295,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1150
+                                "amount": 520
                             }
                         ]
                     },
@@ -323,7 +323,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1230
+                                "amount": 550
                             }
                         ]
                     },
@@ -351,7 +351,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1310
+                                "amount": 590
                             }
                         ]
                     },
@@ -379,7 +379,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1390
+                                "amount": 630
                             }
                         ]
                     },
@@ -407,7 +407,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1470
+                                "amount": 660
                             }
                         ]
                     },
@@ -435,7 +435,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1560
+                                "amount": 700
                             }
                         ]
                     },
@@ -463,7 +463,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1650
+                                "amount": 740
                             }
                         ]
                     },
@@ -491,7 +491,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1740
+                                "amount": 780
                             }
                         ]
                     },
@@ -519,7 +519,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1830
+                                "amount": 820
                             }
                         ]
                     },
@@ -547,7 +547,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1920
+                                "amount": 860
                             }
                         ]
                     },
@@ -576,7 +576,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2050
+                                "amount": 920
                             }
                         ]
                     },
@@ -604,7 +604,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2140
+                                "amount": 960
                             }
                         ]
                     },
@@ -632,7 +632,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2230
+                                "amount": 1000
                             }
                         ]
                     },
@@ -660,7 +660,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2320
+                                "amount": 1040
                             }
                         ]
                     },
@@ -688,7 +688,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2410
+                                "amount": 1080
                             }
                         ]
                     },
@@ -717,7 +717,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2500
+                                "amount": 1120
                             }
                         ]
                     },
@@ -745,7 +745,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2590
+                                "amount": 1170
                             }
                         ]
                     },
@@ -773,7 +773,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2680
+                                "amount": 1210
                             }
                         ]
                     },
@@ -801,7 +801,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2770
+                                "amount": 1250
                             }
                         ]
                     },
@@ -829,7 +829,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2860
+                                "amount": 1290
                             }
                         ]
                     },
@@ -858,7 +858,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3000
+                                "amount": 1350
                             }
                         ]
                     },
@@ -886,7 +886,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3090
+                                "amount": 1390
                             }
                         ]
                     },
@@ -914,7 +914,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3180
+                                "amount": 1430
                             }
                         ]
                     },
@@ -942,7 +942,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3270
+                                "amount": 1470
                             }
                         ]
                     },
@@ -971,7 +971,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3360
+                                "amount": 1510
                             }
                         ]
                     },
@@ -999,7 +999,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3450
+                                "amount": 1550
                             }
                         ]
                     },
@@ -1027,7 +1027,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3540
+                                "amount": 1590
                             }
                         ]
                     },
@@ -1055,7 +1055,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3630
+                                "amount": 1630
                             }
                         ]
                     },
@@ -1083,7 +1083,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3720
+                                "amount": 1670
                             }
                         ]
                     },
@@ -1111,7 +1111,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3810
+                                "amount": 1710
                             }
                         ]
                     },
@@ -1140,7 +1140,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 3960
+                                "amount": 1780
                             }
                         ]
                     },
@@ -1168,7 +1168,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 4080
+                                "amount": 1840
                             }
                         ]
                     },
@@ -1196,7 +1196,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 4200
+                                "amount": 1890
                             }
                         ]
                     },
@@ -1224,7 +1224,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 4320
+                                "amount": 1940
                             }
                         ]
                     },
@@ -1252,7 +1252,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 4440
+                                "amount": 2000
                             }
                         ]
                     },
@@ -1280,7 +1280,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 4560
+                                "amount": 2050
                             }
                         ]
                     },
@@ -1308,7 +1308,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 4680
+                                "amount": 2110
                             }
                         ]
                     },
@@ -1336,7 +1336,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 4800
+                                "amount": 2160
                             }
                         ]
                     },
@@ -1365,7 +1365,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 4920
+                                "amount": 2210
                             }
                         ]
                     },
@@ -1393,7 +1393,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 5100
+                                "amount": 2300
                             }
                         ]
                     },
@@ -1422,7 +1422,7 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 5600
+                                "amount": 2520
                             }
                         ],
                         "characterRewards": [

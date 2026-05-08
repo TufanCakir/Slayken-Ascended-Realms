@@ -7,7 +7,6 @@
 
 import SwiftData
 import SwiftUI
-import UIKit
 
 enum Turn {
     case player
@@ -223,7 +222,7 @@ struct BattleView: View {
     }
 
     private var battleDelay: Double {
-        isFast ? 0.45 : 0.85
+        isFast ? 0.12 : 0.22
     }
 
     var body: some View {
@@ -1284,7 +1283,7 @@ struct BattleView: View {
                         }
                     )
                 }
-                try? await Task.sleep(for: .milliseconds(isFast ? 550 : 1050))
+                try? await Task.sleep(for: .milliseconds(isFast ? 120 : 260))
             }
         }
     }
@@ -1318,7 +1317,7 @@ struct BattleView: View {
             attackingEnemyIndex = index
             enemyAttackID += 1
 
-            try? await Task.sleep(for: .milliseconds(isFast ? 220 : 360))
+            try? await Task.sleep(for: .milliseconds(isFast ? 60 : 120))
 
             let enemyDamage = activeEnemies[index].attack / leveledPlayer.hp
             let rawEnemyDamage = max(
@@ -1343,7 +1342,7 @@ struct BattleView: View {
                 return
             }
 
-            try? await Task.sleep(for: .milliseconds(isFast ? 220 : 520))
+            try? await Task.sleep(for: .milliseconds(isFast ? 70 : 140))
         }
 
         attackingEnemyIndex = nil
@@ -1406,6 +1405,9 @@ struct BattleView: View {
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + battleDelay) {
+            guard currentTurn == .enemy, !showVictory, !showDefeat else {
+                return
+            }
             currentParticleTargetIndices = []
             enemyAttack()
         }
@@ -1492,7 +1494,7 @@ struct BattleView: View {
                 attackingEnemyIndex = nil
                 currentParticleEffect = nil
                 currentParticleTargetIndices = []
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
                     tutorialConfig.onBattleComplete()
                 }
                 return
@@ -1511,6 +1513,9 @@ struct BattleView: View {
 
         let lastIndex = uniqueSortedIndices.max() ?? safeSelectedEnemyIndex
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+            guard currentTurn == .enemy, !showVictory, !showDefeat else {
+                return
+            }
             selectNextTarget(after: lastIndex)
             currentParticleEffect = nil
             currentParticleTargetIndices = []
@@ -1544,6 +1549,9 @@ struct BattleView: View {
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+            guard currentTurn == .enemy, !showVictory, !showDefeat else {
+                return
+            }
             selectNextTarget(after: index)
             currentParticleEffect = nil
             enemyAttack()
@@ -1742,6 +1750,9 @@ struct BattleView: View {
         enemyAttackID += 1
 
         DispatchQueue.main.asyncAfter(deadline: .now() + battleDelay * 0.45) {
+            guard currentTurn == .enemy, !showVictory, !showDefeat else {
+                return
+            }
             withAnimation(.easeOut(duration: 0.2)) {
                 playerHP = normalizedHP
             }
@@ -1759,6 +1770,9 @@ struct BattleView: View {
 
             DispatchQueue.main.asyncAfter(deadline: .now() + battleDelay * 0.45)
             {
+                guard currentTurn == .enemy, !showVictory, !showDefeat else {
+                    return
+                }
                 attackingEnemyIndex = nil
                 recoverMana(turnManaGain)
                 currentTurn = .player
@@ -1770,31 +1784,4 @@ struct BattleView: View {
 private struct CardBattleProgress {
     let level: Int
     let stars: Int
-}
-
-#Preview {
-    let samplePlayer = CharacterStats(
-        name: "Zaron",
-        image: "",
-        model: "zaron",
-        hp: 100,
-        attack: 20
-    )
-    let sampleEnemy = CharacterStats(
-        name: "Shela",
-        image: "",
-        model: "shela",
-        hp: 80,
-        attack: 12
-    )
-
-    BattleView(
-        player: samplePlayer,
-        enemy: sampleEnemy,
-        onExit: {},
-        tutorialConfig: nil
-    )
-    .environmentObject(GameState())
-    .environmentObject(ThemeManager())
-    .environmentObject(MultiplayerManager())
 }

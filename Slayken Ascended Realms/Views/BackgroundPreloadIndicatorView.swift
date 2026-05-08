@@ -78,7 +78,6 @@ struct BackgroundPreloadIndicatorView: View {
                 .stroke(.white.opacity(0.1), lineWidth: 1)
         }
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .shadow(color: .black.opacity(0.2), radius: 10, y: 4)
         .padding(.horizontal, 18)
         .padding(.top, 10)
     }

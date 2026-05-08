@@ -7,7 +7,6 @@
 
 import SwiftData
 import SwiftUI
-import UIKit
 
 private struct SelectedCardInfo: Identifiable {
     let card: AbilityCardDefinition
@@ -331,9 +330,4 @@ private struct CardInfoSheet: View {
             in: RoundedRectangle(cornerRadius: 12)
         )
     }
-}
-
-#Preview {
-    CardCollectionView(onClose: {})
-        .environmentObject(ThemeManager())
 }

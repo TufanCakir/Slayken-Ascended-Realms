@@ -9,11 +9,11 @@
         "rewards": [
             {
                 "currency": "coins",
-                "amount": 500
+                "amount": 250
             },
             {
                 "currency": "crystals",
-                "amount": 10
+                "amount": 5
             }
         ],
         "maxPurchases": 1
@@ -35,7 +35,8 @@
                 "currency": "coins",
                 "amount": 1800
             }
-        ]
+        ],
+        "maxPurchases": 10
     },
     {
         "id": "crystal_cache_for_coins",
@@ -55,7 +56,8 @@
                 "currency": "crystals",
                 "amount": 18
             }
-        ]
+        ],
+        "maxPurchases": 10
     },
     {
         "id": "adventurer_combo_pack",
@@ -67,22 +69,23 @@
         "cost": [
             {
                 "currency": "coins",
-                "amount": 1200
-            },
-            {
-                "currency": "crystals",
-                "amount": 12
-            }
-        ],
-        "rewards": [
-            {
-                "currency": "coins",
-                "amount": 1500
+                "amount": 1800
             },
             {
                 "currency": "crystals",
                 "amount": 20
             }
-        ]
+        ],
+        "rewards": [
+            {
+                "currency": "coins",
+                "amount": 900
+            },
+            {
+                "currency": "crystals",
+                "amount": 8
+            }
+        ],
+        "maxPurchases": 10
     }
 ]

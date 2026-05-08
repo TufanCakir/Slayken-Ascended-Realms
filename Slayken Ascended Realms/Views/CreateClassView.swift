@@ -7,7 +7,6 @@
 
 import SwiftData
 import SwiftUI
-import UIKit
 
 struct CreateClassView: View {
     private enum CreationStep {
@@ -803,10 +802,4 @@ struct CreateClassView: View {
                 .stroke(.white.opacity(0.12), lineWidth: 1)
         }
     }
-}
-
-#Preview {
-    CreateClassView(onClose: {}, onComplete: { _ in })
-        .environmentObject(GameState())
-        .environmentObject(ThemeManager())
 }

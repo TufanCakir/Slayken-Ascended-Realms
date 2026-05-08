@@ -144,7 +144,7 @@ struct GameMiddleDrawerView: View {
             }
         }
         .padding(8)
-        .background(Color.white.opacity(0.90).background(.ultraThinMaterial))
+        .background(Color.white.opacity(0.92))
         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
     }
@@ -280,21 +280,3 @@ private struct MiddleDrawerActionItem: Identifiable {
     let systemName: String
 }
 
-#Preview {
-    GameMiddleDrawerView(
-        selectedTab: .constant(.game),
-        onTheme: {},
-        onSupport: {},
-        onNews: {},
-        onCreateClass: {},
-        onShop: {},
-        onQuests: {},
-        onArchive: {},
-        onEventArchive: {},
-        onTutorialArchive: {},
-        onGift: {},
-        onDailyLogin: {},
-        onSettings: {},
-        trailingPadding: 16
-    )
-}

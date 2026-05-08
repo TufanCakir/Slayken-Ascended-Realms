@@ -7,7 +7,6 @@
 
 import SwiftData
 import SwiftUI
-import UIKit
 
 struct QuestView: View {
     @Environment(\.modelContext) private var modelContext
@@ -106,7 +105,7 @@ struct QuestView: View {
             if !message.isEmpty {
                 Text(message)
                     .font(.system(size: 12, weight: .black))
-                    .foregroundStyle(.yellow)
+                    .foregroundStyle(.white)
             }
         }
     }
@@ -313,7 +312,7 @@ struct QuestView: View {
                     "Ab Ascended Level \(quest.requiredAscendedLevel) verfuegbar."
                 )
                 .font(.system(size: 12, weight: .black))
-                .foregroundStyle(.orange)
+                .foregroundStyle(.blue)
             }
 
             Button {
@@ -341,7 +340,7 @@ struct QuestView: View {
                 .background(
                     claimed
                         ? Color.white.opacity(0.08)
-                        : canClaim ? Color.yellow : Color.black.opacity(0.36),
+                        : canClaim ? Color.blue : Color.black.opacity(0.36),
                     in: Capsule()
                 )
             }
@@ -371,7 +370,7 @@ struct QuestView: View {
                 Capsule()
                     .fill(
                         LinearGradient(
-                            colors: [.cyan, .yellow],
+                            colors: [.blue, .cyan],
                             startPoint: .leading,
                             endPoint: .trailing
                         )

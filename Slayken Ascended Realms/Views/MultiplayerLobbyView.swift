@@ -355,10 +355,3 @@ private struct LobbySecondaryButtonStyle: ButtonStyle {
             .opacity(configuration.isPressed ? 0.82 : 1)
     }
 }
-
-#Preview {
-    MultiplayerLobbyView(onBack: {}, onClose: {})
-        .environmentObject(MultiplayerManager())
-        .environmentObject(ThemeManager())
-        .environmentObject(RemoteContentManager.shared)
-}

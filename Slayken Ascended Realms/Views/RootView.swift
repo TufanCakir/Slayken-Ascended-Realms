@@ -169,6 +169,7 @@ struct RootView: View {
                 DailyLoginPopupView(
                     campaignTitle: pendingLoginPopup.campaign.title,
                     campaignSubtitle: pendingLoginPopup.campaign.subtitle,
+                    campaignEndsAt: pendingLoginPopup.campaign.endsAt,
                     rewards: pendingLoginPopup.campaign.rewards,
                     rewardState: pendingLoginPopup.rewardState,
                     onClaim: claimLoginGift
@@ -705,13 +706,4 @@ struct RootView: View {
         UserDefaults.standard.removeObject(forKey: introFlowKey)
         resetToStart()
     }
-}
-
-#Preview {
-    RootView()
-        .environmentObject(GameState())
-        .environmentObject(ThemeManager())
-        .environmentObject(MusicManager())
-        .environmentObject(NetworkMonitor())
-        .environmentObject(RemoteContentManager.shared)
 }

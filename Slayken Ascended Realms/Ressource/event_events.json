@@ -51,11 +51,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 280
+                                "amount": 130
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 24
+                                "amount": 7
                             }
                         ],
                         "story": [
@@ -90,11 +90,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 300
+                                "amount": 140
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 25
+                                "amount": 8
                             }
                         ]
                     },
@@ -122,11 +122,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 320
+                                "amount": 140
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 26
+                                "amount": 8
                             }
                         ],
                         "cardRewards": [
@@ -161,11 +161,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 340
+                                "amount": 150
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 27
+                                "amount": 8
                             }
                         ]
                     },
@@ -193,11 +193,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 360
+                                "amount": 160
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 28
+                                "amount": 8
                             }
                         ]
                     },
@@ -226,11 +226,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 380
+                                "amount": 170
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 29
+                                "amount": 9
                             }
                         ],
                         "cardRewards": [
@@ -265,11 +265,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 400
+                                "amount": 180
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 30
+                                "amount": 9
                             }
                         ]
                     },
@@ -297,11 +297,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 420
+                                "amount": 190
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 31
+                                "amount": 9
                             }
                         ]
                     },
@@ -330,11 +330,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 440
+                                "amount": 200
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 32
+                                "amount": 10
                             }
                         ],
                         "cardRewards": [
@@ -376,11 +376,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 480
+                                "amount": 220
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 36
+                                "amount": 11
                             }
                         ]
                     },
@@ -408,11 +408,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 510
+                                "amount": 230
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 38
+                                "amount": 11
                             }
                         ]
                     },
@@ -440,11 +440,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 540
+                                "amount": 240
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 40
+                                "amount": 12
                             }
                         ],
                         "cardRewards": [
@@ -478,11 +478,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 570
+                                "amount": 260
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 42
+                                "amount": 12
                             }
                         ]
                     },
@@ -511,11 +511,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 600
+                                "amount": 270
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 44
+                                "amount": 12
                             }
                         ]
                     },
@@ -544,11 +544,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 630
+                                "amount": 280
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 46
+                                "amount": 12
                             }
                         ]
                     },
@@ -576,11 +576,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 660
+                                "amount": 300
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 48
+                                "amount": 12
                             }
                         ],
                         "cardRewards": [
@@ -615,11 +615,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 690
+                                "amount": 310
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 50
+                                "amount": 12
                             }
                         ]
                     },
@@ -648,11 +648,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 720
+                                "amount": 320
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 52
+                                "amount": 12
                             }
                         ]
                     },
@@ -681,11 +681,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 760
+                                "amount": 340
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 54
+                                "amount": 12
                             }
                         ]
                     },
@@ -714,11 +714,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 800
+                                "amount": 360
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 58
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [
@@ -758,11 +758,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 840
+                                "amount": 380
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 60
+                                "amount": 12
                             }
                         ]
                     },
@@ -791,11 +791,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 880
+                                "amount": 400
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 62
+                                "amount": 12
                             }
                         ]
                     },
@@ -824,11 +824,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 920
+                                "amount": 410
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 64
+                                "amount": 12
                             }
                         ],
                         "cardRewards": [
@@ -863,11 +863,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 960
+                                "amount": 430
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 66
+                                "amount": 12
                             }
                         ]
                     },
@@ -896,11 +896,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1000
+                                "amount": 450
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 68
+                                "amount": 12
                             }
                         ]
                     },
@@ -929,11 +929,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1040
+                                "amount": 470
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 70
+                                "amount": 12
                             }
                         ],
                         "cardRewards": [
@@ -968,11 +968,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1080
+                                "amount": 490
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 72
+                                "amount": 12
                             }
                         ]
                     },
@@ -1000,11 +1000,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1120
+                                "amount": 500
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 74
+                                "amount": 12
                             }
                         ]
                     },
@@ -1032,11 +1032,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1160
+                                "amount": 520
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 76
+                                "amount": 12
                             }
                         ],
                         "cardRewards": [
@@ -1078,11 +1078,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1220
+                                "amount": 550
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 82
+                                "amount": 12
                             }
                         ]
                     },
@@ -1111,11 +1111,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1280
+                                "amount": 580
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 86
+                                "amount": 12
                             }
                         ]
                     },
@@ -1144,11 +1144,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1340
+                                "amount": 600
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 90
+                                "amount": 12
                             }
                         ],
                         "cardRewards": [
@@ -1183,11 +1183,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1400
+                                "amount": 630
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 94
+                                "amount": 12
                             }
                         ]
                     },
@@ -1216,11 +1216,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1460
+                                "amount": 660
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 98
+                                "amount": 12
                             }
                         ]
                     },
@@ -1249,11 +1249,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1520
+                                "amount": 680
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 102
+                                "amount": 12
                             }
                         ],
                         "cardRewards": [
@@ -1288,11 +1288,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1580
+                                "amount": 710
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 106
+                                "amount": 12
                             }
                         ]
                     },
@@ -1320,11 +1320,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1640
+                                "amount": 740
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 110
+                                "amount": 12
                             }
                         ]
                     },
@@ -1353,11 +1353,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1700
+                                "amount": 760
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 114
+                                "amount": 12
                             }
                         ],
                         "cardRewards": [
@@ -1392,11 +1392,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1760
+                                "amount": 790
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 118
+                                "amount": 12
                             }
                         ]
                     },
@@ -1432,11 +1432,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1840
+                                "amount": 830
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 126
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [
@@ -1476,11 +1476,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1920
+                                "amount": 860
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 132
+                                "amount": 12
                             }
                         ]
                     },
@@ -1508,11 +1508,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2000
+                                "amount": 900
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 138
+                                "amount": 12
                             }
                         ],
                         "cardRewards": [
@@ -1547,11 +1547,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2080
+                                "amount": 940
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 144
+                                "amount": 12
                             }
                         ]
                     },
@@ -1579,11 +1579,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2160
+                                "amount": 970
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 150
+                                "amount": 12
                             }
                         ],
                         "cardRewards": [
@@ -1618,11 +1618,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2240
+                                "amount": 1010
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 156
+                                "amount": 12
                             }
                         ]
                     },
@@ -1651,11 +1651,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2320
+                                "amount": 1040
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 162
+                                "amount": 12
                             }
                         ],
                         "cardRewards": [
@@ -1690,11 +1690,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2400
+                                "amount": 1080
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 168
+                                "amount": 12
                             }
                         ]
                     },
@@ -1722,11 +1722,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2480
+                                "amount": 1120
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 174
+                                "amount": 12
                             }
                         ],
                         "cardRewards": [
@@ -1761,11 +1761,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2580
+                                "amount": 1160
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 184
+                                "amount": 12
                             }
                         ]
                     },
@@ -1801,11 +1801,11 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2800
+                                "amount": 1260
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 220
+                                "amount": 12
                             }
                         ],
                         "characterRewards": [

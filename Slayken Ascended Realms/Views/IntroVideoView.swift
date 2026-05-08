@@ -165,18 +165,3 @@ struct IntroVideoView: View {
         onFinish()
     }
 }
-
-#Preview {
-    IntroVideoView(
-        introVideo: loadIntroVideoDefinitions().first
-            ?? IntroVideoDefinition(
-                id: "preview",
-                flow: "opening",
-                order: 1,
-                title: "Intro",
-                text: "Preview",
-                video: "intro.mp4"
-            ),
-        onFinish: {}
-    )
-}

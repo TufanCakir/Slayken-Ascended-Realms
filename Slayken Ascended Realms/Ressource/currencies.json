@@ -17,35 +17,35 @@
         "code": "skill_points",
         "name": "Skill Points",
         "icon": "point.3.connected.trianglepath.dotted",
-        "assetIcon": "icon_crystals",
+        "assetIcon": "skill_green",
         "sortOrder": 2
     },
     {
         "code": "skill_runes",
         "name": "Skill Runes",
         "icon": "scribble.variable",
-        "assetIcon": "icon_crystals",
+        "assetIcon": "skill_indigo",
         "sortOrder": 3
     },
     {
         "code": "skill_glyphs",
         "name": "Skill Glyphs",
         "icon": "seal.fill",
-        "assetIcon": "icon_crystals",
+        "assetIcon": "skill_purple",
         "sortOrder": 4
     },
     {
         "code": "skill_cores",
         "name": "Skill Cores",
         "icon": "sparkles",
-        "assetIcon": "icon_crystals",
+        "assetIcon": "skill_rainbow",
         "sortOrder": 5
     },
     {
         "code": "skill_shards",
         "name": "Skill Shards",
         "icon": "triangle.fill",
-        "assetIcon": "icon_crystals",
+        "assetIcon": "skill_overdrive",
         "sortOrder": 6
     },
     {

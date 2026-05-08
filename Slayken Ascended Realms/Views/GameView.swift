@@ -55,6 +55,7 @@ struct GameView: View {
     @State private var showNavigationSpinner = false
     @State private var navigationSpinnerRotation = false
     @State private var navigationSpinnerTask: Task<Void, Never>?
+    @State private var pendingBattleStartTask: Task<Void, Never>?
     @State private var showMultiplayerLobby = false
 
     private enum ModalTabDestination {
@@ -502,9 +503,7 @@ struct GameView: View {
                     ) { battle in
                         showGlobeEvents = false
                         selectedTab = .game
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                            moveToBattleAndStart(battle)
-                        }
+                        moveToBattleAndStart(battle)
                     }
                     .ignoresSafeArea()
 
@@ -617,6 +616,7 @@ struct GameView: View {
             }
             .onDisappear {
                 navigationSpinnerTask?.cancel()
+                pendingBattleStartTask?.cancel()
             }
             .onChange(of: multiplayerManager.lobbyState) { _, newValue in
                 gameState.updateRaidLobby(newValue)
@@ -750,11 +750,11 @@ struct GameView: View {
     }
 
     private var storyArchiveChapters: [GlobeEventChapter] {
-        gameState.eventChapters.filter { !isEventChapter($0) }
+        gameState.eventChapters.filter { !$0.isEventChapter }
     }
 
     private var eventArchiveChapters: [GlobeEventChapter] {
-        gameState.eventChapters.filter { isEventChapter($0) }
+        gameState.eventChapters.filter(\.isEventChapter)
     }
 
     private var completedBattleIDs: Set<String> {
@@ -860,111 +860,57 @@ struct GameView: View {
 
     private var activePreviewChapter: GlobeEventChapter? {
         if let chapter = gameState.activeEventChapter,
-            isChapterUnlocked(chapter)
-        {
-            debugMapLog(
-                "activePreviewChapter saved=\(chapter.id) reason=activeEventChapter"
+            chapter.isUnlocked(
+                in: gameState.eventChapters,
+                completedBattleIDs: completedBattleIDs,
+                ascendedLevel: ascendedLevel
             )
+        {
             return chapter
         }
-        let fallbackChapter = gameState.eventChapters.first {
-            isChapterUnlocked($0)
+        return gameState.eventChapters.first { chapter in
+            chapter.isUnlocked(
+                in: gameState.eventChapters,
+                completedBattleIDs: completedBattleIDs,
+                ascendedLevel: ascendedLevel
+            )
         }
-        debugMapLog(
-            "activePreviewChapter saved=\(gameState.activeEventChapterID ?? "nil") fallback=\(fallbackChapter?.id ?? "nil") reason=firstUnlocked"
-        )
-        return fallbackChapter
     }
 
     private func activePreviewPoint(for chapter: GlobeEventChapter)
         -> GlobeEventPoint?
     {
-        let savedPoint = gameState.activeEventPoint
-        let savedVisibleBattleIDs =
-            savedPoint.map { point in
-                visibleBattles(for: point).map(\.id).joined(separator: "|")
-            } ?? "none"
-
         if chapter.id == gameState.activeEventChapterID,
             let point = gameState.activeEventPoint,
-            visibleBattles(for: point).contains(where: {
+            point.visibleBattles(
+                completedBattleIDs: completedBattleIDs,
+                revealsSequentially: !chapter.isEventChapter
+            )
+            .contains(where: {
                 $0.id == gameState.activeEventBattleID
                     || !completedBattleIDs.contains($0.id)
             })
         {
-            debugMapLog(
-                "activePreviewPoint chapter=\(chapter.id) chosen=\(point.id) reason=savedActivePoint activeBattle=\(gameState.activeEventBattleID ?? "nil") visibleBattles=\(savedVisibleBattleIDs)"
-            )
             return point
         }
 
-        let fallbackPoint =
-            nextUnlockedPoint(in: chapter) ?? chapter.points.first
-        debugMapLog(
-            "activePreviewPoint chapter=\(chapter.id) chosen=\(fallbackPoint?.id ?? "nil") reason=fallback savedChapter=\(gameState.activeEventChapterID ?? "nil") savedPoint=\(savedPoint?.id ?? "nil") activeBattle=\(gameState.activeEventBattleID ?? "nil") savedVisibleBattles=\(savedVisibleBattleIDs)"
-        )
-        return fallbackPoint
-    }
-
-    private func isChapterUnlocked(_ chapter: GlobeEventChapter) -> Bool {
-        guard ascendedLevel >= (chapter.minAscendedLevel ?? 1) else {
-            return false
-        }
-        guard !isEventChapter(chapter) else { return true }
-
-        guard
-            let index = gameState.eventChapters.firstIndex(where: {
-                $0.id == chapter.id
-            })
-        else {
-            return false
-        }
-        guard index > 0 else { return true }
-
-        let previousChapter = gameState.eventChapters[index - 1]
-        let requiredBattleIDs = previousChapter.points.flatMap { point in
-            point.battles.map(\.id)
-        }
-        return requiredBattleIDs.allSatisfy { completedBattleIDs.contains($0) }
-    }
-
-    private func isEventChapter(_ chapter: GlobeEventChapter) -> Bool {
-        chapter.id.hasPrefix("event_")
-    }
-
-    private func visibleBattles(for point: GlobeEventPoint) -> [GlobeBattle] {
-        var result: [GlobeBattle] = []
-
-        for index in point.battles.indices {
-            let battle = point.battles[index]
-            let isCompleted = completedBattleIDs.contains(battle.id)
-            let previousCompleted =
-                index == 0
-                || completedBattleIDs.contains(point.battles[index - 1].id)
-
-            if isCompleted || previousCompleted {
-                result.append(battle)
-            }
-        }
-
-        return result
-    }
-
-    private func nextUnlockedPoint(in chapter: GlobeEventChapter)
-        -> GlobeEventPoint?
-    {
-        chapter.points.first { point in
-            visibleBattles(for: point).contains {
-                !completedBattleIDs.contains($0.id)
-            }
-        }
+        return chapter.nextUnlockedPoint(completedBattleIDs: completedBattleIDs)
+            ?? chapter.points.first
     }
 
     private func moveToBattleAndStart(_ battle: GlobeBattle) {
-        autoMoveTarget = sceneTarget(for: battle.node)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.35) {
+        pendingBattleStartTask?.cancel()
+        pendingBattleStartTask = Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(150))
+            guard !Task.isCancelled else { return }
+            autoMoveTarget = sceneTarget(for: battle.node)
+            gameState.selectBattle(battle)
+
+            try? await Task.sleep(for: .milliseconds(1_350))
+            guard !Task.isCancelled else { return }
             autoMoveTarget = nil
-            startBattle(battle)
+            guard gameState.selectedBattle?.id == battle.id else { return }
+            presentBattleIntro(battle)
         }
     }
 
@@ -975,15 +921,8 @@ struct GameView: View {
         )
     }
 
-    private func debugMapLog(_ message: String) {
-        #if DEBUG
-            print("[GameView][Map] \(message)")
-        #endif
-    }
-
-    private func startBattle(_ battle: GlobeBattle) {
+    private func presentBattleIntro(_ battle: GlobeBattle) {
         battleResourceMessage = ""
-        gameState.selectBattle(battle)
         selectedEnemy = battle.primaryEnemy
         currentStory = battle.story
 

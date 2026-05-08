@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 struct GameEventMapPreviewView: View {
     let chapter: GlobeEventChapter?
@@ -17,6 +16,8 @@ struct GameEventMapPreviewView: View {
     let onSelectPoint: (GlobeEventPoint) -> Void
     let onSelectBattle: (GlobeBattle) -> Void
 
+    @State private var countdownNow = Date()
+
     private var title: String {
         point?.title ?? chapter?.title ?? "World Map"
     }
@@ -25,46 +26,44 @@ struct GameEventMapPreviewView: View {
         point?.mapTexture ?? chapter?.mapTexture
     }
 
+    private var revealsBattlesSequentially: Bool {
+        chapter?.isEventChapter != true
+    }
+
     private var visibleBattles: [GlobeBattle] {
         guard let point else { return [] }
-        var result: [GlobeBattle] = []
-
-        for index in point.battles.indices {
-            let battle = point.battles[index]
-            let isCompleted = completedBattleIDs.contains(battle.id)
-            let previousCompleted =
-                index == 0
-                || completedBattleIDs.contains(point.battles[index - 1].id)
-
-            if isCompleted || previousCompleted {
-                result.append(battle)
-            }
-        }
-
-        return result
+        return point.visibleBattles(
+            completedBattleIDs: completedBattleIDs,
+            revealsSequentially: revealsBattlesSequentially
+        )
     }
 
     private var focusedNodeID: String? {
         if let point {
-            if let nextBattle = nextUnlockedBattle(in: point) {
-                return nodeID(forBattleID: nextBattle.id)
-            }
-
             if let selectedBattleID,
                 visibleBattles.contains(where: { $0.id == selectedBattleID })
             {
-                return nodeID(forBattleID: selectedBattleID)
+                return "battle-\(selectedBattleID)"
+            }
+
+            if let nextBattle = point.nextUnlockedBattle(
+                completedBattleIDs: completedBattleIDs,
+                revealsSequentially: revealsBattlesSequentially
+            ) {
+                return nextBattle.mapNodeID
             }
 
             return nil
         }
 
         if let chapter {
-            return nextUnlockedPoint(in: chapter).map {
-                nodeID(forPointID: $0.id)
+            return chapter.nextPointWithIncompleteBattle(
+                completedBattleIDs: completedBattleIDs
+            ).map {
+                $0.mapNodeID
             }
                 ?? chapter.points.first.map {
-                    nodeID(forPointID: $0.id)
+                    $0.mapNodeID
                 }
         }
 
@@ -73,10 +72,6 @@ struct GameEventMapPreviewView: View {
 
     private var focusedNodePosition: EventMapNodePosition? {
         if let point {
-            if let nextBattle = nextUnlockedBattle(in: point) {
-                return nextBattle.node
-            }
-
             if let selectedBattleID,
                 let selectedBattle = visibleBattles.first(where: {
                     $0.id == selectedBattleID
@@ -85,11 +80,20 @@ struct GameEventMapPreviewView: View {
                 return selectedBattle.node
             }
 
+            if let nextBattle = point.nextUnlockedBattle(
+                completedBattleIDs: completedBattleIDs,
+                revealsSequentially: revealsBattlesSequentially
+            ) {
+                return nextBattle.node
+            }
+
             return nil
         }
 
         if let chapter {
-            return nextUnlockedPoint(in: chapter)?.node
+            return chapter.nextPointWithIncompleteBattle(
+                completedBattleIDs: completedBattleIDs
+            )?.node
                 ?? chapter.points.first?.node
         }
 
@@ -111,8 +115,8 @@ struct GameEventMapPreviewView: View {
                             mapTexture(size: contentSize)
 
                             if point != nil {
-                                battleRouteLayer(
-                                    battles: visibleBattles,
+                                routeLayer(
+                                    nodes: visibleBattles.map(\.node),
                                     size: contentSize
                                 )
 
@@ -124,11 +128,11 @@ struct GameEventMapPreviewView: View {
                                                 in: contentSize
                                             )
                                         )
-                                        .id(nodeID(forBattleID: battle.id))
+                                        .id(battle.mapNodeID)
                                 }
                             } else if let chapter {
-                                pointRouteLayer(
-                                    points: chapter.points,
+                                routeLayer(
+                                    nodes: chapter.points.map(\.node),
                                     size: contentSize
                                 )
 
@@ -140,7 +144,7 @@ struct GameEventMapPreviewView: View {
                                                 in: contentSize
                                             )
                                         )
-                                        .id(nodeID(forPointID: point.id))
+                                        .id(point.mapNodeID)
                                 }
                             }
                         }
@@ -157,20 +161,47 @@ struct GameEventMapPreviewView: View {
                     .mask(topVanishMask(size: viewportSize))
                     .clipped()
                     .onAppear {
-                        debugMapLog(
-                            "onAppear chapter=\(chapter?.id ?? "nil") point=\(point?.id ?? "nil") selectedBattle=\(selectedBattleID ?? "nil") focused=\(focusedNodeID ?? "nil") visibleBattles=\(visibleBattles.map(\.id).joined(separator: "|"))"
-                        )
-                        scrollToFocusedNode(with: proxy, reason: "onAppear")
+                        scrollToFocusedNode(with: proxy)
                     }
                     .onChange(of: focusedNodeID) { _, _ in
-                        scrollToFocusedNode(
-                            with: proxy,
-                            reason: "focusedNodeChanged"
-                        )
+                        scrollToFocusedNode(with: proxy)
                     }
                 }
+
+                previewHeader
+                    .padding(.top, 12)
+                    .padding(.leading, 12)
             }
         }
+        .task {
+            while !Task.isCancelled {
+                countdownNow = .now
+                try? await Task.sleep(for: .seconds(60))
+            }
+        }
+    }
+
+    private var previewHeader: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(title)
+                .font(.system(size: 12, weight: .black))
+                .foregroundStyle(.white)
+                .lineLimit(1)
+
+            if let timingText = EventDateSupport.displayText(
+                endsAt: chapter?.endsAt,
+                now: countdownNow
+            ) {
+                Text(timingText)
+                    .font(.system(size: 9, weight: .black))
+                    .foregroundStyle(theme?.glow.color ?? .yellow)
+                    .lineLimit(1)
+            }
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 7)
+        .background(Color.black.opacity(0.46), in: Capsule())
+        .overlay(Capsule().stroke(.white.opacity(0.12), lineWidth: 1))
     }
 
     private func resolvedContentSize(for viewportSize: CGSize) -> CGSize {
@@ -222,40 +253,18 @@ struct GameEventMapPreviewView: View {
         .frame(width: size.width, height: size.height)
     }
 
-    private func pointRouteLayer(points: [GlobeEventPoint], size: CGSize)
+    private func routeLayer(nodes: [EventMapNodePosition], size: CGSize)
         -> some View
     {
         Path { path in
-            guard let first = points.first else { return }
-            path.move(to: mapPoint(first.node, in: size))
-            for point in points.dropFirst() {
-                path.addLine(to: mapPoint(point.node, in: size))
+            guard let first = nodes.first else { return }
+            path.move(to: mapPoint(first, in: size))
+            for node in nodes.dropFirst() {
+                path.addLine(to: mapPoint(node, in: size))
             }
         }
         .stroke(
-            Color.white.opacity(0.72),
-            style: StrokeStyle(
-                lineWidth: 3,
-                lineCap: .round,
-                lineJoin: .round,
-                dash: [8, 7]
-            )
-        )
-        .shadow(color: .black.opacity(0.35), radius: 3, y: 1)
-    }
-
-    private func battleRouteLayer(battles: [GlobeBattle], size: CGSize)
-        -> some View
-    {
-        Path { path in
-            guard let first = battles.first else { return }
-            path.move(to: mapPoint(first.node, in: size))
-            for battle in battles.dropFirst() {
-                path.addLine(to: mapPoint(battle.node, in: size))
-            }
-        }
-        .stroke(
-            Color.white.opacity(0.74),
+            Color.white.opacity(0.73),
             style: StrokeStyle(
                 lineWidth: 3,
                 lineCap: .round,
@@ -267,7 +276,7 @@ struct GameEventMapPreviewView: View {
     }
 
     private func pointDot(_ point: GlobeEventPoint) -> some View {
-        let isFocused = nodeID(forPointID: point.id) == focusedNodeID
+        let isFocused = point.mapNodeID == focusedNodeID
 
         return Button {
             onSelectPoint(point)
@@ -300,7 +309,7 @@ struct GameEventMapPreviewView: View {
         let isCompleted = completedBattleIDs.contains(battle.id)
         let isSelected =
             selectedBattleID == battle.id
-            || nodeID(forBattleID: battle.id) == focusedNodeID
+            || battle.mapNodeID == focusedNodeID
 
         return Button {
             onSelectBattle(battle)
@@ -345,14 +354,13 @@ struct GameEventMapPreviewView: View {
         let size: CGFloat = isSelected ? 44 : 38
 
         return ZStack {
-            Circle()
-                .fill(Color.black.opacity(0.40))
+            Ellipse()
+                .fill(Color.black.opacity(0.30))
                 .frame(
-                    width: isSelected ? 52 : 44,
-                    height: isSelected ? 52 : 44
+                    width: isSelected ? 48 : 40,
+                    height: isSelected ? 18 : 16
                 )
-                .blur(radius: 6)
-                .offset(y: 6)
+                .offset(y: 16)
 
             Circle()
                 .fill(
@@ -370,7 +378,7 @@ struct GameEventMapPreviewView: View {
                         lineWidth: isSelected ? 2 : 1
                     )
                 )
-                .shadow(color: .black.opacity(0.34), radius: 5, y: 2)
+                .shadow(color: .black.opacity(0.24), radius: 2, y: 1)
 
             RemoteAssetImage(imageName) {
                 Image(systemName: fallbackIcon)
@@ -395,43 +403,13 @@ struct GameEventMapPreviewView: View {
         )
     }
 
-    private func nextUnlockedBattle(in point: GlobeEventPoint) -> GlobeBattle? {
-        visibleBattles.first { !completedBattleIDs.contains($0.id) }
-            ?? visibleBattles.last
-    }
-
-    private func nextUnlockedPoint(in chapter: GlobeEventChapter)
-        -> GlobeEventPoint?
-    {
-        chapter.points.first { point in
-            point.battles.contains { !completedBattleIDs.contains($0.id) }
-        }
-    }
-
-    private func nodeID(forPointID id: String) -> String {
-        "point-\(id)"
-    }
-
-    private func nodeID(forBattleID id: String) -> String {
-        "battle-\(id)"
-    }
-
-    private func scrollToFocusedNode(
-        with proxy: ScrollViewProxy,
-        reason: String
-    ) {
+    private func scrollToFocusedNode(with proxy: ScrollViewProxy) {
         guard let focusedNodeID, let focusedNodePosition else {
-            debugMapLog(
-                "scroll skipped reason=\(reason) chapter=\(chapter?.id ?? "nil") point=\(point?.id ?? "nil") selectedBattle=\(selectedBattleID ?? "nil") cause=noFocusedNode"
-            )
             return
         }
 
         let anchor = anchor(for: focusedNodePosition)
 
-        debugMapLog(
-            "scroll target=\(focusedNodeID) reason=\(reason) anchor=(\(anchor.x),\(anchor.y)) node=(\(focusedNodePosition.x),\(focusedNodePosition.y))"
-        )
         Task { @MainActor in
             await Task.yield()
             try? await Task.sleep(for: .milliseconds(45))
@@ -450,24 +428,4 @@ struct GameEventMapPreviewView: View {
             y: min(max(CGFloat(node.y), 0.22), 0.88)
         )
     }
-
-    private func debugMapLog(_ message: String) {
-        #if DEBUG
-            print("[GameEventMapPreviewView][Map] \(message)")
-        #endif
-    }
-}
-
-#Preview {
-    let chapters = loadGlobeEventChapters()
-    GameEventMapPreviewView(
-        chapter: chapters.first,
-        point: chapters.first?.points.first,
-        completedBattleIDs: [],
-        selectedBattleID: nil,
-        theme: ThemeManager().selectedTheme,
-        onSelectPoint: { _ in },
-        onSelectBattle: { _ in }
-    )
-    .background(.black)
 }

@@ -138,6 +138,45 @@ struct GlobeEventPoint: Codable, Identifiable {
     var resolvedNodeImage: String {
         nodeImage ?? GlobeNodeChestConfigStore.pointImage(for: id)
     }
+
+    var mapNodeID: String {
+        "point-\(id)"
+    }
+
+    func visibleBattles(
+        completedBattleIDs: Set<String>,
+        revealsSequentially: Bool = true
+    ) -> [GlobeBattle] {
+        guard revealsSequentially else { return battles }
+
+        var result: [GlobeBattle] = []
+
+        for index in battles.indices {
+            let battle = battles[index]
+            let isCompleted = completedBattleIDs.contains(battle.id)
+            let previousCompleted =
+                index == 0
+                || completedBattleIDs.contains(battles[index - 1].id)
+
+            if isCompleted || previousCompleted {
+                result.append(battle)
+            }
+        }
+
+        return result
+    }
+
+    func nextUnlockedBattle(
+        completedBattleIDs: Set<String>,
+        revealsSequentially: Bool = true
+    ) -> GlobeBattle? {
+        let battles = visibleBattles(
+            completedBattleIDs: completedBattleIDs,
+            revealsSequentially: revealsSequentially
+        )
+        return battles.first { !completedBattleIDs.contains($0.id) }
+            ?? battles.last
+    }
 }
 
 struct GlobeBattle: Codable, Identifiable {
@@ -179,6 +218,10 @@ struct GlobeBattle: Codable, Identifiable {
                 for: id,
                 difficulty: difficulty
             )
+    }
+
+    var mapNodeID: String {
+        "battle-\(id)"
     }
 
     enum CodingKeys: String, CodingKey {
@@ -294,6 +337,56 @@ struct GlobeBattle: Codable, Identifiable {
             hp: 100,
             attack: 10
         )
+    }
+}
+
+extension GlobeEventChapter {
+    var isEventChapter: Bool {
+        id.hasPrefix("event_")
+    }
+
+    func nextPointWithIncompleteBattle(
+        completedBattleIDs: Set<String>
+    ) -> GlobeEventPoint? {
+        points.first { point in
+            point.battles.contains { !completedBattleIDs.contains($0.id) }
+        }
+    }
+
+    func nextUnlockedPoint(
+        completedBattleIDs: Set<String>
+    ) -> GlobeEventPoint? {
+        points.first { point in
+            point.visibleBattles(
+                completedBattleIDs: completedBattleIDs,
+                revealsSequentially: !isEventChapter
+            )
+            .contains { !completedBattleIDs.contains($0.id) }
+        }
+    }
+
+    func isUnlocked(
+        in chapters: [GlobeEventChapter],
+        completedBattleIDs: Set<String>,
+        ascendedLevel: Int
+    ) -> Bool {
+        guard ascendedLevel >= (minAscendedLevel ?? 1) else {
+            return false
+        }
+        guard !isEventChapter else { return true }
+
+        guard let index = chapters.firstIndex(where: { $0.id == id }) else {
+            return false
+        }
+        guard index > 0 else { return true }
+
+        let previousChapter = chapters[index - 1]
+        let requiredBattleIDs = previousChapter.points.flatMap { point in
+            point.battles.map(\.id)
+        }
+        return requiredBattleIDs.allSatisfy {
+            completedBattleIDs.contains($0)
+        }
     }
 }
 

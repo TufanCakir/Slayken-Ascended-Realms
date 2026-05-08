@@ -7,7 +7,6 @@
 
 import SwiftData
 import SwiftUI
-import UIKit
 
 struct SummonView: View {
     let banners: [SummonBanner]
@@ -35,6 +34,10 @@ struct SummonView: View {
 
     private var ascendedLevel: Int {
         accountProgress.first?.level ?? 1
+    }
+
+    private var headerCurrencies: [CurrencyDefinition] {
+        currencies.filter { ["coins", "crystals"].contains($0.code) }
     }
 
     var body: some View {
@@ -179,8 +182,7 @@ struct SummonView: View {
             }
             .padding(.horizontal)
 
-            // 💰 HIER rein
-            CurrencyBarView(currencies: currencies)
+            CurrencyBarView(currencies: headerCurrencies, compact: true)
 
             Rectangle()
                 .fill(.white.opacity(0.22))
@@ -862,32 +864,4 @@ private struct SummonViewPreviewHost: View {
 
         try? modelContext.save()
     }
-}
-
-#Preview {
-    SummonViewPreviewHost()
-        .modelContainer(
-            for: [
-                PlayerCurrencyBalance.self,
-                OwnedSummonCharacter.self,
-                TeamMemberRecord.self,
-                PlayerBattleProgress.self,
-                PlayerDeckCardSlot.self,
-                OwnedAbilityCard.self,
-                PlayerCharacterProgress.self,
-                PlayerAccountProgress.self,
-                SeenCutsceneRecord.self,
-                SummonBannerProgress.self,
-                PlayerDailyLoginProgress.self,
-                PlayerClaimedGift.self,
-                ShopOfferProgress.self,
-                OwnedCharacterSkin.self,
-                ProcessedStoreTransaction.self,
-                PlayerQuestClaim.self,
-                PlayerQuestCounter.self,
-                PlayerDailyBattleRewardCap.self,
-                PlayerBattleResourceState.self,
-            ],
-            inMemory: true
-        )
 }

@@ -7,7 +7,6 @@
 
 import SwiftData
 import SwiftUI
-import UIKit
 
 struct GlobeEventView: View {
     let chapters: [GlobeEventChapter]
@@ -25,6 +24,7 @@ struct GlobeEventView: View {
     @State private var activeCutscene: GlobeEventCutscene?
     @State private var battleAfterCutscene: GlobeBattle?
     @State private var isChapterDrawerExpanded = false
+    @State private var countdownNow = Date()
 
     private var activeTheme: GameTheme? {
         theme.selectedTheme ?? theme.themes.first
@@ -39,27 +39,38 @@ struct GlobeEventView: View {
         return selectedChapter.points.first { $0.id == selectedPointID }
     }
 
+    private var revealsBattlesSequentially: Bool {
+        selectedChapter?.isEventChapter != true
+    }
+
     private var focusedNodeID: String? {
         if let selectedPoint {
-            if let nextBattle = nextUnlockedBattle(in: selectedPoint) {
-                return nodeID(forBattleID: nextBattle.id)
-            }
-
             if let selectedBattleID,
-                selectedPoint.battles.contains(where: {
-                    $0.id == selectedBattleID
-                })
+                selectedPoint.visibleBattles(
+                    completedBattleIDs: completedBattleIDs,
+                    revealsSequentially: revealsBattlesSequentially
+                )
+                .contains(where: { $0.id == selectedBattleID })
             {
-                return nodeID(forBattleID: selectedBattleID)
+                return "battle-\(selectedBattleID)"
             }
 
-            return nodeID(forPointID: selectedPoint.id)
+            if let nextBattle = selectedPoint.nextUnlockedBattle(
+                completedBattleIDs: completedBattleIDs,
+                revealsSequentially: revealsBattlesSequentially
+            ) {
+                return nextBattle.mapNodeID
+            }
+
+            return selectedPoint.mapNodeID
         }
 
         if let selectedChapter {
-            return nextUnlockedPoint(in: selectedChapter).map {
-                nodeID(forPointID: $0.id)
-            } ?? nodeID(forPointID: selectedChapter.points.first?.id ?? "")
+            return selectedChapter.nextPointWithIncompleteBattle(
+                completedBattleIDs: completedBattleIDs
+            ).map {
+                $0.mapNodeID
+            } ?? selectedChapter.points.first?.mapNodeID
         }
 
         return nil
@@ -67,23 +78,29 @@ struct GlobeEventView: View {
 
     private var focusedNodePosition: EventMapNodePosition? {
         if let selectedPoint {
-            if let nextBattle = nextUnlockedBattle(in: selectedPoint) {
-                return nextBattle.node
-            }
-
             if let selectedBattleID,
-                let selectedBattle = selectedPoint.battles.first(where: {
-                    $0.id == selectedBattleID
-                })
+                let selectedBattle = selectedPoint.visibleBattles(
+                    completedBattleIDs: completedBattleIDs,
+                    revealsSequentially: revealsBattlesSequentially
+                ).first(where: { $0.id == selectedBattleID })
             {
                 return selectedBattle.node
+            }
+
+            if let nextBattle = selectedPoint.nextUnlockedBattle(
+                completedBattleIDs: completedBattleIDs,
+                revealsSequentially: revealsBattlesSequentially
+            ) {
+                return nextBattle.node
             }
 
             return selectedPoint.node
         }
 
         if let selectedChapter {
-            return nextUnlockedPoint(in: selectedChapter)?.node
+            return selectedChapter.nextPointWithIncompleteBattle(
+                completedBattleIDs: completedBattleIDs
+            )?.node
                 ?? selectedChapter.points.first?.node
         }
 
@@ -103,7 +120,13 @@ struct GlobeEventView: View {
     }
 
     private var firstUnlockedChapterID: String? {
-        chapters.first { isChapterUnlocked($0) }?.id
+        chapters.first { chapter in
+            chapter.isUnlocked(
+                in: chapters,
+                completedBattleIDs: completedBattleIDs,
+                ascendedLevel: ascendedLevel
+            )
+        }?.id
     }
 
     var body: some View {
@@ -121,16 +144,10 @@ struct GlobeEventView: View {
                     .scrollBounceBehavior(.basedOnSize)
                     .ignoresSafeArea()
                     .onAppear {
-                        debugMapLog(
-                            "onAppear chapter=\(selectedChapter?.id ?? "nil") point=\(selectedPoint?.id ?? "nil") selectedBattle=\(selectedBattleID ?? "nil") focused=\(focusedNodeID ?? "nil")"
-                        )
-                        scrollToFocusedNode(with: proxy, reason: "onAppear")
+                        scrollToFocusedNode(with: proxy)
                     }
                     .onChange(of: focusedNodeID) { _, _ in
-                        debugMapLog(
-                            "onChange chapter=\(selectedChapter?.id ?? "nil") point=\(selectedPoint?.id ?? "nil") selectedBattle=\(selectedBattleID ?? "nil") focused=\(focusedNodeID ?? "nil")"
-                        )
-                        scrollToFocusedNode(with: proxy, reason: "onChange")
+                        scrollToFocusedNode(with: proxy)
                     }
                 }
                 .zIndex(0)
@@ -179,6 +196,12 @@ struct GlobeEventView: View {
             .onChange(of: selectedChapterID) { _, _ in
                 restoreActivePointIfPossible()
             }
+            .task {
+                while !Task.isCancelled {
+                    countdownNow = .now
+                    try? await Task.sleep(for: .seconds(60))
+                }
+            }
         }
     }
 
@@ -191,7 +214,10 @@ struct GlobeEventView: View {
             mapTexture(texture, size: canvasSize, theme: theme)
 
             if let selectedPoint {
-                let battles = visibleBattles(for: selectedPoint)
+                let battles = selectedPoint.visibleBattles(
+                    completedBattleIDs: completedBattleIDs,
+                    revealsSequentially: revealsBattlesSequentially
+                )
                 battleRouteLayer(
                     battles: battles,
                     canvasSize: canvasSize,
@@ -200,7 +226,7 @@ struct GlobeEventView: View {
 
                 ForEach(battles) { battle in
                     battleMapNode(battle, canvasSize: canvasSize, theme: theme)
-                        .id(nodeID(forBattleID: battle.id))
+                        .id(battle.mapNodeID)
                 }
             } else if let selectedChapter {
                 pointRouteLayer(
@@ -211,7 +237,7 @@ struct GlobeEventView: View {
 
                 ForEach(selectedChapter.points) { point in
                     pointMapNode(point, canvasSize: canvasSize, theme: theme)
-                        .id(nodeID(forPointID: point.id))
+                        .id(point.mapNodeID)
                 }
             }
         }
@@ -294,29 +320,23 @@ struct GlobeEventView: View {
         canvasSize: CGSize,
         theme: GameTheme?
     ) -> some View {
-        Path { path in
-            guard let first = points.first else { return }
-            path.move(to: mapPoint(first.node, in: canvasSize))
-            for point in points.dropFirst() {
-                path.addLine(to: mapPoint(point.node, in: canvasSize))
-            }
-        }
-        .stroke(
-            LinearGradient(
-                colors: [
-                    theme?.glow.color ?? .yellow,
-                    theme?.primary.color ?? .white,
-                ],
-                startPoint: .leading,
-                endPoint: .trailing
-            ),
-            style: StrokeStyle(
-                lineWidth: 3,
-                lineCap: .round,
-                lineJoin: .round,
-                dash: [10, 7]
+        routePath(nodes: points.map(\.node), canvasSize: canvasSize)
+            .stroke(
+                LinearGradient(
+                    colors: [
+                        theme?.glow.color ?? .yellow,
+                        theme?.primary.color ?? .white,
+                    ],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                ),
+                style: StrokeStyle(
+                    lineWidth: 3,
+                    lineCap: .round,
+                    lineJoin: .round,
+                    dash: [10, 7]
+                )
             )
-        )
     }
 
     private func battleRouteLayer(
@@ -324,60 +344,35 @@ struct GlobeEventView: View {
         canvasSize: CGSize,
         theme: GameTheme?
     ) -> some View {
-        Path { path in
-            guard let first = battles.first else { return }
-            path.move(to: mapPoint(first.node, in: canvasSize))
-            for battle in battles.dropFirst() {
-                path.addLine(to: mapPoint(battle.node, in: canvasSize))
-            }
-        }
-        .stroke(
-            LinearGradient(
-                colors: [
-                    theme?.secondary.color ?? .red,
-                    theme?.glow.color ?? .yellow,
-                ],
-                startPoint: .leading,
-                endPoint: .trailing
-            ),
-            style: StrokeStyle(
-                lineWidth: 3,
-                lineCap: .round,
-                lineJoin: .round,
-                dash: [8, 6]
+        routePath(nodes: battles.map(\.node), canvasSize: canvasSize)
+            .stroke(
+                LinearGradient(
+                    colors: [
+                        theme?.secondary.color ?? .red,
+                        theme?.glow.color ?? .yellow,
+                    ],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                ),
+                style: StrokeStyle(
+                    lineWidth: 3,
+                    lineCap: .round,
+                    lineJoin: .round,
+                    dash: [8, 6]
+                )
             )
-        )
     }
 
-    private func visibleBattles(for point: GlobeEventPoint) -> [GlobeBattle] {
-        var result: [GlobeBattle] = []
-
-        for index in point.battles.indices {
-            let battle = point.battles[index]
-            let isCompleted = completedBattleIDs.contains(battle.id)
-            let previousCompleted =
-                index == 0
-                || completedBattleIDs.contains(point.battles[index - 1].id)
-
-            if isCompleted || previousCompleted {
-                result.append(battle)
+    private func routePath(
+        nodes: [EventMapNodePosition],
+        canvasSize: CGSize
+    ) -> Path {
+        Path { path in
+            guard let first = nodes.first else { return }
+            path.move(to: mapPoint(first, in: canvasSize))
+            for node in nodes.dropFirst() {
+                path.addLine(to: mapPoint(node, in: canvasSize))
             }
-        }
-
-        return result
-    }
-
-    private func nextUnlockedBattle(in point: GlobeEventPoint) -> GlobeBattle? {
-        let battles = visibleBattles(for: point)
-        return battles.first { !completedBattleIDs.contains($0.id) }
-            ?? battles.last
-    }
-
-    private func nextUnlockedPoint(in chapter: GlobeEventChapter)
-        -> GlobeEventPoint?
-    {
-        chapter.points.first { point in
-            point.battles.contains { !completedBattleIDs.contains($0.id) }
         }
     }
 
@@ -388,8 +383,11 @@ struct GlobeEventView: View {
     ) -> some View {
         let isFocused =
             selectedPointID == point.id
-            || focusedNodeID == nodeID(forPointID: point.id)
-        let visibleCount = visibleBattles(for: point).count
+            || focusedNodeID == point.mapNodeID
+        let visibleCount = point.visibleBattles(
+            completedBattleIDs: completedBattleIDs,
+            revealsSequentially: selectedChapter?.isEventChapter != true
+        ).count
 
         return Button {
             withAnimation(.spring(response: 0.34, dampingFraction: 0.82)) {
@@ -421,7 +419,7 @@ struct GlobeEventView: View {
     ) -> some View {
         let isFocused =
             selectedBattleID == battle.id
-            || focusedNodeID == nodeID(forBattleID: battle.id)
+            || focusedNodeID == battle.mapNodeID
 
         return Button {
             playCutsceneIfAvailable(battle.cutscene, then: battle)
@@ -452,14 +450,13 @@ struct GlobeEventView: View {
 
         return VStack(spacing: 4) {
             ZStack {
-                Circle()
-                    .fill(Color.black.opacity(0.44))
+                Ellipse()
+                    .fill(Color.black.opacity(0.32))
                     .frame(
-                        width: isFocused ? 68 : 58,
-                        height: isFocused ? 68 : 58
+                        width: isFocused ? 64 : 54,
+                        height: isFocused ? 24 : 20
                     )
-                    .offset(y: 10)
-                    .blur(radius: 8)
+                    .offset(y: 30)
 
                 Circle()
                     .fill(
@@ -487,8 +484,8 @@ struct GlobeEventView: View {
                         )
                     )
                     .shadow(
-                        color: (theme?.glow.color ?? .yellow).opacity(0.75),
-                        radius: isFocused ? 18 : 10
+                        color: (theme?.glow.color ?? .yellow).opacity(0.42),
+                        radius: isFocused ? 8 : 4
                     )
 
                 RemoteAssetImage(imageName) {
@@ -556,6 +553,18 @@ struct GlobeEventView: View {
                             .font(.system(size: 12, weight: .black))
                             .foregroundStyle(.white)
                             .lineLimit(1)
+
+                        if let selectedChapter,
+                            let timingText = EventDateSupport.displayText(
+                                endsAt: selectedChapter.endsAt,
+                                now: countdownNow
+                            )
+                        {
+                            Text(timingText)
+                                .font(.system(size: 8, weight: .black))
+                                .foregroundStyle(theme?.glow.color ?? .yellow)
+                                .lineLimit(1)
+                        }
                     }
 
                     Spacer(minLength: 0)
@@ -580,8 +589,8 @@ struct GlobeEventView: View {
             }
         }
         .frame(width: isChapterDrawerExpanded ? 230 : 172, alignment: .leading)
-        .background((theme?.accent.color ?? .black).opacity(0.28))
-        .background(.ultraThinMaterial.opacity(0.58))
+        .background((theme?.accent.color ?? .black).opacity(0.42))
+        .background(Color.black.opacity(0.36))
         .overlay {
             RoundedRectangle(cornerRadius: 8, style: .continuous)
                 .stroke(
@@ -596,7 +605,11 @@ struct GlobeEventView: View {
         -> some View
     {
         let isSelected = selectedChapterID == chapter.id
-        let isUnlocked = isChapterUnlocked(chapter)
+        let isUnlocked = chapter.isUnlocked(
+            in: chapters,
+            completedBattleIDs: completedBattleIDs,
+            ascendedLevel: ascendedLevel
+        )
 
         return Button {
             guard isUnlocked else { return }
@@ -637,6 +650,16 @@ struct GlobeEventView: View {
                     Text(chapterRequirementText(chapter))
                         .font(.system(size: 9, weight: .bold))
                         .foregroundStyle(.white.opacity(0.52))
+
+                    if let timingText = EventDateSupport.displayText(
+                        endsAt: chapter.endsAt,
+                        now: countdownNow
+                    ) {
+                        Text(timingText)
+                            .font(.system(size: 9, weight: .black))
+                            .foregroundStyle(theme?.glow.color ?? .yellow)
+                            .lineLimit(1)
+                    }
                 }
 
                 Spacer(minLength: 0)
@@ -674,8 +697,8 @@ struct GlobeEventView: View {
                 .foregroundStyle(.white)
                 .padding(.horizontal, 11)
                 .padding(.vertical, 8)
-                .background((theme?.accent.color ?? .black).opacity(0.34))
-                .background(.ultraThinMaterial.opacity(0.58))
+                .background((theme?.accent.color ?? .black).opacity(0.46))
+                .background(Color.black.opacity(0.34))
                 .clipShape(Capsule())
                 .overlay(Capsule().stroke(.white.opacity(0.18), lineWidth: 1))
         }
@@ -685,7 +708,10 @@ struct GlobeEventView: View {
     private func pointBattlePanel(theme: GameTheme?) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             if let selectedPoint {
-                let battles = visibleBattles(for: selectedPoint)
+                let battles = selectedPoint.visibleBattles(
+                    completedBattleIDs: completedBattleIDs,
+                    revealsSequentially: revealsBattlesSequentially
+                )
                 HStack(spacing: 10) {
                     RemoteAssetImage(selectedPoint.mapImage) {
                         Color.black.opacity(0.35)
@@ -730,8 +756,8 @@ struct GlobeEventView: View {
         }
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background((theme?.accent.color ?? .black).opacity(0.28))
-        .background(.ultraThinMaterial.opacity(0.55))
+        .background((theme?.accent.color ?? .black).opacity(0.40))
+        .background(Color.black.opacity(0.38))
         .overlay {
             RoundedRectangle(cornerRadius: 8, style: .continuous)
                 .stroke(
@@ -826,30 +852,13 @@ struct GlobeEventView: View {
         )
     }
 
-    private func nodeID(forPointID id: String) -> String {
-        "point-\(id)"
-    }
-
-    private func nodeID(forBattleID id: String) -> String {
-        "battle-\(id)"
-    }
-
-    private func scrollToFocusedNode(
-        with proxy: ScrollViewProxy,
-        reason: String
-    ) {
+    private func scrollToFocusedNode(with proxy: ScrollViewProxy) {
         guard let focusedNodeID, let focusedNodePosition else {
-            debugMapLog(
-                "scroll skipped reason=\(reason) chapter=\(selectedChapter?.id ?? "nil") point=\(selectedPoint?.id ?? "nil") selectedBattle=\(selectedBattleID ?? "nil") cause=noFocusedNode"
-            )
             return
         }
 
         let anchor = anchor(for: focusedNodePosition)
 
-        debugMapLog(
-            "scroll target=\(focusedNodeID) reason=\(reason) anchor=(\(anchor.x),\(anchor.y)) node=(\(focusedNodePosition.x),\(focusedNodePosition.y))"
-        )
         DispatchQueue.main.async {
             withAnimation(.easeInOut(duration: 0.35)) {
                 proxy.scrollTo(
@@ -896,82 +905,52 @@ struct GlobeEventView: View {
             chapters.first(where: { $0.id == selectedChapterID })?.points
                 .contains(where: { $0.id == activePointID }) == true
         else {
-            debugMapLog(
-                "restoreActivePointIfPossible selectedChapter=\(selectedChapterID ?? "nil") activePoint=\(gameState.activeEventPointID ?? "nil") result=cleared"
-            )
             selectedPointID = nil
             return
         }
 
         selectedPointID = activePointID
-        debugMapLog(
-            "restoreActivePointIfPossible selectedChapter=\(selectedChapterID) activePoint=\(activePointID) result=restored"
-        )
     }
 
     private func syncSelectedChapterWithUnlocks() {
         if let selectedChapterID,
             let chapter = chapters.first(where: { $0.id == selectedChapterID }),
-            isChapterUnlocked(chapter)
-        {
-            debugMapLog(
-                "syncSelectedChapterWithUnlocks keptSelectedChapter=\(selectedChapterID)"
+            chapter.isUnlocked(
+                in: chapters,
+                completedBattleIDs: completedBattleIDs,
+                ascendedLevel: ascendedLevel
             )
+        {
             return
         }
 
         if let savedID = gameState.activeEventChapterID,
             let chapter = chapters.first(where: { $0.id == savedID }),
-            isChapterUnlocked(chapter)
+            chapter.isUnlocked(
+                in: chapters,
+                completedBattleIDs: completedBattleIDs,
+                ascendedLevel: ascendedLevel
+            )
         {
             selectedChapterID = savedID
-            debugMapLog(
-                "syncSelectedChapterWithUnlocks choseSavedChapter=\(savedID)"
-            )
             return
         }
 
         selectedChapterID = firstUnlockedChapterID ?? chapters.first?.id
         if let selectedChapter {
             gameState.selectEventChapter(selectedChapter)
-            debugMapLog(
-                "syncSelectedChapterWithUnlocks choseFallbackChapter=\(selectedChapter.id)"
-            )
         }
-    }
-
-    private func debugMapLog(_ message: String) {
-        #if DEBUG
-            print("[GlobeEventView][Map] \(message)")
-        #endif
-    }
-
-    private func isChapterUnlocked(_ chapter: GlobeEventChapter) -> Bool {
-        guard ascendedLevel >= (chapter.minAscendedLevel ?? 1) else {
-            return false
-        }
-        guard !isEventChapter(chapter) else { return true }
-
-        guard let index = chapters.firstIndex(where: { $0.id == chapter.id })
-        else {
-            return false
-        }
-        guard index > 0 else { return true }
-
-        let previousChapter = chapters[index - 1]
-        let requiredBattleIDs = previousChapter.points.flatMap { point in
-            point.battles.map(\.id)
-        }
-        return requiredBattleIDs.allSatisfy { completedBattleIDs.contains($0) }
-    }
-
-    private func isEventChapter(_ chapter: GlobeEventChapter) -> Bool {
-        chapter.id.hasPrefix("event_")
     }
 
     private func chapterRequirementText(_ chapter: GlobeEventChapter) -> String
     {
-        guard isChapterUnlocked(chapter) else {
+        guard
+            chapter.isUnlocked(
+                in: chapters,
+                completedBattleIDs: completedBattleIDs,
+                ascendedLevel: ascendedLevel
+            )
+        else {
             if ascendedLevel < (chapter.minAscendedLevel ?? 1) {
                 return "Ascended Lv. \(chapter.minAscendedLevel ?? 1)"
             }
@@ -1006,13 +985,4 @@ private struct TrianglePointer: Shape {
             path.closeSubpath()
         }
     }
-}
-
-#Preview {
-    GlobeEventView(
-        chapters: loadGlobeEventChapters(),
-        selectedBattleID: nil
-    ) { _ in }
-    .environmentObject(ThemeManager())
-    .environmentObject(GameState())
 }

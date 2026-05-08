@@ -244,9 +244,3 @@ private struct RaidBossSelectionButtonStyle: ButtonStyle {
             .opacity(configuration.isPressed ? 0.82 : 1)
     }
 }
-
-#Preview {
-    CoopRaidFlowView(onClose: {})
-        .environmentObject(ThemeManager())
-        .environmentObject(MultiplayerManager())
-}

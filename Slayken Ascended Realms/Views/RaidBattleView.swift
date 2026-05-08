@@ -163,10 +163,3 @@ struct RaidBattleView: View {
         }
     }
 }
-
-#Preview {
-    RaidBattleView(onClose: {})
-        .environmentObject(MultiplayerManager())
-        .environmentObject(ThemeManager())
-        .environmentObject(RemoteContentManager.shared)
-}

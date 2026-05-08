@@ -12,6 +12,7 @@ struct DailyLoginView: View {
     @EnvironmentObject var theme: ThemeManager
     @State private var didScrollToHighlightedDay = false
     @State private var revealCards = false
+    @State private var countdownNow = Date()
 
     let campaigns: [LoginRewardCampaign]
     let selectedCampaignID: String?
@@ -30,6 +31,18 @@ struct DailyLoginView: View {
 
     private var highlightedDay: Int {
         availableReward?.dayNumber ?? 1
+    }
+
+    private var selectedCampaign: LoginRewardCampaign? {
+        if let selectedCampaignID,
+            let campaign = campaigns.first(where: {
+                $0.id == selectedCampaignID
+            })
+        {
+            return campaign
+        }
+
+        return campaigns.first
     }
 
     private var cardStroke: LinearGradient {
@@ -148,6 +161,12 @@ struct DailyLoginView: View {
             }
             .ignoresSafeArea()
         }
+        .task {
+            while !Task.isCancelled {
+                countdownNow = .now
+                try? await Task.sleep(for: .seconds(60))
+            }
+        }
     }
 
     private var header: some View {
@@ -160,6 +179,18 @@ struct DailyLoginView: View {
                 Text(campaignSubtitle)
                     .font(.system(size: 14, weight: .medium, design: .rounded))
                     .foregroundStyle(.white.opacity(0.7))
+
+                if let timingText = EventDateSupport.displayText(
+                    endsAt: selectedCampaign?.endsAt,
+                    now: countdownNow
+                ) {
+                    Text(timingText)
+                        .font(
+                            .system(size: 11, weight: .black, design: .rounded)
+                        )
+                        .foregroundStyle(.orange.opacity(0.94))
+                        .lineLimit(1)
+                }
             }
 
             Spacer()
@@ -202,6 +233,22 @@ struct DailyLoginView: View {
                                 )
                                 .lineLimit(1)
                                 .opacity(0.78)
+
+                            if let timingText = EventDateSupport.displayText(
+                                endsAt: campaign.endsAt,
+                                now: countdownNow
+                            ) {
+                                Text(timingText)
+                                    .font(
+                                        .system(
+                                            size: 9,
+                                            weight: .black,
+                                            design: .rounded
+                                        )
+                                    )
+                                    .lineLimit(1)
+                                    .opacity(0.92)
+                            }
                         }
                         .foregroundStyle(.white)
                         .padding(.horizontal, 14)
@@ -509,78 +556,4 @@ struct DailyLoginView: View {
             fallback
         }
     }
-}
-
-#Preview {
-    DailyLoginView(
-        campaigns: [
-            LoginRewardCampaign(
-                id: "daily_login",
-                title: "Daily Login",
-                subtitle: "30 Tage Login-Belohnungen",
-                resource: "daily_login",
-                endsAt: nil,
-                rewards: []
-            )
-        ],
-        selectedCampaignID: "daily_login",
-        campaignTitle: "Daily Login",
-        campaignSubtitle: "30 Tage Login-Belohnungen",
-        rewards: [
-            DailyLoginRewardDefinition(
-                id: "preview-day-1",
-                day: 1,
-                title: "Willkommensbonus",
-                subtitle: "Ein starker Start für dein Abenteuer",
-                message: "Du hast deine erste Tagesbelohnung erhalten.",
-                buttonTitle: "Abholen",
-                icon: "star.fill",
-                assetIcon: nil,
-                rewards: [
-                    CurrencyAmount(currency: "gold", amount: 500),
-                    CurrencyAmount(currency: "gems", amount: 25),
-                ]
-            )
-        ],
-        currencies: [
-            CurrencyDefinition(
-                code: "gold",
-                name: "Gold",
-                icon: "crown.fill",
-                assetIcon: nil,
-                sortOrder: 0
-            ),
-            CurrencyDefinition(
-                code: "gems",
-                name: "Gems",
-                icon: "sparkles",
-                assetIcon: nil,
-                sortOrder: 1
-            ),
-        ],
-        availableReward: DailyLoginRewardState(
-            reward: DailyLoginRewardDefinition(
-                id: "preview-day-1",
-                day: 1,
-                title: "Willkommensbonus",
-                subtitle: "Ein starker Start für dein Abenteuer",
-                message: "Du hast deine erste Tagesbelohnung erhalten.",
-                buttonTitle: "Abholen",
-                icon: "star.fill",
-                assetIcon: nil,
-                rewards: [
-                    CurrencyAmount(currency: "gold", amount: 500),
-                    CurrencyAmount(currency: "gems", amount: 25),
-                ],
-                characterRewards: [GiftCharacterReward(characterID: "zaron")],
-                cardRewards: [GiftCardReward(cardID: "slash_red", amount: 1)]
-            ),
-            dayNumber: 1
-        ),
-        onClaim: {},
-        onSelectCampaign: { _ in },
-        onClose: {}
-    )
-    .environmentObject(GameState())
-    .environmentObject(ThemeManager())
 }

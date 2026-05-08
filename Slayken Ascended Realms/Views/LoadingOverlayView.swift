@@ -95,7 +95,6 @@ struct LoadingOverlayView: View {
             RoundedRectangle(cornerRadius: 26, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
         }
-        .shadow(color: .black.opacity(0.4), radius: 20, y: 10)
     }
 
     private var spinnerBlock: some View {
@@ -120,17 +119,12 @@ struct LoadingOverlayView: View {
                     )
                     .frame(width: 72, height: 72)
                     .rotationEffect(.degrees(spin ? 360 : 0))
-                    .shadow(color: .blue.opacity(0.75), radius: 10)
             }
 
-            HStack(spacing: 7) {
-                ForEach(Array("Loading"), id: \.self) { character in
-                    Text(String(character))
-                        .font(.system(size: 18, weight: .black))
-                        .foregroundStyle(.white.opacity(0.92))
-                }
-            }
-            .tracking(3)
+            Text("LOADING")
+                .font(.system(size: 18, weight: .black))
+                .foregroundStyle(.white.opacity(0.92))
+                .tracking(3)
         }
     }
 
@@ -177,11 +171,4 @@ struct LoadingOverlayView: View {
         }
         .padding(.top, 2)
     }
-
-}
-
-#Preview {
-    LoadingOverlayView(
-        statusText: "Loading core game data and visuals"
-    )
 }

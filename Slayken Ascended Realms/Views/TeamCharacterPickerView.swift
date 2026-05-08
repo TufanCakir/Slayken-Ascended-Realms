@@ -7,7 +7,6 @@
 
 import SwiftData
 import SwiftUI
-import UIKit
 
 struct TeamCharacterPickerView: View {
     private struct PickerCharacterEntry: Identifiable {

@@ -95,19 +95,3 @@ struct StoryView: View {
         }
     }
 }
-
-#Preview {
-    StoryView(
-        story: previewStoryLines,
-        onFinish: {}
-    )
-    .environmentObject(ThemeManager())
-}
-
-private let previewStoryLines: [StoryLine] = [
-    #"{"speaker":"Erza","text":"Die Schatten bewegen sich wieder."}"#,
-    #"{"speaker":"Slayken","text":"Dann betreten wir das Reich und beenden es."}"#,
-]
-.compactMap { line in
-    try? JSONDecoder().decode(StoryLine.self, from: Data(line.utf8))
-}

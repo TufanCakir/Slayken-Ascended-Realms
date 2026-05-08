@@ -102,8 +102,3 @@ struct ThemeSelectView: View {
         }
     }
 }
-
-#Preview {
-    ThemeSelectView(onClose: {})
-        .environmentObject(ThemeManager())
-}

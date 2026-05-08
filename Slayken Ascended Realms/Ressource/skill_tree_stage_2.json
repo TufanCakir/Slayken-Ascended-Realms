@@ -124,7 +124,7 @@
                 "description":
                     "Beschleunigt Mana-Regen fuer haeufigere Skill-Einsaetze.",
                 "icon": "drop.fill",
-                "assetIcon": "skill_brown",
+                "assetIcon": "skill_blue",
                 "maxRank": 5,
                 "costCurrency": "skill_runes",
                 "costPerRank": 90,

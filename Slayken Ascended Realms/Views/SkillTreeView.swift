@@ -64,14 +64,39 @@ struct SkillTreeView: View {
     }
 
     private var displayedCurrencies: [CurrencyDefinition] {
-        gameState.currencies.sorted { $0.sortOrder < $1.sortOrder }
+        let requiredCodes = Set(skillTree?.nodes.map(\.costCurrency) ?? [])
+        return gameState.currencies
+            .filter { requiredCodes.contains($0.code) }
+            .sorted { $0.sortOrder < $1.sortOrder }
+    }
+
+    private var isCompactLayout: Bool {
+        horizontalSizeClass == .compact
+    }
+
+    private var canvasScale: CGFloat {
+        isCompactLayout ? 0.78 : 1.0
+    }
+
+    private var canvasSize: CGSize {
+        CGSize(
+            width: isCompactLayout ? 660 : 900,
+            height: isCompactLayout ? 440 : 620
+        )
+    }
+
+    private var nodeSize: CGSize {
+        CGSize(
+            width: isCompactLayout ? 104 : 132,
+            height: isCompactLayout ? 88 : 114
+        )
     }
 
     var body: some View {
         Group {
             if let skillTree {
                 ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 16) {
+                    VStack(spacing: isCompactLayout ? 10 : 16) {
                         header(for: skillTree)
                         if showsTreeSelector {
                             treeSelector
@@ -79,9 +104,9 @@ struct SkillTreeView: View {
                         currencyStrip(for: skillTree)
                         content(for: skillTree)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 52)
-                    .padding(.bottom, 18)
+                    .padding(.horizontal, isCompactLayout ? 10 : 16)
+                    .padding(.top, isCompactLayout ? 18 : 52)
+                    .padding(.bottom, isCompactLayout ? 10 : 18)
                 }
             } else {
                 unavailableState
@@ -171,9 +196,12 @@ struct SkillTreeView: View {
         HStack {
             Button(action: onClose) {
                 Image(systemName: "xmark")
-                    .font(.system(size: 14, weight: .black))
+                    .font(.system(size: 13, weight: .black))
                     .foregroundStyle(.white)
-                    .frame(width: 38, height: 38)
+                    .frame(
+                        width: isCompactLayout ? 34 : 38,
+                        height: isCompactLayout ? 34 : 38
+                    )
                     .background(Color.black.opacity(0.42), in: Circle())
             }
             .buttonStyle(.plain)
@@ -190,7 +218,10 @@ struct SkillTreeView: View {
                 )
                 .font(.system(size: 14, weight: .black))
                 .foregroundStyle(.white)
-                .frame(width: 38, height: 38)
+                .frame(
+                    width: isCompactLayout ? 34 : 38,
+                    height: isCompactLayout ? 34 : 38
+                )
                 .background(Color.black.opacity(0.42), in: Circle())
             }
             .buttonStyle(.plain)
@@ -201,24 +232,34 @@ struct SkillTreeView: View {
         -> some View
     {
         return ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
+            HStack(spacing: isCompactLayout ? 7 : 10) {
                 ForEach(displayedCurrencies) { currency in
                     let amount =
                         balances.first { $0.code == currency.code }?.amount ?? 0
 
-                    HStack(spacing: 8) {
+                    HStack(spacing: isCompactLayout ? 5 : 8) {
                         currencyIcon(for: currency)
                         VStack(alignment: .leading, spacing: 2) {
                             Text(currency.name)
-                                .font(.system(size: 10, weight: .bold))
+                                .font(
+                                    .system(
+                                        size: isCompactLayout ? 8 : 10,
+                                        weight: .bold
+                                    )
+                                )
                                 .foregroundStyle(.white.opacity(0.78))
                             Text("\(amount)")
-                                .font(.system(size: 13, weight: .black))
+                                .font(
+                                    .system(
+                                        size: isCompactLayout ? 11 : 13,
+                                        weight: .black
+                                    )
+                                )
                                 .foregroundStyle(.white)
                         }
                     }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 9)
+                    .padding(.horizontal, isCompactLayout ? 9 : 12)
+                    .padding(.vertical, isCompactLayout ? 6 : 9)
                     .background(
                         LinearGradient(
                             colors: [
@@ -261,7 +302,7 @@ struct SkillTreeView: View {
 
     private var treeSelector: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
+            HStack(spacing: isCompactLayout ? 8 : 10) {
                 ForEach(skillTrees) { tree in
                     let isSelected = tree.id == skillTree?.id
                     let isUnlocked = isTreeUnlocked(tree.id)
@@ -271,29 +312,50 @@ struct SkillTreeView: View {
                             selectedTreeID = tree.id
                         }
                     } label: {
-                        HStack(spacing: 8) {
+                        HStack(spacing: isCompactLayout ? 6 : 8) {
                             Image(
                                 systemName: isUnlocked
                                     ? "point.3.connected.trianglepath.dotted"
                                     : "lock.fill"
                             )
-                            .font(.system(size: 11, weight: .black))
-                            VStack(alignment: .leading, spacing: 3) {
+                            .font(
+                                .system(
+                                    size: isCompactLayout ? 10 : 11,
+                                    weight: .black
+                                )
+                            )
+                            VStack(
+                                alignment: .leading,
+                                spacing: isCompactLayout ? 2 : 3
+                            ) {
                                 Text(tree.title)
-                                    .font(.system(size: 13, weight: .black))
+                                    .font(
+                                        .system(
+                                            size: isCompactLayout ? 11 : 13,
+                                            weight: .black
+                                        )
+                                    )
                                 Text(
                                     isUnlocked
                                         ? tree.subtitle
                                         : unlockText(for: tree.id)
                                 )
-                                .font(.system(size: 9, weight: .bold))
+                                .font(
+                                    .system(
+                                        size: isCompactLayout ? 8 : 9,
+                                        weight: .bold
+                                    )
+                                )
                                 .lineLimit(1)
                             }
                         }
                         .foregroundStyle(.white)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 10)
-                        .frame(minWidth: 186, alignment: .leading)
+                        .padding(.horizontal, isCompactLayout ? 10 : 14)
+                        .padding(.vertical, isCompactLayout ? 8 : 10)
+                        .frame(
+                            minWidth: isCompactLayout ? 148 : 186,
+                            alignment: .leading
+                        )
                         .background(
                             isSelected && isUnlocked
                                 ? LinearGradient(
@@ -355,7 +417,7 @@ struct SkillTreeView: View {
     private func content(for skillTree: CharacterSkillTreeDefinition)
         -> some View
     {
-        VStack(spacing: 16) {
+        VStack(spacing: isCompactLayout ? 10 : 16) {
             nodeCanvas(for: skillTree)
             autoUnlockPanel(for: skillTree)
         }
@@ -385,20 +447,19 @@ struct SkillTreeView: View {
                 ForEach(skillTree.nodes) { node in
                     skillNodeButton(node, in: skillTree)
                         .position(
-                            x: node.position.x,
-                            y: node.position.y
+                            scaledPoint(for: node.position)
                         )
                 }
             }
             .frame(
-                width: horizontalSizeClass == .compact ? 920 : 1100,
-                height: 620
+                width: canvasSize.width,
+                height: canvasSize.height
             )
-            .padding(24)
+            .padding(isCompactLayout ? 10 : 24)
         }
         .frame(
             maxWidth: .infinity,
-            minHeight: horizontalSizeClass == .compact ? 440 : 640
+            minHeight: isCompactLayout ? 360 : 640
         )
         .background(
             LinearGradient(
@@ -427,7 +488,7 @@ struct SkillTreeView: View {
     private func autoUnlockPanel(for skillTree: CharacterSkillTreeDefinition)
         -> some View
     {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: isCompactLayout ? 8 : 12) {
             Button {
                 if PlayerInventoryStore.autoLearnSkillNodes(
                     in: skillTree,
@@ -438,10 +499,15 @@ struct SkillTreeView: View {
                 }
             } label: {
                 Text("Auto Unlock")
-                    .font(.system(size: 16, weight: .black))
+                    .font(
+                        .system(
+                            size: isCompactLayout ? 13 : 16,
+                            weight: .black
+                        )
+                    )
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 14)
+                    .padding(.vertical, isCompactLayout ? 10 : 14)
                     .background(
                         Color.black.opacity(0.30),
                         in: RoundedRectangle(
@@ -455,10 +521,10 @@ struct SkillTreeView: View {
             Text(
                 "Stage \(completedRanks(in: skillTree))/\(maximumRanks(in: skillTree)) Ranks"
             )
-            .font(.system(size: 12, weight: .bold))
+            .font(.system(size: isCompactLayout ? 10 : 12, weight: .bold))
             .foregroundStyle(.white.opacity(0.78))
         }
-        .padding(18)
+        .padding(isCompactLayout ? 12 : 18)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             LinearGradient(
@@ -490,6 +556,8 @@ struct SkillTreeView: View {
     ) -> some View {
         let rank = nodeRanks[node.id] ?? 0
         let isSelected = selectedNodeID == node.id
+        let isLearned = rank > 0
+        let isMastered = rank >= node.maxRank
         let canLearn = PlayerInventoryStore.canLearnSkillNode(
             node,
             in: skillTree,
@@ -501,21 +569,71 @@ struct SkillTreeView: View {
             selectedNodeID = node.id
             presentedNodeID = node.id
         } label: {
-            VStack(spacing: 5) {
-                nodeIcon(for: node)
+            VStack(spacing: isCompactLayout ? 3 : 5) {
+                ZStack(alignment: .topTrailing) {
+                    nodeIcon(for: node, isLearned: isLearned)
+
+                    if isLearned {
+                        Image(
+                            systemName: isMastered
+                                ? "checkmark.seal.fill"
+                                : "checkmark.circle.fill"
+                        )
+                        .font(
+                            .system(
+                                size: isCompactLayout ? 10 : 12,
+                                weight: .black
+                            )
+                        )
+                        .foregroundStyle(.white)
+                        .padding(2)
+                        .background(Color.black.opacity(0.42), in: Circle())
+                        .offset(x: 8, y: -6)
+                    }
+                }
+
                 Text(node.title)
-                    .font(.system(size: 11, weight: .black))
+                    .font(
+                        .system(
+                            size: isCompactLayout ? 9 : 11,
+                            weight: .black
+                        )
+                    )
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
                 Text(primaryBonusText(for: node))
-                    .font(.system(size: 9, weight: .bold))
-                    .foregroundStyle(.white.opacity(0.84))
+                    .font(
+                        .system(
+                            size: isCompactLayout ? 8 : 9,
+                            weight: .bold
+                        )
+                    )
+                    .foregroundStyle(
+                        isLearned ? .white.opacity(0.90) : .white.opacity(0.56)
+                    )
                     .lineLimit(1)
-                Text("\(rank)/\(node.maxRank)")
-                    .font(.system(size: 10, weight: .black))
+                HStack(spacing: 4) {
+                    Text("\(rank)/\(node.maxRank)")
+                    Text(
+                        skillNodeStateText(
+                            isLearned: isLearned,
+                            isMastered: isMastered,
+                            canLearn: canLearn
+                        )
+                    )
+                }
+                .font(
+                    .system(
+                        size: isCompactLayout ? 8 : 10,
+                        weight: .black
+                    )
+                )
+                .foregroundStyle(
+                    isLearned ? .white : .white.opacity(canLearn ? 0.76 : 0.48)
+                )
             }
-            .foregroundStyle(.white)
-            .frame(width: 132, height: 114)
+            .foregroundStyle(isLearned ? .white : .white.opacity(0.62))
+            .frame(width: nodeSize.width, height: nodeSize.height)
             .background(
                 nodeBackgroundColor(
                     node: node,
@@ -533,10 +651,14 @@ struct SkillTreeView: View {
                                 from: node.palette?.accentHex,
                                 fallback: .yellow
                             )
-                            : .white.opacity(0.12),
-                        lineWidth: isSelected ? 2 : 1
+                            : canLearn && !isLearned
+                                ? .white.opacity(0.34)
+                                : .white.opacity(isLearned ? 0.18 : 0.08),
+                        lineWidth: isSelected || (canLearn && !isLearned)
+                            ? 2 : 1
                     )
             )
+            .opacity(isLearned ? 1 : canLearn ? 0.78 : 0.48)
         }
         .buttonStyle(.plain)
     }
@@ -546,15 +668,27 @@ struct SkillTreeView: View {
         to end: CharacterSkillNodePosition
     ) -> some View {
         Path { path in
-            path.move(to: CGPoint(x: start.x, y: start.y))
-            path.addLine(to: CGPoint(x: end.x, y: end.y))
+            path.move(to: scaledPoint(for: start))
+            path.addLine(to: scaledPoint(for: end))
         }
         .stroke(
             color(
                 from: skillTree?.palette?.connectionHex,
                 fallback: .white.opacity(0.18)
             ),
-            style: StrokeStyle(lineWidth: 3, lineCap: .round)
+            style: StrokeStyle(
+                lineWidth: isCompactLayout ? 2 : 3,
+                lineCap: .round
+            )
+        )
+    }
+
+    private func scaledPoint(for position: CharacterSkillNodePosition)
+        -> CGPoint
+    {
+        CGPoint(
+            x: CGFloat(position.x) * canvasScale + (isCompactLayout ? 14 : 0),
+            y: CGFloat(position.y) * canvasScale + (isCompactLayout ? 12 : 0)
         )
     }
 
@@ -575,7 +709,7 @@ struct SkillTreeView: View {
         maxRank: Int,
         canLearn: Bool
     ) -> LinearGradient {
-        if rank >= maxRank {
+        if rank > 0 && rank >= maxRank {
             return LinearGradient(
                 colors: [
                     color(
@@ -592,7 +726,7 @@ struct SkillTreeView: View {
             )
         }
 
-        if canLearn {
+        if rank > 0 {
             return LinearGradient(
                 colors: [
                     color(
@@ -611,14 +745,8 @@ struct SkillTreeView: View {
 
         return LinearGradient(
             colors: [
-                color(
-                    from: node.palette?.lockedStartHex,
-                    fallback: Color.black.opacity(0.72)
-                ),
-                color(
-                    from: node.palette?.lockedEndHex,
-                    fallback: Color.gray.opacity(0.44)
-                ),
+                Color.gray.opacity(canLearn ? 0.34 : 0.22),
+                Color.black.opacity(canLearn ? 0.62 : 0.74),
             ],
             startPoint: .top,
             endPoint: .bottom
@@ -647,8 +775,14 @@ struct SkillTreeView: View {
     }
 
     @ViewBuilder
-    private func nodeIcon(for node: CharacterSkillNodeDefinition) -> some View {
-        let accentColor = color(from: node.palette?.accentHex, fallback: .white)
+    private func nodeIcon(
+        for node: CharacterSkillNodeDefinition,
+        isLearned: Bool
+    ) -> some View {
+        let accentColor =
+            isLearned
+            ? color(from: node.palette?.accentHex, fallback: .white)
+            : .white.opacity(0.48)
 
         if let assetIcon = node.assetIcon,
             RemoteContentManager.hasCachedOrBundledImage(named: assetIcon)
@@ -665,6 +799,22 @@ struct SkillTreeView: View {
                 .font(.system(size: 22, weight: .black))
                 .foregroundStyle(accentColor)
         }
+    }
+
+    private func skillNodeStateText(
+        isLearned: Bool,
+        isMastered: Bool,
+        canLearn: Bool
+    ) -> String {
+        if isMastered {
+            return "MAX"
+        }
+
+        if isLearned {
+            return "GELERNT"
+        }
+
+        return canLearn ? "LERNBAR" : "LOCK"
     }
 
     private func bonusLine(for bonus: CharacterSkillNodeBonus) -> String {

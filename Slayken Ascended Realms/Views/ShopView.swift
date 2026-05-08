@@ -853,9 +853,3 @@ struct ShopView: View {
         return "Nicht genug"
     }
 }
-
-#Preview {
-    ShopView(onClose: {})
-        .environmentObject(GameState())
-        .environmentObject(ThemeManager())
-}

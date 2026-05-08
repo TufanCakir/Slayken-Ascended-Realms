@@ -275,9 +275,3 @@ struct StartView: View {
         }
     }
 }
-
-#Preview {
-    StartView(onStart: {})
-        .environmentObject(GameState())
-        .environmentObject(ThemeManager())
-}

@@ -3,10 +3,14 @@
 //  Slayken Ascended Realms
 //
 //  Created by Tufan Cakir on 10.04.26.
+//  Updated by ChatGPT on 08.05.26 to clarify that progress reflects real values
 //
 
 import SwiftUI
 
+/// A generic loading overlay used for long-running operations.  Displays a spinner,
+/// an optional progress bar and status text.  Progress is only shown when a real
+/// progress value is supplied; no artificial defaults are injected.
 struct LoadingOverlayView: View {
     let title: String
     let subtitle: String
@@ -28,6 +32,7 @@ struct LoadingOverlayView: View {
         self.statusText = statusText
     }
 
+    /// Clamp the supplied progress between 0 and 1
     private var normalizedProgress: Double? {
         guard let progress else { return nil }
         return min(max(progress, 0), 1)
@@ -53,6 +58,7 @@ struct LoadingOverlayView: View {
         }
     }
 
+    /// The central panel containing the spinner, title, subtitle and optional progress
     private var centerPanel: some View {
         VStack(spacing: 18) {
             spinnerBlock
@@ -97,6 +103,7 @@ struct LoadingOverlayView: View {
         }
     }
 
+    /// The spinning loader graphic and "LOADING" label
     private var spinnerBlock: some View {
         VStack(spacing: 14) {
             ZStack {
@@ -128,6 +135,7 @@ struct LoadingOverlayView: View {
         }
     }
 
+    /// A horizontal progress bar with percentage text
     private func progressBlock(progress: Double) -> some View {
         VStack(spacing: 8) {
             GeometryReader { geometry in

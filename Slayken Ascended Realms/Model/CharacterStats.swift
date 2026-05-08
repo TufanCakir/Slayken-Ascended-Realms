@@ -19,6 +19,7 @@ struct CharacterStats: Codable, Equatable, Identifiable {
     let element: String?
     let hp: CGFloat
     let attack: CGFloat
+    let attackSpeed: Double?
 
     init(
         name: String,
@@ -28,7 +29,8 @@ struct CharacterStats: Codable, Equatable, Identifiable {
         texture: String? = nil,
         element: String? = nil,
         hp: CGFloat,
-        attack: CGFloat
+        attack: CGFloat,
+        attackSpeed: Double? = nil
     ) {
         self.name = name
         self.image = image
@@ -38,6 +40,7 @@ struct CharacterStats: Codable, Equatable, Identifiable {
         self.element = element
         self.hp = hp
         self.attack = attack
+        self.attackSpeed = attackSpeed
     }
 
     func withBattleModel(_ battleModel: String?) -> CharacterStats {
@@ -49,7 +52,8 @@ struct CharacterStats: Codable, Equatable, Identifiable {
             texture: texture,
             element: element,
             hp: hp,
-            attack: attack
+            attack: attack,
+            attackSpeed: attackSpeed
         )
     }
 }

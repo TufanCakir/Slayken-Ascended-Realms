@@ -60,6 +60,17 @@ final class MusicManager: NSObject, ObservableObject {
         UserDefaults.standard.set(clampedValue, forKey: volumeKey)
     }
 
+    func resetSettings() {
+        volume = 0.7
+        isEnabled = true
+        player?.volume = Float(volume)
+        UserDefaults.standard.removeObject(forKey: volumeKey)
+        UserDefaults.standard.removeObject(forKey: enabledKey)
+        if hasStartedPlayback {
+            playCurrentTrack()
+        }
+    }
+
     func toggleEnabled() {
         isEnabled.toggle()
         UserDefaults.standard.set(isEnabled, forKey: enabledKey)

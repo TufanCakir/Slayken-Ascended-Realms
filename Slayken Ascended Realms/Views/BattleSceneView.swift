@@ -29,6 +29,7 @@ struct BattleSceneView: UIViewRepresentable {
     let particleEffects: [ParticleEffectDefinition]
     let groundTexture: String
     let skyboxTexture: String
+    let battleSpeedMultiplier: Double
     let onSelectEnemy: (Int) -> Void
 
     func makeCoordinator() -> BattleSceneCoordinator {
@@ -37,6 +38,7 @@ struct BattleSceneView: UIViewRepresentable {
             enemies: enemies,
             raidParticipants: raidParticipants,
             particleEffects: particleEffects,
+            battleSpeedMultiplier: battleSpeedMultiplier,
             onSelectEnemy: onSelectEnemy
         )
     }
@@ -65,6 +67,7 @@ struct BattleSceneView: UIViewRepresentable {
             groundTexture: groundTexture,
             skyboxTexture: skyboxTexture
         )
+        context.coordinator.updateBattleSpeedMultiplier(battleSpeedMultiplier)
         context.coordinator.updateEnemyHPs(enemyHPs)
         context.coordinator.updateSelectedEnemy(selectedEnemyIndex)
         context.coordinator.updateAttackTriggers(
@@ -90,6 +93,7 @@ final class BattleSceneCoordinator {
     private var raidParticipants: [RaidParticipant]
     private let particleEffectDefinitions: [String: ParticleEffectDefinition]
     private let onSelectEnemy: (Int) -> Void
+    private var battleSpeedMultiplier: Double
 
     private let cameraNode = SCNNode()
     private let playerRootNode = SCNNode()
@@ -114,6 +118,7 @@ final class BattleSceneCoordinator {
         enemies: [CharacterStats],
         raidParticipants: [RaidParticipant]?,
         particleEffects: [ParticleEffectDefinition],
+        battleSpeedMultiplier: Double,
         onSelectEnemy: @escaping (Int) -> Void
     ) {
         self.playerStats = player
@@ -134,6 +139,7 @@ final class BattleSceneCoordinator {
                 ($0.id.lowercased(), $0)
             }
         )
+        self.battleSpeedMultiplier = max(0.1, battleSpeedMultiplier)
         self.onSelectEnemy = onSelectEnemy
     }
 
@@ -170,6 +176,15 @@ final class BattleSceneCoordinator {
         )
         gesture.name = "enemyTap"
         view.addGestureRecognizer(gesture)
+    }
+
+    func updateBattleSpeedMultiplier(_ multiplier: Double) {
+        battleSpeedMultiplier = max(0.1, multiplier)
+    }
+
+    private func speedAdjustedDuration(_ duration: TimeInterval) -> TimeInterval
+    {
+        max(0.01, duration / battleSpeedMultiplier)
     }
 
     @objc
@@ -514,16 +529,27 @@ final class BattleSceneCoordinator {
             start.z + direction.z * lungeDistance
         )
 
-        let windup = SCNAction.move(to: windupPosition, duration: 0.03)
+        let windup = SCNAction.move(
+            to: windupPosition,
+            duration: speedAdjustedDuration(0.08)
+        )
         windup.timingMode = .easeOut
 
-        let dash = SCNAction.move(to: lungePosition, duration: 0.07)
+        let dash = SCNAction.move(
+            to: lungePosition,
+            duration: speedAdjustedDuration(0.15)
+        )
         dash.timingMode = .easeInEaseOut
 
-        let recover = SCNAction.move(to: start, duration: 0.08)
+        let recover = SCNAction.move(
+            to: start,
+            duration: speedAdjustedDuration(0.18)
+        )
         recover.timingMode = .easeOut
 
-        let anticipationDelay = SCNAction.wait(duration: 0.03)
+        let anticipationDelay = SCNAction.wait(
+            duration: speedAdjustedDuration(0.03)
+        )
         let impact = SCNAction.run { [weak self, weak defender] _ in
             guard let self, let defender, let particleEffect else { return }
             if particleTargetIndices.isEmpty {
@@ -548,7 +574,7 @@ final class BattleSceneCoordinator {
 
         modelContainer(for: attacker)?.runAction(
             SCNAction.sequence([
-                SCNAction.wait(duration: 0.11),
+                SCNAction.wait(duration: speedAdjustedDuration(0.11)),
                 attackerPose,
             ]),
             forKey: "attackPose"
@@ -556,7 +582,7 @@ final class BattleSceneCoordinator {
 
         modelContainer(for: defender)?.runAction(
             SCNAction.sequence([
-                SCNAction.wait(duration: 0.26),
+                SCNAction.wait(duration: speedAdjustedDuration(0.26)),
                 impactShake,
             ]),
             forKey: "hitShake"
@@ -581,7 +607,7 @@ final class BattleSceneCoordinator {
                 0,
                 direction.z * hitDistance
             ),
-            duration: 0.07
+            duration: speedAdjustedDuration(0.07)
         )
         let returnBack = SCNAction.move(
             by: SCNVector3(
@@ -589,12 +615,12 @@ final class BattleSceneCoordinator {
                 0,
                 -direction.z * hitDistance
             ),
-            duration: 0.12
+            duration: speedAdjustedDuration(0.12)
         )
 
         defender.runAction(
             SCNAction.sequence([
-                SCNAction.wait(duration: 0.24),
+                SCNAction.wait(duration: speedAdjustedDuration(0.24)),
                 hitBack,
                 returnBack,
             ]),
@@ -615,37 +641,97 @@ final class BattleSceneCoordinator {
         switch abs(seed) % 4 {
         case 0:
             return SCNAction.sequence([
-                SCNAction.rotateBy(x: -0.6, y: 0, z: 0, duration: 0.15),
-                SCNAction.rotateBy(x: 0.6, y: 0, z: 0, duration: 0.1),
+                SCNAction.rotateBy(
+                    x: -0.6,
+                    y: 0,
+                    z: 0,
+                    duration: speedAdjustedDuration(0.15)
+                ),
+                SCNAction.rotateBy(
+                    x: 0.6,
+                    y: 0,
+                    z: 0,
+                    duration: speedAdjustedDuration(0.1)
+                ),
             ])
         case 1:
             return SCNAction.sequence([
-                SCNAction.rotateBy(x: 0, y: 0.4, z: 0, duration: 0.08),
-                SCNAction.rotateBy(x: 0, y: -0.4, z: 0, duration: 0.08),
+                SCNAction.rotateBy(
+                    x: 0,
+                    y: 0.4,
+                    z: 0,
+                    duration: speedAdjustedDuration(0.08)
+                ),
+                SCNAction.rotateBy(
+                    x: 0,
+                    y: -0.4,
+                    z: 0,
+                    duration: speedAdjustedDuration(0.08)
+                ),
             ])
         case 2:
-            return SCNAction.rotateBy(x: 0, y: .pi * 2, z: 0, duration: 0.4)
+            return SCNAction.rotateBy(
+                x: 0,
+                y: .pi * 2,
+                z: 0,
+                duration: speedAdjustedDuration(0.4)
+            )
         default:
             return SCNAction.sequence([
-                SCNAction.moveBy(x: 0, y: 2, z: 0, duration: 0.15),
-                SCNAction.moveBy(x: 0, y: -2, z: 0, duration: 0.2),
+                SCNAction.moveBy(
+                    x: 0,
+                    y: 2,
+                    z: 0,
+                    duration: speedAdjustedDuration(0.15)
+                ),
+                SCNAction.moveBy(
+                    x: 0,
+                    y: -2,
+                    z: 0,
+                    duration: speedAdjustedDuration(0.2)
+                ),
             ])
         }
     }
 
     private func makeImpactShakeAction() -> SCNAction {
         SCNAction.sequence([
-            SCNAction.moveBy(x: 0.2, y: 0, z: 0, duration: 0.05),
-            SCNAction.moveBy(x: -0.4, y: 0, z: 0, duration: 0.05),
-            SCNAction.moveBy(x: 0.2, y: 0, z: 0, duration: 0.05),
+            SCNAction.moveBy(
+                x: 0.2,
+                y: 0,
+                z: 0,
+                duration: speedAdjustedDuration(0.05)
+            ),
+            SCNAction.moveBy(
+                x: -0.4,
+                y: 0,
+                z: 0,
+                duration: speedAdjustedDuration(0.05)
+            ),
+            SCNAction.moveBy(
+                x: 0.2,
+                y: 0,
+                z: 0,
+                duration: speedAdjustedDuration(0.05)
+            ),
         ])
     }
 
     private func makeIdleBounceAction() -> SCNAction {
         SCNAction.repeatForever(
             SCNAction.sequence([
-                SCNAction.moveBy(x: 0, y: 0.1, z: 0, duration: 0.8),
-                SCNAction.moveBy(x: 0, y: -0.1, z: 0, duration: 0.8),
+                SCNAction.moveBy(
+                    x: 0,
+                    y: 0.1,
+                    z: 0,
+                    duration: speedAdjustedDuration(0.8)
+                ),
+                SCNAction.moveBy(
+                    x: 0,
+                    y: -0.1,
+                    z: 0,
+                    duration: speedAdjustedDuration(0.8)
+                ),
             ])
         )
     }
@@ -664,8 +750,16 @@ final class BattleSceneCoordinator {
 
         root.runAction(
             SCNAction.sequence([
-                SCNAction.rotateBy(x: 0, y: 0, z: .pi / 2, duration: 0.3),
-                SCNAction.fadeOpacity(to: 0, duration: 0.4),
+                SCNAction.rotateBy(
+                    x: 0,
+                    y: 0,
+                    z: .pi / 2,
+                    duration: speedAdjustedDuration(0.3)
+                ),
+                SCNAction.fadeOpacity(
+                    to: 0,
+                    duration: speedAdjustedDuration(0.4)
+                ),
             ]),
             forKey: "death"
         )
@@ -711,7 +805,11 @@ final class BattleSceneCoordinator {
         scene.rootNode.addChildNode(node)
         node.runAction(
             SCNAction.sequence([
-                SCNAction.wait(duration: definition.resolvedCleanupDelay),
+                SCNAction.wait(
+                    duration: speedAdjustedDuration(
+                        definition.resolvedCleanupDelay
+                    )
+                ),
                 SCNAction.removeFromParentNode(),
             ])
         )
@@ -924,10 +1022,14 @@ final class BattleSceneCoordinator {
         let particles = SCNParticleSystem()
         particles.loops = false
         particles.birthRate = definition.resolvedBirthRate * birthRateMultiplier
-        particles.emissionDuration = definition.resolvedEmissionDuration
-        particles.particleLifeSpan = definition.resolvedLifeSpan
+        particles.emissionDuration = speedAdjustedDuration(
+            definition.resolvedEmissionDuration
+        )
+        particles.particleLifeSpan = speedAdjustedDuration(
+            definition.resolvedLifeSpan
+        )
         particles.particleLifeSpanVariation =
-            definition.resolvedLifeSpanVariation
+            speedAdjustedDuration(definition.resolvedLifeSpanVariation)
         particles.particleSize = definition.resolvedSize * sizeMultiplier
         particles.particleSizeVariation = definition.resolvedSizeVariation
         particles.particleVelocity =
@@ -964,11 +1066,13 @@ final class BattleSceneCoordinator {
         particles.birthRate = definition.resolvedBirthRate * birthRateMultiplier
         particles.emissionDuration = max(
             0.05,
-            definition.resolvedEmissionDuration * 0.75
+            speedAdjustedDuration(definition.resolvedEmissionDuration * 0.75)
         )
-        particles.particleLifeSpan = definition.resolvedLifeSpan * 1.15
+        particles.particleLifeSpan = speedAdjustedDuration(
+            definition.resolvedLifeSpan * 1.15
+        )
         particles.particleLifeSpanVariation =
-            definition.resolvedLifeSpanVariation * 0.5
+            speedAdjustedDuration(definition.resolvedLifeSpanVariation * 0.5)
         particles.particleSize = definition.resolvedSize * sizeMultiplier
         particles.particleSizeVariation = definition.resolvedSizeVariation * 0.3
         particles.particleVelocity =
@@ -1024,14 +1128,20 @@ final class BattleSceneCoordinator {
         node.runAction(
             SCNAction.sequence([
                 SCNAction.group([
-                    SCNAction.fadeOpacity(to: 0.95, duration: 0.05),
-                    SCNAction.scale(to: 1.0, duration: 0.10),
+                    SCNAction.fadeOpacity(
+                        to: 0.95,
+                        duration: speedAdjustedDuration(0.05)
+                    ),
+                    SCNAction.scale(
+                        to: 1.0,
+                        duration: speedAdjustedDuration(0.10)
+                    ),
                 ]),
                 SCNAction.group([
-                    SCNAction.fadeOut(duration: 0.20),
+                    SCNAction.fadeOut(duration: speedAdjustedDuration(0.20)),
                     SCNAction.scale(
                         to: effect.lowercased() == "storm" ? 1.35 : 1.55,
-                        duration: 0.20
+                        duration: speedAdjustedDuration(0.20)
                     ),
                 ]),
                 SCNAction.removeFromParentNode(),
@@ -1534,4 +1644,3 @@ final class BattleSceneCoordinator {
             ?? RemoteContentManager.cachedOrBundledImage(named: textureName)
     }
 }
-

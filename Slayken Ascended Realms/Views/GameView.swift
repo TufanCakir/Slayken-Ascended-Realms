@@ -52,10 +52,8 @@ struct GameView: View {
     @State private var selectedTab: GameTab = .game
     @State private var resourceRefreshDate = Date()
     @State private var battleResourceMessage = ""
-    @State private var showNavigationSpinner = false
-    @State private var navigationSpinnerRotation = false
-    @State private var navigationSpinnerTask: Task<Void, Never>?
     @State private var pendingBattleStartTask: Task<Void, Never>?
+    @State private var pendingBattleArrivalID: String?
     @State private var showMultiplayerLobby = false
 
     private enum ModalTabDestination {
@@ -106,7 +104,10 @@ struct GameView: View {
                     joystickVector: joystickVector,
                     autoMoveTarget: autoMoveTarget,
                     groundTexture: gameState.activeGroundTexture,
-                    skyboxTexture: gameState.activeSkyboxTexture
+                    skyboxTexture: gameState.activeSkyboxTexture,
+                    onAutoMoveFinished: {
+                        handleAutoMoveFinished()
+                    }
                 )
                 .id(gameState.player.model)
                 .ignoresSafeArea()
@@ -171,15 +172,12 @@ struct GameView: View {
                         maxEnergy: battleResourceStatus.energyMaximum,
                         horizontalPadding: horizontalOverlayPadding,
                         onOpenShop: {
-                            triggerNavigationSpinner()
                             showShop = true
                         },
                         onOpenQuests: {
-                            triggerNavigationSpinner()
                             showQuests = true
                         },
                         onOpenCoop: {
-                            triggerNavigationSpinner()
                             multiplayerManager.ensureLocalLobbyState()
                             showMultiplayerLobby = true
                         }
@@ -229,52 +227,40 @@ struct GameView: View {
                 GameMiddleDrawerView(
                     selectedTab: $selectedTab,
                     onTheme: {
-                        triggerNavigationSpinner()
                         activeSelectionSheet = .theme
                     },
                     onSupport: {
-                        triggerNavigationSpinner()
                         showSupport = true
                     },
                     onNews: {
-                        triggerNavigationSpinner()
                         showNews = true
                     },
                     onCreateClass: {
-                        triggerNavigationSpinner()
                         showCreateClass = true
                     },
                     onShop: {
-                        triggerNavigationSpinner()
                         showShop = true
                     },
                     onQuests: {
-                        triggerNavigationSpinner()
                         showQuests = true
                     },
                     onArchive: {
-                        triggerNavigationSpinner()
                         showStoryArchive = true
                     },
                     onEventArchive: {
-                        triggerNavigationSpinner()
                         showEventArchive = true
                     },
                     onTutorialArchive: {
-                        triggerNavigationSpinner()
                         onOpenTutorialArchive()
                     },
                     onGift: {
-                        triggerNavigationSpinner()
                         showGift = true
                     },
                     onDailyLogin: {
-                        triggerNavigationSpinner()
                         activeLoginCampaignID = preferredLoginCampaignID
                         showDailyLogin = true
                     },
                     onSettings: {
-                        triggerNavigationSpinner()
                         showSettings = true
                     },
                     trailingPadding: horizontalOverlayPadding
@@ -284,11 +270,14 @@ struct GameView: View {
 
             }
             .overlay(alignment: .bottomTrailing) {
-                if showNavigationSpinner {
-                    navigationSpinner
-                        .padding(.trailing, 22)
-                        .padding(.bottom, 118)
-                        .transition(.scale.combined(with: .opacity))
+                if remoteContent.isBackgroundPreloading {
+                    BackgroundPreloadIndicatorView(
+                        progress: remoteContent.backgroundPreloadProgress,
+                        statusText: remoteContent.backgroundStatusText
+                    )
+                    .padding(.trailing, 22)
+                    .padding(.bottom, 118)
+                    .transition(.scale.combined(with: .opacity))
                 }
             }
             .sheet(item: $activeSelectionSheet) { selection in
@@ -582,16 +571,12 @@ struct GameView: View {
             }
             .onChange(of: selectedTab) { _, newTab in
                 if newTab == .events {
-                    triggerNavigationSpinner()
                     showGlobeEvents = true
                 } else if newTab == .character {
-                    triggerNavigationSpinner()
                     showCharacter = true
                 } else if newTab == .summon {
-                    triggerNavigationSpinner()
                     showSummon = true
                 } else if newTab == .shop {
-                    triggerNavigationSpinner()
                     showShop = true
                 } else {
                     if showGlobeEvents {
@@ -615,7 +600,6 @@ struct GameView: View {
                 }
             }
             .onDisappear {
-                navigationSpinnerTask?.cancel()
                 pendingBattleStartTask?.cancel()
             }
             .onChange(of: multiplayerManager.lobbyState) { _, newValue in
@@ -661,66 +645,9 @@ struct GameView: View {
     }
 
     private func closeGlobeAndOpen(_ selection: ActiveSelectionSheet) {
-        triggerNavigationSpinner()
         showGlobeEvents = false
         selectedTab = .game
         activeSelectionSheet = selection
-    }
-
-    private var navigationSpinner: some View {
-        ZStack {
-            Circle()
-                .stroke(Color.black.opacity(0.28), lineWidth: 7)
-                .frame(width: 54, height: 54)
-
-            Circle()
-                .trim(from: 0.08, to: 0.74)
-                .stroke(
-                    AngularGradient(
-                        colors: [
-                            Color(red: 0.12, green: 0.78, blue: 1.0),
-                            Color(red: 0.15, green: 0.42, blue: 1.0),
-                            .white,
-                            Color(red: 0.12, green: 0.78, blue: 1.0),
-                        ],
-                        center: .center
-                    ),
-                    style: StrokeStyle(lineWidth: 6, lineCap: .round)
-                )
-                .frame(width: 54, height: 54)
-                .rotationEffect(.degrees(navigationSpinnerRotation ? 360 : 0))
-        }
-        .padding(10)
-        .background(Color.black.opacity(0.44))
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .shadow(color: .black.opacity(0.24), radius: 10, y: 6)
-        .allowsHitTesting(false)
-        .onAppear {
-            withAnimation(
-                .linear(duration: 0.9).repeatForever(autoreverses: false)
-            ) {
-                navigationSpinnerRotation = true
-            }
-        }
-    }
-
-    private func triggerNavigationSpinner(
-        duration: Duration = .milliseconds(650)
-    ) {
-        navigationSpinnerTask?.cancel()
-        navigationSpinnerRotation = false
-
-        withAnimation(.easeInOut(duration: 0.18)) {
-            showNavigationSpinner = true
-        }
-
-        navigationSpinnerTask = Task { @MainActor in
-            try? await Task.sleep(for: duration)
-            guard !Task.isCancelled else { return }
-            withAnimation(.easeInOut(duration: 0.2)) {
-                showNavigationSpinner = false
-            }
-        }
     }
 
     private var availableDailyReward: DailyLoginRewardState? {
@@ -884,7 +811,7 @@ struct GameView: View {
             let point = gameState.activeEventPoint,
             point.visibleBattles(
                 completedBattleIDs: completedBattleIDs,
-                revealsSequentially: !chapter.isEventChapter
+                revealsSequentially: true
             )
             .contains(where: {
                 $0.id == gameState.activeEventBattleID
@@ -900,18 +827,26 @@ struct GameView: View {
 
     private func moveToBattleAndStart(_ battle: GlobeBattle) {
         pendingBattleStartTask?.cancel()
-        pendingBattleStartTask = Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(150))
-            guard !Task.isCancelled else { return }
-            autoMoveTarget = sceneTarget(for: battle.node)
-            gameState.selectBattle(battle)
+        pendingBattleStartTask = nil
+        pendingBattleArrivalID = battle.id
+        autoMoveTarget = sceneTarget(for: battle.node)
+        gameState.selectBattle(battle)
+    }
 
-            try? await Task.sleep(for: .milliseconds(1_350))
-            guard !Task.isCancelled else { return }
+    private func handleAutoMoveFinished() {
+        guard
+            let pendingBattleArrivalID,
+            let battle = gameState.selectedBattle,
+            battle.id == pendingBattleArrivalID
+        else {
             autoMoveTarget = nil
-            guard gameState.selectedBattle?.id == battle.id else { return }
-            presentBattleIntro(battle)
+            self.pendingBattleArrivalID = nil
+            return
         }
+
+        autoMoveTarget = nil
+        self.pendingBattleArrivalID = nil
+        presentBattleIntro(battle)
     }
 
     private func sceneTarget(for node: EventMapNodePosition) -> SIMD2<Float> {

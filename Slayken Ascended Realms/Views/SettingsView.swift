@@ -385,8 +385,7 @@ struct SettingsView: View {
         for progress in skillNodeProgressRecords {
             modelContext.delete(progress)
         }
-        for progress in dailyLoginProgressRecords
-        where !shouldPreserveLoginProgress(progress) {
+        for progress in dailyLoginProgressRecords {
             modelContext.delete(progress)
         }
         for gift in claimedGifts {
@@ -412,18 +411,17 @@ struct SettingsView: View {
         }
 
         try? modelContext.save()
+        resetPersistedDefaults()
+        theme.loadSelected()
+        musicManager.resetSettings()
         gameState.resetGameData()
         onReset()
     }
 
-    private func shouldPreserveLoginProgress(
-        _ progress: PlayerDailyLoginProgress
-    )
-        -> Bool
-    {
-        guard progress.id != "daily_login" else { return false }
-        let rewards = loadDailyLoginRewardDefinitions(resource: progress.id)
-        guard !rewards.isEmpty else { return false }
-        return progress.totalClaims >= rewards.count
+    private func resetPersistedDefaults() {
+        let defaults = UserDefaults.standard
+        for key in defaults.dictionaryRepresentation().keys {
+            defaults.removeObject(forKey: key)
+        }
     }
 }

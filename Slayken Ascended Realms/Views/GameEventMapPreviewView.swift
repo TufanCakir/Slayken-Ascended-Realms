@@ -27,7 +27,7 @@ struct GameEventMapPreviewView: View {
     }
 
     private var revealsBattlesSequentially: Bool {
-        chapter?.isEventChapter != true
+        true
     }
 
     private var visibleBattles: [GlobeBattle] {
@@ -131,12 +131,15 @@ struct GameEventMapPreviewView: View {
                                         .id(battle.mapNodeID)
                                 }
                             } else if let chapter {
+                                let points = chapter.visiblePoints(
+                                    completedBattleIDs: completedBattleIDs
+                                )
                                 routeLayer(
-                                    nodes: chapter.points.map(\.node),
+                                    nodes: points.map(\.node),
                                     size: contentSize
                                 )
 
-                                ForEach(chapter.points) { point in
+                                ForEach(points) { point in
                                     pointDot(point)
                                         .position(
                                             mapPoint(

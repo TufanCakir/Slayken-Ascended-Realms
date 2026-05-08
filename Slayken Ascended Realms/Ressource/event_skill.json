@@ -30,7 +30,7 @@
                         "groundTexture": "bg_void",
                         "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.06,
+                            "x": 0.05,
                             "y": 0.86
                         },
                         "enemy": {
@@ -66,8 +66,8 @@
                         "groundTexture": "bg_void",
                         "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.14,
-                            "y": 0.81
+                            "x": 0.12,
+                            "y": 0.82
                         },
                         "enemy": {
                             "name": "Forge Spark II",
@@ -78,7 +78,7 @@
                             "hp": 270,
                             "attack": 15
                         },
-                        "xpReward": 260,
+                        "xpReward": 265,
                         "rewards": [
                             {
                                 "currency": "skill_points",
@@ -103,8 +103,8 @@
                         "groundTexture": "bg_ice",
                         "skyboxTexture": "bg_ice",
                         "node": {
-                            "x": 0.22,
-                            "y": 0.76
+                            "x": 0.19,
+                            "y": 0.78
                         },
                         "enemy": {
                             "name": "Rune Dust",
@@ -115,7 +115,7 @@
                             "hp": 295,
                             "attack": 16
                         },
-                        "xpReward": 260,
+                        "xpReward": 270,
                         "rewards": [
                             {
                                 "currency": "skill_points",
@@ -127,7 +127,7 @@
                             },
                             {
                                 "currency": "coins",
-                                "amount": 210
+                                "amount": 205
                             }
                         ]
                     },
@@ -139,8 +139,8 @@
                         "groundTexture": "bg_fire",
                         "skyboxTexture": "bg_fire",
                         "node": {
-                            "x": 0.30,
-                            "y": 0.71
+                            "x": 0.26,
+                            "y": 0.74
                         },
                         "enemy": {
                             "name": "Echo Node",
@@ -151,7 +151,7 @@
                             "hp": 320,
                             "attack": 17
                         },
-                        "xpReward": 260,
+                        "xpReward": 275,
                         "rewards": [
                             {
                                 "currency": "skill_points",
@@ -176,8 +176,8 @@
                         "groundTexture": "bg_country",
                         "skyboxTexture": "bg_country",
                         "node": {
-                            "x": 0.38,
-                            "y": 0.66
+                            "x": 0.33,
+                            "y": 0.69
                         },
                         "enemy": {
                             "name": "Glyph Trail",
@@ -188,7 +188,7 @@
                             "hp": 345,
                             "attack": 18
                         },
-                        "xpReward": 260,
+                        "xpReward": 280,
                         "rewards": [
                             {
                                 "currency": "skill_points",
@@ -216,8 +216,8 @@
                         "groundTexture": "bg_void",
                         "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.48,
-                            "y": 0.60
+                            "x": 0.40,
+                            "y": 0.64
                         },
                         "enemy": {
                             "name": "Mind Ember",
@@ -228,7 +228,7 @@
                             "hp": 370,
                             "attack": 20
                         },
-                        "xpReward": 260,
+                        "xpReward": 285,
                         "rewards": [
                             {
                                 "currency": "skill_points",
@@ -257,8 +257,8 @@
                         "groundTexture": "bg_ice",
                         "skyboxTexture": "bg_ice",
                         "node": {
-                            "x": 0.58,
-                            "y": 0.54
+                            "x": 0.47,
+                            "y": 0.59
                         },
                         "enemy": {
                             "name": "Agile Rift",
@@ -269,7 +269,7 @@
                             "hp": 395,
                             "attack": 21
                         },
-                        "xpReward": 260,
+                        "xpReward": 290,
                         "rewards": [
                             {
                                 "currency": "skill_points",
@@ -297,8 +297,8 @@
                         "groundTexture": "bg_fire",
                         "skyboxTexture": "bg_fire",
                         "node": {
-                            "x": 0.68,
-                            "y": 0.48
+                            "x": 0.54,
+                            "y": 0.54
                         },
                         "enemy": {
                             "name": "Fortune Gate",
@@ -309,7 +309,7 @@
                             "hp": 420,
                             "attack": 22
                         },
-                        "xpReward": 260,
+                        "xpReward": 295,
                         "rewards": [
                             {
                                 "currency": "skill_points",
@@ -341,8 +341,8 @@
                         "groundTexture": "bg_void",
                         "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.78,
-                            "y": 0.40
+                            "x": 0.61,
+                            "y": 0.49
                         },
                         "enemy": {
                             "name": "Master Trace",
@@ -353,7 +353,7 @@
                             "hp": 450,
                             "attack": 24
                         },
-                        "xpReward": 260,
+                        "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "skill_points",
@@ -375,17 +375,17 @@
                     },
                     {
                         "id": "event_skill_forge_battle_10",
-                        "name": "Core Forge",
-                        "description": "Das Zentrum der Skill-Schmiede.",
+                        "name": "Core Forge I",
+                        "description": "Der erste Kern pulsiert.",
                         "difficulty": 11,
                         "groundTexture": "bg_void",
                         "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.88,
-                            "y": 0.30
+                            "x": 0.68,
+                            "y": 0.44
                         },
-                        "boss": {
-                            "name": "Core Forge",
+                        "enemy": {
+                            "name": "Core Forge I",
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
@@ -414,6 +414,1632 @@
                             {
                                 "currency": "crystals",
                                 "amount": 25
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_11",
+                        "name": "Rune Gate II",
+                        "description": "Eine zweite Runenpforte fordert Fokus.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.75,
+                            "y": 0.39
+                        },
+                        "enemy": {
+                            "name": "Rune Gate II",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "element": "water",
+                            "hp": 650,
+                            "attack": 29
+                        },
+                        "xpReward": 325,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 52
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 7
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 4
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 26
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_12",
+                        "name": "Glyph Gate III",
+                        "description":
+                            "Glyphenketten halten die naechste Stufe.",
+                        "difficulty": 12,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.34
+                        },
+                        "enemy": {
+                            "name": "Glyph Gate III",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "element": "fire",
+                            "hp": 680,
+                            "attack": 30
+                        },
+                        "xpReward": 330,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 54
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 5
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 2
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 27
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_13",
+                        "name": "Shard Gate IV",
+                        "description": "Scharfe Shards kreisen um den Pfad.",
+                        "difficulty": 12,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.89,
+                            "y": 0.29
+                        },
+                        "enemy": {
+                            "name": "Shard Gate IV",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "dark",
+                            "hp": 710,
+                            "attack": 31
+                        },
+                        "xpReward": 335,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 56
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 8
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 1
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 28
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_14",
+                        "name": "Forge Bend V",
+                        "description": "Der Pfad dreht sich in den Void.",
+                        "difficulty": 13,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.94,
+                            "y": 0.35
+                        },
+                        "enemy": {
+                            "name": "Forge Bend V",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "plant",
+                            "hp": 740,
+                            "attack": 32
+                        },
+                        "xpReward": 340,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 58
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 5
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 2
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 340
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_15",
+                        "name": "Forge Bend VI",
+                        "description": "Die Kurve prueft deine Ausdauer.",
+                        "difficulty": 13,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.88,
+                            "y": 0.42
+                        },
+                        "enemy": {
+                            "name": "Forge Bend VI",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "element": "storm",
+                            "hp": 770,
+                            "attack": 33
+                        },
+                        "xpReward": 345,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 60
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 8
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 6
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 360
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_16",
+                        "name": "Forge Bend VII",
+                        "description": "Ein Resonanzknoten laedt sich auf.",
+                        "difficulty": 14,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.81,
+                            "y": 0.48
+                        },
+                        "enemy": {
+                            "name": "Forge Bend VII",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "element": "fire",
+                            "hp": 800,
+                            "attack": 34
+                        },
+                        "xpReward": 350,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 62
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 3
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 1
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 30
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_17",
+                        "name": "Forge Bend VIII",
+                        "description": "Die Schmiede schliesst sich kurz.",
+                        "difficulty": 14,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.74,
+                            "y": 0.54
+                        },
+                        "enemy": {
+                            "name": "Forge Bend VIII",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "void",
+                            "hp": 830,
+                            "attack": 35
+                        },
+                        "xpReward": 355,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 64
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 9
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 6
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 31
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_18",
+                        "name": "Forge Bend IX",
+                        "description": "Alte Runen pruefen deine Deckwahl.",
+                        "difficulty": 15,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.67,
+                            "y": 0.60
+                        },
+                        "enemy": {
+                            "name": "Forge Bend IX",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "water",
+                            "hp": 860,
+                            "attack": 36
+                        },
+                        "xpReward": 360,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 66
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 7
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 3
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 380
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_19",
+                        "name": "Forge Bend X",
+                        "description": "Ein Shard-Tor flackert.",
+                        "difficulty": 15,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.60,
+                            "y": 0.66
+                        },
+                        "enemy": {
+                            "name": "Forge Bend X",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "element": "light",
+                            "hp": 890,
+                            "attack": 37
+                        },
+                        "xpReward": 365,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 68
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 9
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 1
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 32
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_20",
+                        "name": "Core Forge II",
+                        "description": "Der zweite Kern verteidigt den Pfad.",
+                        "difficulty": 16,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.53,
+                            "y": 0.72
+                        },
+                        "enemy": {
+                            "name": "Core Forge II",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "element": "dark",
+                            "hp": 940,
+                            "attack": 39
+                        },
+                        "xpReward": 385,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 80
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 8
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 4
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 2
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 35
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_21",
+                        "name": "Ascend Spark I",
+                        "description": "Der zweite Ring beginnt.",
+                        "difficulty": 16,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.46,
+                            "y": 0.76
+                        },
+                        "enemy": {
+                            "name": "Ascend Spark I",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "fire",
+                            "hp": 970,
+                            "attack": 40
+                        },
+                        "xpReward": 390,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 82
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 10
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 8
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 420
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_22",
+                        "name": "Ascend Spark II",
+                        "description": "Mehr Energie sammelt sich im Kreis.",
+                        "difficulty": 17,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.39,
+                            "y": 0.70
+                        },
+                        "enemy": {
+                            "name": "Ascend Spark II",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "water",
+                            "hp": 1000,
+                            "attack": 41
+                        },
+                        "xpReward": 395,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 84
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 8
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 4
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 36
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_23",
+                        "name": "Ascend Spark III",
+                        "description": "Der Riss zieht Mana an.",
+                        "difficulty": 17,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.32,
+                            "y": 0.64
+                        },
+                        "enemy": {
+                            "name": "Ascend Spark III",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "element": "storm",
+                            "hp": 1030,
+                            "attack": 42
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 86
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 11
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 2
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 440
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_24",
+                        "name": "Ascend Spark IV",
+                        "description": "Das Feld wird instabil.",
+                        "difficulty": 18,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.25,
+                            "y": 0.58
+                        },
+                        "enemy": {
+                            "name": "Ascend Spark IV",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "element": "plant",
+                            "hp": 1060,
+                            "attack": 43
+                        },
+                        "xpReward": 405,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 88
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 9
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 5
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 38
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_25",
+                        "name": "Ascend Spark V",
+                        "description": "Die Mitte ruft nach staerkerer Kraft.",
+                        "difficulty": 18,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.52
+                        },
+                        "enemy": {
+                            "name": "Ascend Spark V",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "light",
+                            "hp": 1090,
+                            "attack": 44
+                        },
+                        "xpReward": 410,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 90
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 11
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 9
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 460
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_26",
+                        "name": "Ascend Spark VI",
+                        "description": "Ein Kernsplitter bricht auf.",
+                        "difficulty": 19,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.11,
+                            "y": 0.46
+                        },
+                        "enemy": {
+                            "name": "Ascend Spark VI",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "void",
+                            "hp": 1120,
+                            "attack": 45
+                        },
+                        "xpReward": 415,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 92
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 5
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 2
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 40
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_27",
+                        "name": "Ascend Spark VII",
+                        "description": "Der Pfad kehrt Richtung Zentrum.",
+                        "difficulty": 19,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.06,
+                            "y": 0.40
+                        },
+                        "enemy": {
+                            "name": "Ascend Spark VII",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "element": "water",
+                            "hp": 1150,
+                            "attack": 46
+                        },
+                        "xpReward": 420,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 94
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 12
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 10
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 480
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_28",
+                        "name": "Ascend Spark VIII",
+                        "description": "Ein Sturmknoten blockiert den Bogen.",
+                        "difficulty": 20,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.13,
+                            "y": 0.34
+                        },
+                        "enemy": {
+                            "name": "Ascend Spark VIII",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "element": "storm",
+                            "hp": 1180,
+                            "attack": 47
+                        },
+                        "xpReward": 425,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 96
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 10
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 5
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 42
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_29",
+                        "name": "Ascend Spark IX",
+                        "description": "Die Shards singen leise.",
+                        "difficulty": 20,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.20,
+                            "y": 0.28
+                        },
+                        "enemy": {
+                            "name": "Ascend Spark IX",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "dark",
+                            "hp": 1210,
+                            "attack": 48
+                        },
+                        "xpReward": 430,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 98
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 12
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 2
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 500
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_30",
+                        "name": "Core Forge III",
+                        "description": "Der dritte Kern ist erwacht.",
+                        "difficulty": 21,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.27,
+                            "y": 0.22
+                        },
+                        "enemy": {
+                            "name": "Core Forge III",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "void",
+                            "hp": 1260,
+                            "attack": 50
+                        },
+                        "xpReward": 455,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 115
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 12
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 6
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 3
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 48
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_31",
+                        "name": "Prime Ring I",
+                        "description": "Der finale Ring beginnt.",
+                        "difficulty": 21,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.34,
+                            "y": 0.18
+                        },
+                        "enemy": {
+                            "name": "Prime Ring I",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "element": "fire",
+                            "hp": 1300,
+                            "attack": 51
+                        },
+                        "xpReward": 460,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 118
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 13
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 12
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 540
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_32",
+                        "name": "Prime Ring II",
+                        "description": "Kernstaub sammelt sich am Rand.",
+                        "difficulty": 22,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.41,
+                            "y": 0.24
+                        },
+                        "enemy": {
+                            "name": "Prime Ring II",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "element": "water",
+                            "hp": 1340,
+                            "attack": 52
+                        },
+                        "xpReward": 465,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 121
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 6
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 3
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 50
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_33",
+                        "name": "Prime Ring III",
+                        "description": "Der Ring zieht sich zusammen.",
+                        "difficulty": 22,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.48,
+                            "y": 0.30
+                        },
+                        "enemy": {
+                            "name": "Prime Ring III",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "void",
+                            "hp": 1380,
+                            "attack": 53
+                        },
+                        "xpReward": 470,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 124
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 14
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 13
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 560
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_34",
+                        "name": "Prime Ring IV",
+                        "description": "Alte Glyphen pruefen deine Kraft.",
+                        "difficulty": 23,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.55,
+                            "y": 0.36
+                        },
+                        "enemy": {
+                            "name": "Prime Ring IV",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "plant",
+                            "hp": 1420,
+                            "attack": 54
+                        },
+                        "xpReward": 475,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 127
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 13
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 7
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 52
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_35",
+                        "name": "Prime Ring V",
+                        "description": "Ein Lichtknoten brennt hell.",
+                        "difficulty": 23,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.62,
+                            "y": 0.42
+                        },
+                        "enemy": {
+                            "name": "Prime Ring V",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "element": "light",
+                            "hp": 1460,
+                            "attack": 55
+                        },
+                        "xpReward": 480,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 130
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 14
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 3
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 580
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_36",
+                        "name": "Prime Ring VI",
+                        "description": "Der Druck der Schmiede steigt.",
+                        "difficulty": 24,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.69,
+                            "y": 0.48
+                        },
+                        "enemy": {
+                            "name": "Prime Ring VI",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "element": "dark",
+                            "hp": 1500,
+                            "attack": 56
+                        },
+                        "xpReward": 485,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 133
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 14
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 7
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 54
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_37",
+                        "name": "Prime Ring VII",
+                        "description": "Ein Wasserriss kuehlt den Kern.",
+                        "difficulty": 24,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.76,
+                            "y": 0.54
+                        },
+                        "enemy": {
+                            "name": "Prime Ring VII",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "water",
+                            "hp": 1540,
+                            "attack": 57
+                        },
+                        "xpReward": 490,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 136
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 15
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 14
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 600
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_38",
+                        "name": "Prime Ring VIII",
+                        "description": "Sturmkraft schuetzt den Ring.",
+                        "difficulty": 25,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.83,
+                            "y": 0.60
+                        },
+                        "enemy": {
+                            "name": "Prime Ring VIII",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "storm",
+                            "hp": 1580,
+                            "attack": 58
+                        },
+                        "xpReward": 495,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 139
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 8
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 4
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 56
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_39",
+                        "name": "Prime Ring IX",
+                        "description": "Der letzte Aussenknoten leuchtet.",
+                        "difficulty": 25,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.90,
+                            "y": 0.66
+                        },
+                        "enemy": {
+                            "name": "Prime Ring IX",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "element": "plant",
+                            "hp": 1620,
+                            "attack": 59
+                        },
+                        "xpReward": 500,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 142
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 15
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 15
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 620
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_40",
+                        "name": "Core Forge IV",
+                        "description":
+                            "Der vierte Kern laesst die Karte beben.",
+                        "difficulty": 26,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.95,
+                            "y": 0.72
+                        },
+                        "enemy": {
+                            "name": "Core Forge IV",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "element": "void",
+                            "hp": 1700,
+                            "attack": 62
+                        },
+                        "xpReward": 540,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 165
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 16
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 9
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 4
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 64
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_41",
+                        "name": "Elder Forge I",
+                        "description": "Die aelteste Schmiede oeffnet sich.",
+                        "difficulty": 26,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.88,
+                            "y": 0.78
+                        },
+                        "enemy": {
+                            "name": "Elder Forge I",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "fire",
+                            "hp": 1760,
+                            "attack": 63
+                        },
+                        "xpReward": 550,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 170
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 16
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 16
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 660
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_42",
+                        "name": "Elder Forge II",
+                        "description": "Runenadern leiten dich weiter.",
+                        "difficulty": 27,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.81,
+                            "y": 0.82
+                        },
+                        "enemy": {
+                            "name": "Elder Forge II",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "water",
+                            "hp": 1820,
+                            "attack": 64
+                        },
+                        "xpReward": 560,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 175
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 9
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 4
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 68
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_43",
+                        "name": "Elder Forge III",
+                        "description": "Voidfunken stoeren den Pfad.",
+                        "difficulty": 27,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.74,
+                            "y": 0.86
+                        },
+                        "enemy": {
+                            "name": "Elder Forge III",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "element": "void",
+                            "hp": 1880,
+                            "attack": 65
+                        },
+                        "xpReward": 570,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 180
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 17
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 17
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 700
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_44",
+                        "name": "Elder Forge IV",
+                        "description": "Ein Kernzirkel verteidigt den Eingang.",
+                        "difficulty": 28,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.67,
+                            "y": 0.80
+                        },
+                        "enemy": {
+                            "name": "Elder Forge IV",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "element": "plant",
+                            "hp": 1940,
+                            "attack": 66
+                        },
+                        "xpReward": 580,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 185
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 18
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 10
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 72
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_45",
+                        "name": "Elder Forge V",
+                        "description":
+                            "Die naechste Pforte braucht volle Kontrolle.",
+                        "difficulty": 28,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.60,
+                            "y": 0.74
+                        },
+                        "enemy": {
+                            "name": "Elder Forge V",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "light",
+                            "hp": 2000,
+                            "attack": 67
+                        },
+                        "xpReward": 590,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 190
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 18
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 5
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 740
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_46",
+                        "name": "Elder Forge VI",
+                        "description":
+                            "Die Schmiede prueft deine letzte Reserve.",
+                        "difficulty": 29,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.53,
+                            "y": 0.68
+                        },
+                        "enemy": {
+                            "name": "Elder Forge VI",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "dark",
+                            "hp": 2060,
+                            "attack": 68
+                        },
+                        "xpReward": 600,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 195
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 11
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 5
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 76
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_47",
+                        "name": "Elder Forge VII",
+                        "description": "Der Kern atmet in langen Wellen.",
+                        "difficulty": 29,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.46,
+                            "y": 0.62
+                        },
+                        "enemy": {
+                            "name": "Elder Forge VII",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "element": "water",
+                            "hp": 2120,
+                            "attack": 69
+                        },
+                        "xpReward": 610,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 200
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 19
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 19
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 780
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_48",
+                        "name": "Elder Forge VIII",
+                        "description":
+                            "Der letzte Shard-Waechter steht bereit.",
+                        "difficulty": 30,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.39,
+                            "y": 0.56
+                        },
+                        "enemy": {
+                            "name": "Elder Forge VIII",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "element": "storm",
+                            "hp": 2180,
+                            "attack": 70
+                        },
+                        "xpReward": 620,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 205
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 20
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 12
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 80
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_49",
+                        "name": "Elder Forge IX",
+                        "description": "Nur ein Knoten bleibt vor dem Zentrum.",
+                        "difficulty": 30,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.32,
+                            "y": 0.50
+                        },
+                        "enemy": {
+                            "name": "Elder Forge IX",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "void",
+                            "hp": 2240,
+                            "attack": 72
+                        },
+                        "xpReward": 640,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 215
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 20
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 6
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 820
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_50",
+                        "name": "Core Forge Omega",
+                        "description":
+                            "Das Herz der Skill-Schmiede. Schaffe diesen Kampf, um den ganzen Pfad zu meistern.",
+                        "difficulty": 32,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.25,
+                            "y": 0.44
+                        },
+                        "boss": {
+                            "name": "Core Forge Omega",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "void",
+                            "hp": 2600,
+                            "attack": 78
+                        },
+                        "xpReward": 760,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 260
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 24
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 24
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 14
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 8
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 100
                             }
                         ],
                         "cardRewards": [

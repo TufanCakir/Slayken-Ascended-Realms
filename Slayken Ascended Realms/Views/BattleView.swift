@@ -53,7 +53,8 @@ struct BattleView: View {
     @State private var showVictory = false
     @State private var showDefeat = false
     @State private var isAuto = false
-    @State private var isFast = false
+    @AppStorage("battleAutoModeEnabled") private var savedAutoMode = false
+    @AppStorage("battleFastModeEnabled") private var isFast = false
     @State private var playerAttackID = 0
     @State private var allyAttackID = 0
     @State private var allyAttackerParticipantID: String?
@@ -73,10 +74,12 @@ struct BattleView: View {
     @State private var ascendedLevelBeforeVictory = 1
     @State private var ascendedLevelAfterVictory = 1
     @State private var autoTask: Task<Void, Never>?
+    @State private var turnTask: Task<Void, Never>?
     @State private var manaRegenTask: Task<Void, Never>?
     @State private var inspectedCard: AbilityCardDefinition?
     @State private var cardLongPressActive = false
     @State private var cardPressTask: Task<Void, Never>?
+    @State private var isResolvingTurn = false
 
     private var rewardCurrenciesForVictory: [CurrencyDefinition] {
         var definitionsByCode = [String: CurrencyDefinition]()
@@ -104,6 +107,8 @@ struct BattleView: View {
     private let turnManaGain: Double = 12
     private let manaRegenPerTick: Double = 2
     private let manaRegenTickMilliseconds = 450
+    private let actionFrameCommitMilliseconds = 16
+    private let actionCooldownTickMilliseconds = 40
 
     init(
         player: CharacterStats,
@@ -221,8 +226,44 @@ struct BattleView: View {
         return 70 + difficulty * 35 + battleEnemies.count * 20
     }
 
-    private var battleDelay: Double {
-        isFast ? 0.12 : 0.22
+    private var battleSpeedMultiplier: Double {
+        isFast ? 2.0 : 1.0
+    }
+
+    private func speedAdjustedMilliseconds(_ milliseconds: Int) -> Int {
+        max(1, Int((Double(milliseconds) / battleSpeedMultiplier).rounded()))
+    }
+
+    private func effectiveAttackSpeed(for fighter: CharacterStats) -> Double {
+        if let attackSpeed = fighter.attackSpeed, attackSpeed > 0 {
+            return attackSpeed
+        }
+
+        return max(0.35, min(Double(fighter.attack) / 300.0, 2.5))
+    }
+
+    @MainActor
+    private func waitForActionCooldown(
+        for fighter: CharacterStats,
+        baseDuration: Double
+    ) async -> Bool {
+        var progress = 0.0
+        let tickSeconds = Double(actionCooldownTickMilliseconds) / 1_000
+        let normalizedBaseDuration = max(0.05, baseDuration)
+
+        while progress < 1 {
+            try? await Task.sleep(
+                for: .milliseconds(actionCooldownTickMilliseconds)
+            )
+            guard !Task.isCancelled else { return false }
+
+            let currentSpeed =
+                effectiveAttackSpeed(for: fighter)
+                * battleSpeedMultiplier
+            progress += tickSeconds * currentSpeed / normalizedBaseDuration
+        }
+
+        return true
     }
 
     var body: some View {
@@ -246,6 +287,7 @@ struct BattleView: View {
                     ?? gameState.activeGroundTexture,
                 skyboxTexture: raidConfiguration?.skyboxTexture
                     ?? gameState.activeSkyboxTexture,
+                battleSpeedMultiplier: battleSpeedMultiplier,
                 onSelectEnemy: { index in
                     selectEnemy(index)
                 }
@@ -326,7 +368,11 @@ struct BattleView: View {
             }
             playerMana = 60
             selectedEnemyIndex = 0
+            isAuto = savedAutoMode
             startManaRegen()
+            if savedAutoMode && currentTurn == .player {
+                startAutoAttack()
+            }
         }
         .onChange(of: isFast) {
             if isAuto {
@@ -334,7 +380,7 @@ struct BattleView: View {
             }
         }
         .onChange(of: isAuto) { _, enabled in
-            if enabled && currentTurn == .player {
+            if enabled && currentTurn == .player && !isResolvingTurn {
                 startAutoAttack()
             } else if !enabled {
                 autoTask?.cancel()
@@ -349,7 +395,8 @@ struct BattleView: View {
             applyResolvedRaidBossAttackIfNeeded()
         }
         .onDisappear {
-            autoTask?.cancel()
+            stopAutoAttack()
+            turnTask?.cancel()
             manaRegenTask?.cancel()
             cardPressTask?.cancel()
         }
@@ -361,42 +408,43 @@ struct BattleView: View {
                 .padding(.horizontal, 14)
                 .padding(.top, 14)
 
-            HStack(alignment: .top, spacing: 0) {
-                VStack(alignment: .leading, spacing: 8) {
+            ZStack(alignment: .top) {
+                VStack(spacing: 8) {
                     enemyHPPanel
                     if raidConfiguration != nil, isLocalRaidTargeted {
                         raidTargetWarning
                     }
                     targetStrip
                 }
-                .padding(.leading, 14)
                 .padding(.top, 16)
+                .frame(maxWidth: .infinity)
 
-                Spacer()
+                HStack(alignment: .top, spacing: 0) {
+                    Spacer()
 
-                VStack(alignment: .trailing, spacing: 10) {
-                    cardRail
+                    VStack(alignment: .trailing, spacing: 10) {
+                        cardRail
 
-                    if raidConfiguration != nil {
-                        raidPartyPanel
+                        if raidConfiguration != nil {
+                            raidPartyPanel
+                        }
                     }
+                    .padding(.trailing, 14)
+                    .padding(.top, 16)
                 }
-                .padding()
             }
 
             Spacer()
 
-            HStack(alignment: .bottom) {
+            VStack(spacing: 10) {
                 playerHPPanel
-                    .padding(.leading, 16)
-                    .padding(.bottom, 18)
-
-                Spacer()
+                    .frame(maxWidth: .infinity, alignment: .center)
 
                 bottomControls
-                    .padding(.trailing, 18)
-                    .padding(.bottom, 20)
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 20)
         }
         .foregroundStyle(.white)
     }
@@ -413,25 +461,6 @@ struct BattleView: View {
             }
 
             Spacer()
-
-            Button {
-                isFast.toggle()
-            } label: {
-                Image(
-                    systemName: isFast
-                        ? "gauge.with.dots.needle.67percent"
-                        : "gauge.with.dots.needle.33percent"
-                )
-                .font(.system(size: 16, weight: .black))
-                .frame(width: 38, height: 30)
-                .background(
-                    isFast
-                        ? Color.orange.opacity(0.86)
-                        : Color.black.opacity(0.58),
-                    in: Capsule()
-                )
-            }
-            .buttonStyle(.plain)
 
             Button {
                 onExit()
@@ -484,7 +513,7 @@ struct BattleView: View {
             value: enemyHPs.indices.contains(safeSelectedEnemyIndex)
                 ? enemyHPs[safeSelectedEnemyIndex] : 0,
             maximumHP: currentEnemy.hp,
-            width: 250
+            width: 200
         )
     }
 
@@ -502,7 +531,7 @@ struct BattleView: View {
                 title: player.name.uppercased(),
                 value: playerHP,
                 maximumHP: displayedPlayerMaxHP,
-                width: 220
+                width: 200
             )
 
             HStack(spacing: 8) {
@@ -932,7 +961,7 @@ struct BattleView: View {
             .buttonStyle(.plain)
 
             Button {
-                isAuto.toggle()
+                setAutoMode(!isAuto)
             } label: {
                 VStack(spacing: 2) {
                     Image(systemName: isAuto ? "pause.fill" : "play.fill")
@@ -944,6 +973,24 @@ struct BattleView: View {
                 .background(
                     isAuto
                         ? Color.green.opacity(0.75) : Color.black.opacity(0.58),
+                    in: RoundedRectangle(cornerRadius: 6, style: .continuous)
+                )
+            }
+            .buttonStyle(.plain)
+
+            Button {
+                isFast.toggle()
+            } label: {
+                VStack(spacing: 2) {
+                    Image(systemName: isFast ? "forward.fill" : "forward")
+                        .font(.system(size: 15, weight: .black))
+                    Text(isFast ? "2X" : "1X")
+                        .font(.system(size: 7, weight: .black))
+                }
+                .frame(width: 58, height: 42)
+                .background(
+                    isFast
+                        ? Color.cyan.opacity(0.75) : Color.black.opacity(0.58),
                     in: RoundedRectangle(cornerRadius: 6, style: .continuous)
                 )
             }
@@ -1138,6 +1185,9 @@ struct BattleView: View {
         playerMana = 60
         selectedEnemyIndex = 0
         currentTurn = .player
+        turnTask?.cancel()
+        turnTask = nil
+        isResolvingTurn = false
         currentParticleTargetIndices = []
         currentParticleEffect = nil
         attackingEnemyIndex = nil
@@ -1150,6 +1200,7 @@ struct BattleView: View {
     private func returnHomeFromDefeat() {
         isAuto = false
         autoTask?.cancel()
+        turnTask?.cancel()
         manaRegenTask?.cancel()
         attackingEnemyIndex = nil
         showDefeat = false
@@ -1242,7 +1293,9 @@ struct BattleView: View {
                         * max(0.1, 1 + skillBonuses.manaRegenPercent)
                 )
                 try? await Task.sleep(
-                    for: .milliseconds(manaRegenTickMilliseconds)
+                    for: .milliseconds(
+                        speedAdjustedMilliseconds(manaRegenTickMilliseconds)
+                    )
                 )
             }
         }
@@ -1267,34 +1320,45 @@ struct BattleView: View {
             texture: base.texture,
             element: base.element,
             hp: base.hp * CGFloat(waveScale * bossScale),
-            attack: base.attack * CGFloat(pow(1.05, Double(index)) * bossScale)
+            attack: base.attack * CGFloat(pow(1.05, Double(index)) * bossScale),
+            attackSpeed: base.attackSpeed
         )
     }
 
     private func startAutoAttack() {
-        autoTask?.cancel()
+        stopAutoAttack()
+        guard isAuto else { return }
+
         autoTask = Task { @MainActor in
             while !Task.isCancelled {
                 if !isAuto || showVictory || showDefeat { return }
-                if currentTurn == .player {
+                if currentTurn == .player && !isResolvingTurn {
                     attack(
                         with: activeCards.first {
                             playerMana >= Double($0.resolvedManaCost)
                         }
                     )
                 }
-                try? await Task.sleep(for: .milliseconds(isFast ? 120 : 260))
+                guard
+                    await waitForActionCooldown(
+                        for: leveledPlayer,
+                        baseDuration: 0.5
+                    )
+                else {
+                    return
+                }
             }
         }
     }
 
-    private func enemyAttack() {
-        guard currentTurn == .enemy else { return }
-        guard raidConfiguration == nil else { return }
-        currentParticleEffect = nil
-        Task { @MainActor in
-            await runEnemyTurn()
-        }
+    private func stopAutoAttack() {
+        autoTask?.cancel()
+        autoTask = nil
+    }
+
+    private func setAutoMode(_ enabled: Bool) {
+        isAuto = enabled
+        savedAutoMode = enabled
     }
 
     @MainActor
@@ -1317,7 +1381,12 @@ struct BattleView: View {
             attackingEnemyIndex = index
             enemyAttackID += 1
 
-            try? await Task.sleep(for: .milliseconds(isFast ? 60 : 120))
+            try? await Task.sleep(
+                for: .milliseconds(
+                    speedAdjustedMilliseconds(actionFrameCommitMilliseconds)
+                )
+            )
+            guard !Task.isCancelled else { return }
 
             let enemyDamage = activeEnemies[index].attack / leveledPlayer.hp
             let rawEnemyDamage = max(
@@ -1342,7 +1411,15 @@ struct BattleView: View {
                 return
             }
 
-            try? await Task.sleep(for: .milliseconds(isFast ? 70 : 140))
+            guard
+                await waitForActionCooldown(
+                    for: activeEnemies[index],
+                    baseDuration: 0.42
+                )
+            else {
+                return
+            }
+            attackingEnemyIndex = nil
         }
 
         attackingEnemyIndex = nil
@@ -1352,9 +1429,30 @@ struct BattleView: View {
 
     private func attack(with card: AbilityCardDefinition?) {
         guard currentTurn == .player else { return }
+        guard !isResolvingTurn else { return }
         guard !showVictory && !showDefeat else { return }
         guard !didTriggerTutorialRetreat else { return }
         guard multiplayerManager.raidCountdownRemaining == nil else { return }
+
+        turnTask?.cancel()
+        turnTask = Task { @MainActor in
+            await resolvePlayerTurn(with: card)
+        }
+    }
+
+    @MainActor
+    private func resolvePlayerTurn(with card: AbilityCardDefinition?) async {
+        guard currentTurn == .player else { return }
+        guard !isResolvingTurn else { return }
+        guard !showVictory && !showDefeat else { return }
+        guard !didTriggerTutorialRetreat else { return }
+
+        let targetIndex = safeSelectedEnemyIndex
+        guard enemyHPs.indices.contains(targetIndex), enemyHPs[targetIndex] > 0
+        else {
+            selectNextTarget()
+            return
+        }
 
         if let card {
             let cost = Double(card.resolvedManaCost)
@@ -1364,25 +1462,25 @@ struct BattleView: View {
             recoverMana(baseAttackManaGain)
         }
 
-        currentTurn = .enemy
+        isResolvingTurn = true
         currentParticleEffect = card?.particleEffect
         currentParticleTargetIndices = targetIndices(for: card)
         playerAttackID += 1
 
-        let targetIndex = safeSelectedEnemyIndex
-        guard enemyHPs.indices.contains(targetIndex), enemyHPs[targetIndex] > 0
-        else {
-            selectNextTarget()
-            currentParticleTargetIndices = []
-            currentTurn = .player
+        let targetIndices = currentParticleTargetIndices
+        if raidConfiguration != nil {
+            currentTurn = .enemy
+            submitRaidAttack(card: card, targetIndices: targetIndices)
+            isResolvingTurn = false
             return
         }
 
-        let targetIndices = currentParticleTargetIndices
-        if raidConfiguration != nil {
-            submitRaidAttack(card: card, targetIndices: targetIndices)
-            return
-        }
+        try? await Task.sleep(
+            for: .milliseconds(
+                speedAdjustedMilliseconds(actionFrameCommitMilliseconds)
+            )
+        )
+        guard !Task.isCancelled else { return }
 
         let defeatedIndices = applyAttackDamage(
             with: card,
@@ -1396,21 +1494,37 @@ struct BattleView: View {
             enemyHPs[targetIndex] <= threshold
         {
             triggerTutorialRetreat(using: tutorialConfig)
+            isResolvingTurn = false
             return
         }
 
         if !defeatedIndices.isEmpty {
             defeatEnemies(at: defeatedIndices)
+            if showVictory || didTriggerTutorialRetreat {
+                isResolvingTurn = false
+                return
+            }
+        }
+
+        guard !showVictory && !showDefeat else {
+            isResolvingTurn = false
             return
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + battleDelay) {
-            guard currentTurn == .enemy, !showVictory, !showDefeat else {
-                return
-            }
-            currentParticleTargetIndices = []
-            enemyAttack()
+        guard
+            await waitForActionCooldown(
+                for: leveledPlayer,
+                baseDuration: 0.42
+            )
+        else {
+            return
         }
+
+        currentParticleEffect = nil
+        currentParticleTargetIndices = []
+        currentTurn = .enemy
+        await runEnemyTurn()
+        isResolvingTurn = false
     }
 
     private func submitRaidAttack(
@@ -1441,14 +1555,13 @@ struct BattleView: View {
         didTriggerTutorialRetreat = true
         isAuto = false
         autoTask?.cancel()
+        turnTask?.cancel()
         manaRegenTask?.cancel()
         attackingEnemyIndex = nil
         currentParticleEffect = nil
         currentParticleTargetIndices = []
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
-            config.onEnemyRetreat()
-        }
+        isResolvingTurn = false
+        config.onEnemyRetreat()
     }
 
     private func applyAttackDamage(
@@ -1490,72 +1603,33 @@ struct BattleView: View {
             if let tutorialConfig {
                 isAuto = false
                 autoTask?.cancel()
+                turnTask?.cancel()
                 manaRegenTask?.cancel()
                 attackingEnemyIndex = nil
                 currentParticleEffect = nil
                 currentParticleTargetIndices = []
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
-                    tutorialConfig.onBattleComplete()
-                }
+                isResolvingTurn = false
+                tutorialConfig.onBattleComplete()
                 return
             }
 
             awardVictoryRewardsIfNeeded()
             isAuto = false
             autoTask?.cancel()
+            turnTask?.cancel()
             manaRegenTask?.cancel()
             attackingEnemyIndex = nil
             currentParticleTargetIndices = []
+            isResolvingTurn = false
             onRaidFinished?(true)
             showVictory = true
             return
         }
 
         let lastIndex = uniqueSortedIndices.max() ?? safeSelectedEnemyIndex
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
-            guard currentTurn == .enemy, !showVictory, !showDefeat else {
-                return
-            }
-            selectNextTarget(after: lastIndex)
-            currentParticleEffect = nil
-            currentParticleTargetIndices = []
-            enemyAttack()
-        }
-    }
-
-    private func defeatCurrentEnemy(at index: Int) {
+        selectNextTarget(after: lastIndex)
+        currentParticleEffect = nil
         currentParticleTargetIndices = []
-        if aliveEnemyIndices.isEmpty {
-            if let tutorialConfig {
-                isAuto = false
-                autoTask?.cancel()
-                manaRegenTask?.cancel()
-                attackingEnemyIndex = nil
-                currentParticleEffect = nil
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
-                    tutorialConfig.onBattleComplete()
-                }
-                return
-            }
-
-            awardVictoryRewardsIfNeeded()
-            isAuto = false
-            autoTask?.cancel()
-            manaRegenTask?.cancel()
-            attackingEnemyIndex = nil
-            onRaidFinished?(true)
-            showVictory = true
-            return
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
-            guard currentTurn == .enemy, !showVictory, !showDefeat else {
-                return
-            }
-            selectNextTarget(after: index)
-            currentParticleEffect = nil
-            enemyAttack()
-        }
     }
 
     private func awardVictoryRewardsIfNeeded() {
@@ -1749,7 +1823,12 @@ struct BattleView: View {
         attackingEnemyIndex = 0
         enemyAttackID += 1
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + battleDelay * 0.45) {
+        turnTask?.cancel()
+        turnTask = Task { @MainActor in
+            try? await Task.sleep(
+                for: .milliseconds(actionFrameCommitMilliseconds)
+            )
+            guard !Task.isCancelled else { return }
             guard currentTurn == .enemy, !showVictory, !showDefeat else {
                 return
             }
@@ -1768,15 +1847,17 @@ struct BattleView: View {
                 return
             }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + battleDelay * 0.45)
-            {
-                guard currentTurn == .enemy, !showVictory, !showDefeat else {
-                    return
-                }
-                attackingEnemyIndex = nil
-                recoverMana(turnManaGain)
-                currentTurn = .player
+            guard
+                await waitForActionCooldown(
+                    for: activeEnemies[0],
+                    baseDuration: 0.42
+                )
+            else {
+                return
             }
+            attackingEnemyIndex = nil
+            recoverMana(turnManaGain)
+            currentTurn = .player
         }
     }
 }

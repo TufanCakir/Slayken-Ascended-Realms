@@ -38,6 +38,7 @@ struct Slayken_Ascended_RealmsApp: App {
             PlayerBattleProgress.self,
             PlayerDeckCardSlot.self,
             OwnedAbilityCard.self,
+            PlayerSkillNodeProgress.self,
             PlayerCharacterProgress.self,
             PlayerAccountProgress.self,
             SeenCutsceneRecord.self,

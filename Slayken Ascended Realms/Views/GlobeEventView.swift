@@ -40,7 +40,7 @@ struct GlobeEventView: View {
     }
 
     private var revealsBattlesSequentially: Bool {
-        selectedChapter?.isEventChapter != true
+        true
     }
 
     private var focusedNodeID: String? {
@@ -229,13 +229,16 @@ struct GlobeEventView: View {
                         .id(battle.mapNodeID)
                 }
             } else if let selectedChapter {
+                let points = selectedChapter.visiblePoints(
+                    completedBattleIDs: completedBattleIDs
+                )
                 pointRouteLayer(
-                    points: selectedChapter.points,
+                    points: points,
                     canvasSize: canvasSize,
                     theme: theme
                 )
 
-                ForEach(selectedChapter.points) { point in
+                ForEach(points) { point in
                     pointMapNode(point, canvasSize: canvasSize, theme: theme)
                         .id(point.mapNodeID)
                 }
@@ -386,7 +389,7 @@ struct GlobeEventView: View {
             || focusedNodeID == point.mapNodeID
         let visibleCount = point.visibleBattles(
             completedBattleIDs: completedBattleIDs,
-            revealsSequentially: selectedChapter?.isEventChapter != true
+            revealsSequentially: true
         ).count
 
         return Button {

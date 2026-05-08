@@ -20,6 +20,7 @@ struct GameSceneView: UIViewRepresentable {
     let groundTexture: String
     let skyboxTexture: String
     let previewTransform: CharacterPreviewTransform?
+    let onAutoMoveFinished: () -> Void
 
     init(
         player: CharacterStats,
@@ -27,7 +28,8 @@ struct GameSceneView: UIViewRepresentable {
         autoMoveTarget: SIMD2<Float>?,
         groundTexture: String,
         skyboxTexture: String,
-        previewTransform: CharacterPreviewTransform? = nil
+        previewTransform: CharacterPreviewTransform? = nil,
+        onAutoMoveFinished: @escaping () -> Void = {}
     ) {
         self.player = player
         self.joystickVector = joystickVector
@@ -35,6 +37,7 @@ struct GameSceneView: UIViewRepresentable {
         self.groundTexture = groundTexture
         self.skyboxTexture = skyboxTexture
         self.previewTransform = previewTransform
+        self.onAutoMoveFinished = onAutoMoveFinished
     }
 
     func makeCoordinator() -> SceneCoordinator {
@@ -60,6 +63,7 @@ struct GameSceneView: UIViewRepresentable {
     func updateUIView(_ uiView: SCNView, context: Context) {
         context.coordinator.joystickVector = joystickVector
         context.coordinator.autoMoveTarget = autoMoveTarget
+        context.coordinator.onAutoMoveFinished = onAutoMoveFinished
         context.coordinator.updateTextures(
             ground: groundTexture,
             skybox: skyboxTexture
@@ -90,6 +94,7 @@ final class SceneCoordinator {
 
     var joystickVector: SIMD2<Float> = .zero
     var autoMoveTarget: SIMD2<Float>?
+    var onAutoMoveFinished: () -> Void = {}
 
     init(
         player: CharacterStats,
@@ -574,6 +579,7 @@ final class SceneCoordinator {
         guard remainingDistance > 1.0 else {
             autoMoveTarget = nil
             stopPlayerAnimation()
+            onAutoMoveFinished()
             return
         }
 

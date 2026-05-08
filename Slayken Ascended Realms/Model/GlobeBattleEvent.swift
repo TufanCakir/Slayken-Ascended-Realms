@@ -348,18 +348,39 @@ extension GlobeEventChapter {
     func nextPointWithIncompleteBattle(
         completedBattleIDs: Set<String>
     ) -> GlobeEventPoint? {
-        points.first { point in
+        visiblePoints(completedBattleIDs: completedBattleIDs).first { point in
             point.battles.contains { !completedBattleIDs.contains($0.id) }
         }
+    }
+
+    func visiblePoints(completedBattleIDs: Set<String>) -> [GlobeEventPoint] {
+        guard !points.isEmpty else { return [] }
+
+        var visiblePoints: [GlobeEventPoint] = []
+        for index in points.indices {
+            let point = points[index]
+            let isFirstPoint = index == 0
+            let previousPointCompleted =
+                isFirstPoint
+                || points[index - 1].battles.allSatisfy {
+                    completedBattleIDs.contains($0.id)
+                }
+
+            if isFirstPoint || previousPointCompleted {
+                visiblePoints.append(point)
+            }
+        }
+
+        return visiblePoints
     }
 
     func nextUnlockedPoint(
         completedBattleIDs: Set<String>
     ) -> GlobeEventPoint? {
-        points.first { point in
+        visiblePoints(completedBattleIDs: completedBattleIDs).first { point in
             point.visibleBattles(
                 completedBattleIDs: completedBattleIDs,
-                revealsSequentially: !isEventChapter
+                revealsSequentially: true
             )
             .contains { !completedBattleIDs.contains($0.id) }
         }

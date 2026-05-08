@@ -23,6 +23,8 @@ struct SkillTreeView: View {
     @State private var selectedTreeID: String?
     @State private var presentedNodeID: String?
     @State private var showsTreeSelector = false
+    @State private var showsAutoUnlockConfirmation = false
+    @State private var autoUnlockMessage = ""
     @State private var refreshID = UUID()
 
     private var skillTrees: [CharacterSkillTreeDefinition] {
@@ -187,6 +189,15 @@ struct SkillTreeView: View {
             )
         } message: { node in
             Text(nodePopupSummary(for: node))
+        }
+        .alert("Auto Unlock", isPresented: $showsAutoUnlockConfirmation) {
+            Button("Abbrechen", role: .cancel) {}
+            Button("Alles lernen") {
+                guard let skillTree else { return }
+                performAutoUnlock(in: skillTree)
+            }
+        } message: {
+            Text(autoUnlockConfirmationText)
         }
     }
 
@@ -490,13 +501,8 @@ struct SkillTreeView: View {
     {
         VStack(alignment: .leading, spacing: isCompactLayout ? 8 : 12) {
             Button {
-                if PlayerInventoryStore.autoLearnSkillNodes(
-                    in: skillTree,
-                    characterID: character.model,
-                    in: modelContext
-                ) > 0 {
-                    refreshID = UUID()
-                }
+                autoUnlockMessage = ""
+                showsAutoUnlockConfirmation = true
             } label: {
                 Text("Auto Unlock")
                     .font(
@@ -523,6 +529,14 @@ struct SkillTreeView: View {
             )
             .font(.system(size: isCompactLayout ? 10 : 12, weight: .bold))
             .foregroundStyle(.white.opacity(0.78))
+
+            if !autoUnlockMessage.isEmpty {
+                Text(autoUnlockMessage)
+                    .font(
+                        .system(size: isCompactLayout ? 10 : 12, weight: .black)
+                    )
+                    .foregroundStyle(.orange)
+            }
         }
         .padding(isCompactLayout ? 12 : 18)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -888,6 +902,56 @@ struct SkillTreeView: View {
         let lines = node.bonuses.map(bonusLine).joined(separator: "\n")
         return
             "\(node.description)\n\n\(lines)\n\nKosten: \(node.costPerRank) \(currencyName(for: node.costCurrency))"
+    }
+
+    private var autoUnlockConfirmationText: String {
+        guard let skillTree else {
+            return "Kein Skillbaum aktiv."
+        }
+
+        return
+            "Alle aktuell lernbaren Skills in \(skillTree.title) automatisch lernen?"
+    }
+
+    private func performAutoUnlock(in skillTree: CharacterSkillTreeDefinition) {
+        let learnedCount = PlayerInventoryStore.autoLearnSkillNodes(
+            in: skillTree,
+            characterID: character.model,
+            in: modelContext
+        )
+
+        if learnedCount > 0 {
+            refreshID = UUID()
+            autoUnlockMessage =
+                "\(learnedCount) Skill-Rang\(learnedCount == 1 ? "" : "e") gelernt."
+            return
+        }
+
+        autoUnlockMessage =
+            hasResourceBlockedAutoUnlock(in: skillTree)
+            ? "Zu wenig Ressourcen fuer Auto Unlock."
+            : "Keine lernbaren Skills verfuegbar."
+    }
+
+    private func hasResourceBlockedAutoUnlock(
+        in skillTree: CharacterSkillTreeDefinition
+    ) -> Bool {
+        let ranks = nodeRanks
+
+        return skillTree.nodes.contains { node in
+            let currentRank = ranks[node.id] ?? 0
+            guard currentRank < node.maxRank else { return false }
+
+            let prerequisitesMet = node.prerequisites.allSatisfy {
+                (ranks[$0] ?? 0) > 0
+            }
+            guard prerequisitesMet else { return false }
+
+            return PlayerInventoryStore.amount(
+                for: node.costCurrency,
+                in: modelContext
+            ) < node.costPerRank
+        }
     }
 
     private var firstAvailableTreeID: String? {

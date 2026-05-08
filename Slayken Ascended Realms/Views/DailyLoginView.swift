@@ -57,6 +57,11 @@ struct DailyLoginView: View {
 
     private var activeRewardBackground: String? {
         availableReward?.reward.background
+            ?? rewards.first {
+                ($0.background ?? "")
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .isEmpty == false
+            }?.background
     }
 
     var body: some View {

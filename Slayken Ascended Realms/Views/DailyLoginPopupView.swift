@@ -30,6 +30,15 @@ struct DailyLoginPopupView: View {
         rewardState.dayNumber
     }
 
+    private var campaignBackground: String? {
+        rewardState.reward.background
+            ?? rewards.first {
+                ($0.background ?? "")
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .isEmpty == false
+            }?.background
+    }
+
     var body: some View {
         ZStack {
             Color.black.opacity(0.58)
@@ -67,23 +76,32 @@ struct DailyLoginPopupView: View {
                 .buttonStyle(.plain)
             }
             .padding(18)
-            .background(
-                LinearGradient(
-                    colors: [
-                        Color(red: 0.05, green: 0.17, blue: 0.28).opacity(0.98),
-                        Color(red: 0.03, green: 0.09, blue: 0.18).opacity(0.98),
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                ),
-                in: RoundedRectangle(cornerRadius: 28, style: .continuous)
-            )
+            .background {
+                loginBackgroundImage(
+                    named: campaignBackground,
+                    fallback: popupBackgroundFallback
+                )
+                .clipShape(
+                    RoundedRectangle(cornerRadius: 28, style: .continuous)
+                )
+            }
             .overlay {
                 RoundedRectangle(cornerRadius: 28, style: .continuous)
                     .stroke(.white.opacity(0.12), lineWidth: 1)
             }
             .padding(16)
         }
+    }
+
+    private var popupBackgroundFallback: LinearGradient {
+        LinearGradient(
+            colors: [
+                Color(red: 0.05, green: 0.17, blue: 0.28).opacity(0.98),
+                Color(red: 0.03, green: 0.09, blue: 0.18).opacity(0.98),
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
     }
 
     private var headerBlock: some View {
@@ -414,9 +432,9 @@ struct DailyLoginPopupView: View {
     }
 
     @ViewBuilder
-    private func loginBackgroundImage(
+    private func loginBackgroundImage<Fallback: View>(
         named imageName: String?,
-        fallback: Color
+        fallback: Fallback
     ) -> some View {
         if let imageName,
             !imageName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty

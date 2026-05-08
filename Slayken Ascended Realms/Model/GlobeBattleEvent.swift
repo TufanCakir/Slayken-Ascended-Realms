@@ -116,6 +116,8 @@ struct GlobeEventChapter: Codable, Identifiable {
     let id: String
     let title: String
     let subtitle: String
+    let sortOrder: Int?
+    let endsAt: String?
     let minAscendedLevel: Int?
     let mapTexture: String
     let cutscene: GlobeEventCutscene?
@@ -296,14 +298,140 @@ struct GlobeBattle: Codable, Identifiable {
 }
 
 func loadGlobeEventChapters() -> [GlobeEventChapter] {
-    let storyChapters = JSONResourceLoader.loadArray(
-        GlobeEventChapter.self,
-        resource: "globe_events"
+    let baseResources = ["globe_events", "event_events", "event_skill"]
+    let autoDiscoveredResources = RemoteContentManager.cachedResourceNames()
+        .filter(
+            isGlobeChapterResource
+        )
+    let orderedResources = Array(
+        Set(baseResources).union(autoDiscoveredResources)
     )
-    let eventChapters = JSONResourceLoader.loadArray(
-        GlobeEventChapter.self,
-        resource: "event_events"
-    )
+    .sorted(by: compareGlobeChapterResources)
 
-    return storyChapters + eventChapters
+    var chaptersByID = [String: GlobeEventChapter]()
+    var resourceByChapterID = [String: String]()
+
+    for resourceName in orderedResources {
+        let chapters = JSONResourceLoader.loadArray(
+            GlobeEventChapter.self,
+            resource: resourceName
+        )
+
+        for chapter in chapters {
+            if isEventChapterID(chapter.id)
+                || isEventChapterResource(resourceName)
+            {
+                guard EventDateSupport.isActive(endsAt: chapter.endsAt) else {
+                    continue
+                }
+            }
+
+            chaptersByID[chapter.id] = chapter
+            resourceByChapterID[chapter.id] = resourceName
+        }
+    }
+
+    return chaptersByID.values.sorted { lhs, rhs in
+        let lhsResource = resourceByChapterID[lhs.id] ?? ""
+        let rhsResource = resourceByChapterID[rhs.id] ?? ""
+        let lhsIsEvent =
+            isEventChapterID(lhs.id) || isEventChapterResource(lhsResource)
+        let rhsIsEvent =
+            isEventChapterID(rhs.id) || isEventChapterResource(rhsResource)
+
+        if lhsIsEvent != rhsIsEvent {
+            return !lhsIsEvent
+        }
+
+        let lhsOrder = inferredChapterSortOrder(for: lhs, resource: lhsResource)
+        let rhsOrder = inferredChapterSortOrder(for: rhs, resource: rhsResource)
+
+        if lhsOrder != rhsOrder {
+            return lhsOrder < rhsOrder
+        }
+
+        return lhs.id < rhs.id
+    }
+}
+
+private func isGlobeChapterResource(_ resourceName: String) -> Bool {
+    if resourceName == "globe_events" || resourceName == "event_events"
+        || resourceName == "event_skill"
+    {
+        return true
+    }
+
+    return resourceName.hasPrefix("story_chapter_")
+        || resourceName.hasPrefix("chapter_")
+        || resourceName.hasPrefix("event_chapter_")
+        || resourceName.hasPrefix("event_skill_")
+        || resourceName.hasPrefix("globe_chapter_")
+        || resourceName.hasPrefix("globe_event_")
+}
+
+private func isEventChapterResource(_ resourceName: String) -> Bool {
+    resourceName == "event_events"
+        || resourceName == "event_skill"
+        || resourceName.hasPrefix("event_chapter_")
+        || resourceName.hasPrefix("event_skill_")
+        || resourceName.hasPrefix("globe_event_")
+}
+
+private func isEventChapterID(_ chapterID: String) -> Bool {
+    chapterID.hasPrefix("event_")
+}
+
+private func compareGlobeChapterResources(_ lhs: String, _ rhs: String) -> Bool
+{
+    let lhsPriority = globeChapterResourcePriority(lhs)
+    let rhsPriority = globeChapterResourcePriority(rhs)
+
+    if lhsPriority != rhsPriority {
+        return lhsPriority < rhsPriority
+    }
+
+    let lhsOrder = extractTrailingNumber(from: lhs) ?? Int.max
+    let rhsOrder = extractTrailingNumber(from: rhs) ?? Int.max
+
+    if lhsOrder != rhsOrder {
+        return lhsOrder < rhsOrder
+    }
+
+    return lhs < rhs
+}
+
+private func globeChapterResourcePriority(_ resourceName: String) -> Int {
+    switch resourceName {
+    case "globe_events":
+        return 0
+    case _ where resourceName.hasPrefix("story_chapter_"),
+        _ where resourceName.hasPrefix("chapter_"),
+        _ where resourceName.hasPrefix("globe_chapter_"):
+        return 1
+    case "event_events":
+        return 2
+    case "event_skill":
+        return 3
+    case _ where resourceName.hasPrefix("event_chapter_"),
+        _ where resourceName.hasPrefix("event_skill_"),
+        _ where resourceName.hasPrefix("globe_event_"):
+        return 4
+    default:
+        return 5
+    }
+}
+
+private func inferredChapterSortOrder(
+    for chapter: GlobeEventChapter,
+    resource: String
+) -> Int {
+    chapter.sortOrder
+        ?? extractTrailingNumber(from: chapter.id)
+        ?? extractTrailingNumber(from: resource)
+        ?? Int.max
+}
+
+private func extractTrailingNumber(from text: String) -> Int? {
+    let digits = text.split(separator: "_").last.map(String.init) ?? text
+    return Int(digits)
 }

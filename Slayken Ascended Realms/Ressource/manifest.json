@@ -1,9 +1,9 @@
 {
-    "contentVersion": 22,
+    "contentVersion": 27,
     "resources": [
         {
             "name": "login_campaigns",
-            "version": "1",
+            "version": "3",
             "url": "https://remote.tufancakir.com/login_campaigns.json"
         },
         {
@@ -15,6 +15,21 @@
             "name": "event_login_festival",
             "version": "1",
             "url": "https://remote.tufancakir.com/event_login_festival.json"
+        },
+        {
+            "name": "event_login_summer",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/event_login_summer.json"
+        },
+        {
+            "name": "event_login_coins",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/event_login_coins.json"
+        },
+        {
+            "name": "event_login_crystals",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/event_login_crystals.json"
         },
         {
             "name": "globe_node_chests",
@@ -53,12 +68,12 @@
         },
         {
             "name": "character_classes",
-            "version": "3",
+            "version": "4",
             "url": "https://remote.tufancakir.com/character_classes.json"
         },
         {
             "name": "currencies",
-            "version": "2",
+            "version": "5",
             "url": "https://remote.tufancakir.com/currencies.json"
         },
         {
@@ -67,9 +82,41 @@
             "url": "https://remote.tufancakir.com/daily_login.json"
         },
         {
+            "name": "deck_config",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/deck_config.json"
+        },
+        {
+            "name": "chapter_2",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/chapter_2.json"
+        },
+        {
             "name": "event_events",
-            "version": "2",
+            "version": "3",
             "url": "https://remote.tufancakir.com/event_events.json"
+        },
+        {
+            "name": "event_skill",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/event_skill.json"
+        },
+        {
+            "name": "event_chapter_summer",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/event_chapter_summer.json"
+        },
+        {
+            "name": "event_chapter_coin_frenzy",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/event_chapter_coin_frenzy.json"
+        },
+        {
+            "name": "event_chapter_crystal_storm",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/event_chapter_crystal_storm.json"
         },
         {
             "name": "farm_limits",
@@ -88,7 +135,7 @@
         },
         {
             "name": "globe_events",
-            "version": "2",
+            "version": "3",
             "url": "https://remote.tufancakir.com/globe_events.json"
         },
         {
@@ -153,8 +200,28 @@
         },
         {
             "name": "tutorials",
-            "version": "1",
+            "version": "2",
             "url": "https://remote.tufancakir.com/tutorials.json"
+        },
+        {
+            "name": "skill_tree",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/skill_tree.json"
+        },
+        {
+            "name": "skill_tree_stage_2",
+            "version": "3",
+            "url": "https://remote.tufancakir.com/skill_tree_stage_2.json"
+        },
+        {
+            "name": "skill_tree_stage_3",
+            "version": "3",
+            "url": "https://remote.tufancakir.com/skill_tree_stage_3.json"
+        },
+        {
+            "name": "remote_content_config",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/remote_content_config.json"
         }
     ],
     "assets": [
@@ -260,20 +327,90 @@
             "url": "https://remote.tufancakir.com/assets/icon_crystals.png"
         },
         {
-            "name": "skill_ash_breaker.png",
+            "name": "gift.png",
             "version": "1",
-            "url": "https://remote.tufancakir.com/assets/skill_ash_breaker.png"
+            "url": "https://remote.tufancakir.com/assets/gift.png"
+        },
+        {
+            "name": "sar_dragon.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/sar_dragon.png"
         },
         {
             "name": "skill_crystal_burst.png",
             "version": "1",
-            "url":
-                "https://remote.tufancakir.com/assets/skill_crystal_burst.png"
+            "url": "https://remote.tufancakir.com/assets/skill_crystal_burst.png"
         },
         {
             "name": "skill_moon_guard.png",
             "version": "1",
             "url": "https://remote.tufancakir.com/assets/skill_moon_guard.png"
+        },
+        {
+            "name": "skill_light_flare.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_light_flare.png"
+        },
+        {
+            "name": "skill_ash_breaker.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_ash_breaker.png"
+        },
+        {
+            "name": "skill_neutral_spark.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_neutral_spark.png"
+        },
+        {
+            "name": "skill_blue.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_blue.png"
+        },
+        {
+            "name": "skill_red.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_red.png"
+        },
+        {
+            "name": "skill_green.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/skill_green.png"
+        },
+        {
+            "name": "skill_indigo.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/skill_indigo.png"
+        },
+        {
+            "name": "skill_purple.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/skill_purple.png"
+        },
+        {
+            "name": "skill_brown.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/skill_brown.png"
+        },
+        {
+            "name": "skill_rainbow.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/skill_rainbow.png"
+        },
+        {
+            "name": "skill_overdrive.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/skill_overdrive.png"
+        },
+        {
+            "name": "skill_yellow.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_yellow.png"
         },
         {
             "name": "skill_rift_slash.png",

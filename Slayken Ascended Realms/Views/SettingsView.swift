@@ -26,6 +26,15 @@ struct SettingsView: View {
     @Query private var seenCutscenes: [SeenCutsceneRecord]
     @Query private var summonProgress: [SummonBannerProgress]
     @Query private var battleResourceStates: [PlayerBattleResourceState]
+    @Query private var dailyLoginProgressRecords: [PlayerDailyLoginProgress]
+    @Query private var claimedGifts: [PlayerClaimedGift]
+    @Query private var shopOfferProgressRecords: [ShopOfferProgress]
+    @Query private var ownedSkins: [OwnedCharacterSkin]
+    @Query private var processedTransactions: [ProcessedStoreTransaction]
+    @Query private var questClaims: [PlayerQuestClaim]
+    @Query private var questCounters: [PlayerQuestCounter]
+    @Query private var dailyBattleRewardCaps: [PlayerDailyBattleRewardCap]
+    @Query private var skillNodeProgressRecords: [PlayerSkillNodeProgress]
 
     let onClose: () -> Void
     let onReset: () -> Void
@@ -373,10 +382,49 @@ struct SettingsView: View {
         for state in battleResourceStates {
             modelContext.delete(state)
         }
+        for progress in skillNodeProgressRecords {
+            modelContext.delete(progress)
+        }
+        for progress in dailyLoginProgressRecords
+        where !shouldPreserveLoginProgress(progress) {
+            modelContext.delete(progress)
+        }
+        for gift in claimedGifts {
+            modelContext.delete(gift)
+        }
+        for progress in shopOfferProgressRecords {
+            modelContext.delete(progress)
+        }
+        for skin in ownedSkins {
+            modelContext.delete(skin)
+        }
+        for transaction in processedTransactions {
+            modelContext.delete(transaction)
+        }
+        for claim in questClaims {
+            modelContext.delete(claim)
+        }
+        for counter in questCounters {
+            modelContext.delete(counter)
+        }
+        for cap in dailyBattleRewardCaps {
+            modelContext.delete(cap)
+        }
 
         try? modelContext.save()
         gameState.resetGameData()
         onReset()
+    }
+
+    private func shouldPreserveLoginProgress(
+        _ progress: PlayerDailyLoginProgress
+    )
+        -> Bool
+    {
+        guard progress.id != "daily_login" else { return false }
+        let rewards = loadDailyLoginRewardDefinitions(resource: progress.id)
+        guard !rewards.isEmpty else { return false }
+        return progress.totalClaims >= rewards.count
     }
 
 }

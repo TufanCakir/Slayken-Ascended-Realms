@@ -13,6 +13,7 @@ struct GameTutorialDefinition: Codable, Identifiable {
     let title: String
     let objective: String
     let player: CharacterStats
+    let cardRewards: [GiftCardReward]
     let enemies: [CharacterStats]
     let boss: CharacterStats?
     let retreatEnemyIndex: Int?
@@ -31,6 +32,7 @@ struct GameTutorialDefinition: Codable, Identifiable {
         case title
         case objective
         case player
+        case cardRewards
         case enemy
         case enemies
         case boss
@@ -43,6 +45,7 @@ struct GameTutorialDefinition: Codable, Identifiable {
         title: String,
         objective: String,
         player: CharacterStats,
+        cardRewards: [GiftCardReward],
         enemies: [CharacterStats],
         boss: CharacterStats?,
         retreatEnemyIndex: Int?,
@@ -52,6 +55,7 @@ struct GameTutorialDefinition: Codable, Identifiable {
         self.title = title
         self.objective = objective
         self.player = player
+        self.cardRewards = cardRewards
         self.enemies = enemies
         self.boss = boss
         self.retreatEnemyIndex = retreatEnemyIndex
@@ -64,6 +68,11 @@ struct GameTutorialDefinition: Codable, Identifiable {
         title = try container.decode(String.self, forKey: .title)
         objective = try container.decode(String.self, forKey: .objective)
         player = try container.decode(CharacterStats.self, forKey: .player)
+        cardRewards =
+            try container.decodeIfPresent(
+                [GiftCardReward].self,
+                forKey: .cardRewards
+            ) ?? []
         boss = try container.decodeIfPresent(CharacterStats.self, forKey: .boss)
         retreatEnemyIndex = try container.decodeIfPresent(
             Int.self,
@@ -95,6 +104,7 @@ struct GameTutorialDefinition: Codable, Identifiable {
         try container.encode(title, forKey: .title)
         try container.encode(objective, forKey: .objective)
         try container.encode(player, forKey: .player)
+        try container.encode(cardRewards, forKey: .cardRewards)
         try container.encode(enemies, forKey: .enemies)
         try container.encodeIfPresent(boss, forKey: .boss)
         try container.encodeIfPresent(
@@ -109,8 +119,11 @@ struct GameTutorialDefinition: Codable, Identifiable {
 }
 
 func loadTutorialDefinitions() -> [GameTutorialDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         GameTutorialDefinition.self,
-        resource: "tutorials"
+        baseResources: ["tutorials"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("tutorials_") || $0.hasPrefix("tutorial_")
+        }
     )
 }

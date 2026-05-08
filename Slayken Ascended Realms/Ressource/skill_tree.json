@@ -1,0 +1,304 @@
+[
+    {
+        "id": "core_tree",
+        "title": "Skill Tree",
+        "subtitle":
+            "Baue deinen Charakter ueber Kampf, Drops und Skill-DMG aus.",
+        "sortOrder": 1,
+        "palette": {
+            "selectorStartHex": "#3EC8FF",
+            "selectorEndHex": "#1663C7",
+            "panelStartHex": "#143B5F",
+            "panelEndHex": "#071A33",
+            "resourceBarStartHex": "#1E86AD",
+            "resourceBarEndHex": "#0A2847",
+            "connectionHex": "#64D9FF"
+        },
+        "nodes": [
+            {
+                "id": "vitality_1",
+                "title": "Vitality I",
+                "description": "Mehr Grund-Lebenspunkte fuer laengere Kaempfe.",
+                "icon": "heart.fill",
+                "assetIcon": "skill_green",
+                "maxRank": 5,
+                "costCurrency": "skill_points",
+                "costPerRank": 40,
+                "autoLearnPriority": 1,
+                "position": {
+                    "x": 120,
+                    "y": 140
+                },
+                "prerequisites": [],
+                "palette": {
+                    "fieldName": "Vitality",
+                    "fillStartHex": "#18C68B",
+                    "fillEndHex": "#0B6D5C",
+                    "lockedStartHex": "#18342F",
+                    "lockedEndHex": "#0B1817",
+                    "masteredStartHex": "#5FF5B5",
+                    "masteredEndHex": "#1EA67F",
+                    "accentHex": "#7FFFD4"
+                },
+                "bonuses": [
+                    {
+                        "type": "hp_percent",
+                        "value": 0.04
+                    }
+                ]
+            },
+            {
+                "id": "strength_1",
+                "title": "Strength I",
+                "description": "Steigert den Grundschaden deines Charakters.",
+                "icon": "flame.fill",
+                "assetIcon": "skill_red",
+                "maxRank": 5,
+                "costCurrency": "skill_points",
+                "costPerRank": 40,
+                "autoLearnPriority": 2,
+                "position": {
+                    "x": 320,
+                    "y": 140
+                },
+                "prerequisites": [],
+                "palette": {
+                    "fieldName": "Strength",
+                    "fillStartHex": "#F66B45",
+                    "fillEndHex": "#8E2118",
+                    "lockedStartHex": "#37201A",
+                    "lockedEndHex": "#170D0B",
+                    "masteredStartHex": "#FFB36D",
+                    "masteredEndHex": "#D14827",
+                    "accentHex": "#FF9157"
+                },
+                "bonuses": [
+                    {
+                        "type": "attack_percent",
+                        "value": 0.04
+                    }
+                ]
+            },
+            {
+                "id": "intelligence_1",
+                "title": "Intelligence",
+                "description": "Staerkt den Multiplikator deiner Skill-Karten.",
+                "icon": "brain.head.profile",
+                "assetIcon": "skill_yellow",
+                "maxRank": 5,
+                "costCurrency": "skill_points",
+                "costPerRank": 60,
+                "autoLearnPriority": 3,
+                "position": {
+                    "x": 520,
+                    "y": 140
+                },
+                "prerequisites": [],
+                "palette": {
+                    "fieldName": "Arcane",
+                    "fillStartHex": "#7A69FF",
+                    "fillEndHex": "#35268A",
+                    "lockedStartHex": "#241D3C",
+                    "lockedEndHex": "#0D0A17",
+                    "masteredStartHex": "#C48CFF",
+                    "masteredEndHex": "#6756E7",
+                    "accentHex": "#BFA3FF"
+                },
+                "bonuses": [
+                    {
+                        "type": "card_damage_percent",
+                        "value": 0.05
+                    },
+                    {
+                        "type": "damage_fire_percent",
+                        "value": 0.03
+                    }
+                ]
+            },
+            {
+                "id": "agility_1",
+                "title": "Agility",
+                "description": "Beschleunigt deine Mana-Regeneration.",
+                "icon": "wind",
+                "assetIcon": "skill_blue",
+                "maxRank": 5,
+                "costCurrency": "skill_points",
+                "costPerRank": 55,
+                "autoLearnPriority": 4,
+                "position": {
+                    "x": 720,
+                    "y": 140
+                },
+                "prerequisites": [],
+                "palette": {
+                    "fieldName": "Agility",
+                    "fillStartHex": "#2AD7C1",
+                    "fillEndHex": "#116B73",
+                    "lockedStartHex": "#173234",
+                    "lockedEndHex": "#0A1617",
+                    "masteredStartHex": "#9EFFF2",
+                    "masteredEndHex": "#2AB6B8",
+                    "accentHex": "#74F7EC"
+                },
+                "bonuses": [
+                    {
+                        "type": "mana_regen_percent",
+                        "value": 0.05
+                    }
+                ]
+            },
+            {
+                "id": "fortune_coins",
+                "title": "Fortune Coins",
+                "description":
+                    "Erhoeht Coin-Drops fuer schnelleren Fortschritt.",
+                "icon": "circle.hexagongrid.fill",
+                "assetIcon": "icon_coins",
+                "maxRank": 5,
+                "costCurrency": "skill_points",
+                "costPerRank": 70,
+                "autoLearnPriority": 5,
+                "position": {
+                    "x": 220,
+                    "y": 320
+                },
+                "prerequisites": [
+                    "vitality_1"
+                ],
+                "palette": {
+                    "fieldName": "Coins",
+                    "fillStartHex": "#FFD84D",
+                    "fillEndHex": "#B46B0E",
+                    "lockedStartHex": "#3A3018",
+                    "lockedEndHex": "#1A1408",
+                    "masteredStartHex": "#FFF0A1",
+                    "masteredEndHex": "#E9B73D",
+                    "accentHex": "#FFE470"
+                },
+                "bonuses": [
+                    {
+                        "type": "coin_drop_percent",
+                        "value": 0.06
+                    },
+                    {
+                        "type": "drop_skill_points_percent",
+                        "value": 0.05
+                    }
+                ]
+            },
+            {
+                "id": "fortune_crystals",
+                "title": "Crystal Sense",
+                "description": "Erhoeht Crystal-Drops in Battle-Rewards.",
+                "icon": "diamond.fill",
+                "assetIcon": "icon_crystals",
+                "maxRank": 5,
+                "costCurrency": "skill_points",
+                "costPerRank": 70,
+                "autoLearnPriority": 6,
+                "position": {
+                    "x": 420,
+                    "y": 320
+                },
+                "prerequisites": [
+                    "strength_1"
+                ],
+                "palette": {
+                    "fieldName": "Crystals",
+                    "fillStartHex": "#63C7FF",
+                    "fillEndHex": "#2055C3",
+                    "lockedStartHex": "#1D2E48",
+                    "lockedEndHex": "#0B1220",
+                    "masteredStartHex": "#B4EDFF",
+                    "masteredEndHex": "#4C8EFF",
+                    "accentHex": "#8EDFFF"
+                },
+                "bonuses": [
+                    {
+                        "type": "crystal_drop_percent",
+                        "value": 0.06
+                    }
+                ]
+            },
+            {
+                "id": "hunter_cards",
+                "title": "Card Hunter",
+                "description": "Mehr Karten-Drops nach erfolgreichen Siegen.",
+                "icon": "rectangle.stack.fill",
+                "assetIcon": "skill_purple",
+                "maxRank": 5,
+                "costCurrency": "skill_points",
+                "costPerRank": 75,
+                "autoLearnPriority": 7,
+                "position": {
+                    "x": 620,
+                    "y": 320
+                },
+                "prerequisites": [
+                    "intelligence_1"
+                ],
+                "palette": {
+                    "fieldName": "Cards",
+                    "fillStartHex": "#FF5BA0",
+                    "fillEndHex": "#8F2258",
+                    "lockedStartHex": "#3C1A2D",
+                    "lockedEndHex": "#180A12",
+                    "masteredStartHex": "#FFA6CB",
+                    "masteredEndHex": "#D84C88",
+                    "accentHex": "#FF8FBB"
+                },
+                "bonuses": [
+                    {
+                        "type": "card_drop_percent",
+                        "value": 0.08
+                    }
+                ]
+            },
+            {
+                "id": "battle_mastery",
+                "title": "Battle Mastery",
+                "description":
+                    "Kombiniert Attack und Skill-DMG fuer spaetere Kaempfe.",
+                "icon": "sparkles",
+                "assetIcon": "skill_rainbow",
+                "maxRank": 5,
+                "costCurrency": "skill_points",
+                "costPerRank": 90,
+                "autoLearnPriority": 8,
+                "position": {
+                    "x": 520,
+                    "y": 500
+                },
+                "prerequisites": [
+                    "fortune_coins",
+                    "fortune_crystals",
+                    "hunter_cards"
+                ],
+                "palette": {
+                    "fieldName": "Mastery",
+                    "fillStartHex": "#FFFFFF",
+                    "fillEndHex": "#6A8CFF",
+                    "lockedStartHex": "#2F3242",
+                    "lockedEndHex": "#13151B",
+                    "masteredStartHex": "#FFF2B6",
+                    "masteredEndHex": "#8A9FFF",
+                    "accentHex": "#DDE6FF"
+                },
+                "bonuses": [
+                    {
+                        "type": "attack_percent",
+                        "value": 0.03
+                    },
+                    {
+                        "type": "card_damage_percent",
+                        "value": 0.04
+                    },
+                    {
+                        "type": "damage_all_percent",
+                        "value": 0.02
+                    }
+                ]
+            }
+        ]
+    }
+]

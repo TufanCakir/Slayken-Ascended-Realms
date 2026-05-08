@@ -78,8 +78,12 @@ struct CharacterPreviewTransform: Codable, Hashable {
 }
 
 func loadCharacterClassDefinitions() -> [CharacterClassDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         CharacterClassDefinition.self,
-        resource: "character_classes"
+        baseResources: ["character_classes"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("character_classes_")
+                || $0.hasPrefix("character_class_")
+        }
     )
 }

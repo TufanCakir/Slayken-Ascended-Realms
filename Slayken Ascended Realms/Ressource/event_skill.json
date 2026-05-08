@@ -1,0 +1,430 @@
+[
+    {
+        "id": "event_skill_forge",
+        "title": "Skill Forge",
+        "subtitle":
+            "Farme Skill Points, Runes, Glyphs, Cores und Shards fuer deinen Skillbaum.",
+        "sortOrder": 130,
+        "endsAt": "05.06.2026 23:59",
+        "minAscendedLevel": 1,
+        "mapTexture": "realm_void",
+        "points": [
+            {
+                "id": "event_skill_forge_path",
+                "title": "Forge Path",
+                "text":
+                    "Ein Skill-Event mit allen Skill-Waehrungen fuer deinen Ausbau.",
+                "mapImage": "realm_void",
+                "mapTexture": "realm_void",
+                "node": {
+                    "x": 0.10,
+                    "y": 0.86
+                },
+                "battles": [
+                    {
+                        "id": "event_skill_forge_battle_1",
+                        "name": "Forge Spark I",
+                        "description":
+                            "Der Pfad beginnt mit ersten Skill Points.",
+                        "difficulty": 6,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.06,
+                            "y": 0.86
+                        },
+                        "enemy": {
+                            "name": "Forge Spark I",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "light",
+                            "hp": 250,
+                            "attack": 14
+                        },
+                        "xpReward": 260,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 18
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 2
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 180
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_2",
+                        "name": "Forge Spark II",
+                        "description": "Der Fluss wird dichter.",
+                        "difficulty": 6,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.14,
+                            "y": 0.81
+                        },
+                        "enemy": {
+                            "name": "Forge Spark II",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "element": "water",
+                            "hp": 270,
+                            "attack": 15
+                        },
+                        "xpReward": 260,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 20
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 3
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 190
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_3",
+                        "name": "Rune Dust",
+                        "description":
+                            "Staub aus alten Runen liegt in der Luft.",
+                        "difficulty": 7,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.22,
+                            "y": 0.76
+                        },
+                        "enemy": {
+                            "name": "Rune Dust",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "storm",
+                            "hp": 295,
+                            "attack": 16
+                        },
+                        "xpReward": 260,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 22
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 4
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 210
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_4",
+                        "name": "Echo Node",
+                        "description": "Ein Knoten speichert alte Kraft.",
+                        "difficulty": 7,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.30,
+                            "y": 0.71
+                        },
+                        "enemy": {
+                            "name": "Echo Node",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "element": "fire",
+                            "hp": 320,
+                            "attack": 17
+                        },
+                        "xpReward": 260,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 24
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 4
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 220
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_5",
+                        "name": "Glyph Trail",
+                        "description":
+                            "Die Glyphen oeffnen den Weg nach innen.",
+                        "difficulty": 8,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.38,
+                            "y": 0.66
+                        },
+                        "enemy": {
+                            "name": "Glyph Trail",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "plant",
+                            "hp": 345,
+                            "attack": 18
+                        },
+                        "xpReward": 260,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 26
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 5
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 1
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 240
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_6",
+                        "name": "Mind Ember",
+                        "description": "Hier glimmt rohe Geistesenergie.",
+                        "difficulty": 8,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.48,
+                            "y": 0.60
+                        },
+                        "enemy": {
+                            "name": "Mind Ember",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "element": "dark",
+                            "hp": 370,
+                            "attack": 20
+                        },
+                        "xpReward": 260,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 28
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 5
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 1
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 260
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_7",
+                        "name": "Agile Rift",
+                        "description":
+                            "Die Risswinde machen jeden Schritt schneller.",
+                        "difficulty": 9,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.58,
+                            "y": 0.54
+                        },
+                        "enemy": {
+                            "name": "Agile Rift",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "water",
+                            "hp": 395,
+                            "attack": 21
+                        },
+                        "xpReward": 260,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 30
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 6
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 2
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 280
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_8",
+                        "name": "Fortune Gate",
+                        "description": "Ein Tor voller splitternder Belohnung.",
+                        "difficulty": 9,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.68,
+                            "y": 0.48
+                        },
+                        "enemy": {
+                            "name": "Fortune Gate",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "element": "light",
+                            "hp": 420,
+                            "attack": 22
+                        },
+                        "xpReward": 260,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 32
+                            },
+                            {
+                                "currency": "skill_runes",
+                                "amount": 6
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 2
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 1
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 300
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_9",
+                        "name": "Master Trace",
+                        "description": "Kurz vor dem Herz der Schmiede.",
+                        "difficulty": 10,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.78,
+                            "y": 0.40
+                        },
+                        "enemy": {
+                            "name": "Master Trace",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "element": "void",
+                            "hp": 450,
+                            "attack": 24
+                        },
+                        "xpReward": 260,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 36
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 3
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 1
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 18
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_skill_forge_battle_10",
+                        "name": "Core Forge",
+                        "description": "Das Zentrum der Skill-Schmiede.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.88,
+                            "y": 0.30
+                        },
+                        "boss": {
+                            "name": "Core Forge",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "element": "void",
+                            "hp": 620,
+                            "attack": 28
+                        },
+                        "xpReward": 320,
+                        "rewards": [
+                            {
+                                "currency": "skill_points",
+                                "amount": 50
+                            },
+                            {
+                                "currency": "skill_glyphs",
+                                "amount": 4
+                            },
+                            {
+                                "currency": "skill_cores",
+                                "amount": 2
+                            },
+                            {
+                                "currency": "skill_shards",
+                                "amount": 1
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 25
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "neutral_spark",
+                                "amount": 1
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

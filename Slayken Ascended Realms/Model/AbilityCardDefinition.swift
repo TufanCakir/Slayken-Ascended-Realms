@@ -41,8 +41,11 @@ struct AbilityCardDefinition: Codable, Identifiable, Equatable {
 }
 
 func loadAbilityCards() -> [AbilityCardDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         AbilityCardDefinition.self,
-        resource: "ability_cards"
+        baseResources: ["ability_cards"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("ability_cards_") || $0.hasPrefix("summon_cards_")
+        }
     )
 }

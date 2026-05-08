@@ -112,7 +112,7 @@
         "id": "coop-card-ash-breaker",
         "name": "Ash Breaker Karte",
         "subtitle": "Lava Sigils gegen eine offensive Skill-Karte.",
-        "image": "skill_ash_breaker.png",
+        "image": "skill_ash_breaker",
         "cost": [
             {
                 "currency": "lava_sigil",
@@ -133,7 +133,7 @@
         "id": "coop-card-moon-guard",
         "name": "Moon Guard Karte",
         "subtitle": "Moon Tokens gegen eine defensive Skill-Karte.",
-        "image": "skill_moon_guard.png",
+        "image": "skill_moon_guard",
         "cost": [
             {
                 "currency": "moon_token",
@@ -154,7 +154,7 @@
         "id": "coop-card-void-pulse",
         "name": "Void Pulse Karte",
         "subtitle": "Void Cores gegen eine spätere Void-Skill-Karte.",
-        "image": "skill_void_pulse.png",
+        "image": "skill_void_pulse",
         "cost": [
             {
                 "currency": "void_core",

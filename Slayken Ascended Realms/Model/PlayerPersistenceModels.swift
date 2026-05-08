@@ -83,6 +83,28 @@ final class OwnedAbilityCard {
 }
 
 @Model
+final class PlayerSkillNodeProgress {
+    @Attribute(.unique) var id: String
+    var characterID: String
+    var nodeID: String
+    var rank: Int
+    var updatedAt: Date
+
+    init(
+        characterID: String,
+        nodeID: String,
+        rank: Int = 0,
+        updatedAt: Date = .now
+    ) {
+        self.id = "\(characterID):\(nodeID)"
+        self.characterID = characterID
+        self.nodeID = nodeID
+        self.rank = rank
+        self.updatedAt = updatedAt
+    }
+}
+
+@Model
 final class PlayerCharacterProgress {
     @Attribute(.unique) var characterID: String
     var level: Int

@@ -14,8 +14,11 @@ struct MusicTrackDefinition: Codable, Identifiable, Equatable {
 }
 
 func loadMusicTracks() -> [MusicTrackDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         MusicTrackDefinition.self,
-        resource: "music"
+        baseResources: ["music"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("music_") || $0.hasPrefix("music_tracks_")
+        }
     )
 }

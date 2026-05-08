@@ -1,6 +1,6 @@
 [
     {
-        "id": "chapter_1",
+        "id": "event_chapter_1",
         "title": "Story Kapitel 1",
         "subtitle": "Der erste Riss im Reich",
         "mapTexture": "realm_country",
@@ -18,8 +18,10 @@
                 "mapImage": "realm_country",
                 "mapTexture": "realm_country",
                 "node": {
-                    "x": 0.12,
-                    "y": 0.58
+                    "x": 0.24,
+                    "y": 0.63,
+                    "anchorX": 0.5,
+                    "anchorY": 0.65
                 },
                 "cutscene": {
                     "id": "chapter_1_gate_intro",
@@ -36,8 +38,8 @@
                         "groundTexture": "realm_country",
                         "skyboxTexture": "realm_country",
                         "node": {
-                            "x": 0.06,
-                            "y": 0.72
+                            "x": 0.15,
+                            "y": 0.76
                         },
                         "enemy": {
                             "name": "Rift Guard I",
@@ -85,8 +87,8 @@
                         "groundTexture": "realm_fire",
                         "skyboxTexture": "realm_fire",
                         "node": {
-                            "x": 0.11,
-                            "y": 0.66
+                            "x": 0.24,
+                            "y": 0.69
                         },
                         "enemy": {
                             "name": "Crystal Shade",

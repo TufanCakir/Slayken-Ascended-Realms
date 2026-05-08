@@ -55,6 +55,10 @@ struct DailyLoginView: View {
         )
     }
 
+    private var activeRewardBackground: String? {
+        availableReward?.reward.background
+    }
+
     var body: some View {
 
         VStack(spacing: 20) {
@@ -110,10 +114,22 @@ struct DailyLoginView: View {
         .padding(.top, 20)
         .background {
             ZStack {
-                if let theme = theme.selectedTheme {
-                    RemoteAssetImage(theme.background) {
-                        Color.black.opacity(0.35)
+                if let activeRewardBackground,
+                    !activeRewardBackground.trimmingCharacters(
+                        in: .whitespacesAndNewlines
+                    )
+                    .isEmpty
+                {
+                    RemoteAssetImage(activeRewardBackground, contentMode: .fill)
+                    {
+                        backgroundFallback
                     }
+                } else if let theme = theme.selectedTheme {
+                    RemoteAssetImage(theme.background, contentMode: .fill) {
+                        backgroundFallback
+                    }
+                } else {
+                    backgroundFallback
                 }
 
                 LinearGradient(
@@ -257,10 +273,13 @@ struct DailyLoginView: View {
             }
         }
         .padding()
-        .background(
-            Color.black.opacity(0.34),
-            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
-        )
+        .background {
+            loginBackgroundImage(
+                named: availableReward?.reward.background,
+                fallback: Color.black.opacity(0.34)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+        }
         .overlay {
             RoundedRectangle(cornerRadius: 26, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
@@ -281,10 +300,13 @@ struct DailyLoginView: View {
 
                 Spacer()
 
-                Image(systemName: reward.icon)
-                    .foregroundStyle(
-                        isHighlighted ? Color.white : .white.opacity(0.72)
-                    )
+                rewardIconView(
+                    assetIconName: reward.assetIcon,
+                    symbolName: reward.icon,
+                    tintColor: isHighlighted
+                        ? Color.white : .white.opacity(0.72)
+                )
+                .frame(width: 22, height: 22)
             }
 
             Text(reward.title)
@@ -310,10 +332,13 @@ struct DailyLoginView: View {
             }
         }
         .padding()
-        .background(
-            Color.black.opacity(0.34),
-            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
-        )
+        .background {
+            loginBackgroundImage(
+                named: reward.background,
+                fallback: Color.black.opacity(0.34)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+        }
         .overlay {
             RoundedRectangle(cornerRadius: 26, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
@@ -353,6 +378,26 @@ struct DailyLoginView: View {
         } else {
             Image(systemName: symbolName ?? "gift.fill")
                 .foregroundStyle(.white)
+        }
+    }
+
+    @ViewBuilder
+    private func rewardIconView(
+        assetIconName: String?,
+        symbolName: String,
+        tintColor: Color
+    ) -> some View {
+        if let assetIconName,
+            !assetIconName.trimmingCharacters(in: .whitespacesAndNewlines)
+                .isEmpty
+        {
+            RemoteAssetImage(assetIconName, contentMode: .fit) {
+                Image(systemName: symbolName)
+                    .foregroundStyle(tintColor)
+            }
+        } else {
+            Image(systemName: symbolName)
+                .foregroundStyle(tintColor)
         }
     }
 
@@ -442,6 +487,23 @@ struct DailyLoginView: View {
                 .foregroundStyle(.white)
         }
     }
+
+    @ViewBuilder
+    private func loginBackgroundImage(
+        named imageName: String?,
+        fallback: Color
+    ) -> some View {
+        if let imageName,
+            !imageName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        {
+            RemoteAssetImage(imageName, contentMode: .fill) {
+                fallback
+            }
+            .overlay(Color.black.opacity(0.34))
+        } else {
+            fallback
+        }
+    }
 }
 
 #Preview {
@@ -452,6 +514,7 @@ struct DailyLoginView: View {
                 title: "Daily Login",
                 subtitle: "30 Tage Login-Belohnungen",
                 resource: "daily_login",
+                endsAt: nil,
                 rewards: []
             )
         ],
@@ -467,6 +530,7 @@ struct DailyLoginView: View {
                 message: "Du hast deine erste Tagesbelohnung erhalten.",
                 buttonTitle: "Abholen",
                 icon: "star.fill",
+                assetIcon: nil,
                 rewards: [
                     CurrencyAmount(currency: "gold", amount: 500),
                     CurrencyAmount(currency: "gems", amount: 25),
@@ -498,6 +562,7 @@ struct DailyLoginView: View {
                 message: "Du hast deine erste Tagesbelohnung erhalten.",
                 buttonTitle: "Abholen",
                 icon: "star.fill",
+                assetIcon: nil,
                 rewards: [
                     CurrencyAmount(currency: "gold", amount: 500),
                     CurrencyAmount(currency: "gems", amount: 25),

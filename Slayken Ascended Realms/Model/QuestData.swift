@@ -190,8 +190,14 @@ extension BattleResourceConfigurationDefinition {
 }
 
 func loadQuestDefinitions() -> [QuestDefinition] {
-    JSONResourceLoader.loadArray(QuestDefinition.self, resource: "quests")
-        .sorted { $0.sortOrder < $1.sortOrder }
+    JSONResourceLoader.loadMergedIdentifiableArrays(
+        QuestDefinition.self,
+        baseResources: ["quests"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("quests_") || $0.hasPrefix("quest_")
+        },
+        sort: { $0.sortOrder < $1.sortOrder }
+    )
 }
 
 func loadBattleResourceConfiguration() -> BattleResourceConfigurationDefinition

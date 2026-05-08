@@ -1,0 +1,314 @@
+[
+    {
+        "id": "skill_tree_stage_2",
+        "title": "Stage 2",
+        "subtitle":
+            "Mehr Tempo, bessere Drops und staerkere Karten fuer Midgame-Fortschritt.",
+        "sortOrder": 2,
+        "palette": {
+            "selectorStartHex": "#7E69FF",
+            "selectorEndHex": "#2848BE",
+            "panelStartHex": "#1B2554",
+            "panelEndHex": "#0A1130",
+            "resourceBarStartHex": "#4536A5",
+            "resourceBarEndHex": "#111D4D",
+            "connectionHex": "#A2B3FF"
+        },
+        "nodes": [
+            {
+                "id": "vitality_2",
+                "title": "Vitality II",
+                "description":
+                    "Noch mehr HP fuer laengere Kaempfe gegen Elite-Gegner.",
+                "icon": "heart.text.square.fill",
+                "assetIcon": "skill_green",
+                "maxRank": 5,
+                "costCurrency": "skill_runes",
+                "costPerRank": 90,
+                "autoLearnPriority": 9,
+                "position": {
+                    "x": 120,
+                    "y": 140
+                },
+                "prerequisites": [],
+                "palette": {
+                    "fieldName": "Vitality",
+                    "fillStartHex": "#1FD399",
+                    "fillEndHex": "#107A65",
+                    "lockedStartHex": "#1B3431",
+                    "lockedEndHex": "#0C1615",
+                    "masteredStartHex": "#85FFD8",
+                    "masteredEndHex": "#1AB585",
+                    "accentHex": "#89F6D4"
+                },
+                "bonuses": [
+                    {
+                        "type": "hp_percent",
+                        "value": 0.06
+                    }
+                ]
+            },
+            {
+                "id": "strength_2",
+                "title": "Strength II",
+                "description":
+                    "Skaliert deinen Grundschaden fuer spaetere Story-Kaempfe.",
+                "icon": "bolt.heart.fill",
+                "assetIcon": "skill_red",
+                "maxRank": 5,
+                "costCurrency": "skill_runes",
+                "costPerRank": 95,
+                "autoLearnPriority": 10,
+                "position": {
+                    "x": 320,
+                    "y": 140
+                },
+                "prerequisites": [],
+                "palette": {
+                    "fieldName": "Strength",
+                    "fillStartHex": "#FF7A57",
+                    "fillEndHex": "#A12A1F",
+                    "lockedStartHex": "#3B241E",
+                    "lockedEndHex": "#190F0C",
+                    "masteredStartHex": "#FFBE74",
+                    "masteredEndHex": "#DB5C34",
+                    "accentHex": "#FF9F76"
+                },
+                "bonuses": [
+                    {
+                        "type": "attack_percent",
+                        "value": 0.06
+                    }
+                ]
+            },
+            {
+                "id": "arcanum_2",
+                "title": "Arcanum II",
+                "description":
+                    "Staerkt den Schaden deiner Skill-Karten deutlich.",
+                "icon": "sparkles.rectangle.stack.fill",
+                "assetIcon": "skill_indigo",
+                "maxRank": 5,
+                "costCurrency": "skill_runes",
+                "costPerRank": 100,
+                "autoLearnPriority": 11,
+                "position": {
+                    "x": 520,
+                    "y": 140
+                },
+                "prerequisites": [],
+                "palette": {
+                    "fieldName": "Arcane",
+                    "fillStartHex": "#8E79FF",
+                    "fillEndHex": "#4431A9",
+                    "lockedStartHex": "#282144",
+                    "lockedEndHex": "#0E0B18",
+                    "masteredStartHex": "#D2A0FF",
+                    "masteredEndHex": "#775AE6",
+                    "accentHex": "#C6ABFF"
+                },
+                "bonuses": [
+                    {
+                        "type": "card_damage_percent",
+                        "value": 0.07
+                    },
+                    {
+                        "type": "damage_water_percent",
+                        "value": 0.04
+                    }
+                ]
+            },
+            {
+                "id": "flow_2",
+                "title": "Flow II",
+                "description":
+                    "Beschleunigt Mana-Regen fuer haeufigere Skill-Einsaetze.",
+                "icon": "drop.fill",
+                "assetIcon": "skill_brown",
+                "maxRank": 5,
+                "costCurrency": "skill_runes",
+                "costPerRank": 90,
+                "autoLearnPriority": 12,
+                "position": {
+                    "x": 720,
+                    "y": 140
+                },
+                "prerequisites": [],
+                "palette": {
+                    "fieldName": "Flow",
+                    "fillStartHex": "#41E3E8",
+                    "fillEndHex": "#157694",
+                    "lockedStartHex": "#1A3137",
+                    "lockedEndHex": "#0A1518",
+                    "masteredStartHex": "#ABFDFF",
+                    "masteredEndHex": "#43BCD3",
+                    "accentHex": "#8BF6FF"
+                },
+                "bonuses": [
+                    {
+                        "type": "mana_regen_percent",
+                        "value": 0.06
+                    }
+                ]
+            },
+            {
+                "id": "coin_blessing_2",
+                "title": "Coin Blessing",
+                "description":
+                    "Verbessert Coin-Farming fuer Shop und Aufwertungen.",
+                "icon": "centsign.circle.fill",
+                "assetIcon": "icon_coins",
+                "maxRank": 5,
+                "costCurrency": "skill_runes",
+                "costPerRank": 110,
+                "autoLearnPriority": 13,
+                "position": {
+                    "x": 220,
+                    "y": 320
+                },
+                "prerequisites": [
+                    "vitality_2"
+                ],
+                "palette": {
+                    "fieldName": "Coins",
+                    "fillStartHex": "#FFE15C",
+                    "fillEndHex": "#C77B19",
+                    "lockedStartHex": "#40351D",
+                    "lockedEndHex": "#1B150A",
+                    "masteredStartHex": "#FFF1AA",
+                    "masteredEndHex": "#F0C048",
+                    "accentHex": "#FFE784"
+                },
+                "bonuses": [
+                    {
+                        "type": "coin_drop_percent",
+                        "value": 0.08
+                    },
+                    {
+                        "type": "drop_skill_runes_percent",
+                        "value": 0.10
+                    }
+                ]
+            },
+            {
+                "id": "crystal_blessing_2",
+                "title": "Crystal Blessing",
+                "description":
+                    "Verbessert Crystal-Farming fuer Banner und Shop.",
+                "icon": "diamond.circle.fill",
+                "assetIcon": "icon_crystals",
+                "maxRank": 5,
+                "costCurrency": "skill_runes",
+                "costPerRank": 110,
+                "autoLearnPriority": 14,
+                "position": {
+                    "x": 420,
+                    "y": 320
+                },
+                "prerequisites": [
+                    "strength_2"
+                ],
+                "palette": {
+                    "fieldName": "Crystals",
+                    "fillStartHex": "#6ED4FF",
+                    "fillEndHex": "#2B66D1",
+                    "lockedStartHex": "#1E304A",
+                    "lockedEndHex": "#0B1220",
+                    "masteredStartHex": "#C3F1FF",
+                    "masteredEndHex": "#579DFF",
+                    "accentHex": "#9BE5FF"
+                },
+                "bonuses": [
+                    {
+                        "type": "crystal_drop_percent",
+                        "value": 0.08
+                    }
+                ]
+            },
+            {
+                "id": "card_mastery_2",
+                "title": "Card Mastery",
+                "description":
+                    "Steigert die Chance auf zusaetzliche Karten-Rewards.",
+                "icon": "menucard.fill",
+                "assetIcon": "skill_purple",
+                "maxRank": 5,
+                "costCurrency": "skill_runes",
+                "costPerRank": 120,
+                "autoLearnPriority": 15,
+                "position": {
+                    "x": 620,
+                    "y": 320
+                },
+                "prerequisites": [
+                    "arcanum_2"
+                ],
+                "palette": {
+                    "fieldName": "Cards",
+                    "fillStartHex": "#FF70BE",
+                    "fillEndHex": "#A62868",
+                    "lockedStartHex": "#412035",
+                    "lockedEndHex": "#180A14",
+                    "masteredStartHex": "#FFB5D6",
+                    "masteredEndHex": "#E15496",
+                    "accentHex": "#FFA2CF"
+                },
+                "bonuses": [
+                    {
+                        "type": "card_drop_percent",
+                        "value": 0.10
+                    }
+                ]
+            },
+            {
+                "id": "overdrive_2",
+                "title": "Overdrive",
+                "description":
+                    "Kombiniert Angriff, Karten-DMG und Mana fuer spaetere Kaempfe.",
+                "icon": "sun.max.fill",
+                "assetIcon": "skill_overdrive",
+                "maxRank": 5,
+                "costCurrency": "skill_runes",
+                "costPerRank": 150,
+                "autoLearnPriority": 16,
+                "position": {
+                    "x": 520,
+                    "y": 500
+                },
+                "prerequisites": [
+                    "coin_blessing_2",
+                    "crystal_blessing_2",
+                    "card_mastery_2"
+                ],
+                "palette": {
+                    "fieldName": "Overdrive",
+                    "fillStartHex": "#FFFFFF",
+                    "fillEndHex": "#687BFF",
+                    "lockedStartHex": "#303340",
+                    "lockedEndHex": "#13141A",
+                    "masteredStartHex": "#FFF5C2",
+                    "masteredEndHex": "#8398FF",
+                    "accentHex": "#E2E8FF"
+                },
+                "bonuses": [
+                    {
+                        "type": "attack_percent",
+                        "value": 0.04
+                    },
+                    {
+                        "type": "card_damage_percent",
+                        "value": 0.05
+                    },
+                    {
+                        "type": "mana_regen_percent",
+                        "value": 0.04
+                    },
+                    {
+                        "type": "damage_storm_percent",
+                        "value": 0.05
+                    }
+                ]
+            }
+        ]
+    }
+]

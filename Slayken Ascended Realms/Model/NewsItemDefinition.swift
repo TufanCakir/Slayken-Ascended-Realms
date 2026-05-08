@@ -19,8 +19,11 @@ struct NewsItemDefinition: Codable, Identifiable, Equatable {
 }
 
 func loadNewsItems() -> [NewsItemDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         NewsItemDefinition.self,
-        resource: "news_items"
+        baseResources: ["news_items"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("news_items_") || $0.hasPrefix("news_")
+        }
     )
 }

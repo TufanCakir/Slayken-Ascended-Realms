@@ -25,9 +25,12 @@ struct CurrencyAmount: Codable, Identifiable, Equatable {
 }
 
 func loadCurrencyDefinitions() -> [CurrencyDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         CurrencyDefinition.self,
-        resource: "currencies"
+        baseResources: ["currencies"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("currencies_") || $0.hasPrefix("currency_")
+        },
+        sort: { $0.sortOrder < $1.sortOrder }
     )
-    .sorted { $0.sortOrder < $1.sortOrder }
 }

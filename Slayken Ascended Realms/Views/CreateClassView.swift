@@ -358,13 +358,20 @@ struct CreateClassView: View {
     {
         Button {
             if let previewCharacter {
+                PlayerInventoryStore.setTeam(
+                    characterID: previewCharacter.model,
+                    in: modelContext
+                )
                 onComplete(previewCharacter)
             } else if let selectedClass {
-                onComplete(
-                    selectedVariant.makeCharacter(
-                        named: resolvedCharacterName(for: selectedClass)
-                    )
+                let character = selectedVariant.makeCharacter(
+                    named: resolvedCharacterName(for: selectedClass)
                 )
+                PlayerInventoryStore.setTeam(
+                    characterID: character.model,
+                    in: modelContext
+                )
+                onComplete(character)
             }
         } label: {
             Text(

@@ -66,6 +66,7 @@ enum PlayerInventoryStore {
     static func addBattleRewards(
         _ rewards: [CurrencyAmount],
         in context: ModelContext,
+        characterID: String? = nil,
         limits: BattleRewardLimitDefinition? = nil,
         now: Date = .now
     ) -> [CurrencyAmount] {
@@ -84,15 +85,24 @@ enum PlayerInventoryStore {
                 coins: configuration.coinLimit.maximum,
                 crystals: configuration.crystalLimit.maximum
             )
+        let skillBonuses =
+            characterID.map {
+                characterSkillBonuses(for: $0, in: context)
+            } ?? CharacterSkillBonusTotals()
 
         let filteredRewards = rewards.compactMap { reward -> CurrencyAmount? in
+            let boostedAmount = scaledRewardAmount(
+                reward.amount,
+                bonusPercent: skillBonuses.dropPercent(for: reward.currency)
+            )
+
             switch reward.currency {
             case "coins":
                 let remaining = max(
                     0,
                     min(state.availableCoinsLimit, resolvedLimits.coins)
                 )
-                let allowedAmount = min(reward.amount, remaining)
+                let allowedAmount = min(boostedAmount, remaining)
                 guard allowedAmount > 0 else { return nil }
                 state.availableCoinsLimit -= allowedAmount
                 return CurrencyAmount(
@@ -104,7 +114,7 @@ enum PlayerInventoryStore {
                     0,
                     min(state.availableCrystalsLimit, resolvedLimits.crystals)
                 )
-                let allowedAmount = min(reward.amount, remaining)
+                let allowedAmount = min(boostedAmount, remaining)
                 guard allowedAmount > 0 else { return nil }
                 state.availableCrystalsLimit -= allowedAmount
                 return CurrencyAmount(
@@ -112,7 +122,11 @@ enum PlayerInventoryStore {
                     amount: allowedAmount
                 )
             default:
-                return reward
+                guard boostedAmount > 0 else { return nil }
+                return CurrencyAmount(
+                    currency: reward.currency,
+                    amount: boostedAmount
+                )
             }
         }
 
@@ -325,6 +339,44 @@ enum PlayerInventoryStore {
         save(context)
     }
 
+    static func deckCard(in slotIndex: Int, in context: ModelContext) -> String?
+    {
+        let descriptor = FetchDescriptor<PlayerDeckCardSlot>(
+            predicate: #Predicate { $0.slotIndex == slotIndex }
+        )
+        return try? context.fetch(descriptor).first?.cardID
+    }
+
+    static func ensureDeckCardEquipped(
+        cardID: String,
+        preferredSlotIndex: Int = 0,
+        slotLimit: Int,
+        in context: ModelContext
+    ) {
+        guard slotLimit > 0 else { return }
+
+        let descriptor = FetchDescriptor<PlayerDeckCardSlot>()
+        let slots = (try? context.fetch(descriptor)) ?? []
+
+        if slots.contains(where: {
+            $0.cardID == cardID && $0.slotIndex < slotLimit
+        }) {
+            return
+        }
+
+        let preferredIndex = min(max(0, preferredSlotIndex), slotLimit - 1)
+        if !slots.contains(where: { $0.slotIndex == preferredIndex }) {
+            setDeckCard(cardID: cardID, slotIndex: preferredIndex, in: context)
+            return
+        }
+
+        if let emptyIndex = (0..<slotLimit).first(where: { index in
+            !slots.contains(where: { $0.slotIndex == index })
+        }) {
+            setDeckCard(cardID: cardID, slotIndex: emptyIndex, in: context)
+        }
+    }
+
     static func addOwnedCard(
         cardID: String,
         amount: Int = 1,
@@ -340,6 +392,134 @@ enum PlayerInventoryStore {
             context.insert(OwnedAbilityCard(cardID: cardID, count: amount))
         }
         save(context)
+    }
+
+    static func skillNodeRanks(
+        for characterID: String,
+        in context: ModelContext
+    ) -> [String: Int] {
+        let descriptor = FetchDescriptor<PlayerSkillNodeProgress>(
+            predicate: #Predicate { $0.characterID == characterID }
+        )
+        let progress = (try? context.fetch(descriptor)) ?? []
+        return Dictionary(
+            uniqueKeysWithValues: progress.map { ($0.nodeID, $0.rank) }
+        )
+    }
+
+    static func characterSkillBonuses(
+        for characterID: String,
+        in context: ModelContext
+    ) -> CharacterSkillBonusTotals {
+        let ranks = skillNodeRanks(for: characterID, in: context)
+        var totals = CharacterSkillBonusTotals()
+
+        for tree in loadCharacterSkillTrees() {
+            for node in tree.nodes {
+                let rank = ranks[node.id] ?? 0
+                guard rank > 0 else { continue }
+
+                for bonus in node.bonuses {
+                    let totalValue = bonus.value * Double(rank)
+                    totals.add(type: bonus.type, value: totalValue)
+                }
+            }
+        }
+
+        return totals
+    }
+
+    static func canLearnSkillNode(
+        _ node: CharacterSkillNodeDefinition,
+        in tree: CharacterSkillTreeDefinition,
+        characterID: String,
+        in context: ModelContext
+    ) -> Bool {
+        let ranks = skillNodeRanks(for: characterID, in: context)
+        let currentRank = ranks[node.id] ?? 0
+        guard currentRank < node.maxRank else { return false }
+
+        let prerequisitesMet = node.prerequisites.allSatisfy { prerequisite in
+            (ranks[prerequisite] ?? 0) > 0
+        }
+        guard prerequisitesMet else { return false }
+
+        return amount(for: node.costCurrency, in: context) >= node.costPerRank
+    }
+
+    @discardableResult
+    static func learnSkillNode(
+        _ node: CharacterSkillNodeDefinition,
+        in tree: CharacterSkillTreeDefinition,
+        characterID: String,
+        in context: ModelContext
+    ) -> Bool {
+        guard
+            canLearnSkillNode(
+                node,
+                in: tree,
+                characterID: characterID,
+                in: context
+            )
+        else {
+            return false
+        }
+
+        guard
+            spend(
+                [
+                    CurrencyAmount(
+                        currency: node.costCurrency,
+                        amount: node.costPerRank
+                    )
+                ],
+                in: context
+            )
+        else {
+            return false
+        }
+
+        let progress = skillNodeProgress(
+            characterID: characterID,
+            nodeID: node.id,
+            in: context
+        )
+        progress.rank += 1
+        progress.updatedAt = .now
+        save(context)
+        return true
+    }
+
+    @discardableResult
+    static func autoLearnSkillNodes(
+        in tree: CharacterSkillTreeDefinition,
+        characterID: String,
+        in context: ModelContext
+    ) -> Int {
+        var learnedCount = 0
+        var madeProgress = true
+
+        while madeProgress {
+            madeProgress = false
+
+            for node in tree.nodes.sorted(by: compareSkillNodesForAutoLearn) {
+                guard
+                    learnSkillNode(
+                        node,
+                        in: tree,
+                        characterID: characterID,
+                        in: context
+                    )
+                else {
+                    continue
+                }
+
+                learnedCount += 1
+                madeProgress = true
+            }
+        }
+
+        return learnedCount
     }
 
     static func progress(for characterID: String, in context: ModelContext)
@@ -455,7 +635,8 @@ enum PlayerInventoryStore {
             let nextIndex = nextDailyGiftIndex(
                 progress: progress,
                 rewards: rewards,
-                now: now
+                now: now,
+                progressID: progressID
             )
         else {
             return nil
@@ -709,7 +890,8 @@ enum PlayerInventoryStore {
     static func scaledCharacterStats(
         for character: CharacterStats,
         characterLevel: Int,
-        ascendedLevel: Int
+        ascendedLevel: Int,
+        in context: ModelContext? = nil
     ) -> CharacterStats {
         let progression = loadBattleResourceConfiguration().progression
         let characterHPScale = pow(
@@ -728,6 +910,15 @@ enum PlayerInventoryStore {
             progression.characterAttackGrowthPerAscendedLevel,
             Double(max(0, ascendedLevel - 1))
         )
+        let skillBonuses =
+            context.map {
+                characterSkillBonuses(for: character.model, in: $0)
+            } ?? CharacterSkillBonusTotals()
+        let hpSkillScale = max(0.1, 1 + skillBonuses.statPercent(for: "hp"))
+        let attackSkillScale = max(
+            0.1,
+            1 + skillBonuses.statPercent(for: "attack")
+        )
 
         return CharacterStats(
             name: character.name,
@@ -736,9 +927,13 @@ enum PlayerInventoryStore {
             battleModel: character.battleModel,
             texture: character.texture,
             element: character.element,
-            hp: character.hp * CGFloat(characterHPScale * ascendedHPScale),
+            hp: character.hp
+                * CGFloat(characterHPScale * ascendedHPScale * hpSkillScale),
             attack: character.attack
-                * CGFloat(characterAttackScale * ascendedAttackScale)
+                * CGFloat(
+                    characterAttackScale * ascendedAttackScale
+                        * attackSkillScale
+                )
         )
     }
 
@@ -840,6 +1035,28 @@ enum PlayerInventoryStore {
         }
 
         let progress = PlayerDailyLoginProgress(id: id)
+        context.insert(progress)
+        save(context)
+        return progress
+    }
+
+    private static func skillNodeProgress(
+        characterID: String,
+        nodeID: String,
+        in context: ModelContext
+    ) -> PlayerSkillNodeProgress {
+        let id = "\(characterID):\(nodeID)"
+        let descriptor = FetchDescriptor<PlayerSkillNodeProgress>(
+            predicate: #Predicate { $0.id == id }
+        )
+        if let progress = try? context.fetch(descriptor).first {
+            return progress
+        }
+
+        let progress = PlayerSkillNodeProgress(
+            characterID: characterID,
+            nodeID: nodeID
+        )
         context.insert(progress)
         save(context)
         return progress
@@ -991,9 +1208,15 @@ enum PlayerInventoryStore {
     private static func nextDailyGiftIndex(
         progress: PlayerDailyLoginProgress,
         rewards: [DailyLoginRewardDefinition],
-        now: Date
+        now: Date,
+        progressID: String
     ) -> Int? {
         let calendar = Calendar.current
+        let shouldCycle = progressID == "daily_login"
+
+        if !shouldCycle, progress.totalClaims >= rewards.count {
+            return nil
+        }
 
         guard let lastClaimedAt = progress.lastClaimedAt else {
             return 0
@@ -1008,10 +1231,47 @@ enum PlayerInventoryStore {
             comparedTo: now,
             calendar: calendar
         ) {
-            return progress.streakCount % rewards.count
+            if shouldCycle {
+                return progress.streakCount % rewards.count
+            }
+
+            if progress.streakCount >= rewards.count {
+                return nil
+            }
+
+            return progress.streakCount
         }
 
         return 0
+    }
+
+    private static func scaledRewardAmount(
+        _ baseAmount: Int,
+        bonusPercent: Double
+    ) -> Int {
+        max(
+            baseAmount,
+            Int((Double(baseAmount) * (1 + bonusPercent)).rounded())
+        )
+    }
+
+    private static func compareSkillNodesForAutoLearn(
+        _ lhs: CharacterSkillNodeDefinition,
+        _ rhs: CharacterSkillNodeDefinition
+    ) -> Bool {
+        if lhs.resolvedAutoLearnPriority != rhs.resolvedAutoLearnPriority {
+            return lhs.resolvedAutoLearnPriority < rhs.resolvedAutoLearnPriority
+        }
+
+        if lhs.position.y != rhs.position.y {
+            return lhs.position.y < rhs.position.y
+        }
+
+        if lhs.position.x != rhs.position.x {
+            return lhs.position.x < rhs.position.x
+        }
+
+        return lhs.id < rhs.id
     }
 
     private static func isNextCalendarDay(

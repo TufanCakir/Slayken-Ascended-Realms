@@ -9,6 +9,7 @@ import Foundation
 
 enum JSONResourceLoader {
     private static var memoryCache = [String: Data]()
+    private static var bundledResourceNamesCache: [String]?
 
     static func loadData(resource: String) -> Data? {
         if let cachedData = memoryCache[resource] {
@@ -61,7 +62,63 @@ enum JSONResourceLoader {
         load([T].self, resource: resource) ?? []
     }
 
+    static func loadMergedIdentifiableArrays<T: Decodable & Identifiable>(
+        _ type: T.Type,
+        baseResources: [String],
+        autoDiscoveredWhere predicate: (String) -> Bool,
+        sort: ((T, T) -> Bool)? = nil
+    ) -> [T] where T.ID: Hashable {
+        let discoveredResources = Set(
+            RemoteContentManager.cachedResourceNames().filter(predicate)
+                + bundledResourceNames().filter(predicate)
+        )
+        .sorted()
+
+        var orderedResources = [String]()
+        var seenResources = Set<String>()
+
+        for resourceName in baseResources + discoveredResources {
+            if seenResources.insert(resourceName).inserted {
+                orderedResources.append(resourceName)
+            }
+        }
+
+        var orderedIDs = [T.ID]()
+        var valuesByID = [T.ID: T]()
+
+        for resourceName in orderedResources {
+            let items = loadArray(type, resource: resourceName)
+
+            for item in items {
+                if valuesByID.updateValue(item, forKey: item.id) == nil {
+                    orderedIDs.append(item.id)
+                }
+            }
+        }
+
+        let mergedItems = orderedIDs.compactMap { valuesByID[$0] }
+        guard let sort else { return mergedItems }
+        return mergedItems.sorted(by: sort)
+    }
+
     static func invalidateCache() {
         memoryCache.removeAll()
+        bundledResourceNamesCache = nil
+    }
+
+    private static func bundledResourceNames() -> [String] {
+        if let bundledResourceNamesCache {
+            return bundledResourceNamesCache
+        }
+
+        let resourceNames =
+            Bundle.main.urls(
+                forResourcesWithExtension: "json",
+                subdirectory: nil
+            )?
+            .compactMap { $0.deletingPathExtension().lastPathComponent }
+            ?? []
+        bundledResourceNamesCache = resourceNames
+        return resourceNames
     }
 }

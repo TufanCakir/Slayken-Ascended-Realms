@@ -13,13 +13,13 @@ struct TeamView: View {
     private enum ActiveSheet: Identifiable {
         case character
         case card(slot: Int)
-        case cards
+        case skillTree
 
         var id: String {
             switch self {
             case .character: return "character"
             case .card(let slot): return "card_\(slot)"
-            case .cards: return "cards"
+            case .skillTree: return "skill_tree"
             }
         }
     }
@@ -37,22 +37,55 @@ struct TeamView: View {
         [PlayerDeckCardSlot]
     @Query(sort: \OwnedAbilityCard.acquiredAt) private var ownedCards:
         [OwnedAbilityCard]
+    @Query(sort: \PlayerCharacterProgress.characterID) private
+        var characterProgress: [PlayerCharacterProgress]
 
     @State private var activeSheet: ActiveSheet?
 
-    private let deckSlotCount = 8
+    private var deckSlotCount: Int {
+        loadDeckConfiguration().resolvedSlotCount
+    }
+
+    private var selectedTeamCharacterID: String? {
+        teamRecords.first(where: { $0.slotIndex == 0 })?.characterID
+    }
 
     private var selectedCharacter: SummonCharacter? {
-        guard
-            let teamCharacterID = teamRecords.first(where: { $0.slotIndex == 0 }
-            )?.characterID
-        else { return nil }
+        guard let teamCharacterID = selectedTeamCharacterID else { return nil }
         return characters.first { $0.id == teamCharacterID }
     }
 
     private var selectedOwnedRecord: OwnedSummonCharacter? {
         guard let selectedCharacter else { return nil }
         return ownedRecords.first { $0.characterID == selectedCharacter.id }
+    }
+
+    private var selectedCharacterStats: CharacterStats? {
+        guard let teamCharacterID = selectedTeamCharacterID else {
+            return gameState.player.model.isEmpty ? nil : gameState.player
+        }
+
+        if let selectedCharacter {
+            return selectedCharacter.stats(
+                selectedSkinID: selectedOwnedRecord?.selectedSkinID
+            )
+        }
+
+        if let availableCharacter = gameState.availableCharacters.first(where: {
+            $0.model == teamCharacterID
+        }) {
+            return availableCharacter
+        }
+
+        return teamCharacterID == gameState.player.model
+            ? gameState.player : nil
+    }
+
+    private var selectedCharacterLevel: Int {
+        guard let selectedCharacterStats else { return 1 }
+        return characterProgress.first(where: {
+            $0.characterID == selectedCharacterStats.model
+        })?.level ?? 1
     }
 
     private var selectedSkin: CharacterSkin? {
@@ -69,29 +102,9 @@ struct TeamView: View {
     }
 
     var body: some View {
-
-        VStack(spacing: 14) {
-            Text("Decks")
-                .font(.system(size: 28, weight: .light))
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
-
+        VStack(spacing: 18) {
             deckPanel
-
-            Button {
-                activeSheet = .cards
-            } label: {
-                Label("Meine Karten", systemImage: "rectangle.stack.fill")
-                    .font(.system(size: 13, weight: .black))
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 11)
-                    .background(Color.black.opacity(0.44), in: Capsule())
-            }
-            .buttonStyle(.plain)
-            .padding(.horizontal, 14)
-            .padding(.top, 8)
-            .padding(.bottom, 18)
+            heroStage
         }
         .fullScreenCover(item: $activeSheet) { sheet in
             switch sheet {
@@ -104,15 +117,21 @@ struct TeamView: View {
                         in: modelContext
                     )
                     if let record = ownedRecords.first(where: {
-                        $0.characterID == character.id
+                        $0.characterID == character.model
                     }) {
                         record.selectedSkinID = skinID
                         try? modelContext.save()
                     }
-                    gameState.saveSummonedCharacter(
-                        character,
-                        selectedSkinID: skinID
-                    )
+                    if let summonCharacter = characters.first(where: {
+                        $0.id == character.model
+                    }) {
+                        gameState.saveSummonedCharacter(
+                            summonCharacter,
+                            selectedSkinID: skinID
+                        )
+                    } else {
+                        gameState.saveCharacter(character)
+                    }
                     activeSheet = nil
                 } onClose: {
                     activeSheet = nil
@@ -132,39 +151,64 @@ struct TeamView: View {
                 }
                 .environmentObject(gameState)
 
-            case .cards:
-                CardCollectionView(onClose: {
-                    activeSheet = nil
-                })
+            case .skillTree:
+                SkillTreeView(
+                    character: selectedCharacterStats ?? gameState.player,
+                    onClose: {
+                        activeSheet = nil
+                    }
+                )
                 .environmentObject(gameState)
+                .environmentObject(themeManager)
             }
         }
     }
 
     private var deckPanel: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(selectedCharacterStats?.name ?? "Class Slot")
+                        .font(.system(size: 18, weight: .light))
+                        .foregroundStyle(.white)
+                    Text("Lv. \(selectedCharacterLevel)")
+                        .font(.system(size: 28, weight: .light))
+                        .foregroundStyle(
+                            Color(red: 0.75, green: 0.96, blue: 1.0)
+                        )
+                }
+
+                Spacer()
+
+                VStack(spacing: 8) {
+                    panelButton(title: "Full Edit") {
+                        activeSheet = .character
+                    }
+                    panelButton(title: "Skill Panel") {
+                        activeSheet = .skillTree
+                    }
+                }
+            }
+
             characterSlot
 
-            LazyVGrid(
-                columns: Array(
-                    repeating: GridItem(.flexible(), spacing: 8),
-                    count: 4
-                ),
-                spacing: 8
-            ) {
-                ForEach(0..<deckSlotCount, id: \.self) { index in
-                    cardSlot(index)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(0..<deckSlotCount, id: \.self) { index in
+                        cardSlot(index)
+                            .frame(width: 82)
+                    }
                 }
             }
 
             HStack(spacing: 12) {
                 deckMetric(
-                    "Cards",
+                    "Abilities",
                     value: "\(deckSlots.count)/\(deckSlotCount)"
                 )
                 deckMetric(
-                    "Damage",
-                    value: "x\(String(format: "%.2f", deckMultiplier))"
+                    "Created",
+                    value: "+\(max(0, Int((deckMultiplier - 1.0) * 100)))%"
                 )
                 deckMetric(
                     "Owned",
@@ -172,7 +216,15 @@ struct TeamView: View {
                 )
             }
         }
-        .padding()
+        .padding(14)
+        .background(
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
     }
 
     private var characterSlot: some View {
@@ -181,7 +233,7 @@ struct TeamView: View {
         } label: {
             HStack(spacing: 10) {
                 slotImage(
-                    selectedSkin?.summonImage ?? selectedCharacter?.summonImage,
+                    selectedSkin?.summonImage ?? selectedCharacterStats?.image,
                     fallback: "person.crop.square.fill"
                 )
                 .frame(width: 66, height: 66)
@@ -190,22 +242,22 @@ struct TeamView: View {
                 )
                 .background(
                     Color.black.opacity(0.34),
-                    in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
                 )
                 .overlay {
-                    RoundedRectangle(cornerRadius: 26, style: .continuous)
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .stroke(.white.opacity(0.08), lineWidth: 1)
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(selectedCharacter?.name ?? "Character Slot")
+                    Text(selectedCharacterStats?.name ?? "Character Slot")
                         .font(.system(size: 15, weight: .black))
                         .foregroundStyle(.white)
                         .lineLimit(1)
                     Text(
                         selectedCharacter == nil
-                            ? "Tippen zum Auswaehlen"
-                            : "Skin: \(selectedSkin?.name ?? "Kein Skin")"
+                            ? "Aktive Startklasse"
+                            : "Skin: \(selectedSkin?.name ?? "Standard")"
                     )
                     .font(.system(size: 10, weight: .black))
                     .foregroundStyle(.white.opacity(0.74))
@@ -219,7 +271,7 @@ struct TeamView: View {
             }
             .padding(9)
             .background(
-                Color.black.opacity(0.32),
+                Color.black.opacity(0.26),
                 in: RoundedRectangle(cornerRadius: 5, style: .continuous)
             )
         }
@@ -261,7 +313,7 @@ struct TeamView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .aspectRatio(0.72, contentMode: .fit)
+            .aspectRatio(0.74, contentMode: .fit)
             .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 5).stroke(
@@ -271,6 +323,83 @@ struct TeamView: View {
             )
         }
         .buttonStyle(.plain)
+    }
+
+    private var heroStage: some View {
+        ZStack(alignment: .bottomTrailing) {
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.white.opacity(0.06),
+                            Color.black.opacity(0.28),
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+
+            HStack(alignment: .bottom, spacing: 16) {
+                statPanel
+
+                Spacer(minLength: 0)
+            }
+            .padding(16)
+
+            if let selectedCharacterStats {
+                GameSceneView(
+                    player: selectedCharacterStats,
+                    joystickVector: .zero,
+                    autoMoveTarget: nil,
+                    groundTexture: gameState.selectedMap.mapImage,
+                    skyboxTexture: themeManager.selectedTheme?.background
+                        ?? gameState.selectedBackground.image
+                )
+                .id(selectedCharacterStats.model)
+                .frame(height: 360)
+                .allowsHitTesting(false)
+            }
+        }
+        .frame(height: 380)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(.white.opacity(0.12), lineWidth: 1)
+        )
+    }
+
+    private var statPanel: some View {
+        let character = selectedCharacterStats
+
+        return VStack(alignment: .leading, spacing: 8) {
+            Text("Job")
+                .font(.system(size: 12, weight: .bold))
+                .foregroundStyle(.white.opacity(0.72))
+            Text(character?.name ?? "Keine Klasse")
+                .font(.system(size: 18, weight: .black))
+                .foregroundStyle(.white)
+
+            if let element = character?.element {
+                Text("Element \(GameElement(element).displayName)")
+                    .font(.system(size: 12, weight: .black))
+                    .foregroundStyle(GameElement(element).color)
+            }
+
+            Rectangle()
+                .fill(.white.opacity(0.18))
+                .frame(width: 112, height: 1)
+                .padding(.vertical, 4)
+
+            statRow(title: "HP", value: Int(character?.hp ?? 0))
+            statRow(title: "Attack", value: Int(character?.attack ?? 0))
+            statRow(title: "Skills", value: min(deckSlots.count, deckSlotCount))
+            statRow(title: "Deck", value: deckSlotCount)
+        }
+        .padding(12)
+        .background(
+            Color.black.opacity(0.32),
+            in: RoundedRectangle(cornerRadius: 12, style: .continuous)
+        )
     }
 
     private func deckMetric(_ title: String, value: String) -> some View {
@@ -283,6 +412,40 @@ struct TeamView: View {
                 .foregroundStyle(.white)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func statRow(title: String, value: Int) -> some View {
+        HStack {
+            Text(title)
+                .font(.system(size: 11, weight: .bold))
+                .foregroundStyle(.white.opacity(0.76))
+            Spacer()
+            Text("\(value)")
+                .font(.system(size: 13, weight: .black))
+                .foregroundStyle(.white)
+        }
+        .frame(width: 112)
+    }
+
+    private func panelButton(title: String, action: @escaping () -> Void)
+        -> some View
+    {
+        Button(action: action) {
+            Text(title)
+                .font(.system(size: 14, weight: .black))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .background(
+                    Color.black.opacity(0.34),
+                    in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+                )
+                .overlay {
+                    RoundedRectangle(cornerRadius: 26, style: .continuous)
+                        .stroke(.white.opacity(0.08), lineWidth: 1)
+                }
+        }
+        .buttonStyle(.plain)
     }
 
     @ViewBuilder

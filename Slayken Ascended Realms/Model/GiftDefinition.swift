@@ -39,6 +39,8 @@ struct DailyLoginRewardDefinition: Codable, Identifiable, Equatable {
     let message: String
     let buttonTitle: String
     let icon: String
+    let assetIcon: String?
+    let background: String?
     let rewards: [CurrencyAmount]
     let characterRewards: [GiftCharacterReward]
     let cardRewards: [GiftCardReward]
@@ -51,6 +53,8 @@ struct DailyLoginRewardDefinition: Codable, Identifiable, Equatable {
         case message
         case buttonTitle
         case icon
+        case assetIcon
+        case background
         case rewards
         case characterRewards
         case cardRewards
@@ -64,6 +68,8 @@ struct DailyLoginRewardDefinition: Codable, Identifiable, Equatable {
         message: String,
         buttonTitle: String,
         icon: String,
+        assetIcon: String? = nil,
+        background: String? = nil,
         rewards: [CurrencyAmount],
         characterRewards: [GiftCharacterReward] = [],
         cardRewards: [GiftCardReward] = []
@@ -75,6 +81,8 @@ struct DailyLoginRewardDefinition: Codable, Identifiable, Equatable {
         self.message = message
         self.buttonTitle = buttonTitle
         self.icon = icon
+        self.assetIcon = assetIcon
+        self.background = background
         self.rewards = rewards
         self.characterRewards = characterRewards
         self.cardRewards = cardRewards
@@ -89,6 +97,14 @@ struct DailyLoginRewardDefinition: Codable, Identifiable, Equatable {
         message = try container.decode(String.self, forKey: .message)
         buttonTitle = try container.decode(String.self, forKey: .buttonTitle)
         icon = try container.decode(String.self, forKey: .icon)
+        assetIcon = try container.decodeIfPresent(
+            String.self,
+            forKey: .assetIcon
+        )
+        background = try container.decodeIfPresent(
+            String.self,
+            forKey: .background
+        )
         rewards = try container.decode([CurrencyAmount].self, forKey: .rewards)
         characterRewards =
             try container.decodeIfPresent(
@@ -113,6 +129,7 @@ struct LoginRewardCampaign: Identifiable, Equatable {
     let title: String
     let subtitle: String
     let resource: String
+    let endsAt: String?
     let rewards: [DailyLoginRewardDefinition]
 }
 
@@ -121,6 +138,7 @@ private struct LoginRewardCampaignManifest: Codable, Identifiable, Equatable {
     let title: String
     let subtitle: String
     let resource: String
+    let endsAt: String?
 }
 
 private func isLoginCampaignResource(_ resourceName: String) -> Bool {
@@ -149,7 +167,13 @@ private func inferredLoginCampaignSubtitle(for resourceName: String) -> String {
 }
 
 func loadGiftBoxDefinitions() -> [GiftBoxDefinition] {
-    JSONResourceLoader.loadArray(GiftBoxDefinition.self, resource: "gift")
+    JSONResourceLoader.loadMergedIdentifiableArrays(
+        GiftBoxDefinition.self,
+        baseResources: ["gift"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("gift_") || $0.hasPrefix("gift_box_")
+        }
+    )
 }
 
 func loadDailyLoginRewardDefinitions(resource: String = "daily_login")
@@ -173,19 +197,22 @@ func loadLoginRewardCampaigns() -> [LoginRewardCampaign] {
             id: "daily_login",
             title: "Daily Login",
             subtitle: "30 Tage Login-Belohnungen",
-            resource: "daily_login"
+            resource: "daily_login",
+            endsAt: nil
         ),
         LoginRewardCampaignManifest(
             id: "event_login_launch",
             title: "Launch Login",
             subtitle: "Event-Login zum Release",
-            resource: "event_login_launch"
+            resource: "event_login_launch",
+            endsAt: nil
         ),
         LoginRewardCampaignManifest(
             id: "event_login_festival",
             title: "Festival Login",
             subtitle: "Event-Login mit Spezialbelohnungen",
-            resource: "event_login_festival"
+            resource: "event_login_festival",
+            endsAt: nil
         ),
     ]
 
@@ -193,9 +220,10 @@ func loadLoginRewardCampaigns() -> [LoginRewardCampaign] {
     let configuredByResource = Dictionary(
         uniqueKeysWithValues: configuredManifests.map { ($0.resource, $0) }
     )
-    let autoDiscoveredResources = RemoteContentManager.cachedResourceNames().filter(
-        isLoginCampaignResource
-    )
+    let autoDiscoveredResources = RemoteContentManager.cachedResourceNames()
+        .filter(
+            isLoginCampaignResource
+        )
 
     let mergedResources = Array(
         Set(configuredByResource.keys).union(autoDiscoveredResources)
@@ -216,14 +244,22 @@ func loadLoginRewardCampaigns() -> [LoginRewardCampaign] {
                 id: resourceName,
                 title: inferredLoginCampaignTitle(for: resourceName),
                 subtitle: inferredLoginCampaignSubtitle(for: resourceName),
-                resource: resourceName
+                resource: resourceName,
+                endsAt: nil
             )
+
+        if resourceName != "daily_login",
+            !EventDateSupport.isActive(endsAt: manifest.endsAt)
+        {
+            return nil
+        }
 
         return LoginRewardCampaign(
             id: manifest.id,
             title: manifest.title,
             subtitle: manifest.subtitle,
             resource: manifest.resource,
+            endsAt: manifest.endsAt,
             rewards: rewards
         )
     }

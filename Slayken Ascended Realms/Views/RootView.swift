@@ -627,6 +627,27 @@ struct RootView: View {
     }
 
     private func completeTutorialBattle() {
+        if tutorialLaunchSource == .initial,
+            !hasCompletedIntroFlow,
+            let activeTutorial
+        {
+            let slotLimit = loadDeckConfiguration().resolvedSlotCount
+            for cardReward in activeTutorial.cardRewards
+            where cardReward.amount > 0 {
+                PlayerInventoryStore.addOwnedCard(
+                    cardID: cardReward.cardID,
+                    amount: cardReward.amount,
+                    in: modelContext
+                )
+                PlayerInventoryStore.ensureDeckCardEquipped(
+                    cardID: cardReward.cardID,
+                    preferredSlotIndex: 0,
+                    slotLimit: slotLimit,
+                    in: modelContext
+                )
+            }
+        }
+
         if tutorialLaunchSource == .archive || hasCompletedIntroFlow {
             transition(to: .tutorialArchive)
         } else {

@@ -1,0 +1,1975 @@
+[
+    {
+        "id": "chapter_2",
+        "title": "Story Kapitel 2",
+        "subtitle": "Der zweite Rissring",
+        "sortOrder": 2,
+        "minAscendedLevel": 8,
+        "mapTexture": "realm_void",
+        "cutscene": {
+            "id": "chapter_2_intro",
+            "title": "Der zweite Rissring",
+            "video": "intro",
+            "text":
+                "Hinter dem zerbrochenen Mondtor beginnt ein tieferer Risspfad."
+        },
+        "points": [
+            {
+                "id": "chapter_2_inner_gate",
+                "title": "Inneres Mondtor",
+                "text":
+                    "Der zweite Ring des Mondtors breitet sich ueber das Reich aus.",
+                "mapImage": "realm_void",
+                "mapTexture": "realm_void",
+                "node": {
+                    "x": 0.10,
+                    "y": 0.88
+                },
+                "battles": [
+                    {
+                        "id": "chapter_2_battle_1",
+                        "name": "Schattenpfad I",
+                        "description":
+                            "Der zweite Ring beginnt mit einem stillen Vorstoss.",
+                        "difficulty": 17,
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
+                        "node": {
+                            "x": 0.08,
+                            "y": 0.88
+                        },
+                        "enemy": {
+                            "name": "Shadow Route I",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1180,
+                            "attack": 64,
+                            "element": "Dark"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1400
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 110
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_2",
+                        "name": "Schattenpfad II",
+                        "description":
+                            "Der Druck des Risses wird sofort groesser.",
+                        "difficulty": 17,
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
+                        "node": {
+                            "x": 0.14,
+                            "y": 0.84
+                        },
+                        "enemy": {
+                            "name": "Shadow Route II",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1220,
+                            "attack": 66,
+                            "element": "Light"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1460
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 114
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_3",
+                        "name": "Schattenpfad III",
+                        "description":
+                            "Die Route zieht ueber scharfes Gestein.",
+                        "difficulty": 18,
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
+                        "node": {
+                            "x": 0.20,
+                            "y": 0.80
+                        },
+                        "enemy": {
+                            "name": "Shadow Route III",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1260,
+                            "attack": 68,
+                            "element": "Fire"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1520
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 118
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 2
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_4",
+                        "name": "Schattenpfad IV",
+                        "description":
+                            "Der Kernring schiebt dich weiter ins Dunkel.",
+                        "difficulty": 18,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.26,
+                            "y": 0.76
+                        },
+                        "enemy": {
+                            "name": "Shadow Route IV",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1305,
+                            "attack": 70,
+                            "element": "Storm"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1580
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 122
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_5",
+                        "name": "Aschenrampe",
+                        "description":
+                            "Ein enger Aufstieg fuehrt in den zweiten Sektor.",
+                        "difficulty": 19,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.32,
+                            "y": 0.72
+                        },
+                        "enemy": {
+                            "name": "Ash Ramp",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1350,
+                            "attack": 72,
+                            "element": "Fire"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1640
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 126
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_6",
+                        "name": "Runensaum",
+                        "description":
+                            "Die Rune des zweiten Rings ist bereits aktiv.",
+                        "difficulty": 19,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.38,
+                            "y": 0.68
+                        },
+                        "enemy": {
+                            "name": "Rune Fringe",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1400,
+                            "attack": 74,
+                            "element": "Plant"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1700
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 130
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 2
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_7",
+                        "name": "Rissader",
+                        "description":
+                            "Eine grelle Ader aus Energie kreuzt den Weg.",
+                        "difficulty": 20,
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
+                        "node": {
+                            "x": 0.44,
+                            "y": 0.64
+                        },
+                        "enemy": {
+                            "name": "Rift Vein",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1450,
+                            "attack": 76,
+                            "element": "Water"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1760
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 134
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_8",
+                        "name": "Nachtgrat",
+                        "description": "Der Boden kippt in einen dunklen Grat.",
+                        "difficulty": 20,
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.60
+                        },
+                        "enemy": {
+                            "name": "Night Ridge",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1505,
+                            "attack": 78,
+                            "element": "Dark"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1820
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 138
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_9",
+                        "name": "Mondklinge II",
+                        "description":
+                            "Eine schnelle Elite schneidet die Formation an.",
+                        "difficulty": 21,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.56,
+                            "y": 0.56
+                        },
+                        "enemy": {
+                            "name": "Moon Blade II",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1560,
+                            "attack": 80,
+                            "element": "Light"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1880
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 142
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 2
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_10",
+                        "name": "Kernpuls II",
+                        "description":
+                            "Der zweite Ring prueft deine Linie mit einem Impuls.",
+                        "difficulty": 21,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.62,
+                            "y": 0.52
+                        },
+                        "enemy": {
+                            "name": "Core Pulse II",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1620,
+                            "attack": 82,
+                            "element": "Storm"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1940
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 146
+                            }
+                        ],
+                        "characterRewards": [
+                            {
+                                "characterID": "aika"
+                            }
+                        ],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_11",
+                        "name": "Leerenbruch",
+                        "description":
+                            "Die Karte oeffnet sich in die innere Leere.",
+                        "difficulty": 22,
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
+                        "node": {
+                            "x": 0.68,
+                            "y": 0.48
+                        },
+                        "enemy": {
+                            "name": "Void Break",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1680,
+                            "attack": 84,
+                            "element": "Dark"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2000
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 150
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_12",
+                        "name": "Sternengang",
+                        "description":
+                            "Ein klarer Pfad fuehrt direkt zum Kartenrand.",
+                        "difficulty": 22,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.74,
+                            "y": 0.44
+                        },
+                        "enemy": {
+                            "name": "Star Passage",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1745,
+                            "attack": 86,
+                            "element": "Light"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2060
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 154
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 3
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_13",
+                        "name": "Kernsaum III",
+                        "description":
+                            "Der Ring versiegelt den rechten Fluegel.",
+                        "difficulty": 23,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.80,
+                            "y": 0.40
+                        },
+                        "enemy": {
+                            "name": "Core Fringe III",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1810,
+                            "attack": 88,
+                            "element": "Fire"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2120
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 158
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_14",
+                        "name": "Randwacht",
+                        "description":
+                            "Die Wacht drueckt dich auf die Aussenlinie.",
+                        "difficulty": 23,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.86,
+                            "y": 0.36
+                        },
+                        "enemy": {
+                            "name": "Edge Watch",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1880,
+                            "attack": 90,
+                            "element": "Water"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2180
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 162
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_15",
+                        "name": "Leerenpeitsche",
+                        "description":
+                            "Ein harter Richtungswechsel am aeusseren Ende.",
+                        "difficulty": 24,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.92,
+                            "y": 0.32
+                        },
+                        "enemy": {
+                            "name": "Void Lash",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1950,
+                            "attack": 92,
+                            "element": "Dark"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2240
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 166
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 3
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_16",
+                        "name": "Rissbogen",
+                        "description":
+                            "Die Linie knickt nach unten in den zweiten Bogen ab.",
+                        "difficulty": 24,
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
+                        "node": {
+                            "x": 0.88,
+                            "y": 0.26
+                        },
+                        "enemy": {
+                            "name": "Rift Arc",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 2020,
+                            "attack": 94,
+                            "element": "Storm"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2300
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 170
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_17",
+                        "name": "Leerenfalle",
+                        "description":
+                            "Der Ring legt Fallen ueber den Rueckweg.",
+                        "difficulty": 25,
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.22
+                        },
+                        "enemy": {
+                            "name": "Void Trap",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 2095,
+                            "attack": 96,
+                            "element": "Dark"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2360
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 174
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_18",
+                        "name": "Mondwelle",
+                        "description":
+                            "Ein heller Schlag zieht ueber den Boden.",
+                        "difficulty": 25,
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
+                        "node": {
+                            "x": 0.76,
+                            "y": 0.18
+                        },
+                        "enemy": {
+                            "name": "Moon Wave",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 2170,
+                            "attack": 98,
+                            "element": "Light"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2420
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 178
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 3
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_19",
+                        "name": "Ritualspur",
+                        "description":
+                            "Die zweite Schale zeigt die Spuren eines alten Rituals.",
+                        "difficulty": 26,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.70,
+                            "y": 0.14
+                        },
+                        "enemy": {
+                            "name": "Ritual Track",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 2250,
+                            "attack": 100,
+                            "element": "Plant"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2480
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 182
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_20",
+                        "name": "Dunkelkanal",
+                        "description":
+                            "Ein schmaler Kanal fuehrt in den inneren Abschnitt.",
+                        "difficulty": 26,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.64,
+                            "y": 0.10
+                        },
+                        "enemy": {
+                            "name": "Dark Channel",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 2330,
+                            "attack": 102,
+                            "element": "Dark"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2540
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 186
+                            }
+                        ],
+                        "characterRewards": [
+                            {
+                                "characterID": "shen"
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 4
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_21",
+                        "name": "Kernkanal II",
+                        "description":
+                            "Der innere Ring zieht dich wieder nach oben.",
+                        "difficulty": 27,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.58,
+                            "y": 0.16
+                        },
+                        "enemy": {
+                            "name": "Core Channel II",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 2415,
+                            "attack": 104,
+                            "element": "Fire"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2610
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 190
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_22",
+                        "name": "Lichtrand",
+                        "description":
+                            "Ein heller Rand markiert den Rueckweg zur Kartenmitte.",
+                        "difficulty": 27,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.52,
+                            "y": 0.22
+                        },
+                        "enemy": {
+                            "name": "Light Rim",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 2500,
+                            "attack": 106,
+                            "element": "Light"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2680
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 194
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 4
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_23",
+                        "name": "Sternenbruecke",
+                        "description":
+                            "Die Bruecke fuehrt wieder auf die linke Seite.",
+                        "difficulty": 28,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.46,
+                            "y": 0.28
+                        },
+                        "enemy": {
+                            "name": "Star Bridge",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 2590,
+                            "attack": 108,
+                            "element": "Storm"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2750
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 198
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_24",
+                        "name": "Innerer Grat",
+                        "description":
+                            "Ein breiter Grat trennt den unteren Pfad vom oberen Ring.",
+                        "difficulty": 28,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.40,
+                            "y": 0.34
+                        },
+                        "enemy": {
+                            "name": "Inner Ridge",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 2680,
+                            "attack": 110,
+                            "element": "Water"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2820
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 202
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 4
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_25",
+                        "name": "Leerenbogen II",
+                        "description":
+                            "Der Ring zieht in einer weiten Kurve nach links.",
+                        "difficulty": 29,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.34,
+                            "y": 0.40
+                        },
+                        "enemy": {
+                            "name": "Void Arc II",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 2770,
+                            "attack": 112,
+                            "element": "Dark"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2890
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 206
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_26",
+                        "name": "Kernkamm",
+                        "description":
+                            "Ein Kamm aus harter Energie faehrt quer ueber den Pfad.",
+                        "difficulty": 29,
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
+                        "node": {
+                            "x": 0.28,
+                            "y": 0.46
+                        },
+                        "enemy": {
+                            "name": "Core Crest",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 2860,
+                            "attack": 114,
+                            "element": "Plant"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2960
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 210
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 5
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_27",
+                        "name": "Aschenbogen",
+                        "description":
+                            "Hier beginnt der lange Ruecklauf in den oberen Ring.",
+                        "difficulty": 30,
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
+                        "node": {
+                            "x": 0.22,
+                            "y": 0.52
+                        },
+                        "enemy": {
+                            "name": "Ash Arc",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 2960,
+                            "attack": 116,
+                            "element": "Fire"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3030
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 214
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_28",
+                        "name": "Schattenkrone",
+                        "description":
+                            "Eine dunkle Krone aus Splittern kreist ueber dir.",
+                        "difficulty": 30,
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
+                        "node": {
+                            "x": 0.16,
+                            "y": 0.58
+                        },
+                        "enemy": {
+                            "name": "Shadow Crown",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 3060,
+                            "attack": 118,
+                            "element": "Dark"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3100
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 218
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 5
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_29",
+                        "name": "Runenkranz",
+                        "description":
+                            "Der zweite Ring laeuft nun sichtbar ueber den Startpunkt.",
+                        "difficulty": 31,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.12,
+                            "y": 0.64
+                        },
+                        "enemy": {
+                            "name": "Rune Halo",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 3165,
+                            "attack": 120,
+                            "element": "Light"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3170
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 222
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_30",
+                        "name": "Innerer Hammer",
+                        "description":
+                            "Eine schwere Wache blockiert den Aufstieg.",
+                        "difficulty": 31,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.70
+                        },
+                        "enemy": {
+                            "name": "Inner Hammer",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 3270,
+                            "attack": 122,
+                            "element": "Storm"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3240
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 226
+                            }
+                        ],
+                        "characterRewards": [
+                            {
+                                "characterID": "aika"
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 5
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_31",
+                        "name": "Leerenstieg",
+                        "description":
+                            "Die obere Route zieht wieder nach rechts.",
+                        "difficulty": 32,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.24,
+                            "y": 0.76
+                        },
+                        "enemy": {
+                            "name": "Void Rise",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 3380,
+                            "attack": 124,
+                            "element": "Dark"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3310
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 230
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_32",
+                        "name": "Sternenstieg",
+                        "description":
+                            "Eine steile Linie fuehrt in den oberen Ringbogen.",
+                        "difficulty": 32,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.30,
+                            "y": 0.82
+                        },
+                        "enemy": {
+                            "name": "Star Rise",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 3490,
+                            "attack": 126,
+                            "element": "Light"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3380
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 234
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 6
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_33",
+                        "name": "Kernbogen III",
+                        "description":
+                            "Der obere Ring zieht quer ueber den Himmel.",
+                        "difficulty": 33,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.36,
+                            "y": 0.88
+                        },
+                        "enemy": {
+                            "name": "Core Arc III",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 3605,
+                            "attack": 128,
+                            "element": "Fire"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3450
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 238
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_34",
+                        "name": "Lichtbogen",
+                        "description":
+                            "Der Ring hellt sich fuer kurze Zeit auf.",
+                        "difficulty": 33,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.44,
+                            "y": 0.84
+                        },
+                        "enemy": {
+                            "name": "Light Arc",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 3720,
+                            "attack": 130,
+                            "element": "Light"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3520
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 242
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 6
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_35",
+                        "name": "Donnersaum",
+                        "description":
+                            "Ein rauer Saum aus Sturmenergie nimmt die Sicht.",
+                        "difficulty": 34,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.52,
+                            "y": 0.80
+                        },
+                        "enemy": {
+                            "name": "Thunder Fringe",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 3840,
+                            "attack": 132,
+                            "element": "Storm"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3590
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 246
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_36",
+                        "name": "Risspfeiler",
+                        "description":
+                            "Ein gewaltiger Pfeiler stuetzt den zweiten Ring.",
+                        "difficulty": 34,
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
+                        "node": {
+                            "x": 0.60,
+                            "y": 0.76
+                        },
+                        "enemy": {
+                            "name": "Rift Pillar",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 3960,
+                            "attack": 134,
+                            "element": "Plant"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3660
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 250
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 6
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_37",
+                        "name": "Mondfront",
+                        "description":
+                            "Der Ring drueckt jetzt offen gegen die Front.",
+                        "difficulty": 35,
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
+                        "node": {
+                            "x": 0.68,
+                            "y": 0.72
+                        },
+                        "enemy": {
+                            "name": "Moon Front",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 4085,
+                            "attack": 136,
+                            "element": "Fire"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3730
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 254
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_38",
+                        "name": "Kronenbruch",
+                        "description":
+                            "Ein Splitterkranz bricht ueber dir auseinander.",
+                        "difficulty": 35,
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
+                        "node": {
+                            "x": 0.76,
+                            "y": 0.68
+                        },
+                        "enemy": {
+                            "name": "Crown Break",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 4210,
+                            "attack": 138,
+                            "element": "Water"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3800
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 258
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 7
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_39",
+                        "name": "Wachtkranz",
+                        "description":
+                            "Die Wachen bilden einen harten Kreis vor dem Innenkern.",
+                        "difficulty": 36,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.84,
+                            "y": 0.64
+                        },
+                        "enemy": {
+                            "name": "Guard Halo",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 4340,
+                            "attack": 140,
+                            "element": "Dark"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3880
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 262
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_40",
+                        "name": "Zwielichtkern",
+                        "description":
+                            "Der zweite grosse Zwischenboss schirmt den Innenkern ab.",
+                        "difficulty": 36,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.90,
+                            "y": 0.58
+                        },
+                        "cutscene": {
+                            "id": "chapter_2_battle_40_cutscene",
+                            "title": "Zwielichtkern",
+                            "video": "mondtor",
+                            "text":
+                                "Ein schwerer Kern bricht aus dem Ring und verteidigt den inneren Pfad."
+                        },
+                        "enemy": {
+                            "name": "Twilight Core",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 4480,
+                            "attack": 144,
+                            "element": "Storm"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3960
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 268
+                            }
+                        ],
+                        "characterRewards": [
+                            {
+                                "characterID": "shen"
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 7
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_41",
+                        "name": "Innenstufe",
+                        "description":
+                            "Nach dem Boss fuehrt der Pfad in Stufen zurueck.",
+                        "difficulty": 37,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.84,
+                            "y": 0.52
+                        },
+                        "enemy": {
+                            "name": "Inner Step",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 4620,
+                            "attack": 146,
+                            "element": "Light"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4040
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 272
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_42",
+                        "name": "Leerenlauf",
+                        "description":
+                            "Der innere Pfad laeuft breit ueber die Karte.",
+                        "difficulty": 37,
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
+                        "node": {
+                            "x": 0.78,
+                            "y": 0.46
+                        },
+                        "enemy": {
+                            "name": "Void Run",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 4765,
+                            "attack": 148,
+                            "element": "Dark"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4120
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 276
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 7
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_43",
+                        "name": "Sternenbruch II",
+                        "description":
+                            "Ein heller Bruch zwingt dich in den letzten Sektor.",
+                        "difficulty": 38,
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
+                        "node": {
+                            "x": 0.72,
+                            "y": 0.40
+                        },
+                        "enemy": {
+                            "name": "Star Break II",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 4910,
+                            "attack": 150,
+                            "element": "Light"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4200
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 280
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_44",
+                        "name": "Kernweg",
+                        "description": "Der wahre Innenweg ist jetzt offen.",
+                        "difficulty": 38,
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
+                        "node": {
+                            "x": 0.66,
+                            "y": 0.34
+                        },
+                        "enemy": {
+                            "name": "Core Track",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 5060,
+                            "attack": 152,
+                            "element": "Fire"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4280
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 284
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 8
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_45",
+                        "name": "Risspfahl",
+                        "description":
+                            "Der letzte Wachtpfahl vor dem Abschlussring.",
+                        "difficulty": 39,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.60,
+                            "y": 0.28
+                        },
+                        "enemy": {
+                            "name": "Rift Stake",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 5215,
+                            "attack": 154,
+                            "element": "Plant"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4360
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 288
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_46",
+                        "name": "Torader",
+                        "description":
+                            "Eine letzte Ader verbindet Ring und Kern.",
+                        "difficulty": 39,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.54,
+                            "y": 0.22
+                        },
+                        "enemy": {
+                            "name": "Gate Vein",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 5370,
+                            "attack": 156,
+                            "element": "Storm"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4440
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 292
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 8
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_47",
+                        "name": "Endstufe",
+                        "description":
+                            "Der finale Anstieg beginnt am Abschlussring.",
+                        "difficulty": 40,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.48,
+                            "y": 0.16
+                        },
+                        "enemy": {
+                            "name": "Final Step",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 5530,
+                            "attack": 158,
+                            "element": "Water"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4520
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 296
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_48",
+                        "name": "Torwacht Prime",
+                        "description":
+                            "Die letzte Wache des zweiten Rings steht dir direkt im Weg.",
+                        "difficulty": 40,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.40,
+                            "y": 0.12
+                        },
+                        "enemy": {
+                            "name": "Gate Watch Prime",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 5700,
+                            "attack": 160,
+                            "element": "Dark"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4600
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 300
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 8
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_49",
+                        "name": "Rissherz II",
+                        "description":
+                            "Das Herz des zweiten Rings liegt jetzt offen vor dir.",
+                        "difficulty": 41,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.30,
+                            "y": 0.10
+                        },
+                        "enemy": {
+                            "name": "Rift Heart II",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 5880,
+                            "attack": 164,
+                            "element": "Fire"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4700
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 310
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "chapter_2_battle_50",
+                        "name": "Mondtor-Herz",
+                        "description":
+                            "Der finale Boss von Kapitel 2 und Meister des zweiten Rissrings.",
+                        "difficulty": 42,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.08
+                        },
+                        "cutscene": {
+                            "id": "chapter_2_battle_50_cutscene",
+                            "title": "Mondtor-Herz",
+                            "video": "rissbestie",
+                            "text":
+                                "Das Herz des zweiten Rings erhebt sich ueber dem zerbrochenen Tor."
+                        },
+                        "enemy": {
+                            "name": "Moon Gate Heart",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 6200,
+                            "attack": 172,
+                            "element": "Fire"
+                        },
+                        "xpReward": 400,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 5000
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 350
+                            }
+                        ],
+                        "characterRewards": [
+                            {
+                                "characterID": "shen"
+                            }
+                        ],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 10
+                            }
+                        ],
+                        "story": []
+                    }
+                ]
+            }
+        ]
+    }
+]

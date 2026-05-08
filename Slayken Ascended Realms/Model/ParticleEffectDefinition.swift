@@ -41,8 +41,12 @@ struct ParticleEffectDefinition: Codable, Identifiable, Equatable {
 }
 
 func loadParticleEffects() -> [ParticleEffectDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         ParticleEffectDefinition.self,
-        resource: "particle_effects"
+        baseResources: ["particle_effects"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("particle_effects_")
+                || $0.hasPrefix("particle_effect_")
+        }
     )
 }

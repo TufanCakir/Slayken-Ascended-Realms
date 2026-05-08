@@ -17,8 +17,11 @@ struct IntroVideoDefinition: Codable, Identifiable {
 }
 
 func loadIntroVideoDefinitions() -> [IntroVideoDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         IntroVideoDefinition.self,
-        resource: "intro_videos"
+        baseResources: ["intro_videos"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("intro_videos_") || $0.hasPrefix("intro_video_")
+        }
     )
 }

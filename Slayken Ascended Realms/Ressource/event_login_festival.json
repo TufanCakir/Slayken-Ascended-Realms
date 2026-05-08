@@ -6,6 +6,7 @@
         "subtitle": "Eroeffnung",
         "message": "Das Festival beginnt mit einer grosszuegigen Startgabe.",
         "buttonTitle": "Festival Tag 1 abholen",
+        "assetIcon": "icon_crystals",
         "icon": "party.popper.fill",
         "rewards": [
             {
@@ -27,6 +28,7 @@
         "subtitle": "Lichterpfad",
         "message": "Noch mehr Kristalle waehrend der Feierlichkeiten.",
         "buttonTitle": "Festival Tag 2 abholen",
+        "assetIcon": "icon_crystals",
         "icon": "sparkles",
         "rewards": [
             {
@@ -53,6 +55,7 @@
         "subtitle": "Kartenfunken",
         "message": "Das Festival bringt einen kleinen Skill-Karten-Schub.",
         "buttonTitle": "Festival Tag 3 abholen",
+        "assetIcon": "icon_crystals",
         "icon": "wand.and.stars",
         "rewards": [
             {
@@ -79,6 +82,7 @@
         "subtitle": "Gaeste des Festes",
         "message": "Ein neuer Charakter schliesst sich im Festtrubel an.",
         "buttonTitle": "Festival Tag 4 abholen",
+        "assetIcon": "icon_crystals",
         "icon": "person.3.fill",
         "rewards": [
             {
@@ -105,6 +109,7 @@
         "message":
             "Ein dichter Mix aus Coins und Crystals fuer weitere Upgrades.",
         "buttonTitle": "Festival Tag 5 abholen",
+        "assetIcon": "icon_crystals",
         "icon": "star.fill",
         "rewards": [
             {
@@ -127,6 +132,7 @@
         "message":
             "Kurz vor dem Finale gibt es noch einmal Skill-Karten fuer dein Deck.",
         "buttonTitle": "Festival Tag 6 abholen",
+        "assetIcon": "icon_crystals",
         "icon": "music.note.list",
         "rewards": [
             {
@@ -154,6 +160,7 @@
         "message":
             "Das Festival endet mit einem starken Abschluss aus Ressourcen, Charakter und Karten.",
         "buttonTitle": "Festival Finale abholen",
+        "assetIcon": "preview_shela",
         "icon": "crown.fill",
         "rewards": [
             {

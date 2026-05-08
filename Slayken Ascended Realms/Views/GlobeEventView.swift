@@ -40,21 +40,51 @@ struct GlobeEventView: View {
     }
 
     private var focusedNodeID: String? {
-        if let selectedPoint, let selectedBattleID,
-            selectedPoint.battles.contains(where: { $0.id == selectedBattleID })
-        {
-            return nodeID(forBattleID: selectedBattleID)
-        }
-
         if let selectedPoint {
-            return visibleBattles(for: selectedPoint).first.map {
-                nodeID(forBattleID: $0.id)
+            if let nextBattle = nextUnlockedBattle(in: selectedPoint) {
+                return nodeID(forBattleID: nextBattle.id)
             }
-                ?? nodeID(forPointID: selectedPoint.id)
+
+            if let selectedBattleID,
+                selectedPoint.battles.contains(where: {
+                    $0.id == selectedBattleID
+                })
+            {
+                return nodeID(forBattleID: selectedBattleID)
+            }
+
+            return nodeID(forPointID: selectedPoint.id)
         }
 
         if let selectedChapter {
-            return nodeID(forPointID: selectedChapter.points.first?.id ?? "")
+            return nextUnlockedPoint(in: selectedChapter).map {
+                nodeID(forPointID: $0.id)
+            } ?? nodeID(forPointID: selectedChapter.points.first?.id ?? "")
+        }
+
+        return nil
+    }
+
+    private var focusedNodePosition: EventMapNodePosition? {
+        if let selectedPoint {
+            if let nextBattle = nextUnlockedBattle(in: selectedPoint) {
+                return nextBattle.node
+            }
+
+            if let selectedBattleID,
+                let selectedBattle = selectedPoint.battles.first(where: {
+                    $0.id == selectedBattleID
+                })
+            {
+                return selectedBattle.node
+            }
+
+            return selectedPoint.node
+        }
+
+        if let selectedChapter {
+            return nextUnlockedPoint(in: selectedChapter)?.node
+                ?? selectedChapter.points.first?.node
         }
 
         return nil
@@ -91,10 +121,16 @@ struct GlobeEventView: View {
                     .scrollBounceBehavior(.basedOnSize)
                     .ignoresSafeArea()
                     .onAppear {
-                        scrollToFocusedNode(with: proxy)
+                        debugMapLog(
+                            "onAppear chapter=\(selectedChapter?.id ?? "nil") point=\(selectedPoint?.id ?? "nil") selectedBattle=\(selectedBattleID ?? "nil") focused=\(focusedNodeID ?? "nil")"
+                        )
+                        scrollToFocusedNode(with: proxy, reason: "onAppear")
                     }
                     .onChange(of: focusedNodeID) { _, _ in
-                        scrollToFocusedNode(with: proxy)
+                        debugMapLog(
+                            "onChange chapter=\(selectedChapter?.id ?? "nil") point=\(selectedPoint?.id ?? "nil") selectedBattle=\(selectedBattleID ?? "nil") focused=\(focusedNodeID ?? "nil")"
+                        )
+                        scrollToFocusedNode(with: proxy, reason: "onChange")
                     }
                 }
                 .zIndex(0)
@@ -331,12 +367,28 @@ struct GlobeEventView: View {
         return result
     }
 
+    private func nextUnlockedBattle(in point: GlobeEventPoint) -> GlobeBattle? {
+        let battles = visibleBattles(for: point)
+        return battles.first { !completedBattleIDs.contains($0.id) }
+            ?? battles.last
+    }
+
+    private func nextUnlockedPoint(in chapter: GlobeEventChapter)
+        -> GlobeEventPoint?
+    {
+        chapter.points.first { point in
+            point.battles.contains { !completedBattleIDs.contains($0.id) }
+        }
+    }
+
     private func pointMapNode(
         _ point: GlobeEventPoint,
         canvasSize: CGSize,
         theme: GameTheme?
     ) -> some View {
-        let isFocused = selectedPointID == point.id
+        let isFocused =
+            selectedPointID == point.id
+            || focusedNodeID == nodeID(forPointID: point.id)
         let visibleCount = visibleBattles(for: point).count
 
         return Button {
@@ -367,7 +419,9 @@ struct GlobeEventView: View {
         canvasSize: CGSize,
         theme: GameTheme?
     ) -> some View {
-        let isFocused = selectedBattleID == battle.id
+        let isFocused =
+            selectedBattleID == battle.id
+            || focusedNodeID == nodeID(forBattleID: battle.id)
 
         return Button {
             playCutsceneIfAvailable(battle.cutscene, then: battle)
@@ -772,21 +826,45 @@ struct GlobeEventView: View {
         )
     }
 
-    private func scrollToFocusedNode(with proxy: ScrollViewProxy) {
-        guard let focusedNodeID else { return }
-        DispatchQueue.main.async {
-            withAnimation(.easeInOut(duration: 0.35)) {
-                proxy.scrollTo(focusedNodeID, anchor: .center)
-            }
-        }
-    }
-
     private func nodeID(forPointID id: String) -> String {
         "point-\(id)"
     }
 
     private func nodeID(forBattleID id: String) -> String {
         "battle-\(id)"
+    }
+
+    private func scrollToFocusedNode(
+        with proxy: ScrollViewProxy,
+        reason: String
+    ) {
+        guard let focusedNodeID, let focusedNodePosition else {
+            debugMapLog(
+                "scroll skipped reason=\(reason) chapter=\(selectedChapter?.id ?? "nil") point=\(selectedPoint?.id ?? "nil") selectedBattle=\(selectedBattleID ?? "nil") cause=noFocusedNode"
+            )
+            return
+        }
+
+        let anchor = anchor(for: focusedNodePosition)
+
+        debugMapLog(
+            "scroll target=\(focusedNodeID) reason=\(reason) anchor=(\(anchor.x),\(anchor.y)) node=(\(focusedNodePosition.x),\(focusedNodePosition.y))"
+        )
+        DispatchQueue.main.async {
+            withAnimation(.easeInOut(duration: 0.35)) {
+                proxy.scrollTo(
+                    focusedNodeID,
+                    anchor: anchor
+                )
+            }
+        }
+    }
+
+    private func anchor(for node: EventMapNodePosition) -> UnitPoint {
+        UnitPoint(
+            x: min(max(CGFloat(node.x), 0.18), 0.82),
+            y: min(max(CGFloat(node.y), 0.22), 0.88)
+        )
     }
 
     private func playCutsceneIfAvailable(
@@ -818,11 +896,17 @@ struct GlobeEventView: View {
             chapters.first(where: { $0.id == selectedChapterID })?.points
                 .contains(where: { $0.id == activePointID }) == true
         else {
+            debugMapLog(
+                "restoreActivePointIfPossible selectedChapter=\(selectedChapterID ?? "nil") activePoint=\(gameState.activeEventPointID ?? "nil") result=cleared"
+            )
             selectedPointID = nil
             return
         }
 
         selectedPointID = activePointID
+        debugMapLog(
+            "restoreActivePointIfPossible selectedChapter=\(selectedChapterID) activePoint=\(activePointID) result=restored"
+        )
     }
 
     private func syncSelectedChapterWithUnlocks() {
@@ -830,6 +914,9 @@ struct GlobeEventView: View {
             let chapter = chapters.first(where: { $0.id == selectedChapterID }),
             isChapterUnlocked(chapter)
         {
+            debugMapLog(
+                "syncSelectedChapterWithUnlocks keptSelectedChapter=\(selectedChapterID)"
+            )
             return
         }
 
@@ -838,13 +925,25 @@ struct GlobeEventView: View {
             isChapterUnlocked(chapter)
         {
             selectedChapterID = savedID
+            debugMapLog(
+                "syncSelectedChapterWithUnlocks choseSavedChapter=\(savedID)"
+            )
             return
         }
 
         selectedChapterID = firstUnlockedChapterID ?? chapters.first?.id
         if let selectedChapter {
             gameState.selectEventChapter(selectedChapter)
+            debugMapLog(
+                "syncSelectedChapterWithUnlocks choseFallbackChapter=\(selectedChapter.id)"
+            )
         }
+    }
+
+    private func debugMapLog(_ message: String) {
+        #if DEBUG
+            print("[GlobeEventView][Map] \(message)")
+        #endif
     }
 
     private func isChapterUnlocked(_ chapter: GlobeEventChapter) -> Bool {

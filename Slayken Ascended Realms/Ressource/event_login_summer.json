@@ -6,15 +6,13 @@
         "subtitle": "Start in die Sonne",
         "message": "Zum Eventstart gibt es Coins und Crystals fuer deinen Einstieg.",
         "buttonTitle": "Tag 1 abholen",
-        "icon": "sun.max.fill",
+          "assetIcon": "icon_crystals",
+          "background": "festival_summer",
+          "icon": "party.popper.fill",
         "rewards": [
             {
-                "currency": "coins",
-                "amount": 1500
-            },
-            {
                 "currency": "crystals",
-                "amount": 50
+                "amount": 150
             }
         ],
         "characterRewards": [],
@@ -27,15 +25,13 @@
         "subtitle": "Waermerer Loot",
         "message": "Mehr Vorrat fuer deinen Fortschritt im Sommer-Event.",
         "buttonTitle": "Tag 2 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "festival_summer",
         "icon": "flame.fill",
         "rewards": [
             {
-                "currency": "coins",
-                "amount": 1800
-            },
-            {
                 "currency": "crystals",
-                "amount": 70
+                "amount": 150
             }
         ],
         "characterRewards": [],
@@ -53,15 +49,13 @@
         "subtitle": "Hitzewelle",
         "message": "Zum dritten Login gibt es einen staerkeren Tagesbonus.",
         "buttonTitle": "Tag 3 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "festival_summer",
         "icon": "sparkles",
         "rewards": [
             {
-                "currency": "coins",
-                "amount": 2200
-            },
-            {
                 "currency": "crystals",
-                "amount": 90
+                "amount": 150
             }
         ],
         "characterRewards": [],
@@ -79,15 +73,13 @@
         "subtitle": "Event-Vorrat",
         "message": "Ein dichter Reward-Tag fuer deinen weiteren Aufbau.",
         "buttonTitle": "Tag 4 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "festival_summer",
         "icon": "shippingbox.fill",
         "rewards": [
             {
-                "currency": "coins",
-                "amount": 2600
-            },
-            {
                 "currency": "crystals",
-                "amount": 110
+                "amount": 150
             }
         ],
         "characterRewards": [],
@@ -105,12 +97,10 @@
         "subtitle": "Highlight-Tag",
         "message": "Zum Abschluss wartet ein groesserer Event-Bonus.",
         "buttonTitle": "Tag 5 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "festival_summer",
         "icon": "crown.fill",
         "rewards": [
-            {
-                "currency": "coins",
-                "amount": 3200
-            },
             {
                 "currency": "crystals",
                 "amount": 150

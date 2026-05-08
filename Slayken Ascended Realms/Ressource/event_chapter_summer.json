@@ -1,263 +1,49 @@
 [
     {
-        "id": "event_story_riftfall",
-        "title": "Event: Riftfall Chronicle",
-        "subtitle": "Ein reines Story-Event mit 50 Kaempfen",
-        "sortOrder": 90,
+        "id": "event_summer",
+        "title": "Summer Event",
+        "subtitle": "Sonnenpfad am Rift-Strand",
+        "sortOrder": 100,
         "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 1,
-        "mapTexture": "realm_void",
+        "mapTexture": "realm_country",
         "cutscene": {
-            "id": "event_story_riftfall_intro",
-            "title": "Riftfall Chronicle",
+            "id": "event_summer_intro",
+            "title": "Summer Event",
             "video": "intro",
             "text":
-                "Ein neuer Chronik-Riss oeffnet sich und fuehrt durch einen langen Story-Pfad."
+                "Ein sommerlicher Rissstrand bringt Scherben, Hitze und seltene Beute."
         },
         "points": [
             {
-                "id": "event_story_riftfall_path",
-                "title": "Chronikpfad",
+                "id": "event_summer_shore",
+                "title": "Sunshore",
                 "text":
-                    "50 Story-Kaempfe fuehren durch den offenen Chronik-Riss.",
-                "mapImage": "realm_void",
-                "mapTexture": "realm_void",
+                    "Am Sommerstrand oeffnen sich 50 Event-Kaempfe mit saisonalen Belohnungen.",
+                "mapImage": "realm_country",
+                "mapTexture": "realm_country",
                 "node": {
                     "x": 0.10,
                     "y": 0.86
                 },
                 "battles": [
                     {
-                        "id": "event_story_riftfall_battle_1",
-                        "name": "Chronikbruch I",
-                        "description": "Der erste Schritt in den Story-Riss.",
-                        "difficulty": 8,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "id": "event_summer_battle_1",
+                        "name": "Sunshore I",
+                        "description": "Der Strandpfad beginnt ruhig.",
+                        "difficulty": 10,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
                             "x": 0.06,
                             "y": 0.86
                         },
                         "enemy": {
-                            "name": "Chronicle Rift I",
+                            "name": "Sunshore I",
                             "image": "sar_dragon",
                             "model": "tsayi",
                             "texture": null,
-                            "hp": 420,
-                            "attack": 24,
-                            "element": "Dark"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 280
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 24
-                            }
-                        ],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text": "Dieser Riss fuehlt sich anders an."
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_2",
-                        "name": "Chronikbruch II",
-                        "description":
-                            "Die Route zieht tiefer in die Geschichte.",
-                        "difficulty": 8,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
-                        "node": {
-                            "x": 0.12,
-                            "y": 0.82
-                        },
-                        "enemy": {
-                            "name": "Chronicle Rift II",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 445,
-                            "attack": 25,
-                            "element": "Light"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 300
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 25
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_3",
-                        "name": "Splitterzeile",
-                        "description": "Alte Splitter markieren den Pfad.",
-                        "difficulty": 9,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
-                        "node": {
-                            "x": 0.18,
-                            "y": 0.78
-                        },
-                        "enemy": {
-                            "name": "Shard Line",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 470,
-                            "attack": 26,
-                            "element": "Fire"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 320
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 26
-                            }
-                        ],
-                        "cardRewards": [
-                            {
-                                "cardID": "slash_red",
-                                "amount": 1
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_4",
-                        "name": "Schattenseite",
-                        "description":
-                            "Die Chronik kippt in die dunklere Seite.",
-                        "difficulty": 9,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
-                        "node": {
-                            "x": 0.24,
-                            "y": 0.74
-                        },
-                        "enemy": {
-                            "name": "Shadow Page",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 500,
-                            "attack": 27,
-                            "element": "Dark"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 340
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 27
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_5",
-                        "name": "Runenpfad",
-                        "description": "Runen tragen den Story-Pfad weiter.",
-                        "difficulty": 10,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
-                        "node": {
-                            "x": 0.30,
-                            "y": 0.70
-                        },
-                        "enemy": {
-                            "name": "Rune Path",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 530,
-                            "attack": 28,
-                            "element": "Plant"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 360
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 28
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_6",
-                        "name": "Nebeltext",
-                        "description":
-                            "Die Seiten der Chronik wirken lebendig.",
-                        "difficulty": 10,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
-                        "node": {
-                            "x": 0.36,
-                            "y": 0.66
-                        },
-                        "enemy": {
-                            "name": "Mist Script",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 560,
-                            "attack": 29,
-                            "element": "Water"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 380
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 29
-                            }
-                        ],
-                        "cardRewards": [
-                            {
-                                "cardID": "slash_red",
-                                "amount": 1
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_7",
-                        "name": "Leuchtader",
-                        "description":
-                            "Ein heller Textstrom zieht ueber den Boden.",
-                        "difficulty": 11,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
-                        "node": {
-                            "x": 0.42,
-                            "y": 0.62
-                        },
-                        "enemy": {
-                            "name": "Glow Vein",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 590,
+                            "hp": 520,
                             "attack": 30,
                             "element": "Light"
                         },
@@ -265,176 +51,36 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 400
+                                "amount": 500
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 30
+                                "amount": 60
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_8",
-                        "name": "Bruchseite",
-                        "description": "Die Route bleibt unruhig und offen.",
-                        "difficulty": 11,
+                        "id": "event_summer_battle_2",
+                        "name": "Sunshore II",
+                        "description": "Warme Luft bringt den ersten Druck.",
+                        "difficulty": 10,
                         "groundTexture": "bg_fire",
                         "skyboxTexture": "bg_fire",
                         "node": {
-                            "x": 0.48,
-                            "y": 0.58
+                            "x": 0.12,
+                            "y": 0.82
                         },
                         "enemy": {
-                            "name": "Broken Page",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 620,
-                            "attack": 31,
-                            "element": "Fire"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 420
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 31
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_9",
-                        "name": "Chronikwacht",
-                        "description":
-                            "Eine schwere Wache bewacht den ersten Bogen.",
-                        "difficulty": 12,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
-                        "node": {
-                            "x": 0.54,
-                            "y": 0.54
-                        },
-                        "enemy": {
-                            "name": "Chronicle Guard",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 655,
-                            "attack": 32,
-                            "element": "Storm"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 440
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 32
-                            }
-                        ],
-                        "cardRewards": [
-                            {
-                                "cardID": "slash_red",
-                                "amount": 1
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_10",
-                        "name": "Seitenrichter",
-                        "description":
-                            "Die erste Elite prueft, ob du weiterlesen darfst.",
-                        "difficulty": 12,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
-                        "node": {
-                            "x": 0.60,
-                            "y": 0.50
-                        },
-                        "cutscene": {
-                            "id": "event_story_riftfall_battle_10_cutscene",
-                            "title": "Seitenrichter",
-                            "video": "mondtor",
-                            "text":
-                                "Ein uralter Hueter tritt aus der Chronik hervor."
-                        },
-                        "enemy": {
-                            "name": "Page Judge",
+                            "name": "Sunshore II",
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 700,
-                            "attack": 35,
-                            "element": "Dark"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 480
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 36
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_11",
-                        "name": "Satzklinge",
-                        "description": "Die Geschichte schneidet jetzt tiefer.",
-                        "difficulty": 13,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
-                        "node": {
-                            "x": 0.66,
-                            "y": 0.46
-                        },
-                        "enemy": {
-                            "name": "Sentence Blade",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 740,
-                            "attack": 36,
-                            "element": "Dark"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 510
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 38
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_12",
-                        "name": "Sternenzeile",
-                        "description": "Eine helle Passage zieht an den Rand.",
-                        "difficulty": 13,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
-                        "node": {
-                            "x": 0.72,
-                            "y": 0.42
-                        },
-                        "enemy": {
-                            "name": "Star Line",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 780,
-                            "attack": 37,
-                            "element": "Light"
+                            "hp": 550,
+                            "attack": 32,
+                            "element": "Fire"
                         },
                         "xpReward": 300,
                         "rewards": [
@@ -444,133 +90,109 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 40
+                                "amount": 64
                             }
                         ],
-                        "cardRewards": [
-                            {
-                                "cardID": "slash_red",
-                                "amount": 2
-                            }
-                        ]
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_13",
-                        "name": "Rissschrift",
-                        "description": "Der Randtext des Risses wird dichter.",
-                        "difficulty": 14,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
+                        "id": "event_summer_battle_3",
+                        "name": "Heatline",
+                        "description": "Der Strand flimmert unter dem Riss.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
                         "node": {
-                            "x": 0.78,
-                            "y": 0.38
+                            "x": 0.18,
+                            "y": 0.78
                         },
                         "enemy": {
-                            "name": "Rift Script",
+                            "name": "Heatline",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "krevas",
                             "texture": null,
-                            "hp": 820,
-                            "attack": 38,
+                            "hp": 580,
+                            "attack": 34,
                             "element": "Fire"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 570
+                                "amount": 580
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 42
+                                "amount": 68
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_14",
-                        "name": "Bogenwacht",
+                        "id": "event_summer_battle_4",
+                        "name": "Coral Step",
                         "description":
-                            "Am Kartenrand wartet eine weitere Front.",
-                        "difficulty": 14,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                            "Der Pfad fuehrt ueber scharfe Korallen.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
                         "node": {
-                            "x": 0.84,
-                            "y": 0.34
+                            "x": 0.24,
+                            "y": 0.74
                         },
                         "enemy": {
-                            "name": "Arc Guard",
+                            "name": "Coral Step",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "masoyina",
                             "texture": null,
-                            "hp": 860,
-                            "attack": 39,
+                            "hp": 615,
+                            "attack": 36,
                             "element": "Water"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 600
+                                "amount": 620
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 44
+                                "amount": 72
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_15",
-                        "name": "Leerenbogen",
+                        "id": "event_summer_battle_5",
+                        "name": "Salt Arc",
                         "description":
-                            "Der Pfad dreht jetzt in den unteren Sektor.",
-                        "difficulty": 15,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                            "Ein heller Bogen aus Salz schneidet den Weg.",
+                        "difficulty": 12,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
-                            "x": 0.90,
-                            "y": 0.30
+                            "x": 0.30,
+                            "y": 0.70
                         },
                         "enemy": {
-                            "name": "Void Arc",
+                            "name": "Salt Arc",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "tsayi",
                             "texture": null,
-                            "hp": 900,
-                            "attack": 40,
-                            "element": "Dark"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 630
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 46
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_16",
-                        "name": "Randbruch",
-                        "description": "Der Story-Pfad kippt abrupt um.",
-                        "difficulty": 15,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
-                        "node": {
-                            "x": 0.86,
-                            "y": 0.24
-                        },
-                        "enemy": {
-                            "name": "Edge Break",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 940,
-                            "attack": 41,
-                            "element": "Storm"
+                            "hp": 650,
+                            "attack": 38,
+                            "element": "Light"
                         },
                         "xpReward": 300,
                         "rewards": [
@@ -580,100 +202,108 @@
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 48
+                                "amount": 76
                             }
                         ],
-                        "cardRewards": [
-                            {
-                                "cardID": "slash_red",
-                                "amount": 2
-                            }
-                        ]
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_17",
-                        "name": "Zwischenzeile",
+                        "id": "event_summer_battle_6",
+                        "name": "Shell Guard",
                         "description":
-                            "Der Erzaehlstrom bleibt unter Spannung.",
-                        "difficulty": 16,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                            "Eine harte Strandwache blockiert den Bogen.",
+                        "difficulty": 12,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
                         "node": {
-                            "x": 0.80,
-                            "y": 0.20
+                            "x": 0.36,
+                            "y": 0.66
                         },
                         "enemy": {
-                            "name": "Middle Line",
+                            "name": "Shell Guard",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "jirgin",
                             "texture": null,
-                            "hp": 985,
-                            "attack": 42,
+                            "hp": 685,
+                            "attack": 40,
                             "element": "Plant"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 690
+                                "amount": 700
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 50
+                                "amount": 80
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 1
+                            }
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_18",
-                        "name": "Kernsatz",
+                        "id": "event_summer_battle_7",
+                        "name": "Surf Break",
                         "description":
-                            "Ein Schluesselsatz fuehrt weiter in die Tiefe.",
-                        "difficulty": 16,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                            "Eine Welle aus Risswasser trifft die Formation.",
+                        "difficulty": 13,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.74,
-                            "y": 0.16
+                            "x": 0.42,
+                            "y": 0.62
                         },
                         "enemy": {
-                            "name": "Core Sentence",
+                            "name": "Surf Break",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "krevas",
                             "texture": null,
-                            "hp": 1030,
-                            "attack": 43,
-                            "element": "Fire"
+                            "hp": 720,
+                            "attack": 42,
+                            "element": "Water"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 720
+                                "amount": 740
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 52
+                                "amount": 84
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_19",
-                        "name": "Bruchader",
+                        "id": "event_summer_battle_8",
+                        "name": "Sun Ring",
                         "description":
-                            "Eine schmale Linie oeffnet den Mittelkern.",
-                        "difficulty": 17,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                            "Ein heller Ring steht ueber dem Strand.",
+                        "difficulty": 13,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
                         "node": {
-                            "x": 0.68,
-                            "y": 0.12
+                            "x": 0.48,
+                            "y": 0.58
                         },
                         "enemy": {
-                            "name": "Break Vein",
+                            "name": "Sun Ring",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "masoyina",
                             "texture": null,
-                            "hp": 1075,
+                            "hp": 760,
                             "attack": 44,
                             "element": "Light"
                         },
@@ -681,44 +311,478 @@
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 760
+                                "amount": 780
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 54
+                                "amount": 88
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_20",
-                        "name": "Chronikherz",
+                        "id": "event_summer_battle_9",
+                        "name": "Tidal Slash",
                         "description":
-                            "Der erste Kern der Geschichte liegt offen.",
-                        "difficulty": 17,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                            "Der Strand kippt in einen schnellen Kampf.",
+                        "difficulty": 14,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
-                            "x": 0.62,
-                            "y": 0.10
+                            "x": 0.54,
+                            "y": 0.54
                         },
                         "enemy": {
-                            "name": "Chronicle Heart",
+                            "name": "Tidal Slash",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 800,
+                            "attack": 46,
+                            "element": "Storm"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 820
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 92
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 2
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_10",
+                        "name": "Summer Guard",
+                        "description":
+                            "Der erste Event-Zwischenboss stellt sich.",
+                        "difficulty": 14,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.60,
+                            "y": 0.50
+                        },
+                        "cutscene": {
+                            "id": "event_summer_battle_10_cutscene",
+                            "title": "Summer Guard",
+                            "video": "mondtor",
+                            "text":
+                                "Eine saisonale Elite verteidigt den Strandsektor."
+                        },
+                        "enemy": {
+                            "name": "Summer Guard",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 850,
+                            "attack": 50,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 880
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 100
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 2
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_11",
+                        "name": "Palm Drift",
+                        "description":
+                            "Palmen und Splitter schieben den Pfad weiter.",
+                        "difficulty": 15,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.66,
+                            "y": 0.46
+                        },
+                        "enemy": {
+                            "name": "Palm Drift",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 900,
+                            "attack": 52,
+                            "element": "Plant"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 930
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 104
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_12",
+                        "name": "Beach Rift",
+                        "description": "Der Riss frisst sich durch die Kueste.",
+                        "difficulty": 15,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.72,
+                            "y": 0.42
+                        },
+                        "enemy": {
+                            "name": "Beach Rift",
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
-                            "hp": 1130,
-                            "attack": 46,
+                            "hp": 950,
+                            "attack": 54,
                             "element": "Dark"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 800
+                                "amount": 980
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 58
+                                "amount": 108
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 2
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_13",
+                        "name": "Sunny Crest",
+                        "description":
+                            "Ein heller Grat markiert den Kartenrand.",
+                        "difficulty": 16,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.78,
+                            "y": 0.38
+                        },
+                        "enemy": {
+                            "name": "Sunny Crest",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1000,
+                            "attack": 56,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1030
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 112
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_14",
+                        "name": "Wave Rim",
+                        "description": "Die Linie kippt in den zweiten Bogen.",
+                        "difficulty": 16,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.84,
+                            "y": 0.34
+                        },
+                        "enemy": {
+                            "name": "Wave Rim",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1050,
+                            "attack": 58,
+                            "element": "Water"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1080
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 116
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 2
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_15",
+                        "name": "Solar Edge",
+                        "description":
+                            "Ein warmer Stoss drueckt den Pfad nach unten.",
+                        "difficulty": 17,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.90,
+                            "y": 0.30
+                        },
+                        "enemy": {
+                            "name": "Solar Edge",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1100,
+                            "attack": 60,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1130
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 120
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_16",
+                        "name": "Coral Loop",
+                        "description":
+                            "Der Pfad laeuft als Korallenschleife weiter.",
+                        "difficulty": 17,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.86,
+                            "y": 0.24
+                        },
+                        "enemy": {
+                            "name": "Coral Loop",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1155,
+                            "attack": 62,
+                            "element": "Plant"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1180
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 124
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 2
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_17",
+                        "name": "Salt Pulse",
+                        "description":
+                            "Ein Impuls aus Salzsplittern trifft die Front.",
+                        "difficulty": 18,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.80,
+                            "y": 0.20
+                        },
+                        "enemy": {
+                            "name": "Salt Pulse",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1210,
+                            "attack": 64,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1230
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 128
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_18",
+                        "name": "Drift Shade",
+                        "description":
+                            "Ein dunkler Schatten zieht ueber den Strand.",
+                        "difficulty": 18,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.74,
+                            "y": 0.16
+                        },
+                        "enemy": {
+                            "name": "Drift Shade",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1265,
+                            "attack": 66,
+                            "element": "Dark"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1280
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 132
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 3
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_19",
+                        "name": "Sun Dune",
+                        "description":
+                            "Eine hohe Duenenlinie trennt den Sektor.",
+                        "difficulty": 19,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.68,
+                            "y": 0.12
+                        },
+                        "enemy": {
+                            "name": "Sun Dune",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1320,
+                            "attack": 68,
+                            "element": "Storm"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1330
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 136
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_20",
+                        "name": "Tide Captain",
+                        "description":
+                            "Die zweite Event-Elite sichert den Unterpfad.",
+                        "difficulty": 19,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.62,
+                            "y": 0.10
+                        },
+                        "enemy": {
+                            "name": "Tide Captain",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1380,
+                            "attack": 72,
+                            "element": "Water"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1380
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 142
                             }
                         ],
                         "characterRewards": [
@@ -729,121 +793,129 @@
                         "cardRewards": [
                             {
                                 "cardID": "slash_red",
-                                "amount": 2
+                                "amount": 3
                             }
-                        ]
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_21",
-                        "name": "Rueckseite I",
+                        "id": "event_summer_battle_21",
+                        "name": "Sun Arc II",
                         "description":
-                            "Die zweite Haelfte beginnt ruhiger als erwartet.",
-                        "difficulty": 18,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                            "Der Pfad kehrt in einem grossen Sommerbogen um.",
+                        "difficulty": 20,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
                             "x": 0.56,
                             "y": 0.16
                         },
                         "enemy": {
-                            "name": "Back Page I",
+                            "name": "Sun Arc II",
                             "image": "sar_dragon",
                             "model": "tsayi",
                             "texture": null,
-                            "hp": 1180,
-                            "attack": 48,
-                            "element": "Dark"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 840
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 60
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_22",
-                        "name": "Rueckseite II",
-                        "description":
-                            "Die Route springt in einen neuen Bogen.",
-                        "difficulty": 18,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
-                        "node": {
-                            "x": 0.50,
-                            "y": 0.22
-                        },
-                        "enemy": {
-                            "name": "Back Page II",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 1230,
-                            "attack": 49,
-                            "element": "Water"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 880
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 62
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_23",
-                        "name": "Schattenbogen",
-                        "description":
-                            "Die Chronik drueckt nach links zurueck.",
-                        "difficulty": 19,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
-                        "node": {
-                            "x": 0.44,
-                            "y": 0.28
-                        },
-                        "enemy": {
-                            "name": "Shadow Arc",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 1280,
-                            "attack": 50,
+                            "hp": 1440,
+                            "attack": 74,
                             "element": "Fire"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 920
+                                "amount": 1440
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 64
+                                "amount": 146
                             }
                         ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_22",
+                        "name": "Lagoon Path",
+                        "description":
+                            "Eine helle Lagune oeffnet den Mittelpfad.",
+                        "difficulty": 20,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.22
+                        },
+                        "enemy": {
+                            "name": "Lagoon Path",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1500,
+                            "attack": 76,
+                            "element": "Water"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1500
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 150
+                            }
+                        ],
+                        "characterRewards": [],
                         "cardRewards": [
                             {
                                 "cardID": "slash_red",
                                 "amount": 3
                             }
-                        ]
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_24",
-                        "name": "Sternenrahmen",
+                        "id": "event_summer_battle_23",
+                        "name": "Sunspark",
                         "description":
-                            "Ein heller Rahmen umschliesst die Route.",
-                        "difficulty": 19,
+                            "Funken aus Licht tanzen ueber die Wellen.",
+                        "difficulty": 21,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.44,
+                            "y": 0.28
+                        },
+                        "enemy": {
+                            "name": "Sunspark",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1560,
+                            "attack": 78,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1560
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 154
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_24",
+                        "name": "Palm Halo",
+                        "description": "Die Palmen bilden einen harten Ring.",
+                        "difficulty": 21,
                         "groundTexture": "bg_sar",
                         "skyboxTexture": "bg_sar",
                         "node": {
@@ -851,32 +923,40 @@
                             "y": 0.34
                         },
                         "enemy": {
-                            "name": "Star Frame",
+                            "name": "Palm Halo",
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
-                            "hp": 1330,
-                            "attack": 51,
-                            "element": "Light"
+                            "hp": 1620,
+                            "attack": 80,
+                            "element": "Plant"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 960
+                                "amount": 1620
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 66
+                                "amount": 158
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 4
+                            }
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_25",
-                        "name": "Textsaum",
+                        "id": "event_summer_battle_25",
+                        "name": "Beach Loop",
                         "description":
-                            "Die Geschichte schiebt in den mittleren Ring.",
-                        "difficulty": 20,
+                            "Die Route zieht zurueck in die linke Strandhaelfte.",
+                        "difficulty": 22,
                         "groundTexture": "bg_map",
                         "skyboxTexture": "bg_map",
                         "node": {
@@ -884,376 +964,225 @@
                             "y": 0.40
                         },
                         "enemy": {
-                            "name": "Text Fringe",
+                            "name": "Beach Loop",
                             "image": "sar_dragon",
                             "model": "tsayi",
                             "texture": null,
-                            "hp": 1380,
-                            "attack": 52,
-                            "element": "Plant"
+                            "hp": 1680,
+                            "attack": 82,
+                            "element": "Storm"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1000
+                                "amount": 1680
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 68
+                                "amount": 162
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_26",
-                        "name": "Leerenwort",
+                        "id": "event_summer_battle_26",
+                        "name": "Shore Rift",
                         "description":
-                            "Ein einzelnes Wort traegt den ganzen Druck.",
-                        "difficulty": 20,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                            "Ein heller Schnitt trennt den Strand in zwei Linien.",
+                        "difficulty": 22,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
                         "node": {
                             "x": 0.26,
                             "y": 0.46
                         },
                         "enemy": {
-                            "name": "Void Word",
+                            "name": "Shore Rift",
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 1440,
-                            "attack": 53,
+                            "hp": 1740,
+                            "attack": 84,
                             "element": "Dark"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1040
+                                "amount": 1740
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 70
+                                "amount": 166
                             }
                         ],
+                        "characterRewards": [],
                         "cardRewards": [
                             {
                                 "cardID": "slash_red",
-                                "amount": 3
+                                "amount": 4
                             }
-                        ]
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_27",
-                        "name": "Bruchlinie",
+                        "id": "event_summer_battle_27",
+                        "name": "Heat Crest",
                         "description":
-                            "Die Linie laeuft in den oberen Sektor zurueck.",
-                        "difficulty": 21,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                            "Die Hitze ueber dem Sand steigt stark an.",
+                        "difficulty": 23,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
                             "x": 0.20,
                             "y": 0.52
                         },
                         "enemy": {
-                            "name": "Breakline",
+                            "name": "Heat Crest",
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
-                            "hp": 1500,
-                            "attack": 54,
+                            "hp": 1800,
+                            "attack": 86,
                             "element": "Fire"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1080
+                                "amount": 1800
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 72
+                                "amount": 170
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_28",
-                        "name": "Schattenfeld",
-                        "description": "Die Seiten werden breiter und dunkler.",
-                        "difficulty": 21,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "id": "event_summer_battle_28",
+                        "name": "Lagoon Guard",
+                        "description":
+                            "Eine Wache drueckt dich in den oberen Strandbogen.",
+                        "difficulty": 23,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
                             "x": 0.14,
                             "y": 0.58
                         },
                         "enemy": {
-                            "name": "Shadow Field",
+                            "name": "Lagoon Guard",
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
-                            "hp": 1560,
-                            "attack": 55,
+                            "hp": 1865,
+                            "attack": 88,
                             "element": "Water"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1120
+                                "amount": 1860
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 74
+                                "amount": 174
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 4
+                            }
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_29",
-                        "name": "Risssaum",
-                        "description": "Der obere Bogen ist fast erreicht.",
-                        "difficulty": 22,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "id": "event_summer_battle_29",
+                        "name": "Solar Rise",
+                        "description":
+                            "Der Rueckweg fuehrt in den oberen Eventring.",
+                        "difficulty": 24,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
                         "node": {
                             "x": 0.10,
                             "y": 0.64
                         },
                         "enemy": {
-                            "name": "Rift Fringe",
+                            "name": "Solar Rise",
                             "image": "sar_dragon",
                             "model": "tsayi",
                             "texture": null,
-                            "hp": 1620,
-                            "attack": 56,
-                            "element": "Dark"
+                            "hp": 1930,
+                            "attack": 90,
+                            "element": "Light"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1160
+                                "amount": 1920
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 76
+                                "amount": 178
                             }
                         ],
-                        "cardRewards": [
-                            {
-                                "cardID": "slash_red",
-                                "amount": 4
-                            }
-                        ]
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_30",
-                        "name": "Chronikrichter",
+                        "id": "event_summer_battle_30",
+                        "name": "Summer Breaker",
                         "description":
-                            "Eine weitere Elite trennt Kapitel und Abschlussring.",
-                        "difficulty": 22,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                            "Die dritte Elite prueft den oberen Strandbogen.",
+                        "difficulty": 24,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
                         "node": {
                             "x": 0.16,
                             "y": 0.70
                         },
                         "cutscene": {
-                            "id": "event_story_riftfall_battle_30_cutscene",
-                            "title": "Chronikrichter",
+                            "id": "event_summer_battle_30_cutscene",
+                            "title": "Summer Breaker",
                             "video": "mondtor",
                             "text":
-                                "Ein zweiter Richter blockiert die obere Chronik."
+                                "Eine eventexklusive Elite stoppt den Vorstoss in den Abschlusssektor."
                         },
                         "enemy": {
-                            "name": "Chronicle Judge",
+                            "name": "Summer Breaker",
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 1700,
-                            "attack": 59,
-                            "element": "Light"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1220
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 82
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_31",
-                        "name": "Oberseite I",
-                        "description":
-                            "Die letzte Haelfte beginnt am oberen Rand.",
-                        "difficulty": 23,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
-                        "node": {
-                            "x": 0.22,
-                            "y": 0.76
-                        },
-                        "enemy": {
-                            "name": "Upper Page I",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 1770,
-                            "attack": 60,
+                            "hp": 2010,
+                            "attack": 94,
                             "element": "Storm"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1280
+                                "amount": 2000
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 86
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_32",
-                        "name": "Oberseite II",
-                        "description":
-                            "Der obere Chronikring zieht nach rechts.",
-                        "difficulty": 23,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
-                        "node": {
-                            "x": 0.28,
-                            "y": 0.82
-                        },
-                        "enemy": {
-                            "name": "Upper Page II",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 1840,
-                            "attack": 61,
-                            "element": "Plant"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1340
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 90
+                                "amount": 186
                             }
                         ],
-                        "cardRewards": [
+                        "characterRewards": [
                             {
-                                "cardID": "slash_red",
-                                "amount": 4
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_33",
-                        "name": "Kernbogen II",
-                        "description":
-                            "Ein breiter Bogen fuehrt in die Finalecke.",
-                        "difficulty": 24,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
-                        "node": {
-                            "x": 0.34,
-                            "y": 0.88
-                        },
-                        "enemy": {
-                            "name": "Core Arc II",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 1910,
-                            "attack": 62,
-                            "element": "Fire"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1400
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 94
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_34",
-                        "name": "Lichtseite",
-                        "description":
-                            "Die Geschichte hellt sich vor dem Ende auf.",
-                        "difficulty": 24,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
-                        "node": {
-                            "x": 0.42,
-                            "y": 0.84
-                        },
-                        "enemy": {
-                            "name": "Light Page",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 1980,
-                            "attack": 63,
-                            "element": "Light"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1460
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 98
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_35",
-                        "name": "Donnertext",
-                        "description":
-                            "Ein harter Druck geht ueber die obere Mitte.",
-                        "difficulty": 25,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
-                        "node": {
-                            "x": 0.50,
-                            "y": 0.80
-                        },
-                        "enemy": {
-                            "name": "Thunder Text",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 2050,
-                            "attack": 64,
-                            "element": "Storm"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1520
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 102
+                                "characterID": "aika"
                             }
                         ],
                         "cardRewards": [
@@ -1261,182 +1190,389 @@
                                 "cardID": "slash_red",
                                 "amount": 5
                             }
-                        ]
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_36",
-                        "name": "Schriftpfeiler",
+                        "id": "event_summer_battle_31",
+                        "name": "Shoreline Arc",
                         "description":
-                            "Ein Pfeiler aus Text unterstuetzt den Riss.",
+                            "Der Abschlusspfad fuehrt wieder nach rechts.",
                         "difficulty": 25,
                         "groundTexture": "bg_sar",
                         "skyboxTexture": "bg_sar",
                         "node": {
-                            "x": 0.58,
+                            "x": 0.22,
                             "y": 0.76
                         },
                         "enemy": {
-                            "name": "Script Pillar",
+                            "name": "Shoreline Arc",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "krevas",
                             "texture": null,
-                            "hp": 2120,
-                            "attack": 65,
-                            "element": "Dark"
+                            "hp": 2090,
+                            "attack": 96,
+                            "element": "Plant"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1580
+                                "amount": 2080
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 106
+                                "amount": 190
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_37",
-                        "name": "Rissfront",
-                        "description": "Der Abschlusssektor baut sich auf.",
-                        "difficulty": 26,
+                        "id": "event_summer_battle_32",
+                        "name": "Shell Rise",
+                        "description": "Muscheln und Licht markieren den Ring.",
+                        "difficulty": 25,
                         "groundTexture": "bg_map",
                         "skyboxTexture": "bg_map",
                         "node": {
-                            "x": 0.66,
-                            "y": 0.72
+                            "x": 0.28,
+                            "y": 0.82
                         },
                         "enemy": {
-                            "name": "Rift Front",
+                            "name": "Shell Rise",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "masoyina",
                             "texture": null,
-                            "hp": 2190,
-                            "attack": 66,
-                            "element": "Fire"
+                            "hp": 2170,
+                            "attack": 98,
+                            "element": "Light"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1640
+                                "amount": 2160
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 110
+                                "amount": 194
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 5
+                            }
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_38",
-                        "name": "Seitenbruch II",
+                        "id": "event_summer_battle_33",
+                        "name": "Sun Halo II",
                         "description":
-                            "Ein letzter Seitenbruch schneidet den Ring.",
+                            "Ein heller Ring spannt sich ueber die Kueste.",
                         "difficulty": 26,
                         "groundTexture": "bg_arena",
                         "skyboxTexture": "bg_arena",
                         "node": {
-                            "x": 0.74,
-                            "y": 0.68
+                            "x": 0.34,
+                            "y": 0.88
                         },
                         "enemy": {
-                            "name": "Page Break II",
+                            "name": "Sun Halo II",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 2250,
+                            "attack": 100,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2240
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 198
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_34",
+                        "name": "Coral Arc II",
+                        "description":
+                            "Die Linie zieht quer ueber den oberen Strand.",
+                        "difficulty": 26,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.84
+                        },
+                        "enemy": {
+                            "name": "Coral Arc II",
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 2260,
-                            "attack": 67,
+                            "hp": 2330,
+                            "attack": 102,
                             "element": "Water"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1700
+                                "amount": 2320
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 114
+                                "amount": 202
                             }
                         ],
+                        "characterRewards": [],
                         "cardRewards": [
                             {
                                 "cardID": "slash_red",
                                 "amount": 5
                             }
-                        ]
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_39",
-                        "name": "Rahmenwacht",
+                        "id": "event_summer_battle_35",
+                        "name": "Solar Wall",
                         "description":
-                            "Die Wacht vor dem Innenkern steht bereit.",
+                            "Eine harte Sommerfront steht ueber der Mitte.",
                         "difficulty": 27,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
-                            "x": 0.82,
-                            "y": 0.64
+                            "x": 0.50,
+                            "y": 0.80
                         },
                         "enemy": {
-                            "name": "Frame Guard",
+                            "name": "Solar Wall",
                             "image": "sar_dragon",
                             "model": "krevas",
                             "texture": null,
-                            "hp": 2330,
-                            "attack": 68,
+                            "hp": 2415,
+                            "attack": 104,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2400
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 206
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_36",
+                        "name": "Lagoon Crown",
+                        "description":
+                            "Die Krone des Sommerpfads wird sichtbar.",
+                        "difficulty": 27,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.58,
+                            "y": 0.76
+                        },
+                        "enemy": {
+                            "name": "Lagoon Crown",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 2500,
+                            "attack": 106,
                             "element": "Plant"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1760
+                                "amount": 2480
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 118
+                                "amount": 210
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 6
+                            }
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_40",
-                        "name": "Zwielichtseite",
+                        "id": "event_summer_battle_37",
+                        "name": "Heatfall",
                         "description":
-                            "Der letzte Midboss des Story-Events erscheint.",
-                        "difficulty": 27,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                            "Die Hitze kippt ueber den rechten Fluegel.",
+                        "difficulty": 28,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
                         "node": {
-                            "x": 0.88,
-                            "y": 0.58
-                        },
-                        "cutscene": {
-                            "id": "event_story_riftfall_battle_40_cutscene",
-                            "title": "Zwielichtseite",
-                            "video": "mondtor",
-                            "text":
-                                "Die Chronik zeigt nun ihren dunkleren Kern."
+                            "x": 0.66,
+                            "y": 0.72
                         },
                         "enemy": {
-                            "name": "Twilight Page",
+                            "name": "Heatfall",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "tsayi",
                             "texture": null,
-                            "hp": 2420,
-                            "attack": 72,
+                            "hp": 2590,
+                            "attack": 108,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2560
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 214
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_38",
+                        "name": "Shell Break",
+                        "description":
+                            "Ein harter Muschelbruch schneidet die Linie.",
+                        "difficulty": 28,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.74,
+                            "y": 0.68
+                        },
+                        "enemy": {
+                            "name": "Shell Break",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 2680,
+                            "attack": 110,
                             "element": "Dark"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1840
+                                "amount": 2640
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 126
+                                "amount": 218
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 6
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_39",
+                        "name": "Palm Front",
+                        "description":
+                            "Der Abschlusssektor baut sich vor dir auf.",
+                        "difficulty": 29,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.64
+                        },
+                        "enemy": {
+                            "name": "Palm Front",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 2770,
+                            "attack": 112,
+                            "element": "Storm"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2720
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 222
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_40",
+                        "name": "Summer Halo",
+                        "description":
+                            "Ein grosser Event-Midboss blockiert den Innenstrand.",
+                        "difficulty": 29,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.88,
+                            "y": 0.58
+                        },
+                        "cutscene": {
+                            "id": "event_summer_battle_40_cutscene",
+                            "title": "Summer Halo",
+                            "video": "mondtor",
+                            "text":
+                                "Der innere Strandring zeigt jetzt seinen wahren Druck."
+                        },
+                        "enemy": {
+                            "name": "Summer Halo",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 2880,
+                            "attack": 116,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2820
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 230
                             }
                         ],
                         "characterRewards": [
@@ -1449,332 +1585,359 @@
                                 "cardID": "slash_red",
                                 "amount": 6
                             }
-                        ]
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_41",
-                        "name": "Innenstufe I",
+                        "id": "event_summer_battle_41",
+                        "name": "Sunshore Prime",
                         "description":
-                            "Nach dem Midboss fuehrt der Pfad in den Abschlussring.",
-                        "difficulty": 28,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                            "Nach dem Midboss drueckt der Strandring weiter.",
+                        "difficulty": 30,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
                             "x": 0.82,
                             "y": 0.52
                         },
                         "enemy": {
-                            "name": "Inner Step I",
+                            "name": "Sunshore Prime",
                             "image": "sar_dragon",
                             "model": "tsayi",
                             "texture": null,
-                            "hp": 2500,
-                            "attack": 73,
-                            "element": "Light"
+                            "hp": 2980,
+                            "attack": 118,
+                            "element": "Fire"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 1920
+                                "amount": 2920
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 132
+                                "amount": 236
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_42",
-                        "name": "Innenstufe II",
-                        "description": "Der Abschlussring bleibt hart.",
-                        "difficulty": 28,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "id": "event_summer_battle_42",
+                        "name": "Surf Crown",
+                        "description":
+                            "Die Wellen schlagen im letzten Ring gegen dich.",
+                        "difficulty": 30,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
                             "x": 0.76,
                             "y": 0.46
                         },
                         "enemy": {
-                            "name": "Inner Step II",
+                            "name": "Surf Crown",
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
-                            "hp": 2580,
-                            "attack": 74,
-                            "element": "Storm"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2000
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 138
-                            }
-                        ],
-                        "cardRewards": [
-                            {
-                                "cardID": "slash_red",
-                                "amount": 6
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_43",
-                        "name": "Innenstufe III",
-                        "description":
-                            "Der Kern spuert deine letzten Schritte.",
-                        "difficulty": 29,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
-                        "node": {
-                            "x": 0.70,
-                            "y": 0.40
-                        },
-                        "enemy": {
-                            "name": "Inner Step III",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 2660,
-                            "attack": 75,
-                            "element": "Fire"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2080
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 144
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_44",
-                        "name": "Kernpfad",
-                        "description": "Der wahre Schlussweg ist offen.",
-                        "difficulty": 29,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
-                        "node": {
-                            "x": 0.64,
-                            "y": 0.34
-                        },
-                        "enemy": {
-                            "name": "Core Track",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 2740,
-                            "attack": 76,
-                            "element": "Dark"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2160
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 150
-                            }
-                        ],
-                        "cardRewards": [
-                            {
-                                "cardID": "slash_red",
-                                "amount": 7
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_45",
-                        "name": "Endrahmen",
-                        "description":
-                            "Ein letzter Rahmen trennt dich vom Finale.",
-                        "difficulty": 30,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
-                        "node": {
-                            "x": 0.58,
-                            "y": 0.28
-                        },
-                        "enemy": {
-                            "name": "End Frame",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 2820,
-                            "attack": 77,
-                            "element": "Plant"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2240
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 156
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_46",
-                        "name": "Schlussader",
-                        "description":
-                            "Eine letzte Ader verbindet Geschichte und Kern.",
-                        "difficulty": 30,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
-                        "node": {
-                            "x": 0.52,
-                            "y": 0.22
-                        },
-                        "enemy": {
-                            "name": "Final Vein",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 2900,
-                            "attack": 78,
-                            "element": "Fire"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2320
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 162
-                            }
-                        ],
-                        "cardRewards": [
-                            {
-                                "cardID": "slash_red",
-                                "amount": 7
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_47",
-                        "name": "Letzte Seite",
-                        "description":
-                            "Die Chronik schliesst sich ueber dem Pfad.",
-                        "difficulty": 31,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
-                        "node": {
-                            "x": 0.46,
-                            "y": 0.16
-                        },
-                        "enemy": {
-                            "name": "Final Page",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 2980,
-                            "attack": 79,
+                            "hp": 3080,
+                            "attack": 120,
                             "element": "Water"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2400
+                                "amount": 3020
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 168
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_story_riftfall_battle_48",
-                        "name": "Schlusskante",
-                        "description": "Der Endpfad wird schmal und hart.",
-                        "difficulty": 31,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
-                        "node": {
-                            "x": 0.38,
-                            "y": 0.12
-                        },
-                        "enemy": {
-                            "name": "Final Edge",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 3060,
-                            "attack": 80,
-                            "element": "Dark"
-                        },
-                        "xpReward": 300,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2480
-                            },
-                            {
-                                "currency": "crystals",
-                                "amount": 174
+                                "amount": 242
                             }
                         ],
+                        "characterRewards": [],
                         "cardRewards": [
                             {
                                 "cardID": "slash_red",
-                                "amount": 8
+                                "amount": 7
                             }
-                        ]
+                        ],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_49",
-                        "name": "Chronikherz II",
+                        "id": "event_summer_battle_43",
+                        "name": "Heat Crown",
                         "description":
-                            "Das wahre Herz des Story-Events zeigt sich.",
-                        "difficulty": 32,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                            "Hitze und Licht bauen die Abschlussfront auf.",
+                        "difficulty": 31,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
                         "node": {
-                            "x": 0.28,
-                            "y": 0.10
+                            "x": 0.70,
+                            "y": 0.40
                         },
                         "enemy": {
-                            "name": "Chronicle Heart II",
+                            "name": "Heat Crown",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "krevas",
                             "texture": null,
-                            "hp": 3150,
-                            "attack": 82,
+                            "hp": 3180,
+                            "attack": 122,
                             "element": "Light"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2580
+                                "amount": 3120
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 184
+                                "amount": 248
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_50",
-                        "name": "Riftfall Archive",
+                        "id": "event_summer_battle_44",
+                        "name": "Coral Finale",
                         "description":
-                            "Der finale Boss des Story-Events und Kern der Chronik.",
+                            "Der Strandweg zieht in den Abschlussbogen.",
+                        "difficulty": 31,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.64,
+                            "y": 0.34
+                        },
+                        "enemy": {
+                            "name": "Coral Finale",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 3280,
+                            "attack": 124,
+                            "element": "Plant"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3220
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 254
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 7
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_45",
+                        "name": "Salt Finale",
+                        "description":
+                            "Salzsplitter und Sonne markieren die Endphase.",
+                        "difficulty": 32,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.58,
+                            "y": 0.28
+                        },
+                        "enemy": {
+                            "name": "Salt Finale",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 3390,
+                            "attack": 126,
+                            "element": "Light"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3320
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 260
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_46",
+                        "name": "Lagoon Finale",
+                        "description":
+                            "Die letzte Lagune trennt dich vom Eventkern.",
+                        "difficulty": 32,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.52,
+                            "y": 0.22
+                        },
+                        "enemy": {
+                            "name": "Lagoon Finale",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 3500,
+                            "attack": 128,
+                            "element": "Water"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3420
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 266
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 8
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_47",
+                        "name": "Palm Finale",
+                        "description":
+                            "Der Pfad wird schmal vor dem Sommerkern.",
                         "difficulty": 33,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.46,
+                            "y": 0.16
+                        },
+                        "enemy": {
+                            "name": "Palm Finale",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 3610,
+                            "attack": 130,
+                            "element": "Plant"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3520
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 272
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_48",
+                        "name": "Sunline End",
+                        "description":
+                            "Die Endlinie des Sommerpfads liegt offen vor dir.",
+                        "difficulty": 33,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.38,
+                            "y": 0.12
+                        },
+                        "enemy": {
+                            "name": "Sunline End",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 3720,
+                            "attack": 132,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3620
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 278
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "slash_red",
+                                "amount": 8
+                            }
+                        ],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_49",
+                        "name": "Summer Core",
+                        "description":
+                            "Der Eventkern flimmert ueber dem Strand.",
+                        "difficulty": 34,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.28,
+                            "y": 0.10
+                        },
+                        "enemy": {
+                            "name": "Summer Core",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 3840,
+                            "attack": 136,
+                            "element": "Fire"
+                        },
+                        "xpReward": 300,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3760
+                            },
+                            {
+                                "currency": "crystals",
+                                "amount": 288
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_summer_battle_50",
+                        "name": "Sunheart Festival",
+                        "description":
+                            "Der finale Boss des Summer Events mit maximalem Stranddruck.",
+                        "difficulty": 35,
                         "groundTexture": "bg_sar",
                         "skyboxTexture": "bg_sar",
                         "node": {
@@ -1782,30 +1945,30 @@
                             "y": 0.08
                         },
                         "cutscene": {
-                            "id": "event_story_riftfall_battle_50_cutscene",
-                            "title": "Riftfall Archive",
+                            "id": "event_summer_battle_50_cutscene",
+                            "title": "Sunheart Festival",
                             "video": "rissbestie",
                             "text":
-                                "Die Chronik oeffnet ihre letzte Seite und der Kern tritt hervor."
+                                "Der saisonale Strandkern steigt aus dem Licht des Risses auf."
                         },
                         "enemy": {
-                            "name": "Riftfall Archive",
+                            "name": "Sunheart Festival",
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
-                            "hp": 3400,
-                            "attack": 90,
-                            "element": "Dark"
+                            "hp": 4200,
+                            "attack": 146,
+                            "element": "Light"
                         },
                         "xpReward": 300,
                         "rewards": [
                             {
                                 "currency": "coins",
-                                "amount": 2800
+                                "amount": 4200
                             },
                             {
                                 "currency": "crystals",
-                                "amount": 220
+                                "amount": 320
                             }
                         ],
                         "characterRewards": [
@@ -1819,12 +1982,7 @@
                                 "amount": 10
                             }
                         ],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text": "Damit ist diese Chronik abgeschlossen."
-                            }
-                        ]
+                        "story": []
                     }
                 ]
             }

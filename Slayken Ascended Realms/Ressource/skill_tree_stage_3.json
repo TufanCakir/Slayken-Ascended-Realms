@@ -1,0 +1,282 @@
+[
+    {
+        "id": "skill_tree_stage_3",
+        "title": "Stage 3",
+        "subtitle": "Endgame-Boni fuer Boss-Runs, Drops und Skill-Schaden.",
+        "sortOrder": 3,
+        "palette": {
+            "selectorStartHex": "#FF9B57",
+            "selectorEndHex": "#9C2E52",
+            "panelStartHex": "#3C1632",
+            "panelEndHex": "#130A1A",
+            "resourceBarStartHex": "#7E315D",
+            "resourceBarEndHex": "#241128",
+            "connectionHex": "#FFB7E4"
+        },
+        "nodes": [
+            {
+                "id": "guardian_3",
+                "title": "Guardian III",
+                "description": "Massiv mehr HP fuer Boss- und Raid-Kaempfe.",
+                "icon": "shield.lefthalf.filled",
+                "assetIcon": "skill_green",
+                "maxRank": 5,
+                "costCurrency": "skill_glyphs",
+                "costPerRank": 150,
+                "autoLearnPriority": 17,
+                "position": {
+                    "x": 120,
+                    "y": 140
+                },
+                "prerequisites": [],
+                "palette": {
+                    "fieldName": "Guardian",
+                    "fillStartHex": "#1FD29C",
+                    "fillEndHex": "#0D6A68",
+                    "lockedStartHex": "#193332",
+                    "lockedEndHex": "#091616",
+                    "masteredStartHex": "#8BFFE3",
+                    "masteredEndHex": "#1AA88E",
+                    "accentHex": "#9EFCE8"
+                },
+                "bonuses": [
+                    {
+                        "type": "hp_percent",
+                        "value": 0.08
+                    }
+                ]
+            },
+            {
+                "id": "berserker_3",
+                "title": "Berserker III",
+                "description": "Hoeherer Grundschaden fuer schnellere Siege.",
+                "icon": "flame.circle.fill",
+                "assetIcon": "skill_green",
+                "maxRank": 5,
+                "costCurrency": "skill_glyphs",
+                "costPerRank": 155,
+                "autoLearnPriority": 18,
+                "position": {
+                    "x": 320,
+                    "y": 140
+                },
+                "prerequisites": [],
+                "palette": {
+                    "fieldName": "Berserker",
+                    "fillStartHex": "#FF7F51",
+                    "fillEndHex": "#A22525",
+                    "lockedStartHex": "#3B1F1F",
+                    "lockedEndHex": "#180B0B",
+                    "masteredStartHex": "#FFC07A",
+                    "masteredEndHex": "#DF5D2D",
+                    "accentHex": "#FFAA7A"
+                },
+                "bonuses": [
+                    {
+                        "type": "attack_percent",
+                        "value": 0.08
+                    }
+                ]
+            },
+            {
+                "id": "sage_3",
+                "title": "Sage III",
+                "description":
+                    "Maximiert Skill-Karten-DMG fuer spaete Inhalte.",
+                "icon": "wand.and.stars.inverse",
+                "assetIcon": "skill_green",
+                "maxRank": 5,
+                "costCurrency": "skill_glyphs",
+                "costPerRank": 160,
+                "autoLearnPriority": 19,
+                "position": {
+                    "x": 520,
+                    "y": 140
+                },
+                "prerequisites": [],
+                "palette": {
+                    "fieldName": "Sage",
+                    "fillStartHex": "#9574FF",
+                    "fillEndHex": "#4725B7",
+                    "lockedStartHex": "#291F47",
+                    "lockedEndHex": "#0E0A18",
+                    "masteredStartHex": "#D6AAFF",
+                    "masteredEndHex": "#805DE9",
+                    "accentHex": "#CFB2FF"
+                },
+                "bonuses": [
+                    {
+                        "type": "card_damage_percent",
+                        "value": 0.09
+                    }
+                ]
+            },
+            {
+                "id": "surge_3",
+                "title": "Surge III",
+                "description": "Noch mehr Mana-Regeneration fuer Dauer-Casts.",
+                "icon": "bolt.circle.fill",
+                "assetIcon": "skill_green",
+                "maxRank": 5,
+                "costCurrency": "skill_glyphs",
+                "costPerRank": 150,
+                "autoLearnPriority": 20,
+                "position": {
+                    "x": 720,
+                    "y": 140
+                },
+                "prerequisites": [],
+                "palette": {
+                    "fieldName": "Surge",
+                    "fillStartHex": "#4CE6F0",
+                    "fillEndHex": "#1870A3",
+                    "lockedStartHex": "#19313B",
+                    "lockedEndHex": "#091318",
+                    "masteredStartHex": "#B6FEFF",
+                    "masteredEndHex": "#4EC7D9",
+                    "accentHex": "#A5F8FF"
+                },
+                "bonuses": [
+                    {
+                        "type": "mana_regen_percent",
+                        "value": 0.08
+                    }
+                ]
+            },
+            {
+                "id": "treasure_3",
+                "title": "Treasure Rain",
+                "description": "Erhoeht Coin- und Crystal-Drops gemeinsam.",
+                "icon": "shippingbox.circle.fill",
+                "assetIcon": "skill_green",
+                "maxRank": 5,
+                "costCurrency": "skill_cores",
+                "costPerRank": 180,
+                "autoLearnPriority": 21,
+                "position": {
+                    "x": 220,
+                    "y": 320
+                },
+                "prerequisites": [
+                    "guardian_3"
+                ],
+                "palette": {
+                    "fieldName": "Treasure",
+                    "fillStartHex": "#FFE468",
+                    "fillEndHex": "#CD7720",
+                    "lockedStartHex": "#40361E",
+                    "lockedEndHex": "#1A1309",
+                    "masteredStartHex": "#FFF2AF",
+                    "masteredEndHex": "#F0C554",
+                    "accentHex": "#FFE98F"
+                },
+                "bonuses": [
+                    {
+                        "type": "coin_drop_percent",
+                        "value": 0.09
+                    },
+                    {
+                        "type": "crystal_drop_percent",
+                        "value": 0.09
+                    },
+                    {
+                        "type": "drop_skill_glyphs_percent",
+                        "value": 0.12
+                    },
+                    {
+                        "type": "drop_skill_cores_percent",
+                        "value": 0.08
+                    }
+                ]
+            },
+            {
+                "id": "library_3",
+                "title": "Arcane Library",
+                "description": "Mehr Karten-Drops fuer Deck-Progression.",
+                "icon": "books.vertical.fill",
+                "assetIcon": "skill_green",
+                "maxRank": 5,
+                "costCurrency": "skill_cores",
+                "costPerRank": 190,
+                "autoLearnPriority": 22,
+                "position": {
+                    "x": 520,
+                    "y": 320
+                },
+                "prerequisites": [
+                    "sage_3"
+                ],
+                "palette": {
+                    "fieldName": "Library",
+                    "fillStartHex": "#FF6EB8",
+                    "fillEndHex": "#AB2867",
+                    "lockedStartHex": "#402032",
+                    "lockedEndHex": "#180A13",
+                    "masteredStartHex": "#FFC0DD",
+                    "masteredEndHex": "#E45A98",
+                    "accentHex": "#FFB1D5"
+                },
+                "bonuses": [
+                    {
+                        "type": "card_drop_percent",
+                        "value": 0.12
+                    }
+                ]
+            },
+            {
+                "id": "dominion_3",
+                "title": "Dominion",
+                "description":
+                    "Endgame-Knoten fuer maximale Staerke in allen Kaempfen.",
+                "icon": "crown.fill",
+                "assetIcon": "skill_green",
+                "maxRank": 5,
+                "costCurrency": "skill_shards",
+                "costPerRank": 240,
+                "autoLearnPriority": 23,
+                "position": {
+                    "x": 520,
+                    "y": 500
+                },
+                "prerequisites": [
+                    "treasure_3",
+                    "library_3",
+                    "berserker_3",
+                    "surge_3"
+                ],
+                "palette": {
+                    "fieldName": "Dominion",
+                    "fillStartHex": "#FFF4CB",
+                    "fillEndHex": "#9876FF",
+                    "lockedStartHex": "#35313D",
+                    "lockedEndHex": "#141319",
+                    "masteredStartHex": "#FFFFFF",
+                    "masteredEndHex": "#B695FF",
+                    "accentHex": "#FDE9A5"
+                },
+                "bonuses": [
+                    {
+                        "type": "hp_percent",
+                        "value": 0.05
+                    },
+                    {
+                        "type": "attack_percent",
+                        "value": 0.05
+                    },
+                    {
+                        "type": "card_damage_percent",
+                        "value": 0.06
+                    },
+                    {
+                        "type": "damage_void_percent",
+                        "value": 0.08
+                    },
+                    {
+                        "type": "drop_skill_shards_percent",
+                        "value": 0.10
+                    }
+                ]
+            }
+        ]
+    }
+]

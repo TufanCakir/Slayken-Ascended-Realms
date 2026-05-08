@@ -14,6 +14,41 @@
         "sortOrder": 1
     },
     {
+        "code": "skill_points",
+        "name": "Skill Points",
+        "icon": "point.3.connected.trianglepath.dotted",
+        "assetIcon": "icon_crystals",
+        "sortOrder": 2
+    },
+    {
+        "code": "skill_runes",
+        "name": "Skill Runes",
+        "icon": "scribble.variable",
+        "assetIcon": "icon_crystals",
+        "sortOrder": 3
+    },
+    {
+        "code": "skill_glyphs",
+        "name": "Skill Glyphs",
+        "icon": "seal.fill",
+        "assetIcon": "icon_crystals",
+        "sortOrder": 4
+    },
+    {
+        "code": "skill_cores",
+        "name": "Skill Cores",
+        "icon": "sparkles",
+        "assetIcon": "icon_crystals",
+        "sortOrder": 5
+    },
+    {
+        "code": "skill_shards",
+        "name": "Skill Shards",
+        "icon": "triangle.fill",
+        "assetIcon": "icon_crystals",
+        "sortOrder": 6
+    },
+    {
         "code": "lava_sigil",
         "name": "Lava Sigil",
         "icon": "flame.fill",

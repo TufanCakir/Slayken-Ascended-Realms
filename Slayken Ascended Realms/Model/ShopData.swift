@@ -212,29 +212,44 @@ struct StoreCrystalPackDefinition: Codable, Identifiable, Equatable {
 }
 
 func loadShopOffers() -> [ShopOfferDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         ShopOfferDefinition.self,
-        resource: "shop_offers"
+        baseResources: ["shop_offers"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("shop_offers_") || $0.hasPrefix("shop_offer_")
+        }
     )
 }
 
 func loadShopSkinOffers() -> [ShopSkinOfferDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         ShopSkinOfferDefinition.self,
-        resource: "shop_skins"
+        baseResources: ["shop_skins"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("shop_skins_") || $0.hasPrefix("shop_skin_")
+        }
     )
 }
 
 func loadStoreCrystalPacks() -> [StoreCrystalPackDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         StoreCrystalPackDefinition.self,
-        resource: "store_crystal_packs"
+        baseResources: ["store_crystal_packs"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("store_crystal_packs_")
+                || $0.hasPrefix("crystal_pack_")
+        }
     )
 }
 
 func loadCoopShopOffers() -> [CoopShopOfferDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         CoopShopOfferDefinition.self,
-        resource: "shop_coop_offers"
+        baseResources: ["shop_coop_offers"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("shop_coop_offers_")
+                || $0.hasPrefix("coop_shop_offer_")
+                || $0.hasPrefix("coop_offer_")
+        }
     )
 }

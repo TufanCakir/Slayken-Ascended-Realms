@@ -1,0 +1,545 @@
+[
+    {
+        "id": "event_login_crystals_day_1",
+        "day": 1,
+        "title": "Crystals Login Tag 1",
+        "subtitle": "Kristallstart",
+        "message": "Dein Crystal-Login startet mit einer ersten Premium-Gabe.",
+        "buttonTitle": "Tag 1 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 25
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_2",
+        "day": 2,
+        "title": "Crystals Login Tag 2",
+        "subtitle": "Mehr Lichtsplitter",
+        "message": "Die taegliche Crystal-Gabe waechst weiter.",
+        "buttonTitle": "Tag 2 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 30
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_3",
+        "day": 3,
+        "title": "Crystals Login Tag 3",
+        "subtitle": "Mehr Premium-Vorrat",
+        "message": "Heute gibt es weitere Crystals fuer deine Planung.",
+        "buttonTitle": "Tag 3 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 35
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_4",
+        "day": 4,
+        "title": "Crystals Login Tag 4",
+        "subtitle": "Sammeltempo",
+        "message": "Dein Crystal-Konto fuellt sich weiter.",
+        "buttonTitle": "Tag 4 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 40
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_5",
+        "day": 5,
+        "title": "Crystals Login Tag 5",
+        "subtitle": "Erster Peak",
+        "message": "Der erste groeßere Crystal-Bonus ist erreicht.",
+        "buttonTitle": "Tag 5 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 50
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_6",
+        "day": 6,
+        "title": "Crystals Login Tag 6",
+        "subtitle": "Weiter sparen",
+        "message": "Mehr Crystals fuer spaetere Summons.",
+        "buttonTitle": "Tag 6 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 55
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_7",
+        "day": 7,
+        "title": "Crystals Login Tag 7",
+        "subtitle": "Wochenbonus",
+        "message": "Eine starke Crystal-Gabe fuer sieben Tage Login.",
+        "buttonTitle": "Tag 7 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 70
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_8",
+        "day": 8,
+        "title": "Crystals Login Tag 8",
+        "subtitle": "Neue Woche",
+        "message": "Die zweite Woche startet mit frischen Crystals.",
+        "buttonTitle": "Tag 8 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 60
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_9",
+        "day": 9,
+        "title": "Crystals Login Tag 9",
+        "subtitle": "Konstanter Aufbau",
+        "message": "Deine Premium-Reserven steigen weiter.",
+        "buttonTitle": "Tag 9 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 65
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_10",
+        "day": 10,
+        "title": "Crystals Login Tag 10",
+        "subtitle": "Runder Bonus",
+        "message": "Zehn Tage Login bringen mehr wertvolle Crystals.",
+        "buttonTitle": "Tag 10 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 75
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_11",
+        "day": 11,
+        "title": "Crystals Login Tag 11",
+        "subtitle": "Premium-Aufbau",
+        "message": "Noch mehr Crystals fuer deinen weiteren Fortschritt.",
+        "buttonTitle": "Tag 11 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 80
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_12",
+        "day": 12,
+        "title": "Crystals Login Tag 12",
+        "subtitle": "Mehr Reserve",
+        "message": "Die taegliche Crystal-Kampagne bleibt stark.",
+        "buttonTitle": "Tag 12 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 85
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_13",
+        "day": 13,
+        "title": "Crystals Login Tag 13",
+        "subtitle": "Vor dem Schub",
+        "message": "Kurz vor dem Peak gibt es weitere Crystals.",
+        "buttonTitle": "Tag 13 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 90
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_14",
+        "day": 14,
+        "title": "Crystals Login Tag 14",
+        "subtitle": "Zweiter Wochenbonus",
+        "message": "Zwei Wochen Login bringen einen deutlichen Crystal-Bonus.",
+        "buttonTitle": "Tag 14 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 110
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_15",
+        "day": 15,
+        "title": "Crystals Login Tag 15",
+        "subtitle": "Halbzeit",
+        "message": "Zur Monatsmitte gibt es mehr Premium-Waehrung.",
+        "buttonTitle": "Tag 15 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 100
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_16",
+        "day": 16,
+        "title": "Crystals Login Tag 16",
+        "subtitle": "Neue Reserven",
+        "message": "Die zweite Monatshaelfte startet mit mehr Crystals.",
+        "buttonTitle": "Tag 16 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 110
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_17",
+        "day": 17,
+        "title": "Crystals Login Tag 17",
+        "subtitle": "Premium-Fortschritt",
+        "message": "Mehr Crystals fuer Beschwoerungen und Events.",
+        "buttonTitle": "Tag 17 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_18",
+        "day": 18,
+        "title": "Crystals Login Tag 18",
+        "subtitle": "Laufende Belohnung",
+        "message": "Dein Crystal-Vorrat waechst weiter an.",
+        "buttonTitle": "Tag 18 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 130
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_19",
+        "day": 19,
+        "title": "Crystals Login Tag 19",
+        "subtitle": "Fast am Peak",
+        "message": "Noch mehr Crystals vor dem naechsten Wochenbonus.",
+        "buttonTitle": "Tag 19 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 140
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_20",
+        "day": 20,
+        "title": "Crystals Login Tag 20",
+        "subtitle": "Wertvoller Zufluss",
+        "message": "Der Endspurt bringt dir staerkere Crystal-Belohnungen.",
+        "buttonTitle": "Tag 20 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 150
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_21",
+        "day": 21,
+        "title": "Crystals Login Tag 21",
+        "subtitle": "Dritter Wochenbonus",
+        "message":
+            "Drei Wochen Login werden mit einer grossen Crystal-Gabe belohnt.",
+        "buttonTitle": "Tag 21 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 200
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_22",
+        "day": 22,
+        "title": "Crystals Login Tag 22",
+        "subtitle": "Endspurt",
+        "message": "Die vierte Woche beginnt mit weiteren Crystals.",
+        "buttonTitle": "Tag 22 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 170
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_23",
+        "day": 23,
+        "title": "Crystals Login Tag 23",
+        "subtitle": "Mehr Premium-Wert",
+        "message": "Dein Crystal-Zufluss bleibt hoch.",
+        "buttonTitle": "Tag 23 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 180
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_24",
+        "day": 24,
+        "title": "Crystals Login Tag 24",
+        "subtitle": "Leuchtende Reserve",
+        "message": "Ein weiterer Premium-Boost fuer dein Konto.",
+        "buttonTitle": "Tag 24 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 190
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_25",
+        "day": 25,
+        "title": "Crystals Login Tag 25",
+        "subtitle": "Treuebonus",
+        "message": "Fuenfundzwanzig Tage Login bringen mehr Crystals.",
+        "buttonTitle": "Tag 25 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 220
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_26",
+        "day": 26,
+        "title": "Crystals Login Tag 26",
+        "subtitle": "Mehr Summon-Power",
+        "message": "Weitere Crystals fuer spaetere Banner und Events.",
+        "buttonTitle": "Tag 26 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 240
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_27",
+        "day": 27,
+        "title": "Crystals Login Tag 27",
+        "subtitle": "Kurz vor dem Finale",
+        "message": "Dein Premium-Vorrat waechst weiter an.",
+        "buttonTitle": "Tag 27 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 260
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_28",
+        "day": 28,
+        "title": "Crystals Login Tag 28",
+        "subtitle": "Letzter Wochenbonus",
+        "message":
+            "Vier Wochen Login werden mit einem starken Crystal-Bonus belohnt.",
+        "buttonTitle": "Tag 28 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 300
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_29",
+        "day": 29,
+        "title": "Crystals Login Tag 29",
+        "subtitle": "Vor dem Abschluss",
+        "message": "Noch eine grosse Crystal-Ladung vor Tag 30.",
+        "buttonTitle": "Tag 29 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 350
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_crystals_day_30",
+        "day": 30,
+        "title": "Crystals Login Tag 30",
+        "subtitle": "Grosses Finale",
+        "message":
+            "Der 30-Tage-Abschluss bringt deine groesste Crystal-Belohnung.",
+        "buttonTitle": "Tag 30 abholen",
+        "icon": "diamond.fill",
+        "assetIcon": "icon_crystals",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 500
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    }
+]

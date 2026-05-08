@@ -42,7 +42,9 @@ struct DailyLoginPopupView: View {
 
                 Button(action: onClaim) {
                     Text(rewardState.reward.buttonTitle)
-                        .font(.system(size: 16, weight: .black, design: .rounded))
+                        .font(
+                            .system(size: 16, weight: .black, design: .rounded)
+                        )
                         .tracking(1)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 15)
@@ -109,9 +111,12 @@ struct DailyLoginPopupView: View {
                     .fill(accentColor.opacity(0.18))
                     .frame(width: 112, height: 112)
 
-                Image(systemName: rewardState.reward.icon)
-                    .font(.system(size: 52, weight: .bold))
-                    .foregroundStyle(.white)
+                rewardIconView(
+                    assetIconName: rewardState.reward.assetIcon,
+                    symbolName: rewardState.reward.icon,
+                    tintColor: .white
+                )
+                .frame(width: 52, height: 52)
             }
 
             Text(rewardState.reward.title)
@@ -137,10 +142,13 @@ struct DailyLoginPopupView: View {
             }
         }
         .padding(16)
-        .background(
-            Color.white.opacity(0.06),
-            in: RoundedRectangle(cornerRadius: 20, style: .continuous)
-        )
+        .background {
+            loginBackgroundImage(
+                named: rewardState.reward.background,
+                fallback: Color.white.opacity(0.06)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        }
         .overlay {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .stroke(.white.opacity(0.1), lineWidth: 1)
@@ -165,7 +173,9 @@ struct DailyLoginPopupView: View {
         }
     }
 
-    private func rewardCalendarRow(_ reward: DailyLoginRewardDefinition) -> some View {
+    private func rewardCalendarRow(_ reward: DailyLoginRewardDefinition)
+        -> some View
+    {
         let isActive = reward.day == highlightedDay
 
         return HStack(spacing: 12) {
@@ -178,9 +188,12 @@ struct DailyLoginPopupView: View {
                     )
                     .frame(width: 46, height: 46)
 
-                Image(systemName: reward.icon)
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundStyle(.white)
+                rewardIconView(
+                    assetIconName: reward.assetIcon,
+                    symbolName: reward.icon,
+                    tintColor: .white
+                )
+                .frame(width: 20, height: 20)
             }
 
             VStack(alignment: .leading, spacing: 3) {
@@ -190,7 +203,9 @@ struct DailyLoginPopupView: View {
                     .lineLimit(1)
 
                 Text(rewardSummary(for: reward))
-                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .font(
+                        .system(size: 12, weight: .semibold, design: .rounded)
+                    )
                     .foregroundStyle(.white.opacity(0.66))
                     .lineLimit(1)
             }
@@ -208,10 +223,15 @@ struct DailyLoginPopupView: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
-        .background(
-            isActive ? Color.white.opacity(0.10) : Color.black.opacity(0.18),
-            in: RoundedRectangle(cornerRadius: 16, style: .continuous)
-        )
+        .background {
+            loginBackgroundImage(
+                named: reward.background,
+                fallback: isActive
+                    ? Color.white.opacity(0.10)
+                    : Color.black.opacity(0.18)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        }
         .overlay {
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .stroke(
@@ -221,8 +241,11 @@ struct DailyLoginPopupView: View {
         }
     }
 
-    private func rewardSummary(for reward: DailyLoginRewardDefinition) -> String {
-        let currencyParts = reward.rewards.map { "+\($0.amount) \($0.currency)" }
+    private func rewardSummary(for reward: DailyLoginRewardDefinition) -> String
+    {
+        let currencyParts = reward.rewards.map {
+            "+\($0.amount) \($0.currency)"
+        }
         let characterParts = reward.characterRewards.map { _ in "+ Charakter" }
         let cardParts = reward.cardRewards.map { "+ Karte x\($0.amount)" }
 
@@ -264,7 +287,8 @@ struct DailyLoginPopupView: View {
         }
     }
 
-    private func characterRewardRow(_ reward: GiftCharacterReward) -> some View {
+    private func characterRewardRow(_ reward: GiftCharacterReward) -> some View
+    {
         let character = gameState.summonCharacters.first {
             $0.id == reward.characterID
         }
@@ -352,6 +376,26 @@ struct DailyLoginPopupView: View {
     }
 
     @ViewBuilder
+    private func rewardIconView(
+        assetIconName: String?,
+        symbolName: String,
+        tintColor: Color
+    ) -> some View {
+        if let assetIconName,
+            !assetIconName.trimmingCharacters(in: .whitespacesAndNewlines)
+                .isEmpty
+        {
+            RemoteAssetImage(assetIconName, contentMode: .fit) {
+                Image(systemName: symbolName)
+                    .foregroundStyle(tintColor)
+            }
+        } else {
+            Image(systemName: symbolName)
+                .foregroundStyle(tintColor)
+        }
+    }
+
+    @ViewBuilder
     private func rewardPreviewImage(
         _ imageName: String?,
         fallbackSystemName: String
@@ -366,6 +410,23 @@ struct DailyLoginPopupView: View {
         } else {
             Image(systemName: fallbackSystemName)
                 .foregroundStyle(.white)
+        }
+    }
+
+    @ViewBuilder
+    private func loginBackgroundImage(
+        named imageName: String?,
+        fallback: Color
+    ) -> some View {
+        if let imageName,
+            !imageName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        {
+            RemoteAssetImage(imageName, contentMode: .fill) {
+                fallback
+            }
+            .overlay(Color.black.opacity(0.32))
+        } else {
+            fallback
         }
     }
 }
@@ -432,6 +493,7 @@ struct DailyLoginPopupView: View {
             message: "Vorschau-Belohnung fuer die Kampagnenliste.",
             buttonTitle: "Tag 6 abholen",
             icon: "sparkles",
+            assetIcon: nil,
             rewards: [
                 CurrencyAmount(currency: "gems", amount: 120)
             ],
@@ -447,6 +509,7 @@ struct DailyLoginPopupView: View {
                 "Logge dich morgen wieder ein, um die naechste Belohnung freizuschalten.",
             buttonTitle: "Belohnung abholen",
             icon: "gift.fill",
+            assetIcon: nil,
             rewards: [
                 CurrencyAmount(currency: "gold", amount: 2500),
                 CurrencyAmount(currency: "gems", amount: 120),
@@ -462,6 +525,7 @@ struct DailyLoginPopupView: View {
             message: "Noch ein Beispiel fuer die Popup-Liste.",
             buttonTitle: "Tag 8 abholen",
             icon: "star.fill",
+            assetIcon: nil,
             rewards: [
                 CurrencyAmount(currency: "gold", amount: 3200)
             ],

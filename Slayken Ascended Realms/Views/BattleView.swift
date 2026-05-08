@@ -129,8 +129,11 @@ struct BattleView: View {
     }
 
     private var activeCards: [AbilityCardDefinition] {
-        deckSlots
+        let slotLimit = loadDeckConfiguration().resolvedSlotCount
+        return
+            deckSlots
             .sorted { $0.slotIndex < $1.slotIndex }
+            .prefix(slotLimit)
             .compactMap { slot in
                 gameState.abilityCards.first { $0.id == slot.cardID }
             }
@@ -152,7 +155,15 @@ struct BattleView: View {
         PlayerInventoryStore.scaledCharacterStats(
             for: player,
             characterLevel: playerLevel,
-            ascendedLevel: ascendedLevel
+            ascendedLevel: ascendedLevel,
+            in: modelContext
+        )
+    }
+
+    private var skillBonuses: CharacterSkillBonusTotals {
+        PlayerInventoryStore.characterSkillBonuses(
+            for: player.model,
+            in: modelContext
         )
     }
 
@@ -1191,7 +1202,9 @@ struct BattleView: View {
             Double(progress.level - 1)
         )
         let starGrowth = pow(1.12, Double(progress.stars - 1))
+        let elementBonus = skillBonuses.damagePercent(for: card.element)
         return card.damageMultiplier * levelGrowth * starGrowth
+            * max(0.1, 1 + skillBonuses.cardDamagePercent + elementBonus)
     }
 
     private func elementalMultiplier(for card: AbilityCardDefinition) -> Double
@@ -1225,7 +1238,10 @@ struct BattleView: View {
         manaRegenTask = Task { @MainActor in
             while !Task.isCancelled {
                 if showVictory || showDefeat { return }
-                recoverMana(manaRegenPerTick)
+                recoverMana(
+                    manaRegenPerTick
+                        * max(0.1, 1 + skillBonuses.manaRegenPercent)
+                )
                 try? await Task.sleep(
                     for: .milliseconds(manaRegenTickMilliseconds)
                 )
@@ -1547,6 +1563,7 @@ struct BattleView: View {
         awardedRewards = PlayerInventoryStore.addBattleRewards(
             raidConfiguration?.rewards ?? gameState.activeBattleRewards,
             in: modelContext,
+            characterID: player.model,
             limits: gameState.selectedBattle?.dailyRewardLimits
         )
         awardedCharacterRewards =
@@ -1561,9 +1578,17 @@ struct BattleView: View {
             raidConfiguration?.cardRewards ?? gameState.selectedBattle?
             .cardRewards ?? []
         for cardReward in awardedCardRewards where cardReward.amount > 0 {
+            let boostedAmount = max(
+                cardReward.amount,
+                Int(
+                    (Double(cardReward.amount)
+                        * max(0.1, 1 + skillBonuses.dropPercent(for: "cards")))
+                        .rounded()
+                )
+            )
             PlayerInventoryStore.addOwnedCard(
                 cardID: cardReward.cardID,
-                amount: cardReward.amount,
+                amount: boostedAmount,
                 in: modelContext
             )
         }

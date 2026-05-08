@@ -23,29 +23,21 @@ struct GameBackground: Identifiable, Codable {
 }
 
 func loadMaps() -> [GameMap] {
-    do {
-        guard let data = JSONResourceLoader.loadData(resource: "maps") else {
-            return []
+    JSONResourceLoader.loadMergedIdentifiableArrays(
+        GameMap.self,
+        baseResources: ["maps"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("maps_") || $0.hasPrefix("game_map_")
         }
-        let maps = try JSONDecoder().decode([GameMap].self, from: data)
-        return maps
-    } catch {
-        return []
-    }
+    )
 }
 
 func loadBackgrounds() -> [GameBackground] {
-    do {
-        guard let data = JSONResourceLoader.loadData(resource: "backgrounds")
-        else {
-            return []
+    JSONResourceLoader.loadMergedIdentifiableArrays(
+        GameBackground.self,
+        baseResources: ["backgrounds"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("backgrounds_") || $0.hasPrefix("game_background_")
         }
-        let backgrounds = try JSONDecoder().decode(
-            [GameBackground].self,
-            from: data
-        )
-        return backgrounds
-    } catch {
-        return []
-    }
+    )
 }

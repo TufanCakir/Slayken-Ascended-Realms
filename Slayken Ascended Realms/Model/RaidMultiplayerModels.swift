@@ -128,9 +128,14 @@ struct RaidBossDefinition: Identifiable, Codable, Equatable {
 }
 
 func loadRaidBossDefinitions() -> [RaidBossDefinition] {
-    JSONResourceLoader.loadArray(
+    JSONResourceLoader.loadMergedIdentifiableArrays(
         RaidBossDefinition.self,
-        resource: "raid_bosses"
+        baseResources: ["raid_bosses"],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("raid_bosses_")
+                || $0.hasPrefix("raid_boss_")
+                || $0.hasPrefix("coop_raid_")
+        }
     )
 }
 

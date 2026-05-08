@@ -10,10 +10,17 @@ import SwiftUI
 import UIKit
 
 struct TeamCharacterPickerView: View {
+    private struct PickerCharacterEntry: Identifiable {
+        let id: String
+        let stats: CharacterStats
+        let summonCharacter: SummonCharacter?
+    }
+
     let characters: [SummonCharacter]
-    let onSelect: (SummonCharacter, String?) -> Void
+    let onSelect: (CharacterStats, String?) -> Void
     let onClose: () -> Void
 
+    @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
 
     @Query(sort: \OwnedSummonCharacter.acquiredAt) private var ownedRecords:
@@ -26,9 +33,35 @@ struct TeamCharacterPickerView: View {
         return characters.filter { ownedIDs.contains($0.id) }
     }
 
+    private var pickerEntries: [PickerCharacterEntry] {
+        let summonEntries = ownedCharacters.map {
+            PickerCharacterEntry(
+                id: $0.id,
+                stats: $0.stats(),
+                summonCharacter: $0
+            )
+        }
+        let summonIDs = Set(summonEntries.map(\.id))
+        let customEntries = gameState.availableCharacters
+            .filter { !summonIDs.contains($0.model) }
+            .map {
+                PickerCharacterEntry(
+                    id: $0.model,
+                    stats: $0,
+                    summonCharacter: nil
+                )
+            }
+
+        return customEntries + summonEntries
+    }
+
+    private var selectedEntry: PickerCharacterEntry? {
+        pickerEntries.first { $0.id == selectedCharacterID }
+            ?? pickerEntries.first
+    }
+
     private var selectedCharacter: SummonCharacter? {
-        ownedCharacters.first { $0.id == selectedCharacterID }
-            ?? ownedCharacters.first
+        selectedEntry?.summonCharacter
     }
 
     var body: some View {
@@ -36,10 +69,10 @@ struct TeamCharacterPickerView: View {
         VStack(spacing: 12) {
             header(title: "Character Slot")
 
-            if ownedCharacters.isEmpty {
+            if pickerEntries.isEmpty {
                 emptyState(
                     text:
-                        "Keine Charaktere. Ziehe zuerst Characters im Summon.",
+                        "Keine Charaktere verfuegbar. Erstelle eine Klasse oder ziehe Characters im Summon.",
                     icon: "person.crop.square.fill"
                 )
             } else {
@@ -53,8 +86,8 @@ struct TeamCharacterPickerView: View {
                 }
 
                 Button {
-                    if let selectedCharacter {
-                        onSelect(selectedCharacter, selectedSkinID)
+                    if let selectedEntry {
+                        onSelect(selectedEntry.stats, selectedSkinID)
                     }
                 } label: {
                     Text("Einsetzen")
@@ -71,7 +104,7 @@ struct TeamCharacterPickerView: View {
         }
         .onAppear {
             selectedCharacterID =
-                selectedCharacterID ?? ownedCharacters.first?.id
+                selectedCharacterID ?? pickerEntries.first?.id
         }
         .background {
             ZStack {
@@ -99,17 +132,18 @@ struct TeamCharacterPickerView: View {
             columns: [GridItem(.flexible()), GridItem(.flexible())],
             spacing: 10
         ) {
-            ForEach(ownedCharacters) { character in
+            ForEach(pickerEntries) { entry in
                 Button {
                     let previousCharacterID = selectedCharacterID
-                    selectedCharacterID = character.id
-                    if previousCharacterID != character.id {
+                    selectedCharacterID = entry.id
+                    if previousCharacterID != entry.id {
                         selectedSkinID = nil
                     }
                 } label: {
                     VStack(spacing: 7) {
                         image(
-                            character.summonImage,
+                            entry.summonCharacter?.summonImage
+                                ?? entry.stats.image,
                             fallback: "person.crop.square.fill"
                         )
                         .frame(height: 138)
@@ -119,7 +153,7 @@ struct TeamCharacterPickerView: View {
                                 style: .continuous
                             )
                         )
-                        Text(character.name)
+                        Text(entry.stats.name)
                             .font(.system(size: 12, weight: .black))
                             .foregroundStyle(.white)
                             .lineLimit(1)
@@ -134,9 +168,9 @@ struct TeamCharacterPickerView: View {
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 7).stroke(
-                            selectedCharacterID == character.id
+                            selectedCharacterID == entry.id
                                 ? .yellow : .white.opacity(0.22),
-                            lineWidth: selectedCharacterID == character.id
+                            lineWidth: selectedCharacterID == entry.id
                                 ? 2 : 1
                         )
                     )

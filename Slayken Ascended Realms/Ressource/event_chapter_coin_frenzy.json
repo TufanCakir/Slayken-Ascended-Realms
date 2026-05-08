@@ -1,0 +1,1438 @@
+[
+    {
+        "id": "event_coin_frenzy",
+        "title": "Event: Coin Frenzy",
+        "subtitle": "50 Kaempfe fuer reine Coin-Farmrouten",
+        "sortOrder": 110,
+        "endsAt": "05.06.2026 23:59",
+        "minAscendedLevel": 1,
+        "mapTexture": "bg_country",
+        "points": [
+            {
+                "id": "event_coin_frenzy_field",
+                "title": "Goldfeld",
+                "text": "Eine lange Coin-Route mit 50 Nodes.",
+                "mapImage": "bg_country",
+                "mapTexture": "bg_country",
+                "node": {
+                    "x": 0.10,
+                    "y": 0.86
+                },
+                "battles": [
+                    {
+                        "id": "event_coin_frenzy_battle_1",
+                        "name": "Goldpfad I",
+                        "description": "Coin-Route Auftakt.",
+                        "difficulty": 2,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.06,
+                            "y": 0.86
+                        },
+                        "enemy": {
+                            "name": "Gold Path I",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 150,
+                            "attack": 10,
+                            "element": "Plant"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 450
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_2",
+                        "name": "Goldpfad II",
+                        "description": "Mehr Gold, mehr Wachen.",
+                        "difficulty": 2,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.12,
+                            "y": 0.82
+                        },
+                        "enemy": {
+                            "name": "Gold Path II",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 165,
+                            "attack": 11,
+                            "element": "Water"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 500
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_3",
+                        "name": "Muenzsturm",
+                        "description": "Die Route wird dichter.",
+                        "difficulty": 3,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.78
+                        },
+                        "enemy": {
+                            "name": "Coin Storm",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 180,
+                            "attack": 12,
+                            "element": "Fire"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 560
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_4",
+                        "name": "Kistenrand",
+                        "description": "Kisten saumen die Route.",
+                        "difficulty": 3,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.24,
+                            "y": 0.74
+                        },
+                        "enemy": {
+                            "name": "Crate Edge",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 195,
+                            "attack": 13,
+                            "element": "Light"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 620
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_5",
+                        "name": "Goldader",
+                        "description": "Die Goldspur bleibt offen.",
+                        "difficulty": 4,
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
+                        "node": {
+                            "x": 0.30,
+                            "y": 0.70
+                        },
+                        "enemy": {
+                            "name": "Gold Vein",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 210,
+                            "attack": 14,
+                            "element": "Storm"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 700
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_6",
+                        "name": "Muenzregen",
+                        "description": "Die Splitter regnen ueber das Feld.",
+                        "difficulty": 4,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.36,
+                            "y": 0.66
+                        },
+                        "enemy": {
+                            "name": "Coin Rain",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 230,
+                            "attack": 15,
+                            "element": "Water"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 780
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_7",
+                        "name": "Schatzbogen",
+                        "description": "Ein langer Bogen aus Beute.",
+                        "difficulty": 5,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.62
+                        },
+                        "enemy": {
+                            "name": "Treasure Arc",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 250,
+                            "attack": 16,
+                            "element": "Fire"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 860
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_8",
+                        "name": "Silberbruch",
+                        "description": "Der Pfad schneidet in die Schatzlinie.",
+                        "difficulty": 5,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.48,
+                            "y": 0.58
+                        },
+                        "enemy": {
+                            "name": "Silver Break",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 270,
+                            "attack": 17,
+                            "element": "Light"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 940
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_9",
+                        "name": "Kupferrand",
+                        "description": "Die Front zieht enger.",
+                        "difficulty": 6,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.54,
+                            "y": 0.54
+                        },
+                        "enemy": {
+                            "name": "Copper Edge",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 290,
+                            "attack": 18,
+                            "element": "Dark"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1020
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_10",
+                        "name": "Schatzwacht",
+                        "description": "Die erste Coin-Elite steht bereit.",
+                        "difficulty": 6,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.60,
+                            "y": 0.50
+                        },
+                        "enemy": {
+                            "name": "Treasure Guard",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 330,
+                            "attack": 20,
+                            "element": "Plant"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1150
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_11",
+                        "name": "Kassenpfad I",
+                        "description": "Die zweite Haelfte beginnt.",
+                        "difficulty": 7,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.66,
+                            "y": 0.46
+                        },
+                        "enemy": {
+                            "name": "Vault Path I",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 360,
+                            "attack": 21,
+                            "element": "Fire"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1230
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_12",
+                        "name": "Kassenpfad II",
+                        "description": "Mehr Druck, mehr Beute.",
+                        "difficulty": 7,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.72,
+                            "y": 0.42
+                        },
+                        "enemy": {
+                            "name": "Vault Path II",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 390,
+                            "attack": 22,
+                            "element": "Storm"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1310
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_13",
+                        "name": "Goldwelle",
+                        "description": "Ein goldener Impuls oeffnet den Rand.",
+                        "difficulty": 8,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.78,
+                            "y": 0.38
+                        },
+                        "enemy": {
+                            "name": "Gold Wave",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 420,
+                            "attack": 23,
+                            "element": "Water"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1390
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_14",
+                        "name": "Schatzsaum",
+                        "description": "Die Schatzkante bleibt stabil.",
+                        "difficulty": 8,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.84,
+                            "y": 0.34
+                        },
+                        "enemy": {
+                            "name": "Treasure Fringe",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 450,
+                            "attack": 24,
+                            "element": "Dark"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1470
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_15",
+                        "name": "Muenzsaum",
+                        "description": "Der Pfad knickt jetzt nach unten ab.",
+                        "difficulty": 9,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.90,
+                            "y": 0.30
+                        },
+                        "enemy": {
+                            "name": "Coin Fringe",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 480,
+                            "attack": 25,
+                            "element": "Light"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1560
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_16",
+                        "name": "Kupferbogen",
+                        "description": "Ein zweiter Bogen ueber das Feld.",
+                        "difficulty": 9,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.86,
+                            "y": 0.24
+                        },
+                        "enemy": {
+                            "name": "Copper Arc",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 510,
+                            "attack": 26,
+                            "element": "Plant"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1650
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_17",
+                        "name": "Silberpfad",
+                        "description": "Die Route bleibt lang und profitabel.",
+                        "difficulty": 10,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.80,
+                            "y": 0.20
+                        },
+                        "enemy": {
+                            "name": "Silver Route",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 540,
+                            "attack": 27,
+                            "element": "Fire"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1740
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_18",
+                        "name": "Goldpfahl",
+                        "description": "Der innere Schatzpfahl wird sichtbar.",
+                        "difficulty": 10,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.74,
+                            "y": 0.16
+                        },
+                        "enemy": {
+                            "name": "Gold Stake",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 570,
+                            "attack": 28,
+                            "element": "Water"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1830
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_19",
+                        "name": "Kernmuenze",
+                        "description": "Die Kasse oeffnet sich weiter.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.68,
+                            "y": 0.12
+                        },
+                        "enemy": {
+                            "name": "Core Coin",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 600,
+                            "attack": 29,
+                            "element": "Dark"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 1920
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_20",
+                        "name": "Schatzhaupt",
+                        "description":
+                            "Ein Coin-Boss blockiert die Mittellinie.",
+                        "difficulty": 11,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.62,
+                            "y": 0.10
+                        },
+                        "enemy": {
+                            "name": "Treasure Chief",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 650,
+                            "attack": 31,
+                            "element": "Light"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2050
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_21",
+                        "name": "Goldlauf I",
+                        "description": "Der Rueckweg beginnt mit hoher Dichte.",
+                        "difficulty": 12,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.56,
+                            "y": 0.16
+                        },
+                        "enemy": {
+                            "name": "Gold Run I",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 690,
+                            "attack": 32,
+                            "element": "Plant"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2140
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_22",
+                        "name": "Goldlauf II",
+                        "description": "Die Beutel werden schwerer.",
+                        "difficulty": 12,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.22
+                        },
+                        "enemy": {
+                            "name": "Gold Run II",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 730,
+                            "attack": 33,
+                            "element": "Fire"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2230
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_23",
+                        "name": "Muenzader",
+                        "description": "Die Route bleibt breit und offen.",
+                        "difficulty": 13,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.44,
+                            "y": 0.28
+                        },
+                        "enemy": {
+                            "name": "Coin Vein",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 770,
+                            "attack": 34,
+                            "element": "Water"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2320
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_24",
+                        "name": "Schatzkante",
+                        "description": "Noch immer gibt es neue Kisten.",
+                        "difficulty": 13,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.38,
+                            "y": 0.34
+                        },
+                        "enemy": {
+                            "name": "Treasure Edge",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 810,
+                            "attack": 35,
+                            "element": "Dark"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2410
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_25",
+                        "name": "Kassengrat",
+                        "description":
+                            "Der Grat fuehrt in den oberen Ruecklauf.",
+                        "difficulty": 14,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.32,
+                            "y": 0.40
+                        },
+                        "enemy": {
+                            "name": "Vault Ridge",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 850,
+                            "attack": 36,
+                            "element": "Light"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2500
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_26",
+                        "name": "Muenzgrat",
+                        "description": "Eine lange Linie aus Goldschimmern.",
+                        "difficulty": 14,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.26,
+                            "y": 0.46
+                        },
+                        "enemy": {
+                            "name": "Coin Ridge",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 890,
+                            "attack": 37,
+                            "element": "Plant"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2590
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_27",
+                        "name": "Schatzlauf",
+                        "description": "Die obere Haelfte fuehrt weiter.",
+                        "difficulty": 15,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.20,
+                            "y": 0.52
+                        },
+                        "enemy": {
+                            "name": "Treasure Run",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 930,
+                            "attack": 38,
+                            "element": "Fire"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2680
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_28",
+                        "name": "Goldsattel",
+                        "description": "Der Pfad bleibt lukrativ.",
+                        "difficulty": 15,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.14,
+                            "y": 0.58
+                        },
+                        "enemy": {
+                            "name": "Gold Saddle",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 970,
+                            "attack": 39,
+                            "element": "Water"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2770
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_29",
+                        "name": "Kassenfront",
+                        "description": "Die Front zieht in den oberen Ring.",
+                        "difficulty": 16,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.10,
+                            "y": 0.64
+                        },
+                        "enemy": {
+                            "name": "Vault Front",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1010,
+                            "attack": 40,
+                            "element": "Dark"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 2860
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_30",
+                        "name": "Goldrichter",
+                        "description":
+                            "Eine weitere Elite blockiert den oberen Zugang.",
+                        "difficulty": 16,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.16,
+                            "y": 0.70
+                        },
+                        "enemy": {
+                            "name": "Gold Judge",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1060,
+                            "attack": 42,
+                            "element": "Light"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3000
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_31",
+                        "name": "Schatzbogen II",
+                        "description": "Die Route schwingt wieder nach rechts.",
+                        "difficulty": 17,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.22,
+                            "y": 0.76
+                        },
+                        "enemy": {
+                            "name": "Treasure Arc II",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1110,
+                            "attack": 43,
+                            "element": "Plant"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3090
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_32",
+                        "name": "Muenzbogen II",
+                        "description": "Die obere Linie bleibt voller Truhen.",
+                        "difficulty": 17,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.28,
+                            "y": 0.82
+                        },
+                        "enemy": {
+                            "name": "Coin Arc II",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1160,
+                            "attack": 44,
+                            "element": "Fire"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3180
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_33",
+                        "name": "Goldkreis",
+                        "description": "Die Beute kreist ueber dem Feld.",
+                        "difficulty": 18,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.34,
+                            "y": 0.88
+                        },
+                        "enemy": {
+                            "name": "Gold Circle",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1210,
+                            "attack": 45,
+                            "element": "Water"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3270
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_34",
+                        "name": "Kassensaum",
+                        "description":
+                            "Der innere Ring aus Kisten schliesst sich.",
+                        "difficulty": 18,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.84
+                        },
+                        "enemy": {
+                            "name": "Vault Fringe",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1260,
+                            "attack": 46,
+                            "element": "Dark"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3360
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_35",
+                        "name": "Goldwall",
+                        "description": "Vor dem Ende steht eine letzte Front.",
+                        "difficulty": 19,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.50,
+                            "y": 0.80
+                        },
+                        "enemy": {
+                            "name": "Gold Wall",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1310,
+                            "attack": 47,
+                            "element": "Light"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3450
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_36",
+                        "name": "Muenzwall",
+                        "description": "Die Muenzfront bleibt dicht.",
+                        "difficulty": 19,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.58,
+                            "y": 0.76
+                        },
+                        "enemy": {
+                            "name": "Coin Wall",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1360,
+                            "attack": 48,
+                            "element": "Storm"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3540
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_37",
+                        "name": "Schatzpfeiler",
+                        "description": "Ein letzter Pfeiler stuetzt den Ring.",
+                        "difficulty": 20,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.66,
+                            "y": 0.72
+                        },
+                        "enemy": {
+                            "name": "Treasure Pillar",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1410,
+                            "attack": 49,
+                            "element": "Plant"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3630
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_38",
+                        "name": "Goldsturm",
+                        "description": "Die Luft ist voll mit Glanzsplittern.",
+                        "difficulty": 20,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.74,
+                            "y": 0.68
+                        },
+                        "enemy": {
+                            "name": "Goldstorm",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1460,
+                            "attack": 50,
+                            "element": "Fire"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3720
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_39",
+                        "name": "Kassenwacht",
+                        "description": "Die letzte Wacht steht im Weg.",
+                        "difficulty": 21,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.64
+                        },
+                        "enemy": {
+                            "name": "Vault Guard",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1510,
+                            "attack": 51,
+                            "element": "Water"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3810
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_40",
+                        "name": "Goldboss",
+                        "description":
+                            "Der grosse Coin-Boss verteidigt den Innenring.",
+                        "difficulty": 21,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.88,
+                            "y": 0.58
+                        },
+                        "enemy": {
+                            "name": "Gold Boss",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1580,
+                            "attack": 54,
+                            "element": "Dark"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 3960
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_41",
+                        "name": "Innenkasse I",
+                        "description": "Nach dem Boss bleibt die Beute hoch.",
+                        "difficulty": 22,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.82,
+                            "y": 0.52
+                        },
+                        "enemy": {
+                            "name": "Inner Vault I",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1640,
+                            "attack": 55,
+                            "element": "Light"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4080
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_42",
+                        "name": "Innenkasse II",
+                        "description": "Die Abschlussphase beginnt.",
+                        "difficulty": 22,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.76,
+                            "y": 0.46
+                        },
+                        "enemy": {
+                            "name": "Inner Vault II",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1700,
+                            "attack": 56,
+                            "element": "Storm"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4200
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_43",
+                        "name": "Goldkern I",
+                        "description": "Der Kern der Event-Route bleibt offen.",
+                        "difficulty": 23,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.70,
+                            "y": 0.40
+                        },
+                        "enemy": {
+                            "name": "Gold Core I",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 1760,
+                            "attack": 57,
+                            "element": "Fire"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4320
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_44",
+                        "name": "Goldkern II",
+                        "description": "Der letzte Ring wird enger.",
+                        "difficulty": 23,
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
+                        "node": {
+                            "x": 0.64,
+                            "y": 0.34
+                        },
+                        "enemy": {
+                            "name": "Gold Core II",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 1820,
+                            "attack": 58,
+                            "element": "Plant"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4440
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_45",
+                        "name": "Schlussgold I",
+                        "description": "Der Endpfad glitzert ueberall.",
+                        "difficulty": 24,
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
+                        "node": {
+                            "x": 0.58,
+                            "y": 0.28
+                        },
+                        "enemy": {
+                            "name": "Final Gold I",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 1880,
+                            "attack": 59,
+                            "element": "Water"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4560
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_46",
+                        "name": "Schlussgold II",
+                        "description": "Die letzte Kante wird erreicht.",
+                        "difficulty": 24,
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
+                        "node": {
+                            "x": 0.52,
+                            "y": 0.22
+                        },
+                        "enemy": {
+                            "name": "Final Gold II",
+                            "image": "sar_dragon",
+                            "model": "krevas",
+                            "texture": null,
+                            "hp": 1940,
+                            "attack": 60,
+                            "element": "Dark"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4680
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_47",
+                        "name": "Schatzspitze",
+                        "description": "Die Schatzspitze fuehrt zum Bossraum.",
+                        "difficulty": 25,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.46,
+                            "y": 0.16
+                        },
+                        "enemy": {
+                            "name": "Treasure Peak",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 2000,
+                            "attack": 61,
+                            "element": "Light"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4800
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_48",
+                        "name": "Goldspitze",
+                        "description":
+                            "Nur noch zwei Kaempfe bis zum Abschluss.",
+                        "difficulty": 25,
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
+                        "node": {
+                            "x": 0.38,
+                            "y": 0.12
+                        },
+                        "enemy": {
+                            "name": "Gold Peak",
+                            "image": "sar_dragon",
+                            "model": "tsayi",
+                            "texture": null,
+                            "hp": 2060,
+                            "attack": 62,
+                            "element": "Fire"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 4920
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_49",
+                        "name": "Kassenherz",
+                        "description": "Das Herz der Schatzroute liegt offen.",
+                        "difficulty": 26,
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
+                        "node": {
+                            "x": 0.28,
+                            "y": 0.10
+                        },
+                        "enemy": {
+                            "name": "Vault Heart",
+                            "image": "sar_dragon",
+                            "model": "jirgin",
+                            "texture": null,
+                            "hp": 2140,
+                            "attack": 64,
+                            "element": "Storm"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 5100
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_frenzy_battle_50",
+                        "name": "Treasure Dominion",
+                        "description":
+                            "Der finale Coin-Boss und Abschluss der Goldroute.",
+                        "difficulty": 27,
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
+                        "node": {
+                            "x": 0.16,
+                            "y": 0.08
+                        },
+                        "enemy": {
+                            "name": "Treasure Dominion",
+                            "image": "sar_dragon",
+                            "model": "masoyina",
+                            "texture": null,
+                            "hp": 2300,
+                            "attack": 70,
+                            "element": "Light"
+                        },
+                        "xpReward": 250,
+                        "rewards": [
+                            {
+                                "currency": "coins",
+                                "amount": 5600
+                            }
+                        ],
+                        "characterRewards": [
+                            {
+                                "characterID": "shen"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

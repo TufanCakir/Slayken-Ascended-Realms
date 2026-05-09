@@ -6,7 +6,7 @@
         "sortOrder": 110,
         "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 1,
-        "mapTexture": "bg_country",
+        "mapTexture": "realm_coin",
         "nodeImage": "chest_coin",
         "cutscene": {
             "id": "event_coin_frenzy_intro",
@@ -19,8 +19,8 @@
                 "id": "event_coin_frenzy_field",
                 "title": "Goldfeld",
                 "text": "Eine lange Coin-Route mit 50 Nodes.",
-                "mapImage": "bg_country",
-                "mapTexture": "bg_country",
+                "mapImage": "realm_coin",
+                "mapTexture": "realm_coin",
                 "node": {
                     "x": 0.10,
                     "y": 0.86
@@ -31,8 +31,8 @@
                         "name": "Goldpfad I",
                         "description": "Coin-Route Auftakt.",
                         "difficulty": 2,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.06,
                             "y": 0.86
@@ -59,8 +59,8 @@
                         "name": "Goldpfad II",
                         "description": "Mehr Gold, mehr Wachen.",
                         "difficulty": 2,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.12,
                             "y": 0.82
@@ -171,8 +171,8 @@
                         "name": "Muenzregen",
                         "description": "Die Splitter regnen ueber das Feld.",
                         "difficulty": 4,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.36,
                             "y": 0.66
@@ -311,8 +311,8 @@
                         "name": "Kassenpfad I",
                         "description": "Die zweite Haelfte beginnt.",
                         "difficulty": 7,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.66,
                             "y": 0.46
@@ -451,8 +451,8 @@
                         "name": "Kupferbogen",
                         "description": "Ein zweiter Bogen ueber das Feld.",
                         "difficulty": 9,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.86,
                             "y": 0.24
@@ -592,8 +592,8 @@
                         "name": "Goldlauf I",
                         "description": "Der Rueckweg beginnt mit hoher Dichte.",
                         "difficulty": 12,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.56,
                             "y": 0.16
@@ -733,8 +733,8 @@
                         "name": "Muenzgrat",
                         "description": "Eine lange Linie aus Goldschimmern.",
                         "difficulty": 14,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.26,
                             "y": 0.46
@@ -874,8 +874,8 @@
                         "name": "Schatzbogen II",
                         "description": "Die Route schwingt wieder nach rechts.",
                         "difficulty": 17,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.22,
                             "y": 0.76
@@ -1043,8 +1043,8 @@
                         "name": "Schatzpfeiler",
                         "description": "Ein letzter Pfeiler stuetzt den Ring.",
                         "difficulty": 20,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.66,
                             "y": 0.72
@@ -1212,8 +1212,8 @@
                         "name": "Goldkern I",
                         "description": "Der Kern der Event-Route bleibt offen.",
                         "difficulty": 23,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.70,
                             "y": 0.40
@@ -1381,8 +1381,8 @@
                         "name": "Kassenherz",
                         "description": "Das Herz der Schatzroute liegt offen.",
                         "difficulty": 26,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.28,
                             "y": 0.10

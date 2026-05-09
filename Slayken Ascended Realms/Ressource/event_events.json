@@ -6,7 +6,7 @@
         "sortOrder": 90,
         "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 1,
-        "mapTexture": "realm_void",
+        "mapTexture": "realm_rift",
         "nodeImage": "chest_rift",
         "cutscene": {
             "id": "event_story_riftfall_intro",
@@ -21,8 +21,8 @@
                 "title": "Chronikpfad",
                 "text":
                     "50 Story-Kaempfe fuehren durch den offenen Chronik-Riss.",
-                "mapImage": "realm_void",
-                "mapTexture": "realm_void",
+                "mapImage": "realm_rift",
+                "mapTexture": "realm_rift",
                 "node": {
                     "x": 0.10,
                     "y": 0.86
@@ -33,8 +33,8 @@
                         "name": "Chronikbruch I",
                         "description": "Der erste Schritt in den Story-Riss.",
                         "difficulty": 8,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.06,
                             "y": 0.86
@@ -390,8 +390,8 @@
                         "name": "Satzklinge",
                         "description": "Die Geschichte schneidet jetzt tiefer.",
                         "difficulty": 13,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.66,
                             "y": 0.46
@@ -740,8 +740,8 @@
                         "description":
                             "Die zweite Haelfte beginnt ruhiger als erwartet.",
                         "difficulty": 18,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.56,
                             "y": 0.16

@@ -6,7 +6,7 @@
         "sortOrder": 100,
         "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 1,
-        "mapTexture": "realm_country",
+        "mapTexture": "festival_summer",
         "nodeImage": "chest_summer",
         "cutscene": {
             "id": "event_summer_intro",
@@ -21,8 +21,8 @@
                 "title": "Sunshore",
                 "text":
                     "Am Sommerstrand oeffnen sich 50 Event-Kaempfe mit saisonalen Belohnungen.",
-                "mapImage": "realm_country",
-                "mapTexture": "realm_country",
+                "mapImage": "festival_summer",
+                "mapTexture": "festival_summer",
                 "node": {
                     "x": 0.10,
                     "y": 0.86
@@ -33,8 +33,8 @@
                         "name": "Sunshore I",
                         "description": "Der Strandpfad beginnt ruhig.",
                         "difficulty": 10,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.06,
                             "y": 0.86
@@ -180,8 +180,8 @@
                         "description":
                             "Ein heller Bogen aus Salz schneidet den Weg.",
                         "difficulty": 12,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.30,
                             "y": 0.70
@@ -370,8 +370,8 @@
                         "description":
                             "Der erste Event-Zwischenboss stellt sich.",
                         "difficulty": 14,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.60,
                             "y": 0.50
@@ -494,8 +494,8 @@
                         "description":
                             "Ein heller Grat markiert den Kartenrand.",
                         "difficulty": 16,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.78,
                             "y": 0.38
@@ -760,8 +760,8 @@
                         "description":
                             "Die zweite Event-Elite sichert den Unterpfad.",
                         "difficulty": 19,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.62,
                             "y": 0.10
@@ -1035,8 +1035,8 @@
                         "description":
                             "Die Hitze ueber dem Sand steigt stark an.",
                         "difficulty": 23,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.20,
                             "y": 0.52
@@ -1312,8 +1312,8 @@
                         "description":
                             "Die Linie zieht quer ueber den oberen Strand.",
                         "difficulty": 26,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.42,
                             "y": 0.84
@@ -1595,8 +1595,8 @@
                         "description":
                             "Nach dem Midboss drueckt der Strandring weiter.",
                         "difficulty": 30,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.82,
                             "y": 0.52
@@ -1862,8 +1862,8 @@
                         "description":
                             "Die Endlinie des Sommerpfads liegt offen vor dir.",
                         "difficulty": 33,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.38,
                             "y": 0.12

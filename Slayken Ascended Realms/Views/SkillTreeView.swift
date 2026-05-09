@@ -66,7 +66,11 @@ struct SkillTreeView: View {
     }
 
     private var displayedCurrencies: [CurrencyDefinition] {
-        let requiredCodes = Set(skillTree?.nodes.map(\.costCurrency) ?? [])
+        let requiredCodes = Set(
+            skillTrees.flatMap { tree in
+                tree.nodes.map(\.costCurrency)
+            }
+        )
         return gameState.currencies
             .filter { requiredCodes.contains($0.code) }
             .sorted { $0.sortOrder < $1.sortOrder }

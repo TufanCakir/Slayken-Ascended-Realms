@@ -8,6 +8,7 @@
             "Zum Start der Reiche gibt es sofort Vorrat fuer deinen ersten Run.",
         "buttonTitle": "Launch Tag 1 abholen",
         "assetIcon": "icon_crystals",
+        "background": "festival_launch",
         "icon": "sparkles",
         "rewards": [
             {

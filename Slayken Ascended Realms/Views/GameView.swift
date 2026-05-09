@@ -218,8 +218,11 @@ struct GameView: View {
                     }
 
                     // 🔻 FOOTER IMMER UNTEN
-                    GameFooterView(selectedTab: $selectedTab)
-                        .zIndex(10)
+                    GameFooterView(
+                        selectedTab: $selectedTab,
+                        onSelectTab: openFooterDestination
+                    )
+                    .zIndex(10)
 
                 }
                 .zIndex(6)
@@ -499,7 +502,10 @@ struct GameView: View {
                     VStack(spacing: 0) {
                         Spacer()
 
-                        GameFooterView(selectedTab: $selectedTab)
+                        GameFooterView(
+                            selectedTab: $selectedTab,
+                            onSelectTab: openFooterDestination
+                        )
                     }
 
                     GameMiddleDrawerView(
@@ -570,28 +576,7 @@ struct GameView: View {
                 .background(.black)
             }
             .onChange(of: selectedTab) { _, newTab in
-                if newTab == .events {
-                    showGlobeEvents = true
-                } else if newTab == .character {
-                    showCharacter = true
-                } else if newTab == .summon {
-                    showSummon = true
-                } else if newTab == .shop {
-                    showShop = true
-                } else {
-                    if showGlobeEvents {
-                        showGlobeEvents = false
-                    }
-                    if showCharacter {
-                        showCharacter = false
-                    }
-                    if showSummon {
-                        showSummon = false
-                    }
-                    if showShop {
-                        showShop = false
-                    }
-                }
+                openFooterDestination(newTab)
             }
             .task {
                 while !Task.isCancelled {
@@ -847,6 +832,32 @@ struct GameView: View {
         autoMoveTarget = nil
         self.pendingBattleArrivalID = nil
         presentBattleIntro(battle)
+    }
+
+    private func openFooterDestination(_ tab: GameTab) {
+        switch tab {
+        case .events:
+            showGlobeEvents = true
+        case .character:
+            showCharacter = true
+        case .summon:
+            showSummon = true
+        case .shop:
+            showShop = true
+        default:
+            if showGlobeEvents {
+                showGlobeEvents = false
+            }
+            if showCharacter {
+                showCharacter = false
+            }
+            if showSummon {
+                showSummon = false
+            }
+            if showShop {
+                showShop = false
+            }
+        }
     }
 
     private func sceneTarget(for node: EventMapNodePosition) -> SIMD2<Float> {

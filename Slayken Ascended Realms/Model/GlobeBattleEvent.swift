@@ -120,6 +120,7 @@ struct GlobeEventChapter: Codable, Identifiable {
     let endsAt: String?
     let minAscendedLevel: Int?
     let mapTexture: String
+    let nodeImage: String?
     let cutscene: GlobeEventCutscene?
     let points: [GlobeEventPoint]
 }
@@ -137,6 +138,12 @@ struct GlobeEventPoint: Codable, Identifiable {
 
     var resolvedNodeImage: String {
         nodeImage ?? GlobeNodeChestConfigStore.pointImage(for: id)
+    }
+
+    func resolvedNodeImage(defaultImage: String?) -> String {
+        nodeImage
+            ?? defaultImage
+            ?? GlobeNodeChestConfigStore.pointImage(for: id)
     }
 
     var mapNodeID: String {
@@ -214,6 +221,15 @@ struct GlobeBattle: Codable, Identifiable {
 
     var resolvedNodeImage: String {
         nodeImage
+            ?? GlobeNodeChestConfigStore.battleImage(
+                for: id,
+                difficulty: difficulty
+            )
+    }
+
+    func resolvedNodeImage(defaultImage: String?) -> String {
+        nodeImage
+            ?? defaultImage
             ?? GlobeNodeChestConfigStore.battleImage(
                 for: id,
                 difficulty: difficulty

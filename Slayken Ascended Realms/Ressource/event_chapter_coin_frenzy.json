@@ -7,6 +7,13 @@
         "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 1,
         "mapTexture": "bg_country",
+        "nodeImage": "chest_coin",
+        "cutscene": {
+            "id": "event_coin_frenzy_intro",
+            "title": "Coin Frenzy",
+            "video": "intro_coin",
+            "text": "Ein goldener Riss oeffnet den Weg ins Goldfeld."
+        },
         "points": [
             {
                 "id": "event_coin_frenzy_field",

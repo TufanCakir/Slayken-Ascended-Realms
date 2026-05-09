@@ -173,7 +173,12 @@ struct BattleInfoPopupView: View {
 
     private var enemyPortrait: some View {
         VStack(spacing: 4) {
-            RemoteAssetImage(battle.resolvedNodeImage, contentMode: .fit) {
+            RemoteAssetImage(
+                battle.resolvedNodeImage(
+                    defaultImage: gameState.activeEventChapter?.nodeImage
+                ),
+                contentMode: .fit
+            ) {
                 RemoteAssetImage(mainEnemy.image, contentMode: .fill) {
                     Color.black.opacity(0.30)
                 }

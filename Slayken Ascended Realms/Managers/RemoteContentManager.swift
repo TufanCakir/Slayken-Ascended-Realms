@@ -168,6 +168,11 @@ final class RemoteContentManager: ObservableObject {
     }
 
     func retryStartupRefreshPreparation() async {
+        backgroundPreloadTask?.cancel()
+        backgroundPreloadTask = nil
+        assetDownloadTasks.values.forEach { $0.cancel() }
+        assetDownloadTasks.removeAll()
+        Self.clearMemoryCaches()
         cachedManifest = nil
         startupPlan = nil
         startupReloadRequired = false
@@ -412,7 +417,8 @@ final class RemoteContentManager: ObservableObject {
             return []
         }
 
-        return fileURLs
+        return
+            fileURLs
             .filter { $0.pathExtension.lowercased() == "json" }
             .map { $0.deletingPathExtension().lastPathComponent }
             .filter { $0 != "resource_versions" }
@@ -744,6 +750,8 @@ final class RemoteContentManager: ObservableObject {
             )
             return (didChangeContent, nil)
         } catch {
+            versions.removeValue(forKey: "asset:\(asset.name)")
+            Self.discardCachedAsset(named: asset.name)
             Self.logger.error(
                 "Failed asset \(asset.name): \(error.localizedDescription)"
             )
@@ -832,7 +840,11 @@ final class RemoteContentManager: ObservableObject {
         let versionKey = "asset:\(asset.name)"
         let hasMatchingVersion =
             versions[versionKey] == (asset.version ?? "static")
-            && fileManager.fileExists(atPath: cacheURL.path)
+            && Self.isCachedAssetUsable(
+                at: cacheURL,
+                expectedName: asset.name,
+                remoteURL: asset.url
+            )
 
         if hasMatchingVersion {
             Self.logger.debug(
@@ -853,6 +865,7 @@ final class RemoteContentManager: ObservableObject {
             for: asset,
             primaryURL: assetURL
         )
+        try Self.validateAssetData(assetData, for: asset)
 
         try await Self.writeData(assetData, to: cacheURL)
         Self.removeCachedAsset(named: asset.name)
@@ -1182,7 +1195,11 @@ final class RemoteContentManager: ObservableObject {
 
         let versionKey = "asset:\(asset.name)"
         return versions[versionKey] == (asset.version ?? "static")
-            && fileManager.fileExists(atPath: cacheURL.path)
+            && Self.isCachedAssetUsable(
+                at: cacheURL,
+                expectedName: asset.name,
+                remoteURL: asset.url
+            )
     }
 
     private func hasCachedAsset(named assetName: String) -> Bool {
@@ -1237,12 +1254,89 @@ final class RemoteContentManager: ObservableObject {
         }
     }
 
+    private nonisolated static func validateAssetData(
+        _ data: Data,
+        for asset: RemoteContentAsset
+    ) throws {
+        guard !data.isEmpty else {
+            throw URLError(.zeroByteResource)
+        }
+
+        let fileExtension = resolvedAssetExtension(
+            name: asset.name,
+            remoteURL: asset.url
+        )
+        guard ["png", "jpg", "jpeg", "webp"].contains(fileExtension) else {
+            return
+        }
+
+        guard UIImage(data: data) != nil else {
+            throw URLError(.cannotDecodeContentData)
+        }
+    }
+
+    private nonisolated static func isCachedAssetUsable(
+        at url: URL,
+        expectedName: String,
+        remoteURL: String
+    ) -> Bool {
+        guard FileManager.default.fileExists(atPath: url.path) else {
+            return false
+        }
+
+        let fileExtension = resolvedAssetExtension(
+            name: expectedName,
+            remoteURL: remoteURL
+        )
+
+        if ["png", "jpg", "jpeg", "webp"].contains(fileExtension) {
+            guard UIImage(contentsOfFile: url.path) != nil else {
+                discardCachedAsset(named: expectedName)
+                logger.warning(
+                    "Discarded corrupt cached image asset \(expectedName)"
+                )
+                return false
+            }
+        }
+
+        guard
+            let values = try? url.resourceValues(forKeys: [.fileSizeKey]),
+            (values.fileSize ?? 0) > 0
+        else {
+            discardCachedAsset(named: expectedName)
+            logger.warning("Discarded empty cached asset \(expectedName)")
+            return false
+        }
+
+        return true
+    }
+
+    private nonisolated static func resolvedAssetExtension(
+        name: String,
+        remoteURL: String
+    ) -> String {
+        let nameExtension = URL(fileURLWithPath: name)
+            .pathExtension
+            .lowercased()
+        if !nameExtension.isEmpty {
+            return nameExtension
+        }
+
+        return (URL(string: remoteURL)?.pathExtension ?? "")
+            .lowercased()
+    }
+
     private nonisolated static func writeData(_ data: Data, to url: URL)
         async throws
     {
         try await Task.detached(priority: .utility) {
             try data.write(to: url, options: .atomic)
         }.value
+    }
+
+    private nonisolated static func clearMemoryCaches() {
+        RemoteAssetMemoryCache.imageCache.removeAllObjects()
+        RemoteAssetMemoryCache.sceneCache.removeAllObjects()
     }
 
     private nonisolated static func removeCachedAsset(named assetName: String) {
@@ -1260,6 +1354,24 @@ final class RemoteContentManager: ObservableObject {
             RemoteAssetMemoryCache.sceneCache.removeObject(
                 forKey: url.path as NSString
             )
+        }
+    }
+
+    private nonisolated static func discardCachedAsset(named assetName: String)
+    {
+        removeCachedAsset(named: assetName)
+
+        for candidate in assetCandidates(
+            for: assetName,
+            preferredExtensions: [
+                "png", "jpg", "jpeg", "webp", "usdz", "scn", "mp4", "mp3",
+            ]
+        ) {
+            guard let url = try? assetCacheFileURL(forAssetName: candidate)
+            else {
+                continue
+            }
+            try? FileManager.default.removeItem(at: url)
         }
     }
 

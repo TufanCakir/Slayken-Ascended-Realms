@@ -8,6 +8,7 @@
         "buttonTitle": "Tag 1 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",

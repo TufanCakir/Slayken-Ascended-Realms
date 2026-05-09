@@ -8,6 +8,7 @@
         "buttonTitle": "Tag 1 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",

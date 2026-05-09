@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GameFooterView: View {
     @Binding var selectedTab: GameTab
+    var onSelectTab: ((GameTab) -> Void)?
 
     private let tabs: [FooterTabItem] = [
         FooterTabItem(
@@ -69,6 +70,7 @@ struct GameFooterView: View {
     private func tabButton(_ item: FooterTabItem) -> some View {
         Button {
             selectedTab = item.tab
+            onSelectTab?(item.tab)
         } label: {
             Image(systemName: item.systemName)
                 .font(.system(size: 18, weight: .medium))

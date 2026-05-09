@@ -7,6 +7,13 @@
         "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 1,
         "mapTexture": "bg_ice",
+        "nodeImage": "chest_crystal",
+        "cutscene": {
+            "id": "event_crystal_storm_intro",
+            "title": "Crystal Storm",
+            "video": "intro_crystal",
+            "text": "Ein Kristallsturm bricht ueber dem Splitterfeld aus."
+        },
         "points": [
             {
                 "id": "event_crystal_storm_field",

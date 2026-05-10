@@ -40,6 +40,7 @@ struct TeamView: View {
         var characterProgress: [PlayerCharacterProgress]
 
     @State private var activeSheet: ActiveSheet?
+    @State private var renderHeroScene = false
 
     private var deckSlotCount: Int {
         loadDeckConfiguration().resolvedSlotCount
@@ -110,19 +111,21 @@ struct TeamView: View {
             case .character:
                 TeamCharacterPickerView(characters: characters) {
                     character,
-                    skinID in
+                    skinID,
+                    summonCharacterID in
+                    let teamCharacterID = summonCharacterID ?? character.model
                     PlayerInventoryStore.setTeam(
-                        characterID: character.id,
+                        characterID: teamCharacterID,
                         in: modelContext
                     )
                     if let record = ownedRecords.first(where: {
-                        $0.characterID == character.model
+                        $0.characterID == teamCharacterID
                     }) {
                         record.selectedSkinID = skinID
                         try? modelContext.save()
                     }
                     if let summonCharacter = characters.first(where: {
-                        $0.id == character.model
+                        $0.id == teamCharacterID
                     }) {
                         gameState.saveSummonedCharacter(
                             summonCharacter,
@@ -160,6 +163,15 @@ struct TeamView: View {
                 .environmentObject(gameState)
                 .environmentObject(themeManager)
             }
+        }
+        .onAppear {
+            Task { @MainActor in
+                await Task.yield()
+                renderHeroScene = true
+            }
+        }
+        .onDisappear {
+            renderHeroScene = false
         }
     }
 
@@ -345,16 +357,18 @@ struct TeamView: View {
             }
             .padding(16)
 
-            if let selectedCharacterStats {
+            if renderHeroScene, let selectedCharacterStats {
                 GameSceneView(
                     player: selectedCharacterStats,
                     joystickVector: .zero,
                     autoMoveTarget: nil,
-                    groundTexture: gameState.selectedMap.mapImage,
+                    groundTexture: gameState.activeGroundTexture,
                     skyboxTexture: themeManager.selectedTheme?.background
-                        ?? gameState.selectedBackground.image
+                        ?? gameState.activeSkyboxTexture
                 )
-                .id(selectedCharacterStats.model)
+                .id(
+                    "\(selectedCharacterStats.model)-\(selectedCharacterStats.texture ?? "default")"
+                )
                 .frame(height: 360)
                 .allowsHitTesting(false)
             }

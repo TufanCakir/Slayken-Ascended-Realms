@@ -27,8 +27,8 @@
                         "description":
                             "Der Pfad beginnt mit ersten Skill Points.",
                         "difficulty": 6,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.05,
                             "y": 0.86
@@ -63,8 +63,8 @@
                         "name": "Forge Spark II",
                         "description": "Der Fluss wird dichter.",
                         "difficulty": 6,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.12,
                             "y": 0.82
@@ -100,8 +100,8 @@
                         "description":
                             "Staub aus alten Runen liegt in der Luft.",
                         "difficulty": 7,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.19,
                             "y": 0.78
@@ -136,8 +136,8 @@
                         "name": "Echo Node",
                         "description": "Ein Knoten speichert alte Kraft.",
                         "difficulty": 7,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.26,
                             "y": 0.74
@@ -173,8 +173,8 @@
                         "description":
                             "Die Glyphen oeffnen den Weg nach innen.",
                         "difficulty": 8,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.33,
                             "y": 0.69
@@ -213,8 +213,8 @@
                         "name": "Mind Ember",
                         "description": "Hier glimmt rohe Geistesenergie.",
                         "difficulty": 8,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.40,
                             "y": 0.64
@@ -254,8 +254,8 @@
                         "description":
                             "Die Risswinde machen jeden Schritt schneller.",
                         "difficulty": 9,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.47,
                             "y": 0.59
@@ -294,8 +294,8 @@
                         "name": "Fortune Gate",
                         "description": "Ein Tor voller splitternder Belohnung.",
                         "difficulty": 9,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.54,
                             "y": 0.54
@@ -338,8 +338,8 @@
                         "name": "Master Trace",
                         "description": "Kurz vor dem Herz der Schmiede.",
                         "difficulty": 10,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.61,
                             "y": 0.49
@@ -378,8 +378,8 @@
                         "name": "Core Forge I",
                         "description": "Der erste Kern pulsiert.",
                         "difficulty": 11,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.68,
                             "y": 0.44
@@ -422,8 +422,8 @@
                         "name": "Rune Gate II",
                         "description": "Eine zweite Runenpforte fordert Fokus.",
                         "difficulty": 11,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.75,
                             "y": 0.39
@@ -463,8 +463,8 @@
                         "description":
                             "Glyphenketten halten die naechste Stufe.",
                         "difficulty": 12,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.82,
                             "y": 0.34
@@ -503,8 +503,8 @@
                         "name": "Shard Gate IV",
                         "description": "Scharfe Shards kreisen um den Pfad.",
                         "difficulty": 12,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.89,
                             "y": 0.29
@@ -543,8 +543,8 @@
                         "name": "Forge Bend V",
                         "description": "Der Pfad dreht sich in den Void.",
                         "difficulty": 13,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.94,
                             "y": 0.35
@@ -583,8 +583,8 @@
                         "name": "Forge Bend VI",
                         "description": "Die Kurve prueft deine Ausdauer.",
                         "difficulty": 13,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.88,
                             "y": 0.42
@@ -623,8 +623,8 @@
                         "name": "Forge Bend VII",
                         "description": "Ein Resonanzknoten laedt sich auf.",
                         "difficulty": 14,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.81,
                             "y": 0.48
@@ -663,8 +663,8 @@
                         "name": "Forge Bend VIII",
                         "description": "Die Schmiede schliesst sich kurz.",
                         "difficulty": 14,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.74,
                             "y": 0.54
@@ -703,8 +703,8 @@
                         "name": "Forge Bend IX",
                         "description": "Alte Runen pruefen deine Deckwahl.",
                         "difficulty": 15,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.67,
                             "y": 0.60
@@ -743,8 +743,8 @@
                         "name": "Forge Bend X",
                         "description": "Ein Shard-Tor flackert.",
                         "difficulty": 15,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.60,
                             "y": 0.66
@@ -783,8 +783,8 @@
                         "name": "Core Forge II",
                         "description": "Der zweite Kern verteidigt den Pfad.",
                         "difficulty": 16,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.53,
                             "y": 0.72
@@ -827,8 +827,8 @@
                         "name": "Ascend Spark I",
                         "description": "Der zweite Ring beginnt.",
                         "difficulty": 16,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.46,
                             "y": 0.76
@@ -867,8 +867,8 @@
                         "name": "Ascend Spark II",
                         "description": "Mehr Energie sammelt sich im Kreis.",
                         "difficulty": 17,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.39,
                             "y": 0.70
@@ -907,8 +907,8 @@
                         "name": "Ascend Spark III",
                         "description": "Der Riss zieht Mana an.",
                         "difficulty": 17,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.32,
                             "y": 0.64
@@ -947,8 +947,8 @@
                         "name": "Ascend Spark IV",
                         "description": "Das Feld wird instabil.",
                         "difficulty": 18,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.25,
                             "y": 0.58
@@ -987,8 +987,8 @@
                         "name": "Ascend Spark V",
                         "description": "Die Mitte ruft nach staerkerer Kraft.",
                         "difficulty": 18,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.18,
                             "y": 0.52
@@ -1027,8 +1027,8 @@
                         "name": "Ascend Spark VI",
                         "description": "Ein Kernsplitter bricht auf.",
                         "difficulty": 19,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.11,
                             "y": 0.46
@@ -1067,8 +1067,8 @@
                         "name": "Ascend Spark VII",
                         "description": "Der Pfad kehrt Richtung Zentrum.",
                         "difficulty": 19,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.06,
                             "y": 0.40
@@ -1107,8 +1107,8 @@
                         "name": "Ascend Spark VIII",
                         "description": "Ein Sturmknoten blockiert den Bogen.",
                         "difficulty": 20,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.13,
                             "y": 0.34
@@ -1147,8 +1147,8 @@
                         "name": "Ascend Spark IX",
                         "description": "Die Shards singen leise.",
                         "difficulty": 20,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.20,
                             "y": 0.28
@@ -1187,8 +1187,8 @@
                         "name": "Core Forge III",
                         "description": "Der dritte Kern ist erwacht.",
                         "difficulty": 21,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.27,
                             "y": 0.22
@@ -1231,8 +1231,8 @@
                         "name": "Prime Ring I",
                         "description": "Der finale Ring beginnt.",
                         "difficulty": 21,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.34,
                             "y": 0.18
@@ -1271,8 +1271,8 @@
                         "name": "Prime Ring II",
                         "description": "Kernstaub sammelt sich am Rand.",
                         "difficulty": 22,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.41,
                             "y": 0.24
@@ -1311,8 +1311,8 @@
                         "name": "Prime Ring III",
                         "description": "Der Ring zieht sich zusammen.",
                         "difficulty": 22,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.48,
                             "y": 0.30
@@ -1351,8 +1351,8 @@
                         "name": "Prime Ring IV",
                         "description": "Alte Glyphen pruefen deine Kraft.",
                         "difficulty": 23,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.55,
                             "y": 0.36
@@ -1391,8 +1391,8 @@
                         "name": "Prime Ring V",
                         "description": "Ein Lichtknoten brennt hell.",
                         "difficulty": 23,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.62,
                             "y": 0.42
@@ -1431,8 +1431,8 @@
                         "name": "Prime Ring VI",
                         "description": "Der Druck der Schmiede steigt.",
                         "difficulty": 24,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.69,
                             "y": 0.48
@@ -1471,8 +1471,8 @@
                         "name": "Prime Ring VII",
                         "description": "Ein Wasserriss kuehlt den Kern.",
                         "difficulty": 24,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.76,
                             "y": 0.54
@@ -1511,8 +1511,8 @@
                         "name": "Prime Ring VIII",
                         "description": "Sturmkraft schuetzt den Ring.",
                         "difficulty": 25,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.83,
                             "y": 0.60
@@ -1551,8 +1551,8 @@
                         "name": "Prime Ring IX",
                         "description": "Der letzte Aussenknoten leuchtet.",
                         "difficulty": 25,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.90,
                             "y": 0.66
@@ -1592,8 +1592,8 @@
                         "description":
                             "Der vierte Kern laesst die Karte beben.",
                         "difficulty": 26,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.95,
                             "y": 0.72
@@ -1636,8 +1636,8 @@
                         "name": "Elder Forge I",
                         "description": "Die aelteste Schmiede oeffnet sich.",
                         "difficulty": 26,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.88,
                             "y": 0.78
@@ -1676,8 +1676,8 @@
                         "name": "Elder Forge II",
                         "description": "Runenadern leiten dich weiter.",
                         "difficulty": 27,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.81,
                             "y": 0.82
@@ -1716,8 +1716,8 @@
                         "name": "Elder Forge III",
                         "description": "Voidfunken stoeren den Pfad.",
                         "difficulty": 27,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.74,
                             "y": 0.86
@@ -1756,8 +1756,8 @@
                         "name": "Elder Forge IV",
                         "description": "Ein Kernzirkel verteidigt den Eingang.",
                         "difficulty": 28,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.67,
                             "y": 0.80
@@ -1797,8 +1797,8 @@
                         "description":
                             "Die naechste Pforte braucht volle Kontrolle.",
                         "difficulty": 28,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.60,
                             "y": 0.74
@@ -1838,8 +1838,8 @@
                         "description":
                             "Die Schmiede prueft deine letzte Reserve.",
                         "difficulty": 29,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.53,
                             "y": 0.68
@@ -1878,8 +1878,8 @@
                         "name": "Elder Forge VII",
                         "description": "Der Kern atmet in langen Wellen.",
                         "difficulty": 29,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.46,
                             "y": 0.62
@@ -1919,8 +1919,8 @@
                         "description":
                             "Der letzte Shard-Waechter steht bereit.",
                         "difficulty": 30,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.39,
                             "y": 0.56
@@ -1959,8 +1959,8 @@
                         "name": "Elder Forge IX",
                         "description": "Nur ein Knoten bleibt vor dem Zentrum.",
                         "difficulty": 30,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.32,
                             "y": 0.50
@@ -2000,8 +2000,8 @@
                         "description":
                             "Das Herz der Skill-Schmiede. Schaffe diesen Kampf, um den ganzen Pfad zu meistern.",
                         "difficulty": 32,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.25,
                             "y": 0.44

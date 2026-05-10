@@ -242,9 +242,9 @@ struct CreateClassView: View {
                 player: character,
                 joystickVector: .zero,
                 autoMoveTarget: nil,
-                groundTexture: gameState.selectedMap.mapImage,
+                groundTexture: gameState.activeGroundTexture,
                 skyboxTexture: theme.selectedTheme?.background
-                    ?? gameState.selectedBackground.image
+                    ?? gameState.activeSkyboxTexture
             )
             .id(character.model)
             .frame(height: 260)

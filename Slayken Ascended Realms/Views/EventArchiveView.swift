@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct EventArchiveView: View {
+    private struct ActiveStory: Identifiable {
+        let id: String
+        let lines: [StoryLine]
+    }
+
     let chapters: [GlobeEventChapter]
     let onClose: () -> Void
 
     @EnvironmentObject private var theme: ThemeManager
     @State private var activeCutscene: GlobeEventCutscene?
+    @State private var activeStory: ActiveStory?
     @State private var countdownNow = Date()
 
     private var activeTheme: GameTheme? {
@@ -36,6 +42,12 @@ struct EventArchiveView: View {
             EventCutsceneView(cutscene: cutscene) {
                 activeCutscene = nil
             }
+        }
+        .fullScreenCover(item: $activeStory) { story in
+            StoryView(story: story.lines) {
+                activeStory = nil
+            }
+            .environmentObject(theme)
         }
         .safeAreaInset(edge: .top, spacing: 0) {
             header
@@ -227,6 +239,12 @@ struct EventArchiveView: View {
             }
 
             if !battle.story.isEmpty {
+                storyButton(
+                    id: battle.id,
+                    title: battle.name,
+                    lines: battle.story
+                )
+
                 VStack(alignment: .leading, spacing: 6) {
                     ForEach(Array(battle.story.enumerated()), id: \.offset) {
                         _,
@@ -287,6 +305,40 @@ struct EventArchiveView: View {
             .padding(.vertical, 8)
             .background(
                 (activeTheme?.primary.color ?? .white).opacity(0.18),
+                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(.white.opacity(0.12), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func storyButton(id: String, title: String, lines: [StoryLine])
+        -> some View
+    {
+        Button {
+            activeStory = ActiveStory(id: id, lines: lines)
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: "text.bubble.fill")
+                    .font(.system(size: 15, weight: .black))
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("STORY ANSEHEN")
+                        .font(.system(size: 9, weight: .black))
+                        .foregroundStyle(.white.opacity(0.56))
+                    Text(title)
+                        .font(.system(size: 11, weight: .black))
+                        .lineLimit(1)
+                }
+                Spacer(minLength: 0)
+            }
+            .foregroundStyle(.white)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            .background(
+                (activeTheme?.glow.color ?? .yellow).opacity(0.18),
                 in: RoundedRectangle(cornerRadius: 8, style: .continuous)
             )
             .overlay(

@@ -94,6 +94,7 @@ struct RootView: View {
         ZStack {
             if remoteContent.hasCompletedInitialRefresh {
                 contentLayer
+                    .transition(.opacity)
             } else {
                 Color.black.ignoresSafeArea()
             }
@@ -185,6 +186,10 @@ struct RootView: View {
             }
         }
         .animation(.smooth(duration: 0.45), value: currentScreenID)
+        .animation(
+            .easeInOut(duration: 0.28),
+            value: remoteContent.hasCompletedInitialRefresh
+        )
         .onAppear {
             guard !hasStartedStartupFlow else { return }
             hasStartedStartupFlow = true
@@ -253,7 +258,7 @@ struct RootView: View {
     }
 
     private var loadingImages: [String] {
-        let assets = gameState.backgrounds.map(\.image)
+        let assets = gameState.eventChapters.map(\.mapTexture)
         if assets.isEmpty {
             return [
                 "theme_epic", "theme_fire", "bg_sar", "bg_map", "bg_country",

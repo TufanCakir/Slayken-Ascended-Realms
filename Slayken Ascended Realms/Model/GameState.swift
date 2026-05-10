@@ -11,8 +11,6 @@ import SwiftUI
 final class GameState: ObservableObject {
     @Published var player: CharacterStats
     @Published var availableCharacters: [CharacterStats]
-    @Published var maps: [GameMap]
-    @Published var backgrounds: [GameBackground]
     @Published var currencies: [CurrencyDefinition]
     @Published var eventChapters: [GlobeEventChapter]
     @Published var summonCharacters: [SummonCharacter]
@@ -37,6 +35,19 @@ final class GameState: ObservableObject {
         return activeEventChapter.points.first { $0.id == activeEventPointID }
     }
 
+    var activeBattle: GlobeBattle? {
+        if let selectedBattle {
+            return selectedBattle
+        }
+
+        guard let activeEventBattleID else { return nil }
+        return
+            eventChapters
+            .flatMap(\.points)
+            .flatMap(\.battles)
+            .first { $0.id == activeEventBattleID }
+    }
+
     var battlePlayer: CharacterStats {
         CharacterStats(
             name: player.name,
@@ -50,23 +61,24 @@ final class GameState: ObservableObject {
         )
     }
 
-    @Published var selectedMap: GameMap
-    @Published var selectedBackground: GameBackground
+    var activeMapTexture: String {
+        activeEventPoint?.mapTexture
+            ?? activeEventChapter?.mapTexture
+            ?? "realm_country"
+    }
 
     var activeGroundTexture: String {
-        selectedBattle?.groundTexture ?? selectedMap.mapImage
+        activeBattle?.groundTexture ?? activeMapTexture
     }
 
     var activeSkyboxTexture: String {
-        selectedBattle?.skyboxTexture ?? selectedBackground.image
+        activeBattle?.skyboxTexture ?? activeMapTexture
     }
 
     var activeBattleRewards: [CurrencyAmount] {
-        selectedBattle?.rewards ?? []
+        activeBattle?.rewards ?? []
     }
 
-    private let mapKey = "selectedMapID"
-    private let bgKey = "selectedBackgroundID"
     private let characterKey = "selectedCharacterModel"
     private let characterDataKey = "selectedCharacterData"
     private let eventChapterKey = "activeEventChapterID"
@@ -76,8 +88,6 @@ final class GameState: ObservableObject {
     init() {
         self.player = Self.placeholderCharacter
         self.availableCharacters = []
-        self.maps = []
-        self.backgrounds = []
         self.currencies = []
         self.eventChapters = []
         self.summonCharacters = []
@@ -91,18 +101,11 @@ final class GameState: ObservableObject {
         self.activeEventBattleID = nil
         self.activeRaidLobby = nil
         self.activeRaidSession = nil
-        self.selectedMap = Self.placeholderMap
-        self.selectedBackground = Self.placeholderBackground
     }
 
     func reloadContent() {
-        let currentMapID = selectedMap.id
-        let currentBackgroundID = selectedBackground.id
-
         availableCharacters = Self.loadAvailableCharacters()
         upsertAvailableCharacter(player)
-        maps = loadMaps()
-        backgrounds = loadBackgrounds()
         currencies = mergedCurrencyDefinitions()
         eventChapters = loadGlobeEventChapters()
         summonCharacters = loadSummonCharacters()
@@ -111,37 +114,10 @@ final class GameState: ObservableObject {
         particleEffects = loadParticleEffects()
         newsItems = loadNewsItems()
 
-        if let refreshedMap = maps.first(where: { $0.id == currentMapID }) {
-            selectedMap = refreshedMap
-        } else if let firstMap = maps.first {
-            selectedMap = firstMap
-        }
-
-        if let refreshedBackground = backgrounds.first(where: {
-            $0.id == currentBackgroundID
-        }) {
-            selectedBackground = refreshedBackground
-        } else if let firstBackground = backgrounds.first {
-            selectedBackground = firstBackground
-        }
-
         loadSelections()
     }
 
     func loadSelections() {
-        if let savedMapID = UserDefaults.standard.object(forKey: mapKey) as? Int
-        {
-            if let map = maps.first(where: { $0.id == savedMapID }) {
-                selectedMap = map
-            }
-        }
-
-        if let savedBgID = UserDefaults.standard.object(forKey: bgKey) as? Int {
-            if let bg = backgrounds.first(where: { $0.id == savedBgID }) {
-                selectedBackground = bg
-            }
-        }
-
         if let savedCharacterData = UserDefaults.standard.data(
             forKey: characterDataKey
         ),
@@ -278,8 +254,6 @@ final class GameState: ObservableObject {
     }
 
     func resetGameData() {
-        UserDefaults.standard.removeObject(forKey: mapKey)
-        UserDefaults.standard.removeObject(forKey: bgKey)
         UserDefaults.standard.removeObject(forKey: characterKey)
         UserDefaults.standard.removeObject(forKey: characterDataKey)
         UserDefaults.standard.removeObject(forKey: eventChapterKey)
@@ -293,12 +267,6 @@ final class GameState: ObservableObject {
 
         if let defaultCharacter = availableCharacters.first {
             player = defaultCharacter
-        }
-        if let defaultMap = maps.first {
-            selectedMap = defaultMap
-        }
-        if let defaultBackground = backgrounds.first {
-            selectedBackground = defaultBackground
         }
     }
 
@@ -367,18 +335,4 @@ final class GameState: ObservableObject {
         attack: 10
     )
 
-    private static let placeholderMap = GameMap(
-        id: 0,
-        name: "Default",
-        mapImage: "",
-        difficulty: 1,
-        enemy: placeholderCharacter,
-        story: []
-    )
-
-    private static let placeholderBackground = GameBackground(
-        id: 0,
-        name: "Default",
-        image: ""
-    )
 }

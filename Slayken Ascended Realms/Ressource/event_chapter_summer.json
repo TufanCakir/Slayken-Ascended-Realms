@@ -24,7 +24,7 @@
                 "mapImage": "festival_summer",
                 "mapTexture": "festival_summer",
                 "node": {
-                    "x": 0.10,
+                    "x": 0.1,
                     "y": 0.86
                 },
                 "battles": [
@@ -61,15 +61,29 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Aika",
+                                "image": "preview_aika",
+                                "text":
+                                    "Der Strandriss brennt heller als die Sonne."
+                            },
+                            {
+                                "speaker": "Shen",
+                                "image": "preview_shen",
+                                "text":
+                                    "Dann nutzen wir die Hitze und druecken vor."
+                            }
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_2",
                         "name": "Sunshore II",
                         "description": "Warme Luft bringt den ersten Druck.",
                         "difficulty": 10,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.12,
                             "y": 0.82
@@ -96,15 +110,16 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_3",
                         "name": "Heatline",
                         "description": "Der Strand flimmert unter dem Riss.",
                         "difficulty": 11,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.18,
                             "y": 0.78
@@ -136,7 +151,8 @@
                                 "amount": 1
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_4",
@@ -144,8 +160,8 @@
                         "description":
                             "Der Pfad fuehrt ueber scharfe Korallen.",
                         "difficulty": 11,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.24,
                             "y": 0.74
@@ -172,7 +188,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_5",
@@ -183,8 +200,8 @@
                         "groundTexture": "festival_summer",
                         "skyboxTexture": "festival_summer",
                         "node": {
-                            "x": 0.30,
-                            "y": 0.70
+                            "x": 0.3,
+                            "y": 0.7
                         },
                         "enemy": {
                             "name": "Salt Arc",
@@ -208,7 +225,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_6",
@@ -216,8 +234,8 @@
                         "description":
                             "Eine harte Strandwache blockiert den Bogen.",
                         "difficulty": 12,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.36,
                             "y": 0.66
@@ -249,7 +267,8 @@
                                 "amount": 1
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_7",
@@ -257,8 +276,8 @@
                         "description":
                             "Eine Welle aus Risswasser trifft die Formation.",
                         "difficulty": 13,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.42,
                             "y": 0.62
@@ -285,7 +304,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_8",
@@ -293,8 +313,8 @@
                         "description":
                             "Ein heller Ring steht ueber dem Strand.",
                         "difficulty": 13,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.48,
                             "y": 0.58
@@ -321,7 +341,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_9",
@@ -329,8 +350,8 @@
                         "description":
                             "Der Strand kippt in einen schnellen Kampf.",
                         "difficulty": 14,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.54,
                             "y": 0.54
@@ -362,7 +383,8 @@
                                 "amount": 2
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_10",
@@ -373,8 +395,8 @@
                         "groundTexture": "festival_summer",
                         "skyboxTexture": "festival_summer",
                         "node": {
-                            "x": 0.60,
-                            "y": 0.50
+                            "x": 0.6,
+                            "y": 0.5
                         },
                         "cutscene": {
                             "id": "event_summer_battle_10_cutscene",
@@ -410,7 +432,20 @@
                                 "amount": 2
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Aika",
+                                "image": "preview_aika",
+                                "text": "Eine Elite blockiert den Strandsektor."
+                            },
+                            {
+                                "speaker": "Shen",
+                                "image": "preview_shen",
+                                "text":
+                                    "Sommerwachen fallen genauso wie alle anderen."
+                            }
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_11",
@@ -418,8 +453,8 @@
                         "description":
                             "Palmen und Splitter schieben den Pfad weiter.",
                         "difficulty": 15,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.66,
                             "y": 0.46
@@ -446,15 +481,16 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_12",
                         "name": "Beach Rift",
                         "description": "Der Riss frisst sich durch die Kueste.",
                         "difficulty": 15,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.72,
                             "y": 0.42
@@ -486,7 +522,8 @@
                                 "amount": 2
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_13",
@@ -522,15 +559,16 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_14",
                         "name": "Wave Rim",
                         "description": "Die Linie kippt in den zweiten Bogen.",
                         "difficulty": 16,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.84,
                             "y": 0.34
@@ -562,7 +600,8 @@
                                 "amount": 2
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_15",
@@ -570,11 +609,11 @@
                         "description":
                             "Ein warmer Stoss drueckt den Pfad nach unten.",
                         "difficulty": 17,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
-                            "x": 0.90,
-                            "y": 0.30
+                            "x": 0.9,
+                            "y": 0.3
                         },
                         "enemy": {
                             "name": "Solar Edge",
@@ -598,7 +637,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_16",
@@ -606,8 +646,8 @@
                         "description":
                             "Der Pfad laeuft als Korallenschleife weiter.",
                         "difficulty": 17,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.86,
                             "y": 0.24
@@ -639,7 +679,8 @@
                                 "amount": 2
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_17",
@@ -647,11 +688,11 @@
                         "description":
                             "Ein Impuls aus Salzsplittern trifft die Front.",
                         "difficulty": 18,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
-                            "x": 0.80,
-                            "y": 0.20
+                            "x": 0.8,
+                            "y": 0.2
                         },
                         "enemy": {
                             "name": "Salt Pulse",
@@ -675,7 +716,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_18",
@@ -683,8 +725,8 @@
                         "description":
                             "Ein dunkler Schatten zieht ueber den Strand.",
                         "difficulty": 18,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.74,
                             "y": 0.16
@@ -716,7 +758,8 @@
                                 "amount": 3
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_19",
@@ -724,8 +767,8 @@
                         "description":
                             "Eine hohe Duenenlinie trennt den Sektor.",
                         "difficulty": 19,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.68,
                             "y": 0.12
@@ -752,7 +795,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_20",
@@ -764,7 +808,7 @@
                         "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.62,
-                            "y": 0.10
+                            "y": 0.1
                         },
                         "enemy": {
                             "name": "Tide Captain",
@@ -797,7 +841,8 @@
                                 "amount": 3
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_21",
@@ -805,8 +850,8 @@
                         "description":
                             "Der Pfad kehrt in einem grossen Sommerbogen um.",
                         "difficulty": 20,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.56,
                             "y": 0.16
@@ -833,7 +878,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_22",
@@ -841,10 +887,10 @@
                         "description":
                             "Eine helle Lagune oeffnet den Mittelpfad.",
                         "difficulty": 20,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
-                            "x": 0.50,
+                            "x": 0.5,
                             "y": 0.22
                         },
                         "enemy": {
@@ -874,7 +920,8 @@
                                 "amount": 3
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_23",
@@ -882,8 +929,8 @@
                         "description":
                             "Funken aus Licht tanzen ueber die Wellen.",
                         "difficulty": 21,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.44,
                             "y": 0.28
@@ -910,15 +957,16 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_24",
                         "name": "Palm Halo",
                         "description": "Die Palmen bilden einen harten Ring.",
                         "difficulty": 21,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.38,
                             "y": 0.34
@@ -950,7 +998,8 @@
                                 "amount": 4
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_25",
@@ -958,11 +1007,11 @@
                         "description":
                             "Die Route zieht zurueck in die linke Strandhaelfte.",
                         "difficulty": 22,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.32,
-                            "y": 0.40
+                            "y": 0.4
                         },
                         "enemy": {
                             "name": "Beach Loop",
@@ -986,7 +1035,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_26",
@@ -994,8 +1044,8 @@
                         "description":
                             "Ein heller Schnitt trennt den Strand in zwei Linien.",
                         "difficulty": 22,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.26,
                             "y": 0.46
@@ -1027,7 +1077,8 @@
                                 "amount": 4
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_27",
@@ -1038,7 +1089,7 @@
                         "groundTexture": "festival_summer",
                         "skyboxTexture": "festival_summer",
                         "node": {
-                            "x": 0.20,
+                            "x": 0.2,
                             "y": 0.52
                         },
                         "enemy": {
@@ -1063,7 +1114,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_28",
@@ -1071,8 +1123,8 @@
                         "description":
                             "Eine Wache drueckt dich in den oberen Strandbogen.",
                         "difficulty": 23,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.14,
                             "y": 0.58
@@ -1104,7 +1156,8 @@
                                 "amount": 4
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_29",
@@ -1112,10 +1165,10 @@
                         "description":
                             "Der Rueckweg fuehrt in den oberen Eventring.",
                         "difficulty": 24,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
-                            "x": 0.10,
+                            "x": 0.1,
                             "y": 0.64
                         },
                         "enemy": {
@@ -1140,7 +1193,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_30",
@@ -1148,11 +1202,11 @@
                         "description":
                             "Die dritte Elite prueft den oberen Strandbogen.",
                         "difficulty": 24,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.16,
-                            "y": 0.70
+                            "y": 0.7
                         },
                         "cutscene": {
                             "id": "event_summer_battle_30_cutscene",
@@ -1192,7 +1246,20 @@
                                 "amount": 5
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Aika",
+                                "image": "preview_aika",
+                                "text":
+                                    "Der obere Bogen ist erreicht. Der Kern ist nicht mehr weit."
+                            },
+                            {
+                                "speaker": "Shen",
+                                "image": "preview_shen",
+                                "text": "Dann keinen Schritt zurueck."
+                            }
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_31",
@@ -1200,8 +1267,8 @@
                         "description":
                             "Der Abschlusspfad fuehrt wieder nach rechts.",
                         "difficulty": 25,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.22,
                             "y": 0.76
@@ -1228,15 +1295,16 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_32",
                         "name": "Shell Rise",
                         "description": "Muscheln und Licht markieren den Ring.",
                         "difficulty": 25,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.28,
                             "y": 0.82
@@ -1268,7 +1336,8 @@
                                 "amount": 5
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_33",
@@ -1276,8 +1345,8 @@
                         "description":
                             "Ein heller Ring spannt sich ueber die Kueste.",
                         "difficulty": 26,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.34,
                             "y": 0.88
@@ -1304,7 +1373,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_34",
@@ -1345,7 +1415,8 @@
                                 "amount": 5
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_35",
@@ -1353,11 +1424,11 @@
                         "description":
                             "Eine harte Sommerfront steht ueber der Mitte.",
                         "difficulty": 27,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
-                            "x": 0.50,
-                            "y": 0.80
+                            "x": 0.5,
+                            "y": 0.8
                         },
                         "enemy": {
                             "name": "Solar Wall",
@@ -1381,7 +1452,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_36",
@@ -1389,8 +1461,8 @@
                         "description":
                             "Die Krone des Sommerpfads wird sichtbar.",
                         "difficulty": 27,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.58,
                             "y": 0.76
@@ -1422,7 +1494,8 @@
                                 "amount": 6
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_37",
@@ -1430,8 +1503,8 @@
                         "description":
                             "Die Hitze kippt ueber den rechten Fluegel.",
                         "difficulty": 28,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.66,
                             "y": 0.72
@@ -1458,7 +1531,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_38",
@@ -1466,8 +1540,8 @@
                         "description":
                             "Ein harter Muschelbruch schneidet die Linie.",
                         "difficulty": 28,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.74,
                             "y": 0.68
@@ -1499,7 +1573,8 @@
                                 "amount": 6
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_39",
@@ -1507,8 +1582,8 @@
                         "description":
                             "Der Abschlusssektor baut sich vor dir auf.",
                         "difficulty": 29,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.82,
                             "y": 0.64
@@ -1535,7 +1610,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_40",
@@ -1543,8 +1619,8 @@
                         "description":
                             "Ein grosser Event-Midboss blockiert den Innenstrand.",
                         "difficulty": 29,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.88,
                             "y": 0.58
@@ -1587,7 +1663,8 @@
                                 "amount": 6
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_41",
@@ -1623,7 +1700,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_42",
@@ -1631,8 +1709,8 @@
                         "description":
                             "Die Wellen schlagen im letzten Ring gegen dich.",
                         "difficulty": 30,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.76,
                             "y": 0.46
@@ -1664,7 +1742,8 @@
                                 "amount": 7
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_43",
@@ -1672,11 +1751,11 @@
                         "description":
                             "Hitze und Licht bauen die Abschlussfront auf.",
                         "difficulty": 31,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
-                            "x": 0.70,
-                            "y": 0.40
+                            "x": 0.7,
+                            "y": 0.4
                         },
                         "enemy": {
                             "name": "Heat Crown",
@@ -1700,7 +1779,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_44",
@@ -1708,8 +1788,8 @@
                         "description":
                             "Der Strandweg zieht in den Abschlussbogen.",
                         "difficulty": 31,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.64,
                             "y": 0.34
@@ -1741,7 +1821,8 @@
                                 "amount": 7
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_45",
@@ -1749,8 +1830,8 @@
                         "description":
                             "Salzsplitter und Sonne markieren die Endphase.",
                         "difficulty": 32,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.58,
                             "y": 0.28
@@ -1777,7 +1858,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_46",
@@ -1785,8 +1867,8 @@
                         "description":
                             "Die letzte Lagune trennt dich vom Eventkern.",
                         "difficulty": 32,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.52,
                             "y": 0.22
@@ -1818,7 +1900,8 @@
                                 "amount": 8
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_47",
@@ -1826,8 +1909,8 @@
                         "description":
                             "Der Pfad wird schmal vor dem Sommerkern.",
                         "difficulty": 33,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.46,
                             "y": 0.16
@@ -1854,7 +1937,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_48",
@@ -1895,7 +1979,8 @@
                                 "amount": 8
                             }
                         ],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_49",
@@ -1903,11 +1988,11 @@
                         "description":
                             "Der Eventkern flimmert ueber dem Strand.",
                         "difficulty": 34,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.28,
-                            "y": 0.10
+                            "y": 0.1
                         },
                         "enemy": {
                             "name": "Summer Core",
@@ -1931,7 +2016,8 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": []
+                        "story": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_summer_battle_50",
@@ -1939,8 +2025,8 @@
                         "description":
                             "Der finale Boss des Summer Events mit maximalem Stranddruck.",
                         "difficulty": 35,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "festival_summer",
+                        "skyboxTexture": "festival_summer",
                         "node": {
                             "x": 0.16,
                             "y": 0.08
@@ -1983,7 +2069,21 @@
                                 "amount": 10
                             }
                         ],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Aika",
+                                "image": "preview_aika",
+                                "text":
+                                    "Sunheart Festival erhebt sich aus dem Risslicht."
+                            },
+                            {
+                                "speaker": "Shen",
+                                "image": "preview_shen",
+                                "text":
+                                    "Dann endet dieses Festival mit unserem Sieg."
+                            }
+                        ],
+                        "skinRewards": []
                     }
                 ]
             }

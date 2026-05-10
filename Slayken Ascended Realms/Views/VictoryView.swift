@@ -16,6 +16,7 @@ struct VictoryView: View {
     let currencies: [CurrencyDefinition]
     let rewards: [CurrencyAmount]
     let characterRewards: [GlobeBattle.CharacterReward]
+    let skinRewards: [StorePackSkinReward]
     let cardRewards: [GlobeBattle.CardReward]
     let xpReward: Int
     let ascendedXPReward: Int
@@ -28,25 +29,25 @@ struct VictoryView: View {
     var onContinue: () -> Void
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 22) {
-                Spacer(minLength: 12)
-
-                victoryHeader
-                levelSummaryRow
-                rewardSection
-                if !characterRewards.isEmpty {
-                    characterRewardSection
+        VStack(spacing: 0) {
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 12) {
+                    victoryHeader
+                    levelSummaryRow
+                    ascendedXPPanel
+                    rewardPanel
                 }
-                if !cardRewards.isEmpty {
-                    cardRewardSection
-                }
-                ascendedXPPanel
-                continueButton
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 16)
+                .padding(.top, 18)
+                .padding(.bottom, 12)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, 24)
-            .padding(.vertical, 28)
+
+            continueButton
+                .padding(.horizontal, 16)
+                .padding(.top, 8)
+                .padding(.bottom, 18)
+                .background(Color.black.opacity(0.24))
         }
         .onAppear {
             animate = true
@@ -73,26 +74,49 @@ struct VictoryView: View {
     }
 
     private var victoryHeader: some View {
-        VStack(spacing: 10) {
-            Image(systemName: "crown.fill")
-                .font(.system(size: 28, weight: .black))
-                .foregroundStyle(.yellow)
-                .scaleEffect(animate ? 1 : 0.88)
-                .animation(
-                    .spring(response: 0.5, dampingFraction: 0.7),
-                    value: animate
-                )
+        HStack(spacing: 12) {
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [.yellow, .orange],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                Image(systemName: "crown.fill")
+                    .font(.system(size: 19, weight: .black))
+                    .foregroundStyle(.black.opacity(0.82))
+            }
+            .frame(width: 46, height: 46)
+            .scaleEffect(animate ? 1 : 0.88)
+            .animation(
+                .spring(response: 0.5, dampingFraction: 0.7),
+                value: animate
+            )
 
-            Text("VICTORY")
-                .font(.system(size: 46, weight: .black, design: .serif))
-                .foregroundStyle(.white)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("VICTORY")
+                    .font(.system(size: 34, weight: .black, design: .serif))
+                    .foregroundStyle(.white)
+                    .lineLimit(1)
 
-            Text("Du hast \(defeatedEnemies) Gegner besiegt.")
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(.white.opacity(0.76))
-                .multilineTextAlignment(.center)
+                Text("\(defeatedEnemies) Gegner besiegt")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(.white.opacity(0.72))
+            }
+
+            Spacer(minLength: 0)
         }
-        .frame(maxWidth: .infinity)
+        .padding(14)
+        .background(
+            Color.black.opacity(0.42),
+            in: RoundedRectangle(cornerRadius: 24, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(.white.opacity(0.10), lineWidth: 1)
+        }
     }
 
     private var levelSummaryRow: some View {
@@ -117,32 +141,11 @@ struct VictoryView: View {
         }
     }
 
-    private var rewardSection: some View {
-        VStack(spacing: 12) {
-            sectionTitle("Belohnungen")
-            rewardRow
-        }
-    }
-
-    private var cardRewardSection: some View {
-        VStack(spacing: 12) {
-            sectionTitle("Karten")
-            cardRewardRow
-        }
-    }
-
-    private var characterRewardSection: some View {
-        VStack(spacing: 12) {
-            sectionTitle("Charaktere")
-            characterRewardRow
-        }
-    }
-
     private func sectionTitle(_ title: String) -> some View {
         Text(title)
-            .font(.system(size: 14, weight: .black))
+            .font(.system(size: 12, weight: .black))
             .foregroundStyle(.white.opacity(0.8))
-            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var continueButton: some View {
@@ -150,12 +153,12 @@ struct VictoryView: View {
             onContinue()
         } label: {
             Text("Continue")
-                .font(.system(size: 16, weight: .black))
+                .font(.system(size: 15, weight: .black))
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
+                .padding(.vertical, 13)
                 .background(
                     Color.white.opacity(0.92),
-                    in: RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    in: RoundedRectangle(cornerRadius: 18, style: .continuous)
                 )
                 .foregroundStyle(.black)
         }
@@ -163,11 +166,47 @@ struct VictoryView: View {
     }
 
     private let rewardColumns = [
-        GridItem(.adaptive(minimum: 72, maximum: 90), spacing: 10)
+        GridItem(.adaptive(minimum: 64, maximum: 78), spacing: 8)
     ]
 
+    private var rewardPanel: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            if !rewards.isEmpty {
+                sectionTitle("Belohnungen")
+                rewardRow
+            }
+
+            if !characterRewards.isEmpty {
+                Divider().overlay(.white.opacity(0.16))
+                sectionTitle("Charaktere")
+                characterRewardRow
+            }
+
+            if !skinRewards.isEmpty {
+                Divider().overlay(.white.opacity(0.16))
+                sectionTitle("Skins")
+                skinRewardRow
+            }
+
+            if !cardRewards.isEmpty {
+                Divider().overlay(.white.opacity(0.16))
+                sectionTitle("Karten")
+                cardRewardRow
+            }
+        }
+        .padding(12)
+        .background(
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 22, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
+    }
+
     private var rewardRow: some View {
-        LazyVGrid(columns: rewardColumns, spacing: 10) {
+        LazyVGrid(columns: rewardColumns, spacing: 8) {
             ForEach(rewards) { reward in
                 if let currency = currencies.first(where: {
                     $0.code == reward.currency
@@ -180,7 +219,7 @@ struct VictoryView: View {
     }
 
     private var cardRewardRow: some View {
-        LazyVGrid(columns: rewardColumns, spacing: 10) {
+        LazyVGrid(columns: rewardColumns, spacing: 8) {
             ForEach(cardRewards) { reward in
                 rewardItem(
                     title: cardName(for: reward.cardID),
@@ -194,7 +233,7 @@ struct VictoryView: View {
     }
 
     private var characterRewardRow: some View {
-        LazyVGrid(columns: rewardColumns, spacing: 10) {
+        LazyVGrid(columns: rewardColumns, spacing: 8) {
             ForEach(characterRewards) { reward in
                 rewardItem(
                     title: characterName(for: reward.characterID),
@@ -207,15 +246,35 @@ struct VictoryView: View {
         .frame(maxWidth: .infinity)
     }
 
+    private var skinRewardRow: some View {
+        LazyVGrid(columns: rewardColumns, spacing: 8) {
+            ForEach(skinRewards) { reward in
+                rewardItem(
+                    title: skinName(
+                        characterID: reward.characterID,
+                        skinID: reward.skinID
+                    ),
+                    subtitle: "Skin",
+                    imageName: skinImage(
+                        characterID: reward.characterID,
+                        skinID: reward.skinID
+                    ),
+                    systemName: "sparkles"
+                )
+            }
+        }
+        .frame(maxWidth: .infinity)
+    }
+
     private var ascendedXPPanel: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 6) {
             HStack {
                 Image(systemName: "star.circle.fill")
-                    .font(.system(size: 15, weight: .black))
+                    .font(.system(size: 13, weight: .black))
                     .foregroundStyle(.yellow)
 
                 Text("Ascended XP +\(ascendedXPReward)")
-                    .font(.system(size: 15, weight: .black))
+                    .font(.system(size: 13, weight: .black))
 
                 Spacer()
 
@@ -224,7 +283,7 @@ struct VictoryView: View {
                         ? "Asc. Lv.\(ascendedLevelBefore) -> Lv.\(ascendedLevelAfter)"
                         : "Asc. Lv.\(ascendedLevelAfter)"
                 )
-                .font(.system(size: 13, weight: .black))
+                .font(.system(size: 11, weight: .black))
                 .foregroundStyle(
                     ascendedLevelAfter > ascendedLevelBefore
                         ? .green : .white.opacity(0.82)
@@ -248,13 +307,13 @@ struct VictoryView: View {
             }
             .frame(height: 8)
         }
-        .padding()
+        .padding(12)
         .background(
             Color.black.opacity(0.34),
-            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+            in: RoundedRectangle(cornerRadius: 18, style: .continuous)
         )
         .overlay {
-            RoundedRectangle(cornerRadius: 26, style: .continuous)
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
         }
         .foregroundStyle(.white)
@@ -267,28 +326,30 @@ struct VictoryView: View {
         detail: String,
         accent: Color
     ) -> some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 4) {
             Text(title)
-                .font(.system(size: 11, weight: .black))
+                .font(.system(size: 10, weight: .black))
                 .foregroundStyle(.white.opacity(0.66))
 
             Text(value)
-                .font(.system(size: 22, weight: .black))
+                .font(.system(size: 19, weight: .black))
                 .foregroundStyle(.white)
 
             Text(detail)
-                .font(.system(size: 11, weight: .bold))
+                .font(.system(size: 10, weight: .bold))
                 .foregroundStyle(accent)
                 .multilineTextAlignment(.center)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
         }
-        .frame(maxWidth: .infinity, minHeight: 96)
-        .padding(.horizontal, 10)
+        .frame(maxWidth: .infinity, minHeight: 76)
+        .padding(.horizontal, 8)
         .background(
             Color.black.opacity(0.34),
-            in: RoundedRectangle(cornerRadius: 24, style: .continuous)
+            in: RoundedRectangle(cornerRadius: 18, style: .continuous)
         )
         .overlay {
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
         }
     }
@@ -310,37 +371,37 @@ struct VictoryView: View {
         imageName: String?,
         systemName: String
     ) -> some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 4) {
             if let imageName {
                 RemoteAssetImage(imageName, contentMode: .fit) {
                     Image(systemName: systemName)
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.system(size: 17, weight: .bold))
                         .foregroundStyle(.yellow)
                 }
-                .frame(width: 28, height: 28)
+                .frame(width: 24, height: 24)
             } else {
                 Image(systemName: systemName)
-                    .font(.system(size: 20, weight: .bold))
+                    .font(.system(size: 17, weight: .bold))
                     .foregroundStyle(.yellow)
             }
 
             Text(subtitle)
-                .font(.system(size: 13, weight: .black))
+                .font(.system(size: 11, weight: .black))
                 .foregroundStyle(.white)
 
             Text(title)
-                .font(.system(size: 9, weight: .bold))
+                .font(.system(size: 8, weight: .bold))
                 .foregroundStyle(.white.opacity(0.62))
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
         }
-        .frame(width: 76, height: 72)
+        .frame(width: 66, height: 62)
         .background(
             Color.black.opacity(0.34),
-            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+            in: RoundedRectangle(cornerRadius: 18, style: .continuous)
         )
         .overlay {
-            RoundedRectangle(cornerRadius: 26, style: .continuous)
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
         }
     }
@@ -357,6 +418,17 @@ struct VictoryView: View {
     private func characterImage(for characterID: String) -> String? {
         gameState.summonCharacters.first(where: { $0.id == characterID })?
             .summonImage
+    }
+
+    private func skinName(characterID: String, skinID: String) -> String {
+        gameState.summonCharacters.first(where: { $0.id == characterID })?
+            .skins.first(where: { $0.id == skinID })?.name ?? skinID
+    }
+
+    private func skinImage(characterID: String, skinID: String) -> String? {
+        gameState.summonCharacters.first(where: { $0.id == characterID })?
+            .skins.first(where: { $0.id == skinID })?.summonImage
+            ?? characterImage(for: characterID)
     }
 
     private func cardImage(for cardID: String) -> String? {

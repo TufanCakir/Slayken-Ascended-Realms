@@ -24,7 +24,7 @@
                 "mapImage": "realm_rift",
                 "mapTexture": "realm_rift",
                 "node": {
-                    "x": 0.10,
+                    "x": 0.1,
                     "y": 0.86
                 },
                 "battles": [
@@ -61,10 +61,21 @@
                         ],
                         "story": [
                             {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text":
+                                    "Ein alter Riss faellt durch das Eventfeld. Das ist keine normale Route."
+                            },
+                            {
                                 "speaker": "Shela",
-                                "text": "Dieser Riss fuehlt sich anders an."
+                                "image": "preview_shela",
+                                "text":
+                                    "Dann lesen wir seine Spuren, bevor er wieder verschwindet."
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": []
                     },
                     {
                         "id": "event_story_riftfall_battle_2",
@@ -72,8 +83,8 @@
                         "description":
                             "Die Route zieht tiefer in die Geschichte.",
                         "difficulty": 8,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.12,
                             "y": 0.82
@@ -97,15 +108,19 @@
                                 "currency": "crystals",
                                 "amount": 8
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_3",
                         "name": "Splitterzeile",
                         "description": "Alte Splitter markieren den Pfad.",
                         "difficulty": 9,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.18,
                             "y": 0.78
@@ -135,7 +150,10 @@
                                 "cardID": "slash_red",
                                 "amount": 1
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_4",
@@ -143,8 +161,8 @@
                         "description":
                             "Die Chronik kippt in die dunklere Seite.",
                         "difficulty": 9,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.24,
                             "y": 0.74
@@ -168,18 +186,22 @@
                                 "currency": "crystals",
                                 "amount": 8
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_5",
                         "name": "Runenpfad",
                         "description": "Runen tragen den Story-Pfad weiter.",
                         "difficulty": 10,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
-                            "x": 0.30,
-                            "y": 0.70
+                            "x": 0.3,
+                            "y": 0.7
                         },
                         "enemy": {
                             "name": "Rune Path",
@@ -200,7 +222,11 @@
                                 "currency": "crystals",
                                 "amount": 8
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_6",
@@ -208,8 +234,8 @@
                         "description":
                             "Die Seiten der Chronik wirken lebendig.",
                         "difficulty": 10,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.36,
                             "y": 0.66
@@ -239,7 +265,10 @@
                                 "cardID": "slash_red",
                                 "amount": 1
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_7",
@@ -247,8 +276,8 @@
                         "description":
                             "Ein heller Textstrom zieht ueber den Boden.",
                         "difficulty": 11,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.42,
                             "y": 0.62
@@ -272,15 +301,19 @@
                                 "currency": "crystals",
                                 "amount": 9
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_8",
                         "name": "Bruchseite",
                         "description": "Die Route bleibt unruhig und offen.",
                         "difficulty": 11,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.48,
                             "y": 0.58
@@ -304,7 +337,11 @@
                                 "currency": "crystals",
                                 "amount": 9
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_9",
@@ -312,8 +349,8 @@
                         "description":
                             "Eine schwere Wache bewacht den ersten Bogen.",
                         "difficulty": 12,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.54,
                             "y": 0.54
@@ -343,7 +380,10 @@
                                 "cardID": "slash_red",
                                 "amount": 1
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_10",
@@ -351,11 +391,11 @@
                         "description":
                             "Die erste Elite prueft, ob du weiterlesen darfst.",
                         "difficulty": 12,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
-                            "x": 0.60,
-                            "y": 0.50
+                            "x": 0.6,
+                            "y": 0.5
                         },
                         "cutscene": {
                             "id": "event_story_riftfall_battle_10_cutscene",
@@ -382,6 +422,23 @@
                             {
                                 "currency": "crystals",
                                 "amount": 11
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text":
+                                    "Die erste Welle bricht. Dahinter liegt ein tieferer Schnitt."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text":
+                                    "Ich spuere eine Cutscene im Kern. Der Riss will gesehen werden."
                             }
                         ]
                     },
@@ -415,15 +472,19 @@
                                 "currency": "crystals",
                                 "amount": 11
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_12",
                         "name": "Sternenzeile",
                         "description": "Eine helle Passage zieht an den Rand.",
                         "difficulty": 13,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.72,
                             "y": 0.42
@@ -453,15 +514,18 @@
                                 "cardID": "slash_red",
                                 "amount": 2
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_13",
                         "name": "Rissschrift",
                         "description": "Der Randtext des Risses wird dichter.",
                         "difficulty": 14,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.78,
                             "y": 0.38
@@ -485,7 +549,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_14",
@@ -493,8 +561,8 @@
                         "description":
                             "Am Kartenrand wartet eine weitere Front.",
                         "difficulty": 14,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.84,
                             "y": 0.34
@@ -518,7 +586,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_15",
@@ -526,11 +598,11 @@
                         "description":
                             "Der Pfad dreht jetzt in den unteren Sektor.",
                         "difficulty": 15,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
-                            "x": 0.90,
-                            "y": 0.30
+                            "x": 0.9,
+                            "y": 0.3
                         },
                         "enemy": {
                             "name": "Void Arc",
@@ -551,15 +623,19 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_16",
                         "name": "Randbruch",
                         "description": "Der Story-Pfad kippt abrupt um.",
                         "difficulty": 15,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.86,
                             "y": 0.24
@@ -589,7 +665,10 @@
                                 "cardID": "slash_red",
                                 "amount": 2
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_17",
@@ -597,11 +676,11 @@
                         "description":
                             "Der Erzaehlstrom bleibt unter Spannung.",
                         "difficulty": 16,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
-                            "x": 0.80,
-                            "y": 0.20
+                            "x": 0.8,
+                            "y": 0.2
                         },
                         "enemy": {
                             "name": "Middle Line",
@@ -622,7 +701,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_18",
@@ -630,8 +713,8 @@
                         "description":
                             "Ein Schluesselsatz fuehrt weiter in die Tiefe.",
                         "difficulty": 16,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.74,
                             "y": 0.16
@@ -655,7 +738,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_19",
@@ -663,8 +750,8 @@
                         "description":
                             "Eine schmale Linie oeffnet den Mittelkern.",
                         "difficulty": 17,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.68,
                             "y": 0.12
@@ -688,7 +775,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_20",
@@ -696,11 +787,11 @@
                         "description":
                             "Der erste Kern der Geschichte liegt offen.",
                         "difficulty": 17,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.62,
-                            "y": 0.10
+                            "y": 0.1
                         },
                         "enemy": {
                             "name": "Chronicle Heart",
@@ -731,6 +822,20 @@
                             {
                                 "cardID": "slash_red",
                                 "amount": 2
+                            }
+                        ],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Kashin",
+                                "image": "preview_kashin",
+                                "text":
+                                    "Der Pfad zieht sich zusammen. Alles fuehrt zum selben Zentrum."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text": "Dann sparen wir keine Kraft mehr."
                             }
                         ]
                     },
@@ -765,7 +870,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_22",
@@ -773,10 +882,10 @@
                         "description":
                             "Die Route springt in einen neuen Bogen.",
                         "difficulty": 18,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
-                            "x": 0.50,
+                            "x": 0.5,
                             "y": 0.22
                         },
                         "enemy": {
@@ -798,7 +907,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_23",
@@ -806,8 +919,8 @@
                         "description":
                             "Die Chronik drueckt nach links zurueck.",
                         "difficulty": 19,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.44,
                             "y": 0.28
@@ -837,7 +950,10 @@
                                 "cardID": "slash_red",
                                 "amount": 3
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_24",
@@ -845,8 +961,8 @@
                         "description":
                             "Ein heller Rahmen umschliesst die Route.",
                         "difficulty": 19,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.38,
                             "y": 0.34
@@ -870,7 +986,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_25",
@@ -878,11 +998,11 @@
                         "description":
                             "Die Geschichte schiebt in den mittleren Ring.",
                         "difficulty": 20,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.32,
-                            "y": 0.40
+                            "y": 0.4
                         },
                         "enemy": {
                             "name": "Text Fringe",
@@ -903,7 +1023,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_26",
@@ -911,8 +1035,8 @@
                         "description":
                             "Ein einzelnes Wort traegt den ganzen Druck.",
                         "difficulty": 20,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.26,
                             "y": 0.46
@@ -942,7 +1066,10 @@
                                 "cardID": "slash_red",
                                 "amount": 3
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_27",
@@ -950,10 +1077,10 @@
                         "description":
                             "Die Linie laeuft in den oberen Sektor zurueck.",
                         "difficulty": 21,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
-                            "x": 0.20,
+                            "x": 0.2,
                             "y": 0.52
                         },
                         "enemy": {
@@ -975,15 +1102,19 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_28",
                         "name": "Schattenfeld",
                         "description": "Die Seiten werden breiter und dunkler.",
                         "difficulty": 21,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.14,
                             "y": 0.58
@@ -1007,17 +1138,21 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_29",
                         "name": "Risssaum",
                         "description": "Der obere Bogen ist fast erreicht.",
                         "difficulty": 22,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
-                            "x": 0.10,
+                            "x": 0.1,
                             "y": 0.64
                         },
                         "enemy": {
@@ -1045,7 +1180,10 @@
                                 "cardID": "slash_red",
                                 "amount": 4
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_30",
@@ -1053,11 +1191,11 @@
                         "description":
                             "Eine weitere Elite trennt Kapitel und Abschlussring.",
                         "difficulty": 22,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.16,
-                            "y": 0.70
+                            "y": 0.7
                         },
                         "cutscene": {
                             "id": "event_story_riftfall_battle_30_cutscene",
@@ -1085,6 +1223,21 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text": "Der Rissfall veraendert seine Form."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron_transformation",
+                                "text": "Dann antworte ich mit meiner eigenen."
+                            }
                         ]
                     },
                     {
@@ -1093,8 +1246,8 @@
                         "description":
                             "Die letzte Haelfte beginnt am oberen Rand.",
                         "difficulty": 23,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.22,
                             "y": 0.76
@@ -1118,7 +1271,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_32",
@@ -1126,8 +1283,8 @@
                         "description":
                             "Der obere Chronikring zieht nach rechts.",
                         "difficulty": 23,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.28,
                             "y": 0.82
@@ -1157,7 +1314,10 @@
                                 "cardID": "slash_red",
                                 "amount": 4
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_33",
@@ -1165,8 +1325,8 @@
                         "description":
                             "Ein breiter Bogen fuehrt in die Finalecke.",
                         "difficulty": 24,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.34,
                             "y": 0.88
@@ -1190,7 +1350,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_34",
@@ -1198,8 +1362,8 @@
                         "description":
                             "Die Geschichte hellt sich vor dem Ende auf.",
                         "difficulty": 24,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.42,
                             "y": 0.84
@@ -1223,7 +1387,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_35",
@@ -1231,11 +1399,11 @@
                         "description":
                             "Ein harter Druck geht ueber die obere Mitte.",
                         "difficulty": 25,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
-                            "x": 0.50,
-                            "y": 0.80
+                            "x": 0.5,
+                            "y": 0.8
                         },
                         "enemy": {
                             "name": "Thunder Text",
@@ -1262,7 +1430,10 @@
                                 "cardID": "slash_red",
                                 "amount": 5
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_36",
@@ -1270,8 +1441,8 @@
                         "description":
                             "Ein Pfeiler aus Text unterstuetzt den Riss.",
                         "difficulty": 25,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.58,
                             "y": 0.76
@@ -1295,15 +1466,19 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_37",
                         "name": "Rissfront",
                         "description": "Der Abschlusssektor baut sich auf.",
                         "difficulty": 26,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.66,
                             "y": 0.72
@@ -1327,7 +1502,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_38",
@@ -1335,8 +1514,8 @@
                         "description":
                             "Ein letzter Seitenbruch schneidet den Ring.",
                         "difficulty": 26,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.74,
                             "y": 0.68
@@ -1366,7 +1545,10 @@
                                 "cardID": "slash_red",
                                 "amount": 5
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_39",
@@ -1374,8 +1556,8 @@
                         "description":
                             "Die Wacht vor dem Innenkern steht bereit.",
                         "difficulty": 27,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.82,
                             "y": 0.64
@@ -1399,7 +1581,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_40",
@@ -1407,8 +1593,8 @@
                         "description":
                             "Der letzte Midboss des Story-Events erscheint.",
                         "difficulty": 27,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.88,
                             "y": 0.58
@@ -1450,6 +1636,21 @@
                                 "cardID": "slash_red",
                                 "amount": 6
                             }
+                        ],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Kashin",
+                                "image": "preview_kashin",
+                                "text":
+                                    "Noch eine Elite. Danach bleibt nur der Kern."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text":
+                                    "Gut. Dann brechen wir die letzte Linie."
+                            }
                         ]
                     },
                     {
@@ -1458,8 +1659,8 @@
                         "description":
                             "Nach dem Midboss fuehrt der Pfad in den Abschlussring.",
                         "difficulty": 28,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.82,
                             "y": 0.52
@@ -1483,15 +1684,19 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_42",
                         "name": "Innenstufe II",
                         "description": "Der Abschlussring bleibt hart.",
                         "difficulty": 28,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.76,
                             "y": 0.46
@@ -1521,7 +1726,10 @@
                                 "cardID": "slash_red",
                                 "amount": 6
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_43",
@@ -1529,11 +1737,11 @@
                         "description":
                             "Der Kern spuert deine letzten Schritte.",
                         "difficulty": 29,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
-                            "x": 0.70,
-                            "y": 0.40
+                            "x": 0.7,
+                            "y": 0.4
                         },
                         "enemy": {
                             "name": "Inner Step III",
@@ -1554,15 +1762,19 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_44",
                         "name": "Kernpfad",
                         "description": "Der wahre Schlussweg ist offen.",
                         "difficulty": 29,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.64,
                             "y": 0.34
@@ -1592,7 +1804,10 @@
                                 "cardID": "slash_red",
                                 "amount": 7
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_45",
@@ -1600,8 +1815,8 @@
                         "description":
                             "Ein letzter Rahmen trennt dich vom Finale.",
                         "difficulty": 30,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.58,
                             "y": 0.28
@@ -1625,7 +1840,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_46",
@@ -1633,8 +1852,8 @@
                         "description":
                             "Eine letzte Ader verbindet Geschichte und Kern.",
                         "difficulty": 30,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.52,
                             "y": 0.22
@@ -1664,7 +1883,10 @@
                                 "cardID": "slash_red",
                                 "amount": 7
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_47",
@@ -1672,8 +1894,8 @@
                         "description":
                             "Die Chronik schliesst sich ueber dem Pfad.",
                         "difficulty": 31,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.46,
                             "y": 0.16
@@ -1697,15 +1919,19 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_48",
                         "name": "Schlusskante",
                         "description": "Der Endpfad wird schmal und hart.",
                         "difficulty": 31,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.38,
                             "y": 0.12
@@ -1735,7 +1961,10 @@
                                 "cardID": "slash_red",
                                 "amount": 8
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_49",
@@ -1743,11 +1972,11 @@
                         "description":
                             "Das wahre Herz des Story-Events zeigt sich.",
                         "difficulty": 32,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.28,
-                            "y": 0.10
+                            "y": 0.1
                         },
                         "enemy": {
                             "name": "Chronicle Heart II",
@@ -1768,7 +1997,11 @@
                                 "currency": "crystals",
                                 "amount": 12
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_story_riftfall_battle_50",
@@ -1776,8 +2009,8 @@
                         "description":
                             "Der finale Boss des Story-Events und Kern der Chronik.",
                         "difficulty": 33,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_rift",
+                        "skyboxTexture": "realm_rift",
                         "node": {
                             "x": 0.16,
                             "y": 0.08
@@ -1823,9 +2056,18 @@
                         "story": [
                             {
                                 "speaker": "Zaron",
-                                "text": "Damit ist diese Chronik abgeschlossen."
+                                "image": "preview_zaron_transformation",
+                                "text":
+                                    "Das ist der Ursprung dieses Event-Risses."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text":
+                                    "Wenn er faellt, bleibt seine Story im Archiv erhalten."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     }
                 ]
             }

@@ -215,6 +215,7 @@ struct GlobeBattle: Codable, Identifiable {
     let xpReward: Int?
     let rewards: [CurrencyAmount]
     let characterRewards: [CharacterReward]
+    let skinRewards: [StorePackSkinReward]
     let cardRewards: [CardReward]
     let dailyRewardLimits: BattleRewardLimitDefinition?
     let story: [StoryLine]
@@ -256,6 +257,7 @@ struct GlobeBattle: Codable, Identifiable {
         case xpReward
         case rewards
         case characterRewards
+        case skinRewards
         case cardRewards
         case dailyRewardLimits
         case story
@@ -309,6 +311,11 @@ struct GlobeBattle: Codable, Identifiable {
             try container.decodeIfPresent(
                 [CharacterReward].self,
                 forKey: .characterRewards
+            ) ?? []
+        skinRewards =
+            try container.decodeIfPresent(
+                [StorePackSkinReward].self,
+                forKey: .skinRewards
             ) ?? []
         cardRewards =
             try container.decodeIfPresent(
@@ -428,7 +435,7 @@ extension GlobeEventChapter {
 }
 
 func loadGlobeEventChapters() -> [GlobeEventChapter] {
-    let baseResources = ["globe_events", "event_events", "event_skill"]
+    let baseResources = ["chapter_1", "event_story", "event_skill"]
     let autoDiscoveredResources = RemoteContentManager.cachedResourceNames()
         .filter(
             isGlobeChapterResource
@@ -485,7 +492,9 @@ func loadGlobeEventChapters() -> [GlobeEventChapter] {
 }
 
 private func isGlobeChapterResource(_ resourceName: String) -> Bool {
-    if resourceName == "globe_events" || resourceName == "event_events"
+    if resourceName == "chapter_1" || resourceName == "globe_events"
+        || resourceName == "event_story"
+        || resourceName == "event_events"
         || resourceName == "event_skill"
     {
         return true
@@ -500,7 +509,8 @@ private func isGlobeChapterResource(_ resourceName: String) -> Bool {
 }
 
 private func isEventChapterResource(_ resourceName: String) -> Bool {
-    resourceName == "event_events"
+    resourceName == "event_story"
+        || resourceName == "event_events"
         || resourceName == "event_skill"
         || resourceName.hasPrefix("event_chapter_")
         || resourceName.hasPrefix("event_skill_")
@@ -532,13 +542,13 @@ private func compareGlobeChapterResources(_ lhs: String, _ rhs: String) -> Bool
 
 private func globeChapterResourcePriority(_ resourceName: String) -> Int {
     switch resourceName {
-    case "globe_events":
+    case "chapter_1", "globe_events":
         return 0
     case _ where resourceName.hasPrefix("story_chapter_"),
         _ where resourceName.hasPrefix("chapter_"),
         _ where resourceName.hasPrefix("globe_chapter_"):
         return 1
-    case "event_events":
+    case "event_story", "event_events":
         return 2
     case "event_skill":
         return 3

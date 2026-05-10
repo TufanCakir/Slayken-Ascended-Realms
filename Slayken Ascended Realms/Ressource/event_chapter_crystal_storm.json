@@ -22,7 +22,7 @@
                 "mapImage": "realm_crystal",
                 "mapTexture": "realm_crystal",
                 "node": {
-                    "x": 0.10,
+                    "x": 0.1,
                     "y": 0.86
                 },
                 "battles": [
@@ -56,6 +56,23 @@
                                 "currency": "coins",
                                 "amount": 40
                             }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text":
+                                    "Der Kristallsturm zerreisst die Luft. Jeder Splitter traegt Energie."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text":
+                                    "Dann bleiben wir in Bewegung, bevor uns der Sturm einschliesst."
+                            }
                         ]
                     },
                     {
@@ -88,7 +105,11 @@
                                 "currency": "coins",
                                 "amount": 40
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_3",
@@ -96,8 +117,8 @@
                         "description":
                             "Die Splitter schneiden ueber die Front.",
                         "difficulty": 4,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.18,
                             "y": 0.78
@@ -121,15 +142,19 @@
                                 "currency": "coins",
                                 "amount": 40
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_4",
                         "name": "Glass Edge",
                         "description": "Die Route bleibt scharf und klar.",
                         "difficulty": 4,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.24,
                             "y": 0.74
@@ -153,18 +178,22 @@
                                 "currency": "coins",
                                 "amount": 50
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_5",
                         "name": "Shard Vein",
                         "description": "Eine Ader aus Crystals fuehrt weiter.",
                         "difficulty": 5,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.30,
-                            "y": 0.70
+                            "x": 0.3,
+                            "y": 0.7
                         },
                         "enemy": {
                             "name": "Shard Vein",
@@ -185,15 +214,19 @@
                                 "currency": "coins",
                                 "amount": 50
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_6",
                         "name": "Frost Cut",
                         "description": "Die Linie wird kuehler und haerter.",
                         "difficulty": 5,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.36,
                             "y": 0.66
@@ -217,7 +250,11 @@
                                 "currency": "coins",
                                 "amount": 60
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_7",
@@ -225,8 +262,8 @@
                         "description":
                             "Ein breiter Bogen aus Splittern steht offen.",
                         "difficulty": 6,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.42,
                             "y": 0.62
@@ -250,7 +287,11 @@
                                 "currency": "coins",
                                 "amount": 60
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_8",
@@ -282,15 +323,19 @@
                                 "currency": "coins",
                                 "amount": 70
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_9",
                         "name": "Shard Front",
                         "description": "Die vordere Linie zieht sich enger.",
                         "difficulty": 7,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.54,
                             "y": 0.54
@@ -314,7 +359,11 @@
                                 "currency": "coins",
                                 "amount": 70
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_10",
@@ -322,11 +371,11 @@
                         "description":
                             "Die erste Crystal-Elite blockiert den Pfad.",
                         "difficulty": 7,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.60,
-                            "y": 0.50
+                            "x": 0.6,
+                            "y": 0.5
                         },
                         "enemy": {
                             "name": "Crystal Guard",
@@ -347,6 +396,22 @@
                                 "currency": "coins",
                                 "amount": 80
                             }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text":
+                                    "Die Kristalle reagieren auf unsere Schritte."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text": "Gut. Dann fuehren sie uns zum Kern."
+                            }
                         ]
                     },
                     {
@@ -354,8 +419,8 @@
                         "name": "Shard Run I",
                         "description": "Die zweite Haelfte beginnt.",
                         "difficulty": 8,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.66,
                             "y": 0.46
@@ -379,15 +444,19 @@
                                 "currency": "coins",
                                 "amount": 90
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_12",
                         "name": "Shard Run II",
                         "description": "Der Druck bleibt hoch.",
                         "difficulty": 8,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.72,
                             "y": 0.42
@@ -411,7 +480,11 @@
                                 "currency": "coins",
                                 "amount": 90
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_13",
@@ -443,15 +516,19 @@
                                 "currency": "coins",
                                 "amount": 90
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_14",
                         "name": "Crystal Rim",
                         "description": "Die Kante knickt in den zweiten Bogen.",
                         "difficulty": 9,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.84,
                             "y": 0.34
@@ -475,18 +552,22 @@
                                 "currency": "coins",
                                 "amount": 100
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_15",
                         "name": "Storm Edge",
                         "description": "Die Splitterfront kippt nach unten.",
                         "difficulty": 10,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.90,
-                            "y": 0.30
+                            "x": 0.9,
+                            "y": 0.3
                         },
                         "enemy": {
                             "name": "Storm Edge",
@@ -507,15 +588,19 @@
                                 "currency": "coins",
                                 "amount": 100
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_16",
                         "name": "Shard Bend",
                         "description": "Der zweite Bogen bringt dich tiefer.",
                         "difficulty": 10,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.86,
                             "y": 0.24
@@ -539,7 +624,11 @@
                                 "currency": "coins",
                                 "amount": 110
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_17",
@@ -547,11 +636,11 @@
                         "description":
                             "Die Luft ist voll mit kalten Splittern.",
                         "difficulty": 11,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.80,
-                            "y": 0.20
+                            "x": 0.8,
+                            "y": 0.2
                         },
                         "enemy": {
                             "name": "Frost Shards",
@@ -572,7 +661,11 @@
                                 "currency": "coins",
                                 "amount": 110
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_18",
@@ -604,15 +697,19 @@
                                 "currency": "coins",
                                 "amount": 120
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_19",
                         "name": "Glass Core",
                         "description": "Der mittlere Crystal-Kern leuchtet.",
                         "difficulty": 12,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.68,
                             "y": 0.12
@@ -636,18 +733,22 @@
                                 "currency": "coins",
                                 "amount": 130
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_20",
                         "name": "Crystal Chief",
                         "description": "Ein Crystal-Boss trennt die Route.",
                         "difficulty": 12,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.62,
-                            "y": 0.10
+                            "y": 0.1
                         },
                         "enemy": {
                             "name": "Crystal Chief",
@@ -668,7 +769,11 @@
                                 "currency": "coins",
                                 "amount": 140
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_21",
@@ -676,8 +781,8 @@
                         "description":
                             "Der Rueckweg beginnt mit viel Splitterdruck.",
                         "difficulty": 13,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.56,
                             "y": 0.16
@@ -701,17 +806,21 @@
                                 "currency": "coins",
                                 "amount": 140
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_22",
                         "name": "Shard Line II",
                         "description": "Die Linie bleibt hart und klar.",
                         "difficulty": 13,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.50,
+                            "x": 0.5,
                             "y": 0.22
                         },
                         "enemy": {
@@ -733,7 +842,11 @@
                                 "currency": "coins",
                                 "amount": 150
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_23",
@@ -765,7 +878,11 @@
                                 "currency": "coins",
                                 "amount": 160
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_24",
@@ -773,8 +890,8 @@
                         "description":
                             "Ein harter Impuls zieht durch die Mitte.",
                         "difficulty": 14,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.38,
                             "y": 0.34
@@ -798,7 +915,11 @@
                                 "currency": "coins",
                                 "amount": 170
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_25",
@@ -806,11 +927,11 @@
                         "description":
                             "Der Grat fuehrt in den oberen Ruecklauf.",
                         "difficulty": 15,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.32,
-                            "y": 0.40
+                            "y": 0.4
                         },
                         "enemy": {
                             "name": "Crystal Ridge",
@@ -831,15 +952,19 @@
                                 "currency": "coins",
                                 "amount": 180
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_26",
                         "name": "Shard Ridge",
                         "description": "Die Route bleibt wertvoll.",
                         "difficulty": 15,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.26,
                             "y": 0.46
@@ -863,17 +988,21 @@
                                 "currency": "coins",
                                 "amount": 190
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_27",
                         "name": "Crystal Run",
                         "description": "Der obere Pfad fuehrt weiter.",
                         "difficulty": 16,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.20,
+                            "x": 0.2,
                             "y": 0.52
                         },
                         "enemy": {
@@ -895,7 +1024,11 @@
                                 "currency": "coins",
                                 "amount": 200
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_28",
@@ -927,17 +1060,21 @@
                                 "currency": "coins",
                                 "amount": 210
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_29",
                         "name": "Shard Front",
                         "description": "Die obere Front zieht in den Ring.",
                         "difficulty": 17,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.10,
+                            "x": 0.1,
                             "y": 0.64
                         },
                         "enemy": {
@@ -959,7 +1096,11 @@
                                 "currency": "coins",
                                 "amount": 220
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_30",
@@ -967,11 +1108,11 @@
                         "description":
                             "Eine weitere Elite blockiert den oberen Zugang.",
                         "difficulty": 17,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.16,
-                            "y": 0.70
+                            "y": 0.7
                         },
                         "enemy": {
                             "name": "Crystal Judge",
@@ -992,6 +1133,22 @@
                                 "currency": "coins",
                                 "amount": 230
                             }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text":
+                                    "Der Sturm wird dichter. Ich sehe kaum noch den Pfad."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text": "Folge dem Leuchten. Wir sind nah dran."
+                            }
                         ]
                     },
                     {
@@ -999,8 +1156,8 @@
                         "name": "Glass Arc II",
                         "description": "Die Route schwingt wieder nach rechts.",
                         "difficulty": 18,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.22,
                             "y": 0.76
@@ -1024,7 +1181,11 @@
                                 "currency": "coins",
                                 "amount": 250
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_32",
@@ -1032,8 +1193,8 @@
                         "description":
                             "Die obere Linie bleibt voll mit Splittern.",
                         "difficulty": 18,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.28,
                             "y": 0.82
@@ -1057,15 +1218,19 @@
                                 "currency": "coins",
                                 "amount": 270
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_33",
                         "name": "Glass Crown",
                         "description": "Die Splitter kreisen ueber der Front.",
                         "difficulty": 19,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.34,
                             "y": 0.88
@@ -1089,7 +1254,11 @@
                                 "currency": "coins",
                                 "amount": 290
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_34",
@@ -1122,18 +1291,22 @@
                                 "currency": "coins",
                                 "amount": 310
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_35",
                         "name": "Crystal Wall",
                         "description": "Vor dem Ende steht eine letzte Front.",
                         "difficulty": 20,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.50,
-                            "y": 0.80
+                            "x": 0.5,
+                            "y": 0.8
                         },
                         "enemy": {
                             "name": "Crystal Wall",
@@ -1154,15 +1327,19 @@
                                 "currency": "coins",
                                 "amount": 320
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_36",
                         "name": "Shard Wall",
                         "description": "Die Crystal-Front bleibt dicht.",
                         "difficulty": 20,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.58,
                             "y": 0.76
@@ -1186,15 +1363,19 @@
                                 "currency": "coins",
                                 "amount": 340
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_37",
                         "name": "Glass Pillar",
                         "description": "Ein letzter Pfeiler stuetzt den Ring.",
                         "difficulty": 21,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.66,
                             "y": 0.72
@@ -1218,7 +1399,11 @@
                                 "currency": "coins",
                                 "amount": 360
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_38",
@@ -1226,8 +1411,8 @@
                         "description":
                             "Die Luft ist voll mit glitzernden Splittern.",
                         "difficulty": 21,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.74,
                             "y": 0.68
@@ -1251,15 +1436,19 @@
                                 "currency": "coins",
                                 "amount": 380
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_39",
                         "name": "Shard Guard",
                         "description": "Die letzte Wacht steht im Weg.",
                         "difficulty": 22,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.82,
                             "y": 0.64
@@ -1283,7 +1472,11 @@
                                 "currency": "coins",
                                 "amount": 400
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_40",
@@ -1316,7 +1509,11 @@
                                 "currency": "coins",
                                 "amount": 420
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_41",
@@ -1324,8 +1521,8 @@
                         "description":
                             "Nach dem Boss bleiben die Splitter wertvoll.",
                         "difficulty": 23,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.82,
                             "y": 0.52
@@ -1349,15 +1546,19 @@
                                 "currency": "coins",
                                 "amount": 450
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_42",
                         "name": "Inner Shards II",
                         "description": "Die Abschlussphase beginnt.",
                         "difficulty": 23,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.76,
                             "y": 0.46
@@ -1381,18 +1582,22 @@
                                 "currency": "coins",
                                 "amount": 480
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_43",
                         "name": "Crystal Core I",
                         "description": "Der Kern der Event-Route bleibt offen.",
                         "difficulty": 24,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.70,
-                            "y": 0.40
+                            "x": 0.7,
+                            "y": 0.4
                         },
                         "enemy": {
                             "name": "Crystal Core I",
@@ -1413,15 +1618,19 @@
                                 "currency": "coins",
                                 "amount": 500
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_44",
                         "name": "Crystal Core II",
                         "description": "Der letzte Ring wird enger.",
                         "difficulty": 24,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.64,
                             "y": 0.34
@@ -1445,15 +1654,19 @@
                                 "currency": "coins",
                                 "amount": 530
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_45",
                         "name": "Final Shards I",
-                        "description": "Der Endpfad glitzert ueberall.",
+                        "description": "Der Endpfad glitzert überall.",
                         "difficulty": 25,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.58,
                             "y": 0.28
@@ -1477,7 +1690,11 @@
                                 "currency": "coins",
                                 "amount": 560
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_46",
@@ -1509,16 +1726,19 @@
                                 "currency": "coins",
                                 "amount": 580
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_47",
                         "name": "Crystal Peak",
-                        "description":
-                            "Die Crystal-Spitze fuehrt zum Bossraum.",
+                        "description": "Die Crystal-Spitze führt zum Bossraum.",
                         "difficulty": 26,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.46,
                             "y": 0.16
@@ -1542,7 +1762,11 @@
                                 "currency": "coins",
                                 "amount": 610
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_48",
@@ -1550,8 +1774,8 @@
                         "description":
                             "Nur noch zwei Kaempfe bis zum Abschluss.",
                         "difficulty": 26,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.38,
                             "y": 0.12
@@ -1575,7 +1799,11 @@
                                 "currency": "coins",
                                 "amount": 640
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_49",
@@ -1583,11 +1811,11 @@
                         "description":
                             "Das Herz der Splitterroute liegt offen.",
                         "difficulty": 27,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_crystal",
+                        "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.28,
-                            "y": 0.10
+                            "y": 0.1
                         },
                         "enemy": {
                             "name": "Crystal Heart",
@@ -1608,7 +1836,11 @@
                                 "currency": "coins",
                                 "amount": 680
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_50",
@@ -1645,6 +1877,21 @@
                         "characterRewards": [
                             {
                                 "characterID": "shen"
+                            }
+                        ],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text": "Das Sturmherz pulsiert direkt vor uns."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text":
+                                    "Ein letzter Schlag, dann bricht der Crystal Storm."
                             }
                         ]
                     }

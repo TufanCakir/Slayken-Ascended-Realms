@@ -69,8 +69,8 @@ struct GameFooterView: View {
 
     private func tabButton(_ item: FooterTabItem) -> some View {
         Button {
-            selectedTab = item.tab
             onSelectTab?(item.tab)
+            selectedTab = item.tab
         } label: {
             Image(systemName: item.systemName)
                 .font(.system(size: 18, weight: .medium))

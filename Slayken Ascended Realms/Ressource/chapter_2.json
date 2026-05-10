@@ -5,7 +5,7 @@
         "subtitle": "Der zweite Rissring",
         "sortOrder": 2,
         "minAscendedLevel": 8,
-        "mapTexture": "realm_void",
+        "mapTexture": "realm_fire",
         "cutscene": {
             "id": "chapter_2_intro",
             "title": "Der zweite Rissring",
@@ -19,8 +19,8 @@
                 "title": "Inneres Mondtor",
                 "text":
                     "Der zweite Ring des Mondtors breitet sich ueber das Reich aus.",
-                "mapImage": "realm_void",
-                "mapTexture": "realm_void",
+                "mapImage": "realm_fire",
+                "mapTexture": "realm_fire",
                 "node": {
                     "x": 0.10,
                     "y": 0.88
@@ -32,8 +32,8 @@
                         "description":
                             "Der zweite Ring beginnt mit einem stillen Vorstoss.",
                         "difficulty": 17,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.08,
                             "y": 0.88
@@ -68,8 +68,8 @@
                         "description":
                             "Der Druck des Risses wird sofort groesser.",
                         "difficulty": 17,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.14,
                             "y": 0.84
@@ -145,8 +145,8 @@
                         "description":
                             "Der Kernring schiebt dich weiter ins Dunkel.",
                         "difficulty": 18,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.26,
                             "y": 0.76
@@ -181,8 +181,8 @@
                         "description":
                             "Ein enger Aufstieg fuehrt in den zweiten Sektor.",
                         "difficulty": 19,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.32,
                             "y": 0.72
@@ -217,8 +217,8 @@
                         "description":
                             "Die Rune des zweiten Rings ist bereits aktiv.",
                         "difficulty": 19,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.38,
                             "y": 0.68
@@ -258,8 +258,8 @@
                         "description":
                             "Eine grelle Ader aus Energie kreuzt den Weg.",
                         "difficulty": 20,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.44,
                             "y": 0.64
@@ -293,8 +293,8 @@
                         "name": "Nachtgrat",
                         "description": "Der Boden kippt in einen dunklen Grat.",
                         "difficulty": 20,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.50,
                             "y": 0.60
@@ -329,8 +329,8 @@
                         "description":
                             "Eine schnelle Elite schneidet die Formation an.",
                         "difficulty": 21,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.56,
                             "y": 0.56
@@ -370,8 +370,8 @@
                         "description":
                             "Der zweite Ring prueft deine Linie mit einem Impuls.",
                         "difficulty": 21,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.62,
                             "y": 0.52
@@ -410,8 +410,8 @@
                         "description":
                             "Die Karte oeffnet sich in die innere Leere.",
                         "difficulty": 22,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.68,
                             "y": 0.48
@@ -446,8 +446,8 @@
                         "description":
                             "Ein klarer Pfad fuehrt direkt zum Kartenrand.",
                         "difficulty": 22,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.74,
                             "y": 0.44
@@ -487,8 +487,8 @@
                         "description":
                             "Der Ring versiegelt den rechten Fluegel.",
                         "difficulty": 23,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.80,
                             "y": 0.40
@@ -523,8 +523,8 @@
                         "description":
                             "Die Wacht drueckt dich auf die Aussenlinie.",
                         "difficulty": 23,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.86,
                             "y": 0.36
@@ -559,8 +559,8 @@
                         "description":
                             "Ein harter Richtungswechsel am aeusseren Ende.",
                         "difficulty": 24,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.92,
                             "y": 0.32
@@ -636,8 +636,8 @@
                         "description":
                             "Der Ring legt Fallen ueber den Rueckweg.",
                         "difficulty": 25,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.82,
                             "y": 0.22
@@ -672,8 +672,8 @@
                         "description":
                             "Ein heller Schlag zieht ueber den Boden.",
                         "difficulty": 25,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.76,
                             "y": 0.18
@@ -713,8 +713,8 @@
                         "description":
                             "Die zweite Schale zeigt die Spuren eines alten Rituals.",
                         "difficulty": 26,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.70,
                             "y": 0.14
@@ -749,8 +749,8 @@
                         "description":
                             "Ein schmaler Kanal fuehrt in den inneren Abschnitt.",
                         "difficulty": 26,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.64,
                             "y": 0.10
@@ -794,8 +794,8 @@
                         "description":
                             "Der innere Ring zieht dich wieder nach oben.",
                         "difficulty": 27,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.58,
                             "y": 0.16
@@ -830,8 +830,8 @@
                         "description":
                             "Ein heller Rand markiert den Rueckweg zur Kartenmitte.",
                         "difficulty": 27,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.52,
                             "y": 0.22
@@ -871,8 +871,8 @@
                         "description":
                             "Die Bruecke fuehrt wieder auf die linke Seite.",
                         "difficulty": 28,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.46,
                             "y": 0.28
@@ -907,8 +907,8 @@
                         "description":
                             "Ein breiter Grat trennt den unteren Pfad vom oberen Ring.",
                         "difficulty": 28,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.40,
                             "y": 0.34
@@ -948,8 +948,8 @@
                         "description":
                             "Der Ring zieht in einer weiten Kurve nach links.",
                         "difficulty": 29,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.34,
                             "y": 0.40
@@ -984,8 +984,8 @@
                         "description":
                             "Ein Kamm aus harter Energie faehrt quer ueber den Pfad.",
                         "difficulty": 29,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.28,
                             "y": 0.46
@@ -1061,8 +1061,8 @@
                         "description":
                             "Eine dunkle Krone aus Splittern kreist ueber dir.",
                         "difficulty": 30,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.16,
                             "y": 0.58
@@ -1102,8 +1102,8 @@
                         "description":
                             "Der zweite Ring laeuft nun sichtbar ueber den Startpunkt.",
                         "difficulty": 31,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.12,
                             "y": 0.64
@@ -1138,8 +1138,8 @@
                         "description":
                             "Eine schwere Wache blockiert den Aufstieg.",
                         "difficulty": 31,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.18,
                             "y": 0.70
@@ -1183,8 +1183,8 @@
                         "description":
                             "Die obere Route zieht wieder nach rechts.",
                         "difficulty": 32,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.24,
                             "y": 0.76
@@ -1219,8 +1219,8 @@
                         "description":
                             "Eine steile Linie fuehrt in den oberen Ringbogen.",
                         "difficulty": 32,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.30,
                             "y": 0.82
@@ -1260,8 +1260,8 @@
                         "description":
                             "Der obere Ring zieht quer ueber den Himmel.",
                         "difficulty": 33,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.36,
                             "y": 0.88
@@ -1296,8 +1296,8 @@
                         "description":
                             "Der Ring hellt sich fuer kurze Zeit auf.",
                         "difficulty": 33,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.44,
                             "y": 0.84
@@ -1337,8 +1337,8 @@
                         "description":
                             "Ein rauer Saum aus Sturmenergie nimmt die Sicht.",
                         "difficulty": 34,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.52,
                             "y": 0.80
@@ -1373,8 +1373,8 @@
                         "description":
                             "Ein gewaltiger Pfeiler stuetzt den zweiten Ring.",
                         "difficulty": 34,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.60,
                             "y": 0.76
@@ -1450,8 +1450,8 @@
                         "description":
                             "Ein Splitterkranz bricht ueber dir auseinander.",
                         "difficulty": 35,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.76,
                             "y": 0.68
@@ -1491,8 +1491,8 @@
                         "description":
                             "Die Wachen bilden einen harten Kreis vor dem Innenkern.",
                         "difficulty": 36,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.84,
                             "y": 0.64
@@ -1527,8 +1527,8 @@
                         "description":
                             "Der zweite grosse Zwischenboss schirmt den Innenkern ab.",
                         "difficulty": 36,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.90,
                             "y": 0.58
@@ -1579,8 +1579,8 @@
                         "description":
                             "Nach dem Boss fuehrt der Pfad in Stufen zurueck.",
                         "difficulty": 37,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.84,
                             "y": 0.52
@@ -1615,8 +1615,8 @@
                         "description":
                             "Der innere Pfad laeuft breit ueber die Karte.",
                         "difficulty": 37,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.78,
                             "y": 0.46
@@ -1656,8 +1656,8 @@
                         "description":
                             "Ein heller Bruch zwingt dich in den letzten Sektor.",
                         "difficulty": 38,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.72,
                             "y": 0.40
@@ -1732,8 +1732,8 @@
                         "description":
                             "Der letzte Wachtpfahl vor dem Abschlussring.",
                         "difficulty": 39,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.60,
                             "y": 0.28
@@ -1768,8 +1768,8 @@
                         "description":
                             "Eine letzte Ader verbindet Ring und Kern.",
                         "difficulty": 39,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.54,
                             "y": 0.22
@@ -1809,8 +1809,8 @@
                         "description":
                             "Der finale Anstieg beginnt am Abschlussring.",
                         "difficulty": 40,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.48,
                             "y": 0.16
@@ -1845,8 +1845,8 @@
                         "description":
                             "Die letzte Wache des zweiten Rings steht dir direkt im Weg.",
                         "difficulty": 40,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.40,
                             "y": 0.12
@@ -1886,8 +1886,8 @@
                         "description":
                             "Das Herz des zweiten Rings liegt jetzt offen vor dir.",
                         "difficulty": 41,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.30,
                             "y": 0.10
@@ -1922,8 +1922,8 @@
                         "description":
                             "Der finale Boss von Kapitel 2 und Meister des zweiten Rissrings.",
                         "difficulty": 42,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.18,
                             "y": 0.08
@@ -1955,17 +1955,9 @@
                                 "amount": 12
                             }
                         ],
-                        "characterRewards": [
-                            {
-                                "characterID": "shen"
-                            }
-                        ],
-                        "cardRewards": [
-                            {
-                                "cardID": "slash_red",
-                                "amount": 10
-                            }
-                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
                         "story": []
                     }
                 ]

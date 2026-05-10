@@ -16,7 +16,7 @@ struct TeamCharacterPickerView: View {
     }
 
     let characters: [SummonCharacter]
-    let onSelect: (CharacterStats, String?) -> Void
+    let onSelect: (CharacterStats, String?, String?) -> Void
     let onClose: () -> Void
 
     @EnvironmentObject var gameState: GameState
@@ -24,6 +24,8 @@ struct TeamCharacterPickerView: View {
 
     @Query(sort: \OwnedSummonCharacter.acquiredAt) private var ownedRecords:
         [OwnedSummonCharacter]
+    @Query(sort: \OwnedCharacterSkin.acquiredAt) private var ownedSkins:
+        [OwnedCharacterSkin]
     @State private var selectedCharacterID: String?
     @State private var selectedSkinID: String?
 
@@ -33,25 +35,13 @@ struct TeamCharacterPickerView: View {
     }
 
     private var pickerEntries: [PickerCharacterEntry] {
-        let summonEntries = ownedCharacters.map {
+        ownedCharacters.map {
             PickerCharacterEntry(
                 id: $0.id,
                 stats: $0.stats(),
                 summonCharacter: $0
             )
         }
-        let summonIDs = Set(summonEntries.map(\.id))
-        let customEntries = gameState.availableCharacters
-            .filter { !summonIDs.contains($0.model) }
-            .map {
-                PickerCharacterEntry(
-                    id: $0.model,
-                    stats: $0,
-                    summonCharacter: nil
-                )
-            }
-
-        return customEntries + summonEntries
     }
 
     private var selectedEntry: PickerCharacterEntry? {
@@ -61,6 +51,16 @@ struct TeamCharacterPickerView: View {
 
     private var selectedCharacter: SummonCharacter? {
         selectedEntry?.summonCharacter
+    }
+
+    private var unlockedSkinsForSelectedCharacter: [CharacterSkin] {
+        guard let selectedCharacter else { return [] }
+        let ownedSkinIDs = Set(
+            ownedSkins
+                .filter { $0.characterID == selectedCharacter.id }
+                .map(\.skinID)
+        )
+        return selectedCharacter.skins.filter { ownedSkinIDs.contains($0.id) }
     }
 
     var body: some View {
@@ -86,7 +86,11 @@ struct TeamCharacterPickerView: View {
 
                 Button {
                     if let selectedEntry {
-                        onSelect(selectedEntry.stats, selectedSkinID)
+                        onSelect(
+                            selectedEntry.stats,
+                            selectedSkinID,
+                            selectedEntry.summonCharacter?.id
+                        )
                     }
                 } label: {
                     Text("Einsetzen")
@@ -182,6 +186,7 @@ struct TeamCharacterPickerView: View {
     @ViewBuilder
     private var skinPicker: some View {
         if let selectedCharacter, !selectedCharacter.skins.isEmpty {
+            let unlockedSkins = unlockedSkinsForSelectedCharacter
             VStack(alignment: .leading, spacing: 8) {
                 Text("Skins")
                     .font(.system(size: 16, weight: .black))
@@ -206,7 +211,7 @@ struct TeamCharacterPickerView: View {
                         }
                         .buttonStyle(.plain)
 
-                        ForEach(selectedCharacter.skins) { skin in
+                        ForEach(unlockedSkins) { skin in
                             Button {
                                 selectedSkinID = skin.id
                             } label: {
@@ -223,6 +228,18 @@ struct TeamCharacterPickerView: View {
                                     )
                             }
                             .buttonStyle(.plain)
+                        }
+
+                        if unlockedSkins.isEmpty {
+                            Text("Keine Skins freigeschaltet")
+                                .font(.system(size: 12, weight: .black))
+                                .foregroundStyle(.white.opacity(0.64))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .background(
+                                    Color.black.opacity(0.28),
+                                    in: Capsule()
+                                )
                         }
                     }
                 }

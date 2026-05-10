@@ -1124,7 +1124,6 @@ final class RemoteContentManager: ObservableObject {
         loadGamePlayers().forEach(appendCharacter)
         appendCharacter(loadBattlePlayer())
         loadSummonCharacters().forEach { appendCharacter($0.stats()) }
-        loadMaps().forEach { appendCharacter($0.enemy) }
         loadTutorialDefinitions().forEach { tutorial in
             appendCharacter(tutorial.player)
             tutorial.allEnemies.forEach(appendCharacter)

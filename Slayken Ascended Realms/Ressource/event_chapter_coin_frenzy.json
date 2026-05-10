@@ -22,7 +22,7 @@
                 "mapImage": "realm_coin",
                 "mapTexture": "realm_coin",
                 "node": {
-                    "x": 0.10,
+                    "x": 0.1,
                     "y": 0.86
                 },
                 "battles": [
@@ -52,6 +52,23 @@
                                 "currency": "coins",
                                 "amount": 200
                             }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text":
+                                    "Der goldene Riss ist offen. Wir nehmen, was wir tragen koennen."
+                            },
+                            {
+                                "speaker": "Kashin",
+                                "image": "preview_kashin",
+                                "text":
+                                    "Dann bleibe wachsam. Wo Gold liegt, stehen Waechter nie weit weg."
+                            }
                         ]
                     },
                     {
@@ -80,15 +97,19 @@
                                 "currency": "coins",
                                 "amount": 220
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_3",
                         "name": "Muenzsturm",
                         "description": "Die Route wird dichter.",
                         "difficulty": 3,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.18,
                             "y": 0.78
@@ -108,15 +129,19 @@
                                 "currency": "coins",
                                 "amount": 250
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_4",
                         "name": "Kistenrand",
                         "description": "Kisten saumen die Route.",
                         "difficulty": 3,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.24,
                             "y": 0.74
@@ -136,18 +161,22 @@
                                 "currency": "coins",
                                 "amount": 280
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_5",
                         "name": "Goldader",
                         "description": "Die Goldspur bleibt offen.",
                         "difficulty": 4,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
-                            "x": 0.30,
-                            "y": 0.70
+                            "x": 0.3,
+                            "y": 0.7
                         },
                         "enemy": {
                             "name": "Gold Vein",
@@ -164,7 +193,11 @@
                                 "currency": "coins",
                                 "amount": 320
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_6",
@@ -192,15 +225,19 @@
                                 "currency": "coins",
                                 "amount": 350
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_7",
                         "name": "Schatzbogen",
                         "description": "Ein langer Bogen aus Beute.",
                         "difficulty": 5,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.42,
                             "y": 0.62
@@ -220,15 +257,19 @@
                                 "currency": "coins",
                                 "amount": 390
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_8",
                         "name": "Silberbruch",
                         "description": "Der Pfad schneidet in die Schatzlinie.",
                         "difficulty": 5,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.48,
                             "y": 0.58
@@ -248,15 +289,19 @@
                                 "currency": "coins",
                                 "amount": 420
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_9",
                         "name": "Kupferrand",
                         "description": "Die Front zieht enger.",
                         "difficulty": 6,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.54,
                             "y": 0.54
@@ -276,18 +321,22 @@
                                 "currency": "coins",
                                 "amount": 460
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_10",
                         "name": "Schatzwacht",
                         "description": "Die erste Coin-Elite steht bereit.",
                         "difficulty": 6,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
-                            "x": 0.60,
-                            "y": 0.50
+                            "x": 0.6,
+                            "y": 0.5
                         },
                         "enemy": {
                             "name": "Treasure Guard",
@@ -303,6 +352,23 @@
                             {
                                 "currency": "coins",
                                 "amount": 520
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text":
+                                    "Die Route verdichtet sich. Das ist kein normales Schatzfeld mehr."
+                            },
+                            {
+                                "speaker": "Kashin",
+                                "image": "preview_kashin",
+                                "text":
+                                    "Dann schneiden wir uns bis zum Kern durch."
                             }
                         ]
                     },
@@ -332,15 +398,19 @@
                                 "currency": "coins",
                                 "amount": 550
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_12",
                         "name": "Kassenpfad II",
                         "description": "Mehr Druck, mehr Beute.",
                         "difficulty": 7,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.72,
                             "y": 0.42
@@ -360,15 +430,19 @@
                                 "currency": "coins",
                                 "amount": 590
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_13",
                         "name": "Goldwelle",
                         "description": "Ein goldener Impuls oeffnet den Rand.",
                         "difficulty": 8,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.78,
                             "y": 0.38
@@ -388,15 +462,19 @@
                                 "currency": "coins",
                                 "amount": 630
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_14",
                         "name": "Schatzsaum",
                         "description": "Die Schatzkante bleibt stabil.",
                         "difficulty": 8,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.84,
                             "y": 0.34
@@ -416,18 +494,22 @@
                                 "currency": "coins",
                                 "amount": 660
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_15",
                         "name": "Muenzsaum",
                         "description": "Der Pfad knickt jetzt nach unten ab.",
                         "difficulty": 9,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
-                            "x": 0.90,
-                            "y": 0.30
+                            "x": 0.9,
+                            "y": 0.3
                         },
                         "enemy": {
                             "name": "Coin Fringe",
@@ -444,7 +526,11 @@
                                 "currency": "coins",
                                 "amount": 700
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_16",
@@ -472,18 +558,22 @@
                                 "currency": "coins",
                                 "amount": 740
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_17",
                         "name": "Silberpfad",
                         "description": "Die Route bleibt lang und profitabel.",
                         "difficulty": 10,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
-                            "x": 0.80,
-                            "y": 0.20
+                            "x": 0.8,
+                            "y": 0.2
                         },
                         "enemy": {
                             "name": "Silver Route",
@@ -500,15 +590,19 @@
                                 "currency": "coins",
                                 "amount": 780
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_18",
                         "name": "Goldpfahl",
                         "description": "Der innere Schatzpfahl wird sichtbar.",
                         "difficulty": 10,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.74,
                             "y": 0.16
@@ -528,15 +622,19 @@
                                 "currency": "coins",
                                 "amount": 820
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_19",
                         "name": "Kernmuenze",
                         "description": "Die Kasse oeffnet sich weiter.",
                         "difficulty": 11,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.68,
                             "y": 0.12
@@ -556,7 +654,11 @@
                                 "currency": "coins",
                                 "amount": 860
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_20",
@@ -564,11 +666,11 @@
                         "description":
                             "Ein Coin-Boss blockiert die Mittellinie.",
                         "difficulty": 11,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.62,
-                            "y": 0.10
+                            "y": 0.1
                         },
                         "enemy": {
                             "name": "Treasure Chief",
@@ -585,7 +687,11 @@
                                 "currency": "coins",
                                 "amount": 920
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_21",
@@ -613,17 +719,21 @@
                                 "currency": "coins",
                                 "amount": 960
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_22",
                         "name": "Goldlauf II",
                         "description": "Die Beutel werden schwerer.",
                         "difficulty": 12,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
-                            "x": 0.50,
+                            "x": 0.5,
                             "y": 0.22
                         },
                         "enemy": {
@@ -641,15 +751,19 @@
                                 "currency": "coins",
                                 "amount": 1000
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_23",
                         "name": "Muenzader",
                         "description": "Die Route bleibt breit und offen.",
                         "difficulty": 13,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.44,
                             "y": 0.28
@@ -669,15 +783,19 @@
                                 "currency": "coins",
                                 "amount": 1040
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_24",
                         "name": "Schatzkante",
                         "description": "Noch immer gibt es neue Kisten.",
                         "difficulty": 13,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.38,
                             "y": 0.34
@@ -697,7 +815,11 @@
                                 "currency": "coins",
                                 "amount": 1080
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_25",
@@ -705,11 +827,11 @@
                         "description":
                             "Der Grat fuehrt in den oberen Ruecklauf.",
                         "difficulty": 14,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.32,
-                            "y": 0.40
+                            "y": 0.4
                         },
                         "enemy": {
                             "name": "Vault Ridge",
@@ -726,7 +848,11 @@
                                 "currency": "coins",
                                 "amount": 1120
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_26",
@@ -754,17 +880,21 @@
                                 "currency": "coins",
                                 "amount": 1170
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_27",
                         "name": "Schatzlauf",
                         "description": "Die obere Haelfte fuehrt weiter.",
                         "difficulty": 15,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
-                            "x": 0.20,
+                            "x": 0.2,
                             "y": 0.52
                         },
                         "enemy": {
@@ -782,15 +912,19 @@
                                 "currency": "coins",
                                 "amount": 1210
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_28",
                         "name": "Goldsattel",
                         "description": "Der Pfad bleibt lukrativ.",
                         "difficulty": 15,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.14,
                             "y": 0.58
@@ -810,17 +944,21 @@
                                 "currency": "coins",
                                 "amount": 1250
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_29",
                         "name": "Kassenfront",
                         "description": "Die Front zieht in den oberen Ring.",
                         "difficulty": 16,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
-                            "x": 0.10,
+                            "x": 0.1,
                             "y": 0.64
                         },
                         "enemy": {
@@ -838,7 +976,11 @@
                                 "currency": "coins",
                                 "amount": 1290
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_30",
@@ -846,11 +988,11 @@
                         "description":
                             "Eine weitere Elite blockiert den oberen Zugang.",
                         "difficulty": 16,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.16,
-                            "y": 0.70
+                            "y": 0.7
                         },
                         "enemy": {
                             "name": "Gold Judge",
@@ -866,6 +1008,23 @@
                             {
                                 "currency": "coins",
                                 "amount": 1350
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text":
+                                    "Der Goldstrom zieht an meiner Klinge. Noch weiter."
+                            },
+                            {
+                                "speaker": "Kashin",
+                                "image": "preview_kashin",
+                                "text":
+                                    "Nicht gierig werden. Der Riss nutzt genau das aus."
                             }
                         ]
                     },
@@ -895,15 +1054,19 @@
                                 "currency": "coins",
                                 "amount": 1390
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_32",
                         "name": "Muenzbogen II",
                         "description": "Die obere Linie bleibt voller Truhen.",
                         "difficulty": 17,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.28,
                             "y": 0.82
@@ -923,15 +1086,19 @@
                                 "currency": "coins",
                                 "amount": 1430
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_33",
                         "name": "Goldkreis",
                         "description": "Die Beute kreist ueber dem Feld.",
                         "difficulty": 18,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.34,
                             "y": 0.88
@@ -951,7 +1118,11 @@
                                 "currency": "coins",
                                 "amount": 1470
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_34",
@@ -959,8 +1130,8 @@
                         "description":
                             "Der innere Ring aus Kisten schliesst sich.",
                         "difficulty": 18,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.42,
                             "y": 0.84
@@ -980,18 +1151,22 @@
                                 "currency": "coins",
                                 "amount": 1510
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_35",
                         "name": "Goldwall",
                         "description": "Vor dem Ende steht eine letzte Front.",
                         "difficulty": 19,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
-                            "x": 0.50,
-                            "y": 0.80
+                            "x": 0.5,
+                            "y": 0.8
                         },
                         "enemy": {
                             "name": "Gold Wall",
@@ -1008,15 +1183,19 @@
                                 "currency": "coins",
                                 "amount": 1550
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_36",
                         "name": "Muenzwall",
                         "description": "Die Muenzfront bleibt dicht.",
                         "difficulty": 19,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.58,
                             "y": 0.76
@@ -1036,7 +1215,11 @@
                                 "currency": "coins",
                                 "amount": 1590
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_37",
@@ -1064,15 +1247,19 @@
                                 "currency": "coins",
                                 "amount": 1630
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_38",
                         "name": "Goldsturm",
                         "description": "Die Luft ist voll mit Glanzsplittern.",
                         "difficulty": 20,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.74,
                             "y": 0.68
@@ -1092,15 +1279,19 @@
                                 "currency": "coins",
                                 "amount": 1670
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_39",
                         "name": "Kassenwacht",
                         "description": "Die letzte Wacht steht im Weg.",
                         "difficulty": 21,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.82,
                             "y": 0.64
@@ -1120,7 +1311,11 @@
                                 "currency": "coins",
                                 "amount": 1710
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_40",
@@ -1128,8 +1323,8 @@
                         "description":
                             "Der grosse Coin-Boss verteidigt den Innenring.",
                         "difficulty": 21,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.88,
                             "y": 0.58
@@ -1149,15 +1344,19 @@
                                 "currency": "coins",
                                 "amount": 1780
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_41",
                         "name": "Innenkasse I",
                         "description": "Nach dem Boss bleibt die Beute hoch.",
                         "difficulty": 22,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.82,
                             "y": 0.52
@@ -1177,15 +1376,19 @@
                                 "currency": "coins",
                                 "amount": 1840
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_42",
                         "name": "Innenkasse II",
                         "description": "Die Abschlussphase beginnt.",
                         "difficulty": 22,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.76,
                             "y": 0.46
@@ -1205,7 +1408,11 @@
                                 "currency": "coins",
                                 "amount": 1890
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_43",
@@ -1215,8 +1422,8 @@
                         "groundTexture": "realm_coin",
                         "skyboxTexture": "realm_coin",
                         "node": {
-                            "x": 0.70,
-                            "y": 0.40
+                            "x": 0.7,
+                            "y": 0.4
                         },
                         "enemy": {
                             "name": "Gold Core I",
@@ -1233,15 +1440,19 @@
                                 "currency": "coins",
                                 "amount": 1940
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_44",
                         "name": "Goldkern II",
                         "description": "Der letzte Ring wird enger.",
                         "difficulty": 23,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.64,
                             "y": 0.34
@@ -1261,15 +1472,19 @@
                                 "currency": "coins",
                                 "amount": 2000
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_45",
                         "name": "Schlussgold I",
                         "description": "Der Endpfad glitzert ueberall.",
                         "difficulty": 24,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.58,
                             "y": 0.28
@@ -1289,15 +1504,19 @@
                                 "currency": "coins",
                                 "amount": 2050
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_46",
                         "name": "Schlussgold II",
                         "description": "Die letzte Kante wird erreicht.",
                         "difficulty": 24,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.52,
                             "y": 0.22
@@ -1317,15 +1536,19 @@
                                 "currency": "coins",
                                 "amount": 2110
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_47",
                         "name": "Schatzspitze",
                         "description": "Die Schatzspitze fuehrt zum Bossraum.",
                         "difficulty": 25,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.46,
                             "y": 0.16
@@ -1345,7 +1568,11 @@
                                 "currency": "coins",
                                 "amount": 2160
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_48",
@@ -1353,8 +1580,8 @@
                         "description":
                             "Nur noch zwei Kaempfe bis zum Abschluss.",
                         "difficulty": 25,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.38,
                             "y": 0.12
@@ -1374,7 +1601,11 @@
                                 "currency": "coins",
                                 "amount": 2210
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_49",
@@ -1385,7 +1616,7 @@
                         "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.28,
-                            "y": 0.10
+                            "y": 0.1
                         },
                         "enemy": {
                             "name": "Vault Heart",
@@ -1402,7 +1633,11 @@
                                 "currency": "coins",
                                 "amount": 2300
                             }
-                        ]
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
                     },
                     {
                         "id": "event_coin_frenzy_battle_50",
@@ -1410,8 +1645,8 @@
                         "description":
                             "Der finale Coin-Boss und Abschluss der Goldroute.",
                         "difficulty": 27,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_coin",
+                        "skyboxTexture": "realm_coin",
                         "node": {
                             "x": 0.16,
                             "y": 0.08
@@ -1435,6 +1670,21 @@
                         "characterRewards": [
                             {
                                 "characterID": "shen"
+                            }
+                        ],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text":
+                                    "Treasure Dominion steht vor uns. Danach gehoert diese Route uns."
+                            },
+                            {
+                                "speaker": "Kashin",
+                                "image": "preview_kashin",
+                                "text": "Dann beenden wir den Coin Frenzy hier."
                             }
                         ]
                     }

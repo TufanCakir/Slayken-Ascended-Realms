@@ -35,6 +35,7 @@ struct ShopView: View {
     @StateObject private var storeKitManager = StoreKitShopManager()
     @State private var message = ""
     @State private var selectedCategory: ShopCategory = .all
+    @State private var renderShopContent = false
 
     private var shopOffers: [ShopOfferDefinition] {
         loadShopOffers()
@@ -63,7 +64,11 @@ struct ShopView: View {
                         ascendedLevel: ascendedLevel
                     )
                     categoryBar
-                    filteredSections
+                    if renderShopContent {
+                        filteredSections
+                    } else {
+                        shopLoadingPlaceholder
+                    }
                 }
                 .padding(.horizontal, 16)
                 .padding(.bottom, 40)
@@ -84,6 +89,8 @@ struct ShopView: View {
             }
         }
         .task {
+            await Task.yield()
+            renderShopContent = true
             PlayerInventoryStore.ensureBalances(
                 for: gameState.currencies,
                 in: modelContext
@@ -93,6 +100,9 @@ struct ShopView: View {
                 contextProvider: { modelContext }
             )
             await storeKitManager.loadProducts()
+        }
+        .onDisappear {
+            renderShopContent = false
         }
     }
 
@@ -202,6 +212,23 @@ struct ShopView: View {
         Text(title)
             .font(.system(size: 18, weight: .black))
             .foregroundStyle(.white)
+    }
+
+    private var shopLoadingPlaceholder: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            sectionTitle("Shop")
+            HStack(spacing: 12) {
+                ProgressView()
+                    .tint(.white)
+                Text("Angebote werden geladen...")
+                    .font(.system(size: 13, weight: .black))
+                    .foregroundStyle(.white.opacity(0.74))
+                Spacer()
+            }
+            .padding(16)
+            .background(Color.black.opacity(0.34))
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        }
     }
 
     private func resourceBalanceCard(

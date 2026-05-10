@@ -1,6 +1,6 @@
 [
     {
-        "id": "event_chapter_1",
+        "id": "chapter_1",
         "title": "Story Kapitel 1",
         "subtitle": "Der erste Riss im Reich",
         "mapTexture": "realm_country",
@@ -19,7 +19,7 @@
                 "mapTexture": "realm_country",
                 "node": {
                     "x": 0.24,
-                    "y": 0.63,
+                    "y": 0.63
                 },
                 "cutscene": {
                     "id": "chapter_1_gate_intro",
@@ -74,7 +74,8 @@
                                 "speaker": "Shela",
                                 "text": "Dann drücken wir direkt vor."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_2",
@@ -82,8 +83,8 @@
                         "description":
                             "Eine leuchtende Spur führt tiefer in die Route.",
                         "difficulty": 1,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.24,
                             "y": 0.69
@@ -120,7 +121,8 @@
                                 "text":
                                     "Die Kristalle markieren einen alten Pfad."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_3",
@@ -128,8 +130,8 @@
                         "description":
                             "Ein aggressiver Gegner direkt am Torbogen.",
                         "difficulty": 2,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.16,
                             "y": 0.61
@@ -170,15 +172,16 @@
                                 "speaker": "Zaron",
                                 "text": "Diese Bestie wurde vom Riss verdorben."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_4",
                         "name": "Mondsplitter",
                         "description": "Splitterenergie sammelt sich im Boden.",
                         "difficulty": 2,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.21,
                             "y": 0.55
@@ -215,15 +218,16 @@
                                 "text":
                                     "Die Splitter reagieren auf unsere Schritte."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_5",
                         "name": "Nebelpfad",
                         "description": "Ein Kampf im dichten Nebel.",
                         "difficulty": 3,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.26,
                             "y": 0.66
@@ -260,7 +264,8 @@
                                 "text":
                                     "Im Nebel sieht man nur den nächsten Fehler."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_6",
@@ -268,11 +273,11 @@
                         "description":
                             "Alte Runen erwachen mitten auf dem Pfad.",
                         "difficulty": 3,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.31,
-                            "y": 0.60
+                            "y": 0.6
                         },
                         "enemy": {
                             "name": "Rune Guard",
@@ -311,7 +316,8 @@
                                 "text":
                                     "Die Runen reagieren auf die Rissenergie."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_7",
@@ -319,8 +325,8 @@
                         "description":
                             "Der Riss wirft bereits einen Schatten über das Tal.",
                         "difficulty": 4,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.36,
                             "y": 0.52
@@ -356,7 +362,8 @@
                                 "speaker": "Zaron",
                                 "text": "Der Schatten wird dichter."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_8",
@@ -364,8 +371,8 @@
                         "description":
                             "Ein schneller Elitegegner schneidet durch die Formation.",
                         "difficulty": 4,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.41,
                             "y": 0.45
@@ -401,7 +408,8 @@
                                 "speaker": "Shela",
                                 "text": "Zu schnell für rohe Gewalt."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_9",
@@ -409,8 +417,8 @@
                         "description":
                             "Ein schwerer Vorstossgegner verteidigt den Mittelpfad.",
                         "difficulty": 5,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.46,
                             "y": 0.56
@@ -452,15 +460,16 @@
                                 "text":
                                     "Nach diesem Gegner wird der Weg offener."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_10",
                         "name": "Rissknoten",
                         "description": "Der erste Meilenstein des Mondtors.",
                         "difficulty": 5,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.51,
                             "y": 0.48
@@ -501,15 +510,16 @@
                                 "text":
                                     "Der Knoten hält den ganzen Pfad zusammen."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_11",
                         "name": "Aschenstufe",
                         "description": "Der Boden wird heisser und enger.",
                         "difficulty": 6,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.56,
                             "y": 0.39
@@ -546,7 +556,8 @@
                                 "text":
                                     "Wir sind noch nicht einmal in der Mitte."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_12",
@@ -596,7 +607,8 @@
                                 "speaker": "Shela",
                                 "text": "Hier wurde alte Macht zerbrochen."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_13",
@@ -604,11 +616,11 @@
                         "description":
                             "Eine schnelle Windfront zwingt dich in Bewegung.",
                         "difficulty": 7,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.66,
-                            "y": 0.40
+                            "y": 0.4
                         },
                         "enemy": {
                             "name": "Wind Rift",
@@ -641,7 +653,8 @@
                                 "speaker": "Zaron",
                                 "text": "Der Pfad wird schneller als wir."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_14",
@@ -649,11 +662,11 @@
                         "description":
                             "Schwarze Energie zieht durch den Boden.",
                         "difficulty": 7,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.71,
-                            "y": 0.50
+                            "y": 0.5
                         },
                         "enemy": {
                             "name": "Dark Vein",
@@ -686,7 +699,8 @@
                                 "speaker": "Shela",
                                 "text": "Der Boden selbst wirkt feindlich."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_15",
@@ -694,11 +708,11 @@
                         "description":
                             "Ein kleiner Ritualkreis speist den Riss.",
                         "difficulty": 8,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.76,
-                            "y": 0.60
+                            "y": 0.6
                         },
                         "enemy": {
                             "name": "Mist Circle",
@@ -737,7 +751,8 @@
                                 "text":
                                     "Solange der Zirkel steht, bleibt der Druck."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_16",
@@ -745,8 +760,8 @@
                         "description":
                             "Ein Luftjäger zwingt dich vom Rand zur Mitte.",
                         "difficulty": 8,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.81,
                             "y": 0.51
@@ -782,7 +797,8 @@
                                 "speaker": "Shela",
                                 "text": "Er schneidet den Weg in zwei Teile."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_17",
@@ -790,8 +806,8 @@
                         "description":
                             "Ein enger Korridor führt in den Kernbereich.",
                         "difficulty": 9,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.86,
                             "y": 0.43
@@ -828,7 +844,8 @@
                                 "text":
                                     "Jetzt zieht der Riss uns aktiv nach vorne."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_18",
@@ -836,10 +853,10 @@
                         "description":
                             "Leuchtende Splitter bilden eine Falle über dem Weg.",
                         "difficulty": 9,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
-                            "x": 0.90,
+                            "x": 0.9,
                             "y": 0.35
                         },
                         "enemy": {
@@ -879,7 +896,8 @@
                                 "text":
                                     "Die Splitter stehen wie Minen in der Luft."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_19",
@@ -887,8 +905,8 @@
                         "description":
                             "Die Kernwache schiebt dich an den Kartenrand.",
                         "difficulty": 10,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.84,
                             "y": 0.24
@@ -925,7 +943,8 @@
                                 "text":
                                     "Der Kern ist nah. Ich spüre seinen Druck."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_20",
@@ -933,8 +952,8 @@
                         "description":
                             "Ein Machtpuls reisst den Pfad für einen Moment auf.",
                         "difficulty": 10,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.77,
                             "y": 0.18
@@ -974,7 +993,8 @@
                                 "speaker": "Shela",
                                 "text": "Der Puls öffnet die letzte Route."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_21",
@@ -982,10 +1002,10 @@
                         "description":
                             "Der Kern speist jetzt alle Routen auf einmal.",
                         "difficulty": 11,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
-                            "x": 0.70,
+                            "x": 0.7,
                             "y": 0.26
                         },
                         "enemy": {
@@ -1025,7 +1045,8 @@
                                 "text":
                                     "Jetzt ist jeder Schritt ein Treffer gegen den Kern."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_22",
@@ -1033,8 +1054,8 @@
                         "description":
                             "Eine schwere Wache steht kurz vor dem Herzen des Pfads.",
                         "difficulty": 11,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.63,
                             "y": 0.19
@@ -1070,15 +1091,16 @@
                                 "speaker": "Shela",
                                 "text": "Nur noch die innere Schale fehlt."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_23",
                         "name": "Ritualbrand",
                         "description": "Der Boden glimmt vom letzten Ritual.",
                         "difficulty": 12,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.56,
                             "y": 0.14
@@ -1114,7 +1136,8 @@
                                 "speaker": "Zaron",
                                 "text": "Hier wurde bereits geopfert."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_24",
@@ -1122,8 +1145,8 @@
                         "description":
                             "Eine schnelle Kernwache mit scharfen Richtungswechseln.",
                         "difficulty": 12,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.49,
                             "y": 0.22
@@ -1165,7 +1188,8 @@
                                 "text":
                                     "Sie verteidigen jetzt nur noch den Kern."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_25",
@@ -1173,8 +1197,8 @@
                         "description":
                             "Ein schmaler Kanal direkt unter dem Rissherz.",
                         "difficulty": 13,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.42,
                             "y": 0.16
@@ -1210,7 +1234,8 @@
                                 "speaker": "Zaron",
                                 "text": "Von hier an gibt es kein Zurueck mehr."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_26",
@@ -1218,8 +1243,8 @@
                         "description":
                             "Ein leuchtender Pulsgegner direkt vor dem Schlussabschnitt.",
                         "difficulty": 13,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.35,
                             "y": 0.24
@@ -1260,7 +1285,8 @@
                                 "speaker": "Shela",
                                 "text": "Das Herz des Pfads schlägt gegen uns."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_27",
@@ -1268,8 +1294,8 @@
                         "description":
                             "Der Riss schickt Wellen aus reiner Druckenergie.",
                         "difficulty": 14,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.28,
                             "y": 0.18
@@ -1306,7 +1332,8 @@
                                 "text":
                                     "Er versucht uns vom Ende wegzudruecken."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_28",
@@ -1314,8 +1341,8 @@
                         "description":
                             "Die letzte Verteidigung des äusseren Kerns.",
                         "difficulty": 14,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.21,
                             "y": 0.25
@@ -1357,7 +1384,8 @@
                                 "text":
                                     "Nur noch zwei Schritte bis zum Herzschlag."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_29",
@@ -1365,8 +1393,8 @@
                         "description":
                             "Ein schwerer Gegner bewacht die letzte Stufe.",
                         "difficulty": 15,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.14,
                             "y": 0.19
@@ -1403,7 +1431,8 @@
                                 "text":
                                     "Der nächste Schlag entscheidet über das Tor."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_30",
@@ -1411,8 +1440,8 @@
                         "description":
                             "Der erste Kern bricht auf und öffnet den zweiten Pfad des Mondtors.",
                         "difficulty": 16,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.08,
                             "y": 0.12
@@ -1470,7 +1499,8 @@
                                 "text":
                                     "Hinter dem Rauch liegt noch eine tiefere Route."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_31",
@@ -1478,11 +1508,11 @@
                         "description":
                             "Hinter dem aufgebrochenen Kern beginnt ein neuer Randpfad.",
                         "difficulty": 16,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.16,
-                            "y": 0.10
+                            "y": 0.1
                         },
                         "enemy": {
                             "name": "Ash Fringe",
@@ -1516,7 +1546,8 @@
                                 "text":
                                     "Der Pfad geht weiter. Das war nur die erste Schale."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_32",
@@ -1524,8 +1555,8 @@
                         "description":
                             "Überall liegen Splitter des ersten Kerns.",
                         "difficulty": 17,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.25,
                             "y": 0.08
@@ -1567,7 +1598,8 @@
                                 "text":
                                     "Diese Splitter tragen noch immer Kampfdruck in sich."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_33",
@@ -1575,8 +1607,8 @@
                         "description":
                             "Eine schmale Rampe führt wieder nach oben.",
                         "difficulty": 17,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.34,
                             "y": 0.12
@@ -1613,7 +1645,8 @@
                                 "text":
                                     "Er zieht uns wieder nach oben zur zweiten Schale."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_34",
@@ -1621,8 +1654,8 @@
                         "description":
                             "Der Riss streckt eine lange Front aus Nebel nach dir aus.",
                         "difficulty": 18,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.44,
                             "y": 0.09
@@ -1658,7 +1691,8 @@
                                 "speaker": "Zaron",
                                 "text": "Die Route atmet jetzt selbst."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_35",
@@ -1666,8 +1700,8 @@
                         "description":
                             "Runenlinien bündeln die zweite Phase des Mondtors.",
                         "difficulty": 18,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.54,
                             "y": 0.13
@@ -1709,7 +1743,8 @@
                                 "text":
                                     "Hier wurde der zweite Kern vorbereitet."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_36",
@@ -1717,8 +1752,8 @@
                         "description":
                             "Ein heller Grat schiebt sich über das Tal.",
                         "difficulty": 19,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.64,
                             "y": 0.09
@@ -1755,7 +1790,8 @@
                                 "text":
                                     "Die Route spannt sich ueber die halbe Karte."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_37",
@@ -1763,8 +1799,8 @@
                         "description":
                             "Die Schlacht springt in einem weiten Bogen zur Kartenmitte.",
                         "difficulty": 19,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.73,
                             "y": 0.14
@@ -1801,7 +1837,8 @@
                                 "text":
                                     "Jetzt fuehlt es sich wie ein zweites Kapitel im selben Tor an."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_38",
@@ -1809,11 +1846,11 @@
                         "description":
                             "Ein zweiter Saum aus Kernenergie schneidet den Weg ein.",
                         "difficulty": 20,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.82,
-                            "y": 0.10
+                            "y": 0.1
                         },
                         "enemy": {
                             "name": "Core Fringe II",
@@ -1852,7 +1889,8 @@
                                 "text":
                                     "Die zweite Schale stemmt sich jetzt gegen uns."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_39",
@@ -1863,7 +1901,7 @@
                         "groundTexture": "realm_country",
                         "skyboxTexture": "realm_country",
                         "node": {
-                            "x": 0.90,
+                            "x": 0.9,
                             "y": 0.18
                         },
                         "enemy": {
@@ -1898,7 +1936,8 @@
                                 "text":
                                     "Halte die Linie. Danach knicken wir nach oben ab."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_40",
@@ -1906,11 +1945,11 @@
                         "description":
                             "Die Elitewache des zweiten Kerns erwartet dich.",
                         "difficulty": 21,
-                        "groundTexture": "realm_fire",
-                        "skyboxTexture": "realm_fire",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.86,
-                            "y": 0.30
+                            "y": 0.3
                         },
                         "cutscene": {
                             "id": "chapter_1_battle_40_cutscene",
@@ -1960,7 +1999,8 @@
                                 "text":
                                     "Diese Wache steht auf dem eigentlichen Innenring."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_41",
@@ -1968,11 +2008,11 @@
                         "description":
                             "Der Innenring fuehrt in klaren Stufen weiter nach oben.",
                         "difficulty": 21,
-                        "groundTexture": "realm_ice",
-                        "skyboxTexture": "realm_ice",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.78,
-                            "y": 0.40
+                            "y": 0.4
                         },
                         "enemy": {
                             "name": "Rift Stair",
@@ -2006,7 +2046,8 @@
                                 "text":
                                     "Jetzt fuehrt uns der Ring selbst nach oben."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_42",
@@ -2014,8 +2055,8 @@
                         "description":
                             "Der Weg kippt in den dunkleren Teil des Kerns.",
                         "difficulty": 22,
-                        "groundTexture": "realm_void",
-                        "skyboxTexture": "realm_void",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.69,
                             "y": 0.49
@@ -2057,7 +2098,8 @@
                                 "text":
                                     "Hier spueren wir den echten Sog des Mondtors."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_43",
@@ -2065,10 +2107,10 @@
                         "description":
                             "Eine schnelle Speerspitze stoesst aus dem Kernring hervor.",
                         "difficulty": 22,
-                        "groundTexture": "bg_map",
-                        "skyboxTexture": "bg_map",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
-                            "x": 0.60,
+                            "x": 0.6,
                             "y": 0.58
                         },
                         "enemy": {
@@ -2103,7 +2145,8 @@
                                 "text":
                                     "Noch ein Bogen, dann stehen wir ueber dem ersten Startpunkt."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_44",
@@ -2111,10 +2154,10 @@
                         "description":
                             "Der Ring zieht als breite Kurve ueber die Kartenmitte.",
                         "difficulty": 23,
-                        "groundTexture": "bg_arena",
-                        "skyboxTexture": "bg_arena",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
-                            "x": 0.50,
+                            "x": 0.5,
                             "y": 0.68
                         },
                         "enemy": {
@@ -2154,7 +2197,8 @@
                                 "text":
                                     "Wir kreisen jetzt ueber dem ganzen Tal."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_45",
@@ -2162,10 +2206,10 @@
                         "description":
                             "Die vorletzte Wache drueckt mit voller Kernkraft.",
                         "difficulty": 23,
-                        "groundTexture": "bg_country",
-                        "skyboxTexture": "bg_country",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
-                            "x": 0.40,
+                            "x": 0.4,
                             "y": 0.78
                         },
                         "enemy": {
@@ -2200,7 +2244,8 @@
                                 "text":
                                     "Von hier aus sieht man den Abschlussring."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_46",
@@ -2208,8 +2253,8 @@
                         "description":
                             "Eine leuchtende Ader verbindet Innenring und Abschlusskern.",
                         "difficulty": 24,
-                        "groundTexture": "bg_fire",
-                        "skyboxTexture": "bg_fire",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.31,
                             "y": 0.86
@@ -2251,7 +2296,8 @@
                                 "text":
                                     "Das ist die letzte Versorgungsader des Tors."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_47",
@@ -2259,8 +2305,8 @@
                         "description":
                             "Die finale Linie fuehrt in einem klaren Bogen zum letzten Kern.",
                         "difficulty": 24,
-                        "groundTexture": "bg_ice",
-                        "skyboxTexture": "bg_ice",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.23,
                             "y": 0.81
@@ -2297,7 +2343,8 @@
                                 "text":
                                     "Noch drei Schritte. Dann knackt das Tor vollstaendig."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_48",
@@ -2305,8 +2352,8 @@
                         "description":
                             "Der letzte Ring der Verteidigung steht direkt vor dir.",
                         "difficulty": 25,
-                        "groundTexture": "bg_void",
-                        "skyboxTexture": "bg_void",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.16,
                             "y": 0.72
@@ -2348,7 +2395,8 @@
                                 "text":
                                     "Die Luft ist still. Das ist nie ein gutes Zeichen."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_49",
@@ -2356,10 +2404,10 @@
                         "description":
                             "Das Herz des gesamten Mondtors zeigt sich offen.",
                         "difficulty": 25,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
-                            "x": 0.10,
+                            "x": 0.1,
                             "y": 0.62
                         },
                         "enemy": {
@@ -2394,7 +2442,8 @@
                                 "text":
                                     "Jetzt sehen wir den wirklichen Ursprung des ersten Kapitels."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_50",
@@ -2402,8 +2451,8 @@
                         "description":
                             "Der finale Boss von Kapitel 1 und der wahre Schlussstein des Mondtors.",
                         "difficulty": 26,
-                        "groundTexture": "bg_sar",
-                        "skyboxTexture": "bg_sar",
+                        "groundTexture": "realm_country",
+                        "skyboxTexture": "realm_country",
                         "node": {
                             "x": 0.06,
                             "y": 0.52
@@ -2460,7 +2509,8 @@
                                 "text":
                                     "Kapitel eins endet hier. Hinter diesem Bruch wartet das naechste Reich."
                             }
-                        ]
+                        ],
+                        "skinRewards": []
                     }
                 ]
             }

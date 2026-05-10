@@ -1,1 +1,45 @@
-[]
+[
+    {
+        "id": "skin_zaron_shadow_coins",
+        "characterID": "zaron",
+        "skinID": "zaron_shadow",
+        "name": "Shadow Zaron",
+        "subtitle": "",
+        "image": "preview_zaron_shadow",
+        "texture": "texture_zaron_shadow",
+        "cost": [],
+        "maxPurchases": 1
+    } {
+        "id": "skin_shela_moon_crystals",
+        "characterID": "shela",
+        "skinID": "shela_moon",
+        "name": "Moon Shela",
+        "subtitle": "",
+        "image": "preview_shela_moon",
+        "texture": "texture_shela_moon",
+        "cost": [],
+        "maxPurchases": 1
+    },
+    {
+        "id": "skin_shen_lava_coop",
+        "characterID": "shen",
+        "skinID": "shen_lava",
+        "name": "Lava Shen",
+        "subtitle": "",
+        "image": "preview_shen_lava",
+        "texture": "texture_shen_lava",
+        "cost": [],
+        "maxPurchases": 1
+    },
+    {
+        "id": "skin_aika_void_coop",
+        "characterID": "aika",
+        "skinID": "aika_void",
+        "name": "Void Aika",
+        "subtitle": "",
+        "image": "preview_aika_void",
+        "texture": "texture_aika_void",
+        "cost": [],
+        "maxPurchases": 1
+    }
+]

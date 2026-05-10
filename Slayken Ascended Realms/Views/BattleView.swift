@@ -68,6 +68,7 @@ struct BattleView: View {
     @State private var awardedRewards: [CurrencyAmount] = []
     @State private var awardedCharacterRewards: [GlobeBattle.CharacterReward] =
         []
+    @State private var awardedSkinRewards: [StorePackSkinReward] = []
     @State private var awardedCardRewards: [GlobeBattle.CardReward] = []
     @State private var levelBeforeVictory = 1
     @State private var levelAfterVictory = 1
@@ -316,6 +317,7 @@ struct BattleView: View {
                     currencies: rewardCurrenciesForVictory,
                     rewards: awardedRewards,
                     characterRewards: awardedCharacterRewards,
+                    skinRewards: awardedSkinRewards,
                     cardRewards: awardedCardRewards,
                     xpReward: awardedXP,
                     ascendedXPReward: awardedAscendedXP,
@@ -1653,6 +1655,14 @@ struct BattleView: View {
         for characterReward in awardedCharacterRewards {
             PlayerInventoryStore.addOwned(
                 characterID: characterReward.characterID,
+                in: modelContext
+            )
+        }
+        awardedSkinRewards = gameState.selectedBattle?.skinRewards ?? []
+        for skinReward in awardedSkinRewards {
+            PlayerInventoryStore.addOwnedSkin(
+                characterID: skinReward.characterID,
+                skinID: skinReward.skinID,
                 in: modelContext
             )
         }

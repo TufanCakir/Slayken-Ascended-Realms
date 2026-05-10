@@ -55,6 +55,8 @@ struct GameView: View {
     @State private var pendingBattleStartTask: Task<Void, Never>?
     @State private var pendingBattleArrivalID: String?
     @State private var showMultiplayerLobby = false
+    @State private var showBattleStartTransition = false
+    @State private var renderGameScene = false
 
     private enum ModalTabDestination {
         case character
@@ -98,19 +100,26 @@ struct GameView: View {
 
             ZStack {
 
-                // ✅ 3D FULLSCREEN
-                GameSceneView(
-                    player: gameState.player,
-                    joystickVector: joystickVector,
-                    autoMoveTarget: autoMoveTarget,
-                    groundTexture: gameState.activeGroundTexture,
-                    skyboxTexture: gameState.activeSkyboxTexture,
-                    onAutoMoveFinished: {
-                        handleAutoMoveFinished()
-                    }
-                )
-                .id(gameState.player.model)
-                .ignoresSafeArea()
+                if renderGameScene {
+                    GameSceneView(
+                        player: gameState.player,
+                        joystickVector: joystickVector,
+                        autoMoveTarget: autoMoveTarget,
+                        groundTexture: gameState.activeGroundTexture,
+                        skyboxTexture: gameState.activeSkyboxTexture,
+                        onAutoMoveFinished: {
+                            handleAutoMoveFinished()
+                        }
+                    )
+                    .id(
+                        "\(gameState.player.model)-\(gameState.player.texture ?? "default")"
+                    )
+                    .ignoresSafeArea()
+                    .transition(.opacity)
+                } else {
+                    gameScenePlaceholder
+                        .ignoresSafeArea()
+                }
 
                 if showStory {
                     StoryView(story: currentStory) {
@@ -131,6 +140,13 @@ struct GameView: View {
                     }
                     .zIndex(30)
                 }
+
+                if showBattleStartTransition {
+                    battleStartTransitionOverlay
+                        .transition(.opacity)
+                        .zIndex(60)
+                }
+
                 if shouldShowMapPreview {
                     ZStack {
                         if let chapter = activePreviewChapter {
@@ -579,6 +595,11 @@ struct GameView: View {
                 openFooterDestination(newTab)
             }
             .task {
+                await Task.yield()
+                withAnimation(.easeInOut(duration: 0.18)) {
+                    renderGameScene = true
+                }
+
                 while !Task.isCancelled {
                     resourceRefreshDate = .now
                     try? await Task.sleep(for: .seconds(20))
@@ -586,6 +607,9 @@ struct GameView: View {
             }
             .onDisappear {
                 pendingBattleStartTask?.cancel()
+                pendingBattleStartTask = nil
+                showBattleStartTransition = false
+                renderGameScene = false
             }
             .onChange(of: multiplayerManager.lobbyState) { _, newValue in
                 gameState.updateRaidLobby(newValue)
@@ -789,6 +813,56 @@ struct GameView: View {
         }
     }
 
+    private var gameScenePlaceholder: some View {
+        ZStack {
+            RemoteAssetImage(gameState.activeSkyboxTexture) {
+                Color.black
+            }
+            LinearGradient(
+                colors: [
+                    Color.black.opacity(0.26),
+                    Color.black.opacity(0.58),
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        }
+    }
+
+    private var battleStartTransitionOverlay: some View {
+        ZStack {
+            Color.black.opacity(0.86)
+                .ignoresSafeArea()
+
+            VStack(spacing: 10) {
+                ProgressView()
+                    .tint(.white)
+                    .scaleEffect(1.08)
+
+                Text("Battle startet")
+                    .font(.system(size: 16, weight: .black))
+                    .foregroundStyle(.white)
+                    .textCase(.uppercase)
+
+                Text(gameState.selectedBattle?.name ?? "Risskampf")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(.white.opacity(0.68))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
+            }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 18)
+            .background(
+                Color.white.opacity(0.08),
+                in: RoundedRectangle(cornerRadius: 22, style: .continuous)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    .stroke(.white.opacity(0.12), lineWidth: 1)
+            }
+        }
+    }
+
     private func activePreviewPoint(for chapter: GlobeEventChapter)
         -> GlobeEventPoint?
     {
@@ -893,7 +967,26 @@ struct GameView: View {
         }
         resourceRefreshDate = now
         battleResourceMessage = ""
-        if let selectedEnemy {
+
+        guard let selectedEnemy else { return }
+
+        pendingBattleStartTask?.cancel()
+        pendingBattleStartTask = Task { @MainActor in
+            withAnimation(.easeInOut(duration: 0.16)) {
+                showPopup = false
+                showStory = false
+                showBattleStartTransition = true
+            }
+
+            do {
+                try await Task.sleep(for: .milliseconds(180))
+            } catch {
+                withAnimation(.easeInOut(duration: 0.12)) {
+                    showBattleStartTransition = false
+                }
+                return
+            }
+
             onStartBattle(selectedEnemy)
         }
     }

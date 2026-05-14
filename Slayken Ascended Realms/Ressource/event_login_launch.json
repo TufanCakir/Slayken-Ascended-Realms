@@ -35,6 +35,7 @@
         "subtitle": "Mehr Reserven",
         "message": "Der Launch-Kalender schiebt weitere Ressourcen nach.",
         "buttonTitle": "Launch Tag 2 abholen",
+        "background": "festival_launch",
         "assetIcon": "icon_crystals",
         "icon": "shippingbox.fill",
         "rewards": [
@@ -57,6 +58,7 @@
         "subtitle": "Skill-Boost",
         "message": "Ein zusaetzlicher Karten-Boost fuer fruehe Kaempfe.",
         "buttonTitle": "Launch Tag 3 abholen",
+        "background": "festival_launch",
         "assetIcon": "icon_crystals",
         "icon": "bolt.fill",
         "rewards": [
@@ -84,6 +86,7 @@
         "subtitle": "Team-Zuwachs",
         "message": "Der Launch belohnt treue Rueckkehr mit einem Charakter.",
         "buttonTitle": "Launch Tag 4 abholen",
+        "background": "festival_launch",
         "assetIcon": "icon_crystals",
         "icon": "person.2.fill",
         "rewards": [
@@ -110,6 +113,7 @@
         "subtitle": "Premium-Reserve",
         "message": "Noch mehr Kristalle fuer Banner und fruehe Builds.",
         "buttonTitle": "Launch Tag 5 abholen",
+        "background": "festival_launch",
         "assetIcon": "icon_crystals",
         "icon": "diamond.fill",
         "rewards": [
@@ -132,6 +136,7 @@
         "subtitle": "Kampfkern",
         "message": "Kurz vor dem Finale gibt es noch einmal Skill-Karten.",
         "buttonTitle": "Launch Tag 6 abholen",
+        "background": "festival_launch",
         "assetIcon": "icon_crystals",
         "icon": "shield.lefthalf.filled",
         "rewards": [
@@ -160,6 +165,7 @@
         "message":
             "Der Abschluss des Launch-Events bringt Charakter und starke Ressourcen.",
         "buttonTitle": "Launch Finale abholen",
+        "background": "festival_launch",
         "assetIcon": "icon_crystals",
         "icon": "crown.fill",
         "rewards": [
@@ -174,7 +180,7 @@
         ],
         "characterRewards": [
             {
-                "characterID": "aika"
+                "characterID": "zaron"
             }
         ],
         "cardRewards": [

@@ -608,6 +608,13 @@ enum PlayerInventoryStore {
         for characterReward in gift.characterRewards {
             addOwned(characterID: characterReward.characterID, in: context)
         }
+        for cardReward in gift.cardRewards {
+            addOwnedCard(
+                cardID: cardReward.cardID,
+                amount: cardReward.amount,
+                in: context
+            )
+        }
         context.insert(PlayerClaimedGift(giftID: gift.id))
         save(context)
         return true

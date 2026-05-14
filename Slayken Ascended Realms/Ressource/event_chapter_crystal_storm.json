@@ -2,23 +2,25 @@
     {
         "id": "event_crystal_storm",
         "title": "Event: Crystal Storm",
-        "subtitle": "50 Kaempfe fuer reine Crystal-Farmrouten",
+        "subtitle": "Crycher Crystal Route",
         "sortOrder": 111,
         "endsAt": "05.06.2026 23:59",
-        "minAscendedLevel": 1,
+        "minAscendedLevel": 10,
         "mapTexture": "realm_crystal",
         "nodeImage": "chest_crystal",
         "cutscene": {
             "id": "event_crystal_storm_intro",
             "title": "Crystal Storm",
-            "video": "intro_crystal",
-            "text": "Ein Kristallsturm bricht ueber dem Splitterfeld aus."
+            "video": "intro_crystalstorm",
+            "text":
+                "Ein Kristallsturm bricht ueber dem Splitterfeld aus. Crycher tauchen aus den blauen Rissen auf."
         },
         "points": [
             {
                 "id": "event_crystal_storm_field",
-                "title": "Splitterfeld",
-                "text": "Eine lange Crystal-Route mit 50 Nodes.",
+                "title": "Crycher Splitterfeld",
+                "text":
+                    "Eine Crystal-Route mit Crycher-Gegnern und mehreren 3er-Kaempfen.",
                 "mapImage": "realm_crystal",
                 "mapTexture": "realm_crystal",
                 "node": {
@@ -28,9 +30,10 @@
                 "battles": [
                     {
                         "id": "event_crystal_storm_battle_1",
-                        "name": "Crystal Path I",
-                        "description": "Die Route beginnt mit Splitterenergie.",
-                        "difficulty": 3,
+                        "name": "Crycher I",
+                        "description":
+                            "Der erste Crycher tritt aus dem Kristallnebel.",
+                        "difficulty": 4,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
@@ -38,23 +41,24 @@
                             "y": 0.86
                         },
                         "enemy": {
-                            "name": "Crystal Path I",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
+                            "name": "Crycher",
+                            "image": "preview_crycher",
+                            "model": "crycher",
                             "texture": null,
-                            "hp": 180,
-                            "attack": 12,
-                            "element": "Light"
+                            "hp": 240,
+                            "attack": 16,
+                            "attackSpeed": 0.85,
+                            "element": "Ice"
                         },
                         "xpReward": 250,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 4
+                                "amount": 5
                             },
                             {
                                 "currency": "coins",
-                                "amount": 40
+                                "amount": 50
                             }
                         ],
                         "characterRewards": [],
@@ -63,23 +67,27 @@
                         "story": [
                             {
                                 "speaker": "Shela",
-                                "image": "preview_shela",
                                 "text":
-                                    "Der Kristallsturm zerreisst die Luft. Jeder Splitter traegt Energie."
+                                    "Zaron... siehst du das? Der Kristall bewegt sich."
                             },
                             {
                                 "speaker": "Zaron",
-                                "image": "preview_zaron",
                                 "text":
-                                    "Dann bleiben wir in Bewegung, bevor uns der Sturm einschliesst."
+                                    "Das ist kein Kristall. Da kommt etwas raus."
+                            },
+                            {
+                                "speaker": "Crycher",
+                                "image": "preview_crycher",
+                                "text": "GREEEEEEEEE..."
                             }
                         ]
                     },
                     {
                         "id": "event_crystal_storm_battle_2",
-                        "name": "Crystal Path II",
-                        "description": "Mehr Splitter sammeln sich am Rand.",
-                        "difficulty": 3,
+                        "name": "Crycher II",
+                        "description":
+                            "Ein Crycher laeuft durch die Splitterkante.",
+                        "difficulty": 4,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
@@ -87,23 +95,24 @@
                             "y": 0.82
                         },
                         "enemy": {
-                            "name": "Crystal Path II",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
+                            "name": "Crycher",
+                            "image": "preview_crycher",
+                            "model": "crycher",
                             "texture": null,
-                            "hp": 195,
-                            "attack": 13,
-                            "element": "Water"
+                            "hp": 270,
+                            "attack": 18,
+                            "attackSpeed": 0.88,
+                            "element": "Ice"
                         },
-                        "xpReward": 250,
+                        "xpReward": 270,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 4
+                                "amount": 5
                             },
                             {
                                 "currency": "coins",
-                                "amount": 40
+                                "amount": 60
                             }
                         ],
                         "characterRewards": [],
@@ -113,34 +122,57 @@
                     },
                     {
                         "id": "event_crystal_storm_battle_3",
-                        "name": "Shard Wind",
+                        "name": "Crycher Trio I",
                         "description":
-                            "Die Splitter schneiden ueber die Front.",
-                        "difficulty": 4,
+                            "Drei Crycher greifen gleichzeitig aus dem Kristallwind an.",
+                        "difficulty": 5,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.18,
                             "y": 0.78
                         },
-                        "enemy": {
-                            "name": "Shard Wind",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 210,
-                            "attack": 14,
-                            "element": "Storm"
-                        },
-                        "xpReward": 250,
+                        "enemies": [
+                            {
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 220,
+                                "attack": 15,
+                                "attackSpeed": 0.86,
+                                "element": "Ice"
+                            },
+                            {
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 235,
+                                "attack": 16,
+                                "attackSpeed": 0.88,
+                                "element": "Ice"
+                            },
+                            {
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 250,
+                                "attack": 17,
+                                "attackSpeed": 0.9,
+                                "element": "Ice"
+                            }
+                        ],
+                        "xpReward": 320,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 4
+                                "amount": 6
                             },
                             {
                                 "currency": "coins",
-                                "amount": 40
+                                "amount": 75
                             }
                         ],
                         "characterRewards": [],
@@ -150,9 +182,10 @@
                     },
                     {
                         "id": "event_crystal_storm_battle_4",
-                        "name": "Glass Edge",
-                        "description": "Die Route bleibt scharf und klar.",
-                        "difficulty": 4,
+                        "name": "Crycher IV",
+                        "description":
+                            "Ein Crycher bewacht die blaue Kristallader.",
+                        "difficulty": 6,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
@@ -160,23 +193,24 @@
                             "y": 0.74
                         },
                         "enemy": {
-                            "name": "Glass Edge",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
+                            "name": "Crycher",
+                            "image": "preview_crycher",
+                            "model": "crycher",
                             "texture": null,
-                            "hp": 225,
-                            "attack": 15,
-                            "element": "Light"
+                            "hp": 340,
+                            "attack": 24,
+                            "attackSpeed": 0.9,
+                            "element": "Ice"
                         },
-                        "xpReward": 250,
+                        "xpReward": 340,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 4
+                                "amount": 6
                             },
                             {
                                 "currency": "coins",
-                                "amount": 50
+                                "amount": 90
                             }
                         ],
                         "characterRewards": [],
@@ -186,9 +220,10 @@
                     },
                     {
                         "id": "event_crystal_storm_battle_5",
-                        "name": "Shard Vein",
-                        "description": "Eine Ader aus Crystals fuehrt weiter.",
-                        "difficulty": 5,
+                        "name": "Crycher V",
+                        "description":
+                            "Der Kristallsturm zieht einen staerkeren Crycher an.",
+                        "difficulty": 7,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
@@ -196,538 +231,85 @@
                             "y": 0.7
                         },
                         "enemy": {
-                            "name": "Shard Vein",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
+                            "name": "Crycher",
+                            "image": "preview_crycher",
+                            "model": "crycher",
                             "texture": null,
-                            "hp": 245,
-                            "attack": 16,
-                            "element": "Dark"
+                            "hp": 420,
+                            "attack": 30,
+                            "attackSpeed": 0.95,
+                            "element": "Ice"
                         },
-                        "xpReward": 250,
+                        "xpReward": 380,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 5
+                                "amount": 7
                             },
                             {
                                 "currency": "coins",
-                                "amount": 50
+                                "amount": 110
                             }
                         ],
                         "characterRewards": [],
-                        "cardRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "crystal_blue",
+                                "amount": 1
+                            }
+                        ],
                         "skinRewards": [],
                         "story": []
                     },
                     {
                         "id": "event_crystal_storm_battle_6",
-                        "name": "Frost Cut",
-                        "description": "Die Linie wird kuehler und haerter.",
-                        "difficulty": 5,
+                        "name": "Crycher Trio II",
+                        "description":
+                            "Drei Crycher blockieren die Crystal-Farmroute.",
+                        "difficulty": 8,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
                             "x": 0.36,
                             "y": 0.66
                         },
-                        "enemy": {
-                            "name": "Frost Cut",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 260,
-                            "attack": 17,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
+                        "enemies": [
                             {
-                                "currency": "crystals",
-                                "amount": 5
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 330,
+                                "attack": 24,
+                                "attackSpeed": 0.92,
+                                "element": "Ice"
                             },
                             {
-                                "currency": "coins",
-                                "amount": 60
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 350,
+                                "attack": 25,
+                                "attackSpeed": 0.94,
+                                "element": "Ice"
+                            },
+                            {
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 370,
+                                "attack": 26,
+                                "attackSpeed": 0.96,
+                                "element": "Ice"
                             }
                         ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_7",
-                        "name": "Crystal Arc",
-                        "description":
-                            "Ein breiter Bogen aus Splittern steht offen.",
-                        "difficulty": 6,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.42,
-                            "y": 0.62
-                        },
-                        "enemy": {
-                            "name": "Crystal Arc",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 280,
-                            "attack": 18,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 5
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 60
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_8",
-                        "name": "Crystal Edge",
-                        "description": "Die Route kippt in den ersten Bogen.",
-                        "difficulty": 6,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.48,
-                            "y": 0.58
-                        },
-                        "enemy": {
-                            "name": "Crystal Edge",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 300,
-                            "attack": 19,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 6
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 70
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_9",
-                        "name": "Shard Front",
-                        "description": "Die vordere Linie zieht sich enger.",
-                        "difficulty": 7,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.54,
-                            "y": 0.54
-                        },
-                        "enemy": {
-                            "name": "Shard Front",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 320,
-                            "attack": 20,
-                            "element": "Storm"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 6
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 70
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_10",
-                        "name": "Crystal Guard",
-                        "description":
-                            "Die erste Crystal-Elite blockiert den Pfad.",
-                        "difficulty": 7,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.6,
-                            "y": 0.5
-                        },
-                        "enemy": {
-                            "name": "Crystal Guard",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 350,
-                            "attack": 22,
-                            "element": "Plant"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 7
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 80
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "image": "preview_shela",
-                                "text":
-                                    "Die Kristalle reagieren auf unsere Schritte."
-                            },
-                            {
-                                "speaker": "Zaron",
-                                "image": "preview_zaron",
-                                "text": "Gut. Dann fuehren sie uns zum Kern."
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_11",
-                        "name": "Shard Run I",
-                        "description": "Die zweite Haelfte beginnt.",
-                        "difficulty": 8,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.66,
-                            "y": 0.46
-                        },
-                        "enemy": {
-                            "name": "Shard Run I",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 380,
-                            "attack": 23,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 7
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 90
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_12",
-                        "name": "Shard Run II",
-                        "description": "Der Druck bleibt hoch.",
-                        "difficulty": 8,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.72,
-                            "y": 0.42
-                        },
-                        "enemy": {
-                            "name": "Shard Run II",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 410,
-                            "attack": 24,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
+                        "xpReward": 450,
                         "rewards": [
                             {
                                 "currency": "crystals",
                                 "amount": 8
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 90
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_13",
-                        "name": "Glass Rim",
-                        "description": "Ein heller Rand bleibt ueber dem Feld.",
-                        "difficulty": 9,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.78,
-                            "y": 0.38
-                        },
-                        "enemy": {
-                            "name": "Glass Rim",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 440,
-                            "attack": 25,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 8
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 90
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_14",
-                        "name": "Crystal Rim",
-                        "description": "Die Kante knickt in den zweiten Bogen.",
-                        "difficulty": 9,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.84,
-                            "y": 0.34
-                        },
-                        "enemy": {
-                            "name": "Crystal Rim",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 470,
-                            "attack": 26,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 9
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 100
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_15",
-                        "name": "Storm Edge",
-                        "description": "Die Splitterfront kippt nach unten.",
-                        "difficulty": 10,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.9,
-                            "y": 0.3
-                        },
-                        "enemy": {
-                            "name": "Storm Edge",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 500,
-                            "attack": 27,
-                            "element": "Storm"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 10
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 100
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_16",
-                        "name": "Shard Bend",
-                        "description": "Der zweite Bogen bringt dich tiefer.",
-                        "difficulty": 10,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.86,
-                            "y": 0.24
-                        },
-                        "enemy": {
-                            "name": "Shard Bend",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 530,
-                            "attack": 28,
-                            "element": "Plant"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 10
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 110
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_17",
-                        "name": "Frost Shards",
-                        "description":
-                            "Die Luft ist voll mit kalten Splittern.",
-                        "difficulty": 11,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.8,
-                            "y": 0.2
-                        },
-                        "enemy": {
-                            "name": "Frost Shards",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 560,
-                            "attack": 29,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 11
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 110
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_18",
-                        "name": "Crystal Stake",
-                        "description": "Der innere Pfeiler wird sichtbar.",
-                        "difficulty": 11,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.74,
-                            "y": 0.16
-                        },
-                        "enemy": {
-                            "name": "Crystal Stake",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 590,
-                            "attack": 30,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 11
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 120
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_19",
-                        "name": "Glass Core",
-                        "description": "Der mittlere Crystal-Kern leuchtet.",
-                        "difficulty": 12,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.68,
-                            "y": 0.12
-                        },
-                        "enemy": {
-                            "name": "Glass Core",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 620,
-                            "attack": 31,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
                             },
                             {
                                 "currency": "coins",
@@ -740,103 +322,32 @@
                         "story": []
                     },
                     {
-                        "id": "event_crystal_storm_battle_20",
-                        "name": "Crystal Chief",
-                        "description": "Ein Crystal-Boss trennt die Route.",
-                        "difficulty": 12,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.62,
-                            "y": 0.1
-                        },
-                        "enemy": {
-                            "name": "Crystal Chief",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 660,
-                            "attack": 33,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 140
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_21",
-                        "name": "Shard Line I",
+                        "id": "event_crystal_storm_battle_7",
+                        "name": "Crycher VII",
                         "description":
-                            "Der Rueckweg beginnt mit viel Splitterdruck.",
-                        "difficulty": 13,
+                            "Ein schneller Crycher springt aus dem Splitterfeld.",
+                        "difficulty": 9,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.56,
-                            "y": 0.16
+                            "x": 0.42,
+                            "y": 0.62
                         },
                         "enemy": {
-                            "name": "Shard Line I",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
+                            "name": "Crycher",
+                            "image": "preview_crycher",
+                            "model": "crycher",
                             "texture": null,
-                            "hp": 700,
-                            "attack": 34,
-                            "element": "Plant"
+                            "hp": 560,
+                            "attack": 40,
+                            "attackSpeed": 1.0,
+                            "element": "Ice"
                         },
-                        "xpReward": 250,
+                        "xpReward": 480,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 140
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_22",
-                        "name": "Shard Line II",
-                        "description": "Die Linie bleibt hart und klar.",
-                        "difficulty": 13,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.5,
-                            "y": 0.22
-                        },
-                        "enemy": {
-                            "name": "Shard Line II",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 740,
-                            "attack": 35,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
+                                "amount": 9
                             },
                             {
                                 "currency": "coins",
@@ -849,67 +360,32 @@
                         "story": []
                     },
                     {
-                        "id": "event_crystal_storm_battle_23",
-                        "name": "Glass Line",
-                        "description": "Die obere Linie beginnt.",
-                        "difficulty": 14,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.44,
-                            "y": 0.28
-                        },
-                        "enemy": {
-                            "name": "Glass Line",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 780,
-                            "attack": 36,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 160
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_24",
-                        "name": "Storm Shards",
+                        "id": "event_crystal_storm_battle_8",
+                        "name": "Crycher VIII",
                         "description":
-                            "Ein harter Impuls zieht durch die Mitte.",
-                        "difficulty": 14,
+                            "Der Crycher ist voll mit Crystal-Energie geladen.",
+                        "difficulty": 10,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.38,
-                            "y": 0.34
+                            "x": 0.48,
+                            "y": 0.58
                         },
                         "enemy": {
-                            "name": "Storm Shards",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
+                            "name": "Crycher",
+                            "image": "preview_crycher",
+                            "model": "crycher",
                             "texture": null,
-                            "hp": 820,
-                            "attack": 37,
-                            "element": "Storm"
+                            "hp": 650,
+                            "attack": 48,
+                            "attackSpeed": 1.05,
+                            "element": "Ice"
                         },
-                        "xpReward": 250,
+                        "xpReward": 520,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 12
+                                "amount": 10
                             },
                             {
                                 "currency": "coins",
@@ -919,102 +395,64 @@
                         "characterRewards": [],
                         "cardRewards": [],
                         "skinRewards": [],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Rana",
+                                "text":
+                                    "Es werden immer mehr. Wir duerfen sie nicht bis zum Kern lassen."
+                            },
+                            {
+                                "speaker": "Crycher",
+                                "image": "preview_crycher",
+                                "text": "CRY CRY... GRRRRRR!"
+                            }
+                        ]
                     },
                     {
-                        "id": "event_crystal_storm_battle_25",
-                        "name": "Crystal Ridge",
+                        "id": "event_crystal_storm_battle_9",
+                        "name": "Crycher Trio III",
                         "description":
-                            "Der Grat fuehrt in den oberen Ruecklauf.",
-                        "difficulty": 15,
+                            "Drei Crycher kommen aus drei Kristallrissen.",
+                        "difficulty": 11,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.32,
-                            "y": 0.4
+                            "x": 0.54,
+                            "y": 0.54
                         },
-                        "enemy": {
-                            "name": "Crystal Ridge",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 860,
-                            "attack": 38,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
+                        "enemies": [
                             {
-                                "currency": "crystals",
-                                "amount": 12
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 500,
+                                "attack": 38,
+                                "attackSpeed": 1.0,
+                                "element": "Ice"
                             },
                             {
-                                "currency": "coins",
-                                "amount": 180
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_26",
-                        "name": "Shard Ridge",
-                        "description": "Die Route bleibt wertvoll.",
-                        "difficulty": 15,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.26,
-                            "y": 0.46
-                        },
-                        "enemy": {
-                            "name": "Shard Ridge",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 900,
-                            "attack": 39,
-                            "element": "Plant"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 530,
+                                "attack": 40,
+                                "attackSpeed": 1.02,
+                                "element": "Ice"
                             },
                             {
-                                "currency": "coins",
-                                "amount": 190
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 560,
+                                "attack": 42,
+                                "attackSpeed": 1.04,
+                                "element": "Ice"
                             }
                         ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_27",
-                        "name": "Crystal Run",
-                        "description": "Der obere Pfad fuehrt weiter.",
-                        "difficulty": 16,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.2,
-                            "y": 0.52
-                        },
-                        "enemy": {
-                            "name": "Crystal Run",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 940,
-                            "attack": 40,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
+                        "xpReward": 600,
                         "rewards": [
                             {
                                 "currency": "crystals",
@@ -1031,151 +469,39 @@
                         "story": []
                     },
                     {
-                        "id": "event_crystal_storm_battle_28",
-                        "name": "Glass Saddle",
-                        "description": "Der obere Sattel bleibt scharf.",
-                        "difficulty": 16,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.14,
-                            "y": 0.58
-                        },
-                        "enemy": {
-                            "name": "Glass Saddle",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 980,
-                            "attack": 41,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 210
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_29",
-                        "name": "Shard Front",
-                        "description": "Die obere Front zieht in den Ring.",
-                        "difficulty": 17,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.1,
-                            "y": 0.64
-                        },
-                        "enemy": {
-                            "name": "Shard Front II",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 1020,
-                            "attack": 42,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 220
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_30",
-                        "name": "Crystal Judge",
+                        "id": "event_crystal_storm_battle_10",
+                        "name": "Crycher Guard",
                         "description":
-                            "Eine weitere Elite blockiert den oberen Zugang.",
-                        "difficulty": 17,
+                            "Ein grosser Crycher bewacht den Sturmring.",
+                        "difficulty": 12,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.16,
-                            "y": 0.7
+                            "x": 0.6,
+                            "y": 0.5
+                        },
+                        "cutscene": {
+                            "id": "event_crystal_storm_battle_10_cutscene",
+                            "title": "Crycher Guard",
+                            "video": "crycher_guard",
+                            "text":
+                                "Ein grosser Crycher stellt sich vor den Kristallring."
                         },
                         "enemy": {
-                            "name": "Crystal Judge",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
+                            "name": "Crycher",
+                            "image": "preview_crycher",
+                            "model": "crycher",
                             "texture": null,
-                            "hp": 1070,
-                            "attack": 44,
-                            "element": "Light"
+                            "hp": 820,
+                            "attack": 62,
+                            "attackSpeed": 1.05,
+                            "element": "Ice"
                         },
-                        "xpReward": 250,
+                        "xpReward": 700,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 230
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "image": "preview_shela",
-                                "text":
-                                    "Der Sturm wird dichter. Ich sehe kaum noch den Pfad."
-                            },
-                            {
-                                "speaker": "Zaron",
-                                "image": "preview_zaron",
-                                "text": "Folge dem Leuchten. Wir sind nah dran."
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_31",
-                        "name": "Glass Arc II",
-                        "description": "Die Route schwingt wieder nach rechts.",
-                        "difficulty": 18,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.22,
-                            "y": 0.76
-                        },
-                        "enemy": {
-                            "name": "Glass Arc II",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 1120,
-                            "attack": 45,
-                            "element": "Storm"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
+                                "amount": 15
                             },
                             {
                                 "currency": "coins",
@@ -1183,40 +509,57 @@
                             }
                         ],
                         "characterRewards": [],
-                        "cardRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "crystal_blue",
+                                "amount": 1
+                            }
+                        ],
                         "skinRewards": [],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Der grosse Crycher haelt die anderen zusammen. Erst ihn, dann den Rest."
+                            },
+                            {
+                                "speaker": "Crycher",
+                                "image": "preview_crycher_guard",
+                                "text": "GRAAAAAAA!"
+                            }
+                        ]
                     },
                     {
-                        "id": "event_crystal_storm_battle_32",
-                        "name": "Crystal Arc II",
+                        "id": "event_crystal_storm_battle_11",
+                        "name": "Crycher XI",
                         "description":
-                            "Die obere Linie bleibt voll mit Splittern.",
-                        "difficulty": 18,
+                            "Der Crystal-Sturm verdichtet sich um einen Crycher.",
+                        "difficulty": 13,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.28,
-                            "y": 0.82
+                            "x": 0.68,
+                            "y": 0.46
                         },
                         "enemy": {
-                            "name": "Crystal Arc II",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
+                            "name": "Crycher",
+                            "image": "preview_crycher",
+                            "model": "crycher",
                             "texture": null,
-                            "hp": 1170,
-                            "attack": 46,
-                            "element": "Plant"
+                            "hp": 900,
+                            "attack": 68,
+                            "attackSpeed": 1.08,
+                            "element": "Ice"
                         },
-                        "xpReward": 250,
+                        "xpReward": 760,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 12
+                                "amount": 16
                             },
                             {
                                 "currency": "coins",
-                                "amount": 270
+                                "amount": 280
                             }
                         ],
                         "characterRewards": [],
@@ -1225,103 +568,54 @@
                         "story": []
                     },
                     {
-                        "id": "event_crystal_storm_battle_33",
-                        "name": "Glass Crown",
-                        "description": "Die Splitter kreisen ueber der Front.",
-                        "difficulty": 19,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.34,
-                            "y": 0.88
-                        },
-                        "enemy": {
-                            "name": "Glass Crown",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 1220,
-                            "attack": 47,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 290
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_34",
-                        "name": "Shard Fringe",
+                        "id": "event_crystal_storm_battle_12",
+                        "name": "Crycher Trio IV",
                         "description":
-                            "Der innere Ring aus Splittern schliesst sich.",
-                        "difficulty": 19,
+                            "Drei Crycher halten den inneren Crystal-Kreis.",
+                        "difficulty": 14,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.42,
-                            "y": 0.84
+                            "x": 0.76,
+                            "y": 0.4
                         },
-                        "enemy": {
-                            "name": "Shard Fringe",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 1270,
-                            "attack": 48,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
+                        "enemies": [
                             {
-                                "currency": "crystals",
-                                "amount": 12
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 680,
+                                "attack": 52,
+                                "attackSpeed": 1.05,
+                                "element": "Ice"
                             },
                             {
-                                "currency": "coins",
-                                "amount": 310
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 720,
+                                "attack": 55,
+                                "attackSpeed": 1.08,
+                                "element": "Ice"
+                            },
+                            {
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 760,
+                                "attack": 58,
+                                "attackSpeed": 1.1,
+                                "element": "Ice"
                             }
                         ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_35",
-                        "name": "Crystal Wall",
-                        "description": "Vor dem Ende steht eine letzte Front.",
-                        "difficulty": 20,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.5,
-                            "y": 0.8
-                        },
-                        "enemy": {
-                            "name": "Crystal Wall",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 1320,
-                            "attack": 49,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
+                        "xpReward": 840,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 12
+                                "amount": 18
                             },
                             {
                                 "currency": "coins",
@@ -1334,66 +628,32 @@
                         "story": []
                     },
                     {
-                        "id": "event_crystal_storm_battle_36",
-                        "name": "Shard Wall",
-                        "description": "Die Crystal-Front bleibt dicht.",
-                        "difficulty": 20,
+                        "id": "event_crystal_storm_battle_13",
+                        "name": "Crycher XIII",
+                        "description":
+                            "Ein Crycher springt direkt aus dem blauen Kern.",
+                        "difficulty": 15,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.58,
-                            "y": 0.76
+                            "x": 0.84,
+                            "y": 0.34
                         },
                         "enemy": {
-                            "name": "Shard Wall",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
+                            "name": "Crycher",
+                            "image": "preview_crycher",
+                            "model": "crycher",
                             "texture": null,
-                            "hp": 1370,
-                            "attack": 50,
-                            "element": "Light"
+                            "hp": 1120,
+                            "attack": 85,
+                            "attackSpeed": 1.12,
+                            "element": "Ice"
                         },
-                        "xpReward": 250,
+                        "xpReward": 900,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 340
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_37",
-                        "name": "Glass Pillar",
-                        "description": "Ein letzter Pfeiler stuetzt den Ring.",
-                        "difficulty": 21,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.66,
-                            "y": 0.72
-                        },
-                        "enemy": {
-                            "name": "Glass Pillar",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 1420,
-                            "attack": 51,
-                            "element": "Storm"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
+                                "amount": 20
                             },
                             {
                                 "currency": "coins",
@@ -1406,104 +666,32 @@
                         "story": []
                     },
                     {
-                        "id": "event_crystal_storm_battle_38",
-                        "name": "Crystal Gale",
+                        "id": "event_crystal_storm_battle_14",
+                        "name": "Crycher XIV",
                         "description":
-                            "Die Luft ist voll mit glitzernden Splittern.",
-                        "difficulty": 21,
+                            "Ein Crycher im Kristallpanzer versperrt den letzten Weg.",
+                        "difficulty": 16,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.74,
-                            "y": 0.68
+                            "x": 0.72,
+                            "y": 0.24
                         },
                         "enemy": {
-                            "name": "Crystal Gale",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
+                            "name": "Crycher",
+                            "image": "preview_crycher",
+                            "model": "crycher",
                             "texture": null,
-                            "hp": 1470,
-                            "attack": 52,
-                            "element": "Plant"
+                            "hp": 1280,
+                            "attack": 96,
+                            "attackSpeed": 1.15,
+                            "element": "Ice"
                         },
-                        "xpReward": 250,
+                        "xpReward": 980,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 380
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_39",
-                        "name": "Shard Guard",
-                        "description": "Die letzte Wacht steht im Weg.",
-                        "difficulty": 22,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.82,
-                            "y": 0.64
-                        },
-                        "enemy": {
-                            "name": "Shard Guard",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 1520,
-                            "attack": 53,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 400
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_40",
-                        "name": "Crystal Boss",
-                        "description":
-                            "Der grosse Crystal-Boss verteidigt den Innenring.",
-                        "difficulty": 22,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.88,
-                            "y": 0.58
-                        },
-                        "enemy": {
-                            "name": "Crystal Boss",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 1600,
-                            "attack": 56,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
+                                "amount": 24
                             },
                             {
                                 "currency": "coins",
@@ -1516,382 +704,94 @@
                         "story": []
                     },
                     {
-                        "id": "event_crystal_storm_battle_41",
-                        "name": "Inner Shards I",
+                        "id": "event_crystal_storm_battle_15",
+                        "name": "Crycher Crystal Swarm",
                         "description":
-                            "Nach dem Boss bleiben die Splitter wertvoll.",
-                        "difficulty": 23,
+                            "Drei starke Crycher verteidigen den Crystal-Storm-Kern.",
+                        "difficulty": 18,
                         "groundTexture": "realm_crystal",
                         "skyboxTexture": "realm_crystal",
                         "node": {
-                            "x": 0.82,
-                            "y": 0.52
-                        },
-                        "enemy": {
-                            "name": "Inner Shards I",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 1660,
-                            "attack": 57,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 450
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_42",
-                        "name": "Inner Shards II",
-                        "description": "Die Abschlussphase beginnt.",
-                        "difficulty": 23,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.76,
-                            "y": 0.46
-                        },
-                        "enemy": {
-                            "name": "Inner Shards II",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 1720,
-                            "attack": 58,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 480
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_43",
-                        "name": "Crystal Core I",
-                        "description": "Der Kern der Event-Route bleibt offen.",
-                        "difficulty": 24,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.7,
-                            "y": 0.4
-                        },
-                        "enemy": {
-                            "name": "Crystal Core I",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 1780,
-                            "attack": 59,
-                            "element": "Storm"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 500
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_44",
-                        "name": "Crystal Core II",
-                        "description": "Der letzte Ring wird enger.",
-                        "difficulty": 24,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.64,
-                            "y": 0.34
-                        },
-                        "enemy": {
-                            "name": "Crystal Core II",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 1840,
-                            "attack": 60,
-                            "element": "Plant"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 530
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_45",
-                        "name": "Final Shards I",
-                        "description": "Der Endpfad glitzert überall.",
-                        "difficulty": 25,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.58,
-                            "y": 0.28
-                        },
-                        "enemy": {
-                            "name": "Final Shards I",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 1900,
-                            "attack": 61,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 560
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_46",
-                        "name": "Final Shards II",
-                        "description": "Die letzte Kante wird erreicht.",
-                        "difficulty": 25,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.52,
-                            "y": 0.22
-                        },
-                        "enemy": {
-                            "name": "Final Shards II",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 1960,
-                            "attack": 62,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 580
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_47",
-                        "name": "Crystal Peak",
-                        "description": "Die Crystal-Spitze führt zum Bossraum.",
-                        "difficulty": 26,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.46,
-                            "y": 0.16
-                        },
-                        "enemy": {
-                            "name": "Crystal Peak",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 2020,
-                            "attack": 63,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 610
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_48",
-                        "name": "Glass Peak",
-                        "description":
-                            "Nur noch zwei Kaempfe bis zum Abschluss.",
-                        "difficulty": 26,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.38,
+                            "x": 0.54,
                             "y": 0.12
                         },
-                        "enemy": {
-                            "name": "Glass Peak",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 2080,
-                            "attack": 64,
-                            "element": "Light"
+                        "cutscene": {
+                            "id": "event_crystal_storm_battle_15_cutscene",
+                            "title": "Crycher Crystal Swarm",
+                            "video": "crycher_crystal_swarm",
+                            "text":
+                                "Der finale Crycher-Schwarm tritt aus dem Kristallkern."
                         },
-                        "xpReward": 250,
+                        "enemies": [
+                            {
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 900,
+                                "attack": 72,
+                                "attackSpeed": 1.1,
+                                "element": "Ice"
+                            },
+                            {
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 1100,
+                                "attack": 86,
+                                "attackSpeed": 1.15,
+                                "element": "Ice"
+                            },
+                            {
+                                "name": "Crycher",
+                                "image": "preview_crycher",
+                                "model": "crycher",
+                                "texture": null,
+                                "hp": 1350,
+                                "attack": 105,
+                                "attackSpeed": 1.2,
+                                "element": "Ice"
+                            }
+                        ],
+                        "xpReward": 1250,
                         "rewards": [
                             {
                                 "currency": "crystals",
-                                "amount": 12
+                                "amount": 40
                             },
                             {
                                 "currency": "coins",
-                                "amount": 640
+                                "amount": 650
+                            },
+                            {
+                                "currency": "skill_points",
+                                "amount": 15
                             }
                         ],
                         "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_49",
-                        "name": "Crystal Heart",
-                        "description":
-                            "Das Herz der Splitterroute liegt offen.",
-                        "difficulty": 27,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.28,
-                            "y": 0.1
-                        },
-                        "enemy": {
-                            "name": "Crystal Heart",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 2160,
-                            "attack": 66,
-                            "element": "Storm"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
+                        "cardRewards": [
                             {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 680
+                                "cardID": "void_pulse",
+                                "amount": 1
                             }
                         ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_crystal_storm_battle_50",
-                        "name": "Crystal Dominion",
-                        "description":
-                            "Der finale Crystal-Boss und Abschluss der Splitterroute.",
-                        "difficulty": 28,
-                        "groundTexture": "realm_crystal",
-                        "skyboxTexture": "realm_crystal",
-                        "node": {
-                            "x": 0.16,
-                            "y": 0.08
-                        },
-                        "enemy": {
-                            "name": "Crystal Dominion",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 2320,
-                            "attack": 72,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "crystals",
-                                "amount": 12
-                            },
-                            {
-                                "currency": "coins",
-                                "amount": 810
-                            }
-                        ],
-                        "characterRewards": [
-                            {
-                                "characterID": "shen"
-                            }
-                        ],
-                        "cardRewards": [],
                         "skinRewards": [],
                         "story": [
                             {
                                 "speaker": "Shela",
-                                "image": "preview_shela",
-                                "text": "Das Sturmherz pulsiert direkt vor uns."
+                                "text":
+                                    "Das sind die letzten. Danach bricht der Sturm zusammen."
                             },
                             {
-                                "speaker": "Zaron",
-                                "image": "preview_zaron",
+                                "speaker": "Rana",
                                 "text":
-                                    "Ein letzter Schlag, dann bricht der Crystal Storm."
+                                    "Dann halten wir jetzt nicht mehr zurueck."
+                            },
+                            {
+                                "speaker": "Crycher",
+                                "image": "preview_crycher",
+                                "text": "CRY CRY CRY... GRAAAAAAA!"
                             }
                         ]
                     }

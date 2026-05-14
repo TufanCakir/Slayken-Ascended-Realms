@@ -1,34 +1,34 @@
 {
-    "contentVersion": 27,
+    "contentVersion": 28,
     "resources": [
         {
             "name": "login_campaigns",
-            "version": "3",
+            "version": "6",
             "url": "https://remote.tufancakir.com/login_campaigns.json"
         },
         {
             "name": "event_login_launch",
-            "version": "1",
+            "version": "5",
             "url": "https://remote.tufancakir.com/event_login_launch.json"
         },
         {
             "name": "event_login_festival",
-            "version": "1",
+            "version": "6",
             "url": "https://remote.tufancakir.com/event_login_festival.json"
         },
         {
             "name": "event_login_summer",
-            "version": "1",
+            "version": "7",
             "url": "https://remote.tufancakir.com/event_login_summer.json"
         },
         {
             "name": "event_login_coins",
-            "version": "1",
+            "version": "4",
             "url": "https://remote.tufancakir.com/event_login_coins.json"
         },
         {
             "name": "event_login_crystals",
-            "version": "1",
+            "version": "4",
             "url": "https://remote.tufancakir.com/event_login_crystals.json"
         },
         {
@@ -38,17 +38,17 @@
         },
         {
             "name": "shop_coop_offers",
-            "version": "4",
+            "version": "8",
             "url": "https://remote.tufancakir.com/shop_coop_offers.json"
         },
         {
             "name": "raid_bosses",
-            "version": "2",
+            "version": "3",
             "url": "https://remote.tufancakir.com/raid_bosses.json"
         },
         {
             "name": "ability_cards",
-            "version": "2",
+            "version": "3",
             "url": "https://remote.tufancakir.com/ability_cards.json"
         },
         {
@@ -58,22 +58,22 @@
         },
         {
             "name": "battle_resources",
-            "version": "1",
+            "version": "2",
             "url": "https://remote.tufancakir.com/battle_resources.json"
         },
         {
             "name": "character_classes",
-            "version": "4",
+            "version": "5",
             "url": "https://remote.tufancakir.com/character_classes.json"
         },
         {
             "name": "currencies",
-            "version": "5",
+            "version": "7",
             "url": "https://remote.tufancakir.com/currencies.json"
         },
         {
             "name": "daily_login",
-            "version": "2",
+            "version": "7",
             "url": "https://remote.tufancakir.com/daily_login.json"
         },
         {
@@ -82,40 +82,45 @@
             "url": "https://remote.tufancakir.com/deck_config.json"
         },
         {
+            "name": "chapter_1",
+            "version": "9",
+            "url": "https://remote.tufancakir.com/chapter_1.json"
+        },
+        {
             "name": "chapter_2",
-            "version": "1",
+            "version": "5",
             "url": "https://remote.tufancakir.com/chapter_2.json"
         },
         {
             "name": "event_story",
-            "version": "3",
+            "version": "5",
             "url": "https://remote.tufancakir.com/event_story.json"
         },
         {
             "name": "event_skill",
-            "version": "2",
+            "version": "6",
             "url": "https://remote.tufancakir.com/event_skill.json"
         },
         {
             "name": "event_chapter_summer",
-            "version": "1",
+            "version": "13",
             "url": "https://remote.tufancakir.com/event_chapter_summer.json"
         },
         {
             "name": "event_chapter_coin_frenzy",
-            "version": "1",
+            "version": "14",
             "url":
                 "https://remote.tufancakir.com/event_chapter_coin_frenzy.json"
         },
         {
             "name": "event_chapter_crystal_storm",
-            "version": "1",
+            "version": "19",
             "url":
                 "https://remote.tufancakir.com/event_chapter_crystal_storm.json"
         },
         {
             "name": "farm_limits",
-            "version": "1",
+            "version": "2",
             "url": "https://remote.tufancakir.com/farm_limits.json"
         },
         {
@@ -125,42 +130,37 @@
         },
         {
             "name": "gift",
-            "version": "1",
+            "version": "4",
             "url": "https://remote.tufancakir.com/gift.json"
         },
         {
-            "name": "chapter_1",
-            "version": "3",
-            "url": "https://remote.tufancakir.com/chapter_1.json"
-        },
-        {
             "name": "intro_videos",
-            "version": "1",
+            "version": "8",
             "url": "https://remote.tufancakir.com/intro_videos.json"
         },
         {
             "name": "music",
-            "version": "1",
+            "version": "3",
             "url": "https://remote.tufancakir.com/music.json"
         },
         {
             "name": "news_items",
-            "version": "2",
+            "version": "4",
             "url": "https://remote.tufancakir.com/news_items.json"
         },
         {
             "name": "particle_effects",
-            "version": "2",
+            "version": "3",
             "url": "https://remote.tufancakir.com/particle_effects.json"
         },
         {
             "name": "quests",
-            "version": "6",
+            "version": "7",
             "url": "https://remote.tufancakir.com/quests.json"
         },
         {
             "name": "shop_offers",
-            "version": "1",
+            "version": "2",
             "url": "https://remote.tufancakir.com/shop_offers.json"
         },
         {
@@ -170,17 +170,17 @@
         },
         {
             "name": "store_crystal_packs",
-            "version": "1",
+            "version": "4",
             "url": "https://remote.tufancakir.com/store_crystal_packs.json"
         },
         {
             "name": "summon_banners",
-            "version": "4",
+            "version": "5",
             "url": "https://remote.tufancakir.com/summon_banners.json"
         },
         {
             "name": "summon_characters",
-            "version": "2",
+            "version": "3",
             "url": "https://remote.tufancakir.com/summon_characters.json"
         },
         {
@@ -190,22 +190,22 @@
         },
         {
             "name": "tutorials",
-            "version": "2",
+            "version": "3",
             "url": "https://remote.tufancakir.com/tutorials.json"
         },
         {
             "name": "skill_tree",
-            "version": "2",
+            "version": "3",
             "url": "https://remote.tufancakir.com/skill_tree.json"
         },
         {
             "name": "skill_tree_stage_2",
-            "version": "3",
+            "version": "5",
             "url": "https://remote.tufancakir.com/skill_tree_stage_2.json"
         },
         {
             "name": "skill_tree_stage_3",
-            "version": "3",
+            "version": "5",
             "url": "https://remote.tufancakir.com/skill_tree_stage_3.json"
         },
         {
@@ -215,6 +215,147 @@
         }
     ],
     "assets": [
+        {
+            "name": "bg_main.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/bg_main.png"
+        },
+        {
+            "name": "gift.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/gift.png"
+        },
+        {
+            "name": "preview_setan.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_setan.png"
+        },
+        {
+            "name": "preview_setan_awakening.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_setan_awakening.png"
+        },
+        {
+            "name": "preview_setan_human.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_setan_human.png"
+        },
+        {
+            "name": "preview_cenchar.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_cenchar.png"
+        },
+        {
+            "name": "preview_cenchar_swarm.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_cenchar_swarm.png"
+        },
+        {
+            "name": "preview_crycher_guard.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_crycher_guard.png"
+        },
+        {
+            "name": "preview_crycher.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_crycher.png"
+        },
+        {
+            "name": "preview_summer_breaker.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_summer_breaker.png"
+        },
+        {
+            "name": "preview_beatcher.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_beatcher.png"
+        },
+        {
+            "name": "preview_blue_dragon.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_blue_dragon.png"
+        },
+        {
+            "name": "preview_krevas.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_krevas.png"
+        },
+        {
+            "name": "preview_tsayi.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_tsayi.png"
+        },
+        {
+            "name": "preview_jirgin.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_jirgin.png"
+        },
+        {
+            "name": "realm_rift.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/realm_rift.png"
+        },
+        {
+            "name": "realm_gold.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/realm_gold.png"
+        },
+        {
+            "name": "realm_crystal.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/realm_crystal.png"
+        },
+        {
+            "name": "chest_rift.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/chest_rift.png"
+        },
+        {
+            "name": "chest_coin.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/chest_coin.png"
+        },
+        {
+            "name": "chest_crystal.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/chest_crystal.png"
+        },
+        {
+            "name": "chest_summer.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/chest_summer.png"
+        },
+        {
+            "name": "festival_launch.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/festival_launch.png"
+        },
+        {
+            "name": "skill_moon_guard.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_moon_guard.png"
+        },
+        {
+            "name": "skill_ash_breaker.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_ash_breaker.png"
+        },
+        {
+            "name": "festival_coin.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/festival_coin.png"
+        },
+        {
+            "name": "festival_crystal.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/festival_crystal.png"
+        },
         {
             "name": "bg_sar.png",
             "version": "1",
@@ -315,43 +456,6 @@
             "name": "icon_crystals.png",
             "version": "1",
             "url": "https://remote.tufancakir.com/assets/icon_crystals.png"
-        },
-        {
-            "name": "gift.png",
-            "version": "1",
-            "url": "https://remote.tufancakir.com/assets/gift.png"
-        },
-        {
-            "name": "sar_dragon.png",
-            "version": "1",
-            "url": "https://remote.tufancakir.com/assets/sar_dragon.png"
-        },
-        {
-            "name": "skill_crystal_burst.png",
-            "version": "1",
-            "url":
-                "https://remote.tufancakir.com/assets/skill_crystal_burst.png"
-        },
-        {
-            "name": "skill_moon_guard.png",
-            "version": "1",
-            "url": "https://remote.tufancakir.com/assets/skill_moon_guard.png"
-        },
-        {
-            "name": "skill_light_flare.png",
-            "version": "1",
-            "url": "https://remote.tufancakir.com/assets/skill_light_flare.png"
-        },
-        {
-            "name": "skill_ash_breaker.png",
-            "version": "1",
-            "url": "https://remote.tufancakir.com/assets/skill_ash_breaker.png"
-        },
-        {
-            "name": "skill_neutral_spark.png",
-            "version": "1",
-            "url":
-                "https://remote.tufancakir.com/assets/skill_neutral_spark.png"
         },
         {
             "name": "skill_blue.png",
@@ -851,6 +955,12 @@
             "url": "https://remote.tufancakir.com/3DCharactere/zaron.usdz"
         },
         {
+            "name": "shikenan_form_zaron.usdz",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/3DCharactere/shikenan_form_zaron.usdz"
+        },
+        {
             "name": "aika_animation.usdz",
             "version": "1",
             "url":
@@ -1116,6 +1226,26 @@
                 "https://remote.tufancakir.com/3DHeroClassesAnimation/yanzu_animation.usdz"
         },
         {
+            "name": "setan.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DEventMonster/setan.usdz"
+        },
+        {
+            "name": "cenchar.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DEventMonster/cenchar.usdz"
+        },
+        {
+            "name": "crycher.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DEventMonster/crycher.usdz"
+        },
+        {
+            "name": "beatcher.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DEventMonster/beatcher.usdz"
+        },
+        {
             "name": "jirgin.usdz",
             "version": "1",
             "url": "https://remote.tufancakir.com/3DMonster/jirgin.usdz"
@@ -1146,44 +1276,96 @@
             "url": "https://remote.tufancakir.com/3DMonster/tsayi.usdz"
         },
         {
+            "name": "intro_slayken_acended_realms.mp4",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/Videos/intro_slayken_acended_realms.mp4"
+        },
+        {
+            "name": "intro_riftstorm.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/intro_riftstorm.mp4"
+        },
+        {
+            "name": "pursuer.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/pursuer.mp4"
+        },
+        {
+            "name": "setans_awakening.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/setans_awakening.mp4"
+        },
+        {
+            "name": "mondtor.mp4",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/Videos/mondtor.mp4"
+        },
+        {
+            "name": "riftbestie.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/riftbestie.mp4"
+        },
+        {
+            "name": "coin_festival.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/coin_festival.mp4"
+        },
+        {
+            "name": "cenchar_guard.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/cenchar_guard.mp4"
+        },
+        {
+            "name": "cenchar_swarm.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/cenchar_swarm.mp4"
+        },
+        {
+            "name": "crycher_guard.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/crycher_guard.mp4"
+        },
+        {
+            "name": "crycher_crystal_swarm.mp4",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/Videos/crycher_crystal_swarm.mp4"
+        },
+        {
+            "name": "summer_festival.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/summer_festival.mp4"
+        },
+        {
+            "name": "summer_breaker.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/summer_breaker.mp4"
+        },
+        {
+            "name": "beatcher_tide_king.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/beatcher_tide_king.mp4"
+        },
+        {
             "name": "intro.mp4",
             "version": "1",
             "url": "https://remote.tufancakir.com/Videos/intro.mp4"
         },
         {
-            "name": "intro_original.mp4",
+            "name": "intro_crystalstorm.mp4",
             "version": "1",
-            "url": "https://remote.tufancakir.com/Videos/intro_original.mp4"
+            "url": "https://remote.tufancakir.com/Videos/intro_crystalstorm.mp4"
         },
         {
-            "name": "kristallspur.mp4",
+            "name": "intro_music.mp3",
             "version": "1",
-            "url": "https://remote.tufancakir.com/Videos/kristallspur.mp4"
+            "url": "https://remote.tufancakir.com/Music/intro_music.mp3"
         },
         {
-            "name": "mondtor.mp4",
+            "name": "intro_music2.mp3",
             "version": "1",
-            "url": "https://remote.tufancakir.com/Videos/mondtor.mp4"
-        },
-        {
-            "name": "rissbestie.mp4",
-            "version": "1",
-            "url": "https://remote.tufancakir.com/Videos/rissbestie.mp4"
-        },
-        {
-            "name": "torwache.mp4",
-            "version": "1",
-            "url": "https://remote.tufancakir.com/Videos/torwache.mp4"
-        },
-        {
-            "name": "music1.mp3",
-            "version": "1",
-            "url": "https://remote.tufancakir.com/Music/music1.mp3"
-        },
-        {
-            "name": "music2.mp3",
-            "version": "1",
-            "url": "https://remote.tufancakir.com/Music/music2.mp3"
+            "url": "https://remote.tufancakir.com/Music/intro_music2.mp3"
         }
     ]
 }

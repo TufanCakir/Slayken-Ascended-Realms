@@ -26,6 +26,7 @@
         "subtitle": "Waermerer Loot",
         "message": "Mehr Vorrat fuer deinen Fortschritt im Sommer-Event.",
         "buttonTitle": "Tag 2 abholen",
+        "background": "festival_summer",
         "assetIcon": "icon_crystals",
         "background": "festival_summer",
         "icon": "flame.fill",
@@ -50,6 +51,7 @@
         "subtitle": "Hitzewelle",
         "message": "Zum dritten Login gibt es einen staerkeren Tagesbonus.",
         "buttonTitle": "Tag 3 abholen",
+        "background": "festival_summer",
         "assetIcon": "icon_crystals",
         "background": "festival_summer",
         "icon": "sparkles",
@@ -74,6 +76,7 @@
         "subtitle": "Event-Vorrat",
         "message": "Ein dichter Reward-Tag fuer deinen weiteren Aufbau.",
         "buttonTitle": "Tag 4 abholen",
+        "background": "festival_summer",
         "assetIcon": "icon_crystals",
         "background": "festival_summer",
         "icon": "shippingbox.fill",
@@ -98,6 +101,7 @@
         "subtitle": "Highlight-Tag",
         "message": "Zum Abschluss wartet ein groesserer Event-Bonus.",
         "buttonTitle": "Tag 5 abholen",
+        "background": "festival_summer",
         "assetIcon": "icon_crystals",
         "background": "festival_summer",
         "icon": "crown.fill",
@@ -109,13 +113,61 @@
         ],
         "characterRewards": [
             {
-                "characterID": "girma"
+                "characterID": "shela"
             }
         ],
         "cardRewards": [
             {
                 "cardID": "slash_red",
                 "amount": 6
+            }
+        ]
+    },
+    {
+        "id": "event_login_summer_day_6",
+        "day": 6,
+        "title": "Sommerbonus Tag 6",
+        "subtitle": "Strandnachschub",
+        "message": "Noch mehr Sommerloot fuer deinen Event-Fortschritt.",
+        "buttonTitle": "Tag 6 abholen",
+        "background": "festival_summer",
+        "assetIcon": "icon_crystals",
+        "icon": "sun.max.fill",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 40
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 7
+            }
+        ]
+    },
+    {
+        "id": "event_login_summer_day_7",
+        "day": 7,
+        "title": "Sommerbonus Tag 7",
+        "subtitle": "Finaler Sommerbonus",
+        "message": "Der letzte Login bringt den staerksten Sommerbonus.",
+        "buttonTitle": "Tag 7 abholen",
+        "background": "festival_summer",
+        "assetIcon": "icon_crystals",
+        "icon": "sparkles",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 60
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "slash_red",
+                "amount": 8
             }
         ]
     }

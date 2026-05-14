@@ -44,6 +44,7 @@
         "message": "Heute gibt es weitere Crystals fuer deine Planung.",
         "buttonTitle": "Tag 3 abholen",
         "icon": "diamond.fill",
+        "background": "festival_crystal",
         "assetIcon": "icon_crystals",
         "rewards": [
             {
@@ -63,6 +64,7 @@
         "buttonTitle": "Tag 4 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -81,6 +83,7 @@
         "buttonTitle": "Tag 5 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -99,6 +102,7 @@
         "buttonTitle": "Tag 6 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -117,6 +121,7 @@
         "buttonTitle": "Tag 7 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -135,6 +140,7 @@
         "buttonTitle": "Tag 8 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -153,6 +159,7 @@
         "buttonTitle": "Tag 9 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -171,6 +178,7 @@
         "buttonTitle": "Tag 10 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -189,6 +197,7 @@
         "buttonTitle": "Tag 11 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -207,6 +216,7 @@
         "buttonTitle": "Tag 12 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -225,6 +235,7 @@
         "buttonTitle": "Tag 13 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -243,6 +254,7 @@
         "buttonTitle": "Tag 14 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -261,6 +273,7 @@
         "buttonTitle": "Tag 15 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -279,6 +292,7 @@
         "buttonTitle": "Tag 16 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -297,6 +311,7 @@
         "buttonTitle": "Tag 17 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -315,6 +330,7 @@
         "buttonTitle": "Tag 18 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -333,6 +349,7 @@
         "buttonTitle": "Tag 19 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -351,6 +368,7 @@
         "buttonTitle": "Tag 20 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -370,6 +388,7 @@
         "buttonTitle": "Tag 21 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -388,6 +407,7 @@
         "buttonTitle": "Tag 22 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -406,6 +426,7 @@
         "buttonTitle": "Tag 23 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -424,6 +445,7 @@
         "buttonTitle": "Tag 24 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -442,6 +464,7 @@
         "buttonTitle": "Tag 25 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -460,6 +483,7 @@
         "buttonTitle": "Tag 26 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -478,6 +502,7 @@
         "buttonTitle": "Tag 27 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -497,6 +522,7 @@
         "buttonTitle": "Tag 28 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -515,6 +541,7 @@
         "buttonTitle": "Tag 29 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",
@@ -534,6 +561,7 @@
         "buttonTitle": "Tag 30 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
+        "background": "festival_crystal",
         "rewards": [
             {
                 "currency": "crystals",

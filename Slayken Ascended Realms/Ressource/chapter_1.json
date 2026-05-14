@@ -1,13 +1,13 @@
 [
     {
         "id": "chapter_1",
-        "title": "Story Kapitel 1",
-        "subtitle": "Der erste Riss im Reich",
+        "title": "Kapitel 1",
+        "subtitle": "Die Anomalie",
         "mapTexture": "realm_country",
         "cutscene": {
             "id": "chapter_1_intro",
-            "title": "Der erste Riss",
-            "video": "intro",
+            "title": "Die Anomalie",
+            "video": "mondtor",
             "text": "Ein Portal öffnet sich über dem Mondtor."
         },
         "points": [
@@ -68,11 +68,21 @@
                         "story": [
                             {
                                 "speaker": "Zaron",
-                                "text": "Das ist erst der Anfang."
+                                "text": "Was… was ist das für ein Ort?"
                             },
                             {
                                 "speaker": "Shela",
-                                "text": "Dann drücken wir direkt vor."
+                                "text": "Ich weiß es nicht…"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Na dann, Shela… offenbar wurden wir erwartet."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Scheint so. Na dann – an die Arbeit, Zaron."
                             }
                         ],
                         "skinRewards": []
@@ -83,8 +93,8 @@
                         "description":
                             "Eine leuchtende Spur führt tiefer in die Route.",
                         "difficulty": 1,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.24,
                             "y": 0.69
@@ -115,13 +125,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text":
-                                    "Die Kristalle markieren einen alten Pfad."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -130,8 +134,8 @@
                         "description":
                             "Ein aggressiver Gegner direkt am Torbogen.",
                         "difficulty": 2,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
                         "node": {
                             "x": 0.16,
                             "y": 0.61
@@ -170,7 +174,21 @@
                         "story": [
                             {
                                 "speaker": "Zaron",
-                                "text": "Diese Bestie wurde vom Riss verdorben."
+                                "text":
+                                    "Shela, schau mal! Ein Portal! Komm mit!"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Warte, Zaron! Vielleicht ist das eine Falle."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Wo… wo ist das Portal hin?!"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Hm… war wohl doch kein Portal."
                             }
                         ],
                         "skinRewards": []
@@ -180,8 +198,8 @@
                         "name": "Mondsplitter",
                         "description": "Splitterenergie sammelt sich im Boden.",
                         "difficulty": 2,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.21,
                             "y": 0.55
@@ -212,13 +230,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text":
-                                    "Die Splitter reagieren auf unsere Schritte."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -226,8 +238,8 @@
                         "name": "Nebelpfad",
                         "description": "Ein Kampf im dichten Nebel.",
                         "difficulty": 3,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
                             "x": 0.26,
                             "y": 0.66
@@ -258,13 +270,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text":
-                                    "Im Nebel sieht man nur den nächsten Fehler."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -273,8 +279,8 @@
                         "description":
                             "Alte Runen erwachen mitten auf dem Pfad.",
                         "difficulty": 3,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
                             "x": 0.31,
                             "y": 0.6
@@ -312,9 +318,21 @@
                         ],
                         "story": [
                             {
+                                "speaker": "Zaron",
+                                "text": "Shela, komm schnell!"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Was ist los, Zaron?"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Schau mal! Da vorne ist eine Insel!"
+                            },
+                            {
                                 "speaker": "Shela",
                                 "text":
-                                    "Die Runen reagieren auf die Rissenergie."
+                                    "Dann sehen wir uns mal an, was dort ist."
                             }
                         ],
                         "skinRewards": []
@@ -325,8 +343,8 @@
                         "description":
                             "Der Riss wirft bereits einen Schatten über das Tal.",
                         "difficulty": 4,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
                         "node": {
                             "x": 0.36,
                             "y": 0.52
@@ -357,12 +375,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text": "Der Schatten wird dichter."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -371,8 +384,8 @@
                         "description":
                             "Ein schneller Elitegegner schneidet durch die Formation.",
                         "difficulty": 4,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
                         "node": {
                             "x": 0.41,
                             "y": 0.45
@@ -403,12 +416,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text": "Zu schnell für rohe Gewalt."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -417,8 +425,8 @@
                         "description":
                             "Ein schwerer Vorstossgegner verteidigt den Mittelpfad.",
                         "difficulty": 5,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
                         "node": {
                             "x": 0.46,
                             "y": 0.56
@@ -456,9 +464,37 @@
                         ],
                         "story": [
                             {
+                                "speaker": "Shela",
+                                "text": "Hm… hier scheint nichts zu sein."
+                            },
+                            {
                                 "speaker": "Zaron",
                                 "text":
-                                    "Nach diesem Gegner wird der Weg offener."
+                                    "Warte… ich habe etwas gehört. Komm mit!"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Was ist das?! Eine Kreatur… sie schwebt!"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Hoffentlich ist er freundlich und nicht gefährlich… Ähm… hallo? Wer bist du?"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Zaron, pass auf!"
+                            },
+                            {
+                                "speaker": "Tsayi",
+                                "image": "preview_tsayi",
+                                "text":
+                                    "Zaron… ich habe dich erwartet. Ich wusste, dass du eines Tages zurückkehren würdest."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Du kennst mich?"
                             }
                         ],
                         "skinRewards": []
@@ -468,8 +504,8 @@
                         "name": "Rissknoten",
                         "description": "Der erste Meilenstein des Mondtors.",
                         "difficulty": 5,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
                         "node": {
                             "x": 0.51,
                             "y": 0.48
@@ -504,13 +540,7 @@
                             }
                         ],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text":
-                                    "Der Knoten hält den ganzen Pfad zusammen."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -518,8 +548,8 @@
                         "name": "Aschenstufe",
                         "description": "Der Boden wird heisser und enger.",
                         "difficulty": 6,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
                             "x": 0.56,
                             "y": 0.39
@@ -550,13 +580,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text":
-                                    "Wir sind noch nicht einmal in der Mitte."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -604,8 +628,22 @@
                         ],
                         "story": [
                             {
+                                "speaker": "Tsayi",
+                                "image": "preview_tsayi",
+                                "text": "Mein Gebieter, passt auf!"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Was sind das für Dinger?!"
+                            },
+                            {
+                                "speaker": "Tsayi",
+                                "image": "preview_tsayi",
+                                "text": "Das sind Jirgins – uralte Kreaturen."
+                            },
+                            {
                                 "speaker": "Shela",
-                                "text": "Hier wurde alte Macht zerbrochen."
+                                "text": "Was wollen die von uns?"
                             }
                         ],
                         "skinRewards": []
@@ -616,8 +654,8 @@
                         "description":
                             "Eine schnelle Windfront zwingt dich in Bewegung.",
                         "difficulty": 7,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
                         "node": {
                             "x": 0.66,
                             "y": 0.4
@@ -648,12 +686,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text": "Der Pfad wird schneller als wir."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -662,8 +695,8 @@
                         "description":
                             "Schwarze Energie zieht durch den Boden.",
                         "difficulty": 7,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
                         "node": {
                             "x": 0.71,
                             "y": 0.5
@@ -694,12 +727,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text": "Der Boden selbst wirkt feindlich."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -708,8 +736,8 @@
                         "description":
                             "Ein kleiner Ritualkreis speist den Riss.",
                         "difficulty": 8,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
                             "x": 0.76,
                             "y": 0.6
@@ -749,7 +777,41 @@
                             {
                                 "speaker": "Zaron",
                                 "text":
-                                    "Solange der Zirkel steht, bleibt der Druck."
+                                    "Was geht hier eigentlich vor? Ich verstehe gar nichts mehr!"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Mir geht’s genauso… ich bin genauso verwirrt wie du."
+                            },
+                            {
+                                "speaker": "Tsayi",
+                                "image": "preview_tsayi",
+                                "text": "Zaron… du musst die Jirgins besiegen."
+                            },
+                            {
+                                "speaker": "Jirgins",
+                                "image": "preview_jirgin",
+                                "text": "Zaron muss sterben!"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Warum?! Was wollt ihr von ihm? Und woher kennt ihr Zaron?"
+                            },
+                            {
+                                "speaker": "Jirgins",
+                                "image": "preview_jirgin",
+                                "text":
+                                    "Zaron ist eine Bedrohung… und muss ausgelöscht werden."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Bist du bereit zu kämpfen, Zaron?"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Let’s go!"
                             }
                         ],
                         "skinRewards": []
@@ -760,8 +822,8 @@
                         "description":
                             "Ein Luftjäger zwingt dich vom Rand zur Mitte.",
                         "difficulty": 8,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
                         "node": {
                             "x": 0.81,
                             "y": 0.51
@@ -792,12 +854,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text": "Er schneidet den Weg in zwei Teile."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -806,8 +863,8 @@
                         "description":
                             "Ein enger Korridor führt in den Kernbereich.",
                         "difficulty": 9,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
                         "node": {
                             "x": 0.86,
                             "y": 0.43
@@ -838,13 +895,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text":
-                                    "Jetzt zieht der Riss uns aktiv nach vorne."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -853,8 +904,8 @@
                         "description":
                             "Leuchtende Splitter bilden eine Falle über dem Weg.",
                         "difficulty": 9,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.9,
                             "y": 0.35
@@ -892,9 +943,27 @@
                         ],
                         "story": [
                             {
+                                "speaker": "Zaron",
+                                "text": "Die Jirgins sind verschwunden…"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Ich habe da so eine Vermutung."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Welche Vermutung?"
+                            },
+                            {
                                 "speaker": "Shela",
                                 "text":
-                                    "Die Splitter stehen wie Minen in der Luft."
+                                    "Vielleicht… war das alles nur Einbildung?"
+                            },
+                            {
+                                "speaker": "Tsayi",
+                                "image": "preview_tsayi",
+                                "text":
+                                    "Nein. Das war keine Einbildung. Es war real."
                             }
                         ],
                         "skinRewards": []
@@ -905,8 +974,8 @@
                         "description":
                             "Die Kernwache schiebt dich an den Kartenrand.",
                         "difficulty": 10,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
                         "node": {
                             "x": 0.84,
                             "y": 0.24
@@ -937,13 +1006,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text":
-                                    "Der Kern ist nah. Ich spüre seinen Druck."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -952,8 +1015,8 @@
                         "description":
                             "Ein Machtpuls reisst den Pfad für einen Moment auf.",
                         "difficulty": 10,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.77,
                             "y": 0.18
@@ -988,12 +1051,7 @@
                             }
                         ],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text": "Der Puls öffnet die letzte Route."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1002,8 +1060,8 @@
                         "description":
                             "Der Kern speist jetzt alle Routen auf einmal.",
                         "difficulty": 11,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
                             "x": 0.7,
                             "y": 0.26
@@ -1041,9 +1099,36 @@
                         ],
                         "story": [
                             {
+                                "speaker": "Tsayi",
+                                "image": "preview_tsayi",
+                                "text":
+                                    "Diese Kreaturen stammen aus einem Ort namens Shukula."
+                            },
+                            {
                                 "speaker": "Zaron",
                                 "text":
-                                    "Jetzt ist jeder Schritt ein Treffer gegen den Kern."
+                                    "Shukula… der Name kommt mir bekannt vor."
+                            },
+                            {
+                                "speaker": "Tsayi",
+                                "image": "preview_tsayi",
+                                "text":
+                                    "Zaron, mein Gebieter… Shukula war einst eure Heimat."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Moment mal… Zaron kommt aus einem Ort namens Shukula? Niemals!"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Das kann nicht sein! Shela und ich kommen von der Erde!"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Zaron… irgendetwas Merkwürdiges geht hier vor."
                             }
                         ],
                         "skinRewards": []
@@ -1054,8 +1139,8 @@
                         "description":
                             "Eine schwere Wache steht kurz vor dem Herzen des Pfads.",
                         "difficulty": 11,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
                             "x": 0.63,
                             "y": 0.19
@@ -1086,12 +1171,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text": "Nur noch die innere Schale fehlt."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1099,8 +1179,8 @@
                         "name": "Ritualbrand",
                         "description": "Der Boden glimmt vom letzten Ritual.",
                         "difficulty": 12,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
                         "node": {
                             "x": 0.56,
                             "y": 0.14
@@ -1131,12 +1211,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text": "Hier wurde bereits geopfert."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1145,8 +1220,8 @@
                         "description":
                             "Eine schnelle Kernwache mit scharfen Richtungswechseln.",
                         "difficulty": 12,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
                         "node": {
                             "x": 0.49,
                             "y": 0.22
@@ -1184,9 +1259,44 @@
                         ],
                         "story": [
                             {
+                                "speaker": "Zaron",
+                                "text": "Die Jirgins sind wieder da!"
+                            },
+                            {
                                 "speaker": "Shela",
                                 "text":
-                                    "Sie verteidigen jetzt nur noch den Kern."
+                                    "Jirgins! Das ist Zaron! Er kommt aus Shukula!"
+                            },
+                            {
+                                "speaker": "Jirgins",
+                                "image": "preview_jirgin",
+                                "text":
+                                    "Shukula… ja, das wissen wir. Er hat es beinahe zerstört."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Zu wem gehört ihr überhaupt?"
+                            },
+                            {
+                                "speaker": "Jirgins",
+                                "image": "preview_jirgin",
+                                "text":
+                                    "Wir gehören zu einem Volk namens Lekaris. Klingelt da etwas bei dir, Zaron?"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Ich… ich sehe plötzlich Erinnerungen in meinem Kopf…"
+                            },
+                            {
+                                "speaker": "Jirgins",
+                                "image": "preview_jirgin",
+                                "text":
+                                    "Ganz recht. Du hast damals gegen unseren Anführer gekämpft."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Das… das kann nicht sein…"
                             }
                         ],
                         "skinRewards": []
@@ -1197,8 +1307,8 @@
                         "description":
                             "Ein schmaler Kanal direkt unter dem Rissherz.",
                         "difficulty": 13,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
                         "node": {
                             "x": 0.42,
                             "y": 0.16
@@ -1229,12 +1339,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text": "Von hier an gibt es kein Zurueck mehr."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1243,8 +1348,8 @@
                         "description":
                             "Ein leuchtender Pulsgegner direkt vor dem Schlussabschnitt.",
                         "difficulty": 13,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
                         "node": {
                             "x": 0.35,
                             "y": 0.24
@@ -1280,12 +1385,7 @@
                                 "amount": 3
                             }
                         ],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text": "Das Herz des Pfads schlägt gegen uns."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1294,8 +1394,8 @@
                         "description":
                             "Der Riss schickt Wellen aus reiner Druckenergie.",
                         "difficulty": 14,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
                         "node": {
                             "x": 0.28,
                             "y": 0.18
@@ -1328,9 +1428,13 @@
                         "cardRewards": [],
                         "story": [
                             {
+                                "speaker": "Jirgins",
+                                "image": "preview_jirgin",
+                                "text": "Zaron… der Shikenan."
+                            },
+                            {
                                 "speaker": "Zaron",
-                                "text":
-                                    "Er versucht uns vom Ende wegzudruecken."
+                                "text": "Was?! Was ist ein Shikenan?!"
                             }
                         ],
                         "skinRewards": []
@@ -1341,8 +1445,8 @@
                         "description":
                             "Die letzte Verteidigung des äusseren Kerns.",
                         "difficulty": 14,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
                             "x": 0.21,
                             "y": 0.25
@@ -1378,13 +1482,7 @@
                                 "amount": 3
                             }
                         ],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text":
-                                    "Nur noch zwei Schritte bis zum Herzschlag."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1393,8 +1491,8 @@
                         "description":
                             "Ein schwerer Gegner bewacht die letzte Stufe.",
                         "difficulty": 15,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
                             "x": 0.14,
                             "y": 0.19
@@ -1425,13 +1523,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text":
-                                    "Der nächste Schlag entscheidet über das Tor."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1440,18 +1532,11 @@
                         "description":
                             "Der erste Kern bricht auf und öffnet den zweiten Pfad des Mondtors.",
                         "difficulty": 16,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
                         "node": {
                             "x": 0.08,
                             "y": 0.12
-                        },
-                        "cutscene": {
-                            "id": "chapter_1_battle_30_cutscene",
-                            "title": "Risskern",
-                            "video": "rissbestie",
-                            "text":
-                                "Der Kern des ersten Risses pulsiert direkt vor dir."
                         },
                         "enemy": {
                             "name": "Rift Core",
@@ -1492,12 +1577,45 @@
                             {
                                 "speaker": "Shela",
                                 "text":
-                                    "Der erste Kern ist offen, aber der Riss lebt weiter."
+                                    "Zaron… wer bist du wirklich? Ich verstehe gar nichts mehr."
+                            },
+                            {
+                                "speaker": "Jirgins",
+                                "image": "preview_jirgin",
+                                "text":
+                                    "Oh nein… die Krevas kommen! Schnell, weg hier!"
+                            },
+                            {
+                                "speaker": "Krevas",
+                                "image": "preview_krevas",
+                                "text": "Hallo, Zaron der Shikenan."
                             },
                             {
                                 "speaker": "Zaron",
                                 "text":
-                                    "Hinter dem Rauch liegt noch eine tiefere Route."
+                                    "Ich bin kein Shikenan! Oder was auch immer das sein soll!"
+                            },
+                            {
+                                "speaker": "Krevas",
+                                "image": "preview_krevas",
+                                "text":
+                                    "Du erinnerst dich nicht mehr? Gut… dann wird es leicht sein, dich zu besiegen."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Los, Zaron! Kämpfen wir!"
+                            },
+                            {
+                                "speaker": "Erzähler",
+                                "image": "preview_blue_dragon",
+                                "text":
+                                    "Plötzlich bewegte sich Zaron mit unglaublicher Geschwindigkeit. Gleichzeitig begann sich sein Aussehen zu verändern."
+                            },
+                            {
+                                "speaker": "Krevas",
+                                "image": "preview_krevas",
+                                "text":
+                                    "Wir verschwinden besser und informieren den Anführer!"
                             }
                         ],
                         "skinRewards": []
@@ -1508,8 +1626,8 @@
                         "description":
                             "Hinter dem aufgebrochenen Kern beginnt ein neuer Randpfad.",
                         "difficulty": 16,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.16,
                             "y": 0.1
@@ -1540,13 +1658,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text":
-                                    "Der Pfad geht weiter. Das war nur die erste Schale."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1555,8 +1667,8 @@
                         "description":
                             "Überall liegen Splitter des ersten Kerns.",
                         "difficulty": 17,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
                         "node": {
                             "x": 0.25,
                             "y": 0.08
@@ -1592,13 +1704,7 @@
                                 "amount": 4
                             }
                         ],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text":
-                                    "Diese Splitter tragen noch immer Kampfdruck in sich."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1607,8 +1713,8 @@
                         "description":
                             "Eine schmale Rampe führt wieder nach oben.",
                         "difficulty": 17,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.34,
                             "y": 0.12
@@ -1641,9 +1747,17 @@
                         "cardRewards": [],
                         "story": [
                             {
-                                "speaker": "Shela",
+                                "speaker": "Jefar",
+                                "text": "Hallo, Zaron."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Wer bist du?! Zeig dich!"
+                            },
+                            {
+                                "speaker": "Jefar",
                                 "text":
-                                    "Er zieht uns wieder nach oben zur zweiten Schale."
+                                    "Ich bin Jefar… der Anführer der Lekaris."
                             }
                         ],
                         "skinRewards": []
@@ -1654,8 +1768,8 @@
                         "description":
                             "Der Riss streckt eine lange Front aus Nebel nach dir aus.",
                         "difficulty": 18,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
                             "x": 0.44,
                             "y": 0.09
@@ -1686,12 +1800,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text": "Die Route atmet jetzt selbst."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1700,8 +1809,8 @@
                         "description":
                             "Runenlinien bündeln die zweite Phase des Mondtors.",
                         "difficulty": 18,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
                             "x": 0.54,
                             "y": 0.13
@@ -1737,13 +1846,7 @@
                                 "amount": 4
                             }
                         ],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text":
-                                    "Hier wurde der zweite Kern vorbereitet."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1752,8 +1855,8 @@
                         "description":
                             "Ein heller Grat schiebt sich über das Tal.",
                         "difficulty": 19,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
                         "node": {
                             "x": 0.64,
                             "y": 0.09
@@ -1786,9 +1889,29 @@
                         "cardRewards": [],
                         "story": [
                             {
-                                "speaker": "Zaron",
+                                "speaker": "Jefar",
                                 "text":
-                                    "Die Route spannt sich ueber die halbe Karte."
+                                    "Hallo, mein Freund. Wie geht es dir nach all den Jahren?"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Jahren? Wovon redest du?"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Kennt ihr euch etwa?"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Nein."
+                            },
+                            {
+                                "speaker": "Jefar",
+                                "text": "Doch."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Hä?!"
                             }
                         ],
                         "skinRewards": []
@@ -1799,8 +1922,8 @@
                         "description":
                             "Die Schlacht springt in einem weiten Bogen zur Kartenmitte.",
                         "difficulty": 19,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
                         "node": {
                             "x": 0.73,
                             "y": 0.14
@@ -1831,13 +1954,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text":
-                                    "Jetzt fuehlt es sich wie ein zweites Kapitel im selben Tor an."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1846,8 +1963,8 @@
                         "description":
                             "Ein zweiter Saum aus Kernenergie schneidet den Weg ein.",
                         "difficulty": 20,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
                         "node": {
                             "x": 0.82,
                             "y": 0.1
@@ -1883,13 +2000,7 @@
                                 "amount": 5
                             }
                         ],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text":
-                                    "Die zweite Schale stemmt sich jetzt gegen uns."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -1932,9 +2043,53 @@
                         "cardRewards": [],
                         "story": [
                             {
-                                "speaker": "Shela",
+                                "speaker": "Sanya",
+                                "text": "Hey, Jefar."
+                            },
+                            {
+                                "speaker": "Jefar",
+                                "text": "Du heißt also Sanya… oder?"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text": "Ja. Wir kennen uns doch schon."
+                            },
+                            {
+                                "speaker": "Jefar",
+                                "text": "Das ist unmöglich…"
+                            },
+                            {
+                                "speaker": "Sanya",
                                 "text":
-                                    "Halte die Linie. Danach knicken wir nach oben ab."
+                                    "Glaub mir – wir kennen uns sogar ziemlich gut. Wie auch immer… das hier muss Zaron sein."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Ja, ich bin Zaron. Aber woher kennst du mich?"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text":
+                                    "Erkennst du mich nicht? Shela, was ist mit ihm los?"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Moment… du kennst auch mich?!"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text":
+                                    "Natürlich kenne ich euch! Was ist nur mit euch passiert?"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Das wird alles immer verrückter…"
+                            },
+                            {
+                                "speaker": "Jefar",
+                                "text":
+                                    "Genug geredet. Wir sehen uns wieder. Ich komme zurück."
                             }
                         ],
                         "skinRewards": []
@@ -1945,8 +2100,8 @@
                         "description":
                             "Die Elitewache des zweiten Kerns erwartet dich.",
                         "difficulty": 21,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "realm_fire",
+                        "skyboxTexture": "realm_fire",
                         "node": {
                             "x": 0.86,
                             "y": 0.3
@@ -1993,13 +2148,7 @@
                                 "amount": 5
                             }
                         ],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text":
-                                    "Diese Wache steht auf dem eigentlichen Innenring."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -2008,8 +2157,8 @@
                         "description":
                             "Der Innenring fuehrt in klaren Stufen weiter nach oben.",
                         "difficulty": 21,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "realm_ice",
+                        "skyboxTexture": "realm_ice",
                         "node": {
                             "x": 0.78,
                             "y": 0.4
@@ -2040,13 +2189,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text":
-                                    "Jetzt fuehrt uns der Ring selbst nach oben."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -2055,8 +2198,8 @@
                         "description":
                             "Der Weg kippt in den dunkleren Teil des Kerns.",
                         "difficulty": 22,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "realm_void",
+                        "skyboxTexture": "realm_void",
                         "node": {
                             "x": 0.69,
                             "y": 0.49
@@ -2096,19 +2239,44 @@
                             {
                                 "speaker": "Zaron",
                                 "text":
-                                    "Hier spueren wir den echten Sog des Mondtors."
+                                    "Hey, Shela… Sanya… was ist das dort vorne?"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Hm… interessant. Lass uns nachsehen."
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text":
+                                    "An eurer Stelle würde ich das nicht tun! Hände weg!"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Warum? Was ist das?"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text": "Man nennt es den Gravitationsstein."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Uhh…"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Interessant. Kommt, gehen wir weiter."
                             }
                         ],
                         "skinRewards": []
                     },
                     {
                         "id": "chapter_1_battle_43",
-                        "name": "Sternenspeer",
+                        "name": "Sternensspeer",
                         "description":
                             "Eine schnelle Speerspitze stoesst aus dem Kernring hervor.",
                         "difficulty": 22,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_map",
+                        "skyboxTexture": "bg_map",
                         "node": {
                             "x": 0.6,
                             "y": 0.58
@@ -2139,13 +2307,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text":
-                                    "Noch ein Bogen, dann stehen wir ueber dem ersten Startpunkt."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -2154,8 +2316,8 @@
                         "description":
                             "Der Ring zieht als breite Kurve ueber die Kartenmitte.",
                         "difficulty": 23,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_arena",
+                        "skyboxTexture": "bg_arena",
                         "node": {
                             "x": 0.5,
                             "y": 0.68
@@ -2191,13 +2353,7 @@
                                 "amount": 6
                             }
                         ],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text":
-                                    "Wir kreisen jetzt ueber dem ganzen Tal."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -2206,8 +2362,8 @@
                         "description":
                             "Die vorletzte Wache drueckt mit voller Kernkraft.",
                         "difficulty": 23,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_country",
+                        "skyboxTexture": "bg_country",
                         "node": {
                             "x": 0.4,
                             "y": 0.78
@@ -2240,9 +2396,53 @@
                         "cardRewards": [],
                         "story": [
                             {
-                                "speaker": "Shela",
+                                "speaker": "Jefar",
+                                "text": "Habt ihr mich vermisst?"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Bleibt zurück!"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text": "Okay!"
+                            },
+                            {
+                                "speaker": "Zaron",
                                 "text":
-                                    "Von hier aus sieht man den Abschlussring."
+                                    "Äh… uff… irgendetwas stimmt nicht. Ich kann mich nicht in einen Shikenan verwandeln."
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text": "Was?! Du bist wirklich ein Shikenan?"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Ja. Wieso? Überrascht?"
+                            },
+                            {
+                                "speaker": "Jefar",
+                                "text":
+                                    "Er kann seine Kräfte nicht benutzen! Hahaha!"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text":
+                                    "Keine Sorge, Zaron. Du musst nur das Wort ‚Shulakan‘ sagen."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Was? Das sage ich bestimmt nicht! Das klingt lächerlich."
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text":
+                                    "Sag es! Sonst werden wir alle Jefars Zorn zu spüren bekommen! Und glaub mir… Jefar hat Angst vor dir."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "…Shulakan!"
                             }
                         ],
                         "skinRewards": []
@@ -2253,8 +2453,8 @@
                         "description":
                             "Eine leuchtende Ader verbindet Innenring und Abschlusskern.",
                         "difficulty": 24,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_fire",
+                        "skyboxTexture": "bg_fire",
                         "node": {
                             "x": 0.31,
                             "y": 0.86
@@ -2290,13 +2490,7 @@
                                 "amount": 6
                             }
                         ],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "text":
-                                    "Das ist die letzte Versorgungsader des Tors."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -2305,8 +2499,8 @@
                         "description":
                             "Die finale Linie fuehrt in einem klaren Bogen zum letzten Kern.",
                         "difficulty": 24,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_ice",
+                        "skyboxTexture": "bg_ice",
                         "node": {
                             "x": 0.23,
                             "y": 0.81
@@ -2337,13 +2531,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text":
-                                    "Noch drei Schritte. Dann knackt das Tor vollstaendig."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -2352,8 +2540,8 @@
                         "description":
                             "Der letzte Ring der Verteidigung steht direkt vor dir.",
                         "difficulty": 25,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_void",
+                        "skyboxTexture": "bg_void",
                         "node": {
                             "x": 0.16,
                             "y": 0.72
@@ -2391,9 +2579,35 @@
                         ],
                         "story": [
                             {
+                                "speaker": "Jefar",
+                                "text": "Oh nein…"
+                            },
+                            {
                                 "speaker": "Zaron",
                                 "text":
-                                    "Die Luft ist still. Das ist nie ein gutes Zeichen."
+                                    "Ähm… hä? Es ist doch gar nichts passiert."
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text":
+                                    "Stimmt. Dafür brauchst du noch etwas – ein ShulakanVice."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Sanya… verarschst du mich gerade?"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text": "Leider nein. Lauft! Schnell!"
+                            },
+                            {
+                                "speaker": "Jefar",
+                                "text": "Wohin wollt ihr denn fliehen?"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Er ist direkt hinter uns! Er holt auf! Lauft schneller!"
                             }
                         ],
                         "skinRewards": []
@@ -2404,8 +2618,8 @@
                         "description":
                             "Das Herz des gesamten Mondtors zeigt sich offen.",
                         "difficulty": 25,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
                         "node": {
                             "x": 0.1,
                             "y": 0.62
@@ -2436,13 +2650,7 @@
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Shela",
-                                "text":
-                                    "Jetzt sehen wir den wirklichen Ursprung des ersten Kapitels."
-                            }
-                        ],
+                        "story": [],
                         "skinRewards": []
                     },
                     {
@@ -2451,18 +2659,11 @@
                         "description":
                             "Der finale Boss von Kapitel 1 und der wahre Schlussstein des Mondtors.",
                         "difficulty": 26,
-                        "groundTexture": "realm_country",
-                        "skyboxTexture": "realm_country",
+                        "groundTexture": "bg_sar",
+                        "skyboxTexture": "bg_sar",
                         "node": {
                             "x": 0.06,
                             "y": 0.52
-                        },
-                        "cutscene": {
-                            "id": "chapter_1_battle_50_cutscene",
-                            "title": "Mondtor-Kern",
-                            "video": "rissbestie",
-                            "text":
-                                "Der wahre Kern des Mondtors erhebt sich hinter dem gebrochenen Ring."
                         },
                         "enemy": {
                             "name": "Moon Gate Core",
@@ -2501,13 +2702,36 @@
                         ],
                         "story": [
                             {
+                                "speaker": "Sanya",
+                                "text":
+                                    "Das ShulakanVice ist eine Art Erinnerungsspeicher für Transformationen."
+                            },
+                            {
                                 "speaker": "Zaron",
-                                "text": "Jetzt faellt der wahre Schlussstein."
+                                "text": "Und wo finde ich so ein ShulakanVice?"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text": "Es ist extrem selten."
                             },
                             {
                                 "speaker": "Shela",
+                                "text": "Wie viele gibt es überhaupt?"
+                            },
+                            {
+                                "speaker": "Sanya",
                                 "text":
-                                    "Kapitel eins endet hier. Hinter diesem Bruch wartet das naechste Reich."
+                                    "So funktioniert das nicht. Ein ShulakanVice erscheint nur, wenn sein Träger bereit ist."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Und woher weiß ich, wann ich bereit bin?"
+                            },
+                            {
+                                "speaker": "Rana",
+                                "text":
+                                    "Das musst du selbst herausfinden. Du wirst es in dir spüren. Keine Angst… du merkst es, wenn der Zeitpunkt gekommen ist."
                             }
                         ],
                         "skinRewards": []

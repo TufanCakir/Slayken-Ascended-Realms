@@ -137,6 +137,9 @@ struct GiftView: View {
                 ForEach(gift.characterRewards) { reward in
                     characterRewardRow(reward)
                 }
+                ForEach(gift.cardRewards) { reward in
+                    cardRewardRow(reward)
+                }
             }
 
             Button {
@@ -249,6 +252,48 @@ struct GiftView: View {
             Spacer()
 
             Text("Charakter")
+                .font(.system(size: 16, weight: .black, design: .rounded))
+                .foregroundStyle(.white)
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
+        .background(
+            Color.white.opacity(0.06),
+            in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+        )
+    }
+
+    private func cardRewardRow(_ reward: GiftCardReward) -> some View {
+        let card = gameState.abilityCards.first { $0.id == reward.cardID }
+
+        return HStack {
+            Group {
+                if let image = card?.image {
+                    RemoteAssetImage(image, contentMode: .fill) {
+                        Image(systemName: "sparkles")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(4)
+                            .foregroundStyle(.white)
+                    }
+                } else {
+                    Image(systemName: "sparkles")
+                        .resizable()
+                        .scaledToFit()
+                        .padding(4)
+                        .foregroundStyle(.white)
+                }
+            }
+            .frame(width: 24, height: 24)
+            .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+
+            Text(card?.name ?? reward.cardID.capitalized)
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .foregroundStyle(.white)
+
+            Spacer()
+
+            Text("+\(reward.amount)")
                 .font(.system(size: 16, weight: .black, design: .rounded))
                 .foregroundStyle(.white)
         }

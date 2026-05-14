@@ -1,26 +1,26 @@
 [
     {
-        "id": "event_story_riftfall",
-        "title": "Event: Riftfall Chronicle",
+        "id": "event_story_riftstorm",
+        "title": "Event: Rift Storm",
         "subtitle": "Ein reines Story-Event mit 50 Kaempfen",
         "sortOrder": 90,
         "endsAt": "05.06.2026 23:59",
-        "minAscendedLevel": 1,
+        "minAscendedLevel": 10,
         "mapTexture": "realm_rift",
         "nodeImage": "chest_rift",
         "cutscene": {
-            "id": "event_story_riftfall_intro",
-            "title": "Riftfall Chronicle",
-            "video": "intro",
+            "id": "event_story_riftstorm_intro",
+            "title": "Rift Storm",
+            "video": "intro_riftstorm",
             "text":
-                "Ein neuer Chronik-Riss oeffnet sich und fuehrt durch einen langen Story-Pfad."
+                "Ein neuer Rift Storm zieht auf und führt in einen dunklen Pfad."
         },
         "points": [
             {
-                "id": "event_story_riftfall_path",
-                "title": "Chronikpfad",
+                "id": "event_story_riftstorm_path",
+                "title": "Sturmpfad",
                 "text":
-                    "50 Story-Kaempfe fuehren durch den offenen Chronik-Riss.",
+                    "50 Story-Kaempfe fuehren durch den toedlichen Rift Storm.",
                 "mapImage": "realm_rift",
                 "mapTexture": "realm_rift",
                 "node": {
@@ -29,9 +29,9 @@
                 },
                 "battles": [
                     {
-                        "id": "event_story_riftfall_battle_1",
-                        "name": "Chronikbruch I",
-                        "description": "Der erste Schritt in den Story-Riss.",
+                        "id": "event_story_riftstorm_battle_1",
+                        "name": "Der erste Schatten",
+                        "description": "Der erste Schritt in den Sturm.",
                         "difficulty": 8,
                         "groundTexture": "realm_rift",
                         "skyboxTexture": "realm_rift",
@@ -40,7 +40,7 @@
                             "y": 0.86
                         },
                         "enemy": {
-                            "name": "Chronicle Rift I",
+                            "name": "Storm Rift I",
                             "image": "sar_dragon",
                             "model": "tsayi",
                             "texture": null,
@@ -63,14 +63,36 @@
                             {
                                 "speaker": "Zaron",
                                 "image": "preview_zaron",
+                                "text": "Leute… hört ihr das?"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text": "Was denn?"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
                                 "text":
-                                    "Ein alter Riss faellt durch das Eventfeld. Das ist keine normale Route."
+                                    "Dieses Geräusch… irgendwas stimmt hier nicht."
                             },
                             {
                                 "speaker": "Shela",
                                 "image": "preview_shela",
                                 "text":
-                                    "Dann lesen wir seine Spuren, bevor er wieder verschwindet."
+                                    "…Jetzt wo du’s sagst… ja. Das klingt unheimlich."
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "image": "preview_sanya",
+                                "text":
+                                    "Ich hab ein ganz schlechtes Gefühl… Können wir bitte gehen?"
+                            },
+                            {
+                                "speaker": "Rana",
+                                "image": "preview_rana",
+                                "text":
+                                    "Ja, sofort. Mir gefällt das hier überhaupt nicht."
                             }
                         ],
                         "characterRewards": [],
@@ -78,7 +100,7 @@
                         "skinRewards": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_2",
+                        "id": "event_story_riftstorm_battle_2",
                         "name": "Chronikbruch II",
                         "description":
                             "Die Route zieht tiefer in die Geschichte.",
@@ -115,7 +137,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_3",
+                        "id": "event_story_riftstorm_battle_3",
                         "name": "Splitterzeile",
                         "description": "Alte Splitter markieren den Pfad.",
                         "difficulty": 9,
@@ -156,7 +178,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_4",
+                        "id": "event_story_riftstorm_battle_4",
                         "name": "Schattenseite",
                         "description":
                             "Die Chronik kippt in die dunklere Seite.",
@@ -193,7 +215,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_5",
+                        "id": "event_story_riftstorm_battle_5",
                         "name": "Runenpfad",
                         "description": "Runen tragen den Story-Pfad weiter.",
                         "difficulty": 10,
@@ -229,7 +251,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_6",
+                        "id": "event_story_riftstorm_battle_6",
                         "name": "Nebeltext",
                         "description":
                             "Die Seiten der Chronik wirken lebendig.",
@@ -271,7 +293,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_7",
+                        "id": "event_story_riftstorm_battle_7",
                         "name": "Leuchtader",
                         "description":
                             "Ein heller Textstrom zieht ueber den Boden.",
@@ -308,7 +330,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_8",
+                        "id": "event_story_riftstorm_battle_8",
                         "name": "Bruchseite",
                         "description": "Die Route bleibt unruhig und offen.",
                         "difficulty": 11,
@@ -344,7 +366,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_9",
+                        "id": "event_story_riftstorm_battle_9",
                         "name": "Chronikwacht",
                         "description":
                             "Eine schwere Wache bewacht den ersten Bogen.",
@@ -386,8 +408,8 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_10",
-                        "name": "Seitenrichter",
+                        "id": "event_story_riftstorm_battle_10",
+                        "name": "Bewegung im Schatten",
                         "description":
                             "Die erste Elite prueft, ob du weiterlesen darfst.",
                         "difficulty": 12,
@@ -398,11 +420,10 @@
                             "y": 0.5
                         },
                         "cutscene": {
-                            "id": "event_story_riftfall_battle_10_cutscene",
-                            "title": "Seitenrichter",
-                            "video": "mondtor",
-                            "text":
-                                "Ein uralter Hueter tritt aus der Chronik hervor."
+                            "id": "event_story_riftstorm_battle_10_cutscene",
+                            "title": "Verfolger",
+                            "video": "pursuer",
+                            "text": "Ein Schatten loest sich aus den Baeumen."
                         },
                         "enemy": {
                             "name": "Page Judge",
@@ -432,18 +453,28 @@
                                 "speaker": "Zaron",
                                 "image": "preview_zaron",
                                 "text":
-                                    "Die erste Welle bricht. Dahinter liegt ein tieferer Schnitt."
+                                    "Pscht! Leise… Ich glaube, irgendetwas ist hier entlanggelaufen."
                             },
                             {
                                 "speaker": "Shela",
                                 "image": "preview_shela",
+                                "text": "Okay… jetzt kriege ich wirklich Angst."
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "image": "preview_sanya",
+                                "text": "D-Da drüben! Habt ihr das gesehen?!"
+                            },
+                            {
+                                "speaker": "Rana",
+                                "image": "preview_rana",
                                 "text":
-                                    "Ich spuere eine Cutscene im Kern. Der Riss will gesehen werden."
+                                    "Was?! Nein, nein… lasst uns zurück zum Lager!"
                             }
                         ]
                     },
                     {
-                        "id": "event_story_riftfall_battle_11",
+                        "id": "event_story_riftstorm_battle_11",
                         "name": "Satzklinge",
                         "description": "Die Geschichte schneidet jetzt tiefer.",
                         "difficulty": 13,
@@ -479,7 +510,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_12",
+                        "id": "event_story_riftstorm_battle_12",
                         "name": "Sternenzeile",
                         "description": "Eine helle Passage zieht an den Rand.",
                         "difficulty": 13,
@@ -520,7 +551,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_13",
+                        "id": "event_story_riftstorm_battle_13",
                         "name": "Rissschrift",
                         "description": "Der Randtext des Risses wird dichter.",
                         "difficulty": 14,
@@ -556,7 +587,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_14",
+                        "id": "event_story_riftstorm_battle_14",
                         "name": "Bogenwacht",
                         "description":
                             "Am Kartenrand wartet eine weitere Front.",
@@ -593,7 +624,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_15",
+                        "id": "event_story_riftstorm_battle_15",
                         "name": "Leerenbogen",
                         "description":
                             "Der Pfad dreht jetzt in den unteren Sektor.",
@@ -630,7 +661,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_16",
+                        "id": "event_story_riftstorm_battle_16",
                         "name": "Randbruch",
                         "description": "Der Story-Pfad kippt abrupt um.",
                         "difficulty": 15,
@@ -671,7 +702,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_17",
+                        "id": "event_story_riftstorm_battle_17",
                         "name": "Zwischenzeile",
                         "description":
                             "Der Erzaehlstrom bleibt unter Spannung.",
@@ -708,7 +739,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_18",
+                        "id": "event_story_riftstorm_battle_18",
                         "name": "Kernsatz",
                         "description":
                             "Ein Schluesselsatz fuehrt weiter in die Tiefe.",
@@ -745,7 +776,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_19",
+                        "id": "event_story_riftstorm_battle_19",
                         "name": "Bruchader",
                         "description":
                             "Eine schmale Linie oeffnet den Mittelkern.",
@@ -782,8 +813,8 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_20",
-                        "name": "Chronikherz",
+                        "id": "event_story_riftstorm_battle_20",
+                        "name": "Blick aus dem Dunkeln",
                         "description":
                             "Der erste Kern der Geschichte liegt offen.",
                         "difficulty": 17,
@@ -827,20 +858,30 @@
                         "skinRewards": [],
                         "story": [
                             {
-                                "speaker": "Kashin",
-                                "image": "preview_kashin",
-                                "text":
-                                    "Der Pfad zieht sich zusammen. Alles fuehrt zum selben Zentrum."
-                            },
-                            {
                                 "speaker": "Zaron",
                                 "image": "preview_zaron",
-                                "text": "Dann sparen wir keine Kraft mehr."
+                                "text":
+                                    "Da… zwischen den Bäumen… es starrt uns an."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text": "Nicht bewegen… bitte nicht bewegen…"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "image": "preview_sanya",
+                                "text": "Oh nein… ich muss niesen…!"
+                            },
+                            {
+                                "speaker": "Rana",
+                                "image": "preview_rana",
+                                "text": "RENNT! VERDAMMT, DAS DING IST SCHNELL!"
                             }
                         ]
                     },
                     {
-                        "id": "event_story_riftfall_battle_21",
+                        "id": "event_story_riftstorm_battle_21",
                         "name": "Rueckseite I",
                         "description":
                             "Die zweite Haelfte beginnt ruhiger als erwartet.",
@@ -877,7 +918,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_22",
+                        "id": "event_story_riftstorm_battle_22",
                         "name": "Rueckseite II",
                         "description":
                             "Die Route springt in einen neuen Bogen.",
@@ -914,7 +955,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_23",
+                        "id": "event_story_riftstorm_battle_23",
                         "name": "Schattenbogen",
                         "description":
                             "Die Chronik drueckt nach links zurueck.",
@@ -956,7 +997,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_24",
+                        "id": "event_story_riftstorm_battle_24",
                         "name": "Sternenrahmen",
                         "description":
                             "Ein heller Rahmen umschliesst die Route.",
@@ -993,7 +1034,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_25",
+                        "id": "event_story_riftstorm_battle_25",
                         "name": "Textsaum",
                         "description":
                             "Die Geschichte schiebt in den mittleren Ring.",
@@ -1030,7 +1071,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_26",
+                        "id": "event_story_riftstorm_battle_26",
                         "name": "Leerenwort",
                         "description":
                             "Ein einzelnes Wort traegt den ganzen Druck.",
@@ -1072,7 +1113,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_27",
+                        "id": "event_story_riftstorm_battle_27",
                         "name": "Bruchlinie",
                         "description":
                             "Die Linie laeuft in den oberen Sektor zurueck.",
@@ -1109,7 +1150,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_28",
+                        "id": "event_story_riftstorm_battle_28",
                         "name": "Schattenfeld",
                         "description": "Die Seiten werden breiter und dunkler.",
                         "difficulty": 21,
@@ -1145,7 +1186,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_29",
+                        "id": "event_story_riftstorm_battle_29",
                         "name": "Risssaum",
                         "description": "Der obere Bogen ist fast erreicht.",
                         "difficulty": 22,
@@ -1186,8 +1227,8 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_30",
-                        "name": "Chronikrichter",
+                        "id": "event_story_riftstorm_battle_30",
+                        "name": "Die Konfrontation",
                         "description":
                             "Eine weitere Elite trennt Kapitel und Abschlussring.",
                         "difficulty": 22,
@@ -1198,14 +1239,13 @@
                             "y": 0.7
                         },
                         "cutscene": {
-                            "id": "event_story_riftfall_battle_30_cutscene",
-                            "title": "Chronikrichter",
-                            "video": "mondtor",
-                            "text":
-                                "Ein zweiter Richter blockiert die obere Chronik."
+                            "id": "event_story_riftstorm_battle_30_cutscene",
+                            "title": "Setans Erwachen",
+                            "video": "setans_awakening",
+                            "text": "Die Bestie stellt sich zum Kampf."
                         },
                         "enemy": {
-                            "name": "Chronicle Judge",
+                            "name": "Setan Prototype",
                             "image": "sar_dragon",
                             "model": "jirgin",
                             "texture": null,
@@ -1229,19 +1269,31 @@
                         "skinRewards": [],
                         "story": [
                             {
-                                "speaker": "Shela",
-                                "image": "preview_shela",
-                                "text": "Der Rissfall veraendert seine Form."
+                                "speaker": "Rana",
+                                "image": "preview_rana",
+                                "text":
+                                    "Wir schaffen das nicht… wir sind erledigt!"
                             },
                             {
                                 "speaker": "Zaron",
-                                "image": "preview_zaron_transformation",
-                                "text": "Dann antworte ich mit meiner eigenen."
+                                "image": "preview_zaron",
+                                "text":
+                                    "Noch nicht! Ich habe noch ein Ass im Ärmel!"
+                            },
+                            {
+                                "speaker": "Setan",
+                                "image": "preview_setan",
+                                "text": "GRRRRRRRRFF… HRRRRUUUAAARRR!"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text": "Was… was IST das?!"
                             }
                         ]
                     },
                     {
-                        "id": "event_story_riftfall_battle_31",
+                        "id": "event_story_riftstorm_battle_31",
                         "name": "Oberseite I",
                         "description":
                             "Die letzte Haelfte beginnt am oberen Rand.",
@@ -1278,7 +1330,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_32",
+                        "id": "event_story_riftstorm_battle_32",
                         "name": "Oberseite II",
                         "description":
                             "Der obere Chronikring zieht nach rechts.",
@@ -1320,7 +1372,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_33",
+                        "id": "event_story_riftstorm_battle_33",
                         "name": "Kernbogen II",
                         "description":
                             "Ein breiter Bogen fuehrt in die Finalecke.",
@@ -1357,7 +1409,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_34",
+                        "id": "event_story_riftstorm_battle_34",
                         "name": "Lichtseite",
                         "description":
                             "Die Geschichte hellt sich vor dem Ende auf.",
@@ -1394,7 +1446,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_35",
+                        "id": "event_story_riftstorm_battle_35",
                         "name": "Donnertext",
                         "description":
                             "Ein harter Druck geht ueber die obere Mitte.",
@@ -1436,7 +1488,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_36",
+                        "id": "event_story_riftstorm_battle_36",
                         "name": "Schriftpfeiler",
                         "description":
                             "Ein Pfeiler aus Text unterstuetzt den Riss.",
@@ -1473,7 +1525,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_37",
+                        "id": "event_story_riftstorm_battle_37",
                         "name": "Rissfront",
                         "description": "Der Abschlusssektor baut sich auf.",
                         "difficulty": 26,
@@ -1509,7 +1561,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_38",
+                        "id": "event_story_riftstorm_battle_38",
                         "name": "Seitenbruch II",
                         "description":
                             "Ein letzter Seitenbruch schneidet den Ring.",
@@ -1551,7 +1603,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_39",
+                        "id": "event_story_riftstorm_battle_39",
                         "name": "Rahmenwacht",
                         "description":
                             "Die Wacht vor dem Innenkern steht bereit.",
@@ -1588,8 +1640,8 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_40",
-                        "name": "Zwielichtseite",
+                        "id": "event_story_riftstorm_battle_40",
+                        "name": "Die bittere Wahrheit",
                         "description":
                             "Der letzte Midboss des Story-Events erscheint.",
                         "difficulty": 27,
@@ -1600,14 +1652,13 @@
                             "y": 0.58
                         },
                         "cutscene": {
-                            "id": "event_story_riftfall_battle_40_cutscene",
-                            "title": "Zwielichtseite",
+                            "id": "event_story_riftstorm_battle_40_cutscene",
+                            "title": "Vergebliche Muehe",
                             "video": "mondtor",
-                            "text":
-                                "Die Chronik zeigt nun ihren dunkleren Kern."
+                            "text": "Die Bestie laesst nicht locker."
                         },
                         "enemy": {
-                            "name": "Twilight Page",
+                            "name": "Twilight Setan",
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
@@ -1640,21 +1691,27 @@
                         "skinRewards": [],
                         "story": [
                             {
-                                "speaker": "Kashin",
-                                "image": "preview_kashin",
+                                "speaker": "Rana",
+                                "image": "preview_rana",
                                 "text":
-                                    "Noch eine Elite. Danach bleibt nur der Kern."
+                                    "Das ist ein Setan… und wenn er jagt, hört er niemals auf."
                             },
                             {
                                 "speaker": "Zaron",
                                 "image": "preview_zaron",
                                 "text":
-                                    "Gut. Dann brechen wir die letzte Linie."
+                                    "Ich treffe ihn nicht mal… meine Angriffe richten keinen Schaden an…"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text":
+                                    "Das… das kann doch nicht unser Ende sein…"
                             }
                         ]
                     },
                     {
-                        "id": "event_story_riftfall_battle_41",
+                        "id": "event_story_riftstorm_battle_41",
                         "name": "Innenstufe I",
                         "description":
                             "Nach dem Midboss fuehrt der Pfad in den Abschlussring.",
@@ -1691,7 +1748,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_42",
+                        "id": "event_story_riftstorm_battle_42",
                         "name": "Innenstufe II",
                         "description": "Der Abschlussring bleibt hart.",
                         "difficulty": 28,
@@ -1732,7 +1789,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_43",
+                        "id": "event_story_riftstorm_battle_43",
                         "name": "Innenstufe III",
                         "description":
                             "Der Kern spuert deine letzten Schritte.",
@@ -1769,7 +1826,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_44",
+                        "id": "event_story_riftstorm_battle_44",
                         "name": "Kernpfad",
                         "description": "Der wahre Schlussweg ist offen.",
                         "difficulty": 29,
@@ -1810,7 +1867,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_45",
+                        "id": "event_story_riftstorm_battle_45",
                         "name": "Endrahmen",
                         "description":
                             "Ein letzter Rahmen trennt dich vom Finale.",
@@ -1847,7 +1904,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_46",
+                        "id": "event_story_riftstorm_battle_46",
                         "name": "Schlussader",
                         "description":
                             "Eine letzte Ader verbindet Geschichte und Kern.",
@@ -1889,7 +1946,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_47",
+                        "id": "event_story_riftstorm_battle_47",
                         "name": "Letzte Seite",
                         "description":
                             "Die Chronik schliesst sich ueber dem Pfad.",
@@ -1926,7 +1983,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_48",
+                        "id": "event_story_riftstorm_battle_48",
                         "name": "Schlusskante",
                         "description": "Der Endpfad wird schmal und hart.",
                         "difficulty": 31,
@@ -1967,7 +2024,7 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_49",
+                        "id": "event_story_riftstorm_battle_49",
                         "name": "Chronikherz II",
                         "description":
                             "Das wahre Herz des Story-Events zeigt sich.",
@@ -2004,10 +2061,10 @@
                         "story": []
                     },
                     {
-                        "id": "event_story_riftfall_battle_50",
-                        "name": "Riftfall Archive",
+                        "id": "event_story_riftstorm_battle_50",
+                        "name": "Setan",
                         "description":
-                            "Der finale Boss des Story-Events und Kern der Chronik.",
+                            "Der finale Boss des Story-Events und die wahre Gefahr.",
                         "difficulty": 33,
                         "groundTexture": "realm_rift",
                         "skyboxTexture": "realm_rift",
@@ -2016,14 +2073,14 @@
                             "y": 0.08
                         },
                         "cutscene": {
-                            "id": "event_story_riftfall_battle_50_cutscene",
-                            "title": "Riftfall Archive",
-                            "video": "rissbestie",
+                            "id": "event_story_riftstorm_battle_50_cutscene",
+                            "title": "Setans Ursprung",
+                            "video": "riftbestie",
                             "text":
-                                "Die Chronik oeffnet ihre letzte Seite und der Kern tritt hervor."
+                                "Das Monster enthüllt seine grauenhafte Wahrheit."
                         },
                         "enemy": {
-                            "name": "Riftfall Archive",
+                            "name": "Setan",
                             "image": "sar_dragon",
                             "model": "masoyina",
                             "texture": null,
@@ -2055,16 +2112,42 @@
                         ],
                         "story": [
                             {
-                                "speaker": "Zaron",
-                                "image": "preview_zaron_transformation",
-                                "text":
-                                    "Das ist der Ursprung dieses Event-Risses."
+                                "speaker": "Setan",
+                                "image": "preview_setan",
+                                "text": "TSSSSSS… GRRRRRAAAAAAAHHH!"
                             },
                             {
-                                "speaker": "Shela",
-                                "image": "preview_shela",
+                                "speaker": "Setan",
+                                "image": "preview_setan_awakening",
+                                "text": "Ihr schwachen menschlichen Kreaturen…"
+                            },
+                            {
+                                "speaker": "Setan",
+                                "image": "preview_setan_awakening",
                                 "text":
-                                    "Wenn er faellt, bleibt seine Story im Archiv erhalten."
+                                    "Ich werde euch zeigen… was wahre Macht bedeutet."
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text": "Ein Monster… das sprechen kann…?"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text": "Das ist unmöglich…"
+                            },
+                            {
+                                "speaker": "Rana",
+                                "image": "preview_rana",
+                                "text":
+                                    "Nicht ganz. Er war einst ein Mensch… bis der Rift ihn verändert hat."
+                            },
+                            {
+                                "speaker": "Setan",
+                                "image": "preview_setan_human",
+                                "text":
+                                    "Ihr seid verloren… niemand wird euch retten… GRAAAAAARRR!"
                             }
                         ],
                         "skinRewards": []

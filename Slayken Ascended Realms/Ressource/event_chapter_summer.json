@@ -5,13 +5,13 @@
         "subtitle": "Sonnenpfad am Rift-Strand",
         "sortOrder": 100,
         "endsAt": "05.06.2026 23:59",
-        "minAscendedLevel": 1,
+        "minAscendedLevel": 10,
         "mapTexture": "festival_summer",
         "nodeImage": "chest_summer",
         "cutscene": {
             "id": "event_summer_intro",
             "title": "Summer Event",
-            "video": "intro",
+            "video": "summer_festival",
             "text":
                 "Ein sommerlicher Rissstrand bringt Scherben, Hitze und seltene Beute."
         },
@@ -42,7 +42,7 @@
                         "enemy": {
                             "name": "Sunshore I",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 520,
                             "attack": 30,
@@ -63,16 +63,27 @@
                         "cardRewards": [],
                         "story": [
                             {
-                                "speaker": "Aika",
-                                "image": "preview_aika",
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
                                 "text":
-                                    "Der Strandriss brennt heller als die Sonne."
+                                    "Shela, schau mal da drüben! Ein Sommerfest! Überall Lichter, Musik und Leute! Komm, lass uns hingehen!"
                             },
                             {
-                                "speaker": "Shen",
-                                "image": "preview_shen",
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text": "Okay … warum eigentlich nicht?"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
                                 "text":
-                                    "Dann nutzen wir die Hitze und druecken vor."
+                                    "Solange uns diesmal keine Monster begegnen, wird’s bestimmt ein entspannter Abend …"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text":
+                                    "Bitte beschwör es nicht wieder herauf …"
                             }
                         ],
                         "skinRewards": []
@@ -91,7 +102,7 @@
                         "enemy": {
                             "name": "Sunshore II",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 550,
                             "attack": 32,
@@ -127,7 +138,7 @@
                         "enemy": {
                             "name": "Heatline",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 580,
                             "attack": 34,
@@ -169,7 +180,7 @@
                         "enemy": {
                             "name": "Coral Step",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 615,
                             "attack": 36,
@@ -206,7 +217,7 @@
                         "enemy": {
                             "name": "Salt Arc",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 650,
                             "attack": 38,
@@ -243,7 +254,7 @@
                         "enemy": {
                             "name": "Shell Guard",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 685,
                             "attack": 40,
@@ -285,7 +296,7 @@
                         "enemy": {
                             "name": "Surf Break",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 720,
                             "attack": 42,
@@ -322,7 +333,7 @@
                         "enemy": {
                             "name": "Sun Ring",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 760,
                             "attack": 44,
@@ -359,7 +370,7 @@
                         "enemy": {
                             "name": "Tidal Slash",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 800,
                             "attack": 46,
@@ -398,17 +409,10 @@
                             "x": 0.6,
                             "y": 0.5
                         },
-                        "cutscene": {
-                            "id": "event_summer_battle_10_cutscene",
-                            "title": "Summer Guard",
-                            "video": "mondtor",
-                            "text":
-                                "Eine saisonale Elite verteidigt den Strandsektor."
-                        },
                         "enemy": {
                             "name": "Summer Guard",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 850,
                             "attack": 50,
@@ -434,15 +438,45 @@
                         ],
                         "story": [
                             {
-                                "speaker": "Aika",
-                                "image": "preview_aika",
-                                "text": "Eine Elite blockiert den Strandsektor."
+                                "speaker": "Sanya",
+                                "image": "preview_sanya",
+                                "text":
+                                    "Hey! Ihr zwei! Wie schön, euch zu sehen! Was macht ihr denn hier?"
                             },
                             {
-                                "speaker": "Shen",
-                                "image": "preview_shen",
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
                                 "text":
-                                    "Sommerwachen fallen genauso wie alle anderen."
+                                    "Wir wollten einfach ein bisschen feiern und abschalten."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text":
+                                    "Sag mal, Sanya … wo ist eigentlich Rana? Normalerweise seid ihr doch immer zusammen."
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "image": "preview_sanya",
+                                "text":
+                                    "Rana konnte heute leider nicht kommen … sie ist krank."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text":
+                                    "Oh nein … was hat sie denn? Geht’s ihr schlecht?"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "image": "preview_sanya",
+                                "text":
+                                    "Keine Sorge. Nur eine Erkältung. Sie muss sich ausruhen."
+                            },
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text": "Zum Glück …"
                             }
                         ],
                         "skinRewards": []
@@ -462,7 +496,7 @@
                         "enemy": {
                             "name": "Palm Drift",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 900,
                             "attack": 52,
@@ -498,7 +532,7 @@
                         "enemy": {
                             "name": "Beach Rift",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 950,
                             "attack": 54,
@@ -540,7 +574,7 @@
                         "enemy": {
                             "name": "Sunny Crest",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1000,
                             "attack": 56,
@@ -576,7 +610,7 @@
                         "enemy": {
                             "name": "Wave Rim",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1050,
                             "attack": 58,
@@ -618,7 +652,7 @@
                         "enemy": {
                             "name": "Solar Edge",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1100,
                             "attack": 60,
@@ -655,7 +689,7 @@
                         "enemy": {
                             "name": "Coral Loop",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1155,
                             "attack": 62,
@@ -697,7 +731,7 @@
                         "enemy": {
                             "name": "Salt Pulse",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1210,
                             "attack": 64,
@@ -734,7 +768,7 @@
                         "enemy": {
                             "name": "Drift Shade",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1265,
                             "attack": 66,
@@ -776,7 +810,7 @@
                         "enemy": {
                             "name": "Sun Dune",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1320,
                             "attack": 68,
@@ -813,7 +847,7 @@
                         "enemy": {
                             "name": "Tide Captain",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1380,
                             "attack": 72,
@@ -859,7 +893,7 @@
                         "enemy": {
                             "name": "Sun Arc II",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1440,
                             "attack": 74,
@@ -896,7 +930,7 @@
                         "enemy": {
                             "name": "Lagoon Path",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1500,
                             "attack": 76,
@@ -938,7 +972,7 @@
                         "enemy": {
                             "name": "Sunspark",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1560,
                             "attack": 78,
@@ -974,7 +1008,7 @@
                         "enemy": {
                             "name": "Palm Halo",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1620,
                             "attack": 80,
@@ -1016,7 +1050,7 @@
                         "enemy": {
                             "name": "Beach Loop",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1680,
                             "attack": 82,
@@ -1053,7 +1087,7 @@
                         "enemy": {
                             "name": "Shore Rift",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1740,
                             "attack": 84,
@@ -1095,7 +1129,7 @@
                         "enemy": {
                             "name": "Heat Crest",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1800,
                             "attack": 86,
@@ -1132,7 +1166,7 @@
                         "enemy": {
                             "name": "Lagoon Guard",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1865,
                             "attack": 88,
@@ -1174,7 +1208,7 @@
                         "enemy": {
                             "name": "Solar Rise",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 1930,
                             "attack": 90,
@@ -1210,15 +1244,15 @@
                         },
                         "cutscene": {
                             "id": "event_summer_battle_30_cutscene",
-                            "title": "Summer Breaker",
-                            "video": "mondtor",
+                            "title": "Beatcher Tide King",
+                            "video": "beatcher_tide_king",
                             "text":
-                                "Eine eventexklusive Elite stoppt den Vorstoss in den Abschlusssektor."
+                                "Drei starke Beatcher bewachen den finalen Summer-Core."
                         },
                         "enemy": {
                             "name": "Summer Breaker",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 2010,
                             "attack": 94,
@@ -1248,15 +1282,52 @@
                         ],
                         "story": [
                             {
-                                "speaker": "Aika",
-                                "image": "preview_aika",
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
                                 "text":
-                                    "Der obere Bogen ist erreicht. Der Kern ist nicht mehr weit."
+                                    "W-Wartet mal … Shela! Sanya! Seht ihr das da vorne?!"
                             },
                             {
-                                "speaker": "Shen",
-                                "image": "preview_shen",
-                                "text": "Dann keinen Schritt zurueck."
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text": "Was meinst du—?"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "image": "preview_sanya",
+                                "text": "Was ist los?!"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text":
+                                    "Da! Zwischen den Palmen … dieses Leuchten!"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "image": "preview_sanya",
+                                "text": "Nein … das kann nicht sein …"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text": "Sanya … was IST das?!"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "image": "preview_zaron",
+                                "text": "Das ist doch ein Portal?!"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "image": "preview_sanya",
+                                "text":
+                                    "Ja … und das bedeutet nichts Gutes. Kommt zurück! Sofort!"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "image": "preview_shela",
+                                "text": "Vorsicht!!"
                             }
                         ],
                         "skinRewards": []
@@ -1276,7 +1347,7 @@
                         "enemy": {
                             "name": "Shoreline Arc",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 2090,
                             "attack": 96,
@@ -1312,7 +1383,7 @@
                         "enemy": {
                             "name": "Shell Rise",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 2170,
                             "attack": 98,
@@ -1354,7 +1425,7 @@
                         "enemy": {
                             "name": "Sun Halo II",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 2250,
                             "attack": 100,
@@ -1391,7 +1462,7 @@
                         "enemy": {
                             "name": "Coral Arc II",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 2330,
                             "attack": 102,
@@ -1433,7 +1504,7 @@
                         "enemy": {
                             "name": "Solar Wall",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 2415,
                             "attack": 104,
@@ -1470,7 +1541,7 @@
                         "enemy": {
                             "name": "Lagoon Crown",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 2500,
                             "attack": 106,
@@ -1512,7 +1583,7 @@
                         "enemy": {
                             "name": "Heatfall",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 2590,
                             "attack": 108,
@@ -1549,7 +1620,7 @@
                         "enemy": {
                             "name": "Shell Break",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 2680,
                             "attack": 110,
@@ -1591,7 +1662,7 @@
                         "enemy": {
                             "name": "Palm Front",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 2770,
                             "attack": 112,
@@ -1625,17 +1696,10 @@
                             "x": 0.88,
                             "y": 0.58
                         },
-                        "cutscene": {
-                            "id": "event_summer_battle_40_cutscene",
-                            "title": "Summer Halo",
-                            "video": "mondtor",
-                            "text":
-                                "Der innere Strandring zeigt jetzt seinen wahren Druck."
-                        },
                         "enemy": {
                             "name": "Summer Halo",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 2880,
                             "attack": 116,
@@ -1681,7 +1745,7 @@
                         "enemy": {
                             "name": "Sunshore Prime",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 2980,
                             "attack": 118,
@@ -1718,7 +1782,7 @@
                         "enemy": {
                             "name": "Surf Crown",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 3080,
                             "attack": 120,
@@ -1760,7 +1824,7 @@
                         "enemy": {
                             "name": "Heat Crown",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 3180,
                             "attack": 122,
@@ -1797,7 +1861,7 @@
                         "enemy": {
                             "name": "Coral Finale",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 3280,
                             "attack": 124,
@@ -1839,7 +1903,7 @@
                         "enemy": {
                             "name": "Salt Finale",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 3390,
                             "attack": 126,
@@ -1876,7 +1940,7 @@
                         "enemy": {
                             "name": "Lagoon Finale",
                             "image": "sar_dragon",
-                            "model": "jirgin",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 3500,
                             "attack": 128,
@@ -1918,7 +1982,7 @@
                         "enemy": {
                             "name": "Palm Finale",
                             "image": "sar_dragon",
-                            "model": "krevas",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 3610,
                             "attack": 130,
@@ -1955,7 +2019,7 @@
                         "enemy": {
                             "name": "Sunline End",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 3720,
                             "attack": 132,
@@ -1997,7 +2061,7 @@
                         "enemy": {
                             "name": "Summer Core",
                             "image": "sar_dragon",
-                            "model": "tsayi",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 3840,
                             "attack": 136,
@@ -2033,15 +2097,15 @@
                         },
                         "cutscene": {
                             "id": "event_summer_battle_50_cutscene",
-                            "title": "Sunheart Festival",
-                            "video": "rissbestie",
+                            "title": "Summer Breaker",
+                            "video": "summer_breaker",
                             "text":
                                 "Der saisonale Strandkern steigt aus dem Licht des Risses auf."
                         },
                         "enemy": {
                             "name": "Sunheart Festival",
                             "image": "sar_dragon",
-                            "model": "masoyina",
+                            "model": "beatcher",
                             "texture": null,
                             "hp": 4200,
                             "attack": 146,
@@ -2071,16 +2135,61 @@
                         ],
                         "story": [
                             {
-                                "speaker": "Aika",
-                                "image": "preview_aika",
-                                "text":
-                                    "Sunheart Festival erhebt sich aus dem Risslicht."
+                                "speaker": "Zaron",
+                                "text": "Was … was ist DAS für ein Monster?!"
                             },
                             {
-                                "speaker": "Shen",
-                                "image": "preview_shen",
+                                "speaker": "Sanya",
+                                "text": "Ein Beatcher …"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Ein Beatcher?! Noch nie davon gehört!"
+                            },
+                            {
+                                "speaker": "Sanya",
                                 "text":
-                                    "Dann endet dieses Festival mit unserem Sieg."
+                                    "Diese Wesen sind extrem gefährlich. Wenn sie aggressiv werden, zerstören sie alles um sich herum …"
+                            },
+                            {
+                                "speaker": "Menschen am Strand",
+                                "image": "preview_summer_breaker",
+                                "text":
+                                    "Hilfe!! Lauft weg!! Das Monster kommt näher!!"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Sanya, schau doch! Der Beatcher greift die Menschen an! Wir können nicht einfach zusehen!"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Dann kämpfen wir eben! Gemeinsam!"
+                            },
+                            {
+                                "speaker": "Beatcher",
+                                "image": "preview_beatcher",
+                                "text": "GRRRRRRRRAAAAHHH!!"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Los Leute!! Greift ihn an!!"
+                            },
+                            {
+                                "speaker": "Beatcher",
+                                "image": "preview_beatcher",
+                                "text": "GRAAAAH! GRRRRRAAA! RAAAAAAHHH!!"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Zaron!! Da hinten— da kommen noch mehr von ihnen!!"
+                            },
+                            {
+                                "speaker": "Weitere Beatcher",
+                                "image": "preview_summer_breaker",
+                                "text":
+                                    "GAAAAA… PFFFF… QRRRCHHH… BAAAARRR… GRRRRRRRAAAAH!!"
                             }
                         ],
                         "skinRewards": []

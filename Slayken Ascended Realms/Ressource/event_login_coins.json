@@ -26,6 +26,7 @@
         "message": "Heute wartet die naechste Coin-Belohnung.",
         "buttonTitle": "Tag 2 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -44,6 +45,7 @@
         "message": "Mehr Coins fuer Upgrades und Fortschritt.",
         "buttonTitle": "Tag 3 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -62,6 +64,7 @@
         "message": "Ein weiterer Coin-Boost fuer dein Konto.",
         "buttonTitle": "Tag 4 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -81,6 +84,7 @@
         "buttonTitle": "Tag 5 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -98,6 +102,7 @@
         "message": "Heute gibt es noch mehr Coins fuer deine Reserven.",
         "buttonTitle": "Tag 6 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -116,6 +121,7 @@
         "message": "Sieben Tage Coin-Login bringen einen groesseren Bonus.",
         "buttonTitle": "Tag 7 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -134,6 +140,7 @@
         "message": "Die zweite Woche startet mit frischen Coins.",
         "buttonTitle": "Tag 8 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -152,6 +159,7 @@
         "message": "Mehr Muenzen fuer den taeglichen Ausbau.",
         "buttonTitle": "Tag 9 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -171,6 +179,7 @@
         "buttonTitle": "Tag 10 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -189,6 +198,7 @@
         "buttonTitle": "Tag 11 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -207,6 +217,7 @@
         "buttonTitle": "Tag 12 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -224,6 +235,7 @@
         "message": "Kurz vor dem naechsten Schub gibt es weitere Coins.",
         "buttonTitle": "Tag 13 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -243,6 +255,7 @@
         "buttonTitle": "Tag 14 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -260,6 +273,7 @@
         "message": "Zur Monatsmitte gibt es einen stabilen Coin-Bonus.",
         "buttonTitle": "Tag 15 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -279,6 +293,7 @@
         "buttonTitle": "Tag 16 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -297,6 +312,7 @@
         "buttonTitle": "Tag 17 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -315,6 +331,7 @@
         "buttonTitle": "Tag 18 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -333,6 +350,7 @@
         "buttonTitle": "Tag 19 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -351,6 +369,7 @@
         "buttonTitle": "Tag 20 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -369,6 +388,7 @@
             "Drei Wochen Login werden mit einer satten Coin-Gabe belohnt.",
         "buttonTitle": "Tag 21 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -388,6 +408,7 @@
         "buttonTitle": "Tag 22 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -406,6 +427,7 @@
         "buttonTitle": "Tag 23 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -424,6 +446,7 @@
         "buttonTitle": "Tag 24 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -442,6 +465,7 @@
         "buttonTitle": "Tag 25 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",
@@ -459,6 +483,7 @@
         "message": "Weitere Coins fuer dein spaeteres Endgame.",
         "buttonTitle": "Tag 26 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -476,6 +501,7 @@
         "subtitle": "Reich belohnt",
         "message": "Deine Coin-Kampagne bleibt ergiebig bis zum Schluss.",
         "buttonTitle": "Tag 27 abholen",
+        "background": "festival_coin",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
         "rewards": [
@@ -495,6 +521,7 @@
         "message": "Vier Wochen Login bringen eine starke Coin-Ladung.",
         "buttonTitle": "Tag 28 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -513,6 +540,7 @@
         "message": "Noch ein groeßerer Coin-Boost vor dem Abschluss.",
         "buttonTitle": "Tag 29 abholen",
         "icon": "centsign.circle.fill",
+        "background": "festival_coin",
         "assetIcon": "icon_coins",
         "rewards": [
             {
@@ -533,6 +561,7 @@
         "buttonTitle": "Tag 30 abholen",
         "icon": "centsign.circle.fill",
         "assetIcon": "icon_coins",
+        "background": "festival_coin",
         "rewards": [
             {
                 "currency": "coins",

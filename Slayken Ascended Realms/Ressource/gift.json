@@ -1,133 +1,117 @@
 [
     {
-        "id": "giftbox_welcome",
-        "title": "Willkommensbox",
-        "subtitle": "Soforthilfe fuer neue Helden",
+        "id": "preregister_1000_crystals",
+        "title": "1.000 Vorbesteller",
+        "subtitle": "Pre-Register Reward",
         "message":
-            "Eine kleine Startbox mit Muenzen und Kristallen fuer den Einstieg.",
-        "buttonTitle": "Box vergeben",
-        "icon": "gift.fill",
+            "Danke fuer 1.000 Vorbesteller. Alle Spieler erhalten 3000 Crystals als Startbonus.",
+        "buttonTitle": "Reward abholen",
+        "icon": "diamond.fill",
         "rewards": [
             {
-                "currency": "coins",
-                "amount": 620
-            },
-            {
                 "currency": "crystals",
-                "amount": 24
+                "amount": 3000
             }
         ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "preregister_5000_skill_card",
+        "title": "5.000 Vorbesteller",
+        "subtitle": "5 Star Skill Card",
+        "message":
+            "Danke fuer 5.000 Vorbesteller. Diese Box enthaelt eine garantierte 5-Star Skill Card.",
+        "buttonTitle": "Skill Card abholen",
+        "icon": "sparkles.rectangle.stack.fill",
+        "rewards": [],
+        "characterRewards": [],
+        "cardRewards": [
+            {
+                "cardID": "void_pulse",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "id": "preregister_10000_free_summon",
+        "title": "10.000 Vorbesteller",
+        "subtitle": "Free Summon",
+        "message":
+            "Danke fuer 10.000 Vorbesteller. Diese Box gibt genug Crystals fuer einen freien Character Summon.",
+        "buttonTitle": "Free Summon abholen",
+        "icon": "sparkles",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 1000
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "preregister_25000_zaron",
+        "title": "25.000 Vorbesteller",
+        "subtitle": "Free Character Zaron",
+        "message":
+            "Danke fuer 25.000 Vorbesteller. Zaron wird direkt fuer deinen Account freigeschaltet.",
+        "buttonTitle": "Zaron abholen",
+        "icon": "person.fill",
+        "rewards": [],
+        "characterRewards": [
+            {
+                "characterID": "zaron"
+            }
+        ],
+        "cardRewards": []
+    },
+    {
+        "id": "preregister_50000_shela",
+        "title": "50.000 Vorbesteller",
+        "subtitle": "Free Character Shela",
+        "message":
+            "Danke fuer 50.000 Vorbesteller. Shela wird direkt fuer deinen Account freigeschaltet.",
+        "buttonTitle": "Shela abholen",
+        "icon": "person.crop.circle.badge.plus",
+        "rewards": [],
         "characterRewards": [
             {
                 "characterID": "shela"
             }
-        ]
-    },
-    {
-        "id": "giftbox_event",
-        "title": "Eventbox",
-        "subtitle": "Belohnung fuer Sonderaktionen",
-        "message":
-            "Perfekt fuer Eventtage oder kleine Live-Geschenke an den Spieler.",
-        "buttonTitle": "Eventbox geben",
-        "icon": "sparkles.rectangle.stack.fill",
-        "rewards": [
-            {
-                "currency": "coins",
-                "amount": 1000
-            },
-            {
-                "currency": "crystals",
-                "amount": 44
-            }
         ],
-        "characterRewards": []
+        "cardRewards": []
     },
     {
-        "id": "giftbox_battle",
-        "title": "Kriegskasse",
-        "subtitle": "Vorbereitung auf harte Kaempfe",
+        "id": "preregister_100000_character_choice",
+        "title": "100.000 Vorbesteller",
+        "subtitle": "All Completed Quests + Character Auswahl",
         "message":
-            "Diese Box fuellt die Kasse fuer neue Versuche und Upgrades.",
-        "buttonTitle": "Kasse senden",
-        "icon": "shield.fill",
-        "rewards": [
-            {
-                "currency": "coins",
-                "amount": 1500
-            },
-            {
-                "currency": "crystals",
-                "amount": 30
-            }
-        ],
-        "characterRewards": []
-    },
-    {
-        "id": "giftbox_crystal",
-        "title": "Kristallbox",
-        "subtitle": "Fokus auf Premium-Ressourcen",
-        "message":
-            "Wenn der Spieler mehr Beschwoerungen braucht, ist diese Box passend.",
-        "buttonTitle": "Kristallbox geben",
-        "icon": "diamond.fill",
-        "rewards": [
-            {
-                "currency": "coins",
-                "amount": 500
-            },
-            {
-                "currency": "crystals",
-                "amount": 70
-            }
-        ],
-        "characterRewards": [
-            {
-                "characterID": "lafiya"
-            }
-        ]
-    },
-    {
-        "id": "giftbox_legend",
-        "title": "Legendengeschenk",
-        "subtitle": "Grosse Kompensation oder Meilenstein-Bonus",
-        "message": "Eine starke Geschenkbox fuer besondere Spielerbelohnungen.",
-        "buttonTitle": "Legendengeschenk geben",
+            "Danke fuer 100.000 Vorbesteller. Diese finale Pre-Register Box enthaelt die komplette Character-Auswahl der Kampagne.",
+        "buttonTitle": "Auswahl abholen",
         "icon": "crown.fill",
         "rewards": [
             {
-                "currency": "coins",
-                "amount": 3000
+                "currency": "skill_points",
+                "amount": 100
             },
             {
-                "currency": "crystals",
-                "amount": 80
+                "currency": "skill_runes",
+                "amount": 25
+            },
+            {
+                "currency": "skill_glyphs",
+                "amount": 10
             }
         ],
         "characterRewards": [
             {
                 "characterID": "zaron"
-            }
-        ]
-    },
-    {
-        "id": "giftbox_maintenance",
-        "title": "Maintenance Box",
-        "subtitle": "Ausgleich fuer Wartezeiten",
-        "message":
-            "Ideal als Entschaedigung nach Fixes, Updates oder Downtime.",
-        "buttonTitle": "Entschaedigung geben",
-        "icon": "wrench.and.screwdriver.fill",
-        "rewards": [
-            {
-                "currency": "coins",
-                "amount": 1250
             },
             {
-                "currency": "crystals",
-                "amount": 56
+                "characterID": "shela"
             }
         ],
-        "characterRewards": []
+        "cardRewards": []
     }
 ]

@@ -47,7 +47,7 @@
         "productID": "com.slayken.ascendedrealms.crystals.characterbundle",
         "name": "Hero Starter Bundle",
         "subtitle": "Crystals plus ein sofort freigeschalteter Charakter.",
-        "image": "preview_lafiya",
+        "image": "preview_shen",
         "rewards": [
             {
                 "currency": "crystals",
@@ -56,7 +56,7 @@
         ],
         "characterRewards": [
             {
-                "characterID": "lafiya"
+                "characterID": "shen"
             }
         ]
     },
@@ -78,7 +78,7 @@
         "productID": "com.slayken.ascendedrealms.crystals.specialmixed",
         "name": "Special Mixed Bundle",
         "subtitle": "Grosses Spezialpaket mit Crystals, Charakter und Karten.",
-        "image": "preview_sifili",
+        "image": "preview_lafiya",
         "rewards": [
             {
                 "currency": "crystals",
@@ -91,7 +91,7 @@
         ],
         "characterRewards": [
             {
-                "characterID": "sifili"
+                "characterID": "lafiya"
             }
         ],
         "cardRewards": [

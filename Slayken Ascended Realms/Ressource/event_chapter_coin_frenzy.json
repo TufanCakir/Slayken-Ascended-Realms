@@ -1,53 +1,543 @@
 [
     {
-        "id": "event_coin_frenzy",
-        "title": "Event: Coin Frenzy",
-        "subtitle": "50 Kaempfe fuer reine Coin-Farmrouten",
-        "sortOrder": 110,
+        "id": "event_coin_storm",
+        "title": "Event: Goldbrunnenreich",
+        "subtitle": "Cenchar Coin Route",
+        "sortOrder": 111,
         "endsAt": "05.06.2026 23:59",
-        "minAscendedLevel": 1,
-        "mapTexture": "realm_coin",
+        "minAscendedLevel": 10,
+        "mapTexture": "realm_gold",
         "nodeImage": "chest_coin",
         "cutscene": {
-            "id": "event_coin_frenzy_intro",
-            "title": "Coin Frenzy",
-            "video": "intro_coin",
-            "text": "Ein goldener Riss oeffnet den Weg ins Goldfeld."
+            "id": "event_coin_storm_intro",
+            "title": "Das Goldbrunnenreich",
+            "video": "coin_festival",
+            "text":
+                "Ein dunkler Nebel bricht über das Goldbrunnenreich herein. Cenchar tauchen aus den Schatten auf."
         },
         "points": [
             {
-                "id": "event_coin_frenzy_field",
-                "title": "Goldfeld",
-                "text": "Eine lange Coin-Route mit 50 Nodes.",
-                "mapImage": "realm_coin",
-                "mapTexture": "realm_coin",
+                "id": "event_coin_storm_field",
+                "title": "Goldbrunnen Minen",
+                "text":
+                    "Eine Coin-Route mit Cenchar-Gegnern und mehreren 3er-Kämpfen.",
+                "mapImage": "realm_gold",
+                "mapTexture": "realm_gold",
                 "node": {
                     "x": 0.1,
                     "y": 0.86
                 },
                 "battles": [
                     {
-                        "id": "event_coin_frenzy_battle_1",
-                        "name": "Goldpfad I",
-                        "description": "Coin-Route Auftakt.",
-                        "difficulty": 2,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
+                        "id": "event_coin_storm_battle_1",
+                        "name": "Cenchar I",
+                        "description":
+                            "Der erste Cenchar tritt aus der Dunkelheit.",
+                        "difficulty": 4,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
                         "node": {
                             "x": 0.06,
                             "y": 0.86
                         },
                         "enemy": {
-                            "name": "Gold Path I",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
+                            "name": "Cenchar",
+                            "image": "preview_cenchar",
+                            "model": "cenchar",
                             "texture": null,
-                            "hp": 150,
-                            "attack": 10,
-                            "element": "Plant"
+                            "hp": 240,
+                            "attack": 16,
+                            "attackSpeed": 0.85,
+                            "element": "Dark"
                         },
                         "xpReward": 250,
                         "rewards": [
+                            {
+                                "currency": "crystals",
+                                "amount": 5
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 50
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Sanya",
+                                "text":
+                                    "Wo… wo bin ich? Was ist das für ein Ort…?"
+                            },
+                            {
+                                "speaker": "Rana",
+                                "text": "Sanya! Endlich… Geht es dir gut?"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text":
+                                    "Ich glaube schon… aber wo sind wir hier?"
+                            },
+                            {
+                                "speaker": "Rana",
+                                "text":
+                                    "Ich weiß es nicht… Alles ging so schnell. Ich erinnere mich nur daran, dass wir angegriffen wurden…"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text": "Angegriffen?! Von wem?"
+                            },
+                            {
+                                "speaker": "Rana",
+                                "text":
+                                    "Ich konnte nichts erkennen… Es war dunkel… und diese Schreie… sie kamen aus allen Richtungen…"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text":
+                                    "Bitte sag mir nicht, dass wir allein hier sind…"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_storm_battle_2",
+                        "name": "Cenchar II",
+                        "description": "Ein Cenchar läuft durch die Goldminen.",
+                        "difficulty": 4,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
+                        "node": {
+                            "x": 0.12,
+                            "y": 0.82
+                        },
+                        "enemy": {
+                            "name": "Cenchar",
+                            "image": "preview_cenchar",
+                            "model": "cenchar",
+                            "texture": null,
+                            "hp": 270,
+                            "attack": 18,
+                            "attackSpeed": 0.88,
+                            "element": "Dark"
+                        },
+                        "xpReward": 270,
+                        "rewards": [
+                            {
+                                "currency": "crystals",
+                                "amount": 5
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 60
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "SANYA! RANA!\nOh Gott… endlich haben wir euch gefunden!"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Hat euch auch jemand attackiert?"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text":
+                                    "Ja… aber wir wissen nicht wer oder was das war!"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text":
+                                    "Diese Kreaturen nennt man Cenchar…\nUnd das hier ist ihr Reich… das sogenannte Goldbrunnenreich."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_storm_battle_3",
+                        "name": "Cenchar Trio I",
+                        "description":
+                            "Drei Cenchar greifen gleichzeitig aus den Schatten an.",
+                        "difficulty": 5,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
+                        "node": {
+                            "x": 0.18,
+                            "y": 0.78
+                        },
+                        "enemies": [
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 220,
+                                "attack": 15,
+                                "attackSpeed": 0.86,
+                                "element": "Dark"
+                            },
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 235,
+                                "attack": 16,
+                                "attackSpeed": 0.88,
+                                "element": "Dark"
+                            },
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 250,
+                                "attack": 17,
+                                "attackSpeed": 0.9,
+                                "element": "Dark"
+                            }
+                        ],
+                        "xpReward": 320,
+                        "rewards": [
+                            {
+                                "currency": "crystals",
+                                "amount": 6
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 75
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Rana",
+                                "text":
+                                    "Cenchar…? Goldbrunnenreich…? Wovon redest du überhaupt?"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Man erzählt sich, dass irgendwo hier ein mysteriöser Goldbarren verborgen liegt…\nEin Schatz mit einer Macht, die niemand erklären kann…"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text":
+                                    "Ein mysteriöser Goldbarren…? Jetzt hörst du meine Aufmerksamkeit."
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_storm_battle_4",
+                        "name": "Cenchar IV",
+                        "description":
+                            "Ein Cenchar bewacht die große Goldader.",
+                        "difficulty": 6,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
+                        "node": {
+                            "x": 0.24,
+                            "y": 0.74
+                        },
+                        "enemy": {
+                            "name": "Cenchar",
+                            "image": "preview_cenchar",
+                            "model": "cenchar",
+                            "texture": null,
+                            "hp": 340,
+                            "attack": 24,
+                            "attackSpeed": 0.9,
+                            "element": "Dark"
+                        },
+                        "xpReward": 340,
+                        "rewards": [
+                            {
+                                "currency": "crystals",
+                                "amount": 6
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 90
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_coin_storm_battle_5",
+                        "name": "Cenchar V",
+                        "description":
+                            "Das Geräusch von Goldmünzen zieht einen stärkeren Cenchar an.",
+                        "difficulty": 7,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
+                        "node": {
+                            "x": 0.3,
+                            "y": 0.7
+                        },
+                        "enemy": {
+                            "name": "Cenchar",
+                            "image": "preview_cenchar",
+                            "model": "cenchar",
+                            "texture": null,
+                            "hp": 420,
+                            "attack": 30,
+                            "attackSpeed": 0.95,
+                            "element": "Dark"
+                        },
+                        "xpReward": 380,
+                        "rewards": [
+                            {
+                                "currency": "crystals",
+                                "amount": 7
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 110
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "gold_bar_card",
+                                "amount": 1
+                            }
+                        ],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Dafür haben wir keine Zeit!\nWir müssen sofort verschwinden!\nDie Cenchar sind schnell… brutal… und ich habe wirklich keine Lust, heute ihr Mittagessen zu werden!"
+                            },
+                            {
+                                "speaker": "Sanya",
+                                "text": "Dann los! Weg hier!"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Zu spät…\nDa vorne… mehrere Cenchar!"
+                            },
+                            {
+                                "speaker": "Rana",
+                                "text":
+                                    "Oh nein… Vielleicht entdecken sie uns nicht, wenn wir ganz leise—"
+                            },
+                            {
+                                "speaker": "Cenchar",
+                                "image": "preview_cenchar",
+                                "text": "GRRRRRRRAAAAAHHHH!!"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_storm_battle_6",
+                        "name": "Cenchar Trio II",
+                        "description":
+                            "Drei Cenchar blockieren die Coin-Farmroute.",
+                        "difficulty": 8,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
+                        "node": {
+                            "x": 0.36,
+                            "y": 0.66
+                        },
+                        "enemies": [
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 330,
+                                "attack": 24,
+                                "attackSpeed": 0.92,
+                                "element": "Dark"
+                            },
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 350,
+                                "attack": 25,
+                                "attackSpeed": 0.94,
+                                "element": "Dark"
+                            },
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 370,
+                                "attack": 26,
+                                "attackSpeed": 0.96,
+                                "element": "Dark"
+                            }
+                        ],
+                        "xpReward": 450,
+                        "rewards": [
+                            {
+                                "currency": "crystals",
+                                "amount": 8
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 130
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_coin_storm_battle_7",
+                        "name": "Cenchar VII",
+                        "description":
+                            "Ein schneller Cenchar springt aus dem Schatten.",
+                        "difficulty": 9,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
+                        "node": {
+                            "x": 0.42,
+                            "y": 0.62
+                        },
+                        "enemy": {
+                            "name": "Cenchar",
+                            "image": "preview_cenchar",
+                            "model": "cenchar",
+                            "texture": null,
+                            "hp": 560,
+                            "attack": 40,
+                            "attackSpeed": 1.0,
+                            "element": "Dark"
+                        },
+                        "xpReward": 480,
+                        "rewards": [
+                            {
+                                "currency": "crystals",
+                                "amount": 9
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 150
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": []
+                    },
+                    {
+                        "id": "event_coin_storm_battle_8",
+                        "name": "Cenchar VIII",
+                        "description":
+                            "Der Cenchar ist voll mit dunkler Energie geladen.",
+                        "difficulty": 10,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
+                        "node": {
+                            "x": 0.48,
+                            "y": 0.58
+                        },
+                        "enemy": {
+                            "name": "Cenchar",
+                            "image": "preview_cenchar",
+                            "model": "cenchar",
+                            "texture": null,
+                            "hp": 650,
+                            "attack": 48,
+                            "attackSpeed": 1.05,
+                            "element": "Dark"
+                        },
+                        "xpReward": 520,
+                        "rewards": [
+                            {
+                                "currency": "crystals",
+                                "amount": 10
+                            },
+                            {
+                                "currency": "coins",
+                                "amount": 170
+                            }
+                        ],
+                        "characterRewards": [],
+                        "cardRewards": [],
+                        "skinRewards": [],
+                        "story": [
+                            {
+                                "speaker": "Sanya",
+                                "text": "Zu spät!\nLAUFT!!"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text":
+                                    "Nein! Weglaufen bringt nichts!\nWir müssen kämpfen!"
+                            },
+                            {
+                                "speaker": "Zaron",
+                                "text": "Shela hat recht…\nBereitmachen!"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "event_coin_storm_battle_9",
+                        "name": "Cenchar Trio III",
+                        "description":
+                            "Drei Cenchar kommen aus dunklen Rissen.",
+                        "difficulty": 11,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
+                        "node": {
+                            "x": 0.54,
+                            "y": 0.54
+                        },
+                        "enemies": [
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 500,
+                                "attack": 38,
+                                "attackSpeed": 1.0,
+                                "element": "Dark"
+                            },
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 530,
+                                "attack": 40,
+                                "attackSpeed": 1.02,
+                                "element": "Dark"
+                            },
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 560,
+                                "attack": 42,
+                                "attackSpeed": 1.04,
+                                "element": "Dark"
+                            }
+                        ],
+                        "xpReward": 600,
+                        "rewards": [
+                            {
+                                "currency": "crystals",
+                                "amount": 12
+                            },
                             {
                                 "currency": "coins",
                                 "amount": 200
@@ -56,107 +546,101 @@
                         "characterRewards": [],
                         "cardRewards": [],
                         "skinRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "image": "preview_zaron",
-                                "text":
-                                    "Der goldene Riss ist offen. Wir nehmen, was wir tragen koennen."
-                            },
-                            {
-                                "speaker": "Kashin",
-                                "image": "preview_kashin",
-                                "text":
-                                    "Dann bleibe wachsam. Wo Gold liegt, stehen Waechter nie weit weg."
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_2",
-                        "name": "Goldpfad II",
-                        "description": "Mehr Gold, mehr Wachen.",
-                        "difficulty": 2,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.12,
-                            "y": 0.82
-                        },
-                        "enemy": {
-                            "name": "Gold Path II",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 165,
-                            "attack": 11,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 220
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
                         "story": []
                     },
                     {
-                        "id": "event_coin_frenzy_battle_3",
-                        "name": "Muenzsturm",
-                        "description": "Die Route wird dichter.",
-                        "difficulty": 3,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
+                        "id": "event_coin_storm_battle_10",
+                        "name": "Cenchar Guard",
+                        "description":
+                            "Ein großer Cenchar bewacht den goldenen Ring.",
+                        "difficulty": 12,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
                         "node": {
-                            "x": 0.18,
-                            "y": 0.78
+                            "x": 0.6,
+                            "y": 0.5
+                        },
+                        "cutscene": {
+                            "id": "event_coin_storm_battle_10_cutscene",
+                            "title": "Cenchar Guard",
+                            "video": "cenchar_guard",
+                            "text":
+                                "Ein großer Cenchar stellt sich vor den goldenen Ring."
                         },
                         "enemy": {
-                            "name": "Coin Storm",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
+                            "name": "Cenchar",
+                            "image": "preview_cenchar",
+                            "model": "cenchar",
                             "texture": null,
-                            "hp": 180,
-                            "attack": 12,
-                            "element": "Fire"
+                            "hp": 820,
+                            "attack": 62,
+                            "attackSpeed": 1.05,
+                            "element": "Dark"
                         },
-                        "xpReward": 250,
+                        "xpReward": 700,
                         "rewards": [
+                            {
+                                "currency": "crystals",
+                                "amount": 15
+                            },
                             {
                                 "currency": "coins",
                                 "amount": 250
                             }
                         ],
                         "characterRewards": [],
-                        "cardRewards": [],
+                        "cardRewards": [
+                            {
+                                "cardID": "gold_bar_card",
+                                "amount": 1
+                            }
+                        ],
                         "skinRewards": [],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Sanya",
+                                "text":
+                                    "Okay… alle zusammen!\nLasst euch nicht einschüchtern!"
+                            },
+                            {
+                                "speaker": "Rana",
+                                "text": "Oh man… Das kann niemals gut enden…"
+                            },
+                            {
+                                "speaker": "Cenchar",
+                                "image": "preview_cenchar",
+                                "text": "GRAAAARRR… HUUUAAAAA… KRRRRHHH!"
+                            }
+                        ]
                     },
                     {
-                        "id": "event_coin_frenzy_battle_4",
-                        "name": "Kistenrand",
-                        "description": "Kisten saumen die Route.",
-                        "difficulty": 3,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
+                        "id": "event_coin_storm_battle_11",
+                        "name": "Cenchar XI",
+                        "description":
+                            "Die Schatten verdichten sich um einen Cenchar.",
+                        "difficulty": 13,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
                         "node": {
-                            "x": 0.24,
-                            "y": 0.74
+                            "x": 0.68,
+                            "y": 0.46
                         },
                         "enemy": {
-                            "name": "Crate Edge",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
+                            "name": "Cenchar",
+                            "image": "preview_cenchar",
+                            "model": "cenchar",
                             "texture": null,
-                            "hp": 195,
-                            "attack": 13,
-                            "element": "Light"
+                            "hp": 900,
+                            "attack": 68,
+                            "attackSpeed": 1.08,
+                            "element": "Dark"
                         },
-                        "xpReward": 250,
+                        "xpReward": 760,
                         "rewards": [
+                            {
+                                "currency": "crystals",
+                                "amount": 16
+                            },
                             {
                                 "currency": "coins",
                                 "amount": 280
@@ -168,27 +652,55 @@
                         "story": []
                     },
                     {
-                        "id": "event_coin_frenzy_battle_5",
-                        "name": "Goldader",
-                        "description": "Die Goldspur bleibt offen.",
-                        "difficulty": 4,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
+                        "id": "event_coin_storm_battle_12",
+                        "name": "Cenchar Trio IV",
+                        "description":
+                            "Drei Cenchar halten den inneren Gold-Kreis.",
+                        "difficulty": 14,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
                         "node": {
-                            "x": 0.3,
-                            "y": 0.7
+                            "x": 0.76,
+                            "y": 0.4
                         },
-                        "enemy": {
-                            "name": "Gold Vein",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 210,
-                            "attack": 14,
-                            "element": "Storm"
-                        },
-                        "xpReward": 250,
+                        "enemies": [
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 680,
+                                "attack": 52,
+                                "attackSpeed": 1.05,
+                                "element": "Dark"
+                            },
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 720,
+                                "attack": 55,
+                                "attackSpeed": 1.08,
+                                "element": "Dark"
+                            },
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 760,
+                                "attack": 58,
+                                "attackSpeed": 1.1,
+                                "element": "Dark"
+                            }
+                        ],
+                        "xpReward": 840,
                         "rewards": [
+                            {
+                                "currency": "crystals",
+                                "amount": 18
+                            },
                             {
                                 "currency": "coins",
                                 "amount": 320
@@ -200,91 +712,85 @@
                         "story": []
                     },
                     {
-                        "id": "event_coin_frenzy_battle_6",
-                        "name": "Muenzregen",
-                        "description": "Die Splitter regnen ueber das Feld.",
-                        "difficulty": 4,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
+                        "id": "event_coin_storm_battle_13",
+                        "name": "Cenchar XIII",
+                        "description":
+                            "Ein Cenchar springt direkt aus dem dunklen Kern.",
+                        "difficulty": 15,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
                         "node": {
-                            "x": 0.36,
-                            "y": 0.66
+                            "x": 0.84,
+                            "y": 0.34
                         },
                         "enemy": {
-                            "name": "Coin Rain",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
+                            "name": "Cenchar",
+                            "image": "preview_cenchar",
+                            "model": "cenchar",
                             "texture": null,
-                            "hp": 230,
-                            "attack": 15,
-                            "element": "Water"
+                            "hp": 1120,
+                            "attack": 85,
+                            "attackSpeed": 1.12,
+                            "element": "Dark"
                         },
-                        "xpReward": 250,
+                        "xpReward": 900,
                         "rewards": [
                             {
+                                "currency": "crystals",
+                                "amount": 20
+                            },
+                            {
                                 "currency": "coins",
-                                "amount": 350
+                                "amount": 360
                             }
                         ],
                         "characterRewards": [],
                         "cardRewards": [],
                         "skinRewards": [],
-                        "story": []
+                        "story": [
+                            {
+                                "speaker": "Zaron",
+                                "text": "Die machen echt verstörende Geräusche…"
+                            },
+                            {
+                                "speaker": "Shela",
+                                "text": "Zaron! Konzentrier dich endlich!"
+                            },
+                            {
+                                "speaker": "Cenchar",
+                                "image": "preview_cenchar",
+                                "text": "KRRRRF… RAAAA… SHHHRRRR… PFSSSS!!"
+                            }
+                        ]
                     },
                     {
-                        "id": "event_coin_frenzy_battle_7",
-                        "name": "Schatzbogen",
-                        "description": "Ein langer Bogen aus Beute.",
-                        "difficulty": 5,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
+                        "id": "event_coin_storm_battle_14",
+                        "name": "Cenchar XIV",
+                        "description":
+                            "Ein Cenchar im Goldpanzer versperrt den letzten Weg.",
+                        "difficulty": 16,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
                         "node": {
-                            "x": 0.42,
-                            "y": 0.62
+                            "x": 0.72,
+                            "y": 0.24
                         },
                         "enemy": {
-                            "name": "Treasure Arc",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
+                            "name": "Cenchar",
+                            "image": "preview_cenchar",
+                            "model": "cenchar",
                             "texture": null,
-                            "hp": 250,
-                            "attack": 16,
-                            "element": "Fire"
+                            "hp": 1280,
+                            "attack": 96,
+                            "attackSpeed": 1.15,
+                            "element": "Dark"
                         },
-                        "xpReward": 250,
+                        "xpReward": 980,
                         "rewards": [
                             {
-                                "currency": "coins",
-                                "amount": 390
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_8",
-                        "name": "Silberbruch",
-                        "description": "Der Pfad schneidet in die Schatzlinie.",
-                        "difficulty": 5,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.48,
-                            "y": 0.58
-                        },
-                        "enemy": {
-                            "name": "Silver Break",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 270,
-                            "attack": 17,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
+                                "currency": "crystals",
+                                "amount": 24
+                            },
                             {
                                 "currency": "coins",
                                 "amount": 420
@@ -296,1395 +802,84 @@
                         "story": []
                     },
                     {
-                        "id": "event_coin_frenzy_battle_9",
-                        "name": "Kupferrand",
-                        "description": "Die Front zieht enger.",
-                        "difficulty": 6,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
+                        "id": "event_coin_storm_battle_15",
+                        "name": "Cenchar Swarm",
+                        "description":
+                            "Drei starke Cenchar verteidigen den verborgenen Goldbarren.",
+                        "difficulty": 18,
+                        "groundTexture": "realm_gold",
+                        "skyboxTexture": "realm_gold",
                         "node": {
                             "x": 0.54,
-                            "y": 0.54
-                        },
-                        "enemy": {
-                            "name": "Copper Edge",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 290,
-                            "attack": 18,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 460
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_10",
-                        "name": "Schatzwacht",
-                        "description": "Die erste Coin-Elite steht bereit.",
-                        "difficulty": 6,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.6,
-                            "y": 0.5
-                        },
-                        "enemy": {
-                            "name": "Treasure Guard",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 330,
-                            "attack": 20,
-                            "element": "Plant"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 520
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "image": "preview_zaron",
-                                "text":
-                                    "Die Route verdichtet sich. Das ist kein normales Schatzfeld mehr."
-                            },
-                            {
-                                "speaker": "Kashin",
-                                "image": "preview_kashin",
-                                "text":
-                                    "Dann schneiden wir uns bis zum Kern durch."
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_11",
-                        "name": "Kassenpfad I",
-                        "description": "Die zweite Haelfte beginnt.",
-                        "difficulty": 7,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.66,
-                            "y": 0.46
-                        },
-                        "enemy": {
-                            "name": "Vault Path I",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 360,
-                            "attack": 21,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 550
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_12",
-                        "name": "Kassenpfad II",
-                        "description": "Mehr Druck, mehr Beute.",
-                        "difficulty": 7,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.72,
-                            "y": 0.42
-                        },
-                        "enemy": {
-                            "name": "Vault Path II",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 390,
-                            "attack": 22,
-                            "element": "Storm"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 590
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_13",
-                        "name": "Goldwelle",
-                        "description": "Ein goldener Impuls oeffnet den Rand.",
-                        "difficulty": 8,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.78,
-                            "y": 0.38
-                        },
-                        "enemy": {
-                            "name": "Gold Wave",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 420,
-                            "attack": 23,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 630
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_14",
-                        "name": "Schatzsaum",
-                        "description": "Die Schatzkante bleibt stabil.",
-                        "difficulty": 8,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.84,
-                            "y": 0.34
-                        },
-                        "enemy": {
-                            "name": "Treasure Fringe",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 450,
-                            "attack": 24,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 660
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_15",
-                        "name": "Muenzsaum",
-                        "description": "Der Pfad knickt jetzt nach unten ab.",
-                        "difficulty": 9,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.9,
-                            "y": 0.3
-                        },
-                        "enemy": {
-                            "name": "Coin Fringe",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 480,
-                            "attack": 25,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 700
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_16",
-                        "name": "Kupferbogen",
-                        "description": "Ein zweiter Bogen ueber das Feld.",
-                        "difficulty": 9,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.86,
-                            "y": 0.24
-                        },
-                        "enemy": {
-                            "name": "Copper Arc",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 510,
-                            "attack": 26,
-                            "element": "Plant"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 740
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_17",
-                        "name": "Silberpfad",
-                        "description": "Die Route bleibt lang und profitabel.",
-                        "difficulty": 10,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.8,
-                            "y": 0.2
-                        },
-                        "enemy": {
-                            "name": "Silver Route",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 540,
-                            "attack": 27,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 780
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_18",
-                        "name": "Goldpfahl",
-                        "description": "Der innere Schatzpfahl wird sichtbar.",
-                        "difficulty": 10,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.74,
-                            "y": 0.16
-                        },
-                        "enemy": {
-                            "name": "Gold Stake",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 570,
-                            "attack": 28,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 820
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_19",
-                        "name": "Kernmuenze",
-                        "description": "Die Kasse oeffnet sich weiter.",
-                        "difficulty": 11,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.68,
                             "y": 0.12
                         },
-                        "enemy": {
-                            "name": "Core Coin",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 600,
-                            "attack": 29,
-                            "element": "Dark"
+                        "cutscene": {
+                            "id": "event_coin_storm_battle_15_cutscene",
+                            "title": "Cenchar Swarm",
+                            "video": "cenchar_swarm",
+                            "text":
+                                "Der finale Cenchar-Schwarm tritt aus dem dunklen Kern."
                         },
-                        "xpReward": 250,
+                        "enemies": [
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 900,
+                                "attack": 72,
+                                "attackSpeed": 1.1,
+                                "element": "Dark"
+                            },
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 1100,
+                                "attack": 86,
+                                "attackSpeed": 1.15,
+                                "element": "Dark"
+                            },
+                            {
+                                "name": "Cenchar",
+                                "image": "preview_cenchar",
+                                "model": "cenchar",
+                                "texture": null,
+                                "hp": 1350,
+                                "attack": 105,
+                                "attackSpeed": 1.2,
+                                "element": "Dark"
+                            }
+                        ],
+                        "xpReward": 1250,
                         "rewards": [
                             {
+                                "currency": "crystals",
+                                "amount": 40
+                            },
+                            {
                                 "currency": "coins",
-                                "amount": 860
+                                "amount": 650
+                            },
+                            {
+                                "currency": "skill_points",
+                                "amount": 15
                             }
                         ],
                         "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_20",
-                        "name": "Schatzhaupt",
-                        "description":
-                            "Ein Coin-Boss blockiert die Mittellinie.",
-                        "difficulty": 11,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.62,
-                            "y": 0.1
-                        },
-                        "enemy": {
-                            "name": "Treasure Chief",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 650,
-                            "attack": 31,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
+                        "cardRewards": [
                             {
-                                "currency": "coins",
-                                "amount": 920
+                                "cardID": "void_pulse",
+                                "amount": 1
                             }
                         ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_21",
-                        "name": "Goldlauf I",
-                        "description": "Der Rueckweg beginnt mit hoher Dichte.",
-                        "difficulty": 12,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.56,
-                            "y": 0.16
-                        },
-                        "enemy": {
-                            "name": "Gold Run I",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 690,
-                            "attack": 32,
-                            "element": "Plant"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 960
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_22",
-                        "name": "Goldlauf II",
-                        "description": "Die Beutel werden schwerer.",
-                        "difficulty": 12,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.5,
-                            "y": 0.22
-                        },
-                        "enemy": {
-                            "name": "Gold Run II",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 730,
-                            "attack": 33,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1000
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_23",
-                        "name": "Muenzader",
-                        "description": "Die Route bleibt breit und offen.",
-                        "difficulty": 13,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.44,
-                            "y": 0.28
-                        },
-                        "enemy": {
-                            "name": "Coin Vein",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 770,
-                            "attack": 34,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1040
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_24",
-                        "name": "Schatzkante",
-                        "description": "Noch immer gibt es neue Kisten.",
-                        "difficulty": 13,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.38,
-                            "y": 0.34
-                        },
-                        "enemy": {
-                            "name": "Treasure Edge",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 810,
-                            "attack": 35,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1080
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_25",
-                        "name": "Kassengrat",
-                        "description":
-                            "Der Grat fuehrt in den oberen Ruecklauf.",
-                        "difficulty": 14,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.32,
-                            "y": 0.4
-                        },
-                        "enemy": {
-                            "name": "Vault Ridge",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 850,
-                            "attack": 36,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1120
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_26",
-                        "name": "Muenzgrat",
-                        "description": "Eine lange Linie aus Goldschimmern.",
-                        "difficulty": 14,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.26,
-                            "y": 0.46
-                        },
-                        "enemy": {
-                            "name": "Coin Ridge",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 890,
-                            "attack": 37,
-                            "element": "Plant"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1170
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_27",
-                        "name": "Schatzlauf",
-                        "description": "Die obere Haelfte fuehrt weiter.",
-                        "difficulty": 15,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.2,
-                            "y": 0.52
-                        },
-                        "enemy": {
-                            "name": "Treasure Run",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 930,
-                            "attack": 38,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1210
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_28",
-                        "name": "Goldsattel",
-                        "description": "Der Pfad bleibt lukrativ.",
-                        "difficulty": 15,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.14,
-                            "y": 0.58
-                        },
-                        "enemy": {
-                            "name": "Gold Saddle",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 970,
-                            "attack": 39,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1250
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_29",
-                        "name": "Kassenfront",
-                        "description": "Die Front zieht in den oberen Ring.",
-                        "difficulty": 16,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.1,
-                            "y": 0.64
-                        },
-                        "enemy": {
-                            "name": "Vault Front",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 1010,
-                            "attack": 40,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1290
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_30",
-                        "name": "Goldrichter",
-                        "description":
-                            "Eine weitere Elite blockiert den oberen Zugang.",
-                        "difficulty": 16,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.16,
-                            "y": 0.7
-                        },
-                        "enemy": {
-                            "name": "Gold Judge",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 1060,
-                            "attack": 42,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1350
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
                         "skinRewards": [],
                         "story": [
                             {
-                                "speaker": "Zaron",
-                                "image": "preview_zaron",
-                                "text":
-                                    "Der Goldstrom zieht an meiner Klinge. Noch weiter."
-                            },
-                            {
-                                "speaker": "Kashin",
-                                "image": "preview_kashin",
-                                "text":
-                                    "Nicht gierig werden. Der Riss nutzt genau das aus."
-                            }
-                        ]
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_31",
-                        "name": "Schatzbogen II",
-                        "description": "Die Route schwingt wieder nach rechts.",
-                        "difficulty": 17,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.22,
-                            "y": 0.76
-                        },
-                        "enemy": {
-                            "name": "Treasure Arc II",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 1110,
-                            "attack": 43,
-                            "element": "Plant"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1390
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_32",
-                        "name": "Muenzbogen II",
-                        "description": "Die obere Linie bleibt voller Truhen.",
-                        "difficulty": 17,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.28,
-                            "y": 0.82
-                        },
-                        "enemy": {
-                            "name": "Coin Arc II",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 1160,
-                            "attack": 44,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1430
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_33",
-                        "name": "Goldkreis",
-                        "description": "Die Beute kreist ueber dem Feld.",
-                        "difficulty": 18,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.34,
-                            "y": 0.88
-                        },
-                        "enemy": {
-                            "name": "Gold Circle",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 1210,
-                            "attack": 45,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1470
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_34",
-                        "name": "Kassensaum",
-                        "description":
-                            "Der innere Ring aus Kisten schliesst sich.",
-                        "difficulty": 18,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.42,
-                            "y": 0.84
-                        },
-                        "enemy": {
-                            "name": "Vault Fringe",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 1260,
-                            "attack": 46,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1510
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_35",
-                        "name": "Goldwall",
-                        "description": "Vor dem Ende steht eine letzte Front.",
-                        "difficulty": 19,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.5,
-                            "y": 0.8
-                        },
-                        "enemy": {
-                            "name": "Gold Wall",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 1310,
-                            "attack": 47,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1550
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_36",
-                        "name": "Muenzwall",
-                        "description": "Die Muenzfront bleibt dicht.",
-                        "difficulty": 19,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.58,
-                            "y": 0.76
-                        },
-                        "enemy": {
-                            "name": "Coin Wall",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 1360,
-                            "attack": 48,
-                            "element": "Storm"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1590
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_37",
-                        "name": "Schatzpfeiler",
-                        "description": "Ein letzter Pfeiler stuetzt den Ring.",
-                        "difficulty": 20,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.66,
-                            "y": 0.72
-                        },
-                        "enemy": {
-                            "name": "Treasure Pillar",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 1410,
-                            "attack": 49,
-                            "element": "Plant"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1630
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_38",
-                        "name": "Goldsturm",
-                        "description": "Die Luft ist voll mit Glanzsplittern.",
-                        "difficulty": 20,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.74,
-                            "y": 0.68
-                        },
-                        "enemy": {
-                            "name": "Goldstorm",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 1460,
-                            "attack": 50,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1670
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_39",
-                        "name": "Kassenwacht",
-                        "description": "Die letzte Wacht steht im Weg.",
-                        "difficulty": 21,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.82,
-                            "y": 0.64
-                        },
-                        "enemy": {
-                            "name": "Vault Guard",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 1510,
-                            "attack": 51,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1710
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_40",
-                        "name": "Goldboss",
-                        "description":
-                            "Der grosse Coin-Boss verteidigt den Innenring.",
-                        "difficulty": 21,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.88,
-                            "y": 0.58
-                        },
-                        "enemy": {
-                            "name": "Gold Boss",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 1580,
-                            "attack": 54,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1780
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_41",
-                        "name": "Innenkasse I",
-                        "description": "Nach dem Boss bleibt die Beute hoch.",
-                        "difficulty": 22,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.82,
-                            "y": 0.52
-                        },
-                        "enemy": {
-                            "name": "Inner Vault I",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 1640,
-                            "attack": 55,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1840
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_42",
-                        "name": "Innenkasse II",
-                        "description": "Die Abschlussphase beginnt.",
-                        "difficulty": 22,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.76,
-                            "y": 0.46
-                        },
-                        "enemy": {
-                            "name": "Inner Vault II",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 1700,
-                            "attack": 56,
-                            "element": "Storm"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1890
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_43",
-                        "name": "Goldkern I",
-                        "description": "Der Kern der Event-Route bleibt offen.",
-                        "difficulty": 23,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.7,
-                            "y": 0.4
-                        },
-                        "enemy": {
-                            "name": "Gold Core I",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 1760,
-                            "attack": 57,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 1940
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_44",
-                        "name": "Goldkern II",
-                        "description": "Der letzte Ring wird enger.",
-                        "difficulty": 23,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.64,
-                            "y": 0.34
-                        },
-                        "enemy": {
-                            "name": "Gold Core II",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 1820,
-                            "attack": 58,
-                            "element": "Plant"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2000
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_45",
-                        "name": "Schlussgold I",
-                        "description": "Der Endpfad glitzert ueberall.",
-                        "difficulty": 24,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.58,
-                            "y": 0.28
-                        },
-                        "enemy": {
-                            "name": "Final Gold I",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 1880,
-                            "attack": 59,
-                            "element": "Water"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2050
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_46",
-                        "name": "Schlussgold II",
-                        "description": "Die letzte Kante wird erreicht.",
-                        "difficulty": 24,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.52,
-                            "y": 0.22
-                        },
-                        "enemy": {
-                            "name": "Final Gold II",
-                            "image": "sar_dragon",
-                            "model": "krevas",
-                            "texture": null,
-                            "hp": 1940,
-                            "attack": 60,
-                            "element": "Dark"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2110
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_47",
-                        "name": "Schatzspitze",
-                        "description": "Die Schatzspitze fuehrt zum Bossraum.",
-                        "difficulty": 25,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.46,
-                            "y": 0.16
-                        },
-                        "enemy": {
-                            "name": "Treasure Peak",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 2000,
-                            "attack": 61,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2160
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_48",
-                        "name": "Goldspitze",
-                        "description":
-                            "Nur noch zwei Kaempfe bis zum Abschluss.",
-                        "difficulty": 25,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.38,
-                            "y": 0.12
-                        },
-                        "enemy": {
-                            "name": "Gold Peak",
-                            "image": "sar_dragon",
-                            "model": "tsayi",
-                            "texture": null,
-                            "hp": 2060,
-                            "attack": 62,
-                            "element": "Fire"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2210
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_49",
-                        "name": "Kassenherz",
-                        "description": "Das Herz der Schatzroute liegt offen.",
-                        "difficulty": 26,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.28,
-                            "y": 0.1
-                        },
-                        "enemy": {
-                            "name": "Vault Heart",
-                            "image": "sar_dragon",
-                            "model": "jirgin",
-                            "texture": null,
-                            "hp": 2140,
-                            "attack": 64,
-                            "element": "Storm"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2300
-                            }
-                        ],
-                        "characterRewards": [],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": []
-                    },
-                    {
-                        "id": "event_coin_frenzy_battle_50",
-                        "name": "Treasure Dominion",
-                        "description":
-                            "Der finale Coin-Boss und Abschluss der Goldroute.",
-                        "difficulty": 27,
-                        "groundTexture": "realm_coin",
-                        "skyboxTexture": "realm_coin",
-                        "node": {
-                            "x": 0.16,
-                            "y": 0.08
-                        },
-                        "enemy": {
-                            "name": "Treasure Dominion",
-                            "image": "sar_dragon",
-                            "model": "masoyina",
-                            "texture": null,
-                            "hp": 2300,
-                            "attack": 70,
-                            "element": "Light"
-                        },
-                        "xpReward": 250,
-                        "rewards": [
-                            {
-                                "currency": "coins",
-                                "amount": 2520
-                            }
-                        ],
-                        "characterRewards": [
-                            {
-                                "characterID": "shen"
-                            }
-                        ],
-                        "cardRewards": [],
-                        "skinRewards": [],
-                        "story": [
-                            {
-                                "speaker": "Zaron",
-                                "image": "preview_zaron",
-                                "text":
-                                    "Treasure Dominion steht vor uns. Danach gehoert diese Route uns."
-                            },
-                            {
-                                "speaker": "Kashin",
-                                "image": "preview_kashin",
-                                "text": "Dann beenden wir den Coin Frenzy hier."
+                                "speaker": "Cenchar",
+                                "image": "preview_cenchar_swarm",
+                                "text": "OHJHHH… JSSSSS… SSSS… RRRR… ZUZZZJJJ!!"
                             }
                         ]
                     }

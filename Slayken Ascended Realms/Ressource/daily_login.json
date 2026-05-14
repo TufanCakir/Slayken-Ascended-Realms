@@ -8,7 +8,7 @@
         "buttonTitle": "Tag 1 abholen",
         "icon": "diamond.fill",
         "assetIcon": "icon_crystals",
-        "background": "bg_sar",
+        "background": "bg_main",
         "rewards": [
             {
                 "currency": "coins",
@@ -30,6 +30,7 @@
         "message": "Die zweite Login-Gabe vergroessert deinen Vorrat.",
         "buttonTitle": "Tag 2 abholen",
         "assetIcon": "icon_crystals",
+        "background": "bg_main",
         "icon": "shippingbox.fill",
         "rewards": [
             {
@@ -52,6 +53,7 @@
         "message": "Mehr Kristalle fuer deinen weiteren Aufstieg.",
         "buttonTitle": "Tag 3 abholen",
         "assetIcon": "icon_crystals",
+        "background": "bg_main",
         "icon": "sparkles",
         "rewards": [
             {
@@ -74,6 +76,7 @@
         "message": "Heute gibt es eine staerkere Muenzladung.",
         "buttonTitle": "Tag 4 abholen",
         "assetIcon": "icon_coins",
+        "background": "bg_main",
         "icon": "shield.fill",
         "rewards": [
             {
@@ -96,6 +99,7 @@
         "message": "Die taegliche Belohnung bleibt stabil und verlaesslich.",
         "buttonTitle": "Tag 5 abholen",
         "assetIcon": "icon_coins",
+        "background": "bg_main",
         "icon": "circle.hexagongrid.fill",
         "rewards": [
             {
@@ -123,6 +127,7 @@
         "message": "Die Ahnen belohnen deine Rueckkehr mit mehr Ressourcen.",
         "buttonTitle": "Tag 6 abholen",
         "assetIcon": "icon_coins",
+        "background": "bg_main",
         "icon": "flame.fill",
         "rewards": [
             {
@@ -145,6 +150,7 @@
         "message": "Nach sieben Tagen wartet der erste groessere Wochenbonus.",
         "buttonTitle": "Tag 7 abholen",
         "assetIcon": "icon_crystals",
+        "background": "bg_main",
         "icon": "star.circle.fill",
         "rewards": [
             {
@@ -170,6 +176,7 @@
         "subtitle": "Die zweite Woche beginnt",
         "message": "Ein ruhiger, aber wertvoller Neustart in Woche zwei.",
         "assetIcon": "icon_crystals",
+        "background": "bg_main",
         "buttonTitle": "Tag 8 abholen",
         "icon": "sun.max.fill",
         "rewards": [
@@ -194,6 +201,7 @@
             "Dein Lager wird erneut mit Muenzen und Kristallen gefuellt.",
         "buttonTitle": "Tag 9 abholen",
         "assetIcon": "icon_crystals",
+        "background": "bg_main",
         "icon": "shippingbox.circle.fill",
         "rewards": [
             {
@@ -216,6 +224,7 @@
         "message": "Heute liegt der Fokus deutlicher auf Kristallen.",
         "buttonTitle": "Tag 10 abholen",
         "assetIcon": "icon_coins",
+        "background": "bg_main",
         "icon": "diamond.fill",
         "rewards": [
             {
@@ -243,6 +252,7 @@
         "message": "Eine Reserve fuer neue Versuche und staerkere Gegner.",
         "buttonTitle": "Tag 11 abholen",
         "assetIcon": "icon_coins",
+        "background": "bg_main",
         "icon": "bolt.shield.fill",
         "rewards": [
             {
@@ -266,6 +276,7 @@
             "Du bleibst im Rhythmus und erhaeltst eine weitere starke Gabe.",
         "buttonTitle": "Tag 12 abholen",
         "assetIcon": "icon_coins",
+        "background": "bg_main",
         "icon": "figure.martial.arts",
         "rewards": [
             {
@@ -289,6 +300,7 @@
             "Ein kraftvoller Bonus kurz vor dem naechsten Wochenabschluss.",
         "buttonTitle": "Tag 13 abholen",
         "assetIcon": "icon_coins",
+        "background": "bg_main",
         "icon": "lock.open.fill",
         "rewards": [
             {
@@ -312,6 +324,7 @@
             "Die zweite Woche endet mit einer deutlich groesseren Belohnung.",
         "buttonTitle": "Tag 14 abholen",
         "assetIcon": "icon_crystals",
+        "background": "bg_main",
         "icon": "crown.fill",
         "rewards": [
             {
@@ -342,6 +355,7 @@
         "subtitle": "Die Monatsmitte",
         "message": "Zur Halbzeit gibt es einen stabilen Fortschrittsbonus.",
         "buttonTitle": "Tag 15 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_crystals",
         "icon": "flag.fill",
         "rewards": [
@@ -364,6 +378,7 @@
         "subtitle": "Mehr Muenzen",
         "message": "Diese Gabe richtet sich besonders an deine Muenzkasse.",
         "buttonTitle": "Tag 16 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_crystals",
         "icon": "circle.hexagonpath.fill",
         "rewards": [
@@ -392,6 +407,7 @@
         "message":
             "Eine Kristallgabe fuer Beschwoerungen und Premium-Fortschritt.",
         "buttonTitle": "Tag 17 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_coins",
         "icon": "sparkle.magnifyingglass",
         "rewards": [
@@ -414,6 +430,7 @@
         "subtitle": "Versorgung fuer den Alltag",
         "message": "Der Monat bleibt ergiebig und verlaesslich.",
         "buttonTitle": "Tag 18 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_coins",
         "icon": "house.fill",
         "rewards": [
@@ -436,6 +453,7 @@
         "subtitle": "Kurz vor dem naechsten Peak",
         "message": "Noch einmal mehr Ressourcen vor dem dritten Wochenbonus.",
         "buttonTitle": "Tag 19 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_coins",
         "icon": "sparkles.square.filled.on.square",
         "rewards": [
@@ -458,6 +476,7 @@
         "subtitle": "Wachsende Belohnungen",
         "message": "Die taeglichen Mengen steigen weiter an.",
         "buttonTitle": "Tag 20 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_coins",
         "icon": "shippingbox.and.arrow.backward.fill",
         "rewards": [
@@ -486,6 +505,7 @@
         "message":
             "Drei Wochen Login verdienen eine spuerbar groessere Belohnung.",
         "buttonTitle": "Tag 21 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_crystals",
         "icon": "star.square.fill",
         "rewards": [
@@ -512,6 +532,7 @@
         "subtitle": "Richtung Finale",
         "message": "Die vierte Woche startet mit einer soliden Gabe.",
         "buttonTitle": "Tag 22 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_crystals",
         "icon": "arrow.up.right.circle.fill",
         "rewards": [
@@ -535,6 +556,7 @@
         "message":
             "Noch mehr Ressourcen fuer deine Schlachten und Beschwoerungen.",
         "buttonTitle": "Tag 23 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_crystals",
         "icon": "shield.lefthalf.filled",
         "rewards": [
@@ -562,6 +584,7 @@
         "subtitle": "Starker Premium-Schub",
         "message": "Heute wartet ein besonders ordentlicher Kristallzuwachs.",
         "buttonTitle": "Tag 24 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_coins",
         "icon": "diamond.circle.fill",
         "rewards": [
@@ -584,6 +607,7 @@
         "subtitle": "Treue wird gesehen",
         "message": "Die Halle der Meister fuellt deine Taschen erneut.",
         "buttonTitle": "Tag 25 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_coins",
         "icon": "building.columns.fill",
         "rewards": [
@@ -606,6 +630,7 @@
         "subtitle": "Mehr Energie aus den Reichen",
         "message": "Ein staerkerer Schub kurz vor dem Monatsende.",
         "buttonTitle": "Tag 26 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_coins",
         "icon": "network",
         "rewards": [
@@ -633,6 +658,7 @@
         "subtitle": "Fast geschafft",
         "message": "Der Monatskalender bleibt bis zum Schluss lukrativ.",
         "buttonTitle": "Tag 27 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_coins",
         "icon": "archivebox.fill",
         "rewards": [
@@ -655,6 +681,7 @@
         "subtitle": "Vierter Wochenbonus",
         "message": "Vier Wochen Login werden mit einem starken Bonus gefeiert.",
         "buttonTitle": "Tag 28 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_crystals",
         "icon": "medal.fill",
         "rewards": [
@@ -686,6 +713,7 @@
         "subtitle": "Nur noch ein Tag",
         "message": "Ein letzter grosser Zwischenbonus vor dem Monatsabschluss.",
         "buttonTitle": "Tag 29 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_crystals",
         "icon": "sparkles.tv.fill",
         "rewards": [
@@ -714,6 +742,7 @@
         "message":
             "Der dreissigste Login bringt die staerkste Belohnung des Monats.",
         "buttonTitle": "Tag 30 abholen",
+        "background": "bg_main",
         "assetIcon": "icon_crystals",
         "icon": "crown.fill",
         "rewards": [

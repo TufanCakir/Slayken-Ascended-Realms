@@ -64,18 +64,6 @@ struct GiftView: View {
 
     }
 
-    private var backgroundFallback: some View {
-        LinearGradient(
-            colors: [
-                Color.black,
-                Color(red: 0.11, green: 0.08, blue: 0.07),
-                Color(red: 0.24, green: 0.14, blue: 0.12),
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-
     private var header: some View {
         HStack {
             VStack(alignment: .leading, spacing: 6) {

@@ -1,10 +1,22 @@
 {
     "contentVersion": 28,
+    "maintenance": {
+        "enabled": false,
+        "title": "Wartungsarbeiten",
+        "message":
+            "Slayken Ascended Realms ist gerade kurz nicht erreichbar. Bitte versuche es spaeter erneut.",
+        "retryAfter": "Wir sind bald wieder online."
+    },
     "resources": [
         {
             "name": "login_campaigns",
-            "version": "6",
+            "version": "8",
             "url": "https://remote.tufancakir.com/login_campaigns.json"
+        },
+        {
+            "name": "event_login_campfire",
+            "version": "2",
+            "url": "https://remote.tufancakir.com/event_login_campfire.json"
         },
         {
             "name": "event_login_launch",
@@ -18,7 +30,7 @@
         },
         {
             "name": "event_login_summer",
-            "version": "7",
+            "version": "8",
             "url": "https://remote.tufancakir.com/event_login_summer.json"
         },
         {
@@ -48,7 +60,7 @@
         },
         {
             "name": "ability_cards",
-            "version": "3",
+            "version": "4",
             "url": "https://remote.tufancakir.com/ability_cards.json"
         },
         {
@@ -102,6 +114,11 @@
             "url": "https://remote.tufancakir.com/event_skill.json"
         },
         {
+            "name": "event_chapter_campfire",
+            "version": "3",
+            "url": "https://remote.tufancakir.com/event_chapter_campfire.json"
+        },
+        {
             "name": "event_chapter_summer",
             "version": "13",
             "url": "https://remote.tufancakir.com/event_chapter_summer.json"
@@ -150,7 +167,7 @@
         },
         {
             "name": "particle_effects",
-            "version": "3",
+            "version": "4",
             "url": "https://remote.tufancakir.com/particle_effects.json"
         },
         {
@@ -165,7 +182,7 @@
         },
         {
             "name": "shop_skins",
-            "version": "1",
+            "version": "2",
             "url": "https://remote.tufancakir.com/shop_skins.json"
         },
         {
@@ -215,6 +232,33 @@
         }
     ],
     "assets": [
+        {
+            "name": "skill_shukwa_blessing.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/skill_shukwa_blessing.png"
+        },
+        {
+            "name": "realm_campfire.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/realm_campfire.png"
+        },
+        {
+            "name": "preview_shinuca.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/preview_shinuca.png"
+        },
+        {
+            "name": "preview_shinuca_awakening.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/preview_shinuca_awakening.png"
+        },
+        {
+            "name": "chest_campfire.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/chest_campfire.png"
+        },
         {
             "name": "bg_main.png",
             "version": "1",
@@ -1226,6 +1270,11 @@
                 "https://remote.tufancakir.com/3DHeroClassesAnimation/yanzu_animation.usdz"
         },
         {
+            "name": "shinuca.usdz",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/3DEventMonster/shinuca.usdz"
+        },
+        {
             "name": "setan.usdz",
             "version": "1",
             "url": "https://remote.tufancakir.com/3DEventMonster/setan.usdz"
@@ -1346,6 +1395,26 @@
             "name": "beatcher_tide_king.mp4",
             "version": "1",
             "url": "https://remote.tufancakir.com/Videos/beatcher_tide_king.mp4"
+        },
+        {
+            "name": "intro_crystalstorm.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/intro_crystalstorm.mp4"
+        },
+        {
+            "name": "intro_campfire.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/intro_campfire.mp4"
+        },
+        {
+            "name": "shinucas.mp4",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/Videos/shinucas.mp4"
+        },
+        {
+            "name": "shinucas_awakening.mp4",
+            "version": "3",
+            "url": "https://remote.tufancakir.com/Videos/shinucas_awakening.mp4"
         },
         {
             "name": "intro_crystalstorm.mp4",

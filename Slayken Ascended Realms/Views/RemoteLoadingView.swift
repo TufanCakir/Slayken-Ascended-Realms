@@ -16,6 +16,7 @@ struct RemoteLoadingView: View {
     let requiresMandatoryUpdate: Bool
     let failureMessage: String?
     let requiresRetry: Bool
+    let maintenance: RemoteContentMaintenance?
     let isConnected: Bool
     @Binding var showOptions: Bool
     let onPreloadAll: () -> Void
@@ -29,7 +30,24 @@ struct RemoteLoadingView: View {
         return plan.formattedEstimatedSize
     }
 
+    private var isMaintenanceMode: Bool {
+        maintenance?.enabled == true
+    }
+
+    private var maintenanceTitle: String {
+        maintenance?.title ?? "Wartungsarbeiten"
+    }
+
+    private var maintenanceMessage: String {
+        maintenance?.message
+            ?? "Slayken Ascended Realms ist gerade kurz nicht erreichbar. Bitte versuche es spaeter erneut."
+    }
+
     private var summaryText: String {
+        if isMaintenanceMode {
+            return maintenanceMessage
+        }
+
         if let failureMessage, !failureMessage.isEmpty {
             return failureMessage
         }
@@ -71,7 +89,9 @@ struct RemoteLoadingView: View {
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            guard !requiresMandatoryUpdate, !isPreparingPlan, !isStarting else {
+            guard !isMaintenanceMode, !requiresMandatoryUpdate,
+                !isPreparingPlan, !isStarting
+            else {
                 return
             }
             showOptions = true
@@ -130,11 +150,13 @@ struct RemoteLoadingView: View {
                 .foregroundStyle(.white)
 
             Text(
-                requiresRetry
-                    ? "Download erneut starten."
-                    : requiresMandatoryUpdate
-                        ? "Update zuerst laden."
-                        : "Jetzt laden oder direkt starten."
+                isMaintenanceMode
+                    ? "Die Realm-Server sind kurz offline."
+                    : requiresRetry
+                        ? "Download erneut starten."
+                        : requiresMandatoryUpdate
+                            ? "Update zuerst laden."
+                            : "Jetzt laden oder direkt starten."
             )
             .font(.system(size: 14, weight: .bold))
             .foregroundStyle(.white.opacity(0.72))
@@ -174,13 +196,15 @@ struct RemoteLoadingView: View {
 
             VStack(spacing: 8) {
                 Text(
-                    requiresRetry
-                        ? "Laden fehlgeschlagen"
-                        : isStarting
-                            ? "Lade Inhalte"
-                            : requiresMandatoryUpdate
-                                ? "Update nötig"
-                                : "Download wählen"
+                    isMaintenanceMode
+                        ? maintenanceTitle
+                        : requiresRetry
+                            ? "Laden fehlgeschlagen"
+                            : isStarting
+                                ? "Lade Inhalte"
+                                : requiresMandatoryUpdate
+                                    ? "Update nötig"
+                                    : "Download wählen"
                 )
                 .font(.system(size: 24, weight: .black, design: .rounded))
                 .foregroundStyle(.white)
@@ -193,13 +217,29 @@ struct RemoteLoadingView: View {
                 .foregroundStyle(.white.opacity(0.76))
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
+
+                if isMaintenanceMode, let retryAfter = maintenance?.retryAfter,
+                    !retryAfter.isEmpty
+                {
+                    Text(retryAfter)
+                        .font(.system(size: 12, weight: .black))
+                        .foregroundStyle(.yellow.opacity(0.9))
+                        .multilineTextAlignment(.center)
+                }
             }
 
-            if requiresMandatoryUpdate {
+            if isMaintenanceMode {
+                Image(systemName: "wrench.and.screwdriver.fill")
+                    .font(.system(size: 34, weight: .black))
+                    .foregroundStyle(.yellow)
+                    .padding(.top, 4)
+            } else if requiresMandatoryUpdate {
                 updateInfoBlock
             }
 
-            if requiresRetry {
+            if isMaintenanceMode {
+                EmptyView()
+            } else if requiresRetry {
                 retryBlock
             } else if isStarting || isPreparingPlan {
                 Text(isPreparingPlan ? "Plan wird vorbereitet" : statusText)
@@ -496,7 +536,7 @@ struct RemoteLoadingView: View {
     }
 
     private var shouldShowOverlay: Bool {
-        !requiresRetry && !isStarting
+        !isMaintenanceMode && !requiresRetry && !isStarting
             && (requiresMandatoryUpdate || showOptions)
     }
 

@@ -102,6 +102,10 @@
             {
                 "currency": "skill_glyphs",
                 "amount": 10
+            },
+            {
+                "currency": "lava_sigil",
+                "amount": 100
             }
         ],
         "characterRewards": [

@@ -10,21 +10,21 @@
         "title": "Launch Login",
         "subtitle": "Event-Login zum Release",
         "resource": "event_login_launch",
-        "endsAt": "05.06.2026 23:59",
+        "endsAt": "05.06.2026 23:59"
     },
     {
         "id": "event_login_festival",
         "title": "Festival Login",
         "subtitle": "Event-Login mit Spezialbelohnungen",
         "resource": "event_login_festival",
-        "endsAt": "05.06.2026 23:59",
+        "endsAt": "05.06.2026 23:59"
     },
     {
         "id": "event_login_summer",
         "title": "Summer Login",
         "subtitle": "Sommer-Event mit Bonus-Rewards",
         "resource": "event_login_summer",
-        "endsAt": "05.06.2026 23:59",
+        "endsAt": "05.06.2026 23:59"
     },
     {
         "id": "event_login_coins",
@@ -39,5 +39,12 @@
         "subtitle": "30 Tage Crystal-Login-Belohnungen",
         "resource": "event_login_crystals",
         "endsAt": "05.06.2026 23:59"
+    },
+    {
+        "id": "event_login_campfire",
+        "title": "Campfire Login",
+        "subtitle": "14 Tage Campfire-Login-Belohnungen",
+        "resource": "event_login_campfire",
+        "endsAt": "19.06.2026 23:59"
     }
 ]

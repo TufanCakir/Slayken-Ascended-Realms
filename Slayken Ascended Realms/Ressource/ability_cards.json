@@ -46,7 +46,8 @@
         "damageGrowth": 1.09,
         "targeting": "allEnemies",
         "particleEffect": "void",
-        "description": "Dunkler Impuls mit violettem Einschlag, der alle Gegner trifft."
+        "description":
+            "Dunkler Impuls mit violettem Einschlag, der alle Gegner trifft."
     },
     {
         "id": "moon_guard",
@@ -111,7 +112,8 @@
         "damageGrowth": 1.09,
         "targeting": "allEnemies",
         "particleEffect": "ash",
-        "description": "Schwerer Aschebruch mit Flaechenschaden gegen mehrere Gegner."
+        "description":
+            "Schwerer Aschebruch mit Flaechenschaden gegen mehrere Gegner."
     },
     {
         "id": "neutral_spark",
@@ -128,5 +130,23 @@
         "damageGrowth": 1.06,
         "particleEffect": "neutral",
         "description": "Neutraler Funkenangriff mit klaren weissen Partikeln."
+    },
+    {
+        "id": "shukwa_blessing",
+        "name": "Shukwa Blessing",
+        "image": "skill_shukwa_blessing",
+        "element": "Light",
+        "rarity": 5,
+        "damageMultiplier": 1.24,
+        "manaCost": 44,
+        "maxLevel": 30,
+        "maxStars": 5,
+        "duplicatesPerLevel": 3,
+        "levelsPerStar": 6,
+        "damageGrowth": 1.09,
+        "targeting": "allEnemies",
+        "particleEffect": "shukwa_blessing",
+        "description":
+            "Warmer Shukwa-Segen vom Lagerfeuer, der alle Gegner trifft."
     }
 ]

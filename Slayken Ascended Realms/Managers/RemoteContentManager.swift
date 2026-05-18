@@ -29,8 +29,16 @@ struct RemoteContentConfiguration: Codable {
 
 struct RemoteContentManifest: Codable {
     let contentVersion: Int?
+    let maintenance: RemoteContentMaintenance?
     let resources: [RemoteContentResource]
     let assets: [RemoteContentAsset]?
+}
+
+struct RemoteContentMaintenance: Codable, Equatable {
+    let enabled: Bool
+    let title: String?
+    let message: String?
+    let retryAfter: String?
 }
 
 struct RemoteContentResource: Codable {
@@ -95,6 +103,8 @@ final class RemoteContentManager: ObservableObject {
     @Published private(set) var requiresMandatoryUpdate = false
     @Published private(set) var startupReloadRequired = false
     @Published private(set) var startupFailureMessage: String?
+    @Published private(set) var activeMaintenance: RemoteContentMaintenance?
+    @Published private(set) var hasRuntimeRequiredUpdate = false
     @Published private(set) var isBackgroundPreloading = false
     @Published private(set) var backgroundPreloadProgress = 0.0
     @Published private(set) var backgroundStatusText = "Background preload idle"
@@ -107,6 +117,11 @@ final class RemoteContentManager: ObservableObject {
     private let progressUpdateThreshold = 0.01
     private let refreshRetryLimit = 3
     private let refreshRetryDelayNanoseconds: UInt64 = 800_000_000
+    private let downloadTimeoutSeconds: TimeInterval = 18
+
+    var isMaintenanceActive: Bool {
+        activeMaintenance?.enabled == true
+    }
 
     nonisolated static func logDebug(_ message: String) {
         logger.debug("\(message)")
@@ -137,8 +152,21 @@ final class RemoteContentManager: ObservableObject {
         do {
             try Self.ensureCacheDirectory()
             let manifest = try await fetchManifest()
+            activeMaintenance = manifest.maintenance
+            if manifest.maintenance?.enabled == true {
+                hasRuntimeRequiredUpdate = false
+                startupPlan = nil
+                requiresMandatoryUpdate = false
+                startupReloadRequired = false
+                startupFailureMessage = nil
+                lastErrorMessage = nil
+                setStatusText("Wartungsarbeiten aktiv")
+                return
+            }
+
             let versions = await Self.loadCachedVersions()
             let installedContentVersion = Self.installedContentVersion()
+            hasRuntimeRequiredUpdate = false
             startupPlan = buildStartupPlan(
                 manifest: manifest,
                 versions: versions
@@ -175,12 +203,23 @@ final class RemoteContentManager: ObservableObject {
         Self.clearMemoryCaches()
         cachedManifest = nil
         startupPlan = nil
+        activeMaintenance = nil
+        hasRuntimeRequiredUpdate = false
         startupReloadRequired = false
         startupFailureMessage = nil
         lastErrorMessage = nil
         hasCompletedInitialRefresh = false
         setRefreshProgress(0, force: true)
         await prepareStartupPlanIfNeeded()
+    }
+
+    func failStartupRetryBecauseOffline() {
+        startupReloadRequired = true
+        startupFailureMessage =
+            "Keine Internetverbindung. Bitte Verbindung pruefen und danach erneut laden."
+        lastErrorMessage = startupFailureMessage
+        setStatusText("Offline")
+        setRefreshProgress(0, force: true)
     }
 
     func refreshContentIfNeeded(mode: RemoteContentRefreshMode) async -> Bool {
@@ -204,6 +243,14 @@ final class RemoteContentManager: ObservableObject {
             try Self.ensureCacheDirectory()
 
             let manifest = try await fetchManifest()
+            activeMaintenance = manifest.maintenance
+            if manifest.maintenance?.enabled == true {
+                hasRuntimeRequiredUpdate = false
+                setStatusText("Wartungsarbeiten aktiv")
+                setRefreshProgress(0, force: true)
+                return false
+            }
+
             var versions = await Self.loadCachedVersions()
             var didChangeContent = false
             var assetsToProcess = [RemoteContentAsset]()
@@ -305,6 +352,7 @@ final class RemoteContentManager: ObservableObject {
             if didChangeContent && failedItems.isEmpty {
                 Self.saveInstalledContentVersion(manifest.contentVersion)
                 requiresMandatoryUpdate = false
+                hasRuntimeRequiredUpdate = false
                 hasCompletedInitialRefresh = true
                 setStatusText(
                     mode == .fullPreload
@@ -316,6 +364,7 @@ final class RemoteContentManager: ObservableObject {
             } else if failedItems.isEmpty {
                 Self.saveInstalledContentVersion(manifest.contentVersion)
                 requiresMandatoryUpdate = false
+                hasRuntimeRequiredUpdate = false
                 hasCompletedInitialRefresh = true
                 setStatusText(
                     mode == .fullPreload
@@ -344,6 +393,46 @@ final class RemoteContentManager: ObservableObject {
                 "Remote refresh failed: \(error.localizedDescription)"
             )
             return false
+        }
+    }
+
+    func checkForRuntimeUpdateIfNeeded() async {
+        guard hasCompletedInitialRefresh else { return }
+        guard !isRefreshing, !isPreparingStartupPlan else { return }
+
+        do {
+            let manifest = try await fetchManifest(useCache: false)
+            activeMaintenance = manifest.maintenance
+
+            if manifest.maintenance?.enabled == true {
+                hasRuntimeRequiredUpdate = false
+                requiresMandatoryUpdate = false
+                setStatusText("Wartungsarbeiten aktiv")
+                return
+            }
+
+            let installedContentVersion = Self.installedContentVersion()
+            let needsUpdate = Self.requiresMandatoryUpdate(
+                manifestVersion: manifest.contentVersion,
+                installedVersion: installedContentVersion
+            )
+
+            hasRuntimeRequiredUpdate = needsUpdate
+            requiresMandatoryUpdate = needsUpdate
+            if needsUpdate {
+                let versions = await Self.loadCachedVersions()
+                startupPlan = buildStartupPlan(
+                    manifest: manifest,
+                    versions: versions
+                )
+                startupReloadRequired = false
+                startupFailureMessage = nil
+                setStatusText("Update verfügbar")
+            }
+        } catch {
+            Self.logger.error(
+                "Runtime update check failed: \(error.localizedDescription)"
+            )
         }
     }
 
@@ -583,8 +672,10 @@ final class RemoteContentManager: ObservableObject {
         return nil
     }
 
-    private func fetchManifest() async throws -> RemoteContentManifest {
-        if let cachedManifest {
+    private func fetchManifest(
+        useCache: Bool = true
+    ) async throws -> RemoteContentManifest {
+        if useCache, let cachedManifest {
             Self.logger.info(
                 "Using cached manifest. Resources: \(cachedManifest.resources.count), Assets: \(cachedManifest.assets?.count ?? 0)"
             )
@@ -606,8 +697,9 @@ final class RemoteContentManager: ObservableObject {
             "Starting remote refresh from \(manifestURL.absoluteString)"
         )
 
-        let (manifestData, manifestResponse) = try await URLSession.shared.data(
-            from: manifestURL
+        let (manifestData, manifestResponse) = try await Self.remoteData(
+            from: manifestURL,
+            timeout: downloadTimeoutSeconds
         )
         try Self.validateHTTPResponse(manifestResponse, url: manifestURL)
         Self.logger.info("Manifest downloaded successfully.")
@@ -719,8 +811,10 @@ final class RemoteContentManager: ObservableObject {
                 "Downloading resource \(resource.name).json from \(resourceURL.absoluteString)"
             )
 
-            let (resourceData, resourceResponse) = try await URLSession.shared
-                .data(from: resourceURL)
+            let (resourceData, resourceResponse) = try await Self.remoteData(
+                from: resourceURL,
+                timeout: downloadTimeoutSeconds
+            )
             try Self.validateHTTPResponse(resourceResponse, url: resourceURL)
 
             try await Self.writeData(resourceData, to: cacheURL)
@@ -881,8 +975,9 @@ final class RemoteContentManager: ObservableObject {
         primaryURL: URL
     ) async throws -> Data {
         do {
-            let (assetData, assetResponse) = try await URLSession.shared.data(
-                from: primaryURL
+            let (assetData, assetResponse) = try await Self.remoteData(
+                from: primaryURL,
+                timeout: downloadTimeoutSeconds
             )
             try Self.validateHTTPResponse(assetResponse, url: primaryURL)
             return assetData
@@ -901,10 +996,10 @@ final class RemoteContentManager: ObservableObject {
                     Self.logger.info(
                         "Retrying asset \(asset.name) with fallback URL \(fallbackURL.absoluteString)"
                     )
-                    let (assetData, assetResponse) = try await URLSession.shared
-                        .data(
-                            from: fallbackURL
-                        )
+                    let (assetData, assetResponse) = try await Self.remoteData(
+                        from: fallbackURL,
+                        timeout: downloadTimeoutSeconds
+                    )
                     try Self.validateHTTPResponse(
                         assetResponse,
                         url: fallbackURL
@@ -1581,6 +1676,16 @@ final class RemoteContentManager: ObservableObject {
         }
 
         return 1_000_000
+    }
+
+    private nonisolated static func remoteData(
+        from url: URL,
+        timeout: TimeInterval
+    ) async throws -> (Data, URLResponse) {
+        var request = URLRequest(url: url)
+        request.timeoutInterval = timeout
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        return try await URLSession.shared.data(for: request)
     }
 
     private nonisolated static func progressValue(

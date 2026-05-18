@@ -46,10 +46,12 @@ struct RootView: View {
     @State private var hasStartedStartupFlow = false
     @State private var showStartTransitionOverlay = false
     @State private var startTransitionTask: Task<Void, Never>?
+    @State private var runtimeUpdateCheckTask: Task<Void, Never>?
     @State private var gameEntryLoadingStatusText =
         "Start-Assets werden geladen"
 
     private let introFlowKey = "hasCompletedIntroFlow"
+    private let runtimeUpdateCheckInterval: Duration = .seconds(60)
 
     private var loginCampaigns: [LoginRewardCampaign] {
         loadLoginRewardCampaigns()
@@ -66,6 +68,7 @@ struct RootView: View {
     private var showsStartupLoadingView: Bool {
         !remoteContent.hasCompletedInitialRefresh
             || remoteContent.isPreparingStartupPlan
+            || remoteContent.isMaintenanceActive
     }
 
     private var showsActiveRemoteLoadingOverlay: Bool {
@@ -111,6 +114,7 @@ struct RootView: View {
                         .requiresMandatoryUpdate,
                     failureMessage: remoteContent.startupFailureMessage,
                     requiresRetry: remoteContent.startupReloadRequired,
+                    maintenance: remoteContent.activeMaintenance,
                     isConnected: networkMonitor.isConnected,
                     showOptions: $showStartupOptions,
                     onPreloadAll: {
@@ -184,6 +188,13 @@ struct RootView: View {
                 offlineOverlay
                     .zIndex(500)
             }
+
+            if remoteContent.hasRuntimeRequiredUpdate
+                && !remoteContent.isRefreshing
+            {
+                runtimeUpdateOverlay
+                    .zIndex(520)
+            }
         }
         .animation(.smooth(duration: 0.45), value: currentScreenID)
         .animation(
@@ -196,10 +207,100 @@ struct RootView: View {
             Task {
                 await remoteContent.prepareStartupPlanIfNeeded()
             }
+            startRuntimeUpdateChecks()
         }
         .onDisappear {
             startTransitionTask?.cancel()
+            runtimeUpdateCheckTask?.cancel()
         }
+    }
+
+    private var runtimeUpdateOverlay: some View {
+        ZStack {
+            Color.black.opacity(0.82)
+                .ignoresSafeArea()
+
+            VStack(spacing: 16) {
+                Image(systemName: "arrow.down.circle.fill")
+                    .font(.system(size: 44, weight: .black))
+                    .foregroundStyle(.blue)
+
+                Text("Update verfügbar")
+                    .font(.system(size: 26, weight: .black))
+                    .foregroundStyle(.white)
+
+                Text(
+                    "Ein neues Inhalts-Update ist verfügbar. Lade das Update herunter, um weiterzuspielen."
+                )
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(.white.opacity(0.82))
+                .multilineTextAlignment(.center)
+                .lineSpacing(3)
+
+                if let plan = remoteContent.startupPlan {
+                    HStack(spacing: 10) {
+                        runtimeUpdatePill(
+                            title: "Daten",
+                            value: "\(plan.pendingResourceCount)"
+                        )
+                        runtimeUpdatePill(
+                            title: "Assets",
+                            value: "\(plan.pendingAssetCount)"
+                        )
+                        runtimeUpdatePill(
+                            title: "Größe",
+                            value: plan.formattedEstimatedSize
+                        )
+                    }
+                }
+
+                Button {
+                    startRemoteBootstrap(mode: .fullPreload)
+                } label: {
+                    Text("Update herunterladen")
+                        .font(.system(size: 16, weight: .black))
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(Color(red: 0.12, green: 0.42, blue: 1.0))
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: 18,
+                                style: .continuous
+                            )
+                        )
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, 22)
+            .padding(.vertical, 26)
+            .background(Color.black.opacity(0.58))
+            .overlay {
+                RoundedRectangle(cornerRadius: 26, style: .continuous)
+                    .stroke(.white.opacity(0.14), lineWidth: 1)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+            .padding(.horizontal, 24)
+        }
+    }
+
+    private func runtimeUpdatePill(title: String, value: String) -> some View {
+        VStack(spacing: 4) {
+            Text(title)
+                .font(.system(size: 10, weight: .bold))
+                .foregroundStyle(.white.opacity(0.62))
+
+            Text(value)
+                .font(.system(size: 13, weight: .black))
+                .foregroundStyle(.white)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 10)
+        .background(Color.white.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
     }
 
     private var offlineOverlay: some View {
@@ -366,6 +467,7 @@ struct RootView: View {
     }
 
     private func transition(to screen: Screen, enemy: CharacterStats? = nil) {
+        guard !remoteContent.hasRuntimeRequiredUpdate else { return }
         withAnimation(.smooth(duration: 0.35)) {
             activeEnemy = enemy
             currentScreen = screen
@@ -375,11 +477,31 @@ struct RootView: View {
         }
     }
 
+    private func startRuntimeUpdateChecks() {
+        runtimeUpdateCheckTask?.cancel()
+        runtimeUpdateCheckTask = Task {
+            while !Task.isCancelled {
+                try? await Task.sleep(for: runtimeUpdateCheckInterval)
+                if Task.isCancelled { break }
+
+                let isConnected = await MainActor.run {
+                    networkMonitor.isConnected
+                }
+                guard isConnected else { continue }
+
+                await remoteContent.checkForRuntimeUpdateIfNeeded()
+            }
+        }
+    }
+
     private func startRemoteBootstrap(mode: RemoteContentRefreshMode) {
         guard !remoteContent.isRefreshing else { return }
 
         Task {
-            guard networkMonitor.isConnected else { return }
+            guard networkMonitor.isConnected else {
+                remoteContent.failStartupRetryBecauseOffline()
+                return
+            }
 
             let didRefreshSucceed = await remoteContent.refreshContentIfNeeded(
                 mode: mode
@@ -395,7 +517,10 @@ struct RootView: View {
 
         Task {
             await remoteContent.retryStartupRefreshPreparation()
-            guard networkMonitor.isConnected else { return }
+            guard networkMonitor.isConnected else {
+                remoteContent.failStartupRetryBecauseOffline()
+                return
+            }
 
             let didRefreshSucceed = await remoteContent.refreshContentIfNeeded(
                 mode: .fullPreload
@@ -496,6 +621,8 @@ struct RootView: View {
     }
 
     private func startGameFlow() {
+        guard !remoteContent.hasRuntimeRequiredUpdate else { return }
+
         if hasCompletedIntroFlow || introTutorial == nil {
             beginGameEntryTransition()
         } else if !openingIntroVideos.isEmpty {
@@ -509,6 +636,7 @@ struct RootView: View {
 
     private func beginGameEntryTransition() {
         guard !showStartTransitionOverlay else { return }
+        guard !remoteContent.hasRuntimeRequiredUpdate else { return }
 
         startTransitionTask?.cancel()
         gameEntryLoadingStatusText = "Start-Assets werden geladen"

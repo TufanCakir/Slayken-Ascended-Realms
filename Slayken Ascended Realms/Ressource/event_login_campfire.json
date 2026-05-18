@@ -1,0 +1,269 @@
+[
+    {
+        "id": "event_login_shukuwa_day_1",
+        "day": 1,
+        "title": "Shukuwa Bonus Tag 1",
+        "subtitle": "Kristallstart",
+        "message":
+            "Zum Start des Shukuwa-Events erhaeltst du einen ersten Crystal-Bonus.",
+        "buttonTitle": "Tag 1 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "sparkles",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 25
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_2",
+        "day": 2,
+        "title": "Shukuwa Bonus Tag 2",
+        "subtitle": "Leuchtender Vorrat",
+        "message": "Mehr Crystals fuer deinen Fortschritt im Shukuwa-Event.",
+        "buttonTitle": "Tag 2 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "sun.max.fill",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 30
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_3",
+        "day": 3,
+        "title": "Shukuwa Bonus Tag 3",
+        "subtitle": "Kristallschub",
+        "message": "Der dritte Login bringt dir noch mehr wertvolle Crystals.",
+        "buttonTitle": "Tag 3 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "flame.fill",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 35
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_4",
+        "day": 4,
+        "title": "Shukuwa Bonus Tag 4",
+        "subtitle": "Eventenergie",
+        "message": "Sichere dir weitere Crystals fuer deine Sammlung.",
+        "buttonTitle": "Tag 4 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "bolt.fill",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 40
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_5",
+        "day": 5,
+        "title": "Shukuwa Bonus Tag 5",
+        "subtitle": "Kristallregen",
+        "message": "Zur Halbzeit wartet ein groesserer Crystal-Bonus.",
+        "buttonTitle": "Tag 5 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "drop.fill",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 45
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_6",
+        "day": 6,
+        "title": "Shukuwa Bonus Tag 6",
+        "subtitle": "Leuchtkraft",
+        "message": "Noch mehr Crystals fuer dein Event-Abenteuer.",
+        "buttonTitle": "Tag 6 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "star.fill",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 50
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_7",
+        "day": 7,
+        "title": "Shukuwa Bonus Tag 7",
+        "subtitle": "Wochenhighlight",
+        "message": "Der siebte Login bringt einen starken Crystal-Boost.",
+        "buttonTitle": "Tag 7 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "crown.fill",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 60
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_8",
+        "day": 8,
+        "title": "Shukuwa Bonus Tag 8",
+        "subtitle": "Neue Energie",
+        "message": "Setze dein Event mit weiteren Crystals fort.",
+        "buttonTitle": "Tag 8 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "sparkles",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 65
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_9",
+        "day": 9,
+        "title": "Shukuwa Bonus Tag 9",
+        "subtitle": "Kristallfluss",
+        "message": "Dein taeglicher Login wird mit mehr Crystals belohnt.",
+        "buttonTitle": "Tag 9 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "circle.hexagongrid.fill",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 70
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_10",
+        "day": 10,
+        "title": "Shukuwa Bonus Tag 10",
+        "subtitle": "Magische Reserve",
+        "message": "Ein weiterer Vorrat an Crystals fuer starke Upgrades.",
+        "buttonTitle": "Tag 10 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "wand.and.stars",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 80
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_11",
+        "day": 11,
+        "title": "Shukuwa Bonus Tag 11",
+        "subtitle": "Kristallschimmer",
+        "message": "Die Belohnungen werden immer wertvoller.",
+        "buttonTitle": "Tag 11 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "diamond.fill",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 90
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_12",
+        "day": 12,
+        "title": "Shukuwa Bonus Tag 12",
+        "subtitle": "Eventfieber",
+        "message": "Bleib dran und sichere dir weitere Crystals.",
+        "buttonTitle": "Tag 12 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "flame.fill",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 100
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_13",
+        "day": 13,
+        "title": "Shukuwa Bonus Tag 13",
+        "subtitle": "Fast am Ziel",
+        "message": "Nur noch ein Tag bis zum grossen Finale.",
+        "buttonTitle": "Tag 13 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "star.circle.fill",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 120
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    },
+    {
+        "id": "event_login_shukuwa_day_14",
+        "day": 14,
+        "title": "Shukuwa Bonus Tag 14",
+        "subtitle": "Grosses Finale",
+        "message": "Der letzte Login bringt den ultimativen Crystal-Bonus.",
+        "buttonTitle": "Tag 14 abholen",
+        "assetIcon": "icon_crystals",
+        "background": "realm_campfire",
+        "icon": "crown.fill",
+        "rewards": [
+            {
+                "currency": "crystals",
+                "amount": 150
+            }
+        ],
+        "characterRewards": [],
+        "cardRewards": []
+    }
+]

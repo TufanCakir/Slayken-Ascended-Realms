@@ -9,7 +9,8 @@
         "texture": "texture_zaron_shadow",
         "cost": [],
         "maxPurchases": 1
-    } {
+    },
+    {
         "id": "skin_shela_moon_crystals",
         "characterID": "shela",
         "skinID": "shela_moon",

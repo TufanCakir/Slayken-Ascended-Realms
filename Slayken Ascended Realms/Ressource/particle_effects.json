@@ -142,5 +142,24 @@
         "spreadingAngle": 86,
         "yOffset": 1.35,
         "cleanupDelay": 0.85
+    },
+    {
+        "id": "shukwa_blessing",
+        "name": "Shukwa Blessing",
+        "red": 1.0,
+        "green": 0.74,
+        "blue": 0.32,
+        "alpha": 0.95,
+        "birthRate": 940,
+        "emissionDuration": 0.24,
+        "lifeSpan": 0.9,
+        "lifeSpanVariation": 0.22,
+        "size": 0.22,
+        "sizeVariation": 0.12,
+        "velocity": 3.2,
+        "velocityVariation": 2.0,
+        "spreadingAngle": 130,
+        "yOffset": 1.25,
+        "cleanupDelay": 1.35
     }
 ]

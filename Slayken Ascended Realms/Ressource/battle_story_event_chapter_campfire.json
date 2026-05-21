@@ -51,6 +51,7 @@
         "story": [
             {
                 "speaker": "Shukwa",
+                "image": "preview_blue_dragon",
                 "text": "Piiiiip... hmmmm..."
             },
             {
@@ -78,6 +79,7 @@
             },
             {
                 "speaker": "Shukwa",
+                "image": "preview_blue_dragon",
                 "text": "Pipipip! Shukwa Shukwa! Pipipipi!"
             }
         ]
@@ -91,6 +93,7 @@
             },
             {
                 "speaker": "Shukwa",
+                "image": "preview_blue_dragon",
                 "text": "Shukwa! Shukwa! Hihihihi!"
             },
             {
@@ -116,6 +119,7 @@
             },
             {
                 "speaker": "Shukwa",
+                "image": "preview_blue_dragon",
                 "text": "Pip... pip... pip..."
             },
             {
@@ -162,6 +166,7 @@
             },
             {
                 "speaker": "Shukwa",
+                "image": "preview_blue_dragon",
                 "text": "SHUKWA! SHUKWA! SHUKWA!"
             },
             {
@@ -218,6 +223,7 @@
             },
             {
                 "speaker": "Shinuca",
+                "image": "preview_shinuca_awakening",
                 "text": "GRRRRR... YRRRRT... TZZZZZZ... JSSSSSS!"
             }
         ]
@@ -233,6 +239,7 @@
             },
             {
                 "speaker": "Shukwa",
+                "image": "preview_blue_dragon",
                 "text": "Uhhh... Shukwa..."
             },
             {
@@ -270,10 +277,12 @@
             },
             {
                 "speaker": "Shukwa",
+                "image": "preview_blue_dragon",
                 "text": "Ssssss... Shukwa..."
             },
             {
                 "speaker": "Shinuca",
+                "image": "preview_shinuca_awakening",
                 "text": "GHHHHHH... GRRRRRRRR... RAAAAAAAHHHH!!!"
             },
             {
@@ -288,10 +297,12 @@
             },
             {
                 "speaker": "Shukwa",
+                "image": "preview_blue_dragon",
                 "text": "SHUKWAAAAAA!!!"
             },
             {
                 "speaker": "Shinuca",
+                "image": "preview_shinuca_awakening",
                 "text": "GAAAAAAAAARRRRRRRTTTTTTRRRRRRR!!!"
             },
             {

@@ -132,22 +132,10 @@ struct DailyLoginView: View {
         .padding(.top, 20)
         .background {
             ZStack {
-                if let activeRewardBackground,
-                    !activeRewardBackground.trimmingCharacters(
-                        in: .whitespacesAndNewlines
-                    )
-                    .isEmpty
-                {
-                    RemoteAssetImage(activeRewardBackground, contentMode: .fill)
-                    {
-                        backgroundFallback
+                if let theme = theme.selectedTheme {
+                    RemoteAssetImage(theme.background) {
+                        Color.black.opacity(0.35)
                     }
-                } else if let theme = theme.selectedTheme {
-                    RemoteAssetImage(theme.background, contentMode: .fill) {
-                        backgroundFallback
-                    }
-                } else {
-                    backgroundFallback
                 }
 
                 LinearGradient(
@@ -160,8 +148,7 @@ struct DailyLoginView: View {
                 )
             }
             .ignoresSafeArea()
-        }
-        .task {
+        }.task {
             while !Task.isCancelled {
                 countdownNow = .now
                 try? await Task.sleep(for: .seconds(60))
@@ -325,13 +312,10 @@ struct DailyLoginView: View {
             }
         }
         .padding()
-        .background {
-            loginBackgroundImage(
-                named: availableReward?.reward.background,
-                fallback: Color.black.opacity(0.34)
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
-        }
+        .background(
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+        )
         .overlay {
             RoundedRectangle(cornerRadius: 26, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
@@ -384,13 +368,10 @@ struct DailyLoginView: View {
             }
         }
         .padding()
-        .background {
-            loginBackgroundImage(
-                named: reward.background,
-                fallback: Color.black.opacity(0.34)
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
-        }
+        .background(
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+        )
         .overlay {
             RoundedRectangle(cornerRadius: 26, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)

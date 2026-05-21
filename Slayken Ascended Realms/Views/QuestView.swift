@@ -9,9 +9,11 @@ import SwiftData
 import SwiftUI
 
 struct QuestView: View {
+
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var gameState: GameState
     @EnvironmentObject private var theme: ThemeManager
+    @State private var cachedChapters: [GlobeEventChapter] = []
 
     @Query(sort: \PlayerQuestClaim.questID) private var claimedQuests:
         [PlayerQuestClaim]
@@ -39,12 +41,7 @@ struct QuestView: View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 18) {
-                    GameHeaderView(
-                        playerName: gameState.player.name,
-                        playerPreviewImage: gameState.player.image,
-                        currencies: gameState.currencies,
-                        ascendedLevel: ascendedLevel
-                    )
+
                     heroSection
                     farmLimitSection
                     categoryBar
@@ -70,11 +67,15 @@ struct QuestView: View {
         }
         .task {
             _ = PlayerInventoryStore.dailyBattleFarmStatus(in: modelContext)
+
+            if cachedChapters.isEmpty {
+                cachedChapters = loadGlobeEventChapters()
+            }
         }
         .task {
             while !Task.isCancelled {
                 resourceRefreshDate = .now
-                try? await Task.sleep(for: .seconds(20))
+                try? await Task.sleep(for: .seconds(60))
             }
         }
     }
@@ -157,10 +158,10 @@ struct QuestView: View {
         .padding(16)
         .background(
             Color.black.opacity(0.34),
-            in: RoundedRectangle(cornerRadius: 20, style: .continuous)
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
         )
         .overlay {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
                 .stroke(.white.opacity(0.08), lineWidth: 1)
         }
     }
@@ -248,7 +249,7 @@ struct QuestView: View {
     }
 
     private var questSections: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        LazyVStack(alignment: .leading, spacing: 12) {
             ForEach(filteredQuests) { quest in
                 questCard(quest)
             }
@@ -363,10 +364,9 @@ struct QuestView: View {
     }
 
     private func progressBar(progress: CGFloat) -> some View {
-        GeometryReader { geo in
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(Color.white.opacity(0.12))
+        Capsule()
+            .fill(Color.white.opacity(0.12))
+            .overlay(alignment: .leading) {
                 Capsule()
                     .fill(
                         LinearGradient(
@@ -375,10 +375,10 @@ struct QuestView: View {
                             endPoint: .trailing
                         )
                     )
-                    .frame(width: geo.size.width * progress)
+                    .frame(maxWidth: .infinity)
+                    .scaleEffect(x: progress, anchor: .leading)
             }
-        }
-        .frame(height: 10)
+            .frame(height: 10)
     }
 
     private func rewardsPanel(for quest: QuestDefinition) -> some View {
@@ -611,12 +611,18 @@ struct QuestView: View {
         }
     }
 
+    private var questCounterMap: [String: Int] {
+        Dictionary(
+            uniqueKeysWithValues: questCounters.map { ($0.key, $0.value) }
+        )
+    }
+
     private func questCounterValue(for key: String) -> Int {
-        questCounters.first(where: { $0.key == key })?.value ?? 0
+        questCounterMap[key] ?? 0
     }
 
     private func storyBattleProgress(for referenceID: String?) -> Int {
-        let completedBattleIDs = Set(completedBattles.map(\.battleID))
+        let completedBattleIDs = completedBattleIDSet
 
         guard let referenceID, !referenceID.isEmpty else {
             return completedBattleIDs.filter { $0.hasPrefix("chapter_") }.count
@@ -640,9 +646,13 @@ struct QuestView: View {
             ? 1 : 0
     }
 
+    private var completedBattleIDSet: Set<String> {
+        Set(completedBattles.map(\.battleID))
+    }
+
     private func storyBattleIDs(forChapterID chapterID: String) -> [String] {
-        let chapters = loadGlobeEventChapters()
-        guard let chapter = chapters.first(where: { $0.id == chapterID }) else {
+        guard let chapter = cachedChapters.first(where: { $0.id == chapterID })
+        else {
             return []
         }
 

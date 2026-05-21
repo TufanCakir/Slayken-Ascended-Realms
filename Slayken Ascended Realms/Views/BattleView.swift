@@ -110,6 +110,11 @@ struct BattleView: View {
     private let manaRegenTickMilliseconds = 450
     private let actionFrameCommitMilliseconds = 16
     private let actionCooldownTickMilliseconds = 40
+    private let minimumNormalEnemyHits: CGFloat = 3
+    private let minimumBossEnemyHits: CGFloat = 7
+    private let enemyHPGrowthPerDifficulty = 1.16
+    private let enemyAttackGrowthPerDifficulty = 1.08
+    private let enemyMinimumHPGrowthPerDifficulty = 1.10
 
     init(
         player: CharacterStats,
@@ -214,6 +219,14 @@ struct BattleView: View {
         }
         guard gameState.selectedBattle?.boss != nil else { return false }
         return safeSelectedEnemyIndex == activeEnemies.count - 1
+    }
+
+    private func isBossEnemy(at index: Int) -> Bool {
+        if raidConfiguration != nil {
+            return true
+        }
+        guard gameState.selectedBattle?.boss != nil else { return false }
+        return index == battleEnemies.count - 1
     }
 
     private var battleXPReward: Int {
@@ -382,11 +395,17 @@ struct BattleView: View {
             }
         }
         .onChange(of: isAuto) { _, enabled in
-            if enabled && currentTurn == .player && !isResolvingTurn {
-                startAutoAttack()
+            if enabled {
+                resumeAutoAttackIfPossible()
             } else if !enabled {
-                autoTask?.cancel()
+                stopAutoAttack()
             }
+        }
+        .onChange(of: currentTurn) { _, _ in
+            resumeAutoAttackIfPossible()
+        }
+        .onChange(of: isResolvingTurn) { _, _ in
+            resumeAutoAttackIfPossible()
         }
         .onChange(of: multiplayerManager.latestResolvedRaidAction?.id) { _, _ in
             applyResolvedRaidActionIfNeeded()
@@ -1310,10 +1329,23 @@ struct BattleView: View {
             raidConfiguration?.difficulty ?? gameState.selectedBattle?
                 .difficulty ?? 1
         )
+        let difficultyStep = max(0, difficulty - 1)
         let waveScale = pow(1.07 + difficulty * 0.01, Double(index))
         let bossScale =
             ((raidConfiguration != nil || gameState.selectedBattle?.boss != nil)
                 && index == battleEnemies.count - 1) ? 1.55 : 1.0
+        let difficultyHPScale = pow(enemyHPGrowthPerDifficulty, difficultyStep)
+        let difficultyAttackScale = pow(
+            enemyAttackGrowthPerDifficulty,
+            difficultyStep
+        )
+        let scaledHP =
+            base.hp * CGFloat(difficultyHPScale * waveScale * bossScale)
+        let resolvedHP =
+            raidConfiguration == nil
+            ? max(scaledHP, minimumEnemyHP(for: index))
+            : scaledHP
+
         return CharacterStats(
             name: base.name,
             image: base.image,
@@ -1321,9 +1353,31 @@ struct BattleView: View {
             battleModel: base.battleModel,
             texture: base.texture,
             element: base.element,
-            hp: base.hp * CGFloat(waveScale * bossScale),
-            attack: base.attack * CGFloat(pow(1.05, Double(index)) * bossScale),
+            hp: resolvedHP,
+            attack: base.attack
+                * CGFloat(
+                    difficultyAttackScale * pow(1.05, Double(index))
+                        * bossScale
+                ),
             attackSpeed: base.attackSpeed
+        )
+    }
+
+    private func minimumEnemyHP(for index: Int) -> CGFloat {
+        let requiredHits =
+            isBossEnemy(at: index)
+            ? minimumBossEnemyHits : minimumNormalEnemyHits
+        let difficulty = Double(gameState.selectedBattle?.difficulty ?? 1)
+        let difficultyStep = max(0, difficulty - 1)
+        let difficultyScale = pow(
+            enemyMinimumHPGrowthPerDifficulty,
+            difficultyStep
+        )
+        let baselinePlayerHit = max(1, player.attack)
+
+        return max(
+            1,
+            baselinePlayerHit * requiredHits * CGFloat(difficultyScale)
         )
     }
 
@@ -1356,6 +1410,19 @@ struct BattleView: View {
     private func stopAutoAttack() {
         autoTask?.cancel()
         autoTask = nil
+    }
+
+    private func resumeAutoAttackIfPossible() {
+        guard isAuto else { return }
+        guard currentTurn == .player else { return }
+        guard !isResolvingTurn else { return }
+        guard !showVictory && !showDefeat else { return }
+        guard !didTriggerTutorialRetreat else { return }
+        guard multiplayerManager.raidCountdownRemaining == nil else { return }
+
+        if autoTask == nil || autoTask?.isCancelled == true {
+            startAutoAttack()
+        }
     }
 
     private func setAutoMode(_ enabled: Bool) {
@@ -1427,6 +1494,7 @@ struct BattleView: View {
         attackingEnemyIndex = nil
         recoverMana(turnManaGain)
         currentTurn = .player
+        resumeAutoAttackIfPossible()
     }
 
     private func attack(with card: AbilityCardDefinition?) {
@@ -1489,6 +1557,15 @@ struct BattleView: View {
             targetIndices: targetIndices
         )
 
+        guard
+            await waitForActionCooldown(
+                for: leveledPlayer,
+                baseDuration: 0.42
+            )
+        else {
+            return
+        }
+
         if let tutorialConfig,
             tutorialConfig.retreatEnemyIndex == targetIndex,
             let threshold = tutorialConfig.enemyRetreatThreshold,
@@ -1510,15 +1587,6 @@ struct BattleView: View {
 
         guard !showVictory && !showDefeat else {
             isResolvingTurn = false
-            return
-        }
-
-        guard
-            await waitForActionCooldown(
-                for: leveledPlayer,
-                baseDuration: 0.42
-            )
-        else {
             return
         }
 
@@ -1868,6 +1936,7 @@ struct BattleView: View {
             attackingEnemyIndex = nil
             recoverMana(turnManaGain)
             currentTurn = .player
+            resumeAutoAttackIfPossible()
         }
     }
 }

@@ -1,0 +1,156 @@
+[
+    {
+        "battleID": "event_story_riftstorm_path_battle_1",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "Leute... hört ihr das?"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Was denn?"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Dieses Geräusch... irgendwas stimmt hier nicht."
+            },
+            {
+                "speaker": "Shela",
+                "text": "...Jetzt wo du's sagst... ja. Das klingt unheimlich."
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Ich hab ein ganz schlechtes Gefühl... Können wir bitte gehen?"
+            },
+            {
+                "speaker": "Rana",
+                "text": "Ja, sofort. Mir gefällt das hier überhaupt nicht."
+            }
+        ]
+    },
+    {
+        "battleID": "event_story_riftstorm_path_battle_8",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Pscht! Leise... Ich glaube, irgendetwas ist hier entlanggelaufen."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Okay... jetzt kriege ich wirklich Angst."
+            },
+            {
+                "speaker": "Sanya",
+                "text": "D-Da drüben! Habt ihr das gesehen?!"
+            },
+            {
+                "speaker": "Rana",
+                "text": "Was?! Nein, nein... lasst uns zurück zum Lager!"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Da... zwischen den Bäumen... es starrt uns an."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Nicht bewegen... bitte nicht bewegen..."
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Oh nein... ich muss niesen...!"
+            }
+        ]
+    },
+    {
+        "battleID": "event_story_riftstorm_path_battle_15",
+        "cutscene": {
+            "id": "event_story_riftstorm_setan_hunt",
+            "title": "Die Jagd",
+            "video": "rift_storm",
+            "text":
+                "Etwas Großes bricht aus dem Schatten hervor und jagt die Gruppe durch den Rift-Sturm."
+        },
+        "story": [
+            {
+                "speaker": "Rana",
+                "text": "RENNT! VERDAMMT, DAS DING IST SCHNELL!"
+            },
+            {
+                "speaker": "Rana",
+                "text": "Wir schaffen das nicht... wir sind erledigt!"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Noch nicht! Ich habe noch ein Ass im Ärmel!"
+            },
+            {
+                "speaker": "Setan",
+                "text": "GRRRRRRRRFF... HRRRRUUUAAARRR!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Was... was IST das?!"
+            },
+            {
+                "speaker": "Rana",
+                "text":
+                    "Das ist ein Setan... und wenn er jagt, hört er niemals auf."
+            }
+        ]
+    },
+    {
+        "battleID": "event_story_riftstorm_path_battle_25",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Ich treffe ihn nicht mal... meine Angriffe richten keinen Schaden an..."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Das... das kann doch nicht unser Ende sein..."
+            },
+            {
+                "speaker": "Setan",
+                "image": "preview_setan_awakening",
+                "text": "TSSSSSS... GRRRRRAAAAAAAHHH!"
+            },
+            {
+                "speaker": "Setan",
+                "image": "preview_setan_awakening",
+                "text": "Ihr schwachen menschlichen Kreaturen..."
+            },
+            {
+                "speaker": "Setan",
+                "image": "preview_setan_awakening",
+                "text": "Ich werde euch zeigen... was wahre Macht bedeutet."
+            }
+        ]
+    },
+    {
+        "battleID": "event_story_riftstorm_path_battle_35",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "Ein Monster... das sprechen kann...?"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Das ist unmöglich..."
+            },
+            {
+                "speaker": "Rana",
+                "text":
+                    "Nicht ganz. Er war einst ein Mensch... bis der Rift ihn verändert hat."
+            },
+            {
+                "speaker": "Setan",
+                "image": "preview_setan_human",
+                "text":
+                    "Ihr seid verloren... niemand wird euch retten... GRAAAAAARRR!"
+            }
+        ]
+    }
+]

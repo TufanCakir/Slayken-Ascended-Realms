@@ -1,0 +1,220 @@
+[
+    {
+        "battleID": "event_summer_shore_battle_1",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Shela, schau mal da drüben! Ein Sommerfest! Überall Lichter, Musik und Leute! Komm, lass uns hingehen!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Okay … warum eigentlich nicht?"
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Solange uns diesmal keine Monster begegnen, wird’s bestimmt ein entspannter Abend …"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Bitte beschwör es nicht wieder herauf …"
+            }
+        ]
+    },
+    {
+        "battleID": "event_summer_shore_battle_5",
+        "story": [
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Hey! Ihr zwei! Wie schön, euch zu sehen! Was macht ihr denn hier?"
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Wir wollten einfach ein bisschen feiern und abschalten."
+            },
+            {
+                "speaker": "Shela",
+                "text":
+                    "Sag mal, Sanya … wo ist eigentlich Rana? Normalerweise seid ihr doch immer zusammen."
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Rana konnte heute leider nicht kommen … sie ist krank."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Oh nein … was hat sie denn? Geht’s ihr schlecht?"
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Keine Sorge. Nur eine Erkältung. Sie muss sich ausruhen."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Zum Glück …"
+            }
+        ]
+    },
+    {
+        "battleID": "event_summer_shore_battle_10",
+        "cutscene": {
+            "id": "event_summer_portal_opens",
+            "title": "Das Portal am Strand",
+            "video": "summer_festival",
+            "text":
+                "Ein kalter Wind zieht über das Fest. Die Musik verstummt langsam."
+        },
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "W-Wartet mal … Shela! Sanya! Seht ihr das da vorne?!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Was meinst du—?"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Was ist los?!"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Da! Zwischen den Palmen … dieses Leuchten!"
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Ein dunkles Portal öffnet sich knisternd mitten am Strand. Schwarze Energie strömt daraus hervor."
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Nein … das kann nicht sein …"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Sanya … was IST das?!"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Das ist doch ein Portal?!"
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Ja … und das bedeutet nichts Gutes. Kommt zurück! Sofort!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Vorsicht!!"
+            }
+        ]
+    },
+    {
+        "battleID": "event_summer_shore_battle_15",
+        "story": [
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Der Boden beginnt leicht zu beben. Menschen schreien erschrocken. Aus dem Portal kriecht langsam eine riesige dunkle Kreatur mit glühenden Augen."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Was … was ist DAS für ein Monster?!"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Ein Beatcher …"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Ein Beatcher?! Noch nie davon gehört!"
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Diese Wesen sind extrem gefährlich. Wenn sie aggressiv werden, zerstören sie alles um sich herum …"
+            }
+        ]
+    },
+    {
+        "battleID": "event_summer_shore_battle_20",
+        "story": [
+            {
+                "speaker": "Menschen am Strand",
+                "text": "Hilfe!!"
+            },
+            {
+                "speaker": "Menschen am Strand",
+                "text": "Lauft weg!!"
+            },
+            {
+                "speaker": "Menschen am Strand",
+                "text": "Das Monster kommt näher!!"
+            }
+        ]
+    },
+    {
+        "battleID": "event_summer_shore_battle_25",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Sanya, schau doch! Der Beatcher greift die Menschen an! Wir können nicht einfach zusehen!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Dann kämpfen wir eben! Gemeinsam!"
+            },
+            {
+                "speaker": "Beatcher",
+                "image": "preview_summer_breaker",
+                "text": "GRRRRRRRRAAAAHHH!!"
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text": "Der Boden erzittert unter seinem Brüllen."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Los Leute!! Greift ihn an!!"
+            }
+        ]
+    },
+    {
+        "battleID": "event_summer_shore_battle_35",
+        "story": [
+            {
+                "speaker": "Beatcher",
+                "image": "preview_summer_breaker",
+                "text": "GRAAAAH! GRRRRRAAA! RAAAAAAHHH!!"
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Die Kreatur schlägt wild um sich. Sand wirbelt durch die Luft."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Zaron!! Da hinten— da kommen noch mehr von ihnen!!"
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text": "Mehrere dunkle Augen leuchten im Portal auf."
+            },
+            {
+                "speaker": "Weitere Beatcher",
+                "image": "preview_summer_breaker",
+                "text": "GAAAAA… PFFFF… QRRRCHHH… BAAAARRR… GRRRRRRRAAAAH!!"
+            }
+        ]
+    }
+]

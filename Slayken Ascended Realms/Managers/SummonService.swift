@@ -13,6 +13,25 @@ enum SummonDrop: Equatable {
 }
 
 enum SummonService {
+    static func summonMany(
+        count: Int,
+        from banner: SummonBanner,
+        characters: [SummonCharacter],
+        cards: [AbilityCardDefinition],
+        startingSummonNumber: Int
+    ) -> [SummonDrop] {
+        guard count > 0 else { return [] }
+
+        return (0..<count).compactMap { offset in
+            summon(
+                from: banner,
+                characters: characters,
+                cards: cards,
+                summonNumber: startingSummonNumber + offset
+            )
+        }
+    }
+
     static func summon(
         from banner: SummonBanner,
         characters: [SummonCharacter],

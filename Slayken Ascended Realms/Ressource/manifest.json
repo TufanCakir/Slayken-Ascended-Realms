@@ -1,5 +1,5 @@
 {
-    "contentVersion": 28,
+    "contentVersion": 29,
     "maintenance": {
         "enabled": false,
         "title": "Wartungsarbeiten",
@@ -114,6 +114,11 @@
             "url": "https://remote.tufancakir.com/event_skill.json"
         },
         {
+            "name": "enemies",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/enemies.json"
+        },
+        {
             "name": "event_chapter_campfire",
             "version": "3",
             "url": "https://remote.tufancakir.com/event_chapter_campfire.json"
@@ -134,6 +139,50 @@
             "version": "19",
             "url":
                 "https://remote.tufancakir.com/event_chapter_crystal_storm.json"
+        },
+        {
+            "name": "battle_story_chapter_1",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/battle_story_chapter_1.json"
+        },
+        {
+            "name": "battle_story_chapter_2",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/battle_story_chapter_2.json"
+        },
+        {
+            "name": "battle_story_event_skill",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/battle_story_event_skill.json"
+        },
+        {
+            "name": "battle_story_event_story",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/battle_story_event_story.json"
+        },
+        {
+            "name": "battle_story_event_chapter_campfire",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/battle_story_event_chapter_campfire.json"
+        },
+        {
+            "name": "battle_story_event_chapter_coin_frenzy",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/battle_story_event_chapter_coin_frenzy.json"
+        },
+        {
+            "name": "battle_story_event_chapter_crystal_storm",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/battle_story_event_chapter_crystal_storm.json"
+        },
+        {
+            "name": "battle_story_event_chapter_summer",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/battle_story_event_chapter_summer.json"
         },
         {
             "name": "farm_limits",
@@ -167,7 +216,7 @@
         },
         {
             "name": "particle_effects",
-            "version": "4",
+            "version": "5",
             "url": "https://remote.tufancakir.com/particle_effects.json"
         },
         {
@@ -232,12 +281,6 @@
         }
     ],
     "assets": [
-        {
-            "name": "skill_shukwa_blessing.png",
-            "version": "1",
-            "url":
-                "https://remote.tufancakir.com/assets/skill_shukwa_blessing.png"
-        },
         {
             "name": "realm_campfire.png",
             "version": "1",
@@ -547,9 +590,32 @@
             "url": "https://remote.tufancakir.com/assets/skill_yellow.png"
         },
         {
+            "name": "skill_shukwa_blessing.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/skill_shukwa_blessing.png"
+        },
+        {
             "name": "skill_rift_slash.png",
             "version": "1",
             "url": "https://remote.tufancakir.com/assets/skill_rift_slash.png"
+        },
+        {
+            "name": "skill_crystal_burst.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/skill_crystal_burst.png"
+        },
+        {
+            "name": "skill_light_flare.png",
+            "version": "1",
+            "url": "https://remote.tufancakir.com/assets/skill_light_flare.png"
+        },
+        {
+            "name": "skill_neutral_spark.png",
+            "version": "1",
+            "url":
+                "https://remote.tufancakir.com/assets/skill_neutral_spark.png"
         },
         {
             "name": "skill_storm_edge.png",

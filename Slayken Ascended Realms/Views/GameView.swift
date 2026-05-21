@@ -24,6 +24,7 @@ struct GameView: View {
     @EnvironmentObject var theme: ThemeManager
     @EnvironmentObject var multiplayerManager: MultiplayerManager
     @EnvironmentObject var remoteContent: RemoteContentManager
+    @EnvironmentObject var deepLinkRouter: AppDeepLinkRouter
     @Environment(\.modelContext) private var modelContext
     @Query private var completedBattles: [PlayerBattleProgress]
     @Query private var accountProgress: [PlayerAccountProgress]
@@ -56,6 +57,7 @@ struct GameView: View {
     @State private var pendingBattleArrivalID: String?
     @State private var showMultiplayerLobby = false
     @State private var showBattleStartTransition = false
+    @State private var battleStartStatusText = "Battle assets werden geladen"
     @State private var renderGameScene = false
 
     private enum ModalTabDestination {
@@ -63,18 +65,6 @@ struct GameView: View {
         case summon
         case shop
         case events
-    }
-
-    private var gifts: [GiftBoxDefinition] {
-        loadGiftBoxDefinitions()
-    }
-
-    private var loginCampaigns: [LoginRewardCampaign] {
-        loadLoginRewardCampaigns()
-    }
-
-    private var quests: [QuestDefinition] {
-        loadQuestDefinitions()
     }
 
     let onResetGame: () -> Void
@@ -362,7 +352,7 @@ struct GameView: View {
             }
             .fullScreenCover(isPresented: $showGift) {
                 GiftView(
-                    gifts: gifts,
+                    gifts: gameState.gifts,
                     onClaim: claimGiftFromMenu,
                     onClose: {
                         showGift = false
@@ -374,7 +364,7 @@ struct GameView: View {
             }
             .fullScreenCover(isPresented: $showDailyLogin) {
                 DailyLoginView(
-                    campaigns: loginCampaigns,
+                    campaigns: gameState.loginCampaigns,
                     selectedCampaignID: activeLoginCampaign?.id,
                     campaignTitle: activeLoginCampaign?.title ?? "Daily Login",
                     campaignSubtitle: activeLoginCampaign?.subtitle
@@ -471,7 +461,7 @@ struct GameView: View {
             }
             .fullScreenCover(isPresented: $showQuests) {
                 QuestView(
-                    quests: quests,
+                    quests: gameState.quests,
                     onClose: {
                         showQuests = false
                     }
@@ -595,6 +585,7 @@ struct GameView: View {
                 openFooterDestination(newTab)
             }
             .task {
+                handlePendingDeepLinkIfNeeded()
                 await Task.yield()
                 withAnimation(.easeInOut(duration: 0.18)) {
                     renderGameScene = true
@@ -619,6 +610,9 @@ struct GameView: View {
                     showMultiplayerLobby = false
                 }
                 gameState.updateRaidSession(newValue)
+            }
+            .onChange(of: deepLinkRouter.pendingDestination) { _, _ in
+                handlePendingDeepLinkIfNeeded()
             }
         }
     }
@@ -659,22 +653,140 @@ struct GameView: View {
         activeSelectionSheet = selection
     }
 
+    private func handlePendingDeepLinkIfNeeded() {
+        guard let destination = deepLinkRouter.pendingDestination else {
+            return
+        }
+
+        closeDeepLinkModals()
+
+        switch destination {
+        case .home:
+            selectedTab = .game
+        case .event(let chapterID, let pointID, let battleID):
+            openDeepLinkedEvent(
+                chapterID: chapterID,
+                pointID: pointID,
+                battleID: battleID
+            )
+        case .character:
+            selectedTab = .character
+            showCharacter = true
+        case .summon:
+            selectedTab = .summon
+            showSummon = true
+        case .shop:
+            selectedTab = .shop
+            showShop = true
+        case .support:
+            selectedTab = .support
+            showSupport = true
+        case .dailyLogin:
+            selectedTab = .game
+            activeLoginCampaignID = preferredLoginCampaignID
+            showDailyLogin = true
+        case .gift:
+            selectedTab = .game
+            showGift = true
+        case .news:
+            selectedTab = .game
+            showNews = true
+        case .settings:
+            selectedTab = .game
+            showSettings = true
+        case .quests:
+            selectedTab = .game
+            showQuests = true
+        }
+
+        deepLinkRouter.consumePendingDestination()
+    }
+
+    private func closeDeepLinkModals() {
+        showPopup = false
+        showStory = false
+        showSupport = false
+        showNews = false
+        showStoryArchive = false
+        showEventArchive = false
+        showSettings = false
+        showGlobeEvents = false
+        showSummon = false
+        showShop = false
+        showQuests = false
+        showCharacter = false
+        showCreateClass = false
+        showGift = false
+        showDailyLogin = false
+        activeSelectionSheet = nil
+    }
+
+    private func openDeepLinkedEvent(
+        chapterID: String?,
+        pointID: String?,
+        battleID: String?
+    ) {
+        if let battleID,
+            let battle = gameState.eventChapters
+                .flatMap(\.points)
+                .flatMap(\.battles)
+                .first(where: { $0.id == battleID })
+        {
+            gameState.selectBattle(battle)
+        } else if let chapter = deepLinkedChapter(
+            chapterID: chapterID,
+            pointID: pointID
+        ) {
+            if let pointID,
+                let point = chapter.points.first(where: { $0.id == pointID })
+            {
+                gameState.selectEventPoint(point, in: chapter)
+            } else {
+                gameState.selectEventChapter(chapter)
+            }
+        }
+
+        selectedTab = .events
+        showGlobeEvents = true
+    }
+
+    private func deepLinkedChapter(
+        chapterID: String?,
+        pointID: String?
+    ) -> GlobeEventChapter? {
+        if let chapterID,
+            let chapter = gameState.eventChapters.first(where: {
+                $0.id == chapterID
+            })
+        {
+            return chapter
+        }
+
+        if let pointID {
+            return gameState.eventChapters.first { chapter in
+                chapter.points.contains { $0.id == pointID }
+            }
+        }
+
+        return gameState.eventChapters.first
+    }
+
     private var availableDailyReward: DailyLoginRewardState? {
         loginCampaignReward(
-            for: loginCampaigns.first { $0.id == "daily_login" }
+            for: gameState.loginCampaigns.first { $0.id == "daily_login" }
         )
     }
 
     private var activeLoginCampaign: LoginRewardCampaign? {
         if let activeLoginCampaignID,
-            let campaign = loginCampaigns.first(where: {
+            let campaign = gameState.loginCampaigns.first(where: {
                 $0.id == activeLoginCampaignID
             })
         {
             return campaign
         }
 
-        return loginCampaigns.first
+        return gameState.loginCampaigns.first
     }
 
     private var activeAvailableLoginReward: DailyLoginRewardState? {
@@ -682,7 +794,7 @@ struct GameView: View {
     }
 
     private var preferredLoginCampaignID: String? {
-        nextAvailableLoginCampaign()?.id ?? loginCampaigns.first?.id
+        nextAvailableLoginCampaign()?.id ?? gameState.loginCampaigns.first?.id
     }
 
     private var storyArchiveChapters: [GlobeEventChapter] {
@@ -849,6 +961,11 @@ struct GameView: View {
                     .foregroundStyle(.white.opacity(0.68))
                     .lineLimit(1)
                     .minimumScaleFactor(0.75)
+
+                Text(battleStartStatusText)
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(.white.opacity(0.56))
+                    .multilineTextAlignment(.center)
             }
             .padding(.horizontal, 24)
             .padding(.vertical, 18)
@@ -969,26 +1086,167 @@ struct GameView: View {
         battleResourceMessage = ""
 
         guard let selectedEnemy else { return }
+        let selectedBattle = gameState.selectedBattle
 
         pendingBattleStartTask?.cancel()
         pendingBattleStartTask = Task { @MainActor in
+            showPopup = false
+            showStory = false
+
+            guard
+                battleNeedsPreload(selectedBattle, fallbackEnemy: selectedEnemy)
+            else {
+                onStartBattle(selectedEnemy)
+                return
+            }
+
+            battleStartStatusText = "Battle assets werden geladen"
             withAnimation(.easeInOut(duration: 0.16)) {
                 showPopup = false
                 showStory = false
                 showBattleStartTransition = true
             }
 
-            do {
-                try await Task.sleep(for: .milliseconds(180))
-            } catch {
-                withAnimation(.easeInOut(duration: 0.12)) {
-                    showBattleStartTransition = false
-                }
+            await preloadBattleStartAssets(
+                selectedBattle,
+                fallbackEnemy: selectedEnemy
+            )
+
+            if Task.isCancelled {
+                showBattleStartTransition = false
                 return
             }
 
             onStartBattle(selectedEnemy)
         }
+    }
+
+    private func battleNeedsPreload(
+        _ battle: GlobeBattle?,
+        fallbackEnemy: CharacterStats
+    ) -> Bool {
+        let enemies = battle?.battleEnemies ?? [fallbackEnemy]
+
+        if let groundTexture = battle?.groundTexture,
+            !RemoteContentManager.hasCachedOrBundledImage(named: groundTexture)
+        {
+            return true
+        }
+
+        if let skyboxTexture = battle?.skyboxTexture,
+            !RemoteContentManager.hasCachedOrBundledImage(named: skyboxTexture)
+        {
+            return true
+        }
+
+        for enemy in enemies {
+            if !enemy.image.isEmpty,
+                !RemoteContentManager.hasCachedOrBundledImage(
+                    named: enemy.image
+                )
+            {
+                return true
+            }
+
+            if let texture = enemy.texture, !texture.isEmpty,
+                !RemoteContentManager.hasCachedOrBundledImage(named: texture)
+            {
+                return true
+            }
+
+            if RemoteContentManager.cachedAssetURL(
+                named: enemy.model,
+                preferredExtensions: ["usdz", "scn"]
+            ) == nil {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    private func preloadBattleStartAssets(
+        _ battle: GlobeBattle?,
+        fallbackEnemy: CharacterStats
+    ) async {
+        let enemies = battle?.battleEnemies ?? [fallbackEnemy]
+
+        if let groundTexture = battle?.groundTexture {
+            await preloadBattleImageAsset(
+                named: groundTexture,
+                status: "Lade Boden-Textur"
+            )
+        }
+
+        if let skyboxTexture = battle?.skyboxTexture {
+            await preloadBattleImageAsset(
+                named: skyboxTexture,
+                status: "Lade Skybox"
+            )
+        }
+
+        for enemy in enemies {
+            await preloadBattleImageAsset(
+                named: enemy.image,
+                status: "Lade Gegner-Bild"
+            )
+
+            if let texture = enemy.texture {
+                await preloadBattleImageAsset(
+                    named: texture,
+                    status: "Lade Gegner-Textur"
+                )
+            }
+
+            await preloadBattleModelAsset(
+                named: enemy.model,
+                status: "Lade Gegner-Modell"
+            )
+        }
+    }
+
+    private func preloadBattleImageAsset(
+        named assetName: String,
+        status: String
+    )
+        async
+    {
+        let trimmedName = assetName.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+        guard !trimmedName.isEmpty else { return }
+
+        battleStartStatusText = status
+        guard !RemoteContentManager.hasCachedOrBundledImage(named: trimmedName)
+        else {
+            return
+        }
+
+        await remoteContent.downloadAssetIfNeeded(named: trimmedName)
+    }
+
+    private func preloadBattleModelAsset(
+        named assetName: String,
+        status: String
+    )
+        async
+    {
+        let trimmedName = assetName.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+        guard !trimmedName.isEmpty else { return }
+
+        battleStartStatusText = status
+        guard
+            RemoteContentManager.cachedAssetURL(
+                named: trimmedName,
+                preferredExtensions: ["usdz", "scn"]
+            ) == nil
+        else {
+            return
+        }
+
+        await remoteContent.downloadAssetIfNeeded(named: trimmedName)
     }
 
     private func claimDailyGiftFromMenu() {
@@ -1025,7 +1283,7 @@ struct GameView: View {
     }
 
     private func nextAvailableLoginCampaign() -> LoginRewardCampaign? {
-        loginCampaigns.first { campaign in
+        gameState.loginCampaigns.first { campaign in
             loginCampaignReward(for: campaign) != nil
         }
     }

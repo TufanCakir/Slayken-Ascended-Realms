@@ -123,6 +123,30 @@ struct GlobeEventChapter: Codable, Identifiable {
     let nodeImage: String?
     let cutscene: GlobeEventCutscene?
     let points: [GlobeEventPoint]
+
+    init(
+        id: String,
+        title: String,
+        subtitle: String,
+        sortOrder: Int?,
+        endsAt: String?,
+        minAscendedLevel: Int?,
+        mapTexture: String,
+        nodeImage: String?,
+        cutscene: GlobeEventCutscene?,
+        points: [GlobeEventPoint]
+    ) {
+        self.id = id
+        self.title = title
+        self.subtitle = subtitle
+        self.sortOrder = sortOrder
+        self.endsAt = endsAt
+        self.minAscendedLevel = minAscendedLevel
+        self.mapTexture = mapTexture
+        self.nodeImage = nodeImage
+        self.cutscene = cutscene
+        self.points = points
+    }
 }
 
 struct GlobeEventPoint: Codable, Identifiable {
@@ -134,7 +158,81 @@ struct GlobeEventPoint: Codable, Identifiable {
     let nodeImage: String?
     let node: EventMapNodePosition
     let cutscene: GlobeEventCutscene?
+    let battleGenerator: GlobeBattleGenerator?
     let battles: [GlobeBattle]
+
+    init(
+        id: String,
+        title: String,
+        text: String,
+        mapImage: String,
+        mapTexture: String,
+        nodeImage: String?,
+        node: EventMapNodePosition,
+        cutscene: GlobeEventCutscene?,
+        battleGenerator: GlobeBattleGenerator?,
+        battles: [GlobeBattle]
+    ) {
+        self.id = id
+        self.title = title
+        self.text = text
+        self.mapImage = mapImage
+        self.mapTexture = mapTexture
+        self.nodeImage = nodeImage
+        self.node = node
+        self.cutscene = cutscene
+        self.battleGenerator = battleGenerator
+        self.battles = battles
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case text
+        case mapImage
+        case mapTexture
+        case nodeImage
+        case node
+        case cutscene
+        case battleGenerator
+        case battles
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        title = try container.decode(String.self, forKey: .title)
+        text = try container.decode(String.self, forKey: .text)
+        mapImage = try container.decode(String.self, forKey: .mapImage)
+        mapTexture = try container.decode(String.self, forKey: .mapTexture)
+        nodeImage = try container.decodeIfPresent(
+            String.self,
+            forKey: .nodeImage
+        )
+        node = try container.decode(EventMapNodePosition.self, forKey: .node)
+        cutscene = try container.decodeIfPresent(
+            GlobeEventCutscene.self,
+            forKey: .cutscene
+        )
+        battleGenerator = try container.decodeIfPresent(
+            GlobeBattleGenerator.self,
+            forKey: .battleGenerator
+        )
+
+        let manualBattles =
+            try container.decodeIfPresent([GlobeBattle].self, forKey: .battles)
+            ?? []
+
+        if let battleGenerator, manualBattles.isEmpty {
+            battles = battleGenerator.generateBattles(
+                pointID: id,
+                groundTexture: mapTexture,
+                skyboxTexture: mapTexture
+            )
+        } else {
+            battles = manualBattles
+        }
+    }
 
     var resolvedNodeImage: String {
         nodeImage ?? GlobeNodeChestConfigStore.pointImage(for: id)
@@ -183,6 +281,200 @@ struct GlobeEventPoint: Codable, Identifiable {
         )
         return battles.first { !completedBattleIDs.contains($0.id) }
             ?? battles.last
+    }
+}
+
+struct BattleStoryDefinition: Codable, Identifiable {
+    let battleID: String
+    let cutscene: GlobeEventCutscene?
+    let story: [StoryLine]
+
+    var id: String { battleID }
+
+    enum CodingKeys: String, CodingKey {
+        case battleID
+        case cutscene
+        case story
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        battleID = try container.decode(String.self, forKey: .battleID)
+        cutscene = try container.decodeIfPresent(
+            GlobeEventCutscene.self,
+            forKey: .cutscene
+        )
+        story =
+            try container.decodeIfPresent([StoryLine].self, forKey: .story)
+            ?? []
+    }
+}
+
+struct GlobeBattleGenerator: Codable {
+    let count: Int
+    let enemyIDs: [String]
+    let enemyGroups: [[String]]?
+    let bossIDs: [String?]?
+    let ids: [String]?
+    let names: [String]?
+    let descriptions: [String]?
+    let difficulties: [Int]?
+    let groundTextures: [String]?
+    let skyboxTextures: [String]?
+    let nodeImages: [String?]?
+    let cutscenes: [GlobeEventCutscene?]?
+    let groupSize: Int?
+    let idPrefix: String?
+    let namePrefix: String?
+    let description: String?
+    let startDifficulty: Int?
+    let difficultyEvery: Int?
+    let difficultyStep: Int?
+    let groundTexture: String?
+    let skyboxTexture: String?
+    let nodeImage: String?
+    let nodes: [EventMapNodePosition]?
+    let xpReward: Int?
+    let xpRewards: [Int?]?
+    let rewards: [CurrencyAmount]?
+    let rewardSets: [[CurrencyAmount]]?
+    let characterRewards: [GlobeBattle.CharacterReward]?
+    let characterRewardSets: [[GlobeBattle.CharacterReward]]?
+    let skinRewards: [StorePackSkinReward]?
+    let skinRewardSets: [[StorePackSkinReward]]?
+    let cardRewards: [GlobeBattle.CardReward]?
+    let cardRewardSets: [[GlobeBattle.CardReward]]?
+    let dailyRewardLimits: BattleRewardLimitDefinition?
+    let dailyRewardLimitSets: [BattleRewardLimitDefinition?]?
+    let story: [StoryLine]?
+    let storySets: [[StoryLine]]?
+
+    func generateBattles(
+        pointID: String,
+        groundTexture defaultGroundTexture: String,
+        skyboxTexture defaultSkyboxTexture: String
+    ) -> [GlobeBattle] {
+        guard count > 0 else { return [] }
+
+        return (0..<count).map { index in
+            let enemyGroup = enemyGroup(for: index)
+            let generatedEnemies = enemyGroup.map(generatedEnemy)
+            let generatedBoss = bossIDs?.element(at: index).flatMap {
+                $0.map(generatedEnemy)
+            }
+            let battleID = "\(idPrefix ?? pointID + "_battle")_\(index + 1)"
+
+            return GlobeBattle(
+                id: ids?.element(at: index) ?? battleID,
+                name: names?.element(at: index) ?? generatedName(for: index),
+                description: descriptions?.element(at: index)
+                    ?? description
+                    ?? "",
+                difficulty: difficulties?.element(at: index)
+                    ?? generatedDifficulty(for: index),
+                groundTexture: groundTextures?.element(at: index)
+                    ?? groundTexture
+                    ?? defaultGroundTexture,
+                skyboxTexture: skyboxTextures?.element(at: index)
+                    ?? groundTextures?.element(at: index)
+                    ?? skyboxTexture
+                    ?? groundTexture
+                    ?? defaultSkyboxTexture,
+                nodeImage: nodeImages?.element(at: index) ?? nodeImage,
+                node: nodes?.element(at: index) ?? generatedNode(for: index),
+                cutscene: cutscenes?.element(at: index) ?? nil,
+                enemy: generatedEnemies.count == 1
+                    ? generatedEnemies.first : nil,
+                enemies: generatedEnemies.count > 1 ? generatedEnemies : nil,
+                boss: generatedBoss,
+                xpReward: xpRewards?.element(at: index) ?? xpReward,
+                rewards: rewardSets?.element(at: index) ?? rewards ?? [],
+                characterRewards: characterRewardSets?.element(at: index)
+                    ?? characterRewards
+                    ?? [],
+                skinRewards: skinRewardSets?.element(at: index)
+                    ?? skinRewards
+                    ?? [],
+                cardRewards: cardRewardSets?.element(at: index)
+                    ?? cardRewards
+                    ?? [],
+                dailyRewardLimits: dailyRewardLimitSets?.element(at: index)
+                    ?? dailyRewardLimits,
+                story: storySets?.element(at: index) ?? story ?? []
+            )
+        }
+    }
+
+    private func enemyGroup(for index: Int) -> [String] {
+        if let enemyGroups, !enemyGroups.isEmpty {
+            return enemyGroups[index % enemyGroups.count].filter {
+                !$0.isEmpty
+            }
+        }
+
+        let validEnemyIDs = enemyIDs.filter { !$0.isEmpty }
+        guard !validEnemyIDs.isEmpty else { return ["tsayi"] }
+
+        let size = max(1, groupSize ?? 1)
+        return (0..<size).map { offset in
+            validEnemyIDs[(index + offset) % validEnemyIDs.count]
+        }
+    }
+
+    private func generatedName(for index: Int) -> String {
+        "\(namePrefix ?? "Battle") \(index + 1)"
+    }
+
+    private func generatedDifficulty(for index: Int) -> Int {
+        let baseDifficulty = max(1, startDifficulty ?? 1)
+        let interval = max(1, difficultyEvery ?? 1)
+        let step = max(0, difficultyStep ?? 1)
+        return baseDifficulty + (index / interval) * step
+    }
+
+    private func generatedNode(for index: Int) -> EventMapNodePosition {
+        let column = index % 10
+        let row = index / 10
+        let x = min(max(0.08 + Double(column) * 0.09, 0.05), 0.94)
+        let yOffset = column.isMultiple(of: 2) ? 0.0 : 0.03
+        let y = min(max(0.86 - Double(row) * 0.16 - yOffset, 0.14), 0.9)
+        return EventMapNodePosition(
+            x: roundedNodeValue(x),
+            y: roundedNodeValue(y)
+        )
+    }
+
+    private func generatedEnemy(enemyID: String) -> CharacterStats {
+        let payload = #"{"enemyID":"\#(enemyID)"}"#.data(using: .utf8)
+        guard
+            let payload,
+            let enemy = try? JSONDecoder().decode(
+                CharacterStats.self,
+                from: payload
+            )
+        else {
+            return CharacterStats(
+                name: enemyID,
+                image: "sar_dragon",
+                model: enemyID,
+                element: "neutral",
+                hp: 100,
+                attack: 10
+            )
+        }
+
+        return enemy
+    }
+
+    private func roundedNodeValue(_ value: Double) -> Double {
+        (value * 100).rounded() / 100
+    }
+}
+
+extension Array {
+    fileprivate func element(at index: Int) -> Element? {
+        guard indices.contains(index) else { return nil }
+        return self[index]
     }
 }
 
@@ -261,6 +553,48 @@ struct GlobeBattle: Codable, Identifiable {
         case cardRewards
         case dailyRewardLimits
         case story
+    }
+
+    init(
+        id: String,
+        name: String,
+        description: String,
+        difficulty: Int,
+        groundTexture: String,
+        skyboxTexture: String,
+        nodeImage: String? = nil,
+        node: EventMapNodePosition,
+        cutscene: GlobeEventCutscene? = nil,
+        enemy: CharacterStats? = nil,
+        enemies: [CharacterStats]? = nil,
+        boss: CharacterStats? = nil,
+        xpReward: Int? = nil,
+        rewards: [CurrencyAmount] = [],
+        characterRewards: [CharacterReward] = [],
+        skinRewards: [StorePackSkinReward] = [],
+        cardRewards: [CardReward] = [],
+        dailyRewardLimits: BattleRewardLimitDefinition? = nil,
+        story: [StoryLine] = []
+    ) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.difficulty = difficulty
+        self.groundTexture = groundTexture
+        self.skyboxTexture = skyboxTexture
+        self.nodeImage = nodeImage
+        self.node = node
+        self.cutscene = cutscene
+        self.enemy = enemy
+        self.enemies = enemies
+        self.boss = boss
+        self.xpReward = xpReward
+        self.rewards = rewards
+        self.characterRewards = characterRewards
+        self.skinRewards = skinRewards
+        self.cardRewards = cardRewards
+        self.dailyRewardLimits = dailyRewardLimits
+        self.story = story
     }
 
     init(from decoder: Decoder) throws {
@@ -363,6 +697,21 @@ struct GlobeBattle: Codable, Identifiable {
     }
 }
 
+private func loadBattleStoryDefinitionsByID()
+    -> [String: BattleStoryDefinition]
+{
+    let stories = JSONResourceLoader.loadMergedIdentifiableArrays(
+        BattleStoryDefinition.self,
+        baseResources: [],
+        autoDiscoveredWhere: {
+            $0.hasPrefix("battle_story_")
+                || $0.hasPrefix("event_battle_story_")
+        }
+    )
+
+    return Dictionary(uniqueKeysWithValues: stories.map { ($0.battleID, $0) })
+}
+
 extension GlobeEventChapter {
     var isEventChapter: Bool {
         id.hasPrefix("event_")
@@ -432,6 +781,77 @@ extension GlobeEventChapter {
             completedBattleIDs.contains($0)
         }
     }
+
+    func applyingBattleStories(
+        _ storiesByBattleID: [String: BattleStoryDefinition]
+    ) -> GlobeEventChapter {
+        GlobeEventChapter(
+            id: id,
+            title: title,
+            subtitle: subtitle,
+            sortOrder: sortOrder,
+            endsAt: endsAt,
+            minAscendedLevel: minAscendedLevel,
+            mapTexture: mapTexture,
+            nodeImage: nodeImage,
+            cutscene: cutscene,
+            points: points.map {
+                $0.applyingBattleStories(storiesByBattleID)
+            }
+        )
+    }
+}
+
+extension GlobeEventPoint {
+    fileprivate func applyingBattleStories(
+        _ storiesByBattleID: [String: BattleStoryDefinition]
+    ) -> GlobeEventPoint {
+        GlobeEventPoint(
+            id: id,
+            title: title,
+            text: text,
+            mapImage: mapImage,
+            mapTexture: mapTexture,
+            nodeImage: nodeImage,
+            node: node,
+            cutscene: cutscene,
+            battleGenerator: battleGenerator,
+            battles: battles.map { battle in
+                guard let story = storiesByBattleID[battle.id] else {
+                    return battle
+                }
+                return battle.applyingBattleStory(story)
+            }
+        )
+    }
+}
+
+extension GlobeBattle {
+    fileprivate func applyingBattleStory(_ battleStory: BattleStoryDefinition)
+        -> GlobeBattle
+    {
+        GlobeBattle(
+            id: id,
+            name: name,
+            description: description,
+            difficulty: difficulty,
+            groundTexture: groundTexture,
+            skyboxTexture: skyboxTexture,
+            nodeImage: nodeImage,
+            node: node,
+            cutscene: battleStory.cutscene ?? cutscene,
+            enemy: enemy,
+            enemies: enemies,
+            boss: boss,
+            xpReward: xpReward,
+            rewards: rewards,
+            characterRewards: characterRewards,
+            skinRewards: skinRewards,
+            cardRewards: cardRewards,
+            dailyRewardLimits: dailyRewardLimits,
+            story: battleStory.story.isEmpty ? story : battleStory.story
+        )
+    }
 }
 
 func loadGlobeEventChapters() -> [GlobeEventChapter] {
@@ -447,6 +867,7 @@ func loadGlobeEventChapters() -> [GlobeEventChapter] {
 
     var chaptersByID = [String: GlobeEventChapter]()
     var resourceByChapterID = [String: String]()
+    let storiesByBattleID = loadBattleStoryDefinitionsByID()
 
     for resourceName in orderedResources {
         let chapters = JSONResourceLoader.loadArray(
@@ -463,7 +884,8 @@ func loadGlobeEventChapters() -> [GlobeEventChapter] {
                 }
             }
 
-            chaptersByID[chapter.id] = chapter
+            chaptersByID[chapter.id] =
+                chapter.applyingBattleStories(storiesByBattleID)
             resourceByChapterID[chapter.id] = resourceName
         }
     }

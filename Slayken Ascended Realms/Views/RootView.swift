@@ -14,6 +14,7 @@ struct RootView: View {
     @EnvironmentObject var musicManager: MusicManager
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var remoteContent: RemoteContentManager
+    @EnvironmentObject var deepLinkRouter: AppDeepLinkRouter
     @Environment(\.modelContext) private var modelContext
 
     private enum Screen {
@@ -52,10 +53,6 @@ struct RootView: View {
 
     private let introFlowKey = "hasCompletedIntroFlow"
     private let runtimeUpdateCheckInterval: Duration = .seconds(60)
-
-    private var loginCampaigns: [LoginRewardCampaign] {
-        loadLoginRewardCampaigns()
-    }
 
     private var introVideos: [IntroVideoDefinition] {
         loadIntroVideoDefinitions()
@@ -212,6 +209,12 @@ struct RootView: View {
         .onDisappear {
             startTransitionTask?.cancel()
             runtimeUpdateCheckTask?.cancel()
+        }
+        .onChange(of: deepLinkRouter.pendingDestination) { _, _ in
+            routePendingDeepLinkIfPossible()
+        }
+        .onChange(of: remoteContent.hasCompletedInitialRefresh) { _, _ in
+            routePendingDeepLinkIfPossible()
         }
     }
 
@@ -538,9 +541,24 @@ struct RootView: View {
         musicManager.reloadTracks()
         musicManager.startPlaybackIfNeeded()
         refreshLoginPopups()
+        routePendingDeepLinkIfPossible()
 
         if mode == .bootstrap {
             remoteContent.startBackgroundPreloadIfNeeded()
+        }
+    }
+
+    private func routePendingDeepLinkIfPossible() {
+        guard deepLinkRouter.pendingDestination != nil else { return }
+        guard remoteContent.hasCompletedInitialRefresh else { return }
+        guard !remoteContent.hasRuntimeRequiredUpdate else { return }
+
+        if currentScreen != .game {
+            startTransitionTask?.cancel()
+            startTransitionTask = nil
+            showStartTransitionOverlay = false
+            activeEnemy = nil
+            transition(to: .game)
         }
     }
 
@@ -580,7 +598,7 @@ struct RootView: View {
     }
 
     private func nextPendingLoginPopup() -> PendingLoginPopup? {
-        for campaign in loginCampaigns {
+        for campaign in gameState.loginCampaigns {
             guard !campaign.rewards.isEmpty else { continue }
             if let rewardState = PlayerInventoryStore.dailyLoginGift(
                 from: campaign.rewards,
@@ -623,7 +641,9 @@ struct RootView: View {
     private func startGameFlow() {
         guard !remoteContent.hasRuntimeRequiredUpdate else { return }
 
-        if hasCompletedIntroFlow || introTutorial == nil {
+        if hasCompletedIntroFlow, gameState.player.model.isEmpty {
+            transition(to: .createClass)
+        } else if hasCompletedIntroFlow || introTutorial == nil {
             beginGameEntryTransition()
         } else if !openingIntroVideos.isEmpty {
             activeIntroIndex = 0
@@ -785,6 +805,7 @@ struct RootView: View {
         if tutorialLaunchSource == .archive || hasCompletedIntroFlow {
             transition(to: .tutorialArchive)
         } else {
+            UserDefaults.standard.set(true, forKey: introFlowKey)
             transition(to: .createClass)
         }
     }

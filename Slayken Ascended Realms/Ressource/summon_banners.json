@@ -166,12 +166,36 @@
         ],
         "pool": [
             {
+                "cardID": "slash_red",
+                "weight": 40
+            },
+            {
+                "cardID": "crystal_blue",
+                "weight": 26
+            },
+            {
+                "cardID": "moon_guard",
+                "weight": 18
+            },
+            {
+                "cardID": "storm_edge",
+                "weight": 10
+            },
+            {
                 "cardID": "void_pulse",
-                "weight": 50
+                "weight": 3
             },
             {
                 "cardID": "ash_breaker",
-                "weight": 50
+                "weight": 3
+            },
+            {
+                "cardID": "light_flare",
+                "weight": 20
+            },
+            {
+                "cardID": "neutral_spark",
+                "weight": 20
             }
         ]
     },
@@ -182,6 +206,7 @@
             "Reines Character Banner mit allen Story-Helden aus deinem Projekt.",
         "category": "Character",
         "image": "realm_country",
+        "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 1,
         "cost": [
             {
@@ -189,6 +214,7 @@
                 "amount": 1000
             }
         ],
+        "multiSummonCount": 10,
         "rates": [
             {
                 "rarity": 5,
@@ -257,6 +283,7 @@
             "Gemischtes Banner mit Charakteren und Skills aus mehreren Seltenheiten.",
         "category": "Mixed",
         "image": "realm_fire",
+        "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 2,
         "cost": [
             {
@@ -264,6 +291,7 @@
                 "amount": 2000
             }
         ],
+        "multiSummonCount": 10,
         "rates": [
             {
                 "rarity": 5,
@@ -364,6 +392,7 @@
             "Event Character Banner. Beim 10. Summon ist ein 5-Star Character garantiert.",
         "category": "Event",
         "image": "bg_sar",
+        "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 7,
         "cost": [
             {
@@ -371,6 +400,7 @@
                 "amount": 3000
             }
         ],
+        "multiSummonCount": 10,
         "maxSummons": 10,
         "guarantee": {
             "dropType": "character",
@@ -444,6 +474,7 @@
         "subtitle": "Gueltiges Einsteiger-Banner fuer 1-Star Skills.",
         "category": "Skill",
         "image": "realm_fire",
+        "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 1,
         "cost": [
             {
@@ -451,6 +482,7 @@
                 "amount": 1000
             }
         ],
+        "multiSummonCount": 10,
         "rates": [
             {
                 "rarity": 1,
@@ -478,6 +510,7 @@
         "subtitle": "Gezieltes Banner fuer 2-Star Skills.",
         "category": "Skill",
         "image": "realm_ice",
+        "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 2,
         "cost": [
             {
@@ -485,6 +518,7 @@
                 "amount": 2800
             }
         ],
+        "multiSummonCount": 10,
         "rates": [
             {
                 "rarity": 2,
@@ -504,6 +538,7 @@
         "subtitle": "Gezieltes Banner fuer 3-Star Skills.",
         "category": "Skill",
         "image": "bg_country",
+        "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 3,
         "cost": [
             {
@@ -511,6 +546,7 @@
                 "amount": 3000
             }
         ],
+        "multiSummonCount": 10,
         "rates": [
             {
                 "rarity": 3,
@@ -530,6 +566,7 @@
         "subtitle": "Gezieltes Banner fuer 4-Star Skills.",
         "category": "Skill",
         "image": "bg_arena",
+        "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 4,
         "cost": [
             {
@@ -537,6 +574,7 @@
                 "amount": 300
             }
         ],
+        "multiSummonCount": 10,
         "rates": [
             {
                 "rarity": 4,
@@ -556,6 +594,7 @@
         "subtitle": "Max-Star Skill Banner mit hoeheren Kosten.",
         "category": "Skill",
         "image": "bg_void",
+        "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 5,
         "cost": [
             {
@@ -563,6 +602,7 @@
                 "amount": 500
             }
         ],
+        "multiSummonCount": 10,
         "rates": [
             {
                 "rarity": 5,
@@ -586,6 +626,7 @@
         "subtitle": "Gemischtes Skill Banner mit allen Sterne-Stufen.",
         "category": "Skill",
         "image": "realm_fire",
+        "endsAt": "05.06.2026 23:59",
         "minAscendedLevel": 6,
         "cost": [
             {
@@ -593,6 +634,7 @@
                 "amount": 3000
             }
         ],
+        "multiSummonCount": 10,
         "rates": [
             {
                 "rarity": 5,

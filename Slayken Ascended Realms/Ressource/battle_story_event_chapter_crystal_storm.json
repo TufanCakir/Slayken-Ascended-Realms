@@ -1,0 +1,161 @@
+[
+    {
+        "battleID": "event_crystal_storm_field_battle_1",
+        "story": [
+            {
+                "speaker": "Shela",
+                "text":
+                    "Zaron… siehst du das? Ein blauer Kristall… komm schnell."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Ein blauer Kristall… aber was bedeutet das?"
+            },
+            {
+                "speaker": "Shela",
+                "text":
+                    "Ich weiß es nicht… Aber irgendwie macht mir das Angst… dieser Ort fühlt sich falsch an."
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Ja… mir läuft auch schon eine Gänsehaut über den Rücken."
+            }
+        ]
+    },
+    {
+        "battleID": "event_crystal_storm_field_battle_5",
+        "story": [
+            {
+                "speaker": "Rana",
+                "text": "Hey! Shela? Zaron? Was macht ihr hier an diesem Ort?"
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Wir wissen es selbst nicht… Vor einem Moment waren wir noch woanders und plötzlich… waren wir hier. Was ist das überhaupt für ein Ort?"
+            },
+            {
+                "speaker": "Rana",
+                "text": "Das hier… ist das Kristallsturmreich."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Das Kristallsturmreich…? Was soll das sein?"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Ja… warum sieht hier alles so unheimlich aus?"
+            }
+        ]
+    },
+    {
+        "battleID": "event_crystal_storm_field_battle_10",
+        "cutscene": {
+            "id": "event_crystal_storm_energy",
+            "title": "Uralte Energie",
+            "video": "intro_crystalstorm",
+            "text":
+                "Blaue Kristalle leuchten im Nebel. Eine uralte Energie pulsiert durch das Reich."
+        },
+        "story": [
+            {
+                "speaker": "Rana",
+                "text":
+                    "Dieser Ort ist voller blauer Kristalle… Aber sie sind nicht einfach nur schön. In ihnen steckt eine uralte Energie."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Und wofür werden sie benutzt?"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Das will ich jetzt auch wissen…"
+            },
+            {
+                "speaker": "Rana",
+                "text":
+                    "Mit diesen Kristallen kann man legendäre Waffen erschaffen. Man sagt, irgendwo hier wurde einst ein Schwert geschmiedet… stark genug, um ganze Reiche zu zerstören."
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Ein legendäres Schwert…? Was für eine Macht muss das haben?"
+            },
+            {
+                "speaker": "Rana",
+                "text":
+                    "Ich weiß es nicht genau… Ich habe diesen Ort selbst nur zufällig entdeckt. Aber seitdem habe ich ständig das Gefühl, beobachtet zu werden…"
+            }
+        ]
+    },
+    {
+        "battleID": "event_crystal_storm_field_battle_15",
+        "story": [
+            {
+                "speaker": "Shela",
+                "text": "Leute… schaut mal da hinten… Wir sind nicht allein."
+            },
+            {
+                "speaker": "Rana",
+                "text": "Oh nein… schnell weg hier! Das sind Crycher!"
+            },
+            {
+                "speaker": "Crycher",
+                "image":  "preview_crycher_guard",
+                "text": "GREEEEEEEEE…"
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Wartet! Können wir gegen sie kämpfen? Sind sie wirklich so stark?"
+            },
+            {
+                "speaker": "Rana",
+                "text":
+                    "Ja… sehr stark. Aber nicht unbesiegbar. Wenn wir zusammenhalten… haben wir vielleicht eine Chance."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Dann kämpfen wir!"
+            }
+        ]
+    },
+    {
+        "battleID": "event_crystal_storm_field_battle_25",
+        "story": [
+            {
+                "speaker": "Crycher",
+                "image":  "preview_crycher_guard",
+                "text": "CRY CRY CRY GRRRRRRRR!"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Verdammt… da kommen noch mehr!"
+            },
+            {
+                "speaker": "Crycher",
+                "image":  "preview_crycher_guard",
+                "text": "GRAAAAAAA! RERREEE! HGGHHGF! TSSSSSS!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "PASST AUF!"
+            }
+        ]
+    },
+    {
+        "battleID": "event_crystal_storm_field_battle_35",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "Das… das ist unmöglich… Ist das etwa unser Ende…?"
+            },
+            {
+                "speaker": "Crycher",
+                "image":  "preview_crycher_guard",
+                "text": "URRRRRR… GRRRR… TRRRR… ZRRRR… BRRRR…"
+            }
+        ]
+    }
+]

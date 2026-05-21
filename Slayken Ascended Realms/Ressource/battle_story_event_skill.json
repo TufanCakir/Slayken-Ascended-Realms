@@ -1,0 +1,27 @@
+[
+    {
+        "battleID": "event_skill_forge_path_battle_1",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "Leute, schaut mal! Da drüben sind merkwürdige Steine."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Ja, ich sehe es, Blödmann."
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Ach Shela, sei nicht gleich so. Hihi."
+            },
+            {
+                "speaker": "Rana",
+                "text": "Immer dasselbe."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Kommt mit!"
+            }
+        ]
+    }
+]

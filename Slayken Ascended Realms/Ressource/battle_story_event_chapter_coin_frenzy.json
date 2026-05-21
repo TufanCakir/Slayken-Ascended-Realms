@@ -1,0 +1,186 @@
+[
+    {
+        "battleID": "event_coin_storm_field_battle_1",
+        "story": [
+            {
+                "speaker": "Sanya",
+                "text": "Wo... wo bin ich? Was ist das für ein Ort...?"
+            },
+            {
+                "speaker": "Rana",
+                "text": "Sanya! Endlich... Geht es dir gut?"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Ich glaube schon... aber wo sind wir hier?"
+            },
+            {
+                "speaker": "Rana",
+                "text":
+                    "Ich weiß es nicht... Alles ging so schnell. Ich erinnere mich nur daran, dass wir angegriffen wurden..."
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Angegriffen?! Von wem?"
+            },
+            {
+                "speaker": "Rana",
+                "text":
+                    "Ich konnte nichts erkennen... Es war dunkel... und diese Schreie... sie kamen aus allen Richtungen..."
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Bitte sag mir nicht, dass wir allein hier sind..."
+            }
+        ]
+    },
+    {
+        "battleID": "event_coin_storm_field_battle_5",
+        "story": [
+            {
+                "speaker": "Shela",
+                "text":
+                    "SANYA! RANA!\nOh Gott... endlich haben wir euch gefunden!"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Hat euch auch jemand attackiert?"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Ja... aber wir wissen nicht wer oder was das war!"
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Diese Kreaturen nennt man Cenchar...\nUnd das hier ist ihr Reich... das sogenannte Goldbrunnenreich."
+            },
+            {
+                "speaker": "Rana",
+                "text":
+                    "Cenchar...? Goldbrunnenreich...? Wovon redest du überhaupt?"
+            }
+        ]
+    },
+    {
+        "battleID": "event_coin_storm_field_battle_10",
+        "story": [
+            {
+                "speaker": "Shela",
+                "text":
+                    "Man erzählt sich, dass irgendwo hier ein mysteriöser Goldbarren verborgen liegt...\nEin Schatz mit einer Macht, die niemand erklären kann..."
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Ein mysteriöser Goldbarren...? Jetzt hörst du meine Aufmerksamkeit."
+            },
+            {
+                "speaker": "Shela",
+                "text":
+                    "Dafür haben wir keine Zeit!\nWir müssen sofort verschwinden!\nDie Cenchar sind schnell... brutal... und ich habe wirklich keine Lust, heute ihr Mittagessen zu werden!"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Dann los! Weg hier!"
+            }
+        ]
+    },
+    {
+        "battleID": "event_coin_storm_field_battle_15",
+        "cutscene": {
+            "id": "event_coin_storm_cenchar_arrival",
+            "title": "Cenchar im Goldbrunnenreich",
+            "video": "coin_festival",
+            "text":
+                "Schwere Schritte donnern durch den Boden. Dunkle Kreaturen kommen immer näher."
+        },
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "Zu spät...\nDa vorne... mehrere Cenchar!"
+            },
+            {
+                "speaker": "Rana",
+                "text":
+                    "Oh nein... Vielleicht entdecken sie uns nicht, wenn wir ganz leise-"
+            },
+            {
+                "speaker": "Cenchar",
+                "text": "GRRRRRRRAAAAAHHHH!!"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Zu spät!\nLAUFT!!"
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Schwere Schritte donnern durch den Boden. Die dunklen Kreaturen kommen immer näher."
+            }
+        ]
+    },
+    {
+        "battleID": "event_coin_storm_field_battle_25",
+        "story": [
+            {
+                "speaker": "Shela",
+                "text": "Nein! Weglaufen bringt nichts!\nWir müssen kämpfen!"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Shela hat recht...\nBereitmachen!"
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Okay... alle zusammen!\nLasst euch nicht einschüchtern!"
+            },
+            {
+                "speaker": "Rana",
+                "text": "Oh man... Das kann niemals gut enden..."
+            },
+            {
+                "speaker": "Cenchar",
+                "image": "preview_cenchar_swarm",
+                "text": "GRAAAARRR... HUUUAAAAA... KRRRRHHH!"
+            }
+        ]
+    },
+    {
+        "battleID": "event_coin_storm_field_battle_35",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "Die machen echt verstörende Geräusche..."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Zaron! Konzentrier dich endlich!"
+            },
+            {
+                "speaker": "Cenchar",
+                "image": "preview_cenchar_swarm",
+                "text": "KRRRRF... RAAAA... SHHHRRRR... PFSSSS!!"
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Die Cenchar reißen ihre Mäuler auf. Schwarzer Speichel tropft auf den Boden, während ihre roten Augen im Dunkeln glühen."
+            },
+            {
+                "speaker": "Cenchar",
+                "image": "preview_cenchar_swarm",
+                "text": "OHJHHH... JSSSSS... SSSS... RRRR... ZUZZZJJJ!!"
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Plötzlich stürmen die Kreaturen mit voller Geschwindigkeit auf die Gruppe zu..."
+            }
+        ]
+    }
+]

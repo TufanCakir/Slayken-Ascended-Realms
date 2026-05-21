@@ -18,6 +18,9 @@ final class GameState: ObservableObject {
     @Published var abilityCards: [AbilityCardDefinition]
     @Published var particleEffects: [ParticleEffectDefinition]
     @Published var newsItems: [NewsItemDefinition]
+    @Published var gifts: [GiftBoxDefinition]
+    @Published var loginCampaigns: [LoginRewardCampaign]
+    @Published var quests: [QuestDefinition]
     @Published var selectedBattle: GlobeBattle?
     @Published var activeEventChapterID: String?
     @Published var activeEventPointID: String?
@@ -95,6 +98,9 @@ final class GameState: ObservableObject {
         self.abilityCards = []
         self.particleEffects = []
         self.newsItems = []
+        self.gifts = []
+        self.loginCampaigns = []
+        self.quests = []
         self.selectedBattle = nil
         self.activeEventChapterID = nil
         self.activeEventPointID = nil
@@ -113,6 +119,9 @@ final class GameState: ObservableObject {
         abilityCards = loadAbilityCards()
         particleEffects = loadParticleEffects()
         newsItems = loadNewsItems()
+        gifts = loadGiftBoxDefinitions()
+        loginCampaigns = loadLoginRewardCampaigns()
+        quests = loadQuestDefinitions()
 
         loadSelections()
     }

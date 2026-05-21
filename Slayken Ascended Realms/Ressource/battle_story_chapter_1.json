@@ -1,0 +1,566 @@
+[
+    {
+        "battleID": "chapter_1_gate_battle_1",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "Was… was ist das für ein Ort?"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Ich weiß es nicht…"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Na dann, Shela… offenbar wurden wir erwartet."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Scheint so. Na dann – an die Arbeit, Zaron."
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_3",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "Shela, schau mal! Ein Portal! Komm mit!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Warte, Zaron! Vielleicht ist das eine Falle."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Wo… wo ist das Portal hin?!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Hm… war wohl doch kein Portal."
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_5",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "Shela, komm schnell!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Was ist los, Zaron?"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Schau mal! Da vorne ist eine Insel!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Dann sehen wir uns mal an, was dort ist."
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_8",
+        "story": [
+            {
+                "speaker": "Shela",
+                "text": "Hm… hier scheint nichts zu sein."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Warte… ich habe etwas gehört. Komm mit!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Was ist das?! Eine Kreatur… sie schwebt!"
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Hoffentlich ist er freundlich und nicht gefährlich… Ähm… hallo? Wer bist du?"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Zaron, pass auf!"
+            },
+            {
+                "speaker": "Tsayi",
+                "text":
+                    "Zaron… ich habe dich erwartet. Ich wusste, dass du eines Tages zurückkehren würdest."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Du kennst mich?"
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_10",
+        "story": [
+            {
+                "speaker": "Tsayi",
+                "text": "Mein Gebieter, passt auf!"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Was sind das für Dinger?!"
+            },
+            {
+                "speaker": "Tsayi",
+                "text": "Das sind Jirgins – uralte Kreaturen."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Was wollen die von uns?"
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_12",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Was geht hier eigentlich vor? Ich verstehe gar nichts mehr!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Mir geht’s genauso… ich bin genauso verwirrt wie du."
+            },
+            {
+                "speaker": "Tsayi",
+                "text": "Zaron… du musst die Jirgins besiegen."
+            },
+            {
+                "speaker": "Jirgins",
+                "text": "Zaron muss sterben!"
+            },
+            {
+                "speaker": "Shela",
+                "text":
+                    "Warum?! Was wollt ihr von ihm? Und woher kennt ihr Zaron?"
+            },
+            {
+                "speaker": "Jirgins",
+                "text": "Zaron ist eine Bedrohung… und muss ausgelöscht werden."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Bist du bereit zu kämpfen, Zaron?"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Let’s go!"
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_15",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "Die Jirgins sind verschwunden…"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Ich habe da so eine Vermutung."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Welche Vermutung?"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Vielleicht… war das alles nur Einbildung?"
+            },
+            {
+                "speaker": "Tsayi",
+                "text": "Nein. Das war keine Einbildung. Es war real."
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_18",
+        "story": [
+            {
+                "speaker": "Tsayi",
+                "text": "Diese Kreaturen stammen aus einem Ort namens Shukula."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Shukula… der Name kommt mir bekannt vor."
+            },
+            {
+                "speaker": "Tsayi",
+                "text": "Zaron, mein Gebieter… Shukula war einst eure Heimat."
+            },
+            {
+                "speaker": "Shela",
+                "text":
+                    "Moment mal… Zaron kommt aus einem Ort namens Shukula? Niemals!"
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Das kann nicht sein! Shela und ich kommen von der Erde!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Zaron… irgendetwas Merkwürdiges geht hier vor."
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_21",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "Die Jirgins sind wieder da!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Jirgins! Das ist Zaron! Er kommt aus Shukula!"
+            },
+            {
+                "speaker": "Jirgins",
+                "text":
+                    "Shukula… ja, das wissen wir. Er hat es beinahe zerstört."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Zu wem gehört ihr überhaupt?"
+            },
+            {
+                "speaker": "Jirgins",
+                "text":
+                    "Wir gehören zu einem Volk namens Lekaris. Klingelt da etwas bei dir, Zaron?"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Ich… ich sehe plötzlich Erinnerungen in meinem Kopf…"
+            },
+            {
+                "speaker": "Jirgins",
+                "text":
+                    "Ganz recht. Du hast damals gegen unseren Anführer gekämpft."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Das… das kann nicht sein…"
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_24",
+        "story": [
+            {
+                "speaker": "Jirgins",
+                "text": "Zaron… der Shikenan."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Was?! Was ist ein Shikenan?!"
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_27",
+        "story": [
+            {
+                "speaker": "Shela",
+                "text":
+                    "Zaron… wer bist du wirklich? Ich verstehe gar nichts mehr."
+            },
+            {
+                "speaker": "Jirgins",
+                "text": "Oh nein… die Krevas kommen! Schnell, weg hier!"
+            },
+            {
+                "speaker": "Krevas",
+                "text": "Hallo, Zaron der Shikenan."
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Ich bin kein Shikenan! Oder was auch immer das sein soll!"
+            },
+            {
+                "speaker": "Krevas",
+                "text":
+                    "Du erinnerst dich nicht mehr? Gut… dann wird es leicht sein, dich zu besiegen."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Los, Zaron! Kämpfen wir!"
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Plötzlich bewegte sich Zaron mit unglaublicher Geschwindigkeit. Gleichzeitig begann sich sein Aussehen zu verändern."
+            },
+            {
+                "speaker": "Krevas",
+                "text": "Wir verschwinden besser und informieren den Anführer!"
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_30",
+        "story": [
+            {
+                "speaker": "Jefar",
+                "text": "Hallo, Zaron."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Wer bist du?! Zeig dich!"
+            },
+            {
+                "speaker": "Jefar",
+                "text": "Ich bin Jefar… der Anführer der Lekaris."
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_33",
+        "story": [
+            {
+                "speaker": "Jefar",
+                "text":
+                    "Hallo, mein Freund. Wie geht es dir nach all den Jahren?"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Jahren? Wovon redest du?"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Kennt ihr euch etwa?"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Nein."
+            },
+            {
+                "speaker": "Jefar",
+                "text": "Doch."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Hä?!"
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_36",
+        "story": [
+            {
+                "speaker": "Sanya",
+                "text": "Hey, Jefar."
+            },
+            {
+                "speaker": "Jefar",
+                "text": "Du heißt also Sanya… oder?"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Ja. Wir kennen uns doch schon."
+            },
+            {
+                "speaker": "Jefar",
+                "text": "Das ist unmöglich…"
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Glaub mir – wir kennen uns sogar ziemlich gut. Wie auch immer… das hier muss Zaron sein."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Ja, ich bin Zaron. Aber woher kennst du mich?"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Erkennst du mich nicht? Shela, was ist mit ihm los?"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Moment… du kennst auch mich?!"
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Natürlich kenne ich euch! Was ist nur mit euch passiert?"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Das wird alles immer verrückter…"
+            },
+            {
+                "speaker": "Jefar",
+                "text": "Genug geredet. Wir sehen uns wieder. Ich komme zurück."
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_39",
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text": "Hey, Shela… Sanya… was ist das dort vorne?"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Hm… interessant. Lass uns nachsehen."
+            },
+            {
+                "speaker": "Sanya",
+                "text": "An eurer Stelle würde ich das nicht tun! Hände weg!"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Warum? Was ist das?"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Man nennt es den Gravitationsstein."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Uhh…"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Interessant. Kommt, gehen wir weiter."
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_43",
+        "story": [
+            {
+                "speaker": "Jefar",
+                "text": "Habt ihr mich vermisst?"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Bleibt zurück!"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Okay!"
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Äh… uff… irgendetwas stimmt nicht. Ich kann mich nicht in einen Shikenan verwandeln."
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Was?! Du bist wirklich ein Shikenan?"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Ja. Wieso? Überrascht?"
+            },
+            {
+                "speaker": "Jefar",
+                "text": "Er kann seine Kräfte nicht benutzen! Hahaha!"
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Keine Sorge, Zaron. Du musst nur das Wort ‚Shulakan‘ sagen."
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Was? Das sage ich bestimmt nicht! Das klingt lächerlich."
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Sag es! Sonst werden wir alle Jefars Zorn zu spüren bekommen! Und glaub mir… Jefar hat Angst vor dir."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "…Shulakan!"
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_46",
+        "story": [
+            {
+                "speaker": "Jefar",
+                "text": "Oh nein…"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Ähm… hä? Es ist doch gar nichts passiert."
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Stimmt. Dafür brauchst du noch etwas – ein ShulakanVice."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Sanya… verarschst du mich gerade?"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Leider nein. Lauft! Schnell!"
+            },
+            {
+                "speaker": "Jefar",
+                "text": "Wohin wollt ihr denn fliehen?"
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Er ist direkt hinter uns! Er holt auf! Lauft schneller!"
+            }
+        ]
+    },
+    {
+        "battleID": "chapter_1_gate_battle_49",
+        "story": [
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Das ShulakanVice ist eine Art Erinnerungsspeicher für Transformationen."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Und wo finde ich so ein ShulakanVice?"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Es ist extrem selten."
+            },
+            {
+                "speaker": "Shela",
+                "text": "Wie viele gibt es überhaupt?"
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "So funktioniert das nicht. Ein ShulakanVice erscheint nur, wenn sein Träger bereit ist."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Und woher weiß ich, wann ich bereit bin?"
+            },
+            {
+                "speaker": "Rana",
+                "text":
+                    "Das musst du selbst herausfinden. Du wirst es in dir spüren. Keine Angst… du merkst es, wenn der Zeitpunkt gekommen ist."
+            }
+        ]
+    }
+]

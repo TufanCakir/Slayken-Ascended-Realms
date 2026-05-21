@@ -1,0 +1,305 @@
+[
+    {
+        "battleID": "event_shukuwa_field_battle_1",
+        "story": [
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Zaron öffnet langsam die Augen und richtet sich erschrocken auf. Kalter Wind rauscht zwischen den Bäumen, dichter Nebel zieht über den Boden."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Leute... wacht auf! Wo sind wir hier?!"
+            },
+            {
+                "speaker": "Shela",
+                "text":
+                    "Ich weiß es nicht... aber dieser Ort fühlt sich irgendwie seltsam an..."
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Ja... ich weiß genau, was du meinst, Shela... Irgendetwas ist hier anders... aber was?"
+            },
+            {
+                "speaker": "Rana",
+                "text": "Leute, schaut mal da drüben! Da ist ein Lagerfeuer!"
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Ein Lagerfeuer?! Uiii, endlich etwas zu essen! Kommt mit!"
+            },
+            {
+                "speaker": "Shela",
+                "text":
+                    "HALT! Oh mein Gott... du denkst wirklich immer nur ans Essen, typisch Zaron!"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Zaron ist echt so vorhersehbar... unglaublich."
+            },
+            {
+                "speaker": "Rana",
+                "text": "Naja... er ist eben wie er ist."
+            }
+        ]
+    },
+    {
+        "battleID": "event_shukuwa_field_battle_5",
+        "story": [
+            {
+                "speaker": "Shukwa",
+                "text": "Piiiiip... hmmmm..."
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "HEY LEUTE, kommt schnell her! Da sind irgendwelche kleinen Wesen am Essen! Wie gemein, die essen ohne uns!"
+            },
+            {
+                "speaker": "Shela",
+                "text":
+                    "Kannst du eigentlich an IRGENDWAS anderes denken außer Essen?!"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "AUA! Nein... aehm... ich meine doch! Hihihi..."
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Moment mal... die haben uns entdeckt... Aber... sie greifen uns gar nicht an?"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Warum sind sie nicht wie die anderen Monster...?"
+            },
+            {
+                "speaker": "Shukwa",
+                "text": "Pipipip! Shukwa Shukwa! Pipipipi!"
+            }
+        ]
+    },
+    {
+        "battleID": "event_shukuwa_field_battle_10",
+        "story": [
+            {
+                "speaker": "Sanya",
+                "text": "Hae? Was wollt ihr? Moment... heisst du etwa Shukwa?"
+            },
+            {
+                "speaker": "Shukwa",
+                "text": "Shukwa! Shukwa! Hihihihi!"
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Was macht ihr hier eigentlich ganz alleine am Lagerfeuer?"
+            },
+            {
+                "speaker": "Shela",
+                "text":
+                    "Vielleicht haben sie kein Zuhause... oder sie wurden zurückgelassen..."
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Shukwa senkt langsam den Kopf und zeigt traurig in die dunkle Ferne. Seine Augen wirken plötzlich voller Schmerz."
+            },
+            {
+                "speaker": "Shela",
+                "text":
+                    "Hey Kleiner... warum bist du hier ganz allein und nicht bei den anderen?"
+            },
+            {
+                "speaker": "Shukwa",
+                "text": "Pip... pip... pip..."
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Der Kleine klingt... einsam..."
+            },
+            {
+                "speaker": "Rana",
+                "text":
+                    "Ich hab eine Idee! Hey... möchtest du vielleicht mit uns kommen?"
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Das ist eine fantastische Idee, Rana!"
+            },
+            {
+                "speaker": "Shela",
+                "text": "Ja... wirklich eine wunderschöne Idee."
+            }
+        ]
+    },
+    {
+        "battleID": "event_shukuwa_field_battle_15",
+        "cutscene": {
+            "id": "event_campfire_shinuca_approach",
+            "title": "Shinucas im Nebel",
+            "video": "intro_campfire",
+            "text":
+                "Ein unheimlicher Wind zieht durch den Wald. Zwischen den dunklen Bäumen erscheinen leuchtende Augen."
+        },
+        "story": [
+            {
+                "speaker": "Zaron",
+                "text":
+                    "Moment mal... wenn er mit uns kommt... was soll ich dann essen? Seine Krümel?"
+            },
+            {
+                "speaker": "Shela",
+                "text": "ZARON DU IDIOT!"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "AAAAUUU! Das war doch nur ein Scherz!"
+            },
+            {
+                "speaker": "Shukwa",
+                "text": "SHUKWA! SHUKWA! SHUKWA!"
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Das kleine Wesen springt voller Freude herum. Zum ersten Mal wirkt es nicht mehr allein."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Psst... hört ihr das? Und... es riecht verbrannt..."
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Ein unheimlicher Wind zieht durch den Wald. Das Feuer flackert plötzlich wild."
+            },
+            {
+                "speaker": "Shela",
+                "text":
+                    "Dann sehen wir lieber nach... aber bleibt dicht zusammen."
+            }
+        ]
+    },
+    {
+        "battleID": "event_shukuwa_field_battle_20",
+        "story": [
+            {
+                "speaker": "Sanya",
+                "text": "Uggh... nein... das sind Shinucas..."
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Zwischen den dunklen Bäumen erscheinen mehrere leuchtende Augen."
+            },
+            {
+                "speaker": "Shinuca",
+                "text": "HSSCHTHSSCHT... GRRRRRRR..."
+            },
+            {
+                "speaker": "Rana",
+                "text": "Äh... was machen wir jetzt?! Kämpfen oder weglaufen?!"
+            },
+            {
+                "speaker": "Zaron",
+                "text": "Kämpfen natürlich!"
+            },
+            {
+                "speaker": "Rana",
+                "text": "Zaron, bist du verrückt?! Die sind in der Überzahl!"
+            },
+            {
+                "speaker": "Shinuca",
+                "text": "GRRRRR... YRRRRT... TZZZZZZ... JSSSSSS!"
+            }
+        ]
+    },
+    {
+        "battleID": "event_shukuwa_field_battle_30",
+        "story": [
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Immer mehr Shinucas tauchen aus den Schatten auf. Ihre Stimmen klingen wie das Kreischen wilder Bestien."
+            },
+            {
+                "speaker": "Shukwa",
+                "text": "Uhhh... Shukwa..."
+            },
+            {
+                "speaker": "Sanya",
+                "text":
+                    "Diesmal hat Rana recht! Zaron, wir sollten lieber weglaufen!"
+            },
+            {
+                "speaker": "Zaron",
+                "text":
+                    "NEIN! Wenn wir jetzt davonlaufen, werden sie uns jagen!"
+            },
+            {
+                "speaker": "Rana",
+                "text": "...Na gut. Dann kaempfen wir eben zusammen."
+            },
+            {
+                "speaker": "Sanya",
+                "text": "Wenn es sein muss..."
+            },
+            {
+                "speaker": "Shela",
+                "text":
+                    "Ich hätte es wissen muessen... mit Zaron endet alles immer im Chaos."
+            }
+        ]
+    },
+    {
+        "battleID": "event_shukuwa_field_battle_40",
+        "story": [
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text": "Obwohl Shukwa Angst hat, tritt er langsam neben Zaron."
+            },
+            {
+                "speaker": "Shukwa",
+                "text": "Ssssss... Shukwa..."
+            },
+            {
+                "speaker": "Shinuca",
+                "text": "GHHHHHH... GRRRRRRRR... RAAAAAAAHHHH!!!"
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Ploetzlich stürmen die Shinucas gleichzeitig los. Der Boden bebt unter ihren Schritten."
+            },
+            {
+                "speaker": "Zaron",
+                "text": "LOS JETZT!!! ANGRIFF!!!"
+            },
+            {
+                "speaker": "Shukwa",
+                "text": "SHUKWAAAAAA!!!"
+            },
+            {
+                "speaker": "Shinuca",
+                "text": "GAAAAAAAAARRRRRRRTTTTTTRRRRRRR!!!"
+            },
+            {
+                "speaker": "Erzähler",
+                "image": "preview_blue_dragon",
+                "text":
+                    "Ein gewaltiger Kampf beginnt. Funken fliegen durch die Luft. Schreie hallen durch den Wald. Das Lagerfeuer explodiert in einem Sturm aus Asche und Flammen."
+            }
+        ]
+    }
+]

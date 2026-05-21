@@ -710,6 +710,7 @@ enum PlayerInventoryStore {
     @discardableResult
     static func incrementSummonCount(
         for bannerID: String,
+        by amount: Int = 1,
         in context: ModelContext
     ) -> SummonBannerProgress {
         let existing = summonProgress(for: bannerID, in: context)
@@ -717,7 +718,7 @@ enum PlayerInventoryStore {
         if existing == nil {
             context.insert(progress)
         }
-        progress.summonCount += 1
+        progress.summonCount += max(0, amount)
         save(context)
         return progress
     }

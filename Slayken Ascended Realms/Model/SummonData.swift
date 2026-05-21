@@ -49,8 +49,10 @@ struct SummonBanner: Codable, Identifiable, Equatable {
     let subtitle: String?
     let category: String?
     let image: String
+    let endsAt: String?
     let minAscendedLevel: Int?
     let cost: [CurrencyAmount]
+    let multiSummonCount: Int?
     let maxSummons: Int?
     let guarantee: SummonGuarantee?
     let rates: [SummonRate]
@@ -58,6 +60,10 @@ struct SummonBanner: Codable, Identifiable, Equatable {
 
     var requiredAscendedLevel: Int {
         max(1, minAscendedLevel ?? 1)
+    }
+
+    var resolvedMultiSummonCount: Int {
+        max(1, multiSummonCount ?? 1)
     }
 }
 
@@ -102,4 +108,5 @@ func loadSummonBanners() -> [SummonBanner] {
                 || $0.hasPrefix("summon_banner_")
         }
     )
+    .filter { EventDateSupport.isActive(endsAt: $0.endsAt) }
 }

@@ -26,11 +26,14 @@ struct SummonView: View {
     @Query private var accountProgress: [PlayerAccountProgress]
 
     @State private var lastSummon: SummonDrop?
+    @State private var lastSummons: [SummonDrop] = []
     @State private var lastBannerID: String?
     @State private var message = ""
     @State private var showResult = false
     @State private var infoBanner: SummonBanner?
     @State private var confirmationBanner: SummonBanner?
+    @State private var confirmationSummonCount = 1
+    @State private var countdownNow = Date()
 
     private var ascendedLevel: Int {
         accountProgress.first?.level ?? 1
@@ -77,12 +80,12 @@ struct SummonView: View {
         }
 
         .overlay {
-            if showResult, let lastSummon {
+            if showResult, !lastSummons.isEmpty {
                 ZStack {
                     Color.black.opacity(0.6)
                         .ignoresSafeArea()
 
-                    SummonResultView(result: lastSummon) {
+                    SummonResultsView(results: lastSummons) {
                         withAnimation {
                             showResult = false
                         }
@@ -95,6 +98,12 @@ struct SummonView: View {
                 for: currencies,
                 in: modelContext
             )
+        }
+        .task {
+            while !Task.isCancelled {
+                countdownNow = .now
+                try? await Task.sleep(for: .seconds(30))
+            }
         }
         .sheet(item: $infoBanner) { banner in
             SummonBannerInfoSheet(
@@ -114,14 +123,22 @@ struct SummonView: View {
             titleVisibility: .visible,
             presenting: confirmationBanner
         ) { banner in
-            Button("Summon fuer \(costText(banner.cost))") {
-                performSummon(from: banner)
+            Button(
+                summonButtonTitle(
+                    count: confirmationSummonCount,
+                    cost: totalCost(for: banner, count: confirmationSummonCount)
+                )
+            ) {
+                performSummon(from: banner, count: confirmationSummonCount)
             }
             Button("Nicht summon", role: .cancel) {
                 confirmationBanner = nil
+                confirmationSummonCount = 1
             }
         } message: { banner in
-            Text("Willst du wirklich \(banner.name) benutzen?")
+            Text(
+                "Willst du wirklich \(confirmationSummonCount)x \(banner.name) benutzen?"
+            )
         }
     }
 
@@ -211,9 +228,14 @@ struct SummonView: View {
     }
 
     private func summonBannerRow(_ banner: SummonBanner) -> some View {
-        let affordable = canAfford(banner.cost)
+        let singleCost = totalCost(for: banner, count: 1)
+        let multiCount = availableSummonCount(for: banner)
+        let multiCost = totalCost(for: banner, count: multiCount)
+        let affordable = canAfford(singleCost)
+        let multiAffordable = canAfford(multiCost)
         let available = isAvailable(banner)
         let levelUnlocked = isLevelUnlocked(banner)
+        let active = isDateActive(banner)
         let resultIsHere = lastBannerID == banner.id
 
         return ZStack {
@@ -276,8 +298,15 @@ struct SummonView: View {
                                 .lineLimit(1)
                         }
 
-                        if resultIsHere, let lastSummon {
-                            Text(resultName(lastSummon))
+                        if let countdownText = countdownText(for: banner) {
+                            Text(countdownText)
+                                .font(.system(size: 10, weight: .black))
+                                .foregroundStyle(.orange)
+                                .lineLimit(1)
+                        }
+
+                        if resultIsHere, !lastSummons.isEmpty {
+                            Text(resultSummary(lastSummons))
                                 .font(.system(size: 10, weight: .black))
                                 .foregroundStyle(.green)
                                 .lineLimit(1)
@@ -292,9 +321,9 @@ struct SummonView: View {
 
                 Spacer(minLength: 4)
 
-                VStack(spacing: 2) {
+                VStack(spacing: 6) {
                     Button {
-                        requestSummon(from: banner)
+                        requestSummon(from: banner, count: 1)
                     } label: {
                         Text("Use")
                             .font(.system(size: 18, weight: .medium))
@@ -302,7 +331,7 @@ struct SummonView: View {
                             .frame(width: 58, height: 42)
                             .background(
                                 LinearGradient(
-                                    colors: affordable && available
+                                    colors: affordable && available && active
                                         && levelUnlocked
                                         ? [
                                             Color(
@@ -333,12 +362,45 @@ struct SummonView: View {
                     }
                     .buttonStyle(.plain)
                     .contentShape(Rectangle())
-                    .disabled(!affordable || !available || !levelUnlocked)
+                    .disabled(
+                        !affordable || !available || !active || !levelUnlocked
+                    )
 
-                    Text(costText(banner.cost))
+                    if banner.resolvedMultiSummonCount > 1 {
+                        Button {
+                            requestSummon(from: banner, count: multiCount)
+                        } label: {
+                            Text("x\(multiCount)")
+                                .font(.system(size: 13, weight: .black))
+                                .foregroundStyle(.white)
+                                .frame(width: 58, height: 28)
+                                .background(
+                                    multiAffordable && available && active
+                                        && levelUnlocked && multiCount > 1
+                                        ? Color.purple.opacity(0.78)
+                                        : Color.gray.opacity(0.52),
+                                    in: Capsule()
+                                )
+                                .overlay {
+                                    Capsule()
+                                        .stroke(
+                                            .white.opacity(0.42),
+                                            lineWidth: 1
+                                        )
+                                }
+                        }
+                        .buttonStyle(.plain)
+                        .contentShape(Rectangle())
+                        .disabled(
+                            !multiAffordable || !available || !active
+                                || !levelUnlocked || multiCount <= 1
+                        )
+                    }
+
+                    Text(costText(singleCost))
                         .font(.system(size: 10, weight: .black))
                         .foregroundStyle(
-                            affordable && available && levelUnlocked
+                            affordable && available && active && levelUnlocked
                                 ? .white.opacity(0.9) : .red.opacity(0.9)
                         )
                         .lineLimit(1)
@@ -408,7 +470,13 @@ struct SummonView: View {
 
     private var confirmationTitle: String {
         guard let confirmationBanner else { return "Summon bestaetigen" }
-        return "Summon fuer \(costText(confirmationBanner.cost))?"
+        return summonButtonTitle(
+            count: confirmationSummonCount,
+            cost: totalCost(
+                for: confirmationBanner,
+                count: confirmationSummonCount
+            )
+        ) + "?"
     }
 
     private var confirmationBinding: Binding<Bool> {
@@ -417,18 +485,29 @@ struct SummonView: View {
             set: { isPresented in
                 if !isPresented {
                     confirmationBanner = nil
+                    confirmationSummonCount = 1
                 }
             }
         )
     }
 
-    private func requestSummon(from banner: SummonBanner) {
+    private func requestSummon(from banner: SummonBanner, count: Int) {
+        let resolvedCount = availableSummonCount(
+            for: banner,
+            requestedCount: count
+        )
         lastBannerID = banner.id
         lastSummon = nil
+        lastSummons = []
 
         guard isLevelUnlocked(banner) else {
             message =
                 "Freischaltung ab Ascended Level \(banner.requiredAscendedLevel)"
+            return
+        }
+
+        guard isDateActive(banner) else {
+            message = "Banner beendet"
             return
         }
 
@@ -437,22 +516,39 @@ struct SummonView: View {
             return
         }
 
-        guard canAfford(banner.cost) else {
+        guard resolvedCount > 0 else {
+            message = "Limit erreicht"
+            return
+        }
+
+        guard canAfford(totalCost(for: banner, count: resolvedCount)) else {
             message = "Nicht genug Waehrung"
             return
         }
 
         confirmationBanner = banner
+        confirmationSummonCount = resolvedCount
     }
 
-    private func performSummon(from banner: SummonBanner) {
+    private func performSummon(from banner: SummonBanner, count: Int) {
         confirmationBanner = nil
         lastBannerID = banner.id
         lastSummon = nil
+        lastSummons = []
+
+        let resolvedCount = availableSummonCount(
+            for: banner,
+            requestedCount: count
+        )
 
         guard isLevelUnlocked(banner) else {
             message =
                 "Freischaltung ab Ascended Level \(banner.requiredAscendedLevel)"
+            return
+        }
+
+        guard isDateActive(banner) else {
+            message = "Banner beendet"
             return
         }
 
@@ -461,43 +557,57 @@ struct SummonView: View {
             return
         }
 
-        guard canAfford(banner.cost) else {
+        guard resolvedCount > 0 else {
+            message = "Limit erreicht"
+            return
+        }
+
+        let totalCost = totalCost(for: banner, count: resolvedCount)
+        guard canAfford(totalCost) else {
             message = "Nicht genug Waehrung"
             return
         }
 
-        guard
-            let result = SummonService.summon(
-                from: banner,
-                characters: characters,
-                cards: gameState.abilityCards,
-                summonNumber: summonCount(for: banner) + 1
-            )
-        else {
+        let results = SummonService.summonMany(
+            count: resolvedCount,
+            from: banner,
+            characters: characters,
+            cards: gameState.abilityCards,
+            startingSummonNumber: summonCount(for: banner) + 1
+        )
+
+        guard results.count == resolvedCount else {
             message = "Pool ist leer"
             return
         }
 
-        guard PlayerInventoryStore.spend(banner.cost, in: modelContext) else {
+        guard PlayerInventoryStore.spend(totalCost, in: modelContext) else {
             message = "Nicht genug Waehrung"
             return
         }
 
-        switch result {
-        case .character(let character):
-            PlayerInventoryStore.addOwned(
-                characterID: character.id,
-                in: modelContext
-            )
-        case .card(let card):
-            PlayerInventoryStore.addOwnedCard(cardID: card.id, in: modelContext)
+        for result in results {
+            switch result {
+            case .character(let character):
+                PlayerInventoryStore.addOwned(
+                    characterID: character.id,
+                    in: modelContext
+                )
+            case .card(let card):
+                PlayerInventoryStore.addOwnedCard(
+                    cardID: card.id,
+                    in: modelContext
+                )
+            }
         }
 
         PlayerInventoryStore.incrementSummonCount(
             for: banner.id,
+            by: resolvedCount,
             in: modelContext
         )
-        lastSummon = result
+        lastSummon = results.first
+        lastSummons = results
         showResult = true
         message = ""
     }
@@ -529,10 +639,37 @@ struct SummonView: View {
         }
     }
 
+    private func resultSummary(_ results: [SummonDrop]) -> String {
+        guard results.count > 1 else {
+            return results.first.map(resultName) ?? ""
+        }
+        return "\(results.count)x Summon"
+    }
+
     private func canAfford(_ cost: [CurrencyAmount]) -> Bool {
         cost.allSatisfy { costItem in
             amount(for: costItem.currency) >= costItem.amount
         }
+    }
+
+    private func totalCost(
+        for banner: SummonBanner,
+        count: Int
+    ) -> [CurrencyAmount] {
+        guard count > 1 else { return banner.cost }
+        return banner.cost.map {
+            CurrencyAmount(currency: $0.currency, amount: $0.amount * count)
+        }
+    }
+
+    private func summonButtonTitle(
+        count: Int,
+        cost: [CurrencyAmount]
+    ) -> String {
+        if count > 1 {
+            return "\(count)x Summon fuer \(costText(cost))"
+        }
+        return "Summon fuer \(costText(cost))"
     }
 
     private func summonCount(for banner: SummonBanner) -> Int {
@@ -544,6 +681,10 @@ struct SummonView: View {
         return summonCount(for: banner) < maxSummons
     }
 
+    private func isDateActive(_ banner: SummonBanner) -> Bool {
+        EventDateSupport.isActive(endsAt: banner.endsAt, now: countdownNow)
+    }
+
     private func isLevelUnlocked(_ banner: SummonBanner) -> Bool {
         ascendedLevel >= banner.requiredAscendedLevel
     }
@@ -551,6 +692,25 @@ struct SummonView: View {
     private func limitText(for banner: SummonBanner) -> String? {
         guard let maxSummons = banner.maxSummons else { return nil }
         return "\(summonCount(for: banner))/\(maxSummons)"
+    }
+
+    private func countdownText(for banner: SummonBanner) -> String? {
+        EventDateSupport.displayText(endsAt: banner.endsAt, now: countdownNow)
+    }
+
+    private func availableSummonCount(
+        for banner: SummonBanner,
+        requestedCount: Int? = nil
+    ) -> Int {
+        let requestedCount = max(
+            1,
+            requestedCount ?? banner.resolvedMultiSummonCount
+        )
+        guard let maxSummons = banner.maxSummons else {
+            return requestedCount
+        }
+        let remaining = max(0, maxSummons - summonCount(for: banner))
+        return min(requestedCount, remaining)
     }
 
     private func amount(for code: String) -> Int {
@@ -635,9 +795,20 @@ private struct SummonBannerInfoSheet: View {
                 infoPill(banner.category ?? "Standard")
                 infoPill(costText(banner.cost))
                 infoPill("Asc Lv. \(banner.requiredAscendedLevel)")
+                if banner.resolvedMultiSummonCount > 1 {
+                    infoPill("Multi x\(banner.resolvedMultiSummonCount)")
+                }
                 if let maxSummons = banner.maxSummons {
                     infoPill("\(summonCount)/\(maxSummons) used")
                 }
+            }
+
+            if let timingText = EventDateSupport.displayText(
+                endsAt: banner.endsAt
+            ) {
+                Text(timingText)
+                    .font(.system(size: 12, weight: .black))
+                    .foregroundStyle(.orange)
             }
 
             if ascendedLevel < banner.requiredAscendedLevel {

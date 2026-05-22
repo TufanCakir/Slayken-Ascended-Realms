@@ -123,17 +123,27 @@ struct TeamCardPickerView: View {
             onSelect(card)
         } label: {
             VStack(alignment: .leading, spacing: 7) {
-                cardImage(card.image)
-                    .frame(height: 164)
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 6, style: .continuous)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 6).stroke(
-                            .white.opacity(0.28),
-                            lineWidth: 1
+                ZStack(alignment: .topLeading) {
+                    cardImage(card.image)
+                        .frame(height: 164)
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: 6,
+                                style: .continuous
+                            )
                         )
-                    )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6).stroke(
+                                .white.opacity(0.28),
+                                lineWidth: 1
+                            )
+                        )
+
+                    if card.isEventLimited {
+                        eventBadge
+                            .padding(8)
+                    }
+                }
 
                 Text(card.name)
                     .font(.system(size: 13, weight: .black))
@@ -217,5 +227,17 @@ struct TeamCardPickerView: View {
                     .foregroundStyle(.white.opacity(0.78))
             }
         }
+    }
+
+    private var eventBadge: some View {
+        Text("EVENT")
+            .font(.system(size: 9, weight: .black))
+            .foregroundStyle(.black)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(Color.yellow, in: Capsule())
+            .overlay(
+                Capsule().stroke(.white.opacity(0.72), lineWidth: 1)
+            )
     }
 }

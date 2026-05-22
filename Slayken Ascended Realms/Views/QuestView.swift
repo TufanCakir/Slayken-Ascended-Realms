@@ -37,6 +37,18 @@ struct QuestView: View {
     @State private var message = ""
     @State private var resourceRefreshDate = Date()
 
+    private struct QuestRenderContext {
+        let claimedQuestIDs: Set<String>
+        let questCounterMap: [String: Int]
+        let completedBattleIDs: Set<String>
+        let summonCount: Int
+        let teamMemberCount: Int
+        let dailyLoginClaims: Int
+        let currenciesByCode: [String: CurrencyDefinition]
+        let summonCharactersByID: [String: SummonCharacter]
+        let chapterBattleIDsByChapterID: [String: [String]]
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
@@ -112,7 +124,9 @@ struct QuestView: View {
     }
 
     private var farmLimitSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        let status = activeBattleFarmStatus
+
+        return VStack(alignment: .leading, spacing: 12) {
             Text("Battle Energie und Limits")
                 .font(.system(size: 18, weight: .black))
                 .foregroundStyle(.white)
@@ -120,9 +134,9 @@ struct QuestView: View {
             HStack(spacing: 12) {
                 farmStatCard(
                     title: "Energie",
-                    value: "\(activeBattleFarmStatus.energy)",
+                    value: "\(status.energy)",
                     subtitle:
-                        "Von \(activeBattleFarmStatus.energyMaximum), +\(activeBattleFarmStatus.energyRegenerationPerMinute)/Min",
+                        "Von \(status.energyMaximum), +\(status.energyRegenerationPerMinute)/Min",
                     assetName: nil,
                     systemName: "bolt.fill",
                     accent: .orange
@@ -130,9 +144,9 @@ struct QuestView: View {
 
                 farmStatCard(
                     title: "Coins",
-                    value: "\(activeBattleFarmStatus.remainingCoins)",
+                    value: "\(status.remainingCoins)",
                     subtitle:
-                        "Von \(activeBattleFarmStatus.coinsLimitMaximum), +\(activeBattleFarmStatus.coinsRegenerationPerMinute)/Min",
+                        "Von \(status.coinsLimitMaximum), +\(status.coinsRegenerationPerMinute)/Min",
                     assetName: "icon_coins",
                     systemName: "circle.hexagongrid.fill",
                     accent: .yellow
@@ -140,9 +154,9 @@ struct QuestView: View {
 
                 farmStatCard(
                     title: "Crystals",
-                    value: "\(activeBattleFarmStatus.remainingCrystals)",
+                    value: "\(status.remainingCrystals)",
                     subtitle:
-                        "Von \(activeBattleFarmStatus.crystalsLimitMaximum), +\(activeBattleFarmStatus.crystalsRegenerationPerMinute)/Min",
+                        "Von \(status.crystalsLimitMaximum), +\(status.crystalsRegenerationPerMinute)/Min",
                     assetName: "icon_crystals",
                     systemName: "diamond.fill",
                     accent: .cyan
@@ -249,16 +263,21 @@ struct QuestView: View {
     }
 
     private var questSections: some View {
-        LazyVStack(alignment: .leading, spacing: 12) {
+        let context = makeQuestRenderContext()
+
+        return LazyVStack(alignment: .leading, spacing: 12) {
             ForEach(filteredQuests) { quest in
-                questCard(quest)
+                questCard(quest, context: context)
             }
         }
     }
 
-    private func questCard(_ quest: QuestDefinition) -> some View {
-        let progress = progressValue(for: quest)
-        let claimed = claimedQuests.contains { $0.questID == quest.id }
+    private func questCard(
+        _ quest: QuestDefinition,
+        context: QuestRenderContext
+    ) -> some View {
+        let progress = progressValue(for: quest, context: context)
+        let claimed = context.claimedQuestIDs.contains(quest.id)
         let unlocked = ascendedLevel >= quest.requiredAscendedLevel
         let canClaim =
             unlocked && !claimed && progress >= quest.objective.target
@@ -275,11 +294,17 @@ struct QuestView: View {
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(.white.opacity(0.76))
 
-                    Text(progressLabel(for: quest, progress: progress))
-                        .font(.system(size: 12, weight: .black))
-                        .foregroundStyle(
-                            canClaim ? .green : .cyan.opacity(0.92)
+                    Text(
+                        progressLabel(
+                            for: quest,
+                            progress: progress,
+                            context: context
                         )
+                    )
+                    .font(.system(size: 12, weight: .black))
+                    .foregroundStyle(
+                        canClaim ? .green : .cyan.opacity(0.92)
+                    )
                 }
 
                 Spacer(minLength: 0)
@@ -302,10 +327,10 @@ struct QuestView: View {
                 )
             )
 
-            rewardsPanel(for: quest)
+            rewardsPanel(for: quest, context: context)
 
             if !quest.choiceCharacterRewardIDs.isEmpty {
-                choiceRewardStrip(for: quest)
+                choiceRewardStrip(for: quest, context: context)
             }
 
             if !unlocked {
@@ -381,7 +406,10 @@ struct QuestView: View {
             .frame(height: 10)
     }
 
-    private func rewardsPanel(for quest: QuestDefinition) -> some View {
+    private func rewardsPanel(
+        for quest: QuestDefinition,
+        context: QuestRenderContext
+    ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Rewards")
                 .font(.system(size: 12, weight: .black))
@@ -391,20 +419,33 @@ struct QuestView: View {
                 HStack(spacing: 8) {
                     ForEach(quest.rewards) { reward in
                         rewardChip(
-                            title: currencyName(for: reward.currency),
+                            title: currencyName(
+                                for: reward.currency,
+                                context: context
+                            ),
                             subtitle: "+\(reward.amount)",
-                            imageName: currencyAsset(for: reward.currency),
-                            systemName: currencySymbol(for: reward.currency)
+                            imageName: currencyAsset(
+                                for: reward.currency,
+                                context: context
+                            ),
+                            systemName: currencySymbol(
+                                for: reward.currency,
+                                context: context
+                            )
                         )
                     }
 
                     ForEach(quest.characterRewards, id: \.characterID) {
                         reward in
                         rewardChip(
-                            title: characterName(for: reward.characterID),
+                            title: characterName(
+                                for: reward.characterID,
+                                context: context
+                            ),
                             subtitle: "Direkt",
                             imageName: characterPreview(
-                                for: reward.characterID
+                                for: reward.characterID,
+                                context: context
                             ),
                             systemName: "person.crop.square"
                         )
@@ -462,7 +503,10 @@ struct QuestView: View {
         )
     }
 
-    private func choiceRewardStrip(for quest: QuestDefinition) -> some View {
+    private func choiceRewardStrip(
+        for quest: QuestDefinition,
+        context: QuestRenderContext
+    ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Waehle deinen Character")
                 .font(.system(size: 12, weight: .black))
@@ -482,7 +526,8 @@ struct QuestView: View {
                         } label: {
                             VStack(spacing: 8) {
                                 if let preview = characterPreview(
-                                    for: characterID
+                                    for: characterID,
+                                    context: context
                                 ) {
                                     RemoteAssetImage(preview) {
                                         Image(systemName: "person.crop.square")
@@ -524,9 +569,14 @@ struct QuestView: View {
                                         )
                                 }
 
-                                Text(characterName(for: characterID))
-                                    .font(.system(size: 11, weight: .black))
-                                    .foregroundStyle(.white)
+                                Text(
+                                    characterName(
+                                        for: characterID,
+                                        context: context
+                                    )
+                                )
+                                .font(.system(size: 11, weight: .black))
+                                .foregroundStyle(.white)
                             }
                             .padding(8)
                             .background(
@@ -557,33 +607,47 @@ struct QuestView: View {
         }
     }
 
-    private func progressValue(for quest: QuestDefinition) -> Int {
+    private func progressValue(
+        for quest: QuestDefinition,
+        context: QuestRenderContext
+    ) -> Int {
         switch quest.objective.type {
         case .ascendedLevel:
             return ascendedLevel
         case .battleVictories:
-            return questCounterValue(for: "battle_victories")
+            return questCounterValue(for: "battle_victories", context: context)
         case .monsterKills:
-            return questCounterValue(for: "monster_kills")
+            return questCounterValue(for: "monster_kills", context: context)
         case .currencyCollect:
             let currency = quest.objective.currency ?? "coins"
-            return questCounterValue(for: "currency_earned_\(currency)")
+            return questCounterValue(
+                for: "currency_earned_\(currency)",
+                context: context
+            )
         case .summons:
-            return summonProgressRecords.reduce(0) {
-                $0 + max(0, $1.summonCount)
-            }
+            return context.summonCount
         case .dailyLoginClaims:
-            return dailyLoginProgress.first?.totalClaims ?? 0
+            return context.dailyLoginClaims
         case .teamMembers:
-            return Set(teamMembers.map(\.slotIndex)).count
+            return context.teamMemberCount
         case .storyBattleCompletion:
-            return storyBattleProgress(for: quest.objective.referenceID)
+            return storyBattleProgress(
+                for: quest.objective.referenceID,
+                context: context
+            )
         case .chapterCompletion:
-            return chapterCompletionProgress(for: quest.objective.referenceID)
+            return chapterCompletionProgress(
+                for: quest.objective.referenceID,
+                context: context
+            )
         }
     }
 
-    private func progressLabel(for quest: QuestDefinition, progress: Int)
+    private func progressLabel(
+        for quest: QuestDefinition,
+        progress: Int,
+        context: QuestRenderContext
+    )
         -> String
     {
         let current = min(progress, quest.objective.target)
@@ -597,7 +661,7 @@ struct QuestView: View {
             return "Monster \(current)/\(quest.objective.target)"
         case .currencyCollect:
             return
-                "\(currencyName(for: quest.objective.currency ?? "coins")) \(current)/\(quest.objective.target)"
+                "\(currencyName(for: quest.objective.currency ?? "coins", context: context)) \(current)/\(quest.objective.target)"
         case .summons:
             return "Summons \(current)/\(quest.objective.target)"
         case .dailyLoginClaims:
@@ -611,77 +675,119 @@ struct QuestView: View {
         }
     }
 
-    private var questCounterMap: [String: Int] {
-        Dictionary(
-            uniqueKeysWithValues: questCounters.map { ($0.key, $0.value) }
+    private func makeQuestRenderContext() -> QuestRenderContext {
+        let chapterBattleIDsByChapterID = Dictionary(
+            uniqueKeysWithValues: cachedChapters.map { chapter in
+                (
+                    chapter.id,
+                    chapter.points.flatMap { point in
+                        point.battles.map(\.id)
+                    }
+                )
+            }
+        )
+
+        return QuestRenderContext(
+            claimedQuestIDs: Set(claimedQuests.map(\.questID)),
+            questCounterMap: Dictionary(
+                uniqueKeysWithValues: questCounters.map { ($0.key, $0.value) }
+            ),
+            completedBattleIDs: Set(completedBattles.map(\.battleID)),
+            summonCount: summonProgressRecords.reduce(0) {
+                $0 + max(0, $1.summonCount)
+            },
+            teamMemberCount: Set(teamMembers.map(\.slotIndex)).count,
+            dailyLoginClaims: dailyLoginProgress.first?.totalClaims ?? 0,
+            currenciesByCode: Dictionary(
+                uniqueKeysWithValues: gameState.currencies.map {
+                    ($0.code, $0)
+                }
+            ),
+            summonCharactersByID: Dictionary(
+                uniqueKeysWithValues: gameState.summonCharacters.map {
+                    ($0.id, $0)
+                }
+            ),
+            chapterBattleIDsByChapterID: chapterBattleIDsByChapterID
         )
     }
 
-    private func questCounterValue(for key: String) -> Int {
-        questCounterMap[key] ?? 0
+    private func questCounterValue(
+        for key: String,
+        context: QuestRenderContext
+    ) -> Int {
+        context.questCounterMap[key] ?? 0
     }
 
-    private func storyBattleProgress(for referenceID: String?) -> Int {
-        let completedBattleIDs = completedBattleIDSet
-
+    private func storyBattleProgress(
+        for referenceID: String?,
+        context: QuestRenderContext
+    ) -> Int {
         guard let referenceID, !referenceID.isEmpty else {
-            return completedBattleIDs.filter { $0.hasPrefix("chapter_") }.count
+            return context.completedBattleIDs.filter {
+                $0.hasPrefix("chapter_")
+            }.count
         }
 
         if referenceID.contains("_battle_") {
-            return completedBattleIDs.contains(referenceID) ? 1 : 0
+            return context.completedBattleIDs.contains(referenceID) ? 1 : 0
         }
 
-        let chapterBattleIDs = storyBattleIDs(forChapterID: referenceID)
+        let chapterBattleIDs =
+            context.chapterBattleIDsByChapterID[referenceID] ?? []
         guard !chapterBattleIDs.isEmpty else { return 0 }
-        return chapterBattleIDs.filter { completedBattleIDs.contains($0) }.count
+        return chapterBattleIDs.filter {
+            context.completedBattleIDs.contains($0)
+        }.count
     }
 
-    private func chapterCompletionProgress(for referenceID: String?) -> Int {
+    private func chapterCompletionProgress(
+        for referenceID: String?,
+        context: QuestRenderContext
+    ) -> Int {
         guard let referenceID, !referenceID.isEmpty else { return 0 }
-        let completedBattleIDs = Set(completedBattles.map(\.battleID))
-        let chapterBattleIDs = storyBattleIDs(forChapterID: referenceID)
+        let chapterBattleIDs =
+            context.chapterBattleIDsByChapterID[referenceID] ?? []
         guard !chapterBattleIDs.isEmpty else { return 0 }
-        return chapterBattleIDs.allSatisfy { completedBattleIDs.contains($0) }
+        return chapterBattleIDs.allSatisfy {
+            context.completedBattleIDs.contains($0)
+        }
             ? 1 : 0
     }
 
-    private var completedBattleIDSet: Set<String> {
-        Set(completedBattles.map(\.battleID))
+    private func currencyName(
+        for code: String,
+        context: QuestRenderContext
+    ) -> String {
+        context.currenciesByCode[code]?.name ?? code
     }
 
-    private func storyBattleIDs(forChapterID chapterID: String) -> [String] {
-        guard let chapter = cachedChapters.first(where: { $0.id == chapterID })
-        else {
-            return []
-        }
-
-        return chapter.points.flatMap { point in
-            point.battles.map(\.id)
-        }
+    private func currencyAsset(
+        for code: String,
+        context: QuestRenderContext
+    ) -> String? {
+        context.currenciesByCode[code]?.assetIcon
     }
 
-    private func currencyName(for code: String) -> String {
-        gameState.currencies.first(where: { $0.code == code })?.name ?? code
+    private func currencySymbol(
+        for code: String,
+        context: QuestRenderContext
+    ) -> String {
+        context.currenciesByCode[code]?.icon ?? "circle.fill"
     }
 
-    private func currencyAsset(for code: String) -> String? {
-        gameState.currencies.first(where: { $0.code == code })?.assetIcon
+    private func characterName(
+        for characterID: String,
+        context: QuestRenderContext
+    ) -> String {
+        context.summonCharactersByID[characterID]?.name ?? characterID
     }
 
-    private func currencySymbol(for code: String) -> String {
-        gameState.currencies.first(where: { $0.code == code })?.icon
-            ?? "circle.fill"
-    }
-
-    private func characterName(for characterID: String) -> String {
-        gameState.summonCharacters.first(where: { $0.id == characterID })?.name
-            ?? characterID
-    }
-
-    private func characterPreview(for characterID: String) -> String? {
-        gameState.summonCharacters.first(where: { $0.id == characterID })?
-            .summonImage
+    private func characterPreview(
+        for characterID: String,
+        context: QuestRenderContext
+    ) -> String? {
+        context.summonCharactersByID[characterID]?.summonImage
     }
 
     private var backgroundView: some View {

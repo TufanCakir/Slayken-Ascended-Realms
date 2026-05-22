@@ -28,6 +28,9 @@ struct AbilityCardDefinition: Codable, Identifiable, Equatable {
     let levelsPerStar: Int?
     let damageGrowth: Double?
     let targeting: AbilityCardTargeting?
+    let source: String?
+    let isLimited: Bool?
+    let limitedUntil: String?
 
     var resolvedRarity: Int { rarity ?? resolvedMaxStars }
     var resolvedManaCost: Int { manaCost ?? 35 }
@@ -38,6 +41,14 @@ struct AbilityCardDefinition: Codable, Identifiable, Equatable {
     var resolvedDamageGrowth: Double { damageGrowth ?? 1.08 }
     var resolvedTargeting: AbilityCardTargeting { targeting ?? .single }
     var isAOE: Bool { resolvedTargeting == .allEnemies }
+    var isEventLimited: Bool {
+        (isLimited ?? false)
+            || source?.localizedCaseInsensitiveContains("event") == true
+    }
+
+    var eventSourceLabel: String {
+        source ?? "Limited Event"
+    }
 }
 
 func loadAbilityCards() -> [AbilityCardDefinition] {

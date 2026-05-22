@@ -112,9 +112,9 @@ struct BattleView: View {
     private let actionCooldownTickMilliseconds = 40
     private let minimumNormalEnemyHits: CGFloat = 3
     private let minimumBossEnemyHits: CGFloat = 7
-    private let enemyHPGrowthPerDifficulty = 1.16
-    private let enemyAttackGrowthPerDifficulty = 1.08
-    private let enemyMinimumHPGrowthPerDifficulty = 1.10
+    private let enemyHPGrowthPerDifficulty = 1.07
+    private let enemyAttackGrowthPerDifficulty = 1.045
+    private let enemyMinimumHPGrowthPerDifficulty = 1.045
 
     init(
         player: CharacterStats,
@@ -233,11 +233,21 @@ struct BattleView: View {
         if let raidConfiguration {
             return raidConfiguration.xpReward
         }
-        if let xpReward = gameState.selectedBattle?.xpReward {
-            return xpReward
-        }
         let difficulty = gameState.selectedBattle?.difficulty ?? 1
-        return 70 + difficulty * 35 + battleEnemies.count * 20
+        let baseXP =
+            gameState.selectedBattle?.xpReward
+            ?? (160 + difficulty * 45 + battleEnemies.count * 30)
+        let difficultyBonus = 1 + Double(max(0, difficulty - 1)) * 0.12
+        let groupBonus = 1 + Double(max(0, battleEnemies.count - 1)) * 0.18
+        let bossBonus = gameState.selectedBattle?.boss == nil ? 1.0 : 1.35
+
+        return max(
+            baseXP,
+            Int(
+                (Double(baseXP) * difficultyBonus * groupBonus * bossBonus)
+                    .rounded()
+            )
+        )
     }
 
     private var battleSpeedMultiplier: Double {
@@ -250,10 +260,10 @@ struct BattleView: View {
 
     private func effectiveAttackSpeed(for fighter: CharacterStats) -> Double {
         if let attackSpeed = fighter.attackSpeed, attackSpeed > 0 {
-            return attackSpeed
+            return max(0.35, min(attackSpeed, 1.4))
         }
 
-        return max(0.35, min(Double(fighter.attack) / 300.0, 2.5))
+        return max(0.35, min(Double(fighter.attack) / 420.0, 1.25))
     }
 
     @MainActor
@@ -1330,10 +1340,10 @@ struct BattleView: View {
                 .difficulty ?? 1
         )
         let difficultyStep = max(0, difficulty - 1)
-        let waveScale = pow(1.07 + difficulty * 0.01, Double(index))
+        let waveScale = pow(1.03 + difficulty * 0.003, Double(index))
         let bossScale =
             ((raidConfiguration != nil || gameState.selectedBattle?.boss != nil)
-                && index == battleEnemies.count - 1) ? 1.55 : 1.0
+                && index == battleEnemies.count - 1) ? 1.35 : 1.0
         let difficultyHPScale = pow(enemyHPGrowthPerDifficulty, difficultyStep)
         let difficultyAttackScale = pow(
             enemyAttackGrowthPerDifficulty,

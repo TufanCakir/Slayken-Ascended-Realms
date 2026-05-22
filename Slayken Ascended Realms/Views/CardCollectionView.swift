@@ -141,6 +141,12 @@ struct CardCollectionView: View {
                         RoundedRectangle(cornerRadius: 6, style: .continuous)
                     )
 
+                if card.isEventLimited {
+                    eventBadge
+                        .padding(8)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                }
+
                 Button {
                     selectedInfoCard = SelectedCardInfo(
                         card: card,
@@ -244,6 +250,18 @@ struct CardCollectionView: View {
             }
         }
     }
+
+    private var eventBadge: some View {
+        Text("EVENT")
+            .font(.system(size: 9, weight: .black))
+            .foregroundStyle(.black)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(Color.yellow, in: Capsule())
+            .overlay(
+                Capsule().stroke(.white.opacity(0.72), lineWidth: 1)
+            )
+    }
 }
 
 private struct CardInfoSheet: View {
@@ -265,6 +283,12 @@ private struct CardInfoSheet: View {
                 infoRow("Sterne", "\(stars) / \(card.resolvedMaxStars)")
                 infoRow("Besitz", "x\(count)")
                 infoRow("DMG", "x\(String(format: "%.2f", damage))")
+                if card.isEventLimited {
+                    infoRow("Quelle", card.eventSourceLabel)
+                    if let limitedUntil = card.limitedUntil {
+                        infoRow("Limitiert bis", limitedUntil)
+                    }
+                }
 
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Beschreibung")
@@ -306,6 +330,17 @@ private struct CardInfoSheet: View {
             }
             .frame(height: 200)
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .overlay(alignment: .topLeading) {
+                if card.isEventLimited {
+                    Text("LIMITIERTE EVENT-KARTE")
+                        .font(.system(size: 10, weight: .black))
+                        .foregroundStyle(.black)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(Color.yellow, in: Capsule())
+                        .padding(10)
+                }
+            }
 
             Text(card.name)
                 .font(.system(size: 24, weight: .black))

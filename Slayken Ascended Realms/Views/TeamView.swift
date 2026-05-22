@@ -23,6 +23,20 @@ struct TeamView: View {
         }
     }
 
+    private enum TeamPanelTab: String, CaseIterable, Identifiable {
+        case deck
+        case skins
+
+        var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .deck: return "Deck"
+            case .skins: return "Skins"
+            }
+        }
+    }
+
     let characters: [SummonCharacter]
 
     @EnvironmentObject private var themeManager: ThemeManager
@@ -36,11 +50,14 @@ struct TeamView: View {
         [PlayerDeckCardSlot]
     @Query(sort: \OwnedAbilityCard.acquiredAt) private var ownedCards:
         [OwnedAbilityCard]
+    @Query(sort: \OwnedCharacterSkin.acquiredAt) private var ownedSkins:
+        [OwnedCharacterSkin]
     @Query(sort: \PlayerCharacterProgress.characterID) private
         var characterProgress: [PlayerCharacterProgress]
 
     @State private var activeSheet: ActiveSheet?
     @State private var renderHeroScene = false
+    @State private var selectedPanelTab: TeamPanelTab = .deck
 
     private var deckSlotCount: Int {
         loadDeckConfiguration().resolvedSlotCount
@@ -92,6 +109,10 @@ struct TeamView: View {
         guard let selectedCharacter else { return nil }
         let selectedSkinID = selectedOwnedRecord?.selectedSkinID
         return selectedCharacter.skins.first { $0.id == selectedSkinID }
+    }
+
+    private var selectedSkinID: String? {
+        selectedOwnedRecord?.selectedSkinID
     }
 
     private var deckMultiplier: Double {
@@ -201,6 +222,54 @@ struct TeamView: View {
                 }
             }
 
+            tabBar
+
+            switch selectedPanelTab {
+            case .deck:
+                deckContent
+            case .skins:
+                skinContent
+            }
+        }
+        .padding(14)
+        .background(
+            Color.black.opacity(0.34),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.08), lineWidth: 1)
+        }
+    }
+
+    private var tabBar: some View {
+        HStack(spacing: 6) {
+            ForEach(TeamPanelTab.allCases) { tab in
+                Button {
+                    selectedPanelTab = tab
+                } label: {
+                    Text(tab.title)
+                        .font(.system(size: 12, weight: .black))
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 9)
+                        .background(
+                            selectedPanelTab == tab
+                                ? Color.cyan.opacity(0.64)
+                                : Color.black.opacity(0.30),
+                            in: RoundedRectangle(
+                                cornerRadius: 8,
+                                style: .continuous
+                            )
+                        )
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+
+    private var deckContent: some View {
+        VStack(spacing: 12) {
             characterSlot
 
             ScrollView(.horizontal, showsIndicators: false) {
@@ -227,14 +296,77 @@ struct TeamView: View {
                 )
             }
         }
-        .padding(14)
-        .background(
-            Color.black.opacity(0.34),
-            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
-        )
-        .overlay {
-            RoundedRectangle(cornerRadius: 26, style: .continuous)
-                .stroke(.white.opacity(0.08), lineWidth: 1)
+    }
+
+    @ViewBuilder
+    private var skinContent: some View {
+        if let selectedCharacter {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Aktiver Skin")
+                            .font(.system(size: 10, weight: .black))
+                            .foregroundStyle(.white.opacity(0.64))
+                        Text(selectedSkin?.name ?? "Standard")
+                            .font(.system(size: 15, weight: .black))
+                            .foregroundStyle(.white)
+                    }
+
+                    Spacer()
+
+                    panelButton(title: "Full Edit") {
+                        activeSheet = .character
+                    }
+                }
+
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        skinTile(
+                            title: "Standard",
+                            imageName: selectedCharacter.summonImage,
+                            isSelected: selectedSkinID == nil,
+                            isLocked: false
+                        ) {
+                            applySkin(nil)
+                        }
+
+                        ForEach(selectedCharacter.skins) { skin in
+                            let isOwned = ownsSkin(skin)
+                            skinTile(
+                                title: skin.name,
+                                imageName: skin.summonImage
+                                    ?? selectedCharacter.summonImage,
+                                isSelected: selectedSkinID == skin.id,
+                                isLocked: !isOwned
+                            ) {
+                                if isOwned {
+                                    applySkin(skin.id)
+                                }
+                            }
+                        }
+                    }
+                    .padding(.vertical, 2)
+                }
+            }
+        } else {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Skins")
+                    .font(.system(size: 15, weight: .black))
+                    .foregroundStyle(.white)
+                Text("Für die Startklasse gibt es noch keine Skin-Auswahl. Öffne Full Edit und setze einen Summon-Charakter ein.")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(.white.opacity(0.66))
+                    .fixedSize(horizontal: false, vertical: true)
+                panelButton(title: "Full Edit") {
+                    activeSheet = .character
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(12)
+            .background(
+                Color.black.opacity(0.24),
+                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            )
         }
     }
 
@@ -334,6 +466,57 @@ struct TeamView: View {
             )
         }
         .buttonStyle(.plain)
+    }
+
+    private func skinTile(
+        title: String,
+        imageName: String,
+        isSelected: Bool,
+        isLocked: Bool,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 6) {
+                ZStack(alignment: .topTrailing) {
+                    slotImage(imageName, fallback: "person.crop.square.fill")
+                        .frame(width: 92, height: 92)
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: 7,
+                                style: .continuous
+                            )
+                        )
+
+                    if isLocked {
+                        Image(systemName: "lock.fill")
+                            .font(.system(size: 10, weight: .black))
+                            .foregroundStyle(.white)
+                            .padding(6)
+                            .background(Color.black.opacity(0.58), in: Circle())
+                            .padding(6)
+                    }
+                }
+
+                Text(title)
+                    .font(.system(size: 11, weight: .black))
+                    .foregroundStyle(isLocked ? .white.opacity(0.48) : .white)
+                    .lineLimit(1)
+            }
+            .padding(7)
+            .background(
+                Color.black.opacity(isSelected ? 0.52 : 0.30),
+                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8).stroke(
+                    isSelected ? Color.yellow : Color.white.opacity(0.14),
+                    lineWidth: isSelected ? 2 : 1
+                )
+            )
+            .opacity(isLocked ? 0.62 : 1)
+        }
+        .buttonStyle(.plain)
+        .disabled(isLocked)
     }
 
     private var heroStage: some View {
@@ -459,6 +642,42 @@ struct TeamView: View {
                 }
         }
         .buttonStyle(.plain)
+    }
+
+    private func ownsSkin(_ skin: CharacterSkin) -> Bool {
+        guard let selectedCharacter else { return false }
+        return ownedSkins.contains {
+            $0.characterID == selectedCharacter.id && $0.skinID == skin.id
+        }
+    }
+
+    private func applySkin(_ skinID: String?) {
+        guard let selectedCharacter else { return }
+
+        if let record = ownedRecords.first(where: {
+            $0.characterID == selectedCharacter.id
+        }) {
+            record.selectedSkinID = skinID
+        } else {
+            modelContext.insert(
+                OwnedSummonCharacter(
+                    characterID: selectedCharacter.id,
+                    selectedSkinID: skinID
+                )
+            )
+        }
+
+        try? modelContext.save()
+        gameState.saveSummonedCharacter(selectedCharacter, selectedSkinID: skinID)
+        refreshHeroScene()
+    }
+
+    private func refreshHeroScene() {
+        renderHeroScene = false
+        Task { @MainActor in
+            await Task.yield()
+            renderHeroScene = true
+        }
     }
 
     @ViewBuilder

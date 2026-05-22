@@ -16,6 +16,7 @@ private struct StartBackgroundAsset {
 struct StartView: View {
     private let backgroundRotationInterval = 2.0
     private let backgroundFadeDuration = 0.70
+    private let previewBackgroundLimit = 8
 
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
@@ -57,6 +58,8 @@ struct StartView: View {
         return (summonPreviews + classPreviews).filter {
             seen.insert($0).inserted
         }
+        .prefix(previewBackgroundLimit)
+        .map { $0 }
     }
 
     private var currentBackgroundAsset: StartBackgroundAsset? {
@@ -101,6 +104,7 @@ struct StartView: View {
                 var resolvedAssets = [StartBackgroundAsset]()
 
                 for imageName in imageNames {
+                    guard !Task.isCancelled else { return }
                     guard
                         RemoteContentManager.hasCachedOrBundledImage(
                             named: imageName

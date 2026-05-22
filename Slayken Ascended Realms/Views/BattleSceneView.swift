@@ -100,6 +100,7 @@ final class BattleSceneCoordinator {
     private var enemyRootNodes: [SCNNode] = []
     private var allyRootNodes: [SCNNode] = []
     private var fighterModelContainers: [String: SCNNode] = [:]
+    private var fighterHomePositions: [String: SCNVector3] = [:]
     private var groundNode = SCNNode()
     private var enemyHPNodes: [SCNNode] = []
     private var enemySelectionNodes: [SCNNode] = []
@@ -500,6 +501,8 @@ final class BattleSceneCoordinator {
         defender.removeAction(forKey: "hit")
         modelContainer(for: attacker)?.removeAction(forKey: "attackPose")
         modelContainer(for: defender)?.removeAction(forKey: "hitShake")
+        resetCombatPosition(for: attacker)
+        resetCombatPosition(for: defender)
 
         let start = attacker.position
         let defenderPosition = defender.position
@@ -631,6 +634,16 @@ final class BattleSceneCoordinator {
     private func modelContainer(for root: SCNNode) -> SCNNode? {
         guard let name = root.name else { return nil }
         return fighterModelContainers[name]
+    }
+
+    private func resetCombatPosition(for root: SCNNode) {
+        guard let name = root.name,
+            let homePosition = fighterHomePositions[name]
+        else {
+            return
+        }
+
+        root.position = homePosition
     }
 
     private func allyRootNode(for participantID: String) -> SCNNode? {
@@ -1279,7 +1292,7 @@ final class BattleSceneCoordinator {
 
         let modelContainer = SCNNode()
         let modelNode = loadModel(
-            named: stats.model,
+            named: stats.battleModel ?? stats.model,
             textureName: stats.texture
         )
         modelContainer.addChildNode(modelNode)
@@ -1322,6 +1335,9 @@ final class BattleSceneCoordinator {
                     -zOffset
                 )
             }
+            if let name = root.name {
+                fighterHomePositions[name] = root.position
+            }
             root.eulerAngles.y = Float.pi
             addEnemyHUD(to: root, index: index)
             enemyRootNodes.append(root)
@@ -1339,6 +1355,9 @@ final class BattleSceneCoordinator {
                 )
             } else {
                 root.position = SCNVector3(xOffset, groundY + yOffset, zOffset)
+            }
+            if let name = root.name {
+                fighterHomePositions[name] = root.position
             }
             root.eulerAngles.y = 0
         }
@@ -1383,6 +1402,9 @@ final class BattleSceneCoordinator {
         let groundY = getGroundTopY() + 3
         if let bossNode = enemyRootNodes.first {
             bossNode.position = SCNVector3(0, groundY, -2.8)
+            if let name = bossNode.name {
+                fighterHomePositions[name] = bossNode.position
+            }
         }
 
         let participants = visibleRaidParticipants
@@ -1392,6 +1414,9 @@ final class BattleSceneCoordinator {
             totalSlots: max(participants.count, 1),
             groundY: groundY
         )
+        if let name = playerRootNode.name {
+            fighterHomePositions[name] = playerRootNode.position
+        }
     }
 
     private func raidParticipantPosition(
@@ -1467,6 +1492,9 @@ final class BattleSceneCoordinator {
             totalSlots: totalSlots,
             groundY: groundY
         )
+        if let name = root.name {
+            fighterHomePositions[name] = root.position
+        }
         root.eulerAngles.y = 0
         addRaidAllyMarker(to: root, participant: participant)
 

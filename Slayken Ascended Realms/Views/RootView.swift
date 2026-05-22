@@ -53,6 +53,7 @@ struct RootView: View {
 
     private let introFlowKey = "hasCompletedIntroFlow"
     private let runtimeUpdateCheckInterval: Duration = .seconds(60)
+    private let gameEntryPreloadTimeoutNanoseconds: UInt64 = 6_000_000_000
 
     private var introVideos: [IntroVideoDefinition] {
         loadIntroVideoDefinitions()
@@ -685,6 +686,30 @@ struct RootView: View {
     }
 
     private func preloadGameEntryAssets() async {
+        await withTaskGroup(of: Bool.self) { group in
+            group.addTask {
+                await preloadGameEntryAssetsWithoutTimeout()
+                return true
+            }
+            group.addTask {
+                try? await Task.sleep(
+                    nanoseconds: gameEntryPreloadTimeoutNanoseconds
+                )
+                return false
+            }
+
+            let completedPreload = await group.next() ?? false
+            group.cancelAll()
+            if !completedPreload {
+                await MainActor.run {
+                    gameEntryLoadingStatusText =
+                        "Assets laden im Hintergrund weiter"
+                }
+            }
+        }
+    }
+
+    private func preloadGameEntryAssetsWithoutTimeout() async {
         await preloadImageAsset(
             named: gameEntryLoadingBackground,
             status: "Lade Start-Hintergrund"
@@ -720,28 +745,14 @@ struct RootView: View {
         )
         guard !trimmedName.isEmpty else { return }
 
-        while !Task.isCancelled {
-            await MainActor.run {
-                gameEntryLoadingStatusText = status
-            }
-
-            if RemoteContentManager.hasCachedOrBundledImage(named: trimmedName)
-            {
-                return
-            }
-
-            await remoteContent.downloadAssetIfNeeded(named: trimmedName)
-
-            if RemoteContentManager.hasCachedOrBundledImage(named: trimmedName)
-            {
-                return
-            }
-
-            await MainActor.run {
-                gameEntryLoadingStatusText = "\(status) erneut"
-            }
-            try? await Task.sleep(for: .milliseconds(400))
+        await MainActor.run {
+            gameEntryLoadingStatusText = status
         }
+
+        guard !RemoteContentManager.hasCachedOrBundledImage(named: trimmedName)
+        else { return }
+
+        await remoteContent.downloadAssetIfNeeded(named: trimmedName)
     }
 
     private func preloadModelAsset(named assetName: String, status: String)
@@ -752,32 +763,18 @@ struct RootView: View {
         )
         guard !trimmedName.isEmpty else { return }
 
-        while !Task.isCancelled {
-            await MainActor.run {
-                gameEntryLoadingStatusText = status
-            }
-
-            if RemoteContentManager.cachedAssetURL(
-                named: trimmedName,
-                preferredExtensions: ["usdz", "scn"]
-            ) != nil {
-                return
-            }
-
-            await remoteContent.downloadAssetIfNeeded(named: trimmedName)
-
-            if RemoteContentManager.cachedAssetURL(
-                named: trimmedName,
-                preferredExtensions: ["usdz", "scn"]
-            ) != nil {
-                return
-            }
-
-            await MainActor.run {
-                gameEntryLoadingStatusText = "\(status) erneut"
-            }
-            try? await Task.sleep(for: .milliseconds(400))
+        await MainActor.run {
+            gameEntryLoadingStatusText = status
         }
+
+        guard
+            RemoteContentManager.cachedAssetURL(
+                named: trimmedName,
+                preferredExtensions: ["usdz", "scn"]
+            ) == nil
+        else { return }
+
+        await remoteContent.downloadAssetIfNeeded(named: trimmedName)
     }
 
     private func completeTutorialBattle() {

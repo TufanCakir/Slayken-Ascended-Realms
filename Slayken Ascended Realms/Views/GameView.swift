@@ -20,6 +20,66 @@ struct GameView: View {
         }
     }
 
+    private enum NavigationDestination {
+        case events
+        case character
+        case summon
+        case shop
+        case quests
+        case coop
+        case support
+        case news
+        case createClass
+        case storyArchive
+        case eventArchive
+        case tutorialArchive
+        case gift
+        case dailyLogin
+        case settings
+        case theme
+
+        var title: String {
+            switch self {
+            case .events:
+                return "Events"
+            case .character:
+                return "Character"
+            case .summon:
+                return "Summon"
+            case .shop:
+                return "Shop"
+            case .quests:
+                return "Quests"
+            case .coop:
+                return "Co-op Raid"
+            case .support:
+                return "Support"
+            case .news:
+                return "News"
+            case .createClass:
+                return "Create Class"
+            case .storyArchive:
+                return "Story Archive"
+            case .eventArchive:
+                return "Event Archive"
+            case .tutorialArchive:
+                return "Tutorials"
+            case .gift:
+                return "Gifts"
+            case .dailyLogin:
+                return "Daily Login"
+            case .settings:
+                return "Settings"
+            case .theme:
+                return "Themes"
+            }
+        }
+
+        var statusText: String {
+            "\(title) wird vorbereitet"
+        }
+    }
+
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var theme: ThemeManager
     @EnvironmentObject var multiplayerManager: MultiplayerManager
@@ -59,6 +119,13 @@ struct GameView: View {
     @State private var showBattleStartTransition = false
     @State private var battleStartStatusText = "Battle assets werden geladen"
     @State private var renderGameScene = false
+    @State private var showNavigationLoading = false
+    @State private var navigationLoadingTitle = "Loading"
+    @State private var navigationLoadingStatusText = "Menü wird vorbereitet"
+    @State private var navigationLoadingProgress = 0.0
+    @State private var navigationLoadingTask: Task<Void, Never>?
+    private let battleStartPreloadTimeoutNanoseconds: UInt64 = 8_000_000_000
+    private let navigationPreloadTimeoutNanoseconds: UInt64 = 3_000_000_000
 
     private enum ModalTabDestination {
         case character
@@ -137,6 +204,17 @@ struct GameView: View {
                         .zIndex(60)
                 }
 
+                if showNavigationLoading {
+                    LoadingOverlayView(
+                        title: navigationLoadingTitle,
+                        subtitle: "Daten und Assets werden kurz geprüft.",
+                        progress: navigationLoadingProgress,
+                        statusText: navigationLoadingStatusText
+                    )
+                    .transition(.opacity)
+                    .zIndex(80)
+                }
+
                 if shouldShowMapPreview {
                     ZStack {
                         if let chapter = activePreviewChapter {
@@ -178,14 +256,13 @@ struct GameView: View {
                         maxEnergy: battleResourceStatus.energyMaximum,
                         horizontalPadding: horizontalOverlayPadding,
                         onOpenShop: {
-                            showShop = true
+                            openNavigationDestination(.shop)
                         },
                         onOpenQuests: {
-                            showQuests = true
+                            openNavigationDestination(.quests)
                         },
                         onOpenCoop: {
-                            multiplayerManager.ensureLocalLobbyState()
-                            showMultiplayerLobby = true
+                            openNavigationDestination(.coop)
                         }
                     )
                     .zIndex(8)
@@ -236,41 +313,40 @@ struct GameView: View {
                 GameMiddleDrawerView(
                     selectedTab: $selectedTab,
                     onTheme: {
-                        activeSelectionSheet = .theme
+                        openNavigationDestination(.theme)
                     },
                     onSupport: {
-                        showSupport = true
+                        openNavigationDestination(.support)
                     },
                     onNews: {
-                        showNews = true
+                        openNavigationDestination(.news)
                     },
                     onCreateClass: {
-                        showCreateClass = true
+                        openNavigationDestination(.createClass)
                     },
                     onShop: {
-                        showShop = true
+                        openNavigationDestination(.shop)
                     },
                     onQuests: {
-                        showQuests = true
+                        openNavigationDestination(.quests)
                     },
                     onArchive: {
-                        showStoryArchive = true
+                        openNavigationDestination(.storyArchive)
                     },
                     onEventArchive: {
-                        showEventArchive = true
+                        openNavigationDestination(.eventArchive)
                     },
                     onTutorialArchive: {
-                        onOpenTutorialArchive()
+                        openNavigationDestination(.tutorialArchive)
                     },
                     onGift: {
-                        showGift = true
+                        openNavigationDestination(.gift)
                     },
                     onDailyLogin: {
-                        activeLoginCampaignID = preferredLoginCampaignID
-                        showDailyLogin = true
+                        openNavigationDestination(.dailyLogin)
                     },
                     onSettings: {
-                        showSettings = true
+                        openNavigationDestination(.settings)
                     },
                     trailingPadding: horizontalOverlayPadding
                 )
@@ -599,6 +675,9 @@ struct GameView: View {
             .onDisappear {
                 pendingBattleStartTask?.cancel()
                 pendingBattleStartTask = nil
+                navigationLoadingTask?.cancel()
+                navigationLoadingTask = nil
+                showNavigationLoading = false
                 showBattleStartTransition = false
                 renderGameScene = false
             }
@@ -1028,13 +1107,13 @@ struct GameView: View {
     private func openFooterDestination(_ tab: GameTab) {
         switch tab {
         case .events:
-            showGlobeEvents = true
+            openNavigationDestination(.events)
         case .character:
-            showCharacter = true
+            openNavigationDestination(.character)
         case .summon:
-            showSummon = true
+            openNavigationDestination(.summon)
         case .shop:
-            showShop = true
+            openNavigationDestination(.shop)
         default:
             if showGlobeEvents {
                 showGlobeEvents = false
@@ -1048,6 +1127,165 @@ struct GameView: View {
             if showShop {
                 showShop = false
             }
+        }
+    }
+
+    private func openNavigationDestination(_ destination: NavigationDestination)
+    {
+        navigationLoadingTask?.cancel()
+        navigationLoadingTitle = destination.title
+        navigationLoadingStatusText = destination.statusText
+        navigationLoadingProgress = 0.12
+
+        withAnimation(.easeInOut(duration: 0.16)) {
+            showNavigationLoading = true
+        }
+
+        navigationLoadingTask = Task { @MainActor in
+            async let minimumVisibleTime: Void = Task.sleep(
+                for: .milliseconds(280)
+            )
+            await prepareNavigationDestination(destination)
+            navigationLoadingProgress = 0.86
+            _ = try? await minimumVisibleTime
+
+            guard !Task.isCancelled else { return }
+            presentNavigationDestination(destination)
+            navigationLoadingProgress = 1
+
+            try? await Task.sleep(for: .milliseconds(90))
+            guard !Task.isCancelled else { return }
+            withAnimation(.easeInOut(duration: 0.16)) {
+                showNavigationLoading = false
+            }
+            navigationLoadingTask = nil
+        }
+    }
+
+    private func presentNavigationDestination(
+        _ destination: NavigationDestination
+    ) {
+        switch destination {
+        case .events:
+            showGlobeEvents = true
+        case .character:
+            showCharacter = true
+        case .summon:
+            showSummon = true
+        case .shop:
+            showShop = true
+        case .quests:
+            showQuests = true
+        case .coop:
+            multiplayerManager.ensureLocalLobbyState()
+            showMultiplayerLobby = true
+        case .support:
+            showSupport = true
+        case .news:
+            showNews = true
+        case .createClass:
+            showCreateClass = true
+        case .storyArchive:
+            showStoryArchive = true
+        case .eventArchive:
+            showEventArchive = true
+        case .tutorialArchive:
+            onOpenTutorialArchive()
+        case .gift:
+            showGift = true
+        case .dailyLogin:
+            activeLoginCampaignID = preferredLoginCampaignID
+            showDailyLogin = true
+        case .settings:
+            showSettings = true
+        case .theme:
+            activeSelectionSheet = .theme
+        }
+    }
+
+    private func prepareNavigationDestination(
+        _ destination: NavigationDestination
+    ) async {
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask {
+                await preloadNavigationAssets(for: destination)
+            }
+            group.addTask {
+                try? await Task.sleep(
+                    nanoseconds: navigationPreloadTimeoutNanoseconds
+                )
+            }
+
+            _ = await group.next()
+            group.cancelAll()
+        }
+    }
+
+    private func preloadNavigationAssets(
+        for destination: NavigationDestination
+    ) async {
+        let imageNames = navigationImageAssetNames(for: destination)
+        guard !imageNames.isEmpty else { return }
+
+        let uniqueNames = Array(NSOrderedSet(array: imageNames))
+            .compactMap { $0 as? String }
+            .filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+            .prefix(12)
+
+        for name in uniqueNames {
+            guard !Task.isCancelled else { return }
+            await MainActor.run {
+                navigationLoadingStatusText = "Lade \(name)"
+            }
+            guard !RemoteContentManager.hasCachedOrBundledImage(named: name)
+            else { continue }
+            await remoteContent.downloadAssetIfNeeded(named: name)
+        }
+    }
+
+    private func navigationImageAssetNames(
+        for destination: NavigationDestination
+    ) -> [String] {
+        switch destination {
+        case .events:
+            var imageNames = [String]()
+            for chapter in gameState.eventChapters {
+                imageNames.append(chapter.mapTexture)
+                for point in chapter.points {
+                    imageNames.append(point.mapImage)
+                    for battle in point.battles.prefix(2) {
+                        imageNames.append(
+                            battle.resolvedNodeImage(
+                                defaultImage: point.mapImage
+                            )
+                        )
+                    }
+                }
+            }
+            return imageNames
+        case .character, .createClass:
+            return [gameState.player.image]
+                + gameState.availableCharacters.prefix(8).map(\.image)
+        case .summon:
+            return gameState.summonBanners.map(\.image)
+                + gameState.summonCharacters.prefix(8).map(\.summonImage)
+        case .shop:
+            return loadShopOffers().map(\.image)
+                + loadShopSkinOffers().map(\.image)
+                + loadCoopShopOffers().map(\.image)
+        case .quests:
+            return gameState.currencies.compactMap(\.assetIcon)
+                + gameState.summonCharacters.prefix(6).map(\.summonImage)
+        case .gift:
+            return gameState.gifts.map(\.icon)
+        case .dailyLogin:
+            return gameState.currencies.compactMap(\.assetIcon)
+        case .news:
+            return gameState.newsItems.prefix(8).map(\.image)
+        case .storyArchive, .eventArchive:
+            return gameState.eventChapters.map(\.mapTexture)
+        case .settings, .support, .coop, .tutorialArchive, .theme:
+            return []
         }
     }
 
@@ -1117,6 +1355,7 @@ struct GameView: View {
                 return
             }
 
+            showBattleStartTransition = false
             onStartBattle(selectedEnemy)
         }
     }
@@ -1166,6 +1405,34 @@ struct GameView: View {
     }
 
     private func preloadBattleStartAssets(
+        _ battle: GlobeBattle?,
+        fallbackEnemy: CharacterStats
+    ) async {
+        await withTaskGroup(of: Bool.self) { group in
+            group.addTask {
+                await preloadBattleStartAssetsWithoutTimeout(
+                    battle,
+                    fallbackEnemy: fallbackEnemy
+                )
+                return true
+            }
+            group.addTask {
+                try? await Task.sleep(
+                    nanoseconds: battleStartPreloadTimeoutNanoseconds
+                )
+                return false
+            }
+
+            let completedPreload = await group.next() ?? false
+            group.cancelAll()
+            if !completedPreload {
+                battleStartStatusText =
+                    "Assets laden im Hintergrund weiter"
+            }
+        }
+    }
+
+    private func preloadBattleStartAssetsWithoutTimeout(
         _ battle: GlobeBattle?,
         fallbackEnemy: CharacterStats
     ) async {

@@ -55,7 +55,7 @@ final class GameState: ObservableObject {
         CharacterStats(
             name: player.name,
             image: player.image,
-            model: player.battleModel ?? player.model,
+            model: player.model,
             battleModel: player.battleModel,
             texture: player.texture,
             element: player.element,

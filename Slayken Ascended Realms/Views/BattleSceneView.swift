@@ -14,6 +14,8 @@ private enum BattleSceneNodeCache {
 }
 
 struct BattleSceneView: UIViewRepresentable {
+    @EnvironmentObject private var performanceMode: PerformanceModeManager
+
     let player: CharacterStats
     let enemies: [CharacterStats]
     let raidParticipants: [RaidParticipant]?
@@ -26,6 +28,7 @@ struct BattleSceneView: UIViewRepresentable {
     let attackingEnemyIndex: Int?
     let particleEffect: String?
     let particleTargetIndices: [Int]
+    let comboStep: BattleComboStepDefinition?
     let particleEffects: [ParticleEffectDefinition]
     let groundTexture: String
     let skyboxTexture: String
@@ -50,8 +53,13 @@ struct BattleSceneView: UIViewRepresentable {
         view.allowsCameraControl = false
         view.autoenablesDefaultLighting = false
         view.isPlaying = true
-        view.preferredFramesPerSecond = 60
+        view.preferredFramesPerSecond = performanceMode.sceneFramesPerSecond
+        view.antialiasingMode =
+            performanceMode.isReducedEffectsEnabled ? .none : .multisampling2X
 
+        context.coordinator.updatePerformanceMode(
+            reducedEffects: performanceMode.isReducedEffectsEnabled
+        )
         context.coordinator.setupScene(
             groundTexture: groundTexture,
             skyboxTexture: skyboxTexture
@@ -62,6 +70,12 @@ struct BattleSceneView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: SCNView, context: Context) {
+        uiView.preferredFramesPerSecond = performanceMode.sceneFramesPerSecond
+        uiView.antialiasingMode =
+            performanceMode.isReducedEffectsEnabled ? .none : .multisampling2X
+        context.coordinator.updatePerformanceMode(
+            reducedEffects: performanceMode.isReducedEffectsEnabled
+        )
         context.coordinator.updateRaidParticipants(raidParticipants)
         context.coordinator.updateEnvironment(
             groundTexture: groundTexture,
@@ -78,7 +92,8 @@ struct BattleSceneView: UIViewRepresentable {
             attackingEnemyIndex: attackingEnemyIndex,
             selectedEnemyIndex: selectedEnemyIndex,
             particleEffect: particleEffect,
-            particleTargetIndices: particleTargetIndices
+            particleTargetIndices: particleTargetIndices,
+            comboStep: comboStep
         )
     }
 }
@@ -113,6 +128,7 @@ final class BattleSceneCoordinator {
     private var lastEnemyAttackID = 0
     private var appliedGroundTexture = ""
     private var appliedSkyboxTexture = ""
+    private var isReducedEffectsEnabled = false
 
     init(
         player: CharacterStats,
@@ -146,6 +162,19 @@ final class BattleSceneCoordinator {
 
     private var isRaidMode: Bool {
         !raidParticipants.isEmpty
+    }
+
+    func updatePerformanceMode(reducedEffects: Bool) {
+        guard isReducedEffectsEnabled != reducedEffects else { return }
+        isReducedEffectsEnabled = reducedEffects
+        scene.rootNode.enumerateChildNodes { node, _ in
+            guard let light = node.light, light.type == .directional else {
+                return
+            }
+            light.castsShadow = !reducedEffects
+            light.shadowSampleCount = reducedEffects ? 1 : 6
+            light.shadowRadius = reducedEffects ? 1 : 3
+        }
     }
 
     func updateRaidParticipants(_ participants: [RaidParticipant]?) {
@@ -235,7 +264,8 @@ final class BattleSceneCoordinator {
         attackingEnemyIndex: Int?,
         selectedEnemyIndex: Int,
         particleEffect: String?,
-        particleTargetIndices: [Int]
+        particleTargetIndices: [Int],
+        comboStep: BattleComboStepDefinition?
     ) {
         if playerAttackID != lastPlayerAttackID {
             lastPlayerAttackID = playerAttackID
@@ -248,7 +278,8 @@ final class BattleSceneCoordinator {
                     defender: enemyRootNodes[selectedEnemyIndex],
                     animationSeed: playerAttackID,
                     particleEffect: particleEffect,
-                    particleTargetIndices: particleTargetIndices
+                    particleTargetIndices: particleTargetIndices,
+                    comboStep: comboStep
                 )
             }
         }
@@ -267,7 +298,8 @@ final class BattleSceneCoordinator {
                     defender: defender,
                     animationSeed: allyAttackID,
                     particleEffect: nil,
-                    particleTargetIndices: []
+                    particleTargetIndices: [],
+                    comboStep: nil
                 )
             }
         }
@@ -284,7 +316,8 @@ final class BattleSceneCoordinator {
                     defender: playerRootNode,
                     animationSeed: enemyAttackID,
                     particleEffect: nil,
-                    particleTargetIndices: []
+                    particleTargetIndices: [],
+                    comboStep: nil
                 )
             }
         }
@@ -379,10 +412,10 @@ final class BattleSceneCoordinator {
         let directional = SCNLight()
         directional.type = .directional
         directional.intensity = 1400
-        directional.castsShadow = true
+        directional.castsShadow = !isReducedEffectsEnabled
         directional.shadowMode = .modulated
-        directional.shadowRadius = 3
-        directional.shadowSampleCount = 6
+        directional.shadowRadius = isReducedEffectsEnabled ? 1 : 3
+        directional.shadowSampleCount = isReducedEffectsEnabled ? 1 : 6
 
         let directionalNode = SCNNode()
         directionalNode.light = directional
@@ -495,7 +528,8 @@ final class BattleSceneCoordinator {
         defender: SCNNode,
         animationSeed: Int,
         particleEffect: String?,
-        particleTargetIndices: [Int]
+        particleTargetIndices: [Int],
+        comboStep: BattleComboStepDefinition?
     ) {
         attacker.removeAction(forKey: "attack")
         defender.removeAction(forKey: "hit")
@@ -518,8 +552,12 @@ final class BattleSceneCoordinator {
                 + pow(defenderPosition.z - start.z, 2)
         )
 
-        let lungeDistance = max(1.2, distanceToEnemy * 0.45)
-        let windupDistance: Float = 0.35
+        let style = comboStep?.resolvedStyle ?? .dash
+        let lungeDistance = lungeDistance(
+            for: style,
+            distanceToEnemy: distanceToEnemy
+        )
+        let windupDistance = windupDistance(for: style)
 
         let windupPosition = SCNVector3(
             start.x - direction.x * windupDistance,
@@ -534,24 +572,24 @@ final class BattleSceneCoordinator {
 
         let windup = SCNAction.move(
             to: windupPosition,
-            duration: speedAdjustedDuration(0.08)
+            duration: speedAdjustedDuration(windupDuration(for: style))
         )
         windup.timingMode = .easeOut
 
         let dash = SCNAction.move(
             to: lungePosition,
-            duration: speedAdjustedDuration(0.15)
+            duration: speedAdjustedDuration(dashDuration(for: style))
         )
         dash.timingMode = .easeInEaseOut
 
         let recover = SCNAction.move(
             to: start,
-            duration: speedAdjustedDuration(0.18)
+            duration: speedAdjustedDuration(recoverDuration(for: style))
         )
         recover.timingMode = .easeOut
 
         let anticipationDelay = SCNAction.wait(
-            duration: speedAdjustedDuration(0.03)
+            duration: speedAdjustedDuration(comboStep?.resolvedHoldDuration ?? 0.03)
         )
         let impact = SCNAction.run { [weak self, weak defender] _ in
             guard let self, let defender, let particleEffect else { return }
@@ -572,12 +610,18 @@ final class BattleSceneCoordinator {
             }
         }
 
-        let attackerPose = makeAttackPoseAction(seed: animationSeed)
+        let attackerPose = makeAttackPoseAction(
+            seed: animationSeed,
+            style: style
+        )
         let impactShake = makeImpactShakeAction()
+        let impactWait = speedAdjustedDuration(
+            comboStep?.resolvedHitDelay ?? 0.22
+        )
 
         modelContainer(for: attacker)?.runAction(
             SCNAction.sequence([
-                SCNAction.wait(duration: speedAdjustedDuration(0.11)),
+                SCNAction.wait(duration: max(0.02, impactWait * 0.45)),
                 attackerPose,
             ]),
             forKey: "attackPose"
@@ -585,7 +629,7 @@ final class BattleSceneCoordinator {
 
         modelContainer(for: defender)?.runAction(
             SCNAction.sequence([
-                SCNAction.wait(duration: speedAdjustedDuration(0.26)),
+                SCNAction.wait(duration: impactWait),
                 impactShake,
             ]),
             forKey: "hitShake"
@@ -594,11 +638,10 @@ final class BattleSceneCoordinator {
         attacker.runAction(
             SCNAction.sequence([
                 windup,
-                anticipationDelay,
                 dash,
                 impact,
                 anticipationDelay,
-                recover,
+                recover
             ]),
             forKey: "attack"
         )
@@ -623,7 +666,7 @@ final class BattleSceneCoordinator {
 
         defender.runAction(
             SCNAction.sequence([
-                SCNAction.wait(duration: speedAdjustedDuration(0.24)),
+                SCNAction.wait(duration: impactWait),
                 hitBack,
                 returnBack,
             ]),
@@ -650,9 +693,82 @@ final class BattleSceneCoordinator {
         allyRootNodes.first { $0.name == "ally_\(participantID)" }
     }
 
-    private func makeAttackPoseAction(seed: Int) -> SCNAction {
-        switch abs(seed) % 4 {
-        case 0:
+    private func lungeDistance(
+        for style: BattleComboStyle,
+        distanceToEnemy: Float
+    ) -> Float {
+        switch style {
+        case .dash:
+            return max(1.2, distanceToEnemy * 0.45)
+        case .slashRight, .slashLeft, .slashDown, .slashUp:
+            return max(1.6, distanceToEnemy * 0.58)
+        case .heavy:
+            return max(1.4, distanceToEnemy * 0.52)
+        case .finisher:
+            return max(1.9, distanceToEnemy * 0.68)
+        }
+    }
+
+    private func windupDistance(for style: BattleComboStyle) -> Float {
+        switch style {
+        case .dash:
+            return 0.35
+        case .slashRight, .slashDown, .slashUp:
+            return 0.18
+        case .slashLeft:
+            return 0.18
+        case .heavy:
+            return 0.48
+        case .finisher:
+            return 0.62
+        }
+    }
+
+    private func windupDuration(for style: BattleComboStyle) -> TimeInterval {
+        switch style {
+        case .dash:
+            return 0.08
+        case .slashRight, .slashLeft, .slashDown, .slashUp:
+            return 0.05
+        case .heavy:
+            return 0.14
+        case .finisher:
+            return 0.18
+        }
+    }
+
+    private func dashDuration(for style: BattleComboStyle) -> TimeInterval {
+        switch style {
+        case .dash:
+            return 0.15
+        case .slashRight, .slashLeft, .slashDown, .slashUp:
+            return 0.11
+        case .heavy:
+            return 0.18
+        case .finisher:
+            return 0.22
+        }
+    }
+
+    private func recoverDuration(for style: BattleComboStyle) -> TimeInterval {
+        switch style {
+        case .dash:
+            return 0.28
+        case .slashRight, .slashLeft, .slashDown, .slashUp:
+            return 0.2
+        case .heavy:
+            return 0.24
+        case .finisher:
+            return 0.32
+        }
+    }
+
+    private func makeAttackPoseAction(
+        seed: Int,
+        style: BattleComboStyle
+    ) -> SCNAction {
+        switch style {
+        case .dash:
             return SCNAction.sequence([
                 SCNAction.rotateBy(
                     x: -0.6,
@@ -667,42 +783,103 @@ final class BattleSceneCoordinator {
                     duration: speedAdjustedDuration(0.1)
                 ),
             ])
-        case 1:
+        case .slashRight:
             return SCNAction.sequence([
                 SCNAction.rotateBy(
                     x: 0,
-                    y: 0.4,
-                    z: 0,
+                    y: 0.55,
+                    z: -0.2,
                     duration: speedAdjustedDuration(0.08)
                 ),
                 SCNAction.rotateBy(
                     x: 0,
-                    y: -0.4,
-                    z: 0,
+                    y: -0.55,
+                    z: 0.2,
                     duration: speedAdjustedDuration(0.08)
                 ),
             ])
-        case 2:
-            return SCNAction.rotateBy(
-                x: 0,
-                y: .pi * 2,
-                z: 0,
-                duration: speedAdjustedDuration(0.4)
-            )
-        default:
+        case .slashLeft:
             return SCNAction.sequence([
-                SCNAction.moveBy(
+                SCNAction.rotateBy(
                     x: 0,
-                    y: 2,
+                    y: -0.55,
+                    z: 0.2,
+                    duration: speedAdjustedDuration(0.08)
+                ),
+                SCNAction.rotateBy(
+                    x: 0,
+                    y: 0.55,
+                    z: -0.2,
+                    duration: speedAdjustedDuration(0.08)
+                ),
+            ])
+        case .slashDown:
+            return SCNAction.sequence([
+                SCNAction.rotateBy(
+                    x: 0.65,
+                    y: 0,
+                    z: 0.22,
+                    duration: speedAdjustedDuration(0.09)
+                ),
+                SCNAction.rotateBy(
+                    x: -0.65,
+                    y: 0,
+                    z: -0.22,
+                    duration: speedAdjustedDuration(0.09)
+                ),
+            ])
+        case .slashUp:
+            return SCNAction.sequence([
+                SCNAction.rotateBy(
+                    x: -0.65,
+                    y: 0,
+                    z: -0.22,
+                    duration: speedAdjustedDuration(0.09)
+                ),
+                SCNAction.rotateBy(
+                    x: 0.65,
+                    y: 0,
+                    z: 0.22,
+                    duration: speedAdjustedDuration(0.09)
+                ),
+            ])
+        case .heavy:
+            return SCNAction.sequence([
+                SCNAction.rotateBy(
+                    x: -0.85,
+                    y: 0,
                     z: 0,
                     duration: speedAdjustedDuration(0.15)
                 ),
-                SCNAction.moveBy(
-                    x: 0,
-                    y: -2,
+                SCNAction.rotateBy(
+                    x: 0.85,
+                    y: 0,
                     z: 0,
-                    duration: speedAdjustedDuration(0.2)
+                    duration: speedAdjustedDuration(0.12)
+                )
+            ])
+        case .finisher:
+            return SCNAction.group([
+                SCNAction.rotateBy(
+                    x: 0,
+                    y: .pi * 2,
+                    z: 0,
+                    duration: speedAdjustedDuration(0.36)
                 ),
+                SCNAction.sequence([
+                    SCNAction.moveBy(
+                        x: 0,
+                        y: 1.5,
+                        z: 0,
+                        duration: speedAdjustedDuration(0.14)
+                    ),
+                    SCNAction.moveBy(
+                        x: 0,
+                        y: -1.5,
+                        z: 0,
+                        duration: speedAdjustedDuration(0.18)
+                    )
+                ])
             ])
         }
     }
@@ -804,6 +981,8 @@ final class BattleSceneCoordinator {
         named effect: String,
         at position: SCNVector3
     ) {
+        guard !isReducedEffectsEnabled else { return }
+
         let definition = particleDefinition(for: effect)
         let node = SCNNode()
         node.position = SCNVector3(
@@ -1293,7 +1472,7 @@ final class BattleSceneCoordinator {
         let modelContainer = SCNNode()
         let modelNode = loadModel(
             named: stats.battleModel ?? stats.model,
-            textureName: stats.texture
+            stats: stats
         )
         modelContainer.addChildNode(modelNode)
         root.addChildNode(modelContainer)
@@ -1315,6 +1494,13 @@ final class BattleSceneCoordinator {
         modelContainer.scale = SCNVector3(scale, scale, scale)
 
         modelContainer.eulerAngles = SCNVector3(-Float.pi / 2, Float.pi / 2, 0)
+        if !isEnemy {
+            addSkinSceneEffects(
+                for: stats,
+                to: modelContainer,
+                bounds: bounds
+            )
+        }
         modelContainer.runAction(makeIdleBounceAction(), forKey: "idle")
 
         let groundY = getGroundTopY()
@@ -1465,7 +1651,14 @@ final class BattleSceneCoordinator {
             participant.characterTexture ?? playerStats.texture
         let modelNode = loadModel(
             named: allyModelName,
-            textureName: allyTextureName
+            stats: CharacterStats(
+                name: participant.displayName,
+                image: "",
+                model: allyModelName,
+                texture: allyTextureName,
+                hp: CGFloat(participant.maxHP),
+                attack: 1
+            )
         )
         modelContainer.addChildNode(modelNode)
         root.addChildNode(modelContainer)
@@ -1568,10 +1761,10 @@ final class BattleSceneCoordinator {
         enemySelectionNodes.append(selection)
     }
 
-    private func loadModel(named modelName: String, textureName: String?)
+    private func loadModel(named modelName: String, stats: CharacterStats)
         -> SCNNode
     {
-        let cacheKey = "\(modelName)|\(textureName ?? "-")" as NSString
+        let cacheKey = skinCacheKey(modelName: modelName, stats: stats)
         if let cachedNode = BattleSceneNodeCache.modelCache.object(
             forKey: cacheKey
         ) {
@@ -1585,11 +1778,26 @@ final class BattleSceneCoordinator {
                 container.addChildNode(child.clone())
             }
             removeModelAnimations(from: container)
-            applyCharacterTextureIfNeeded(textureName, to: container)
+            applyCharacterMaterial(stats, to: container)
         }
 
         BattleSceneNodeCache.modelCache.setObject(container, forKey: cacheKey)
         return container.clone()
+    }
+
+    private func skinCacheKey(modelName: String, stats: CharacterStats)
+        -> NSString
+    {
+        [
+            modelName,
+            stats.texture ?? "-",
+            stats.materialColor ?? "-",
+            stats.emissionColor ?? "-",
+            String(stats.emissionIntensity ?? -1),
+            String(stats.roughness ?? -1),
+            String(stats.metalness ?? -1),
+        ]
+        .joined(separator: "|") as NSString
     }
 
     private func loadModelScene(named modelName: String) -> SCNScene? {
@@ -1631,14 +1839,19 @@ final class BattleSceneCoordinator {
         }
     }
 
-    private func applyCharacterTextureIfNeeded(
-        _ textureName: String?,
+    private func applyCharacterMaterial(
+        _ stats: CharacterStats,
         to rootNode: SCNNode
     ) {
+        let image =
+            stats.texture.flatMap { textureName in
+                textureName.isEmpty ? nil : loadTextureImage(named: textureName)
+            }
+        let materialColor = color(from: stats.materialColor)
+        let emissionColor = color(from: stats.emissionColor)
         guard
-            let textureName,
-            !textureName.isEmpty,
-            let image = loadTextureImage(named: textureName)
+            image != nil || materialColor != nil || emissionColor != nil
+                || stats.roughness != nil || stats.metalness != nil
         else { return }
 
         rootNode.enumerateChildNodes { node, _ in
@@ -1654,16 +1867,122 @@ final class BattleSceneCoordinator {
 
             for material in copiedMaterials {
                 material.lightingModel = .physicallyBased
-                material.diffuse.contents = image
+                if let image {
+                    material.diffuse.contents = image
+                    material.multiply.contents = materialColor
+                } else if let materialColor {
+                    material.diffuse.contents = materialColor
+                }
                 material.diffuse.wrapS = .repeat
                 material.diffuse.wrapT = .repeat
-                material.roughness.contents = 0.85
-                material.metalness.contents = 0.0
+                material.emission.contents = emissionColor
+                if let emissionIntensity = stats.emissionIntensity {
+                    material.emission.intensity = CGFloat(emissionIntensity)
+                }
+                material.roughness.contents = stats.roughness ?? 0.85
+                material.metalness.contents = stats.metalness ?? 0.0
                 material.isDoubleSided = true
             }
 
             copiedGeometry.materials = copiedMaterials
             node.geometry = copiedGeometry
+        }
+    }
+
+    private func addSkinSceneEffects(
+        for stats: CharacterStats,
+        to rootNode: SCNNode,
+        bounds: (min: SCNVector3, max: SCNVector3)
+    ) {
+        guard !isReducedEffectsEnabled else { return }
+
+        let width = max(bounds.max.x - bounds.min.x, 0.1)
+        let depth = max(bounds.max.z - bounds.min.z, 0.1)
+        let height = max(bounds.max.y - bounds.min.y, 0.1)
+        let radius =
+            CGFloat(max(width, depth)) * CGFloat(stats.auraRadius ?? 0.62)
+
+        if let auraColor = color(from: stats.auraColor) {
+            let aura = SCNNode(
+                geometry: SCNTorus(
+                    ringRadius: radius,
+                    pipeRadius: max(0.015, radius * 0.035)
+                )
+            )
+            aura.geometry?.firstMaterial?.diffuse.contents =
+                auraColor.withAlphaComponent(0.65)
+            aura.geometry?.firstMaterial?.emission.contents = auraColor
+            aura.geometry?.firstMaterial?.emission.intensity =
+                CGFloat(stats.auraIntensity ?? 1.0)
+            aura.position = SCNVector3(0, bounds.min.y + 0.08, 0)
+            aura.eulerAngles.x = Float.pi / 2
+            aura.opacity = 0.72
+            rootNode.addChildNode(aura)
+        }
+
+        if let shadowColor = color(from: stats.shadowColor) {
+            let shadow = SCNNode(
+                geometry: SCNCylinder(
+                    radius: radius * 0.95,
+                    height: 0.012
+                )
+            )
+            shadow.geometry?.firstMaterial?.diffuse.contents =
+                shadowColor.withAlphaComponent(CGFloat(stats.shadowOpacity ?? 0.32))
+            shadow.geometry?.firstMaterial?.isDoubleSided = true
+            shadow.position = SCNVector3(0, bounds.min.y + 0.02, 0)
+            rootNode.addChildNode(shadow)
+        }
+
+        if stats.particleEffect != nil {
+            let particleSystem = SCNParticleSystem()
+            particleSystem.birthRate = 70
+            particleSystem.particleLifeSpan = 0.9
+            particleSystem.particleLifeSpanVariation = 0.3
+            particleSystem.particleSize = 0.08
+            particleSystem.particleSizeVariation = 0.04
+            particleSystem.spreadingAngle = 140
+            particleSystem.emitterShape = SCNSphere(radius: radius * 0.65)
+            particleSystem.particleColor =
+                color(from: stats.auraColor)
+                ?? color(from: stats.emissionColor)
+                ?? UIColor.cyan
+            particleSystem.isLocal = true
+
+            let particleNode = SCNNode()
+            particleNode.position = SCNVector3(
+                0,
+                bounds.min.y + height * 0.55,
+                0
+            )
+            particleNode.addParticleSystem(particleSystem)
+            rootNode.addChildNode(particleNode)
+        }
+    }
+
+    private func color(from hex: String?) -> UIColor? {
+        guard let hex else { return nil }
+        let trimmed = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "#", with: "")
+        guard let value = UInt64(trimmed, radix: 16) else { return nil }
+
+        switch trimmed.count {
+        case 6:
+            return UIColor(
+                red: CGFloat((value >> 16) & 0xFF) / 255,
+                green: CGFloat((value >> 8) & 0xFF) / 255,
+                blue: CGFloat(value & 0xFF) / 255,
+                alpha: 1
+            )
+        case 8:
+            return UIColor(
+                red: CGFloat((value >> 24) & 0xFF) / 255,
+                green: CGFloat((value >> 16) & 0xFF) / 255,
+                blue: CGFloat((value >> 8) & 0xFF) / 255,
+                alpha: CGFloat(value & 0xFF) / 255
+            )
+        default:
+            return nil
         }
     }
 

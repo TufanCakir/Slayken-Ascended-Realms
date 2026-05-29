@@ -72,13 +72,14 @@ struct BackgroundPreloadIndicatorView: View {
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
+        .frame(maxWidth: 330)
         .background(Color.black.opacity(0.72))
         .overlay {
             RoundedRectangle(cornerRadius: 18, style: .continuous)
                 .stroke(.white.opacity(0.1), lineWidth: 1)
         }
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .padding(.horizontal, 18)
-        .padding(.top, 10)
+        .padding(.horizontal, 14)
+        .padding(.bottom, 14)
     }
 }

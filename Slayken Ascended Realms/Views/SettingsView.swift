@@ -14,6 +14,7 @@ struct SettingsView: View {
     @EnvironmentObject var theme: ThemeManager
     @EnvironmentObject var gameState: GameState
     @EnvironmentObject var musicManager: MusicManager
+    @EnvironmentObject var remoteContent: RemoteContentManager
 
     @Query private var currencyBalances: [PlayerCurrencyBalance]
     @Query private var ownedCharacters: [OwnedSummonCharacter]
@@ -41,6 +42,7 @@ struct SettingsView: View {
     let onOpenTutorialArchive: () -> Void
 
     @State private var showResetConfirm = false
+    @State private var fullPreloadMessage: String?
 
     var body: some View {
 
@@ -50,6 +52,7 @@ struct SettingsView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 16) {
                     audioPanel
+                    contentDownloadPanel
                     tutorialPanel
                     resetPanel
                     dataPanel
@@ -203,6 +206,71 @@ struct SettingsView: View {
                     .foregroundStyle(.white)
             }
             .buttonStyle(.plain)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity)
+        .background(
+            .white.opacity(0.07),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(.white.opacity(0.12))
+        )
+    }
+
+    var contentDownloadPanel: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Label("Live Inhalte", systemImage: "arrow.down.circle.fill")
+                .font(.system(size: 18, weight: .black))
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            Text(
+                "Laedt alle Remote-Bilder, Musik, Modelle und Daten vor. Das ist optional; fehlende Inhalte werden sonst beim Spielen automatisch geladen."
+            )
+            .font(.system(size: 13, weight: .semibold))
+            .foregroundStyle(.white.opacity(0.7))
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            if remoteContent.isRefreshing {
+                VStack(alignment: .leading, spacing: 8) {
+                    ProgressView(value: remoteContent.refreshProgress)
+                        .tint(.cyan)
+                    Text(remoteContent.statusText)
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.74))
+                        .lineLimit(2)
+                }
+            } else if let fullPreloadMessage {
+                Text(fullPreloadMessage)
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(.white.opacity(0.76))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+
+            Button {
+                startFullPreload()
+            } label: {
+                Text(remoteContent.isRefreshing ? "LÄDT..." : "ALLES HERUNTERLADEN")
+                    .font(.system(size: 14, weight: .black))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background(
+                        LinearGradient(
+                            colors: [.cyan.opacity(0.95), .blue.opacity(0.95)],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        ),
+                        in: RoundedRectangle(cornerRadius: 10)
+                    )
+                    .foregroundStyle(.white)
+            }
+            .buttonStyle(.plain)
+            .disabled(remoteContent.isRefreshing)
+            .opacity(remoteContent.isRefreshing ? 0.65 : 1)
         }
         .padding(16)
         .frame(maxWidth: .infinity)
@@ -416,6 +484,30 @@ struct SettingsView: View {
         musicManager.resetSettings()
         gameState.resetGameData()
         onReset()
+    }
+
+    func startFullPreload() {
+        fullPreloadMessage = nil
+        Task {
+            let didSucceed = await remoteContent.refreshContentIfNeeded(
+                mode: .fullPreload
+            )
+
+            await MainActor.run {
+                if didSucceed {
+                    gameState.reloadContent()
+                    theme.loadThemes()
+                    theme.loadSelected()
+                    musicManager.reloadTracks()
+                    musicManager.startPlaybackIfNeeded()
+                    fullPreloadMessage = "Alle verfuegbaren Inhalte wurden vorbereitet."
+                } else {
+                    fullPreloadMessage =
+                        remoteContent.lastErrorMessage
+                        ?? "Download fehlgeschlagen. Bitte Verbindung pruefen."
+                }
+            }
+        }
     }
 
     private func resetPersistedDefaults() {

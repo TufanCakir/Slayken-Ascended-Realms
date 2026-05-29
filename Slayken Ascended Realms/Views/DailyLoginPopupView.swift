@@ -221,9 +221,10 @@ struct DailyLoginPopupView: View {
             "+\($0.amount) \($0.currency)"
         }
         let characterParts = reward.characterRewards.map { _ in "+ Charakter" }
+        let skinParts = reward.skinRewards.map { _ in "+ Skin" }
         let cardParts = reward.cardRewards.map { "+ Karte x\($0.amount)" }
 
-        return (currencyParts + characterParts + cardParts)
+        return (currencyParts + characterParts + skinParts + cardParts)
             .joined(separator: " · ")
     }
 

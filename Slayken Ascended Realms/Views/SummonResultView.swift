@@ -19,6 +19,8 @@ struct SummonResultView: View {
         switch result {
         case .character:
             return "Character Summoned"
+        case .skin:
+            return "Skin Unlocked"
         case .card:
             return "Skill Card Summoned"
         }
@@ -28,6 +30,8 @@ struct SummonResultView: View {
         switch result {
         case .character(let character):
             return character.name
+        case .skin(_, let skin):
+            return skin.name
         case .card(let card):
             return card.name
         }
@@ -37,6 +41,8 @@ struct SummonResultView: View {
         switch result {
         case .character(let character):
             return character.summonImage
+        case .skin(_, let skin):
+            return skin.summonImage ?? skin.texture
         case .card(let card):
             return card.image
         }
@@ -46,6 +52,8 @@ struct SummonResultView: View {
         switch result {
         case .character(let character):
             return character.rarity
+        case .skin:
+            return 5
         case .card(let card):
             return card.resolvedRarity
         }
@@ -279,6 +287,8 @@ struct SummonResultsView: View {
         switch result {
         case .character(let character):
             return character.name
+        case .skin(_, let skin):
+            return skin.name
         case .card(let card):
             return card.name
         }
@@ -288,6 +298,8 @@ struct SummonResultsView: View {
         switch result {
         case .character(let character):
             return character.summonImage
+        case .skin(_, let skin):
+            return skin.summonImage ?? skin.texture
         case .card(let card):
             return card.image
         }
@@ -298,6 +310,8 @@ struct SummonResultsView: View {
         switch result {
         case .character(let character):
             count = character.rarity
+        case .skin:
+            count = 5
         case .card(let card):
             count = card.resolvedRarity
         }

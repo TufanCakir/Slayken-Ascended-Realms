@@ -1,0 +1,146 @@
+[
+    {
+        "id": "tap_rush_combo",
+        "name": "Tap Rush",
+        "description": "Schnelle Basis-Combo mit Dash, rechtem Slash, linkem Slash und Finisher.",
+        "inputSequence": ["tap", "tap", "tap", "tap"],
+        "isDefault": true,
+        "sortOrder": 1,
+        "comboWindow": 1.15,
+        "resetAfter": 1.8,
+        "steps": [
+            {
+                "id": "dash_entry",
+                "input": "tap",
+                "label": "Dash Entry",
+                "style": "dash",
+                "damageMultiplier": 1.0,
+                "hitDelay": 0.22,
+                "holdDuration": 0.28,
+                "slowMotion": false
+            },
+            {
+                "id": "slash_right",
+                "input": "tap",
+                "label": "Right Slash",
+                "style": "slashRight",
+                "damageMultiplier": 1.08,
+                "hitDelay": 0.18,
+                "holdDuration": 0.24,
+                "slowMotion": false
+            },
+            {
+                "id": "slash_left",
+                "input": "tap",
+                "label": "Left Slash",
+                "style": "slashLeft",
+                "damageMultiplier": 1.16,
+                "hitDelay": 0.18,
+                "holdDuration": 0.24,
+                "slowMotion": false
+            },
+            {
+                "id": "heavy_finish",
+                "input": "tap",
+                "label": "Heavy Finish",
+                "style": "finisher",
+                "damageMultiplier": 1.35,
+                "hitDelay": 0.32,
+                "holdDuration": 0.1,
+                "slowMotion": true
+            }
+        ]
+    },
+    {
+        "id": "rising_cross_combo",
+        "name": "Rising Cross",
+        "description": "tief ansetzen, hochziehen, links kreuzen.",
+        "inputSequence": ["tap", "swipeDown", "swipeUp", "tap"],
+        "sortOrder": 2,
+        "comboWindow": 1.25,
+        "resetAfter": 1.9,
+        "steps": [
+            {
+                "id": "low_step",
+                "input": "tap",
+                "label": "Low Step",
+                "style": "dash",
+                "damageMultiplier": 0.95,
+                "hitDelay": 0.2,
+                "holdDuration": 0.26,
+                "slowMotion": false
+            },
+            {
+                "id": "down_slash",
+                "input": "swipeDown",
+                "label": "Down Slash",
+                "style": "slashDown",
+                "damageMultiplier": 1.12,
+                "hitDelay": 0.2,
+                "holdDuration": 0.22,
+                "slowMotion": false
+            },
+            {
+                "id": "rising_slash",
+                "input": "swipeUp",
+                "label": "Rising Slash",
+                "style": "slashUp",
+                "damageMultiplier": 1.2,
+                "hitDelay": 0.18,
+                "holdDuration": 0.2,
+                "slowMotion": false
+            },
+            {
+                "id": "cross_finish",
+                "input": "tap",
+                "label": "Cross Finish",
+                "style": "finisher",
+                "damageMultiplier": 1.42,
+                "hitDelay": 0.3,
+                "holdDuration": 0.08,
+                "slowMotion": true
+            }
+        ]
+    },
+    {
+        "id": "left_right_breaker",
+        "name": "Left Right Breaker",
+        "description": "Seitliche Slash-Combo mit starkem Heavy-Ende.",
+        "inputSequence": ["swipeLeft", "swipeRight", "hold"],
+        "sortOrder": 3,
+        "comboWindow": 1.35,
+        "resetAfter": 2.0,
+        "steps": [
+            {
+                "id": "left_cut",
+                "input": "swipeLeft",
+                "label": "Left Cut",
+                "style": "slashLeft",
+                "damageMultiplier": 1.05,
+                "hitDelay": 0.18,
+                "holdDuration": 0.18,
+                "slowMotion": false
+            },
+            {
+                "id": "right_cut",
+                "input": "swipeRight",
+                "label": "Right Cut",
+                "style": "slashRight",
+                "damageMultiplier": 1.12,
+                "hitDelay": 0.18,
+                "holdDuration": 0.2,
+                "slowMotion": false
+            },
+            {
+                "id": "breaker",
+                "input": "hold",
+                "label": "Breaker",
+                "style": "heavy",
+                "damageMultiplier": 1.48,
+                "hitDelay": 0.34,
+                "holdDuration": 0.1,
+                "slowMotion": true
+            }
+        ]
+    }
+]

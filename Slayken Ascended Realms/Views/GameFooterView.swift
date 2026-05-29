@@ -14,7 +14,7 @@ struct GameFooterView: View {
     private let tabs: [FooterTabItem] = [
         FooterTabItem(
             tab: .game,
-            systemName: "house"
+            systemName: "figure.martial.arts"
         ),
         FooterTabItem(
             tab: .character,
@@ -30,7 +30,7 @@ struct GameFooterView: View {
         ),
         FooterTabItem(
             tab: .events,
-            systemName: "globe.europe.africa"
+            systemName: "sportscourt"
         ),
 
     ]
@@ -59,9 +59,13 @@ struct GameFooterView: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
             .frame(width: expandedWidth)
-            .background(Color.white.opacity(0.92))
+            .background(Color.black.opacity(0.78))
             .clipShape(Capsule())
-            .shadow(color: .black.opacity(0.16), radius: 10, y: 3)
+            .overlay {
+                Capsule()
+                    .stroke(.white.opacity(0.12), lineWidth: 1)
+            }
+            .shadow(color: .black.opacity(0.26), radius: 12, y: 4)
             .padding(.horizontal, 14)
             .padding(.vertical, 8)
             .frame(maxWidth: .infinity)
@@ -74,11 +78,12 @@ struct GameFooterView: View {
         } label: {
             Image(systemName: item.systemName)
                 .font(.system(size: 18, weight: .medium))
-                .foregroundStyle(.gray)
+                .foregroundStyle(selectedTab == item.tab ? .white : .white.opacity(0.62))
                 .frame(width: 34, height: 34)
                 .padding(4)
                 .background(
-                    Color.black.opacity(selectedTab == item.tab ? 0.08 : 0.06),
+                    selectedTab == item.tab
+                        ? Color.red.opacity(0.62) : Color.white.opacity(0.08),
                     in: RoundedRectangle(cornerRadius: 9, style: .continuous)
                 )
         }
@@ -97,13 +102,13 @@ private struct FooterTabItem: Identifiable {
     var accessibilityLabel: String {
         switch tab {
         case .game:
-            return "Game"
+            return "Dojo"
         case .events:
-            return "Events"
+            return "Arena"
         case .character:
-            return "Character"
+            return "Fighter"
         case .shop:
-            return "Shop"
+            return "Market"
         case .support:
             return "Support"
         case .summon:

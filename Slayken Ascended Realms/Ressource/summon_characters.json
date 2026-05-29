@@ -9,7 +9,25 @@
         "rarity": 5,
         "hp": 120,
         "attack": 55,
-        "skins": []
+        "skins": [
+            {
+                "id": "zaron_shadow",
+                "name": "Shadow Zaron",
+                "texture": "texture_zaron_shadow",
+                "summonImage": "preview_zaron_shadow",
+                "materialColor": "#5B2BFF",
+                "emissionColor": "#8B5CFF",
+                "emissionIntensity": 0.8,
+                "roughness": 0.72,
+                "metalness": 0.08,
+                "auraColor": "#6D38FF",
+                "auraIntensity": 1.4,
+                "auraRadius": 0.74,
+                "particleEffect": "shadow_aura",
+                "shadowColor": "#160A33",
+                "shadowOpacity": 0.42
+            }
+        ]
     },
     {
         "id": "shela",
@@ -21,7 +39,25 @@
         "rarity": 4,
         "hp": 105,
         "attack": 48,
-        "skins": []
+        "skins": [
+            {
+                "id": "shela_moon",
+                "name": "Moon Shela",
+                "texture": "texture_shela_moon",
+                "summonImage": "preview_shela_moon",
+                "materialColor": "#DDEBFF",
+                "emissionColor": "#9CCBFF",
+                "emissionIntensity": 0.55,
+                "roughness": 0.88,
+                "metalness": 0.0,
+                "auraColor": "#9CCBFF",
+                "auraIntensity": 1.05,
+                "auraRadius": 0.66,
+                "particleEffect": "moon_aura",
+                "shadowColor": "#20324D",
+                "shadowOpacity": 0.28
+            }
+        ]
     },
     {
         "id": "shen",
@@ -33,7 +69,25 @@
         "rarity": 4,
         "hp": 105,
         "attack": 48,
-        "skins": []
+        "skins": [
+            {
+                "id": "shen_lava",
+                "name": "Lava Shen",
+                "texture": "texture_shen_lava",
+                "summonImage": "preview_shen_lava",
+                "materialColor": "#FF6A2A",
+                "emissionColor": "#FF3B12",
+                "emissionIntensity": 1.15,
+                "roughness": 0.68,
+                "metalness": 0.05,
+                "auraColor": "#FF4A1C",
+                "auraIntensity": 1.5,
+                "auraRadius": 0.7,
+                "particleEffect": "lava_aura",
+                "shadowColor": "#3A0900",
+                "shadowOpacity": 0.36
+            }
+        ]
     },
     {
         "id": "lafiya",
@@ -57,7 +111,25 @@
         "rarity": 4,
         "hp": 104,
         "attack": 47,
-        "skins": []
+        "skins": [
+            {
+                "id": "aika_void",
+                "name": "Void Aika",
+                "texture": "texture_aika_void",
+                "summonImage": "preview_aika_void",
+                "materialColor": "#7A3BFF",
+                "emissionColor": "#D84DFF",
+                "emissionIntensity": 1.0,
+                "roughness": 0.74,
+                "metalness": 0.04,
+                "auraColor": "#D84DFF",
+                "auraIntensity": 1.35,
+                "auraRadius": 0.68,
+                "particleEffect": "void_aura",
+                "shadowColor": "#250033",
+                "shadowOpacity": 0.38
+            }
+        ]
     },
     {
         "id": "anjima",

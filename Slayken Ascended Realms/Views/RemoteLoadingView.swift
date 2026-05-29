@@ -56,11 +56,15 @@ struct RemoteLoadingView: View {
             return "Manifest und Cache werden geprueft."
         }
 
-        if plan.totalPendingCount == 0 {
-            return "Alles ist bereit."
+        if isStarting {
+            return "Basisdaten werden geladen. Weitere Inhalte laden danach im Hintergrund."
         }
 
-        return "Ca. \(estimatedSizeText) für \(plan.totalPendingCount) Inhalte."
+        if plan.totalPendingCount == 0 {
+            return "Spiel wird vorbereitet."
+        }
+
+        return "Basisdaten werden automatisch vorbereitet."
     }
 
     private var pendingResourceCountText: String {
@@ -154,9 +158,7 @@ struct RemoteLoadingView: View {
                     ? "Die Realm-Server sind kurz offline."
                     : requiresRetry
                         ? "Download erneut starten."
-                        : requiresMandatoryUpdate
-                            ? "Update zuerst laden."
-                            : "Jetzt laden oder direkt starten."
+                        : "Spiel wird vorbereitet."
             )
             .font(.system(size: 14, weight: .bold))
             .foregroundStyle(.white.opacity(0.72))
@@ -204,7 +206,7 @@ struct RemoteLoadingView: View {
                                 ? "Lade Inhalte"
                                 : requiresMandatoryUpdate
                                     ? "Update nötig"
-                                    : "Download wählen"
+                                    : "Lade Spielstart"
                 )
                 .font(.system(size: 24, weight: .black, design: .rounded))
                 .foregroundStyle(.white)
@@ -233,8 +235,6 @@ struct RemoteLoadingView: View {
                     .font(.system(size: 34, weight: .black))
                     .foregroundStyle(.yellow)
                     .padding(.top, 4)
-            } else if requiresMandatoryUpdate {
-                updateInfoBlock
             }
 
             if isMaintenanceMode {
@@ -536,8 +536,7 @@ struct RemoteLoadingView: View {
     }
 
     private var shouldShowOverlay: Bool {
-        !isMaintenanceMode && !requiresRetry && !isStarting
-            && (requiresMandatoryUpdate || showOptions)
+        false
     }
 
     private func updateSpinnerState(isAnimating: Bool) {

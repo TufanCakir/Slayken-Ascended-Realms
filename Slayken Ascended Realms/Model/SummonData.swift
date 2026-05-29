@@ -13,6 +13,17 @@ struct CharacterSkin: Codable, Identifiable, Equatable {
     let name: String
     let texture: String
     let summonImage: String?
+    let materialColor: String?
+    let emissionColor: String?
+    let emissionIntensity: Double?
+    let roughness: Double?
+    let metalness: Double?
+    let auraColor: String?
+    let auraIntensity: Double?
+    let auraRadius: Double?
+    let particleEffect: String?
+    let shadowColor: String?
+    let shadowOpacity: Double?
 }
 
 struct SummonCharacter: Codable, Identifiable, Equatable {
@@ -36,6 +47,17 @@ struct SummonCharacter: Codable, Identifiable, Equatable {
             model: model,
             battleModel: battleModel,
             texture: selectedSkin?.texture ?? texture,
+            materialColor: selectedSkin?.materialColor,
+            emissionColor: selectedSkin?.emissionColor,
+            emissionIntensity: selectedSkin?.emissionIntensity,
+            roughness: selectedSkin?.roughness,
+            metalness: selectedSkin?.metalness,
+            auraColor: selectedSkin?.auraColor,
+            auraIntensity: selectedSkin?.auraIntensity,
+            auraRadius: selectedSkin?.auraRadius,
+            particleEffect: selectedSkin?.particleEffect,
+            shadowColor: selectedSkin?.shadowColor,
+            shadowOpacity: selectedSkin?.shadowOpacity,
             element: element,
             hp: CGFloat(hp),
             attack: CGFloat(attack)
@@ -82,10 +104,22 @@ struct SummonRate: Codable, Identifiable, Equatable {
 
 struct SummonPoolEntry: Codable, Identifiable, Equatable {
     let characterID: String?
+    let skinID: String?
     let cardID: String?
     let weight: Double
 
-    var id: String { characterID ?? cardID ?? UUID().uuidString }
+    var id: String {
+        if let characterID, let skinID {
+            return "\(characterID):\(skinID)"
+        }
+        if let characterID {
+            return characterID
+        }
+        if let cardID {
+            return cardID
+        }
+        return "empty-pool-entry-\(weight)"
+    }
 }
 
 func loadSummonCharacters() -> [SummonCharacter] {

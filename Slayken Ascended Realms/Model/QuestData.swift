@@ -40,6 +40,7 @@ struct QuestDefinition: Codable, Identifiable, Equatable {
     let objective: QuestObjectiveDefinition
     let rewards: [CurrencyAmount]
     let characterRewards: [QuestCharacterReward]
+    let skinRewards: [StorePackSkinReward]?
     let choiceCharacterRewardIDs: [String]
 
     var requiredAscendedLevel: Int {

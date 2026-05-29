@@ -77,6 +77,7 @@ struct BattleView: View {
     @State private var autoTask: Task<Void, Never>?
     @State private var turnTask: Task<Void, Never>?
     @State private var manaRegenTask: Task<Void, Never>?
+    @State private var comboWindowTask: Task<Void, Never>?
     @State private var inspectedCard: AbilityCardDefinition?
     @State private var cardLongPressActive = false
     @State private var cardPressTask: Task<Void, Never>?
@@ -102,6 +103,12 @@ struct BattleView: View {
     }
     @State private var didTriggerTutorialRetreat = false
     @State private var currentParticleTargetIndices: [Int] = []
+    @State private var currentComboStepIndex = 0
+    @State private var currentComboStep: BattleComboStepDefinition?
+    @State private var currentComboInputs: [String] = []
+    @State private var activeComboID: String?
+    @State private var showsComboLibrary = false
+    @State private var didTriggerHoldAttack = false
 
     private let maxMana: Double = 100
     private let baseAttackManaGain: Double = 18
@@ -110,11 +117,46 @@ struct BattleView: View {
     private let manaRegenTickMilliseconds = 450
     private let actionFrameCommitMilliseconds = 16
     private let actionCooldownTickMilliseconds = 40
-    private let minimumNormalEnemyHits: CGFloat = 3
-    private let minimumBossEnemyHits: CGFloat = 7
-    private let enemyHPGrowthPerDifficulty = 1.07
-    private let enemyAttackGrowthPerDifficulty = 1.045
-    private let enemyMinimumHPGrowthPerDifficulty = 1.045
+    private let minimumNormalEnemyHits: CGFloat = 2.5
+    private let minimumBossEnemyHits: CGFloat = 5.5
+    private let maximumEnemyDifficultyStep = 35.0
+    private let enemyHPGrowthPerDifficulty = 1.025
+    private let enemyAttackGrowthPerDifficulty = 1.018
+    private let enemyMinimumHPGrowthPerDifficulty = 1.015
+
+    private var battleCombo: BattleComboDefinition {
+        let combos = loadBattleComboDefinitions()
+        if let activeComboID,
+            let activeCombo = combos.first(where: { $0.id == activeComboID })
+        {
+            return activeCombo
+        }
+
+        return combos.first { $0.isDefault == true } ?? combos.first
+            ?? BattleComboDefinition(
+            id: "fallback_combo",
+            name: "Fallback Combo",
+            description: "Basis Combo",
+            inputSequence: ["tap"],
+            isDefault: true,
+            sortOrder: 999,
+            comboWindow: 1.15,
+            resetAfter: 1.8,
+            steps: [
+                BattleComboStepDefinition(
+                    id: "dash",
+                    input: "tap",
+                    label: "Dash",
+                    style: BattleComboStyle.dash.rawValue,
+                    damageMultiplier: 1.0,
+                    hitDelay: 0.22,
+                    holdDuration: 0.25,
+                    slowMotion: false,
+                    particleEffect: nil
+                )
+            ]
+        )
+    }
 
     init(
         player: CharacterStats,
@@ -306,6 +348,7 @@ struct BattleView: View {
                 attackingEnemyIndex: attackingEnemyIndex,
                 particleEffect: currentParticleEffect,
                 particleTargetIndices: currentParticleTargetIndices,
+                comboStep: currentComboStep,
                 particleEffects: gameState.particleEffects,
                 groundTexture: raidConfiguration?.groundTexture
                     ?? gameState.activeGroundTexture,
@@ -324,9 +367,7 @@ struct BattleView: View {
             Color.clear
                 .contentShape(Rectangle())
                 .ignoresSafeArea()
-                .onTapGesture {
-                    attack(with: nil)
-                }
+                .gesture(basicAttackGesture)
 
             battleHUD
 
@@ -425,10 +466,17 @@ struct BattleView: View {
             _ in
             applyResolvedRaidBossAttackIfNeeded()
         }
+        .sheet(isPresented: $showsComboLibrary) {
+            BattleComboLibraryView(
+                combos: loadBattleComboDefinitions(),
+                activeComboID: battleCombo.id
+            )
+        }
         .onDisappear {
             stopAutoAttack()
             turnTask?.cancel()
             manaRegenTask?.cancel()
+            comboWindowTask?.cancel()
             cardPressTask?.cancel()
         }
     }
@@ -478,6 +526,40 @@ struct BattleView: View {
             .padding(.bottom, 20)
         }
         .foregroundStyle(.white)
+    }
+
+    private var basicAttackGesture: some Gesture {
+        DragGesture(minimumDistance: 0)
+            .onChanged { _ in }
+            .onEnded { value in
+                if didTriggerHoldAttack {
+                    didTriggerHoldAttack = false
+                    return
+                }
+                attack(with: nil, input: comboInput(for: value.translation))
+            }
+            .simultaneously(
+                with: LongPressGesture(minimumDuration: 0.38)
+                    .onEnded { _ in
+                        didTriggerHoldAttack = true
+                        attack(with: nil, input: "hold")
+                    }
+            )
+    }
+
+    private func comboInput(for translation: CGSize) -> String {
+        let horizontal = translation.width
+        let vertical = translation.height
+
+        guard max(abs(horizontal), abs(vertical)) >= 28 else {
+            return "tap"
+        }
+
+        if abs(horizontal) > abs(vertical) {
+            return horizontal < 0 ? "swipeLeft" : "swipeRight"
+        }
+
+        return vertical < 0 ? "swipeUp" : "swipeDown"
     }
 
     private var topBar: some View {
@@ -889,7 +971,7 @@ struct BattleView: View {
                 }
 
                 guard canUse else { return }
-                attack(with: card)
+                attack(with: card, input: "tap")
             }
     }
 
@@ -1004,6 +1086,23 @@ struct BattleView: View {
                 .background(
                     isAuto
                         ? Color.green.opacity(0.75) : Color.black.opacity(0.58),
+                    in: RoundedRectangle(cornerRadius: 6, style: .continuous)
+                )
+            }
+            .buttonStyle(.plain)
+
+            Button {
+                showsComboLibrary = true
+            } label: {
+                VStack(spacing: 2) {
+                    Image(systemName: "list.bullet.rectangle")
+                        .font(.system(size: 15, weight: .black))
+                    Text("COMBO")
+                        .font(.system(size: 7, weight: .black))
+                }
+                .frame(width: 58, height: 42)
+                .background(
+                    Color.purple.opacity(0.72),
                     in: RoundedRectangle(cornerRadius: 6, style: .continuous)
                 )
             }
@@ -1218,6 +1317,7 @@ struct BattleView: View {
         currentTurn = .player
         turnTask?.cancel()
         turnTask = nil
+        resetComboChain()
         isResolvingTurn = false
         currentParticleTargetIndices = []
         currentParticleEffect = nil
@@ -1233,6 +1333,7 @@ struct BattleView: View {
         autoTask?.cancel()
         turnTask?.cancel()
         manaRegenTask?.cancel()
+        resetComboChain()
         attackingEnemyIndex = nil
         showDefeat = false
         onExit()
@@ -1339,11 +1440,17 @@ struct BattleView: View {
             raidConfiguration?.difficulty ?? gameState.selectedBattle?
                 .difficulty ?? 1
         )
-        let difficultyStep = max(0, difficulty - 1)
-        let waveScale = pow(1.03 + difficulty * 0.003, Double(index))
+        let difficultyStep = min(
+            maximumEnemyDifficultyStep,
+            max(0, difficulty - 1)
+        )
+        let waveScale = pow(
+            1.015 + min(difficulty, 30) * 0.001,
+            Double(index)
+        )
         let bossScale =
             ((raidConfiguration != nil || gameState.selectedBattle?.boss != nil)
-                && index == battleEnemies.count - 1) ? 1.35 : 1.0
+                && index == battleEnemies.count - 1) ? 1.2 : 1.0
         let difficultyHPScale = pow(enemyHPGrowthPerDifficulty, difficultyStep)
         let difficultyAttackScale = pow(
             enemyAttackGrowthPerDifficulty,
@@ -1362,11 +1469,22 @@ struct BattleView: View {
             model: base.model,
             battleModel: base.battleModel,
             texture: base.texture,
+            materialColor: base.materialColor,
+            emissionColor: base.emissionColor,
+            emissionIntensity: base.emissionIntensity,
+            roughness: base.roughness,
+            metalness: base.metalness,
+            auraColor: base.auraColor,
+            auraIntensity: base.auraIntensity,
+            auraRadius: base.auraRadius,
+            particleEffect: base.particleEffect,
+            shadowColor: base.shadowColor,
+            shadowOpacity: base.shadowOpacity,
             element: base.element,
             hp: resolvedHP,
             attack: base.attack
                 * CGFloat(
-                    difficultyAttackScale * pow(1.05, Double(index))
+                    difficultyAttackScale * pow(1.025, Double(index))
                         * bossScale
                 ),
             attackSpeed: base.attackSpeed
@@ -1378,7 +1496,10 @@ struct BattleView: View {
             isBossEnemy(at: index)
             ? minimumBossEnemyHits : minimumNormalEnemyHits
         let difficulty = Double(gameState.selectedBattle?.difficulty ?? 1)
-        let difficultyStep = max(0, difficulty - 1)
+        let difficultyStep = min(
+            maximumEnemyDifficultyStep,
+            max(0, difficulty - 1)
+        )
         let difficultyScale = pow(
             enemyMinimumHPGrowthPerDifficulty,
             difficultyStep
@@ -1433,6 +1554,93 @@ struct BattleView: View {
         if autoTask == nil || autoTask?.isCancelled == true {
             startAutoAttack()
         }
+    }
+
+    private func nextComboStep(for input: String) -> BattleComboStepDefinition {
+        let combos = loadBattleComboDefinitions()
+        let proposedInputs = currentComboInputs + [input]
+        let matchedCombo =
+            comboMatching(inputs: proposedInputs, in: combos)
+            ?? comboMatching(inputs: [input], in: combos)
+            ?? combos.first { $0.isDefault == true }
+            ?? combos.first
+
+        let resolvedInputs =
+            matchedCombo?.resolvedInputSequence.starts(with: proposedInputs)
+            == true
+            ? proposedInputs : [input]
+
+        currentComboInputs = resolvedInputs
+        activeComboID = matchedCombo?.id
+
+        let steps = matchedCombo?.steps ?? battleCombo.steps
+        guard !steps.isEmpty else {
+            return BattleComboStepDefinition(
+                id: "dash",
+                input: "tap",
+                label: "Dash",
+                style: BattleComboStyle.dash.rawValue,
+                damageMultiplier: 1.0,
+                hitDelay: 0.22,
+                holdDuration: 0.25,
+                slowMotion: false,
+                particleEffect: nil
+            )
+        }
+
+        let stepIndex = min(max(0, resolvedInputs.count - 1), steps.count - 1)
+        let step = steps[stepIndex]
+        currentComboStepIndex = min(stepIndex + 1, steps.count)
+        return step
+    }
+
+    private func comboMatching(
+        inputs: [String],
+        in combos: [BattleComboDefinition]
+    ) -> BattleComboDefinition? {
+        combos.first { combo in
+            combo.resolvedInputSequence.starts(with: inputs)
+        }
+    }
+
+    private func shouldContinueCombo(after step: BattleComboStepDefinition)
+        -> Bool
+    {
+        guard raidConfiguration == nil else { return false }
+        guard !battleCombo.steps.isEmpty else { return false }
+        guard currentComboStepIndex < battleCombo.steps.count else {
+            return false
+        }
+        return !step.isSlowMotion
+    }
+
+    private func scheduleComboWindowTimeout() {
+        comboWindowTask?.cancel()
+        let windowMilliseconds = max(
+            250,
+            Int((battleCombo.resolvedComboWindow * 1000).rounded())
+        )
+        comboWindowTask = Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(windowMilliseconds))
+            guard !Task.isCancelled else { return }
+            guard currentTurn == .player else { return }
+            guard !isResolvingTurn else { return }
+            guard !showVictory && !showDefeat else { return }
+
+            resetComboChain()
+            currentTurn = .enemy
+            await runEnemyTurn()
+            isResolvingTurn = false
+        }
+    }
+
+    private func resetComboChain() {
+        comboWindowTask?.cancel()
+        comboWindowTask = nil
+        currentComboStepIndex = 0
+        currentComboStep = nil
+        currentComboInputs = []
+        activeComboID = nil
     }
 
     private func setAutoMode(_ enabled: Bool) {
@@ -1507,21 +1715,28 @@ struct BattleView: View {
         resumeAutoAttackIfPossible()
     }
 
-    private func attack(with card: AbilityCardDefinition?) {
+    private func attack(
+        with card: AbilityCardDefinition?,
+        input: String = "tap"
+    ) {
         guard currentTurn == .player else { return }
         guard !isResolvingTurn else { return }
         guard !showVictory && !showDefeat else { return }
         guard !didTriggerTutorialRetreat else { return }
         guard multiplayerManager.raidCountdownRemaining == nil else { return }
 
+        comboWindowTask?.cancel()
         turnTask?.cancel()
         turnTask = Task { @MainActor in
-            await resolvePlayerTurn(with: card)
+            await resolvePlayerTurn(with: card, input: input)
         }
     }
 
     @MainActor
-    private func resolvePlayerTurn(with card: AbilityCardDefinition?) async {
+    private func resolvePlayerTurn(
+        with card: AbilityCardDefinition?,
+        input: String
+    ) async {
         guard currentTurn == .player else { return }
         guard !isResolvingTurn else { return }
         guard !showVictory && !showDefeat else { return }
@@ -1542,8 +1757,10 @@ struct BattleView: View {
             recoverMana(baseAttackManaGain)
         }
 
+        let comboStep = nextComboStep(for: input)
         isResolvingTurn = true
-        currentParticleEffect = card?.particleEffect
+        currentComboStep = comboStep
+        currentParticleEffect = comboStep.particleEffect ?? card?.particleEffect
         currentParticleTargetIndices = targetIndices(for: card)
         playerAttackID += 1
 
@@ -1564,7 +1781,8 @@ struct BattleView: View {
 
         let defeatedIndices = applyAttackDamage(
             with: card,
-            targetIndices: targetIndices
+            targetIndices: targetIndices,
+            comboStep: comboStep
         )
 
         guard
@@ -1602,6 +1820,15 @@ struct BattleView: View {
 
         currentParticleEffect = nil
         currentParticleTargetIndices = []
+        currentComboStep = nil
+        if shouldContinueCombo(after: comboStep) {
+            isResolvingTurn = false
+            scheduleComboWindowTimeout()
+            resumeAutoAttackIfPossible()
+            return
+        }
+
+        resetComboChain()
         currentTurn = .enemy
         await runEnemyTurn()
         isResolvingTurn = false
@@ -1646,7 +1873,8 @@ struct BattleView: View {
 
     private func applyAttackDamage(
         with card: AbilityCardDefinition?,
-        targetIndices: [Int]
+        targetIndices: [Int],
+        comboStep: BattleComboStepDefinition
     ) -> [Int] {
         var defeatedIndices: [Int] = []
 
@@ -1661,7 +1889,8 @@ struct BattleView: View {
                     } ?? 1.0
                 )
                 let damage =
-                    (leveledPlayer.attack * multiplier)
+                    (leveledPlayer.attack * multiplier
+                        * CGFloat(comboStep.resolvedDamageMultiplier))
                     / activeEnemies[index].hp
                 enemyHPs[index] -= damage
 
@@ -1685,6 +1914,7 @@ struct BattleView: View {
                 autoTask?.cancel()
                 turnTask?.cancel()
                 manaRegenTask?.cancel()
+                resetComboChain()
                 attackingEnemyIndex = nil
                 currentParticleEffect = nil
                 currentParticleTargetIndices = []
@@ -1698,6 +1928,7 @@ struct BattleView: View {
             autoTask?.cancel()
             turnTask?.cancel()
             manaRegenTask?.cancel()
+            resetComboChain()
             attackingEnemyIndex = nil
             currentParticleTargetIndices = []
             isResolvingTurn = false

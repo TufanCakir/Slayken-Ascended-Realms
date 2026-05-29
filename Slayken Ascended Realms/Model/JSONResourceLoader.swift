@@ -8,18 +8,25 @@
 import Foundation
 
 enum JSONResourceLoader {
+    private static let cacheLock = NSLock()
     private static var memoryCache = [String: Data]()
+    private static var decodedCache = [String: Any]()
     private static var bundledResourceNamesCache: [String]?
 
     static func loadData(resource: String) -> Data? {
-        if let cachedData = memoryCache[resource] {
+        cacheLock.lock()
+        let cachedData = memoryCache[resource]
+        cacheLock.unlock()
+        if let cachedData {
             return cachedData
         }
 
         if let cachedData = RemoteContentManager.cachedData(
             forResource: resource
         ) {
+            cacheLock.lock()
             memoryCache[resource] = cachedData
+            cacheLock.unlock()
             return cachedData
         }
 
@@ -41,14 +48,28 @@ enum JSONResourceLoader {
         guard let bundledData = try? Data(contentsOf: url) else {
             return nil
         }
+        cacheLock.lock()
         memoryCache[resource] = bundledData
+        cacheLock.unlock()
         return bundledData
     }
 
     static func load<T: Decodable>(_ type: T.Type, resource: String) -> T? {
+        let cacheKey = "\(String(reflecting: T.self)):\(resource)"
+        cacheLock.lock()
+        let cachedValue = decodedCache[cacheKey] as? T
+        cacheLock.unlock()
+        if let cachedValue {
+            return cachedValue
+        }
+
         do {
             guard let data = loadData(resource: resource) else { return nil }
-            return try JSONDecoder().decode(T.self, from: data)
+            let decodedValue = try JSONDecoder().decode(T.self, from: data)
+            cacheLock.lock()
+            decodedCache[cacheKey] = decodedValue
+            cacheLock.unlock()
+            return decodedValue
         } catch {
             RemoteContentManager.logError(
                 "Failed decoding \(resource).json: \(error.localizedDescription)"
@@ -102,13 +123,19 @@ enum JSONResourceLoader {
     }
 
     static func invalidateCache() {
+        cacheLock.lock()
         memoryCache.removeAll()
+        decodedCache.removeAll()
         bundledResourceNamesCache = nil
+        cacheLock.unlock()
     }
 
     private static func bundledResourceNames() -> [String] {
-        if let bundledResourceNamesCache {
-            return bundledResourceNamesCache
+        cacheLock.lock()
+        let cachedNames = bundledResourceNamesCache
+        cacheLock.unlock()
+        if let cachedNames {
+            return cachedNames
         }
 
         let resourceNames =
@@ -118,7 +145,14 @@ enum JSONResourceLoader {
             )?
             .compactMap { $0.deletingPathExtension().lastPathComponent }
             ?? []
+
+        cacheLock.lock()
+        if let bundledResourceNamesCache {
+            cacheLock.unlock()
+            return bundledResourceNamesCache
+        }
         bundledResourceNamesCache = resourceNames
+        cacheLock.unlock()
         return resourceNames
     }
 }

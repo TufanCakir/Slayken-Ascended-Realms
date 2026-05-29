@@ -25,79 +25,38 @@ struct GameMiddleDrawerView: View {
     let trailingPadding: CGFloat
 
     @State private var isExpanded = false
+    @State private var showMoreActions = false
 
     private let actions: [MiddleDrawerActionItem] = [
-        MiddleDrawerActionItem(id: .home, title: "Home", systemName: "house"),
+        MiddleDrawerActionItem(
+            id: .home,
+            title: "Dojo",
+            systemName: "figure.martial.arts"
+        ),
+        MiddleDrawerActionItem(
+            id: .team,
+            title: "Fighter",
+            systemName: "person.crop.square"
+        ),
         MiddleDrawerActionItem(
             id: .events,
-            title: "Events",
-            systemName: "globe.europe.africa"
-        ),
-        MiddleDrawerActionItem(id: .team, title: "Team", systemName: "person"),
-        MiddleDrawerActionItem(
-            id: .createClass,
-            title: "Classes",
-            systemName: "person.crop.rectangle.stack"
+            title: "Arena",
+            systemName: "sportscourt"
         ),
         MiddleDrawerActionItem(
             id: .summon,
-            title: "Summon",
+            title: "Roster",
             systemName: "sparkles"
         ),
         MiddleDrawerActionItem(
             id: .shop,
-            title: "Shop",
-            systemName: "cart"
+            title: "Market",
+            systemName: "bag"
         ),
         MiddleDrawerActionItem(
-            id: .quests,
-            title: "Quests",
-            systemName: "checklist"
-        ),
-        MiddleDrawerActionItem(
-            id: .news,
-            title: "News",
-            systemName: "newspaper"
-        ),
-        MiddleDrawerActionItem(
-            id: .archive,
-            title: "Story",
-            systemName: "book"
-        ),
-        MiddleDrawerActionItem(
-            id: .tutorialArchive,
-            title: "Tutorial",
-            systemName: "play.rectangle.on.rectangle"
-        ),
-        MiddleDrawerActionItem(
-            id: .eventArchive,
-            title: "Event Log",
-            systemName: "sparkles.rectangle.stack"
-        ),
-        MiddleDrawerActionItem(
-            id: .gift,
-            title: "Gift",
-            systemName: "gift"
-        ),
-        MiddleDrawerActionItem(
-            id: .dailyLogin,
-            title: "Daily",
-            systemName: "calendar.badge.clock"
-        ),
-        MiddleDrawerActionItem(
-            id: .theme,
-            title: "Theme",
-            systemName: "paintbrush"
-        ),
-        MiddleDrawerActionItem(
-            id: .support,
-            title: "Support",
-            systemName: "questionmark.circle"
-        ),
-        MiddleDrawerActionItem(
-            id: .settings,
-            title: "Settings",
-            systemName: "gear"
+            id: .more,
+            title: "More",
+            systemName: "ellipsis"
         ),
     ]
 
@@ -135,6 +94,11 @@ struct GameMiddleDrawerView: View {
             .spring(response: 0.34, dampingFraction: 0.84),
             value: isExpanded
         )
+        .sheet(isPresented: $showMoreActions) {
+            moreActionsSheet
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+        }
     }
 
     private var drawerContent: some View {
@@ -144,9 +108,13 @@ struct GameMiddleDrawerView: View {
             }
         }
         .padding(8)
-        .background(Color.white.opacity(0.92))
-        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-        .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
+        .background(Color.black.opacity(0.72))
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .stroke(.white.opacity(0.12), lineWidth: 1)
+        }
+        .shadow(color: .black.opacity(0.28), radius: 14, y: 6)
     }
 
     private func actionButton(_ item: MiddleDrawerActionItem) -> some View {
@@ -165,16 +133,75 @@ struct GameMiddleDrawerView: View {
 
                 Spacer(minLength: 0)
             }
-            .foregroundStyle(.gray)
+            .foregroundStyle(.white)
             .padding(.horizontal, 8)
             .frame(width: 116, height: 32)
             .background(
-                Color.black.opacity(isActive(item.id) ? 0.12 : 0.06),
+                isActive(item.id)
+                    ? Color.red.opacity(0.58) : Color.white.opacity(0.08),
                 in: RoundedRectangle(cornerRadius: 8, style: .continuous)
             )
         }
         .buttonStyle(.plain)
         .accessibilityLabel(item.title)
+    }
+
+    private var moreActionsSheet: some View {
+        NavigationStack {
+            List {
+                Section("Training") {
+                    moreAction("Quests", "checklist", onQuests)
+                    moreAction(
+                        "Classes",
+                        "person.crop.rectangle.stack",
+                        onCreateClass
+                    )
+                    moreAction(
+                        "Tutorial",
+                        "play.rectangle.on.rectangle",
+                        onTutorialArchive
+                    )
+                }
+
+                Section("Archive") {
+                    moreAction("Story", "book", onArchive)
+                    moreAction(
+                        "Event Log",
+                        "sparkles.rectangle.stack",
+                        onEventArchive
+                    )
+                    moreAction("News", "newspaper", onNews)
+                }
+
+                Section("Account") {
+                    moreAction("Gift", "gift", onGift)
+                    moreAction(
+                        "Daily Login",
+                        "calendar.badge.clock",
+                        onDailyLogin
+                    )
+                    moreAction("Theme", "paintbrush", onTheme)
+                    moreAction("Support", "questionmark.circle", onSupport)
+                    moreAction("Settings", "gear", onSettings)
+                }
+            }
+            .navigationTitle("Fighter Hub")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+
+    private func moreAction(
+        _ title: String,
+        _ systemName: String,
+        _ action: @escaping () -> Void
+    ) -> some View {
+        Button {
+            showMoreActions = false
+            selectedTab = .game
+            action()
+        } label: {
+            Label(title, systemImage: systemName)
+        }
     }
 
     private func perform(_ action: MiddleDrawerAction) {
@@ -223,6 +250,9 @@ struct GameMiddleDrawerView: View {
         case .settings:
             selectedTab = .game
             onSettings()
+        case .more:
+            selectedTab = .game
+            showMoreActions = true
         }
     }
 
@@ -251,6 +281,8 @@ struct GameMiddleDrawerView: View {
             return selectedTab == .support
         case .settings:
             return false
+        case .more:
+            return false
         }
     }
 }
@@ -272,6 +304,7 @@ private enum MiddleDrawerAction {
     case dailyLogin
     case support
     case settings
+    case more
 }
 
 private struct MiddleDrawerActionItem: Identifiable {
@@ -279,4 +312,3 @@ private struct MiddleDrawerActionItem: Identifiable {
     let title: String
     let systemName: String
 }
-

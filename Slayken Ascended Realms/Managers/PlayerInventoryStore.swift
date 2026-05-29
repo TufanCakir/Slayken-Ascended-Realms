@@ -608,6 +608,13 @@ enum PlayerInventoryStore {
         for characterReward in gift.characterRewards {
             addOwned(characterID: characterReward.characterID, in: context)
         }
+        for skinReward in gift.skinRewards {
+            addOwnedSkin(
+                characterID: skinReward.characterID,
+                skinID: skinReward.skinID,
+                in: context
+            )
+        }
         for cardReward in gift.cardRewards {
             addOwnedCard(
                 cardID: cardReward.cardID,
@@ -676,6 +683,13 @@ enum PlayerInventoryStore {
         add(availableGift.reward.rewards, in: context)
         for characterReward in availableGift.reward.characterRewards {
             addOwned(characterID: characterReward.characterID, in: context)
+        }
+        for skinReward in availableGift.reward.skinRewards {
+            addOwnedSkin(
+                characterID: skinReward.characterID,
+                skinID: skinReward.skinID,
+                in: context
+            )
         }
         for cardReward in availableGift.reward.cardRewards {
             addOwnedCard(
@@ -839,6 +853,13 @@ enum PlayerInventoryStore {
         for reward in quest.characterRewards {
             addOwned(characterID: reward.characterID, in: context)
         }
+        for reward in quest.skinRewards ?? [] {
+            addOwnedSkin(
+                characterID: reward.characterID,
+                skinID: reward.skinID,
+                in: context
+            )
+        }
 
         context.insert(PlayerQuestClaim(questID: quest.id))
         save(context)
@@ -934,6 +955,17 @@ enum PlayerInventoryStore {
             model: character.model,
             battleModel: character.battleModel,
             texture: character.texture,
+            materialColor: character.materialColor,
+            emissionColor: character.emissionColor,
+            emissionIntensity: character.emissionIntensity,
+            roughness: character.roughness,
+            metalness: character.metalness,
+            auraColor: character.auraColor,
+            auraIntensity: character.auraIntensity,
+            auraRadius: character.auraRadius,
+            particleEffect: character.particleEffect,
+            shadowColor: character.shadowColor,
+            shadowOpacity: character.shadowOpacity,
             element: character.element,
             hp: character.hp
                 * CGFloat(characterHPScale * ascendedHPScale * hpSkillScale),

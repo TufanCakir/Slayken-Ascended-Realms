@@ -27,11 +27,122 @@ struct RemoteContentConfiguration: Codable {
     let manifestURL: String
 }
 
-struct RemoteContentManifest: Codable {
+struct RemoteContentManifest: Decodable {
     let contentVersion: Int?
     let maintenance: RemoteContentMaintenance?
     let resources: [RemoteContentResource]
     let assets: [RemoteContentAsset]?
+
+    private enum CodingKeys: String, CodingKey {
+        case contentVersion
+        case maintenance
+        case resources
+        case assets
+        case jsonFiles
+        case jsonBaseURL
+        case assetBaseURL
+        case musicBaseURL
+        case music
+    }
+
+    init(
+        contentVersion: Int? = nil,
+        maintenance: RemoteContentMaintenance? = nil,
+        resources: [RemoteContentResource],
+        assets: [RemoteContentAsset]? = nil
+    ) {
+        self.contentVersion = contentVersion
+        self.maintenance = maintenance
+        self.resources = resources
+        self.assets = assets
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        contentVersion = try container.decodeIfPresent(
+            Int.self,
+            forKey: .contentVersion
+        )
+        maintenance = try container.decodeIfPresent(
+            RemoteContentMaintenance.self,
+            forKey: .maintenance
+        )
+
+        let decodedResources =
+            try container.decodeIfPresent(
+                [RemoteContentResource].self,
+                forKey: .resources
+            ) ?? []
+        let jsonFileResources =
+            try container.decodeIfPresent([String].self, forKey: .jsonFiles)?
+            .map {
+                RemoteContentResource(
+                    name: $0,
+                    version: nil,
+                    url: Self.resolvedResourceURL(
+                        resourceName: $0,
+                        baseURL: try? container.decodeIfPresent(
+                            String.self,
+                            forKey: .jsonBaseURL
+                        )
+                    )
+                )
+            }
+            ?? []
+        resources = decodedResources + jsonFileResources
+
+        let decodedAssets =
+            try container.decodeIfPresent(
+                [RemoteContentAsset].self,
+                forKey: .assets
+            ) ?? []
+        let assetBaseURL = try container.decodeIfPresent(
+            String.self,
+            forKey: .assetBaseURL
+        )
+        let resolvedAssets = decodedAssets.map {
+            $0.resolved(baseURL: assetBaseURL)
+        }
+
+        let decodedMusic =
+            try container.decodeIfPresent(
+                [RemoteContentAsset].self,
+                forKey: .music
+            ) ?? []
+        let musicBaseURL = try container.decodeIfPresent(
+            String.self,
+            forKey: .musicBaseURL
+        )
+        let resolvedMusic = decodedMusic.map {
+            $0.resolved(baseURL: musicBaseURL)
+        }
+
+        let allAssets = resolvedAssets + resolvedMusic
+        assets = allAssets.isEmpty ? nil : allAssets
+    }
+
+    private static func resolvedResourceURL(
+        resourceName: String,
+        baseURL: String?
+    ) -> String {
+        let fileName = resourceName.hasSuffix(".json")
+            ? resourceName : "\(resourceName).json"
+        guard let baseURL,
+            let resolvedURL = URL(string: fileName, relativeTo: URL(string: baseURL + "/"))
+        else {
+            return fileName
+        }
+        return resolvedURL.absoluteURL.absoluteString
+    }
+
+    func resolvingRelativeURLs(against manifestURL: URL) -> RemoteContentManifest {
+        RemoteContentManifest(
+            contentVersion: contentVersion,
+            maintenance: maintenance,
+            resources: resources.map { $0.resolvingRelativeURL(against: manifestURL) },
+            assets: assets?.map { $0.resolvingRelativeURL(against: manifestURL) }
+        )
+    }
 }
 
 struct RemoteContentMaintenance: Codable, Equatable {
@@ -43,14 +154,100 @@ struct RemoteContentMaintenance: Codable, Equatable {
 
 struct RemoteContentResource: Codable {
     let name: String
-    let version: String
+    let version: String?
     let url: String
+
+    func resolvingRelativeURL(against manifestURL: URL) -> RemoteContentResource {
+        guard URL(string: url)?.scheme == nil,
+            let resolvedURL = URL(string: url, relativeTo: manifestURL)
+        else { return self }
+
+        return RemoteContentResource(
+            name: name,
+            version: version,
+            url: resolvedURL.absoluteURL.absoluteString
+        )
+    }
 }
 
-struct RemoteContentAsset: Codable {
+struct RemoteContentAsset: Decodable {
     let name: String
     let version: String?
     let url: String
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case file
+        case version
+        case url
+    }
+
+    init(name: String, version: String? = nil, url: String) {
+        self.name = name
+        self.version = version
+        self.url = url
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let decodedID = try container.decodeIfPresent(String.self, forKey: .id)
+        let file = try container.decodeIfPresent(String.self, forKey: .file)
+        if let decodedID {
+            name = Self.cacheName(id: decodedID, file: file)
+        } else if let decodedName = try container.decodeIfPresent(
+            String.self,
+            forKey: .name
+        ) {
+            name = decodedName
+        } else if let file {
+            name = file
+        } else {
+            name = try container.decode(String.self, forKey: .id)
+        }
+        version = try container.decodeIfPresent(String.self, forKey: .version)
+        url =
+            try container.decodeIfPresent(String.self, forKey: .url)
+            ?? file
+            ?? name
+    }
+
+    private static func cacheName(id: String, file: String?) -> String {
+        guard
+            !URL(fileURLWithPath: id).pathExtension.isEmpty
+                || URL(fileURLWithPath: file ?? "").pathExtension.isEmpty
+                == false
+        else {
+            return id
+        }
+
+        return id + "." + URL(fileURLWithPath: file ?? "").pathExtension
+    }
+
+    func resolved(baseURL: String?) -> RemoteContentAsset {
+        guard URL(string: url)?.scheme == nil,
+            let baseURL,
+            let resolvedURL = URL(string: url, relativeTo: URL(string: baseURL + "/"))
+        else { return self }
+
+        return RemoteContentAsset(
+            name: name,
+            version: version,
+            url: resolvedURL.absoluteURL.absoluteString
+        )
+    }
+
+    func resolvingRelativeURL(against manifestURL: URL) -> RemoteContentAsset {
+        guard URL(string: url)?.scheme == nil,
+            let resolvedURL = URL(string: url, relativeTo: manifestURL)
+        else { return self }
+
+        return RemoteContentAsset(
+            name: name,
+            version: version,
+            url: resolvedURL.absoluteURL.absoluteString
+        )
+    }
 }
 
 struct RemoteContentStartupPlan {
@@ -80,6 +277,8 @@ enum RemoteContentRefreshMode {
 private enum RemoteAssetMemoryCache {
     nonisolated(unsafe) static let imageCache = NSCache<NSString, UIImage>()
     nonisolated(unsafe) static let sceneCache = NSCache<NSString, SCNScene>()
+    nonisolated(unsafe) static let missingSceneCache =
+        NSCache<NSString, NSNumber>()
 }
 
 @MainActor
@@ -611,6 +810,13 @@ final class RemoteContentManager: ObservableObject {
     }
 
     nonisolated static func cachedScene(candidateNames: [String]) -> SCNScene? {
+        let missingCacheKey = candidateNames.joined(separator: "|") as NSString
+        if RemoteAssetMemoryCache.missingSceneCache.object(
+            forKey: missingCacheKey
+        ) != nil {
+            return nil
+        }
+
         for candidate in candidateNames {
             let fileName = URL(fileURLWithPath: candidate).lastPathComponent
             guard let url = try? assetCacheFileURL(forAssetName: fileName)
@@ -641,6 +847,10 @@ final class RemoteContentManager: ObservableObject {
 
         logger.error(
             "No remote cached scene found. Candidates: \(candidateNames.joined(separator: ", "))"
+        )
+        RemoteAssetMemoryCache.missingSceneCache.setObject(
+            1,
+            forKey: missingCacheKey
         )
         return nil
     }
@@ -704,9 +914,12 @@ final class RemoteContentManager: ObservableObject {
         try Self.validateHTTPResponse(manifestResponse, url: manifestURL)
         Self.logger.info("Manifest downloaded successfully.")
 
-        let manifest = try JSONDecoder().decode(
+        let decodedManifest = try JSONDecoder().decode(
             RemoteContentManifest.self,
             from: manifestData
+        )
+        let manifest = decodedManifest.resolvingRelativeURLs(
+            against: manifestURL
         )
         cachedManifest = manifest
         Self.logger.info(
@@ -797,12 +1010,13 @@ final class RemoteContentManager: ObservableObject {
         do {
             let cacheURL = try Self.cacheFileURL(forResource: resource.name)
             let hasMatchingVersion =
-                versions[resource.name] == resource.version
+                resource.version != nil
+                && versions[resource.name] == resource.version
                 && fileManager.fileExists(atPath: cacheURL.path)
 
             if hasMatchingVersion {
                 Self.logger.debug(
-                    "Resource cache hit: \(resource.name).json version \(resource.version)"
+                    "Resource cache hit: \(resource.name).json version \(resource.version ?? "unversioned")"
                 )
                 return (false, nil)
             }
@@ -821,7 +1035,11 @@ final class RemoteContentManager: ObservableObject {
             Self.logger.info(
                 "Saved resource \(resource.name).json to cache: \(cacheURL.lastPathComponent)"
             )
-            versions[resource.name] = resource.version
+            if let version = resource.version {
+                versions[resource.name] = version
+            } else {
+                versions.removeValue(forKey: resource.name)
+            }
             return (true, nil)
         } catch {
             Self.logger.error(
@@ -932,8 +1150,9 @@ final class RemoteContentManager: ObservableObject {
 
         let cacheURL = try Self.assetCacheFileURL(forAssetName: asset.name)
         let versionKey = "asset:\(asset.name)"
+        let versionToken = asset.version ?? asset.url
         let hasMatchingVersion =
-            versions[versionKey] == (asset.version ?? "static")
+            versions[versionKey] == versionToken
             && Self.isCachedAssetUsable(
                 at: cacheURL,
                 expectedName: asset.name,
@@ -942,7 +1161,7 @@ final class RemoteContentManager: ObservableObject {
 
         if hasMatchingVersion {
             Self.logger.debug(
-                "Asset cache hit: \(asset.name) version \(asset.version ?? "static")"
+                "Asset cache hit: \(asset.name) token \(versionToken)"
             )
             return false
         }
@@ -966,7 +1185,7 @@ final class RemoteContentManager: ObservableObject {
         Self.logger.info(
             "Saved asset \(asset.name) to cache: \(cacheURL.lastPathComponent)"
         )
-        versions[versionKey] = asset.version ?? "static"
+        versions[versionKey] = versionToken
         return true
     }
 
@@ -1273,7 +1492,11 @@ final class RemoteContentManager: ObservableObject {
             return false
         }
 
-        return versions[resource.name] == resource.version
+        guard let version = resource.version else {
+            return fileManager.fileExists(atPath: cacheURL.path)
+        }
+
+        return versions[resource.name] == version
             && fileManager.fileExists(atPath: cacheURL.path)
     }
 
@@ -1288,7 +1511,7 @@ final class RemoteContentManager: ObservableObject {
         }
 
         let versionKey = "asset:\(asset.name)"
-        return versions[versionKey] == (asset.version ?? "static")
+        return versions[versionKey] == (asset.version ?? asset.url)
             && Self.isCachedAssetUsable(
                 at: cacheURL,
                 expectedName: asset.name,
@@ -1431,9 +1654,11 @@ final class RemoteContentManager: ObservableObject {
     private nonisolated static func clearMemoryCaches() {
         RemoteAssetMemoryCache.imageCache.removeAllObjects()
         RemoteAssetMemoryCache.sceneCache.removeAllObjects()
+        RemoteAssetMemoryCache.missingSceneCache.removeAllObjects()
     }
 
     private nonisolated static func removeCachedAsset(named assetName: String) {
+        RemoteAssetMemoryCache.missingSceneCache.removeAllObjects()
         for candidate in assetCandidates(
             for: assetName,
             preferredExtensions: ["png", "jpg", "jpeg", "webp", "usdz", "scn"]

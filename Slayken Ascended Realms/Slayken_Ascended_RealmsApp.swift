@@ -18,6 +18,7 @@ struct Slayken_Ascended_RealmsApp: App {
     @StateObject var remoteContent = RemoteContentManager.shared
     @StateObject var multiplayerManager = MultiplayerManager()
     @StateObject var deepLinkRouter = AppDeepLinkRouter()
+    @StateObject var performanceMode = PerformanceModeManager.shared
 
     var body: some Scene {
         WindowGroup {
@@ -29,6 +30,7 @@ struct Slayken_Ascended_RealmsApp: App {
                 .environmentObject(remoteContent)
                 .environmentObject(multiplayerManager)
                 .environmentObject(deepLinkRouter)
+                .environmentObject(performanceMode)
                 .task {
                     multiplayerManager.authenticatePlayer()
                 }

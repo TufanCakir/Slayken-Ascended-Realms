@@ -14,6 +14,8 @@ private enum GameSceneNodeCache {
 }
 
 struct GameSceneView: UIViewRepresentable {
+    @EnvironmentObject private var performanceMode: PerformanceModeManager
+
     let player: CharacterStats
     let joystickVector: SIMD2<Float>
     let autoMoveTarget: SIMD2<Float>?
@@ -54,13 +56,24 @@ struct GameSceneView: UIViewRepresentable {
         view.allowsCameraControl = false
         view.autoenablesDefaultLighting = false
         view.isPlaying = true
-        view.preferredFramesPerSecond = 60
+        view.preferredFramesPerSecond = performanceMode.sceneFramesPerSecond
+        view.antialiasingMode =
+            performanceMode.isReducedEffectsEnabled ? .none : .multisampling2X
 
+        context.coordinator.updatePerformanceMode(
+            reducedEffects: performanceMode.isReducedEffectsEnabled
+        )
         context.coordinator.start()
         return view
     }
 
     func updateUIView(_ uiView: SCNView, context: Context) {
+        uiView.preferredFramesPerSecond = performanceMode.sceneFramesPerSecond
+        uiView.antialiasingMode =
+            performanceMode.isReducedEffectsEnabled ? .none : .multisampling2X
+        context.coordinator.updatePerformanceMode(
+            reducedEffects: performanceMode.isReducedEffectsEnabled
+        )
         context.coordinator.joystickVector = joystickVector
         context.coordinator.autoMoveTarget = autoMoveTarget
         context.coordinator.onAutoMoveFinished = onAutoMoveFinished
@@ -91,6 +104,7 @@ final class SceneCoordinator {
 
     private var displayLink: CADisplayLink?
     private var lastUpdateTime: CFTimeInterval = 0
+    private var isReducedEffectsEnabled = false
 
     var joystickVector: SIMD2<Float> = .zero
     var autoMoveTarget: SIMD2<Float>?
@@ -113,12 +127,27 @@ final class SceneCoordinator {
             target: self,
             selector: #selector(stepFrame(_:))
         )
+        link.preferredFramesPerSecond = isReducedEffectsEnabled ? 30 : 60
         link.add(to: .main, forMode: .common)
         displayLink = link
     }
 
     deinit {
         displayLink?.invalidate()
+    }
+
+    func updatePerformanceMode(reducedEffects: Bool) {
+        guard isReducedEffectsEnabled != reducedEffects else { return }
+        isReducedEffectsEnabled = reducedEffects
+        displayLink?.preferredFramesPerSecond = reducedEffects ? 30 : 60
+        scene.rootNode.enumerateChildNodes { node, _ in
+            guard let light = node.light, light.type == .directional else {
+                return
+            }
+            light.castsShadow = !reducedEffects
+            light.shadowSampleCount = reducedEffects ? 1 : 6
+            light.shadowRadius = reducedEffects ? 1 : 3
+        }
     }
 
     private func setupScene() {
@@ -283,10 +312,10 @@ final class SceneCoordinator {
         directional.type = .directional
         directional.intensity = 1200
         directional.color = UIColor.white
-        directional.castsShadow = true
+        directional.castsShadow = !isReducedEffectsEnabled
         directional.shadowMode = .modulated
-        directional.shadowRadius = 3
-        directional.shadowSampleCount = 6
+        directional.shadowRadius = isReducedEffectsEnabled ? 1 : 3
+        directional.shadowSampleCount = isReducedEffectsEnabled ? 1 : 6
         directional.shadowColor = UIColor.black.withAlphaComponent(0.35)
 
         let directionalNode = SCNNode()
@@ -351,7 +380,7 @@ final class SceneCoordinator {
         // 1. Model laden
         if let cachedModelNode = makePreparedModelNode(
             modelName: player.model,
-            textureName: player.texture
+            player: player
         ) {
             playerVisualNode.addChildNode(cachedModelNode)
         }
@@ -389,6 +418,12 @@ final class SceneCoordinator {
             Float((previewTransform.rollDegrees ?? 0) * .pi / 180)
         )
 
+        addSkinSceneEffects(
+            for: player,
+            to: playerVisualNode,
+            bounds: bounds
+        )
+
         // 6. In Parent einhängen
         playerNode.addChildNode(playerVisualNode)
 
@@ -405,10 +440,10 @@ final class SceneCoordinator {
         return playerNode
     }
 
-    private func makePreparedModelNode(modelName: String, textureName: String?)
+    private func makePreparedModelNode(modelName: String, player: CharacterStats)
         -> SCNNode?
     {
-        let cacheKey = "\(modelName)|\(textureName ?? "-")" as NSString
+        let cacheKey = skinCacheKey(modelName: modelName, player: player)
         if let cachedNode = GameSceneNodeCache.modelCache.object(
             forKey: cacheKey
         ) {
@@ -423,9 +458,24 @@ final class SceneCoordinator {
         for child in modelScene.rootNode.childNodes {
             prototypeNode.addChildNode(child.clone())
         }
-        applyCharacterTextureIfNeeded(textureName, to: prototypeNode)
+        applyCharacterMaterial(player, to: prototypeNode)
         GameSceneNodeCache.modelCache.setObject(prototypeNode, forKey: cacheKey)
         return prototypeNode.clone()
+    }
+
+    private func skinCacheKey(modelName: String, player: CharacterStats)
+        -> NSString
+    {
+        [
+            modelName,
+            player.texture ?? "-",
+            player.materialColor ?? "-",
+            player.emissionColor ?? "-",
+            String(player.emissionIntensity ?? -1),
+            String(player.roughness ?? -1),
+            String(player.metalness ?? -1),
+        ]
+        .joined(separator: "|") as NSString
     }
 
     private func loadModelScene(named modelName: String) -> SCNScene? {
@@ -457,14 +507,19 @@ final class SceneCoordinator {
         return nil
     }
 
-    private func applyCharacterTextureIfNeeded(
-        _ textureName: String?,
+    private func applyCharacterMaterial(
+        _ player: CharacterStats,
         to rootNode: SCNNode
     ) {
+        let image =
+            player.texture.flatMap { textureName in
+                textureName.isEmpty ? nil : loadTextureImage(named: textureName)
+            }
+        let materialColor = color(from: player.materialColor)
+        let emissionColor = color(from: player.emissionColor)
         guard
-            let textureName,
-            !textureName.isEmpty,
-            let image = loadTextureImage(named: textureName)
+            image != nil || materialColor != nil || emissionColor != nil
+                || player.roughness != nil || player.metalness != nil
         else { return }
 
         rootNode.enumerateChildNodes { node, _ in
@@ -480,16 +535,122 @@ final class SceneCoordinator {
 
             for material in copiedMaterials {
                 material.lightingModel = .physicallyBased
-                material.diffuse.contents = image
+                if let image {
+                    material.diffuse.contents = image
+                    material.multiply.contents = materialColor
+                } else if let materialColor {
+                    material.diffuse.contents = materialColor
+                }
                 material.diffuse.wrapS = .repeat
                 material.diffuse.wrapT = .repeat
-                material.roughness.contents = 0.85
-                material.metalness.contents = 0.0
+                material.emission.contents = emissionColor
+                if let emissionIntensity = player.emissionIntensity {
+                    material.emission.intensity = CGFloat(emissionIntensity)
+                }
+                material.roughness.contents = player.roughness ?? 0.85
+                material.metalness.contents = player.metalness ?? 0.0
                 material.isDoubleSided = true
             }
 
             copiedGeometry.materials = copiedMaterials
             node.geometry = copiedGeometry
+        }
+    }
+
+    private func addSkinSceneEffects(
+        for player: CharacterStats,
+        to rootNode: SCNNode,
+        bounds: (min: SCNVector3, max: SCNVector3)
+    ) {
+        guard !isReducedEffectsEnabled else { return }
+
+        let width = max(bounds.max.x - bounds.min.x, 0.1)
+        let depth = max(bounds.max.z - bounds.min.z, 0.1)
+        let height = max(bounds.max.y - bounds.min.y, 0.1)
+        let radius =
+            CGFloat(max(width, depth)) * CGFloat(player.auraRadius ?? 0.62)
+
+        if let auraColor = color(from: player.auraColor) {
+            let aura = SCNNode(
+                geometry: SCNTorus(
+                    ringRadius: radius,
+                    pipeRadius: max(0.015, radius * 0.035)
+                )
+            )
+            aura.geometry?.firstMaterial?.diffuse.contents =
+                auraColor.withAlphaComponent(0.65)
+            aura.geometry?.firstMaterial?.emission.contents = auraColor
+            aura.geometry?.firstMaterial?.emission.intensity =
+                CGFloat(player.auraIntensity ?? 1.0)
+            aura.position = SCNVector3(0, bounds.min.y + 0.08, 0)
+            aura.eulerAngles.x = Float.pi / 2
+            aura.opacity = 0.72
+            rootNode.addChildNode(aura)
+        }
+
+        if let shadowColor = color(from: player.shadowColor) {
+            let shadow = SCNNode(
+                geometry: SCNCylinder(
+                    radius: radius * 0.95,
+                    height: 0.012
+                )
+            )
+            shadow.geometry?.firstMaterial?.diffuse.contents =
+                shadowColor.withAlphaComponent(CGFloat(player.shadowOpacity ?? 0.32))
+            shadow.geometry?.firstMaterial?.isDoubleSided = true
+            shadow.position = SCNVector3(0, bounds.min.y + 0.02, 0)
+            rootNode.addChildNode(shadow)
+        }
+
+        if player.particleEffect != nil {
+            let particleSystem = SCNParticleSystem()
+            particleSystem.birthRate = 80
+            particleSystem.particleLifeSpan = 1.0
+            particleSystem.particleLifeSpanVariation = 0.35
+            particleSystem.particleSize = 0.08
+            particleSystem.particleSizeVariation = 0.04
+            particleSystem.spreadingAngle = 140
+            particleSystem.emitterShape = SCNSphere(radius: radius * 0.65)
+            particleSystem.particleColor =
+                color(from: player.auraColor)
+                ?? color(from: player.emissionColor)
+                ?? UIColor.cyan
+            particleSystem.isLocal = true
+
+            let particleNode = SCNNode()
+            particleNode.position = SCNVector3(
+                0,
+                bounds.min.y + height * 0.55,
+                0
+            )
+            particleNode.addParticleSystem(particleSystem)
+            rootNode.addChildNode(particleNode)
+        }
+    }
+
+    private func color(from hex: String?) -> UIColor? {
+        guard let hex else { return nil }
+        let trimmed = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "#", with: "")
+        guard let value = UInt64(trimmed, radix: 16) else { return nil }
+
+        switch trimmed.count {
+        case 6:
+            return UIColor(
+                red: CGFloat((value >> 16) & 0xFF) / 255,
+                green: CGFloat((value >> 8) & 0xFF) / 255,
+                blue: CGFloat(value & 0xFF) / 255,
+                alpha: 1
+            )
+        case 8:
+            return UIColor(
+                red: CGFloat((value >> 24) & 0xFF) / 255,
+                green: CGFloat((value >> 16) & 0xFF) / 255,
+                blue: CGFloat((value >> 8) & 0xFF) / 255,
+                alpha: CGFloat(value & 0xFF) / 255
+            )
+        default:
+            return nil
         }
     }
 

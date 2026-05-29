@@ -9,6 +9,7 @@ import Foundation
 
 enum SummonDrop: Equatable {
     case character(SummonCharacter)
+    case skin(characterID: String, skin: CharacterSkin)
     case card(AbilityCardDefinition)
 }
 
@@ -74,6 +75,13 @@ enum SummonService {
             entry -> (SummonDrop, Double)? in
             guard entry.weight > 0 else { return nil }
             if let characterID = entry.characterID,
+                let skinID = entry.skinID,
+                let character = charactersByID[characterID],
+                let skin = character.skins.first(where: { $0.id == skinID })
+            {
+                return (.skin(characterID: characterID, skin: skin), entry.weight)
+            }
+            if let characterID = entry.characterID,
                 let character = charactersByID[characterID]
             {
                 return (.character(character), entry.weight)
@@ -91,10 +99,14 @@ enum SummonService {
     ) -> Bool {
         switch drop {
         case .character(let character):
-            guard guarantee.dropType != "card" else { return false }
+            guard guarantee.dropType != "card" && guarantee.dropType != "skin"
+            else { return false }
             return guarantee.rarity.map { character.rarity >= $0 } ?? true
+        case .skin:
+            return guarantee.dropType == nil || guarantee.dropType == "skin"
         case .card(let card):
-            guard guarantee.dropType != "character" else { return false }
+            guard guarantee.dropType != "character" && guarantee.dropType != "skin"
+            else { return false }
             return guarantee.rarity.map { card.resolvedRarity >= $0 } ?? true
         }
     }

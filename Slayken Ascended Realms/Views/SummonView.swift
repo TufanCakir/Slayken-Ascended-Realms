@@ -593,6 +593,12 @@ struct SummonView: View {
                     characterID: character.id,
                     in: modelContext
                 )
+            case .skin(let characterID, let skin):
+                PlayerInventoryStore.addOwnedSkin(
+                    characterID: characterID,
+                    skinID: skin.id,
+                    in: modelContext
+                )
             case .card(let card):
                 PlayerInventoryStore.addOwnedCard(
                     cardID: card.id,
@@ -634,6 +640,8 @@ struct SummonView: View {
         switch result {
         case .character(let character):
             return character.name
+        case .skin(_, let skin):
+            return skin.name
         case .card(let card):
             return card.name
         }
@@ -920,6 +928,22 @@ private struct SummonBannerInfoSheet: View {
 
     private var poolRows: [PoolRow] {
         banner.pool.compactMap { entry in
+            if let characterID = entry.characterID,
+                let skinID = entry.skinID,
+                let character = characters.first(where: { $0.id == characterID }
+                ),
+                let skin = character.skins.first(where: { $0.id == skinID })
+            {
+                return PoolRow(
+                    id: "\(characterID):\(skin.id)",
+                    name: skin.name,
+                    image: skin.summonImage ?? character.summonImage,
+                    kind: "Skin",
+                    rarity: character.rarity,
+                    weight: entry.weight
+                )
+            }
+
             if let characterID = entry.characterID,
                 let character = characters.first(where: { $0.id == characterID }
                 )

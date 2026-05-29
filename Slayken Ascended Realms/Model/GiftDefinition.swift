@@ -29,6 +29,7 @@ struct GiftBoxDefinition: Codable, Identifiable, Equatable {
     let icon: String
     let rewards: [CurrencyAmount]
     let characterRewards: [GiftCharacterReward]
+    let skinRewards: [StorePackSkinReward]
     let cardRewards: [GiftCardReward]
 
     private enum CodingKeys: String, CodingKey {
@@ -40,6 +41,7 @@ struct GiftBoxDefinition: Codable, Identifiable, Equatable {
         case icon
         case rewards
         case characterRewards
+        case skinRewards
         case cardRewards
     }
 
@@ -52,6 +54,7 @@ struct GiftBoxDefinition: Codable, Identifiable, Equatable {
         icon: String,
         rewards: [CurrencyAmount],
         characterRewards: [GiftCharacterReward] = [],
+        skinRewards: [StorePackSkinReward] = [],
         cardRewards: [GiftCardReward] = []
     ) {
         self.id = id
@@ -62,6 +65,7 @@ struct GiftBoxDefinition: Codable, Identifiable, Equatable {
         self.icon = icon
         self.rewards = rewards
         self.characterRewards = characterRewards
+        self.skinRewards = skinRewards
         self.cardRewards = cardRewards
     }
 
@@ -78,6 +82,11 @@ struct GiftBoxDefinition: Codable, Identifiable, Equatable {
             try container.decodeIfPresent(
                 [GiftCharacterReward].self,
                 forKey: .characterRewards
+            ) ?? []
+        skinRewards =
+            try container.decodeIfPresent(
+                [StorePackSkinReward].self,
+                forKey: .skinRewards
             ) ?? []
         cardRewards =
             try container.decodeIfPresent(
@@ -99,6 +108,7 @@ struct DailyLoginRewardDefinition: Codable, Identifiable, Equatable {
     let background: String?
     let rewards: [CurrencyAmount]
     let characterRewards: [GiftCharacterReward]
+    let skinRewards: [StorePackSkinReward]
     let cardRewards: [GiftCardReward]
 
     private enum CodingKeys: String, CodingKey {
@@ -113,6 +123,7 @@ struct DailyLoginRewardDefinition: Codable, Identifiable, Equatable {
         case background
         case rewards
         case characterRewards
+        case skinRewards
         case cardRewards
     }
 
@@ -128,6 +139,7 @@ struct DailyLoginRewardDefinition: Codable, Identifiable, Equatable {
         background: String? = nil,
         rewards: [CurrencyAmount],
         characterRewards: [GiftCharacterReward] = [],
+        skinRewards: [StorePackSkinReward] = [],
         cardRewards: [GiftCardReward] = []
     ) {
         self.id = id
@@ -141,6 +153,7 @@ struct DailyLoginRewardDefinition: Codable, Identifiable, Equatable {
         self.background = background
         self.rewards = rewards
         self.characterRewards = characterRewards
+        self.skinRewards = skinRewards
         self.cardRewards = cardRewards
     }
 
@@ -166,6 +179,11 @@ struct DailyLoginRewardDefinition: Codable, Identifiable, Equatable {
             try container.decodeIfPresent(
                 [GiftCharacterReward].self,
                 forKey: .characterRewards
+            ) ?? []
+        skinRewards =
+            try container.decodeIfPresent(
+                [StorePackSkinReward].self,
+                forKey: .skinRewards
             ) ?? []
         cardRewards =
             try container.decodeIfPresent(

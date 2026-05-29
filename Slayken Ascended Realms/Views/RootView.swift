@@ -157,14 +157,18 @@ struct RootView: View {
                 && remoteContent.isBackgroundPreloading
             {
                 VStack {
-                    BackgroundPreloadIndicatorView(
-                        progress: remoteContent.backgroundPreloadProgress,
-                        statusText: remoteContent.backgroundStatusText
-                    )
-
                     Spacer()
+
+                    HStack {
+                        Spacer()
+
+                        BackgroundPreloadIndicatorView(
+                            progress: remoteContent.backgroundPreloadProgress,
+                            statusText: remoteContent.backgroundStatusText
+                        )
+                    }
                 }
-                .transition(.move(edge: .top).combined(with: .opacity))
+                .transition(.move(edge: .bottom).combined(with: .opacity))
                 .zIndex(180)
             }
 
@@ -204,6 +208,7 @@ struct RootView: View {
             hasStartedStartupFlow = true
             Task {
                 await remoteContent.prepareStartupPlanIfNeeded()
+                await startSilentStartupLoad()
             }
             startRuntimeUpdateChecks()
         }
@@ -516,6 +521,23 @@ struct RootView: View {
         }
     }
 
+    private func startSilentStartupLoad() async {
+        guard !remoteContent.hasCompletedInitialRefresh else { return }
+        guard !remoteContent.isMaintenanceActive else { return }
+
+        guard networkMonitor.isConnected else {
+            remoteContent.failStartupRetryBecauseOffline()
+            return
+        }
+
+        let didRefreshSucceed = await remoteContent.refreshContentIfNeeded(
+            mode: .bootstrap
+        )
+        guard didRefreshSucceed else { return }
+
+        completeRemoteRefresh(mode: .bootstrap)
+    }
+
     private func retryStartupLoading() {
         guard !remoteContent.isRefreshing else { return }
 
@@ -527,11 +549,11 @@ struct RootView: View {
             }
 
             let didRefreshSucceed = await remoteContent.refreshContentIfNeeded(
-                mode: .fullPreload
+                mode: .bootstrap
             )
             guard didRefreshSucceed else { return }
 
-            completeRemoteRefresh(mode: .fullPreload)
+            completeRemoteRefresh(mode: .bootstrap)
         }
     }
 

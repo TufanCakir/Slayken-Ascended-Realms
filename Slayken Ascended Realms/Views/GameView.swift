@@ -354,17 +354,6 @@ struct GameView: View {
                 .zIndex(11)
 
             }
-            .overlay(alignment: .bottomTrailing) {
-                if remoteContent.isBackgroundPreloading {
-                    BackgroundPreloadIndicatorView(
-                        progress: remoteContent.backgroundPreloadProgress,
-                        statusText: remoteContent.backgroundStatusText
-                    )
-                    .padding(.trailing, 22)
-                    .padding(.bottom, 118)
-                    .transition(.scale.combined(with: .opacity))
-                }
-            }
             .sheet(item: $activeSelectionSheet) { selection in
                 switch selection {
 

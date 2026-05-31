@@ -125,22 +125,32 @@ struct RemoteContentManifest: Decodable {
         resourceName: String,
         baseURL: String?
     ) -> String {
-        let fileName = resourceName.hasSuffix(".json")
+        let fileName =
+            resourceName.hasSuffix(".json")
             ? resourceName : "\(resourceName).json"
         guard let baseURL,
-            let resolvedURL = URL(string: fileName, relativeTo: URL(string: baseURL + "/"))
+            let resolvedURL = URL(
+                string: fileName,
+                relativeTo: URL(string: baseURL + "/")
+            )
         else {
             return fileName
         }
         return resolvedURL.absoluteURL.absoluteString
     }
 
-    func resolvingRelativeURLs(against manifestURL: URL) -> RemoteContentManifest {
+    func resolvingRelativeURLs(against manifestURL: URL)
+        -> RemoteContentManifest
+    {
         RemoteContentManifest(
             contentVersion: contentVersion,
             maintenance: maintenance,
-            resources: resources.map { $0.resolvingRelativeURL(against: manifestURL) },
-            assets: assets?.map { $0.resolvingRelativeURL(against: manifestURL) }
+            resources: resources.map {
+                $0.resolvingRelativeURL(against: manifestURL)
+            },
+            assets: assets?.map {
+                $0.resolvingRelativeURL(against: manifestURL)
+            }
         )
     }
 }
@@ -157,7 +167,8 @@ struct RemoteContentResource: Codable {
     let version: String?
     let url: String
 
-    func resolvingRelativeURL(against manifestURL: URL) -> RemoteContentResource {
+    func resolvingRelativeURL(against manifestURL: URL) -> RemoteContentResource
+    {
         guard URL(string: url)?.scheme == nil,
             let resolvedURL = URL(string: url, relativeTo: manifestURL)
         else { return self }
@@ -216,7 +227,7 @@ struct RemoteContentAsset: Decodable {
         guard
             !URL(fileURLWithPath: id).pathExtension.isEmpty
                 || URL(fileURLWithPath: file ?? "").pathExtension.isEmpty
-                == false
+                    == false
         else {
             return id
         }
@@ -227,7 +238,10 @@ struct RemoteContentAsset: Decodable {
     func resolved(baseURL: String?) -> RemoteContentAsset {
         guard URL(string: url)?.scheme == nil,
             let baseURL,
-            let resolvedURL = URL(string: url, relativeTo: URL(string: baseURL + "/"))
+            let resolvedURL = URL(
+                string: url,
+                relativeTo: URL(string: baseURL + "/")
+            )
         else { return self }
 
         return RemoteContentAsset(
@@ -1402,69 +1416,68 @@ final class RemoteContentManager: ObservableObject {
         case .fullPreload:
             return allAssets
         case .bootstrap:
-            let immediateAssets = allAssets.filter(
-                Self.shouldLoadDuringBootstrap
-            )
-            let modelAssets = bootstrapCharacterModelAssets(from: manifest)
-            var seenAssetNames = Set<String>()
-
-            return (immediateAssets + modelAssets).filter { asset in
-                seenAssetNames.insert(asset.name).inserted
-            }
+            return bootstrapCoreAssets(from: manifest)
         }
     }
 
-    private func bootstrapCharacterModelAssets(
+    private func bootstrapCoreAssets(
         from manifest: RemoteContentManifest
     ) -> [RemoteContentAsset] {
-        var requiredModelNames = Set<String>()
+        var requiredAssetNames = [String]()
+        var seenRequiredNames = Set<String>()
 
-        func appendCharacter(_ character: CharacterStats) {
-            let modelName = character.model.trimmingCharacters(
+        func appendAssetName(_ assetName: String?) {
+            guard let assetName else { return }
+            let trimmedName = assetName.trimmingCharacters(
                 in: .whitespacesAndNewlines
             )
-            if !modelName.isEmpty {
-                requiredModelNames.insert(modelName)
-            }
-
-            if let battleModel = character.battleModel?
-                .trimmingCharacters(in: .whitespacesAndNewlines),
-                !battleModel.isEmpty
-            {
-                requiredModelNames.insert(battleModel)
+            guard !trimmedName.isEmpty else { return }
+            if seenRequiredNames.insert(trimmedName).inserted {
+                requiredAssetNames.append(trimmedName)
             }
         }
 
+        func appendCharacter(_ character: CharacterStats) {
+            appendAssetName(character.image)
+            appendAssetName(character.model)
+            appendAssetName(character.battleModel)
+            appendAssetName(character.texture)
+        }
+
+        [
+            "theme_epic",
+            "theme_fire",
+            "bg_sar",
+            "realm_country",
+        ].forEach(appendAssetName)
+
+        if let themeData = JSONResourceLoader.loadData(resource: "themes"),
+            let themes = try? JSONDecoder().decode(
+                [GameTheme].self,
+                from: themeData
+            )
+        {
+            themes.forEach { appendAssetName($0.background) }
+        }
         loadGamePlayers().forEach(appendCharacter)
         appendCharacter(loadBattlePlayer())
-        loadSummonCharacters().forEach { appendCharacter($0.stats()) }
-        loadTutorialDefinitions().forEach { tutorial in
-            appendCharacter(tutorial.player)
-            tutorial.allEnemies.forEach(appendCharacter)
-        }
-        loadGlobeEventChapters().forEach { chapter in
-            for point in chapter.points {
-                for battle in point.battles {
-                    battle.battleEnemies.forEach(appendCharacter)
-                }
-            }
+
+        if let firstChapter = loadGlobeEventChapters().first {
+            appendAssetName(firstChapter.mapTexture)
         }
 
-        for definition in loadCharacterClassDefinitions() {
-            for variant in definition.variants {
-                appendCharacter(
-                    variant.makeCharacter(named: definition.defaultName)
-                )
-            }
-        }
+        appendAssetName(loadMusicTracks().first?.fileName)
 
         var resolvedAssets = [RemoteContentAsset]()
         var seenAssetNames = Set<String>()
 
-        for modelName in requiredModelNames {
+        for assetName in requiredAssetNames {
             let candidateNames = Self.assetCandidates(
-                for: modelName,
-                preferredExtensions: ["usdz", "scn"]
+                for: assetName,
+                preferredExtensions: [
+                    "png", "jpg", "jpeg", "webp", "usdz", "scn", "mp3",
+                    "m4a", "wav",
+                ]
             )
 
             for candidateName in candidateNames {
@@ -1796,35 +1809,6 @@ final class RemoteContentManager: ObservableObject {
         -> [String]
     {
         return []
-    }
-
-    private nonisolated static func shouldLoadDuringBootstrap(
-        _ asset: RemoteContentAsset
-    ) -> Bool {
-        let fileName = URL(fileURLWithPath: asset.name).lastPathComponent
-            .lowercased()
-        let path =
-            URL(string: asset.url)?.path.lowercased() ?? asset.url.lowercased()
-
-        if fileName.hasSuffix(".png")
-            || fileName.hasSuffix(".jpg")
-            || fileName.hasSuffix(".jpeg")
-            || fileName.hasSuffix(".webp")
-            || fileName.hasSuffix(".mp3")
-        {
-            return true
-        }
-
-        if path.hasSuffix(".png")
-            || path.hasSuffix(".jpg")
-            || path.hasSuffix(".jpeg")
-            || path.hasSuffix(".webp")
-            || path.hasSuffix(".mp3")
-        {
-            return true
-        }
-
-        return false
     }
 
     private nonisolated static func imageFallbackURLs(

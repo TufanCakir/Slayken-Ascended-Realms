@@ -557,7 +557,7 @@ struct RootView: View {
         }
     }
 
-    private func completeRemoteRefresh(mode: RemoteContentRefreshMode) {
+    private func completeRemoteRefresh(mode _: RemoteContentRefreshMode) {
         gameState.reloadContent()
         theme.loadThemes()
         theme.loadSelected()
@@ -565,10 +565,6 @@ struct RootView: View {
         musicManager.startPlaybackIfNeeded()
         refreshLoginPopups()
         routePendingDeepLinkIfPossible()
-
-        if mode == .bootstrap {
-            remoteContent.startBackgroundPreloadIfNeeded()
-        }
     }
 
     private func routePendingDeepLinkIfPossible() {
